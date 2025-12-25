@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NHL Prediction Analysis | M. Nasiri</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .content-container { max-width: 800px; margin: 50px auto; }
+        .section-title { border-left: 5px solid #0d6efd; padding-left: 15px; margin-top: 40px; }
+        code { background: #f4f4f4; padding: 2px 5px; border-radius: 4px; color: #c7254e; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-light bg-white border-bottom">
+        <div class="container">
+            <a class="navbar-brand text-primary" href="../../index.html">&larr; Back to Portfolio</a>
+        </div>
+    </nav>
+
+    <div class="container content-container">
+        <h1 class="display-5 fw-bold mb-4">Predicting NHL Goal Scorers: A Rare Event Classification Approach</h1>
+        <p class="text-muted">By Mohammad G. Nasiri | <span class="badge bg-secondary">Work in Progress</span></p>
+        <hr>
+
+        <h3 class="section-title">1. Problem Definition</h3>
+        <p>
+            The Tim Hortons NHL Hockey Challenge requires selecting three players who will score a goal in upcoming games. 
+            From a data science perspective, this is an <strong>imbalanced binary classification problem</strong>, 
+            as the probability of a specific player scoring in a specific game is typically low (< 15%).
+        </p>
+
+        <h3 class="section-title">2. Methodology</h3>
+        <p>
+            I utilized the <strong>NHL Public API</strong> to gather historical data. The modeling strategy involves:
+        </p>
+        <ul>
+            <li><strong>Feature Engineering:</strong> Calculating rolling averages of goals, shots on goal, and time on ice over the last 5 games.</li>
+            <li><strong>Model Selection:</strong> Using <code>XGBoost</code> due to its efficiency with tabular data and ability to handle missing values.</li>
+            <li><strong>Handling Imbalance:</strong> adjusting <code>scale_pos_weight</code> to penalize false negatives more heavily.</li>
+        </ul>
+
+        <h3 class="section-title">3. Next Steps</h3>
+        <p>
+            The current model achieves an AUC of 0.72. Future work includes integrating player fatigue metrics (back-to-back games) and goalkeeper statistics.
+        </p>
+
+    </div>
+
+</body>
+</html>
