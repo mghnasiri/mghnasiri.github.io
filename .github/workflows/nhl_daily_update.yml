@@ -1,0 +1,91 @@
+# .github/workflows/nhl_daily_update.yml
+# این فایل باید در root repo باشه: mghnasiri.github.io/.github/workflows/
+
+name: NHL Daily Predictions
+
+on:
+  # اجرای روزانه
+  schedule:
+    - cron: '0 15 * * *'  # پیش‌بینی - 10:00 صبح تورنتو
+    - cron: '0 6 * * *'   # نتایج - 01:00 شب تورنتو
+  
+  # اجرای دستی
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Action to run'
+        required: true
+        default: 'both'
+        type: choice
+        options:
+          - predictions
+          - results
+          - both
+
+jobs:
+  predictions:
+    runs-on: ubuntu-latest
+    if: github.event.schedule == '0 15 * * *' || github.event.inputs.action == 'predictions' || github.event.inputs.action == 'both'
+    
+    defaults:
+      run:
+        working-directory: projects/nhl-hockey
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: pip install pandas numpy requests
+      
+      - name: Run predictions
+        run: python scripts/daily_predict.py
+      
+      - name: Commit predictions
+        run: |
+          cd $GITHUB_WORKSPACE
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git diff --staged --quiet || git commit -m "🏒 Predictions for $(date +%Y-%m-%d)"
+          git push
+
+  results:
+    runs-on: ubuntu-latest
+    if: github.event.schedule == '0 6 * * *' || github.event.inputs.action == 'results' || github.event.inputs.action == 'both'
+    
+    defaults:
+      run:
+        working-directory: projects/nhl-hockey
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: pip install pandas numpy requests
+      
+      - name: Fetch results
+        run: python scripts/fetch_results.py
+      
+      - name: Update dashboard
+        run: python scripts/update_dashboard.py
+      
+      - name: Commit results
+        run: |
+          cd $GITHUB_WORKSPACE
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git diff --staged --quiet || git commit -m "📊 Results for $(date -d 'yesterday' +%Y-%m-%d)"
+          git push
