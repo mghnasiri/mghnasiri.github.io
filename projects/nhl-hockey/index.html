@@ -42,7 +42,6 @@
             text-align: center;
             margin-bottom: 30px;
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         
         header h1 {
@@ -50,19 +49,9 @@
             margin-bottom: 10px;
         }
         
-        header .subtitle {
+        header .date {
             font-size: 1.2rem;
             opacity: 0.9;
-        }
-        
-        .date-badge {
-            display: inline-block;
-            background: var(--accent);
-            color: var(--secondary);
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-weight: bold;
-            margin-top: 15px;
         }
         
         .grid {
@@ -83,64 +72,21 @@
             color: var(--secondary);
             margin-bottom: 15px;
             padding-bottom: 10px;
-            border-bottom: 3px solid var(--primary);
+            border-bottom: 2px solid var(--primary);
+        }
+        
+        .games-list {
             display: flex;
-            align-items: center;
+            flex-wrap: wrap;
             gap: 10px;
         }
         
-        .card.success {
-            border-left: 5px solid var(--success);
-        }
-        
-        .card.info {
-            border-left: 5px solid var(--primary);
-        }
-        
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 10px;
-        }
-        
-        .game-card {
-            background: linear-gradient(135deg, var(--secondary) 0%, #1a3a5c 100%);
+        .game-badge {
+            background: var(--secondary);
             color: white;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
+            padding: 8px 15px;
+            border-radius: 20px;
             font-weight: 600;
-        }
-        
-        .game-card .vs {
-            font-size: 0.8rem;
-            opacity: 0.7;
-            margin: 5px 0;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-        }
-        
-        .stat-box {
-            text-align: center;
-            padding: 20px;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border-radius: 10px;
-        }
-        
-        .stat-value {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: var(--primary);
-        }
-        
-        .stat-label {
-            font-size: 0.9rem;
-            color: #666;
-            margin-top: 5px;
         }
         
         table {
@@ -150,7 +96,7 @@
         }
         
         th, td {
-            padding: 12px 8px;
+            padding: 12px;
             text-align: left;
             border-bottom: 1px solid #eee;
         }
@@ -159,22 +105,11 @@
             background: var(--secondary);
             color: white;
             font-weight: 600;
-            position: sticky;
-            top: 0;
         }
         
         tr:hover {
             background: #f8f9fa;
         }
-        
-        .rank-cell {
-            font-weight: bold;
-            color: var(--secondary);
-        }
-        
-        .rank-1 { color: #ffd700; }
-        .rank-2 { color: #c0c0c0; }
-        .rank-3 { color: #cd7f32; }
         
         .prob-bar {
             width: 100%;
@@ -188,16 +123,11 @@
             height: 100%;
             background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
             border-radius: 4px;
-            transition: width 0.3s ease;
         }
         
-        .hot-badge {
-            background: #ff6b00;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 0.75rem;
-            margin-left: 5px;
+        .hot {
+            color: #ff6b00;
+            font-weight: bold;
         }
         
         .result-hit {
@@ -209,80 +139,56 @@
             color: var(--danger);
         }
         
-        .table-container {
-            max-height: 600px;
-            overflow-y: auto;
-            border-radius: 8px;
-            border: 1px solid #eee;
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
         }
         
-        .loading {
+        .stat-box {
             text-align: center;
-            padding: 40px;
-            color: #666;
-        }
-        
-        .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .no-data {
-            text-align: center;
-            padding: 40px;
-            color: #666;
+            padding: 15px;
             background: #f8f9fa;
             border-radius: 8px;
         }
         
-        .filter-bar {
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .model-tabs {
             display: flex;
             gap: 10px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
+            margin-bottom: 20px;
         }
         
-        .filter-bar input {
-            padding: 10px 15px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            flex: 1;
-            min-width: 200px;
+        .model-tab {
+            padding: 10px 20px;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
         }
         
-        .filter-bar input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-        
-        .filter-bar select {
-            padding: 10px 15px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            background: white;
+        .model-tab.active {
+            background: var(--primary);
         }
         
         footer {
             text-align: center;
-            padding: 30px;
+            padding: 20px;
             color: #666;
             font-size: 0.9rem;
-        }
-        
-        footer a {
-            color: var(--primary);
         }
         
         @media (max-width: 768px) {
@@ -294,20 +200,12 @@
                 grid-template-columns: 1fr;
             }
             
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            
             table {
-                font-size: 0.85rem;
+                font-size: 0.9rem;
             }
             
             th, td {
-                padding: 8px 4px;
-            }
-            
-            .hide-mobile {
-                display: none;
+                padding: 8px;
             }
         }
     </style>
@@ -316,287 +214,33 @@
     <div class="container">
         <header>
             <h1>🏒 NHL Goal Predictor</h1>
-            <p class="subtitle">Tim Hortons Hockey Challenge</p>
-            <div class="date-badge" id="prediction-date">Loading...</div>
+            <p class="date">Tim Hortons Hockey Challenge</p>
+            <p class="date">📅 2025-12-25</p>
         </header>
-        
-        <!-- Yesterday's Results -->
-        <div class="card success" id="results-section" style="margin-bottom: 30px; display: none;">
-            <h2>📊 Yesterday's Results</h2>
-            <div id="results-content">
-                <div class="loading">
-                    <div class="loading-spinner"></div>
-                    Loading results...
-                </div>
-            </div>
-        </div>
-        
-        <!-- Today's Games -->
-        <div class="card info" style="margin-bottom: 30px;">
-            <h2>🏒 Today's Games</h2>
-            <div class="games-grid" id="games-grid">
-                <div class="loading">
-                    <div class="loading-spinner"></div>
-                    Loading games...
-                </div>
-            </div>
-        </div>
-        
-        <!-- Stats -->
-        <div class="card" style="margin-bottom: 30px;" id="stats-section">
-            <h2>📈 Model Statistics</h2>
+<div class="grid">
+        <div class="card">
+            <h2>📈 Neural Network v1 Stats</h2>
             <div class="stats-grid">
                 <div class="stat-box">
-                    <div class="stat-value" id="stat-hit-rate">--</div>
+                    <div class="stat-value">0%</div>
                     <div class="stat-label">Hit Rate</div>
                 </div>
                 <div class="stat-box">
-                    <div class="stat-value" id="stat-total-hits">--</div>
+                    <div class="stat-value">0</div>
                     <div class="stat-label">Total Hits</div>
                 </div>
                 <div class="stat-box">
-                    <div class="stat-value" id="stat-days">--</div>
+                    <div class="stat-value">0</div>
                     <div class="stat-label">Days Tracked</div>
                 </div>
             </div>
         </div>
-        
-        <!-- Predictions Table -->
-        <div class="card">
-            <h2>🎯 Today's Predictions</h2>
-            
-            <div class="filter-bar">
-                <input type="text" id="search-input" placeholder="🔍 Search player or team...">
-                <select id="position-filter">
-                    <option value="">All Positions</option>
-                    <option value="C">Center</option>
-                    <option value="L">Left Wing</option>
-                    <option value="R">Right Wing</option>
-                    <option value="D">Defense</option>
-                </select>
-            </div>
-            
-            <div class="table-container">
-                <table id="predictions-table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Player</th>
-                            <th>Team</th>
-                            <th>Pos</th>
-                            <th>Probability</th>
-                            <th class="hide-mobile">Goals</th>
-                            <th>Last 5</th>
-                            <th class="hide-mobile">Matchup</th>
-                        </tr>
-                    </thead>
-                    <tbody id="predictions-body">
-                        <tr>
-                            <td colspan="8" class="loading">
-                                <div class="loading-spinner"></div>
-                                Loading predictions...
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
         </div>
-        
         <footer>
-            <p>Last updated: <span id="last-updated">--</span></p>
-            <p>🤖 Automated predictions using Neural Network model</p>
+            <p>Last updated: 2025-12-26 06:32 UTC</p>
+            <p>🤖 Automated predictions using Machine Learning</p>
             <p>⚠️ For entertainment purposes only</p>
-            <p style="margin-top: 10px;">
-                <a href="https://github.com/mghnasiri/mghnasiri.github.io" target="_blank">View on GitHub</a>
-            </p>
         </footer>
     </div>
-    
-    <script>
-        // Base path for data files
-        const DATA_BASE = './data';
-        
-        // Load predictions
-        async function loadPredictions() {
-            try {
-                const response = await fetch(`${DATA_BASE}/predictions/neural_network/latest.json`);
-                if (!response.ok) throw new Error('No predictions found');
-                const data = await response.json();
-                
-                // Update date
-                document.getElementById('prediction-date').textContent = `📅 ${data.date}`;
-                document.getElementById('last-updated').textContent = new Date(data.generated_at).toLocaleString();
-                
-                // Update games
-                renderGames(data.games);
-                
-                // Update predictions table
-                renderPredictions(data.predictions);
-                
-                return data;
-            } catch (error) {
-                console.error('Error loading predictions:', error);
-                document.getElementById('games-grid').innerHTML = '<div class="no-data">No games data available</div>';
-                document.getElementById('predictions-body').innerHTML = '<tr><td colspan="8" class="no-data">No predictions available</td></tr>';
-            }
-        }
-        
-        // Load results
-        async function loadResults() {
-            try {
-                const response = await fetch(`${DATA_BASE}/results/latest.json`);
-                if (!response.ok) throw new Error('No results found');
-                const data = await response.json();
-                
-                if (data.model_comparisons && data.model_comparisons.length > 0) {
-                    document.getElementById('results-section').style.display = 'block';
-                    renderResults(data);
-                    updateStats(data);
-                }
-                
-                return data;
-            } catch (error) {
-                console.log('No results available yet');
-            }
-        }
-        
-        // Render games
-        function renderGames(games) {
-            if (!games || games.length === 0) {
-                document.getElementById('games-grid').innerHTML = '<div class="no-data">No games scheduled</div>';
-                return;
-            }
-            
-            const html = games.map(game => `
-                <div class="game-card">
-                    <div>${game.away_team}</div>
-                    <div class="vs">@</div>
-                    <div>${game.home_team}</div>
-                </div>
-            `).join('');
-            
-            document.getElementById('games-grid').innerHTML = html;
-        }
-        
-        // Render predictions
-        let allPredictions = [];
-        
-        function renderPredictions(predictions) {
-            if (!predictions || predictions.length === 0) {
-                document.getElementById('predictions-body').innerHTML = '<tr><td colspan="8" class="no-data">No predictions available</td></tr>';
-                return;
-            }
-            
-            allPredictions = predictions;
-            filterAndRender();
-        }
-        
-        function filterAndRender() {
-            const searchTerm = document.getElementById('search-input').value.toLowerCase();
-            const positionFilter = document.getElementById('position-filter').value;
-            
-            let filtered = allPredictions;
-            
-            if (searchTerm) {
-                filtered = filtered.filter(p => 
-                    p.name.toLowerCase().includes(searchTerm) ||
-                    p.team.toLowerCase().includes(searchTerm)
-                );
-            }
-            
-            if (positionFilter) {
-                filtered = filtered.filter(p => p.position === positionFilter);
-            }
-            
-            const html = filtered.map(p => {
-                const probPercent = (p.goal_probability * 100).toFixed(1);
-                const probWidth = (p.goal_probability / 0.6 * 100).toFixed(0);
-                const hotBadge = p.is_hot ? '<span class="hot-badge">🔥 HOT</span>' : '';
-                const rankClass = p.rank <= 3 ? `rank-${p.rank}` : '';
-                
-                return `
-                    <tr>
-                        <td class="rank-cell ${rankClass}">${p.rank}</td>
-                        <td>${p.name}${hotBadge}</td>
-                        <td>${p.team}</td>
-                        <td>${p.position}</td>
-                        <td>
-                            <div style="display: flex; align-items: center; gap: 8px;">
-                                <span>${probPercent}%</span>
-                                <div class="prob-bar" style="width: 60px;">
-                                    <div class="prob-fill" style="width: ${probWidth}%;"></div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="hide-mobile">${p.season_goals || 0}</td>
-                        <td>${p.last5_goals || 0}</td>
-                        <td class="hide-mobile">${p.matchup || ''}</td>
-                    </tr>
-                `;
-            }).join('');
-            
-            document.getElementById('predictions-body').innerHTML = html || '<tr><td colspan="8" class="no-data">No matching players</td></tr>';
-        }
-        
-        // Render results
-        function renderResults(data) {
-            let html = '';
-            
-            for (const comp of data.model_comparisons) {
-                html += `<h3 style="margin: 15px 0 10px 0;">${comp.model_display_name || comp.model}</h3>`;
-                html += '<table><tr><th>#</th><th>Player</th><th>Team</th><th>Prob</th><th>Result</th></tr>';
-                
-                for (const pick of comp.top3_picks) {
-                    const resultClass = pick.scored ? 'result-hit' : 'result-miss';
-                    const resultText = pick.scored ? '✅ GOAL!' : '❌ Miss';
-                    html += `
-                        <tr>
-                            <td>${pick.rank}</td>
-                            <td>${pick.name}</td>
-                            <td>${pick.team}</td>
-                            <td>${(pick.probability * 100).toFixed(1)}%</td>
-                            <td class="${resultClass}">${resultText}</td>
-                        </tr>
-                    `;
-                }
-                
-                html += `</table>`;
-                html += `<p style="margin: 15px 0; font-size: 1.3rem; font-weight: bold;">Score: ${comp.hits}/3</p>`;
-            }
-            
-            // All scorers
-            if (data.all_scorers && data.all_scorers.length > 0) {
-                html += '<h3 style="margin: 20px 0 10px 0;">⚽ All Goal Scorers</h3>';
-                html += '<div class="games-grid">';
-                for (const scorer of data.all_scorers) {
-                    const goals = scorer.goals > 1 ? ` (${scorer.goals})` : '';
-                    html += `<div class="game-card" style="font-size: 0.9rem;">${scorer.player_name}${goals}<br><small>${scorer.team}</small></div>`;
-                }
-                html += '</div>';
-            }
-            
-            document.getElementById('results-content').innerHTML = html;
-        }
-        
-        // Update stats
-        function updateStats(data) {
-            // For now, just show latest result
-            // In future, aggregate historical data
-            if (data.model_comparisons && data.model_comparisons.length > 0) {
-                const comp = data.model_comparisons[0];
-                document.getElementById('stat-hit-rate').textContent = `${((comp.hits / 3) * 100).toFixed(0)}%`;
-                document.getElementById('stat-total-hits').textContent = comp.hits;
-                document.getElementById('stat-days').textContent = '1';
-            }
-        }
-        
-        // Event listeners
-        document.getElementById('search-input').addEventListener('input', filterAndRender);
-        document.getElementById('position-filter').addEventListener('change', filterAndRender);
-        
-        // Initialize
-        loadPredictions();
-        loadResults();
-    </script>
 </body>
 </html>
