@@ -4,15 +4,15 @@ name: NHL Daily Predictions
 
 on:
   schedule:
-    - cron: '0 15 * * *'  # پیش‌بینی - 10:00 صبح تورنتو
-    - cron: '0 6 * * *'   # نتایج - 01:00 شب تورنتو
+    - cron: '0 15 * * *'  # 10:00 AM Toronto
+    - cron: '0 6 * * *'   # 01:00 AM Toronto
   
   workflow_dispatch:
     inputs:
       action:
         description: 'Action to run'
         required: true
-        default: 'both'
+        default: 'predictions'
         type: choice
         options:
           - predictions
@@ -24,15 +24,9 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.schedule == '0 15 * * *' || github.event.inputs.action == 'predictions' || github.event.inputs.action == 'both'
     
-    defaults:
-      run:
-        working-directory: projects/nhl-hockey
-    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -43,31 +37,24 @@ jobs:
         run: pip install pandas numpy requests
       
       - name: Run predictions
+        working-directory: projects/nhl-hockey
         run: python scripts/daily_predict.py
       
-      - name: Commit and push predictions
+      - name: Commit and push
         run: |
-          cd $GITHUB_WORKSPACE
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add -A
           git diff --staged --quiet || git commit -m "🏒 Predictions for $(date +%Y-%m-%d)"
-          git pull --rebase --strategy-option=theirs origin main || true
-          git push --force-with-lease origin main
+          git push origin main || (git pull --rebase origin main && git push origin main)
 
   results:
     runs-on: ubuntu-latest
     if: github.event.schedule == '0 6 * * *' || github.event.inputs.action == 'results' || github.event.inputs.action == 'both'
     
-    defaults:
-      run:
-        working-directory: projects/nhl-hockey
-    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -78,17 +65,17 @@ jobs:
         run: pip install pandas numpy requests
       
       - name: Fetch results
+        working-directory: projects/nhl-hockey
         run: python scripts/fetch_results.py
       
       - name: Update dashboard
+        working-directory: projects/nhl-hockey
         run: python scripts/update_dashboard.py
       
-      - name: Commit and push results
+      - name: Commit and push
         run: |
-          cd $GITHUB_WORKSPACE
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add -A
           git diff --staged --quiet || git commit -m "📊 Results for $(date -d 'yesterday' +%Y-%m-%d)"
-          git pull --rebase --strategy-option=theirs origin main || true
-          git push --force-with-lease origin main
+          git push origin main || (git pull --rebase origin main && git push origin main)
