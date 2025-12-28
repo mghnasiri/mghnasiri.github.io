@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NHL Goal Predictor | Mohammad G. Nasiri</title>
-    <meta name="description" content="Daily NHL goal predictions for Tim Hortons Hockey Challenge using Machine Learning">
+    <meta name="description" content="Daily NHL goal predictions using Machine Learning">
     
     <!-- Bootstrap & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -80,7 +80,7 @@
         
         /* Page Header */
         .page-header {
-            padding: 8rem 0 4rem;
+            padding: 8rem 0 3rem;
             text-align: center;
             background: linear-gradient(180deg, var(--midnight-light) 0%, var(--midnight) 100%);
         }
@@ -114,10 +114,95 @@
             margin: 1.5rem auto;
         }
         
-        /* Games Section */
-        .games-section {
-            padding: 4rem 0;
+        /* Performance Section */
+        .performance-section {
+            padding: 3rem 0;
+            background: var(--midnight);
+            border-bottom: 1px solid rgba(197, 160, 89, 0.1);
+        }
+        
+        .performance-card {
             background: var(--midnight-light);
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .performance-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.25rem;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+        }
+        
+        .stat-big {
+            font-size: 3rem;
+            font-weight: 600;
+            color: var(--ivory);
+            line-height: 1;
+        }
+        
+        .stat-label {
+            color: var(--slate);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            letter-spacing: 1px;
+        }
+        
+        .yesterday-results {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(197, 160, 89, 0.1);
+        }
+        
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.05);
+        }
+        
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .result-item .rank {
+            color: var(--slate);
+            width: 25px;
+        }
+        
+        .result-item .name {
+            flex: 1;
+            color: var(--ivory);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .result-item .name img {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .result-item .status {
+            font-size: 1rem;
+        }
+        
+        .result-hit { color: var(--success); }
+        .result-miss { color: var(--danger); }
+        
+        .no-games-message {
+            color: var(--slate);
+            font-style: italic;
+            padding: 1rem 0;
+        }
+        
+        /* Predictions Table */
+        .predictions-section {
+            padding: 3rem 0;
         }
         
         .section-title {
@@ -128,38 +213,6 @@
             letter-spacing: 2px;
             margin-bottom: 2rem;
             text-align: center;
-        }
-        
-        .games-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1rem;
-        }
-        
-        .game-badge {
-            background: var(--midnight);
-            border: 1px solid rgba(197, 160, 89, 0.2);
-            padding: 1rem 1.5rem;
-            text-align: center;
-            min-width: 140px;
-        }
-        
-        .game-badge .teams {
-            color: var(--ivory);
-            font-size: 0.95rem;
-            font-weight: 400;
-        }
-        
-        .game-badge .vs {
-            color: var(--slate);
-            font-size: 0.75rem;
-            margin: 0.25rem 0;
-        }
-        
-        /* Predictions Table */
-        .predictions-section {
-            padding: 4rem 0;
         }
         
         .filter-bar {
@@ -233,6 +286,18 @@
         .rank-2 { color: #C0C0C0; }
         .rank-3 { color: #CD7F32; }
         
+        .player-cell {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .team-logo {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+        
         .player-name {
             color: var(--ivory);
             font-weight: 400;
@@ -287,7 +352,7 @@
         
         .no-data {
             text-align: center;
-            padding: 4rem;
+            padding: 2rem;
             color: var(--slate);
         }
         
@@ -314,7 +379,7 @@
         /* Responsive */
         @media (max-width: 768px) {
             .page-header {
-                padding: 7rem 0 3rem;
+                padding: 7rem 0 2rem;
             }
             
             .page-header h1 {
@@ -328,6 +393,19 @@
             
             .hide-mobile {
                 display: none;
+            }
+            
+            .stat-big {
+                font-size: 2.5rem;
+            }
+            
+            .performance-card {
+                padding: 1.5rem;
+            }
+            
+            .team-logo {
+                width: 20px;
+                height: 20px;
             }
         }
     </style>
@@ -354,21 +432,54 @@
     <!-- Page Header -->
     <header class="page-header">
         <div class="container">
-            <p class="subtitle">Tim Hortons Hockey Challenge</p>
+            <p class="subtitle"></p>
             <h1>NHL Goal Predictor</h1>
             <div class="gold-line"></div>
             <p class="date" id="prediction-date">Loading...</p>
         </div>
     </header>
 
-    <!-- Today's Games -->
-    <section class="games-section">
+    <!-- Performance Section -->
+    <section class="performance-section">
         <div class="container">
-            <h2 class="section-title">Today's Games</h2>
-            <div class="games-grid" id="games-grid">
-                <div class="loading">
-                    <div class="loading-spinner"></div>
-                    Loading games...
+            <div class="row g-4">
+                <!-- Yesterday's Top 10 -->
+                <div class="col-lg-6">
+                    <div class="performance-card">
+                        <h3>Yesterday's Top 10</h3>
+                        <div id="yesterday-top10">
+                            <div class="loading">
+                                <div class="loading-spinner"></div>
+                                Loading results...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Overall Stats -->
+                <div class="col-lg-6">
+                    <div class="performance-card">
+                        <h3>Model Performance</h3>
+                        <div class="stat-big" id="hit-rate">--%</div>
+                        <div class="stat-label">Top 10 Hit Rate (Last 7 Days)</div>
+                        
+                        <div class="yesterday-results">
+                            <div class="row text-center">
+                                <div class="col-4">
+                                    <div style="font-size: 1.5rem; color: var(--ivory);" id="total-hits">--</div>
+                                    <div class="stat-label">Total Hits</div>
+                                </div>
+                                <div class="col-4">
+                                    <div style="font-size: 1.5rem; color: var(--ivory);" id="total-days">--</div>
+                                    <div class="stat-label">Days Tracked</div>
+                                </div>
+                                <div class="col-4">
+                                    <div style="font-size: 1.5rem; color: var(--ivory);" id="avg-hits">--</div>
+                                    <div class="stat-label">Avg Hits/Day</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -377,7 +488,7 @@
     <!-- Predictions -->
     <section class="predictions-section">
         <div class="container">
-            <h2 class="section-title">Player Rankings</h2>
+            <h2 class="section-title">Today's Predictions</h2>
             
             <div class="filter-bar">
                 <input type="text" id="search-input" placeholder="Search player or team...">
@@ -396,8 +507,7 @@
                         <tr>
                             <th>Rank</th>
                             <th>Player</th>
-                            <th>Team</th>
-                            <th>Pos</th>
+                            <th class="hide-mobile">Pos</th>
                             <th>Probability</th>
                             <th class="hide-mobile">Goals</th>
                             <th>Last 5</th>
@@ -406,7 +516,7 @@
                     </thead>
                     <tbody id="predictions-body">
                         <tr>
-                            <td colspan="8">
+                            <td colspan="7">
                                 <div class="loading">
                                     <div class="loading-spinner"></div>
                                     Loading predictions...
@@ -431,19 +541,20 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
-        // Data path
-        const DATA_PATH = './data/predictions/neural_network/latest.json';
+        // Data paths
+        const PREDICTIONS_PATH = './data/predictions/neural_network/latest.json';
+        const RESULTS_PATH = './data/results/latest.json';
+        
+        // Team logo URL
+        const getTeamLogo = (team) => `https://assets.nhle.com/logos/nhl/svg/${team}_dark.svg`;
         
         let allPredictions = [];
         
-        // Load data
-        async function loadData() {
+        // Load predictions
+        async function loadPredictions() {
             try {
-                const response = await fetch(DATA_PATH);
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}`);
-                }
+                const response = await fetch(PREDICTIONS_PATH);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
                 
                 const data = await response.json();
                 
@@ -455,40 +566,141 @@
                         new Date(data.generated_at).toLocaleString();
                 }
                 
-                // Render games
-                renderGames(data.games || []);
-                
                 // Render predictions
                 allPredictions = data.predictions || [];
                 renderPredictions();
                 
             } catch (error) {
-                console.error('Error loading data:', error);
-                
-                document.getElementById('games-grid').innerHTML = 
-                    '<div class="no-data">Unable to load games</div>';
-                
+                console.error('Error loading predictions:', error);
                 document.getElementById('predictions-body').innerHTML = 
-                    '<tr><td colspan="8"><div class="no-data">Unable to load predictions<br><small>Check back later or refresh the page</small></div></td></tr>';
+                    '<tr><td colspan="7"><div class="no-data">No predictions available</div></td></tr>';
             }
         }
         
-        // Render games
-        function renderGames(games) {
-            const container = document.getElementById('games-grid');
-            
-            if (!games || games.length === 0) {
-                container.innerHTML = '<div class="no-data">No games scheduled for today</div>';
+        // Load results and calculate performance
+        async function loadResults() {
+            try {
+                const response = await fetch(RESULTS_PATH);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                const data = await response.json();
+                
+                // Check if there were games yesterday
+                if (!data.games_count || data.games_count === 0) {
+                    document.getElementById('yesterday-top10').innerHTML = 
+                        '<div class="no-games-message">No games yesterday</div>';
+                    return;
+                }
+                
+                // Get all scorers from yesterday
+                const scorerIds = new Set((data.all_scorers || []).map(s => s.player_id));
+                
+                // Get yesterday's top 10 from model comparison
+                const modelComparison = data.model_comparisons?.find(m => m.model === 'neural_network');
+                
+                if (modelComparison && modelComparison.top10_picks) {
+                    renderYesterdayTop10(modelComparison.top10_picks, data.date, modelComparison.hits);
+                } else {
+                    // Fallback: try to load yesterday's predictions directly
+                    await loadYesterdayPredictions(data, scorerIds);
+                }
+                
+                // Update stats
+                if (modelComparison) {
+                    const hitRate = modelComparison.hit_rate || Math.round((modelComparison.hits / 10) * 100);
+                    document.getElementById('hit-rate').textContent = `${hitRate}%`;
+                    document.getElementById('total-hits').textContent = modelComparison.hits || '--';
+                    document.getElementById('total-days').textContent = '1';
+                    document.getElementById('avg-hits').textContent = modelComparison.hits?.toFixed(1) || '--';
+                }
+                
+            } catch (error) {
+                console.error('Error loading results:', error);
+                document.getElementById('yesterday-top10').innerHTML = 
+                    '<div class="no-games-message">Results not available yet</div>';
+            }
+        }
+        
+        // Load yesterday's predictions if model_comparisons not available
+        async function loadYesterdayPredictions(resultsData, scorerIds) {
+            try {
+                const yesterday = resultsData.date;
+                const predPath = `./data/predictions/neural_network/${yesterday}.json`;
+                
+                const response = await fetch(predPath);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                const predData = await response.json();
+                const top10 = (predData.predictions || []).slice(0, 10);
+                
+                if (top10.length === 0) {
+                    document.getElementById('yesterday-top10').innerHTML = 
+                        '<div class="no-games-message">No predictions for yesterday</div>';
+                    return;
+                }
+                
+                // Check hits
+                let hits = 0;
+                const picks = top10.map((p, i) => {
+                    const scored = scorerIds.has(p.player_id);
+                    if (scored) hits++;
+                    return {
+                        rank: i + 1,
+                        name: p.name,
+                        team: p.team,
+                        scored: scored
+                    };
+                });
+                
+                renderYesterdayTop10(picks, resultsData.date, hits);
+                
+                // Update stats
+                document.getElementById('hit-rate').textContent = `${Math.round(hits / 10 * 100)}%`;
+                document.getElementById('total-hits').textContent = hits;
+                document.getElementById('total-days').textContent = '1';
+                document.getElementById('avg-hits').textContent = hits.toFixed(1);
+                
+            } catch (error) {
+                console.error('Error loading yesterday predictions:', error);
+                document.getElementById('yesterday-top10').innerHTML = 
+                    '<div class="no-games-message">Could not load yesterday\'s results</div>';
+            }
+        }
+        
+        // Render yesterday's top 10
+        function renderYesterdayTop10(picks, date, totalHits) {
+            if (!picks || picks.length === 0) {
+                document.getElementById('yesterday-top10').innerHTML = 
+                    '<div class="no-games-message">No data available</div>';
                 return;
             }
             
-            container.innerHTML = games.map(game => `
-                <div class="game-badge">
-                    <div class="teams">${game.away_team}</div>
-                    <div class="vs">@</div>
-                    <div class="teams">${game.home_team}</div>
+            let html = `
+                <div style="font-size: 1.5rem; color: var(--ivory); margin-bottom: 1rem;">
+                    ${totalHits}/10 <span style="color: var(--gold);">hits</span>
                 </div>
-            `).join('');
+                <div style="font-size: 0.8rem; color: var(--slate); margin-bottom: 1rem;">
+                    ${date}
+                </div>
+            `;
+            
+            picks.forEach((p, i) => {
+                const logoUrl = getTeamLogo(p.team);
+                html += `
+                    <div class="result-item">
+                        <span class="rank">${i + 1}.</span>
+                        <span class="name">
+                            <img src="${logoUrl}" alt="${p.team}" onerror="this.style.display='none'">
+                            ${p.name}
+                        </span>
+                        <span class="status ${p.scored ? 'result-hit' : 'result-miss'}">
+                            ${p.scored ? '✅' : '❌'}
+                        </span>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('yesterday-top10').innerHTML = html;
         }
         
         // Render predictions
@@ -512,7 +724,7 @@
             }
             
             if (filtered.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="8"><div class="no-data">No players found</div></td></tr>';
+                tbody.innerHTML = '<tr><td colspan="7"><div class="no-data">No players found</div></td></tr>';
                 return;
             }
             
@@ -521,13 +733,18 @@
                 const probWidth = Math.min((p.goal_probability || 0) / 0.6 * 100, 100).toFixed(0);
                 const rankClass = p.rank <= 3 ? `rank-${p.rank}` : '';
                 const hotBadge = p.is_hot ? '<span class="hot-badge">HOT</span>' : '';
+                const logoUrl = getTeamLogo(p.team);
                 
                 return `
                     <tr>
                         <td class="rank-cell ${rankClass}">${p.rank || '-'}</td>
-                        <td class="player-name">${p.name || 'Unknown'}${hotBadge}</td>
-                        <td>${p.team || '-'}</td>
-                        <td>${p.position || '-'}</td>
+                        <td>
+                            <div class="player-cell">
+                                <img src="${logoUrl}" alt="${p.team}" class="team-logo" onerror="this.style.display='none'">
+                                <span class="player-name">${p.name || 'Unknown'}${hotBadge}</span>
+                            </div>
+                        </td>
+                        <td class="hide-mobile">${p.position || '-'}</td>
                         <td>
                             ${prob}%
                             <div class="prob-bar">
@@ -547,7 +764,8 @@
         document.getElementById('position-filter').addEventListener('change', renderPredictions);
         
         // Initialize
-        loadData();
+        loadPredictions();
+        loadResults();
     </script>
 </body>
 </html>
