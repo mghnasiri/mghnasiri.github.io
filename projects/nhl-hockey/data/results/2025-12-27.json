@@ -1,0 +1,178 @@
+{
+  "date": "2025-12-27",
+  "games_count": 13,
+  "games": [
+    {
+      "game_id": 2025020588,
+      "home_team": "NYI",
+      "away_team": "NYR",
+      "game_state": "OFF"
+    },
+    {
+      "game_id": 2025020589,
+      "home_team": "BUF",
+      "away_team": "BOS",
+      "game_state": "OFF"
+    },
+    {
+      "game_id": 2025020590,
+      "home_team": "TOR",
+      "away_team": "OTT",
+      "game_state": "OFF"
+    },
+    {
+      "game_id": 2025020591,
+      "home_team": "FLA",
+      "away_team": "TBL",
+      "game_state": "OFF"
+    },
+    {
+      "game_id": 2025020592,
+      "home_team": "NJD",
+      "away_team": "WSH",
+      "game_state": "OFF"
+    },
+    {
+      "game_id": 2025020593,
+      "home_team": "CAR",
+      "away_team": "DET",
+      "game_state": "OFF"
+    },
+    {
+      "game_id": 2025020594,
+      "home_team": "WPG",
+      "away_team": "MIN",
+      "game_state": "OFF"
+    },
+    {
+      "game_id": 2025020595,
+      "home_team": "STL",
+      "away_team": "NSH",
+      "game_state": "OFF"
+    },
+    {
+      "game_id": 2025020596,
+      "home_team": "DAL",
+      "away_team": "CHI",
+      "game_state": "OFF"
+    },
+    {
+      "game_id": 2025020597,
+      "home_team": "LAK",
+      "away_team": "ANA",
+      "game_state": "OFF"
+    },
+    {
+      "game_id": 2025020598,
+      "home_team": "CGY",
+      "away_team": "EDM",
+      "game_state": "OFF"
+    },
+    {
+      "game_id": 2025020599,
+      "home_team": "VAN",
+      "away_team": "SJS",
+      "game_state": "OFF"
+    },
+    {
+      "game_id": 2025020600,
+      "home_team": "VGK",
+      "away_team": "COL",
+      "game_state": "OFF"
+    }
+  ],
+  "all_scorers": [],
+  "scorers_count": 0,
+  "model_comparisons": [
+    {
+      "model": "neural_network",
+      "model_display_name": "Neural Network v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8477492,
+          "name": "Nathan MacKinnon",
+          "team": "COL",
+          "probability": 0.55,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8478402,
+          "name": "Connor McDavid",
+          "team": "EDM",
+          "probability": 0.447,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8480801,
+          "name": "Brady Tkachuk",
+          "team": "OTT",
+          "probability": 0.44,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8480027,
+          "name": "Jason Robertson",
+          "team": "DAL",
+          "probability": 0.409,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8481557,
+          "name": "Matt Boldy",
+          "team": "MIN",
+          "probability": 0.407,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8476887,
+          "name": "Filip Forsberg",
+          "team": "NSH",
+          "probability": 0.399,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8477500,
+          "name": "Bo Horvat",
+          "team": "NYI",
+          "probability": 0.391,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8484801,
+          "name": "Macklin Celebrini",
+          "team": "SJS",
+          "probability": 0.382,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8479987,
+          "name": "Morgan Geekie",
+          "team": "BOS",
+          "probability": 0.37,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8479420,
+          "name": "Tage Thompson",
+          "team": "BUF",
+          "probability": 0.368,
+          "scored": false
+        }
+      ],
+      "hits": 0,
+      "total_predictions": 10,
+      "hit_rate": 0.0
+    }
+  ],
+  "fetched_at": "2025-12-28T06:31:52.420076"
+}
