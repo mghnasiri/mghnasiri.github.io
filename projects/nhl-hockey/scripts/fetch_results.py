@@ -73,27 +73,63 @@ def get_scorers(game_id):
     try:
         response = requests.get(url, timeout=15)
         if response.status_code != 200:
+            print(f"   ⚠️ API returned {response.status_code}")
             return []
         
         data = response.json()
         scorers = []
         
-        for team_type in ['homeTeam', 'awayTeam']:
-            team_data = data.get(team_type, {})
-            team_abbrev = team_data.get('abbrev', '')
-            
-            # Check forwards and defense
-            players = team_data.get('forwards', []) + team_data.get('defense', [])
-            
-            for player in players:
-                goals = player.get('goals', 0)
-                if goals > 0:
-                    scorers.append({
-                        'player_id': player.get('playerId'),
-                        'player_name': player.get('name', {}).get('default', 'Unknown'),
-                        'team': team_abbrev,
-                        'goals': goals
-                    })
+        # NEW API STRUCTURE: playerByGameStats
+        player_stats = data.get('playerByGameStats')
+        
+        if player_stats:
+            for team_type in ['awayTeam', 'homeTeam']:
+                team_data = player_stats.get(team_type, {})
+                
+                # Get team abbrev from main data
+                team_abbrev = data.get(team_type, {}).get('abbrev', '')
+                
+                # Check forwards and defense
+                for position_group in ['forwards', 'defense']:
+                    for player in team_data.get(position_group, []):
+                        goals = player.get('goals', 0)
+                        if goals > 0:
+                            # Handle name as dict or string
+                            name = player.get('name', {})
+                            if isinstance(name, dict):
+                                player_name = name.get('default', 'Unknown')
+                            else:
+                                player_name = str(name) if name else 'Unknown'
+                            
+                            scorers.append({
+                                'player_id': player.get('playerId'),
+                                'player_name': player_name,
+                                'team': team_abbrev,
+                                'goals': goals
+                            })
+        else:
+            # FALLBACK: Old structure
+            for team_type in ['homeTeam', 'awayTeam']:
+                team_data = data.get(team_type, {})
+                team_abbrev = team_data.get('abbrev', '')
+                
+                players = team_data.get('forwards', []) + team_data.get('defense', [])
+                
+                for player in players:
+                    goals = player.get('goals', 0)
+                    if goals > 0:
+                        name = player.get('name', {})
+                        if isinstance(name, dict):
+                            player_name = name.get('default', 'Unknown')
+                        else:
+                            player_name = str(name) if name else 'Unknown'
+                        
+                        scorers.append({
+                            'player_id': player.get('playerId'),
+                            'player_name': player_name,
+                            'team': team_abbrev,
+                            'goals': goals
+                        })
         
         return scorers
         
