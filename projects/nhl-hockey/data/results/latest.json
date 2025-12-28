@@ -81,8 +81,641 @@
       "game_state": "OFF"
     }
   ],
-  "all_scorers": [],
-  "scorers_count": 0,
+  "all_scorers": [
+    {
+      "player_id": 8481601,
+      "player_name": "S. Holmstrom",
+      "team": "NYI",
+      "goals": 1,
+      "game_id": 2025020588,
+      "matchup": "NYR @ NYI"
+    },
+    {
+      "player_id": 8475314,
+      "player_name": "A. Lee",
+      "team": "NYI",
+      "goals": 1,
+      "game_id": 2025020588,
+      "matchup": "NYR @ NYI"
+    },
+    {
+      "player_id": 8477956,
+      "player_name": "D. Pastrnak",
+      "team": "BOS",
+      "goals": 1,
+      "game_id": 2025020589,
+      "matchup": "BOS @ BUF"
+    },
+    {
+      "player_id": 8480064,
+      "player_name": "J. Norris",
+      "team": "BUF",
+      "goals": 1,
+      "game_id": 2025020589,
+      "matchup": "BOS @ BUF"
+    },
+    {
+      "player_id": 8481522,
+      "player_name": "P. Krebs",
+      "team": "BUF",
+      "goals": 1,
+      "game_id": 2025020589,
+      "matchup": "BOS @ BUF"
+    },
+    {
+      "player_id": 8480802,
+      "player_name": "R. McLeod",
+      "team": "BUF",
+      "goals": 1,
+      "game_id": 2025020589,
+      "matchup": "BOS @ BUF"
+    },
+    {
+      "player_id": 8480807,
+      "player_name": "M. Samuelsson",
+      "team": "BUF",
+      "goals": 1,
+      "game_id": 2025020589,
+      "matchup": "BOS @ BUF"
+    },
+    {
+      "player_id": 8482116,
+      "player_name": "T. Stützle",
+      "team": "OTT",
+      "goals": 1,
+      "game_id": 2025020590,
+      "matchup": "OTT @ TOR"
+    },
+    {
+      "player_id": 8480208,
+      "player_name": "D. Batherson",
+      "team": "OTT",
+      "goals": 1,
+      "game_id": 2025020590,
+      "matchup": "OTT @ TOR"
+    },
+    {
+      "player_id": 8476393,
+      "player_name": "N. Cousins",
+      "team": "OTT",
+      "goals": 1,
+      "game_id": 2025020590,
+      "matchup": "OTT @ TOR"
+    },
+    {
+      "player_id": 8482092,
+      "player_name": "R. Greig",
+      "team": "OTT",
+      "goals": 1,
+      "game_id": 2025020590,
+      "matchup": "OTT @ TOR"
+    },
+    {
+      "player_id": 8481606,
+      "player_name": "J. Spence",
+      "team": "OTT",
+      "goals": 1,
+      "game_id": 2025020590,
+      "matchup": "OTT @ TOR"
+    },
+    {
+      "player_id": 8482720,
+      "player_name": "M. Knies",
+      "team": "TOR",
+      "goals": 2,
+      "game_id": 2025020590,
+      "matchup": "OTT @ TOR"
+    },
+    {
+      "player_id": 8479318,
+      "player_name": "A. Matthews",
+      "team": "TOR",
+      "goals": 1,
+      "game_id": 2025020590,
+      "matchup": "OTT @ TOR"
+    },
+    {
+      "player_id": 8482259,
+      "player_name": "B. McMann",
+      "team": "TOR",
+      "goals": 1,
+      "game_id": 2025020590,
+      "matchup": "OTT @ TOR"
+    },
+    {
+      "player_id": 8477939,
+      "player_name": "W. Nylander",
+      "team": "TOR",
+      "goals": 1,
+      "game_id": 2025020590,
+      "matchup": "OTT @ TOR"
+    },
+    {
+      "player_id": 8481582,
+      "player_name": "N. Robertson",
+      "team": "TOR",
+      "goals": 1,
+      "game_id": 2025020590,
+      "matchup": "OTT @ TOR"
+    },
+    {
+      "player_id": 8475166,
+      "player_name": "J. Tavares",
+      "team": "TOR",
+      "goals": 1,
+      "game_id": 2025020590,
+      "matchup": "OTT @ TOR"
+    },
+    {
+      "player_id": 8480995,
+      "player_name": "P. Holmberg",
+      "team": "TBL",
+      "goals": 1,
+      "game_id": 2025020591,
+      "matchup": "TBL @ FLA"
+    },
+    {
+      "player_id": 8477404,
+      "player_name": "J. Guentzel",
+      "team": "TBL",
+      "goals": 1,
+      "game_id": 2025020591,
+      "matchup": "TBL @ FLA"
+    },
+    {
+      "player_id": 8476453,
+      "player_name": "N. Kucherov",
+      "team": "TBL",
+      "goals": 2,
+      "game_id": 2025020591,
+      "matchup": "TBL @ FLA"
+    },
+    {
+      "player_id": 8480185,
+      "player_name": "E. Luostarinen",
+      "team": "FLA",
+      "goals": 1,
+      "game_id": 2025020591,
+      "matchup": "TBL @ FLA"
+    },
+    {
+      "player_id": 8473419,
+      "player_name": "B. Marchand",
+      "team": "FLA",
+      "goals": 1,
+      "game_id": 2025020591,
+      "matchup": "TBL @ FLA"
+    },
+    {
+      "player_id": 8471214,
+      "player_name": "A. Ovechkin",
+      "team": "WSH",
+      "goals": 1,
+      "game_id": 2025020592,
+      "matchup": "WSH @ NJD"
+    },
+    {
+      "player_id": 8481656,
+      "player_name": "A. Protas",
+      "team": "WSH",
+      "goals": 1,
+      "game_id": 2025020592,
+      "matchup": "WSH @ NJD"
+    },
+    {
+      "player_id": 8478463,
+      "player_name": "A. Beauvillier",
+      "team": "WSH",
+      "goals": 1,
+      "game_id": 2025020592,
+      "matchup": "WSH @ NJD"
+    },
+    {
+      "player_id": 8479345,
+      "player_name": "J. Chychrun",
+      "team": "WSH",
+      "goals": 1,
+      "game_id": 2025020592,
+      "matchup": "WSH @ NJD"
+    },
+    {
+      "player_id": 8479996,
+      "player_name": "C. Glass",
+      "team": "NJD",
+      "goals": 1,
+      "game_id": 2025020592,
+      "matchup": "WSH @ NJD"
+    },
+    {
+      "player_id": 8479407,
+      "player_name": "J. Bratt",
+      "team": "NJD",
+      "goals": 2,
+      "game_id": 2025020592,
+      "matchup": "WSH @ NJD"
+    },
+    {
+      "player_id": 8477429,
+      "player_name": "A. Copp",
+      "team": "DET",
+      "goals": 1,
+      "game_id": 2025020593,
+      "matchup": "DET @ CAR"
+    },
+    {
+      "player_id": 8479992,
+      "player_name": "M. Rasmussen",
+      "team": "DET",
+      "goals": 1,
+      "game_id": 2025020593,
+      "matchup": "DET @ CAR"
+    },
+    {
+      "player_id": 8480830,
+      "player_name": "A. Svechnikov",
+      "team": "CAR",
+      "goals": 1,
+      "game_id": 2025020593,
+      "matchup": "DET @ CAR"
+    },
+    {
+      "player_id": 8476921,
+      "player_name": "J. Martinook",
+      "team": "CAR",
+      "goals": 1,
+      "game_id": 2025020593,
+      "matchup": "DET @ CAR"
+    },
+    {
+      "player_id": 8480762,
+      "player_name": "E. Robinson",
+      "team": "CAR",
+      "goals": 1,
+      "game_id": 2025020593,
+      "matchup": "DET @ CAR"
+    },
+    {
+      "player_id": 8482809,
+      "player_name": "J. Blake",
+      "team": "CAR",
+      "goals": 1,
+      "game_id": 2025020593,
+      "matchup": "DET @ CAR"
+    },
+    {
+      "player_id": 8476906,
+      "player_name": "S. Gostisbehere",
+      "team": "CAR",
+      "goals": 1,
+      "game_id": 2025020593,
+      "matchup": "DET @ CAR"
+    },
+    {
+      "player_id": 8481557,
+      "player_name": "M. Boldy",
+      "team": "MIN",
+      "goals": 2,
+      "game_id": 2025020594,
+      "matchup": "MIN @ WPG"
+    },
+    {
+      "player_id": 8475692,
+      "player_name": "M. Zuccarello",
+      "team": "MIN",
+      "goals": 1,
+      "game_id": 2025020594,
+      "matchup": "MIN @ WPG"
+    },
+    {
+      "player_id": 8478864,
+      "player_name": "K. Kaprizov",
+      "team": "MIN",
+      "goals": 1,
+      "game_id": 2025020594,
+      "matchup": "MIN @ WPG"
+    },
+    {
+      "player_id": 8476460,
+      "player_name": "M. Scheifele",
+      "team": "WPG",
+      "goals": 1,
+      "game_id": 2025020594,
+      "matchup": "MIN @ WPG"
+    },
+    {
+      "player_id": 8478398,
+      "player_name": "K. Connor",
+      "team": "WPG",
+      "goals": 1,
+      "game_id": 2025020594,
+      "matchup": "MIN @ WPG"
+    },
+    {
+      "player_id": 8477504,
+      "player_name": "J. Morrissey",
+      "team": "WPG",
+      "goals": 1,
+      "game_id": 2025020594,
+      "matchup": "MIN @ WPG"
+    },
+    {
+      "player_id": 8479370,
+      "player_name": "T. Jost",
+      "team": "NSH",
+      "goals": 1,
+      "game_id": 2025020595,
+      "matchup": "NSH @ STL"
+    },
+    {
+      "player_id": 8482768,
+      "player_name": "F. Svechkov",
+      "team": "NSH",
+      "goals": 1,
+      "game_id": 2025020595,
+      "matchup": "NSH @ STL"
+    },
+    {
+      "player_id": 8475170,
+      "player_name": "B. Schenn",
+      "team": "STL",
+      "goals": 1,
+      "game_id": 2025020595,
+      "matchup": "NSH @ STL"
+    },
+    {
+      "player_id": 8477402,
+      "player_name": "P. Buchnevich",
+      "team": "STL",
+      "goals": 2,
+      "game_id": 2025020595,
+      "matchup": "NSH @ STL"
+    },
+    {
+      "player_id": 8477450,
+      "player_name": "J. Dickinson",
+      "team": "CHI",
+      "goals": 1,
+      "game_id": 2025020596,
+      "matchup": "CHI @ DAL"
+    },
+    {
+      "player_id": 8477479,
+      "player_name": "T. Bertuzzi",
+      "team": "CHI",
+      "goals": 2,
+      "game_id": 2025020596,
+      "matchup": "CHI @ DAL"
+    },
+    {
+      "player_id": 8484829,
+      "player_name": "J. Hryckowian",
+      "team": "DAL",
+      "goals": 1,
+      "game_id": 2025020596,
+      "matchup": "CHI @ DAL"
+    },
+    {
+      "player_id": 8478420,
+      "player_name": "M. Rantanen",
+      "team": "DAL",
+      "goals": 1,
+      "game_id": 2025020596,
+      "matchup": "CHI @ DAL"
+    },
+    {
+      "player_id": 8480878,
+      "player_name": "N. Lundkvist",
+      "team": "DAL",
+      "goals": 1,
+      "game_id": 2025020596,
+      "matchup": "CHI @ DAL"
+    },
+    {
+      "player_id": 8482745,
+      "player_name": "M. McTavish",
+      "team": "ANA",
+      "goals": 1,
+      "game_id": 2025020597,
+      "matchup": "ANA @ LAK"
+    },
+    {
+      "player_id": 8479675,
+      "player_name": "T. Moore",
+      "team": "LAK",
+      "goals": 1,
+      "game_id": 2025020597,
+      "matchup": "ANA @ LAK"
+    },
+    {
+      "player_id": 8482155,
+      "player_name": "A. Laferriere",
+      "team": "LAK",
+      "goals": 3,
+      "game_id": 2025020597,
+      "matchup": "ANA @ LAK"
+    },
+    {
+      "player_id": 8482124,
+      "player_name": "Q. Byfield",
+      "team": "LAK",
+      "goals": 1,
+      "game_id": 2025020597,
+      "matchup": "ANA @ LAK"
+    },
+    {
+      "player_id": 8474563,
+      "player_name": "D. Doughty",
+      "team": "LAK",
+      "goals": 1,
+      "game_id": 2025020597,
+      "matchup": "ANA @ LAK"
+    },
+    {
+      "player_id": 8478402,
+      "player_name": "C. McDavid",
+      "team": "EDM",
+      "goals": 1,
+      "game_id": 2025020598,
+      "matchup": "EDM @ CGY"
+    },
+    {
+      "player_id": 8480803,
+      "player_name": "E. Bouchard",
+      "team": "EDM",
+      "goals": 1,
+      "game_id": 2025020598,
+      "matchup": "EDM @ CGY"
+    },
+    {
+      "player_id": 8481068,
+      "player_name": "Y. Sharangovich",
+      "team": "CGY",
+      "goals": 1,
+      "game_id": 2025020598,
+      "matchup": "EDM @ CGY"
+    },
+    {
+      "player_id": 8476399,
+      "player_name": "B. Coleman",
+      "team": "CGY",
+      "goals": 1,
+      "game_id": 2025020598,
+      "matchup": "EDM @ CGY"
+    },
+    {
+      "player_id": 8479066,
+      "player_name": "R. Lomberg",
+      "team": "CGY",
+      "goals": 1,
+      "game_id": 2025020598,
+      "matchup": "EDM @ CGY"
+    },
+    {
+      "player_id": 8484911,
+      "player_name": "C. Graf",
+      "team": "SJS",
+      "goals": 1,
+      "game_id": 2025020599,
+      "matchup": "SJS @ VAN"
+    },
+    {
+      "player_id": 8484801,
+      "player_name": "M. Celebrini",
+      "team": "SJS",
+      "goals": 1,
+      "game_id": 2025020599,
+      "matchup": "SJS @ VAN"
+    },
+    {
+      "player_id": 8482667,
+      "player_name": "W. Eklund",
+      "team": "SJS",
+      "goals": 1,
+      "game_id": 2025020599,
+      "matchup": "SJS @ VAN"
+    },
+    {
+      "player_id": 8471817,
+      "player_name": "R. Reaves",
+      "team": "SJS",
+      "goals": 1,
+      "game_id": 2025020599,
+      "matchup": "SJS @ VAN"
+    },
+    {
+      "player_id": 8484994,
+      "player_name": "I. Chernyshov",
+      "team": "SJS",
+      "goals": 1,
+      "game_id": 2025020599,
+      "matchup": "SJS @ VAN"
+    },
+    {
+      "player_id": 8475906,
+      "player_name": "J. Klingberg",
+      "team": "SJS",
+      "goals": 1,
+      "game_id": 2025020599,
+      "matchup": "SJS @ VAN"
+    },
+    {
+      "player_id": 8482055,
+      "player_name": "D. O'Connor",
+      "team": "VAN",
+      "goals": 1,
+      "game_id": 2025020599,
+      "matchup": "SJS @ VAN"
+    },
+    {
+      "player_id": 8482079,
+      "player_name": "M. Rossi",
+      "team": "VAN",
+      "goals": 1,
+      "game_id": 2025020599,
+      "matchup": "SJS @ VAN"
+    },
+    {
+      "player_id": 8481024,
+      "player_name": "L. Karlsson",
+      "team": "VAN",
+      "goals": 1,
+      "game_id": 2025020599,
+      "matchup": "SJS @ VAN"
+    },
+    {
+      "player_id": 8477492,
+      "player_name": "N. MacKinnon",
+      "team": "COL",
+      "goals": 1,
+      "game_id": 2025020600,
+      "matchup": "COL @ VGK"
+    },
+    {
+      "player_id": 8477476,
+      "player_name": "A. Lehkonen",
+      "team": "COL",
+      "goals": 1,
+      "game_id": 2025020600,
+      "matchup": "COL @ VGK"
+    },
+    {
+      "player_id": 8480039,
+      "player_name": "M. Necas",
+      "team": "COL",
+      "goals": 2,
+      "game_id": 2025020600,
+      "matchup": "COL @ VGK"
+    },
+    {
+      "player_id": 8479398,
+      "player_name": "S. Girard",
+      "team": "COL",
+      "goals": 1,
+      "game_id": 2025020600,
+      "matchup": "COL @ VGK"
+    },
+    {
+      "player_id": 8476925,
+      "player_name": "C. Sissons",
+      "team": "VGK",
+      "goals": 1,
+      "game_id": 2025020600,
+      "matchup": "COL @ VGK"
+    },
+    {
+      "player_id": 8479353,
+      "player_name": "B. Howden",
+      "team": "VGK",
+      "goals": 1,
+      "game_id": 2025020600,
+      "matchup": "COL @ VGK"
+    },
+    {
+      "player_id": 8482125,
+      "player_name": "A. Holtz",
+      "team": "VGK",
+      "goals": 1,
+      "game_id": 2025020600,
+      "matchup": "COL @ VGK"
+    },
+    {
+      "player_id": 8477964,
+      "player_name": "I. Barbashev",
+      "team": "VGK",
+      "goals": 1,
+      "game_id": 2025020600,
+      "matchup": "COL @ VGK"
+    },
+    {
+      "player_id": 8477018,
+      "player_name": "B. Hutton",
+      "team": "VGK",
+      "goals": 1,
+      "game_id": 2025020600,
+      "matchup": "COL @ VGK"
+    }
+  ],
+  "scorers_count": 79,
   "model_comparisons": [
     {
       "model": "neural_network",
@@ -94,7 +727,7 @@
           "name": "Nathan MacKinnon",
           "team": "COL",
           "probability": 0.55,
-          "scored": false
+          "scored": true
         },
         {
           "rank": 2,
@@ -102,7 +735,7 @@
           "name": "Connor McDavid",
           "team": "EDM",
           "probability": 0.447,
-          "scored": false
+          "scored": true
         },
         {
           "rank": 3,
@@ -126,7 +759,7 @@
           "name": "Matt Boldy",
           "team": "MIN",
           "probability": 0.407,
-          "scored": false
+          "scored": true
         },
         {
           "rank": 6,
@@ -150,7 +783,7 @@
           "name": "Macklin Celebrini",
           "team": "SJS",
           "probability": 0.382,
-          "scored": false
+          "scored": true
         },
         {
           "rank": 9,
@@ -169,10 +802,10 @@
           "scored": false
         }
       ],
-      "hits": 0,
+      "hits": 4,
       "total_predictions": 10,
-      "hit_rate": 0.0
+      "hit_rate": 40.0
     }
   ],
-  "fetched_at": "2025-12-28T15:38:28.877930"
+  "fetched_at": "2025-12-28T16:10:44.248424"
 }
