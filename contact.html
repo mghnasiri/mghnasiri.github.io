@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Mohammad G. Nasiri</title>
+    <meta name="description" content="Contact Mohammad G. Nasiri - PhD Student at Université Laval">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --midnight: #0A192F;
+            --midnight-light: #112240;
+            --gold: #C5A059;
+            --gold-light: #D4AF37;
+            --ivory: #F8F9FA;
+            --slate: #8892B0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--midnight);
+            color: var(--ivory);
+            font-weight: 300;
+            letter-spacing: 0.02em;
+            line-height: 1.8;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Navigation */
+        .navbar {
+            padding: 2rem 0;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.1);
+        }
+        
+        .navbar .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .navbar-brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            font-size: 1.2rem;
+            color: var(--ivory);
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+        
+        .nav-links a {
+            color: var(--slate);
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--gold);
+        }
+        
+        /* Main */
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+        }
+        
+        .content {
+            max-width: 500px;
+            width: 100%;
+        }
+        
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 400;
+            color: var(--ivory);
+            letter-spacing: 3px;
+            margin-bottom: 3rem;
+        }
+        
+        .gold-line {
+            width: 40px;
+            height: 1px;
+            background: var(--gold);
+            margin-bottom: 3rem;
+        }
+        
+        /* Contact Links */
+        .contact-list {
+            margin-bottom: 4rem;
+        }
+        
+        .contact-item {
+            margin-bottom: 1.25rem;
+        }
+        
+        .contact-item a {
+            color: var(--slate);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .contact-item a:hover {
+            color: var(--gold);
+        }
+        
+        .contact-item .label {
+            color: var(--slate);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            width: 70px;
+            flex-shrink: 0;
+        }
+        
+        .contact-item .value {
+            color: var(--ivory);
+        }
+        
+        .contact-item a:hover .value {
+            color: var(--gold);
+        }
+        
+        /* Location */
+        .location {
+            color: var(--slate);
+            font-size: 0.95rem;
+        }
+        
+        .location span {
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        footer p {
+            color: var(--slate);
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 600px) {
+            .nav-links {
+                gap: 1.5rem;
+            }
+            
+            .nav-links a {
+                font-size: 0.7rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .contact-item a {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.25rem;
+            }
+            
+            .contact-item .label {
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">M. G. NASIRI</a>
+            <div class="nav-links">
+                <a href="about.html">About</a>
+                <a href="cv.html">CV</a>
+                <a href="index.html#projects">Projects</a>
+                <a href="contact.html" class="active">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="content">
+            <h1>Contact</h1>
+            <div class="gold-line"></div>
+            
+            <div class="contact-list">
+                <div class="contact-item">
+                    <a href="mailto:mohammad.ghafourian-nasiri.1@ulaval.ca">
+                        <span class="label">Email</span>
+                        <span class="value">mohammad.ghafourian-nasiri.1@ulaval.ca</span>
+                    </a>
+                </div>
+                
+                <div class="contact-item">
+                    <a href="https://www.linkedin.com/in/mohammad-ghafourian-nasiri-0653aa83/" target="_blank">
+                        <span class="label">LinkedIn</span>
+                        <span class="value">mohammad-ghafourian-nasiri</span>
+                    </a>
+                </div>
+                
+                <div class="contact-item">
+                    <a href="https://github.com/mghnasiri" target="_blank">
+                        <span class="label">GitHub</span>
+                        <span class="value">mghnasiri</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="location">
+                <span>Université Laval</span>
+                <span>Quebec City, Canada</span>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Mohammad G. Nasiri</p>
+    </footer>
+</body>
+</html>
