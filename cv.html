@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV | Mohammad G. Nasiri</title>
+    <meta name="description" content="Curriculum Vitae - Mohammad G. Nasiri, PhD Student at Université Laval">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --midnight: #0A192F;
+            --midnight-light: #112240;
+            --gold: #C5A059;
+            --gold-light: #D4AF37;
+            --ivory: #F8F9FA;
+            --slate: #8892B0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--midnight);
+            color: var(--ivory);
+            font-weight: 300;
+            letter-spacing: 0.02em;
+            line-height: 1.8;
+        }
+        
+        /* Navigation */
+        .navbar {
+            padding: 2rem 0;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.1);
+            position: sticky;
+            top: 0;
+            background: var(--midnight);
+            z-index: 100;
+        }
+        
+        .navbar .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .navbar-brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            font-size: 1.2rem;
+            color: var(--ivory);
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+        
+        .nav-links a {
+            color: var(--slate);
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--gold);
+        }
+        
+        /* Main */
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        
+        /* Header */
+        .cv-header {
+            margin-bottom: 4rem;
+        }
+        
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 400;
+            color: var(--ivory);
+            letter-spacing: 3px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            color: var(--gold);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+        }
+        
+        .gold-line {
+            width: 40px;
+            height: 1px;
+            background: var(--gold);
+        }
+        
+        /* Sections */
+        .cv-section {
+            margin-bottom: 4rem;
+        }
+        
+        .cv-section h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 400;
+            color: var(--ivory);
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.15);
+        }
+        
+        /* Entry Items */
+        .cv-entry {
+            margin-bottom: 2.5rem;
+        }
+        
+        .cv-entry:last-child {
+            margin-bottom: 0;
+        }
+        
+        .cv-entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .cv-entry-title {
+            font-weight: 500;
+            color: var(--ivory);
+            font-size: 1rem;
+        }
+        
+        .cv-entry-date {
+            color: var(--slate);
+            font-size: 0.85rem;
+        }
+        
+        .cv-entry-subtitle {
+            color: var(--gold);
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .cv-entry-description {
+            color: var(--slate);
+            font-size: 0.9rem;
+        }
+        
+        .cv-entry-description ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 0.5rem;
+        }
+        
+        .cv-entry-description li {
+            padding-left: 1rem;
+            position: relative;
+            margin-bottom: 0.4rem;
+        }
+        
+        .cv-entry-description li::before {
+            content: '–';
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+        }
+        
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .skill-category h3 {
+            color: var(--ivory);
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            margin-bottom: 0.75rem;
+        }
+        
+        .skill-category p {
+            color: var(--slate);
+            font-size: 0.9rem;
+        }
+        
+        /* Publications */
+        .publication {
+            margin-bottom: 1.5rem;
+            padding-left: 1rem;
+            border-left: 1px solid rgba(197, 160, 89, 0.2);
+        }
+        
+        .publication-title {
+            color: var(--ivory);
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .publication-venue {
+            color: var(--slate);
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+        
+        /* Languages */
+        .languages {
+            display: flex;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .language-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .language-name {
+            color: var(--ivory);
+            font-size: 0.95rem;
+        }
+        
+        .language-level {
+            color: var(--slate);
+            font-size: 0.85rem;
+        }
+        
+        /* Footer */
+        footer {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(197, 160, 89, 0.1);
+        }
+        
+        footer p {
+            color: var(--slate);
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 600px) {
+            .nav-links {
+                gap: 1.5rem;
+            }
+            
+            .nav-links a {
+                font-size: 0.7rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .cv-entry-header {
+                flex-direction: column;
+            }
+            
+            .languages {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">M. G. NASIRI</a>
+            <div class="nav-links">
+                <a href="about.html">About</a>
+                <a href="cv.html" class="active">CV</a>
+                <a href="index.html#projects">Projects</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Header -->
+        <div class="cv-header">
+            <h1>Curriculum Vitae</h1>
+            <p class="subtitle">Mohammad Ghafourian-Nasiri</p>
+            <div class="gold-line"></div>
+        </div>
+
+        <!-- Education -->
+        <section class="cv-section">
+            <h2>Education</h2>
+            
+            <div class="cv-entry">
+                <div class="cv-entry-header">
+                    <span class="cv-entry-title">Ph.D. in Administrative Sciences (Operations & Decision Systems)</span>
+                    <span class="cv-entry-date">2025 – Present</span>
+                </div>
+                <div class="cv-entry-subtitle">Université Laval, Quebec, Canada</div>
+                <div class="cv-entry-description">
+                    Research: Robust optimization methods for emergency department staff rostering
+                </div>
+            </div>
+            
+            <div class="cv-entry">
+                <div class="cv-entry-header">
+                    <span class="cv-entry-title">M.Sc. in Industrial Engineering</span>
+                    <span class="cv-entry-date">2020 – 2022</span>
+                </div>
+                <div class="cv-entry-subtitle">Tarbiat Modares University, Tehran</div>
+                <div class="cv-entry-description">
+                    <ul>
+                        <li>GPA: 18.51/20 (WES: 3.81/4.00)</li>
+                        <li>Thesis: Developing assessment framework for desired organizational capabilities in Industry 4.0 projects using ISM</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="cv-entry">
+                <div class="cv-entry-header">
+                    <span class="cv-entry-title">B.Sc. in Industrial Engineering</span>
+                    <span class="cv-entry-date">2013 – 2017</span>
+                </div>
+                <div class="cv-entry-subtitle">Ferdowsi University of Mashhad</div>
+            </div>
+        </section>
+
+        <!-- Experience -->
+        <section class="cv-section">
+            <h2>Experience</h2>
+            
+            <div class="cv-entry">
+                <div class="cv-entry-header">
+                    <span class="cv-entry-title">Researcher</span>
+                    <span class="cv-entry-date">Sep 2023 – Jun 2024</span>
+                </div>
+                <div class="cv-entry-subtitle">CIRRELT, Quebec, Canada</div>
+                <div class="cv-entry-description">
+                    <ul>
+                        <li>Transportation network modeling (MILP, Constraint Programming)</li>
+                        <li>Algorithm implementation: ALNS, GA, SA, Tabu Search, PSO</li>
+                        <li>Developed modular toolbox using Gurobi & OR-Tools</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="cv-entry">
+                <div class="cv-entry-header">
+                    <span class="cv-entry-title">QA/QC Manager</span>
+                    <span class="cv-entry-date">Oct 2022 – Sep 2023</span>
+                </div>
+                <div class="cv-entry-subtitle">AmootSoft, Iran</div>
+                <div class="cv-entry-description">
+                    <ul>
+                        <li>ISO 9001 implementation and internal audits (ISO 19011)</li>
+                        <li>KPI development and Power BI dashboards</li>
+                        <li>Statistical process control and Pareto analysis</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="cv-entry">
+                <div class="cv-entry-header">
+                    <span class="cv-entry-title">Research Assistant</span>
+                    <span class="cv-entry-date">Dec 2021 – Oct 2022</span>
+                </div>
+                <div class="cv-entry-subtitle">National Elites Foundation, Tehran</div>
+                <div class="cv-entry-description">
+                    Neural network for reliability prediction in smart city infrastructure
+                </div>
+            </div>
+            
+            <div class="cv-entry">
+                <div class="cv-entry-header">
+                    <span class="cv-entry-title">Process Engineer</span>
+                    <span class="cv-entry-date">May 2021 – Dec 2021</span>
+                </div>
+                <div class="cv-entry-subtitle">Golbahar University of Sciences and New Technologies</div>
+                <div class="cv-entry-description">
+                    Process modeling (BPMN/Bizagi), APQC framework, ISO 9001 documentation
+                </div>
+            </div>
+            
+            <div class="cv-entry">
+                <div class="cv-entry-header">
+                    <span class="cv-entry-title">Decision Support Systems Analyst</span>
+                    <span class="cv-entry-date">2016 – 2018</span>
+                </div>
+                <div class="cv-entry-subtitle">Behin Rahavard Behboud, Mashhad</div>
+            </div>
+        </section>
+
+        <!-- Publications -->
+        <section class="cv-section">
+            <h2>Publications</h2>
+            
+            <div class="publication">
+                <div class="publication-title">Investigating the frameworks, standards and models of using the fourth industrial revolution (Industry 4.0): A literature review</div>
+                <div class="publication-venue">8th International Conference on Industrial and Systems Engineering (ICISE), Iran</div>
+            </div>
+            
+            <div class="publication">
+                <div class="publication-title">The Application of Process Mining in Healthcare Logistics: A Systematic Literature Review</div>
+                <div class="publication-venue">In Progress</div>
+            </div>
+        </section>
+
+        <!-- Skills -->
+        <section class="cv-section">
+            <h2>Technical Skills</h2>
+            
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Programming</h3>
+                    <p>Python, R, SQL, C++, VBA</p>
+                </div>
+                
+                <div class="skill-category">
+                    <h3>Optimization</h3>
+                    <p>Gurobi, OR-Tools, PuLP, AMPL</p>
+                </div>
+                
+                <div class="skill-category">
+                    <h3>Machine Learning</h3>
+                    <p>Scikit-learn, TensorFlow, Keras</p>
+                </div>
+                
+                <div class="skill-category">
+                    <h3>Data & Analytics</h3>
+                    <p>Pandas, Power BI, SPSS, Minitab</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Languages -->
+        <section class="cv-section">
+            <h2>Languages</h2>
+            
+            <div class="languages">
+                <div class="language-item">
+                    <span class="language-name">Persian</span>
+                    <span class="language-level">Native</span>
+                </div>
+                <div class="language-item">
+                    <span class="language-name">English</span>
+                    <span class="language-level">IELTS 7</span>
+                </div>
+                <div class="language-item">
+                    <span class="language-name">French</span>
+                    <span class="language-level">TCF B2</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Certifications -->
+        <section class="cv-section">
+            <h2>Certifications</h2>
+            
+            <div class="cv-entry">
+                <div class="cv-entry-description">
+                    <ul>
+                        <li>Six Sigma Black Belt – LinkedIn Learning</li>
+                        <li>Career Essentials in Generative AI – Microsoft</li>
+                        <li>Intermediate Machine Learning – Kaggle</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Mohammad G. Nasiri</p>
+    </footer>
+</body>
+</html>
