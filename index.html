@@ -176,6 +176,8 @@
             padding: 3rem;
             height: 100%;
             transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
         }
         
         .project-card:hover {
@@ -197,6 +199,7 @@
             font-size: 0.9rem;
             line-height: 1.8;
             margin-bottom: 2rem;
+            flex-grow: 1;
         }
         
         .tech-badge {
@@ -212,6 +215,15 @@
             text-transform: uppercase;
         }
         
+        .project-type {
+            font-size: 0.7rem;
+            color: var(--slate);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+        
         .btn-luxury {
             display: inline-block;
             background: transparent;
@@ -225,6 +237,7 @@
             transition: all 0.3s;
             width: 100%;
             text-align: center;
+            margin-top: auto;
         }
         
         .btn-luxury:hover {
@@ -343,6 +356,7 @@
                 <!-- NHL Project -->
                 <div class="col-lg-4">
                     <div class="project-card">
+                        <span class="project-type">Personal Project</span>
                         <span class="tech-badge">Python</span>
                         <span class="tech-badge">Neural Network</span>
                         <h5 class="card-title">NHL Goal Prediction</h5>
@@ -355,9 +369,26 @@
                     </div>
                 </div>
                 
+                <!-- Obesity Prediction -->
+                <div class="col-lg-4">
+                    <div class="project-card">
+                        <span class="project-type">Academic Project</span>
+                        <span class="tech-badge">R</span>
+                        <span class="tech-badge">Random Forest</span>
+                        <h5 class="card-title">Obesity Risk Prediction</h5>
+                        <p class="card-text">
+                            Comparative analysis of tree-based ML models to predict obesity risk from behavioral and demographic factors.
+                        </p>
+                        <a href="projects/obesity-prediction/index.html" class="btn-luxury">
+                            View Project
+                        </a>
+                    </div>
+                </div>
+                
                 <!-- Process Mining -->
                 <div class="col-lg-4">
                     <div class="project-card">
+                        <span class="project-type">Research</span>
                         <span class="tech-badge">R</span>
                         <span class="tech-badge">Healthcare</span>
                         <h5 class="card-title">Process Mining in Healthcare</h5>
@@ -371,6 +402,7 @@
                 <!-- Transportation -->
                 <div class="col-lg-4">
                     <div class="project-card">
+                        <span class="project-type">Research</span>
                         <span class="tech-badge">Gurobi</span>
                         <span class="tech-badge">OR-Tools</span>
                         <h5 class="card-title">Transportation Optimization</h5>
