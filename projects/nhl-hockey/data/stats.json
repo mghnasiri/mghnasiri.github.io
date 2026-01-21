@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-01-20T06:36:19.255927",
-  "total_days_tracked": 24,
+  "generated_at": "2026-01-21T06:36:42.876968",
+  "total_days_tracked": 25,
   "models": {
     "neural_network": {
-      "total_days": 24,
-      "total_hits": 79,
-      "total_predictions": 240,
-      "hit_rate": 32.9,
-      "avg_hits_per_day": 3.29,
+      "total_days": 25,
+      "total_hits": 83,
+      "total_predictions": 250,
+      "hit_rate": 33.2,
+      "avg_hits_per_day": 3.32,
       "last_7_days": {
         "days": 7,
-        "hits": 20,
+        "hits": 22,
         "total": 70,
-        "hit_rate": 28.6
+        "hit_rate": 31.4
       },
       "daily_results": [
         {
@@ -158,6 +158,12 @@
           "hits": 2,
           "total": 10,
           "hit_rate": 20.0
+        },
+        {
+          "date": "2026-01-20",
+          "hits": 4,
+          "total": 10,
+          "hit_rate": 40.0
         }
       ]
     }
