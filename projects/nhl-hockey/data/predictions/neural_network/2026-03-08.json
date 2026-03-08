@@ -47,7 +47,7 @@
       "start_time": "2026-03-09T01:30:00Z"
     }
   ],
-  "players_count": 322,
+  "players_count": 323,
   "predictions": [
     {
       "player_id": 8483445,
@@ -71,6 +71,27 @@
       "is_hot": true
     },
     {
+      "player_id": 8477492,
+      "name": "Nathan MacKinnon",
+      "position": "C",
+      "team": "COL",
+      "games_played": 61,
+      "season_goals": 43,
+      "season_shots": 280,
+      "avg_goals": 0.705,
+      "avg_shots": 4.59,
+      "shooting_pct": 0.154,
+      "last5_goals": 3,
+      "last5_points": 9,
+      "opponent": "MIN",
+      "is_home": true,
+      "game_id": 2025021001,
+      "matchup": "COL vs MIN",
+      "goal_probability": 0.538,
+      "rank": 2,
+      "is_hot": true
+    },
+    {
       "player_id": 8475786,
       "name": "Zach Hyman",
       "position": "L",
@@ -88,29 +109,29 @@
       "game_id": 2025021007,
       "matchup": "EDM @ VGK",
       "goal_probability": 0.503,
-      "rank": 2,
+      "rank": 3,
       "is_hot": true
     },
     {
-      "player_id": 8477492,
-      "name": "Nathan MacKinnon",
-      "position": "C",
-      "team": "COL",
-      "games_played": 60,
-      "season_goals": 42,
-      "season_shots": 271,
-      "avg_goals": 0.7,
-      "avg_shots": 4.52,
-      "shooting_pct": 0.155,
-      "last5_goals": 2,
-      "last5_points": 10,
-      "opponent": "MIN",
-      "is_home": true,
+      "player_id": 8478864,
+      "name": "Kirill Kaprizov",
+      "position": "L",
+      "team": "MIN",
+      "games_played": 64,
+      "season_goals": 36,
+      "season_shots": 224,
+      "avg_goals": 0.562,
+      "avg_shots": 3.5,
+      "shooting_pct": 0.161,
+      "last5_goals": 4,
+      "last5_points": 4,
+      "opponent": "COL",
+      "is_home": false,
       "game_id": 2025021001,
-      "matchup": "COL vs MIN",
-      "goal_probability": 0.501,
-      "rank": 3,
-      "is_hot": false
+      "matchup": "MIN @ COL",
+      "goal_probability": 0.477,
+      "rank": 4,
+      "is_hot": true
     },
     {
       "player_id": 8482740,
@@ -130,7 +151,7 @@
       "game_id": 2025021004,
       "matchup": "DAL vs CHI",
       "goal_probability": 0.466,
-      "rank": 4,
+      "rank": 5,
       "is_hot": true
     },
     {
@@ -151,70 +172,7 @@
       "game_id": 2025021007,
       "matchup": "EDM @ VGK",
       "goal_probability": 0.446,
-      "rank": 5,
-      "is_hot": true
-    },
-    {
-      "player_id": 8481557,
-      "name": "Matt Boldy",
-      "position": "L",
-      "team": "MIN",
-      "games_played": 59,
-      "season_goals": 35,
-      "season_shots": 197,
-      "avg_goals": 0.593,
-      "avg_shots": 3.34,
-      "shooting_pct": 0.178,
-      "last5_goals": 3,
-      "last5_points": 10,
-      "opponent": "COL",
-      "is_home": false,
-      "game_id": 2025021001,
-      "matchup": "MIN @ COL",
-      "goal_probability": 0.446,
       "rank": 6,
-      "is_hot": true
-    },
-    {
-      "player_id": 8478864,
-      "name": "Kirill Kaprizov",
-      "position": "L",
-      "team": "MIN",
-      "games_played": 63,
-      "season_goals": 35,
-      "season_shots": 220,
-      "avg_goals": 0.556,
-      "avg_shots": 3.49,
-      "shooting_pct": 0.159,
-      "last5_goals": 3,
-      "last5_points": 5,
-      "opponent": "COL",
-      "is_home": false,
-      "game_id": 2025021001,
-      "matchup": "MIN @ COL",
-      "goal_probability": 0.442,
-      "rank": 7,
-      "is_hot": true
-    },
-    {
-      "player_id": 8480039,
-      "name": "Martin Necas",
-      "position": "C",
-      "team": "COL",
-      "games_played": 58,
-      "season_goals": 28,
-      "season_shots": 145,
-      "avg_goals": 0.483,
-      "avg_shots": 2.5,
-      "shooting_pct": 0.193,
-      "last5_goals": 5,
-      "last5_points": 12,
-      "opponent": "MIN",
-      "is_home": true,
-      "game_id": 2025021001,
-      "matchup": "COL vs MIN",
-      "goal_probability": 0.44,
-      "rank": 8,
       "is_hot": true
     },
     {
@@ -235,7 +193,7 @@
       "game_id": 2025021003,
       "matchup": "BUF vs TBL",
       "goal_probability": 0.439,
-      "rank": 9,
+      "rank": 7,
       "is_hot": true
     },
     {
@@ -256,7 +214,7 @@
       "game_id": 2025021005,
       "matchup": "DET @ NJD",
       "goal_probability": 0.432,
-      "rank": 10,
+      "rank": 8,
       "is_hot": true
     },
     {
@@ -277,7 +235,7 @@
       "game_id": 2025021004,
       "matchup": "DAL vs CHI",
       "goal_probability": 0.41,
-      "rank": 11,
+      "rank": 9,
       "is_hot": false
     },
     {
@@ -298,7 +256,7 @@
       "game_id": 2025021004,
       "matchup": "CHI @ DAL",
       "goal_probability": 0.388,
-      "rank": 12,
+      "rank": 10,
       "is_hot": false
     },
     {
@@ -319,7 +277,7 @@
       "game_id": 2025021007,
       "matchup": "EDM @ VGK",
       "goal_probability": 0.387,
-      "rank": 13,
+      "rank": 11,
       "is_hot": false
     },
     {
@@ -340,7 +298,7 @@
       "game_id": 2025021003,
       "matchup": "TBL @ BUF",
       "goal_probability": 0.385,
-      "rank": 14,
+      "rank": 12,
       "is_hot": false
     },
     {
@@ -361,7 +319,7 @@
       "game_id": 2025021005,
       "matchup": "NJD vs DET",
       "goal_probability": 0.384,
-      "rank": 15,
+      "rank": 13,
       "is_hot": true
     },
     {
@@ -382,6 +340,48 @@
       "game_id": 2025021002,
       "matchup": "BOS @ PIT",
       "goal_probability": 0.381,
+      "rank": 14,
+      "is_hot": true
+    },
+    {
+      "player_id": 8481557,
+      "name": "Matt Boldy",
+      "position": "L",
+      "team": "MIN",
+      "games_played": 60,
+      "season_goals": 35,
+      "season_shots": 201,
+      "avg_goals": 0.583,
+      "avg_shots": 3.35,
+      "shooting_pct": 0.174,
+      "last5_goals": 1,
+      "last5_points": 6,
+      "opponent": "COL",
+      "is_home": false,
+      "game_id": 2025021001,
+      "matchup": "MIN @ COL",
+      "goal_probability": 0.378,
+      "rank": 15,
+      "is_hot": false
+    },
+    {
+      "player_id": 8480039,
+      "name": "Martin Necas",
+      "position": "C",
+      "team": "COL",
+      "games_played": 59,
+      "season_goals": 28,
+      "season_shots": 151,
+      "avg_goals": 0.475,
+      "avg_shots": 2.56,
+      "shooting_pct": 0.185,
+      "last5_goals": 3,
+      "last5_points": 10,
+      "opponent": "MIN",
+      "is_home": true,
+      "game_id": 2025021001,
+      "matchup": "COL vs MIN",
+      "goal_probability": 0.375,
       "rank": 16,
       "is_hot": true
     },
@@ -411,11 +411,11 @@
       "name": "Cale Makar",
       "position": "D",
       "team": "COL",
-      "games_played": 61,
+      "games_played": 62,
       "season_goals": 19,
       "season_shots": 164,
-      "avg_goals": 0.311,
-      "avg_shots": 2.69,
+      "avg_goals": 0.306,
+      "avg_shots": 2.65,
       "shooting_pct": 0.116,
       "last5_goals": 4,
       "last5_points": 8,
@@ -423,7 +423,7 @@
       "is_home": true,
       "game_id": 2025021001,
       "matchup": "COL vs MIN",
-      "goal_probability": 0.365,
+      "goal_probability": 0.361,
       "rank": 18,
       "is_hot": true
     },
@@ -764,27 +764,6 @@
       "is_hot": false
     },
     {
-      "player_id": 8478493,
-      "name": "Joel Eriksson Ek",
-      "position": "C",
-      "team": "MIN",
-      "games_played": 57,
-      "season_goals": 17,
-      "season_shots": 157,
-      "avg_goals": 0.298,
-      "avg_shots": 2.75,
-      "shooting_pct": 0.108,
-      "last5_goals": 2,
-      "last5_points": 2,
-      "opponent": "COL",
-      "is_home": false,
-      "game_id": 2025021001,
-      "matchup": "MIN @ COL",
-      "goal_probability": 0.298,
-      "rank": 35,
-      "is_hot": false
-    },
-    {
       "player_id": 8475913,
       "name": "Mark Stone",
       "position": "R",
@@ -802,7 +781,7 @@
       "game_id": 2025021007,
       "matchup": "VGK vs EDM",
       "goal_probability": 0.296,
-      "rank": 36,
+      "rank": 35,
       "is_hot": false
     },
     {
@@ -823,7 +802,7 @@
       "game_id": 2025021003,
       "matchup": "BUF vs TBL",
       "goal_probability": 0.294,
-      "rank": 37,
+      "rank": 36,
       "is_hot": true
     },
     {
@@ -844,7 +823,7 @@
       "game_id": 2025021003,
       "matchup": "BUF vs TBL",
       "goal_probability": 0.294,
-      "rank": 38,
+      "rank": 37,
       "is_hot": false
     },
     {
@@ -865,29 +844,8 @@
       "game_id": 2025021002,
       "matchup": "BOS @ PIT",
       "goal_probability": 0.293,
-      "rank": 39,
+      "rank": 38,
       "is_hot": false
-    },
-    {
-      "player_id": 8475692,
-      "name": "Mats Zuccarello",
-      "position": "R",
-      "team": "MIN",
-      "games_played": 43,
-      "season_goals": 12,
-      "season_shots": 84,
-      "avg_goals": 0.279,
-      "avg_shots": 1.95,
-      "shooting_pct": 0.143,
-      "last5_goals": 3,
-      "last5_points": 5,
-      "opponent": "COL",
-      "is_home": false,
-      "game_id": 2025021001,
-      "matchup": "MIN @ COL",
-      "goal_probability": 0.287,
-      "rank": 40,
-      "is_hot": true
     },
     {
       "player_id": 8477476,
@@ -907,7 +865,7 @@
       "game_id": 2025021001,
       "matchup": "COL vs MIN",
       "goal_probability": 0.286,
-      "rank": 41,
+      "rank": 39,
       "is_hot": false
     },
     {
@@ -928,7 +886,7 @@
       "game_id": 2025021003,
       "matchup": "TBL @ BUF",
       "goal_probability": 0.286,
-      "rank": 42,
+      "rank": 40,
       "is_hot": false
     },
     {
@@ -949,7 +907,7 @@
       "game_id": 2025021006,
       "matchup": "ANA vs STL",
       "goal_probability": 0.282,
-      "rank": 43,
+      "rank": 41,
       "is_hot": false
     },
     {
@@ -970,49 +928,7 @@
       "game_id": 2025021004,
       "matchup": "CHI @ DAL",
       "goal_probability": 0.281,
-      "rank": 44,
-      "is_hot": false
-    },
-    {
-      "player_id": 8475172,
-      "name": "Nazem Kadri",
-      "position": "C",
-      "team": "COL",
-      "games_played": 61,
-      "season_goals": 12,
-      "season_shots": 175,
-      "avg_goals": 0.197,
-      "avg_shots": 2.87,
-      "shooting_pct": 0.069,
-      "last5_goals": 2,
-      "last5_points": 2,
-      "opponent": "MIN",
-      "is_home": true,
-      "game_id": 2025021001,
-      "matchup": "COL vs MIN",
-      "goal_probability": 0.274,
-      "rank": 45,
-      "is_hot": false
-    },
-    {
-      "player_id": 8475754,
-      "name": "Brock Nelson",
-      "position": "C",
-      "team": "COL",
-      "games_played": 61,
-      "season_goals": 30,
-      "season_shots": 142,
-      "avg_goals": 0.492,
-      "avg_shots": 2.33,
-      "shooting_pct": 0.211,
-      "last5_goals": 0,
-      "last5_points": 3,
-      "opponent": "MIN",
-      "is_home": true,
-      "game_id": 2025021001,
-      "matchup": "COL vs MIN",
-      "goal_probability": 0.272,
-      "rank": 46,
+      "rank": 42,
       "is_hot": false
     },
     {
@@ -1033,7 +949,7 @@
       "game_id": 2025021002,
       "matchup": "PIT vs BOS",
       "goal_probability": 0.27,
-      "rank": 47,
+      "rank": 43,
       "is_hot": false
     },
     {
@@ -1054,8 +970,29 @@
       "game_id": 2025021007,
       "matchup": "EDM @ VGK",
       "goal_probability": 0.268,
-      "rank": 48,
+      "rank": 44,
       "is_hot": true
+    },
+    {
+      "player_id": 8475754,
+      "name": "Brock Nelson",
+      "position": "C",
+      "team": "COL",
+      "games_played": 62,
+      "season_goals": 30,
+      "season_shots": 142,
+      "avg_goals": 0.484,
+      "avg_shots": 2.29,
+      "shooting_pct": 0.211,
+      "last5_goals": 0,
+      "last5_points": 3,
+      "opponent": "MIN",
+      "is_home": true,
+      "game_id": 2025021001,
+      "matchup": "COL vs MIN",
+      "goal_probability": 0.267,
+      "rank": 45,
+      "is_hot": false
     },
     {
       "player_id": 8478420,
@@ -1075,7 +1012,7 @@
       "game_id": 2025021004,
       "matchup": "DAL vs CHI",
       "goal_probability": 0.267,
-      "rank": 49,
+      "rank": 46,
       "is_hot": false
     },
     {
@@ -1096,7 +1033,7 @@
       "game_id": 2025021005,
       "matchup": "NJD vs DET",
       "goal_probability": 0.26,
-      "rank": 50,
+      "rank": 47,
       "is_hot": false
     },
     {
@@ -1117,7 +1054,7 @@
       "game_id": 2025021007,
       "matchup": "VGK vs EDM",
       "goal_probability": 0.258,
-      "rank": 51,
+      "rank": 48,
       "is_hot": false
     },
     {
@@ -1138,7 +1075,28 @@
       "game_id": 2025021004,
       "matchup": "DAL vs CHI",
       "goal_probability": 0.254,
-      "rank": 52,
+      "rank": 49,
+      "is_hot": false
+    },
+    {
+      "player_id": 8475692,
+      "name": "Mats Zuccarello",
+      "position": "R",
+      "team": "MIN",
+      "games_played": 44,
+      "season_goals": 12,
+      "season_shots": 87,
+      "avg_goals": 0.273,
+      "avg_shots": 1.98,
+      "shooting_pct": 0.138,
+      "last5_goals": 2,
+      "last5_points": 4,
+      "opponent": "COL",
+      "is_home": false,
+      "game_id": 2025021001,
+      "matchup": "MIN @ COL",
+      "goal_probability": 0.254,
+      "rank": 50,
       "is_hot": false
     },
     {
@@ -1159,7 +1117,7 @@
       "game_id": 2025021006,
       "matchup": "ANA vs STL",
       "goal_probability": 0.253,
-      "rank": 53,
+      "rank": 51,
       "is_hot": false
     },
     {
@@ -1180,7 +1138,7 @@
       "game_id": 2025021005,
       "matchup": "DET @ NJD",
       "goal_probability": 0.249,
-      "rank": 54,
+      "rank": 52,
       "is_hot": false
     },
     {
@@ -1201,7 +1159,7 @@
       "game_id": 2025021007,
       "matchup": "EDM @ VGK",
       "goal_probability": 0.247,
-      "rank": 55,
+      "rank": 53,
       "is_hot": false
     },
     {
@@ -1222,7 +1180,7 @@
       "game_id": 2025021006,
       "matchup": "STL @ ANA",
       "goal_probability": 0.247,
-      "rank": 56,
+      "rank": 54,
       "is_hot": false
     },
     {
@@ -1243,7 +1201,7 @@
       "game_id": 2025021007,
       "matchup": "VGK vs EDM",
       "goal_probability": 0.246,
-      "rank": 57,
+      "rank": 55,
       "is_hot": false
     },
     {
@@ -1264,7 +1222,7 @@
       "game_id": 2025021004,
       "matchup": "CHI @ DAL",
       "goal_probability": 0.244,
-      "rank": 58,
+      "rank": 56,
       "is_hot": true
     },
     {
@@ -1285,7 +1243,7 @@
       "game_id": 2025021007,
       "matchup": "EDM @ VGK",
       "goal_probability": 0.241,
-      "rank": 59,
+      "rank": 57,
       "is_hot": false
     },
     {
@@ -1306,7 +1264,7 @@
       "game_id": 2025021001,
       "matchup": "COL vs MIN",
       "goal_probability": 0.24,
-      "rank": 60,
+      "rank": 58,
       "is_hot": false
     },
     {
@@ -1327,7 +1285,7 @@
       "game_id": 2025021005,
       "matchup": "NJD vs DET",
       "goal_probability": 0.239,
-      "rank": 61,
+      "rank": 59,
       "is_hot": false
     },
     {
@@ -1348,7 +1306,7 @@
       "game_id": 2025021003,
       "matchup": "BUF vs TBL",
       "goal_probability": 0.238,
-      "rank": 62,
+      "rank": 60,
       "is_hot": false
     },
     {
@@ -1369,7 +1327,7 @@
       "game_id": 2025021007,
       "matchup": "EDM @ VGK",
       "goal_probability": 0.238,
-      "rank": 63,
+      "rank": 61,
       "is_hot": false
     },
     {
@@ -1390,7 +1348,7 @@
       "game_id": 2025021005,
       "matchup": "NJD vs DET",
       "goal_probability": 0.236,
-      "rank": 64,
+      "rank": 62,
       "is_hot": false
     },
     {
@@ -1411,7 +1369,7 @@
       "game_id": 2025021002,
       "matchup": "PIT vs BOS",
       "goal_probability": 0.235,
-      "rank": 65,
+      "rank": 63,
       "is_hot": false
     },
     {
@@ -1432,7 +1390,7 @@
       "game_id": 2025021003,
       "matchup": "TBL @ BUF",
       "goal_probability": 0.234,
-      "rank": 66,
+      "rank": 64,
       "is_hot": false
     },
     {
@@ -1453,7 +1411,7 @@
       "game_id": 2025021002,
       "matchup": "PIT vs BOS",
       "goal_probability": 0.233,
-      "rank": 67,
+      "rank": 65,
       "is_hot": false
     },
     {
@@ -1474,7 +1432,7 @@
       "game_id": 2025021006,
       "matchup": "STL @ ANA",
       "goal_probability": 0.233,
-      "rank": 68,
+      "rank": 66,
       "is_hot": false
     },
     {
@@ -1495,28 +1453,28 @@
       "game_id": 2025021003,
       "matchup": "BUF vs TBL",
       "goal_probability": 0.23,
-      "rank": 69,
+      "rank": 67,
       "is_hot": false
     },
     {
-      "player_id": 8477501,
-      "name": "Valeri Nichushkin",
-      "position": "R",
-      "team": "COL",
-      "games_played": 52,
-      "season_goals": 13,
-      "season_shots": 118,
-      "avg_goals": 0.25,
-      "avg_shots": 2.27,
-      "shooting_pct": 0.11,
-      "last5_goals": 1,
-      "last5_points": 2,
-      "opponent": "MIN",
-      "is_home": true,
+      "player_id": 8478493,
+      "name": "Joel Eriksson Ek",
+      "position": "C",
+      "team": "MIN",
+      "games_played": 58,
+      "season_goals": 17,
+      "season_shots": 158,
+      "avg_goals": 0.293,
+      "avg_shots": 2.72,
+      "shooting_pct": 0.108,
+      "last5_goals": 0,
+      "last5_points": 1,
+      "opponent": "COL",
+      "is_home": false,
       "game_id": 2025021001,
-      "matchup": "COL vs MIN",
-      "goal_probability": 0.228,
-      "rank": 70,
+      "matchup": "MIN @ COL",
+      "goal_probability": 0.23,
+      "rank": 68,
       "is_hot": false
     },
     {
@@ -1537,7 +1495,7 @@
       "game_id": 2025021004,
       "matchup": "DAL vs CHI",
       "goal_probability": 0.227,
-      "rank": 71,
+      "rank": 69,
       "is_hot": false
     },
     {
@@ -1558,7 +1516,28 @@
       "game_id": 2025021002,
       "matchup": "PIT vs BOS",
       "goal_probability": 0.227,
-      "rank": 72,
+      "rank": 70,
+      "is_hot": false
+    },
+    {
+      "player_id": 8477501,
+      "name": "Valeri Nichushkin",
+      "position": "R",
+      "team": "COL",
+      "games_played": 53,
+      "season_goals": 13,
+      "season_shots": 119,
+      "avg_goals": 0.245,
+      "avg_shots": 2.25,
+      "shooting_pct": 0.109,
+      "last5_goals": 1,
+      "last5_points": 2,
+      "opponent": "MIN",
+      "is_home": true,
+      "game_id": 2025021001,
+      "matchup": "COL vs MIN",
+      "goal_probability": 0.225,
+      "rank": 71,
       "is_hot": false
     },
     {
@@ -1566,12 +1545,12 @@
       "name": "Vladimir Tarasenko",
       "position": "R",
       "team": "MIN",
-      "games_played": 56,
+      "games_played": 57,
       "season_goals": 16,
-      "season_shots": 108,
-      "avg_goals": 0.286,
-      "avg_shots": 1.93,
-      "shooting_pct": 0.148,
+      "season_shots": 111,
+      "avg_goals": 0.281,
+      "avg_shots": 1.95,
+      "shooting_pct": 0.144,
       "last5_goals": 1,
       "last5_points": 2,
       "opponent": "COL",
@@ -1579,7 +1558,7 @@
       "game_id": 2025021001,
       "matchup": "MIN @ COL",
       "goal_probability": 0.223,
-      "rank": 73,
+      "rank": 72,
       "is_hot": false
     },
     {
@@ -1600,7 +1579,7 @@
       "game_id": 2025021002,
       "matchup": "PIT vs BOS",
       "goal_probability": 0.222,
-      "rank": 74,
+      "rank": 73,
       "is_hot": false
     },
     {
@@ -1621,7 +1600,7 @@
       "game_id": 2025021007,
       "matchup": "EDM @ VGK",
       "goal_probability": 0.221,
-      "rank": 75,
+      "rank": 74,
       "is_hot": false
     },
     {
@@ -1642,7 +1621,7 @@
       "game_id": 2025021005,
       "matchup": "NJD vs DET",
       "goal_probability": 0.221,
-      "rank": 76,
+      "rank": 75,
       "is_hot": false
     },
     {
@@ -1663,7 +1642,7 @@
       "game_id": 2025021002,
       "matchup": "BOS @ PIT",
       "goal_probability": 0.22,
-      "rank": 77,
+      "rank": 76,
       "is_hot": false
     },
     {
@@ -1684,28 +1663,7 @@
       "game_id": 2025021005,
       "matchup": "DET @ NJD",
       "goal_probability": 0.218,
-      "rank": 78,
-      "is_hot": false
-    },
-    {
-      "player_id": 8480448,
-      "name": "Parker Kelly",
-      "position": "C",
-      "team": "COL",
-      "games_played": 61,
-      "season_goals": 15,
-      "season_shots": 79,
-      "avg_goals": 0.246,
-      "avg_shots": 1.3,
-      "shooting_pct": 0.19,
-      "last5_goals": 2,
-      "last5_points": 2,
-      "opponent": "MIN",
-      "is_home": true,
-      "game_id": 2025021001,
-      "matchup": "COL vs MIN",
-      "goal_probability": 0.217,
-      "rank": 79,
+      "rank": 77,
       "is_hot": false
     },
     {
@@ -1726,28 +1684,28 @@
       "game_id": 2025021004,
       "matchup": "DAL vs CHI",
       "goal_probability": 0.216,
-      "rank": 80,
+      "rank": 78,
       "is_hot": true
     },
     {
-      "player_id": 8482122,
-      "name": "Brock Faber",
-      "position": "D",
-      "team": "MIN",
-      "games_played": 63,
-      "season_goals": 14,
-      "season_shots": 133,
-      "avg_goals": 0.222,
-      "avg_shots": 2.11,
-      "shooting_pct": 0.105,
-      "last5_goals": 1,
-      "last5_points": 4,
-      "opponent": "COL",
-      "is_home": false,
+      "player_id": 8480448,
+      "name": "Parker Kelly",
+      "position": "C",
+      "team": "COL",
+      "games_played": 62,
+      "season_goals": 15,
+      "season_shots": 79,
+      "avg_goals": 0.242,
+      "avg_shots": 1.27,
+      "shooting_pct": 0.19,
+      "last5_goals": 2,
+      "last5_points": 2,
+      "opponent": "MIN",
+      "is_home": true,
       "game_id": 2025021001,
-      "matchup": "MIN @ COL",
-      "goal_probability": 0.212,
-      "rank": 81,
+      "matchup": "COL vs MIN",
+      "goal_probability": 0.214,
+      "rank": 79,
       "is_hot": false
     },
     {
@@ -1768,7 +1726,7 @@
       "game_id": 2025021002,
       "matchup": "PIT vs BOS",
       "goal_probability": 0.211,
-      "rank": 82,
+      "rank": 80,
       "is_hot": false
     },
     {
@@ -1789,7 +1747,7 @@
       "game_id": 2025021006,
       "matchup": "STL @ ANA",
       "goal_probability": 0.211,
-      "rank": 83,
+      "rank": 81,
       "is_hot": false
     },
     {
@@ -1810,6 +1768,48 @@
       "game_id": 2025021004,
       "matchup": "DAL vs CHI",
       "goal_probability": 0.21,
+      "rank": 82,
+      "is_hot": false
+    },
+    {
+      "player_id": 8482122,
+      "name": "Brock Faber",
+      "position": "D",
+      "team": "MIN",
+      "games_played": 64,
+      "season_goals": 14,
+      "season_shots": 134,
+      "avg_goals": 0.219,
+      "avg_shots": 2.09,
+      "shooting_pct": 0.104,
+      "last5_goals": 1,
+      "last5_points": 4,
+      "opponent": "COL",
+      "is_home": false,
+      "game_id": 2025021001,
+      "matchup": "MIN @ COL",
+      "goal_probability": 0.21,
+      "rank": 83,
+      "is_hot": false
+    },
+    {
+      "player_id": 8475172,
+      "name": "Nazem Kadri",
+      "position": "C",
+      "team": "COL",
+      "games_played": 62,
+      "season_goals": 12,
+      "season_shots": 180,
+      "avg_goals": 0.194,
+      "avg_shots": 2.9,
+      "shooting_pct": 0.067,
+      "last5_goals": 0,
+      "last5_points": 1,
+      "opponent": "MIN",
+      "is_home": true,
+      "game_id": 2025021001,
+      "matchup": "COL vs MIN",
+      "goal_probability": 0.209,
       "rank": 84,
       "is_hot": false
     },
@@ -1877,27 +1877,6 @@
       "is_hot": false
     },
     {
-      "player_id": 8480800,
-      "name": "Quinn Hughes",
-      "position": "D",
-      "team": "MIN",
-      "games_played": 57,
-      "season_goals": 6,
-      "season_shots": 155,
-      "avg_goals": 0.105,
-      "avg_shots": 2.72,
-      "shooting_pct": 0.039,
-      "last5_goals": 1,
-      "last5_points": 5,
-      "opponent": "COL",
-      "is_home": false,
-      "game_id": 2025021001,
-      "matchup": "MIN @ COL",
-      "goal_probability": 0.207,
-      "rank": 88,
-      "is_hot": false
-    },
-    {
       "player_id": 8479353,
       "name": "Brett Howden",
       "position": "C",
@@ -1915,7 +1894,7 @@
       "game_id": 2025021007,
       "matchup": "VGK vs EDM",
       "goal_probability": 0.207,
-      "rank": 89,
+      "rank": 88,
       "is_hot": false
     },
     {
@@ -1936,7 +1915,7 @@
       "game_id": 2025021005,
       "matchup": "DET @ NJD",
       "goal_probability": 0.204,
-      "rank": 90,
+      "rank": 89,
       "is_hot": false
     },
     {
@@ -1956,6 +1935,27 @@
       "is_home": false,
       "game_id": 2025021002,
       "matchup": "BOS @ PIT",
+      "goal_probability": 0.203,
+      "rank": 90,
+      "is_hot": false
+    },
+    {
+      "player_id": 8480800,
+      "name": "Quinn Hughes",
+      "position": "D",
+      "team": "MIN",
+      "games_played": 58,
+      "season_goals": 6,
+      "season_shots": 155,
+      "avg_goals": 0.103,
+      "avg_shots": 2.67,
+      "shooting_pct": 0.039,
+      "last5_goals": 1,
+      "last5_points": 5,
+      "opponent": "COL",
+      "is_home": false,
+      "game_id": 2025021001,
+      "matchup": "MIN @ COL",
       "goal_probability": 0.203,
       "rank": 91,
       "is_hot": false
@@ -2427,19 +2427,19 @@
       "name": "Ryan Hartman",
       "position": "R",
       "team": "MIN",
-      "games_played": 59,
+      "games_played": 60,
       "season_goals": 14,
-      "season_shots": 120,
-      "avg_goals": 0.237,
+      "season_shots": 122,
+      "avg_goals": 0.233,
       "avg_shots": 2.03,
-      "shooting_pct": 0.117,
+      "shooting_pct": 0.115,
       "last5_goals": 0,
-      "last5_points": 1,
+      "last5_points": 0,
       "opponent": "COL",
       "is_home": false,
       "game_id": 2025021001,
       "matchup": "MIN @ COL",
-      "goal_probability": 0.18,
+      "goal_probability": 0.179,
       "rank": 114,
       "is_hot": false
     },
@@ -2549,27 +2549,6 @@
       "is_hot": false
     },
     {
-      "player_id": 8477446,
-      "name": "Michael McCarron",
-      "position": "C",
-      "team": "MIN",
-      "games_played": 60,
-      "season_goals": 6,
-      "season_shots": 87,
-      "avg_goals": 0.1,
-      "avg_shots": 1.45,
-      "shooting_pct": 0.069,
-      "last5_goals": 2,
-      "last5_points": 3,
-      "opponent": "COL",
-      "is_home": false,
-      "game_id": 2025021001,
-      "matchup": "MIN @ COL",
-      "goal_probability": 0.174,
-      "rank": 120,
-      "is_hot": false
-    },
-    {
       "player_id": 8481605,
       "name": "Jackson LaCombe",
       "position": "D",
@@ -2587,7 +2566,7 @@
       "game_id": 2025021006,
       "matchup": "ANA vs STL",
       "goal_probability": 0.173,
-      "rank": 121,
+      "rank": 120,
       "is_hot": false
     },
     {
@@ -2608,7 +2587,7 @@
       "game_id": 2025021005,
       "matchup": "NJD vs DET",
       "goal_probability": 0.173,
-      "rank": 122,
+      "rank": 121,
       "is_hot": false
     },
     {
@@ -2629,7 +2608,7 @@
       "game_id": 2025021004,
       "matchup": "DAL vs CHI",
       "goal_probability": 0.172,
-      "rank": 123,
+      "rank": 122,
       "is_hot": false
     },
     {
@@ -2650,7 +2629,7 @@
       "game_id": 2025021005,
       "matchup": "NJD vs DET",
       "goal_probability": 0.172,
-      "rank": 124,
+      "rank": 123,
       "is_hot": false
     },
     {
@@ -2671,7 +2650,7 @@
       "game_id": 2025021002,
       "matchup": "BOS @ PIT",
       "goal_probability": 0.171,
-      "rank": 125,
+      "rank": 124,
       "is_hot": false
     },
     {
@@ -2692,7 +2671,7 @@
       "game_id": 2025021007,
       "matchup": "VGK vs EDM",
       "goal_probability": 0.171,
-      "rank": 126,
+      "rank": 125,
       "is_hot": false
     },
     {
@@ -2713,7 +2692,7 @@
       "game_id": 2025021003,
       "matchup": "BUF vs TBL",
       "goal_probability": 0.17,
-      "rank": 127,
+      "rank": 126,
       "is_hot": false
     },
     {
@@ -2734,7 +2713,7 @@
       "game_id": 2025021006,
       "matchup": "STL @ ANA",
       "goal_probability": 0.17,
-      "rank": 128,
+      "rank": 127,
       "is_hot": false
     },
     {
@@ -2755,7 +2734,7 @@
       "game_id": 2025021006,
       "matchup": "ANA vs STL",
       "goal_probability": 0.169,
-      "rank": 129,
+      "rank": 128,
       "is_hot": false
     },
     {
@@ -2776,7 +2755,7 @@
       "game_id": 2025021003,
       "matchup": "BUF vs TBL",
       "goal_probability": 0.169,
-      "rank": 130,
+      "rank": 129,
       "is_hot": false
     },
     {
@@ -2797,7 +2776,7 @@
       "game_id": 2025021005,
       "matchup": "DET @ NJD",
       "goal_probability": 0.166,
-      "rank": 131,
+      "rank": 130,
       "is_hot": false
     },
     {
@@ -2818,7 +2797,7 @@
       "game_id": 2025021003,
       "matchup": "TBL @ BUF",
       "goal_probability": 0.165,
-      "rank": 132,
+      "rank": 131,
       "is_hot": false
     },
     {
@@ -2839,7 +2818,7 @@
       "game_id": 2025021006,
       "matchup": "STL @ ANA",
       "goal_probability": 0.164,
-      "rank": 133,
+      "rank": 132,
       "is_hot": false
     },
     {
@@ -2860,7 +2839,7 @@
       "game_id": 2025021003,
       "matchup": "BUF vs TBL",
       "goal_probability": 0.162,
-      "rank": 134,
+      "rank": 133,
       "is_hot": false
     },
     {
@@ -2881,28 +2860,7 @@
       "game_id": 2025021007,
       "matchup": "VGK vs EDM",
       "goal_probability": 0.162,
-      "rank": 135,
-      "is_hot": false
-    },
-    {
-      "player_id": 8481553,
-      "name": "Bobby Brink",
-      "position": "R",
-      "team": "MIN",
-      "games_played": 56,
-      "season_goals": 13,
-      "season_shots": 91,
-      "avg_goals": 0.232,
-      "avg_shots": 1.62,
-      "shooting_pct": 0.143,
-      "last5_goals": 0,
-      "last5_points": 1,
-      "opponent": "COL",
-      "is_home": false,
-      "game_id": 2025021001,
-      "matchup": "MIN @ COL",
-      "goal_probability": 0.16,
-      "rank": 136,
+      "rank": 134,
       "is_hot": false
     },
     {
@@ -2923,7 +2881,7 @@
       "game_id": 2025021007,
       "matchup": "VGK vs EDM",
       "goal_probability": 0.16,
-      "rank": 137,
+      "rank": 135,
       "is_hot": false
     },
     {
@@ -2944,7 +2902,28 @@
       "game_id": 2025021007,
       "matchup": "EDM @ VGK",
       "goal_probability": 0.159,
-      "rank": 138,
+      "rank": 136,
+      "is_hot": false
+    },
+    {
+      "player_id": 8481553,
+      "name": "Bobby Brink",
+      "position": "R",
+      "team": "MIN",
+      "games_played": 57,
+      "season_goals": 13,
+      "season_shots": 92,
+      "avg_goals": 0.228,
+      "avg_shots": 1.61,
+      "shooting_pct": 0.141,
+      "last5_goals": 0,
+      "last5_points": 1,
+      "opponent": "COL",
+      "is_home": false,
+      "game_id": 2025021001,
+      "matchup": "MIN @ COL",
+      "goal_probability": 0.158,
+      "rank": 137,
       "is_hot": false
     },
     {
@@ -2952,20 +2931,20 @@
       "name": "Ross Colton",
       "position": "C",
       "team": "COL",
-      "games_played": 58,
+      "games_played": 59,
       "season_goals": 7,
-      "season_shots": 134,
-      "avg_goals": 0.121,
+      "season_shots": 136,
+      "avg_goals": 0.119,
       "avg_shots": 2.31,
-      "shooting_pct": 0.052,
+      "shooting_pct": 0.051,
       "last5_goals": 0,
       "last5_points": 0,
       "opponent": "MIN",
       "is_home": true,
       "game_id": 2025021001,
       "matchup": "COL vs MIN",
-      "goal_probability": 0.158,
-      "rank": 139,
+      "goal_probability": 0.157,
+      "rank": 138,
       "is_hot": false
     },
     {
@@ -2986,7 +2965,7 @@
       "game_id": 2025021006,
       "matchup": "STL @ ANA",
       "goal_probability": 0.157,
-      "rank": 140,
+      "rank": 139,
       "is_hot": false
     },
     {
@@ -3007,28 +2986,7 @@
       "game_id": 2025021006,
       "matchup": "ANA vs STL",
       "goal_probability": 0.156,
-      "rank": 141,
-      "is_hot": false
-    },
-    {
-      "player_id": 8470613,
-      "name": "Brent Burns",
-      "position": "D",
-      "team": "COL",
-      "games_played": 61,
-      "season_goals": 9,
-      "season_shots": 128,
-      "avg_goals": 0.148,
-      "avg_shots": 2.1,
-      "shooting_pct": 0.07,
-      "last5_goals": 0,
-      "last5_points": 1,
-      "opponent": "MIN",
-      "is_home": true,
-      "game_id": 2025021001,
-      "matchup": "COL vs MIN",
-      "goal_probability": 0.156,
-      "rank": 142,
+      "rank": 140,
       "is_hot": false
     },
     {
@@ -3049,7 +3007,28 @@
       "game_id": 2025021005,
       "matchup": "DET @ NJD",
       "goal_probability": 0.156,
-      "rank": 143,
+      "rank": 141,
+      "is_hot": false
+    },
+    {
+      "player_id": 8470613,
+      "name": "Brent Burns",
+      "position": "D",
+      "team": "COL",
+      "games_played": 62,
+      "season_goals": 9,
+      "season_shots": 128,
+      "avg_goals": 0.145,
+      "avg_shots": 2.06,
+      "shooting_pct": 0.07,
+      "last5_goals": 0,
+      "last5_points": 1,
+      "opponent": "MIN",
+      "is_home": true,
+      "game_id": 2025021001,
+      "matchup": "COL vs MIN",
+      "goal_probability": 0.153,
+      "rank": 142,
       "is_hot": false
     },
     {
@@ -3070,7 +3049,7 @@
       "game_id": 2025021004,
       "matchup": "DAL vs CHI",
       "goal_probability": 0.15,
-      "rank": 144,
+      "rank": 143,
       "is_hot": false
     },
     {
@@ -3091,7 +3070,7 @@
       "game_id": 2025021002,
       "matchup": "PIT vs BOS",
       "goal_probability": 0.149,
-      "rank": 145,
+      "rank": 144,
       "is_hot": false
     },
     {
@@ -3112,7 +3091,7 @@
       "game_id": 2025021001,
       "matchup": "MIN @ COL",
       "goal_probability": 0.148,
-      "rank": 146,
+      "rank": 145,
       "is_hot": false
     },
     {
@@ -3133,7 +3112,7 @@
       "game_id": 2025021004,
       "matchup": "CHI @ DAL",
       "goal_probability": 0.147,
-      "rank": 147,
+      "rank": 146,
       "is_hot": false
     },
     {
@@ -3154,7 +3133,7 @@
       "game_id": 2025021003,
       "matchup": "TBL @ BUF",
       "goal_probability": 0.147,
-      "rank": 148,
+      "rank": 147,
       "is_hot": false
     },
     {
@@ -3175,7 +3154,7 @@
       "game_id": 2025021002,
       "matchup": "BOS @ PIT",
       "goal_probability": 0.145,
-      "rank": 149,
+      "rank": 148,
       "is_hot": false
     },
     {
@@ -3196,7 +3175,7 @@
       "game_id": 2025021005,
       "matchup": "NJD vs DET",
       "goal_probability": 0.145,
-      "rank": 150,
+      "rank": 149,
       "is_hot": false
     },
     {
@@ -3217,7 +3196,7 @@
       "game_id": 2025021005,
       "matchup": "DET @ NJD",
       "goal_probability": 0.144,
-      "rank": 151,
+      "rank": 150,
       "is_hot": false
     },
     {
@@ -3238,6 +3217,27 @@
       "game_id": 2025021007,
       "matchup": "VGK vs EDM",
       "goal_probability": 0.144,
+      "rank": 151,
+      "is_hot": false
+    },
+    {
+      "player_id": 8477446,
+      "name": "Michael McCarron",
+      "position": "C",
+      "team": "MIN",
+      "games_played": 61,
+      "season_goals": 6,
+      "season_shots": 90,
+      "avg_goals": 0.098,
+      "avg_shots": 1.48,
+      "shooting_pct": 0.067,
+      "last5_goals": 1,
+      "last5_points": 2,
+      "opponent": "COL",
+      "is_home": false,
+      "game_id": 2025021001,
+      "matchup": "MIN @ COL",
+      "goal_probability": 0.143,
       "rank": 152,
       "is_hot": false
     },
@@ -3326,6 +3326,27 @@
       "is_hot": false
     },
     {
+      "player_id": 8478038,
+      "name": "Devon Toews",
+      "position": "D",
+      "team": "COL",
+      "games_played": 49,
+      "season_goals": 2,
+      "season_shots": 87,
+      "avg_goals": 0.041,
+      "avg_shots": 1.78,
+      "shooting_pct": 0.023,
+      "last5_goals": 1,
+      "last5_points": 2,
+      "opponent": "MIN",
+      "is_home": true,
+      "game_id": 2025021001,
+      "matchup": "COL vs MIN",
+      "goal_probability": 0.139,
+      "rank": 157,
+      "is_hot": false
+    },
+    {
       "player_id": 8483506,
       "name": "Sam Rinzel",
       "position": "D",
@@ -3343,27 +3364,6 @@
       "game_id": 2025021004,
       "matchup": "CHI @ DAL",
       "goal_probability": 0.138,
-      "rank": 157,
-      "is_hot": false
-    },
-    {
-      "player_id": 8478038,
-      "name": "Devon Toews",
-      "position": "D",
-      "team": "COL",
-      "games_played": 48,
-      "season_goals": 2,
-      "season_shots": 84,
-      "avg_goals": 0.042,
-      "avg_shots": 1.75,
-      "shooting_pct": 0.024,
-      "last5_goals": 1,
-      "last5_points": 2,
-      "opponent": "MIN",
-      "is_home": true,
-      "game_id": 2025021001,
-      "matchup": "COL vs MIN",
-      "goal_probability": 0.138,
       "rank": 158,
       "is_hot": false
     },
@@ -3372,19 +3372,19 @@
       "name": "Gavin Brindley",
       "position": "C",
       "team": "COL",
-      "games_played": 48,
+      "games_played": 49,
       "season_goals": 6,
-      "season_shots": 56,
-      "avg_goals": 0.125,
-      "avg_shots": 1.17,
-      "shooting_pct": 0.107,
+      "season_shots": 57,
+      "avg_goals": 0.122,
+      "avg_shots": 1.16,
+      "shooting_pct": 0.105,
       "last5_goals": 1,
       "last5_points": 1,
       "opponent": "MIN",
       "is_home": true,
       "game_id": 2025021001,
       "matchup": "COL vs MIN",
-      "goal_probability": 0.137,
+      "goal_probability": 0.136,
       "rank": 159,
       "is_hot": false
     },
@@ -3666,12 +3666,12 @@
       "name": "Yakov Trenin",
       "position": "C",
       "team": "MIN",
-      "games_played": 63,
+      "games_played": 64,
       "season_goals": 6,
-      "season_shots": 72,
-      "avg_goals": 0.095,
+      "season_shots": 73,
+      "avg_goals": 0.094,
       "avg_shots": 1.14,
-      "shooting_pct": 0.083,
+      "shooting_pct": 0.082,
       "last5_goals": 1,
       "last5_points": 2,
       "opponent": "COL",
@@ -3830,6 +3830,27 @@
       "is_hot": false
     },
     {
+      "player_id": 8478462,
+      "name": "Nicolas Roy",
+      "position": "C",
+      "team": "COL",
+      "games_played": 61,
+      "season_goals": 6,
+      "season_shots": 59,
+      "avg_goals": 0.098,
+      "avg_shots": 0.97,
+      "shooting_pct": 0.102,
+      "last5_goals": 1,
+      "last5_points": 1,
+      "opponent": "MIN",
+      "is_home": true,
+      "game_id": 2025021001,
+      "matchup": "COL vs MIN",
+      "goal_probability": 0.119,
+      "rank": 181,
+      "is_hot": false
+    },
+    {
       "player_id": 8478396,
       "name": "Noah Hanifin",
       "position": "D",
@@ -3847,7 +3868,7 @@
       "game_id": 2025021007,
       "matchup": "VGK vs EDM",
       "goal_probability": 0.119,
-      "rank": 181,
+      "rank": 182,
       "is_hot": false
     },
     {
@@ -3868,7 +3889,7 @@
       "game_id": 2025021003,
       "matchup": "BUF vs TBL",
       "goal_probability": 0.118,
-      "rank": 182,
+      "rank": 183,
       "is_hot": false
     },
     {
@@ -3889,7 +3910,7 @@
       "game_id": 2025021004,
       "matchup": "DAL vs CHI",
       "goal_probability": 0.118,
-      "rank": 183,
+      "rank": 184,
       "is_hot": false
     },
     {
@@ -3910,7 +3931,7 @@
       "game_id": 2025021004,
       "matchup": "DAL vs CHI",
       "goal_probability": 0.117,
-      "rank": 184,
+      "rank": 185,
       "is_hot": false
     },
     {
@@ -3931,7 +3952,7 @@
       "game_id": 2025021005,
       "matchup": "DET @ NJD",
       "goal_probability": 0.117,
-      "rank": 185,
+      "rank": 186,
       "is_hot": false
     },
     {
@@ -3952,7 +3973,7 @@
       "game_id": 2025021004,
       "matchup": "CHI @ DAL",
       "goal_probability": 0.116,
-      "rank": 186,
+      "rank": 187,
       "is_hot": false
     },
     {
@@ -3973,7 +3994,7 @@
       "game_id": 2025021005,
       "matchup": "DET @ NJD",
       "goal_probability": 0.116,
-      "rank": 187,
+      "rank": 188,
       "is_hot": false
     },
     {
@@ -3994,7 +4015,7 @@
       "game_id": 2025021002,
       "matchup": "BOS @ PIT",
       "goal_probability": 0.115,
-      "rank": 188,
+      "rank": 189,
       "is_hot": false
     },
     {
@@ -4002,10 +4023,10 @@
       "name": "Sam Malinski",
       "position": "D",
       "team": "COL",
-      "games_played": 61,
+      "games_played": 62,
       "season_goals": 3,
-      "season_shots": 115,
-      "avg_goals": 0.049,
+      "season_shots": 117,
+      "avg_goals": 0.048,
       "avg_shots": 1.89,
       "shooting_pct": 0.026,
       "last5_goals": 0,
@@ -4015,7 +4036,7 @@
       "game_id": 2025021001,
       "matchup": "COL vs MIN",
       "goal_probability": 0.114,
-      "rank": 189,
+      "rank": 190,
       "is_hot": false
     },
     {
@@ -4036,7 +4057,7 @@
       "game_id": 2025021005,
       "matchup": "NJD vs DET",
       "goal_probability": 0.114,
-      "rank": 190,
+      "rank": 191,
       "is_hot": false
     },
     {
@@ -4057,7 +4078,7 @@
       "game_id": 2025021002,
       "matchup": "BOS @ PIT",
       "goal_probability": 0.113,
-      "rank": 191,
+      "rank": 192,
       "is_hot": false
     },
     {
@@ -4078,7 +4099,7 @@
       "game_id": 2025021002,
       "matchup": "PIT vs BOS",
       "goal_probability": 0.113,
-      "rank": 192,
+      "rank": 193,
       "is_hot": false
     },
     {
@@ -4099,7 +4120,7 @@
       "game_id": 2025021003,
       "matchup": "TBL @ BUF",
       "goal_probability": 0.113,
-      "rank": 193,
+      "rank": 194,
       "is_hot": false
     },
     {
@@ -4120,7 +4141,7 @@
       "game_id": 2025021005,
       "matchup": "NJD vs DET",
       "goal_probability": 0.112,
-      "rank": 194,
+      "rank": 195,
       "is_hot": false
     },
     {
@@ -4141,7 +4162,28 @@
       "game_id": 2025021003,
       "matchup": "TBL @ BUF",
       "goal_probability": 0.112,
-      "rank": 195,
+      "rank": 196,
+      "is_hot": false
+    },
+    {
+      "player_id": 8481477,
+      "name": "Nico Sturm",
+      "position": "C",
+      "team": "MIN",
+      "games_played": 41,
+      "season_goals": 4,
+      "season_shots": 31,
+      "avg_goals": 0.098,
+      "avg_shots": 0.76,
+      "shooting_pct": 0.129,
+      "last5_goals": 1,
+      "last5_points": 1,
+      "opponent": "COL",
+      "is_home": false,
+      "game_id": 2025021001,
+      "matchup": "MIN @ COL",
+      "goal_probability": 0.111,
+      "rank": 197,
       "is_hot": false
     },
     {
@@ -4162,7 +4204,7 @@
       "game_id": 2025021002,
       "matchup": "PIT vs BOS",
       "goal_probability": 0.111,
-      "rank": 196,
+      "rank": 198,
       "is_hot": false
     },
     {
@@ -4183,7 +4225,7 @@
       "game_id": 2025021007,
       "matchup": "VGK vs EDM",
       "goal_probability": 0.11,
-      "rank": 197,
+      "rank": 199,
       "is_hot": false
     },
     {
@@ -4204,7 +4246,7 @@
       "game_id": 2025021003,
       "matchup": "BUF vs TBL",
       "goal_probability": 0.109,
-      "rank": 198,
+      "rank": 200,
       "is_hot": false
     },
     {
@@ -4225,7 +4267,7 @@
       "game_id": 2025021002,
       "matchup": "PIT vs BOS",
       "goal_probability": 0.109,
-      "rank": 199,
+      "rank": 201,
       "is_hot": false
     },
     {
@@ -4246,7 +4288,7 @@
       "game_id": 2025021002,
       "matchup": "PIT vs BOS",
       "goal_probability": 0.109,
-      "rank": 200,
+      "rank": 202,
       "is_hot": false
     },
     {
@@ -4267,7 +4309,7 @@
       "game_id": 2025021006,
       "matchup": "ANA vs STL",
       "goal_probability": 0.108,
-      "rank": 201,
+      "rank": 203,
       "is_hot": false
     },
     {
@@ -4275,20 +4317,20 @@
       "name": "Josh Manson",
       "position": "D",
       "team": "COL",
-      "games_played": 61,
+      "games_played": 62,
       "season_goals": 5,
-      "season_shots": 95,
-      "avg_goals": 0.082,
-      "avg_shots": 1.56,
-      "shooting_pct": 0.053,
+      "season_shots": 96,
+      "avg_goals": 0.081,
+      "avg_shots": 1.55,
+      "shooting_pct": 0.052,
       "last5_goals": 0,
-      "last5_points": 1,
+      "last5_points": 0,
       "opponent": "MIN",
       "is_home": true,
       "game_id": 2025021001,
       "matchup": "COL vs MIN",
       "goal_probability": 0.108,
-      "rank": 202,
+      "rank": 204,
       "is_hot": false
     },
     {
@@ -4296,20 +4338,20 @@
       "name": "Danila Yurov",
       "position": "R",
       "team": "MIN",
-      "games_played": 56,
+      "games_played": 57,
       "season_goals": 8,
-      "season_shots": 61,
-      "avg_goals": 0.143,
-      "avg_shots": 1.09,
-      "shooting_pct": 0.131,
+      "season_shots": 65,
+      "avg_goals": 0.14,
+      "avg_shots": 1.14,
+      "shooting_pct": 0.123,
       "last5_goals": 0,
       "last5_points": 1,
       "opponent": "COL",
       "is_home": false,
       "game_id": 2025021001,
       "matchup": "MIN @ COL",
-      "goal_probability": 0.107,
-      "rank": 203,
+      "goal_probability": 0.108,
+      "rank": 205,
       "is_hot": false
     },
     {
@@ -4330,7 +4372,7 @@
       "game_id": 2025021003,
       "matchup": "TBL @ BUF",
       "goal_probability": 0.107,
-      "rank": 204,
+      "rank": 206,
       "is_hot": false
     },
     {
@@ -4351,28 +4393,7 @@
       "game_id": 2025021003,
       "matchup": "BUF vs TBL",
       "goal_probability": 0.106,
-      "rank": 205,
-      "is_hot": false
-    },
-    {
-      "player_id": 8480835,
-      "name": "Jack Drury",
-      "position": "C",
-      "team": "COL",
-      "games_played": 61,
-      "season_goals": 8,
-      "season_shots": 71,
-      "avg_goals": 0.131,
-      "avg_shots": 1.16,
-      "shooting_pct": 0.113,
-      "last5_goals": 0,
-      "last5_points": 2,
-      "opponent": "MIN",
-      "is_home": true,
-      "game_id": 2025021001,
-      "matchup": "COL vs MIN",
-      "goal_probability": 0.106,
-      "rank": 206,
+      "rank": 207,
       "is_hot": false
     },
     {
@@ -4380,12 +4401,12 @@
       "name": "Nick Foligno",
       "position": "L",
       "team": "MIN",
-      "games_played": 37,
+      "games_played": 38,
       "season_goals": 3,
-      "season_shots": 30,
-      "avg_goals": 0.081,
-      "avg_shots": 0.81,
-      "shooting_pct": 0.1,
+      "season_shots": 31,
+      "avg_goals": 0.079,
+      "avg_shots": 0.82,
+      "shooting_pct": 0.097,
       "last5_goals": 1,
       "last5_points": 1,
       "opponent": "COL",
@@ -4393,7 +4414,7 @@
       "game_id": 2025021001,
       "matchup": "MIN @ COL",
       "goal_probability": 0.106,
-      "rank": 207,
+      "rank": 208,
       "is_hot": false
     },
     {
@@ -4414,7 +4435,7 @@
       "game_id": 2025021007,
       "matchup": "VGK vs EDM",
       "goal_probability": 0.106,
-      "rank": 208,
+      "rank": 209,
       "is_hot": false
     },
     {
@@ -4435,7 +4456,28 @@
       "game_id": 2025021007,
       "matchup": "VGK vs EDM",
       "goal_probability": 0.106,
-      "rank": 209,
+      "rank": 210,
+      "is_hot": false
+    },
+    {
+      "player_id": 8480835,
+      "name": "Jack Drury",
+      "position": "C",
+      "team": "COL",
+      "games_played": 62,
+      "season_goals": 8,
+      "season_shots": 71,
+      "avg_goals": 0.129,
+      "avg_shots": 1.15,
+      "shooting_pct": 0.113,
+      "last5_goals": 0,
+      "last5_points": 2,
+      "opponent": "MIN",
+      "is_home": true,
+      "game_id": 2025021001,
+      "matchup": "COL vs MIN",
+      "goal_probability": 0.105,
+      "rank": 211,
       "is_hot": false
     },
     {
@@ -4456,7 +4498,7 @@
       "game_id": 2025021001,
       "matchup": "COL vs MIN",
       "goal_probability": 0.105,
-      "rank": 210,
+      "rank": 212,
       "is_hot": false
     },
     {
@@ -4477,7 +4519,7 @@
       "game_id": 2025021005,
       "matchup": "DET @ NJD",
       "goal_probability": 0.105,
-      "rank": 211,
+      "rank": 213,
       "is_hot": false
     },
     {
@@ -4498,7 +4540,7 @@
       "game_id": 2025021001,
       "matchup": "MIN @ COL",
       "goal_probability": 0.104,
-      "rank": 212,
+      "rank": 214,
       "is_hot": false
     },
     {
@@ -4519,7 +4561,7 @@
       "game_id": 2025021006,
       "matchup": "ANA vs STL",
       "goal_probability": 0.102,
-      "rank": 213,
+      "rank": 215,
       "is_hot": false
     },
     {
@@ -4540,7 +4582,7 @@
       "game_id": 2025021002,
       "matchup": "PIT vs BOS",
       "goal_probability": 0.102,
-      "rank": 214,
+      "rank": 216,
       "is_hot": false
     },
     {
@@ -4561,7 +4603,7 @@
       "game_id": 2025021006,
       "matchup": "STL @ ANA",
       "goal_probability": 0.102,
-      "rank": 215,
+      "rank": 217,
       "is_hot": false
     },
     {
@@ -4582,7 +4624,7 @@
       "game_id": 2025021007,
       "matchup": "EDM @ VGK",
       "goal_probability": 0.101,
-      "rank": 216,
+      "rank": 218,
       "is_hot": false
     },
     {
@@ -4603,7 +4645,7 @@
       "game_id": 2025021007,
       "matchup": "EDM @ VGK",
       "goal_probability": 0.101,
-      "rank": 217,
+      "rank": 219,
       "is_hot": false
     },
     {
@@ -4624,7 +4666,28 @@
       "game_id": 2025021004,
       "matchup": "DAL vs CHI",
       "goal_probability": 0.1,
-      "rank": 218,
+      "rank": 220,
+      "is_hot": false
+    },
+    {
+      "player_id": 8474567,
+      "name": "Zach Bogosian",
+      "position": "D",
+      "team": "MIN",
+      "games_played": 31,
+      "season_goals": 2,
+      "season_shots": 25,
+      "avg_goals": 0.065,
+      "avg_shots": 0.81,
+      "shooting_pct": 0.08,
+      "last5_goals": 1,
+      "last5_points": 1,
+      "opponent": "COL",
+      "is_home": false,
+      "game_id": 2025021001,
+      "matchup": "MIN @ COL",
+      "goal_probability": 0.1,
+      "rank": 221,
       "is_hot": false
     },
     {
@@ -4645,7 +4708,7 @@
       "game_id": 2025021003,
       "matchup": "BUF vs TBL",
       "goal_probability": 0.099,
-      "rank": 219,
+      "rank": 222,
       "is_hot": false
     },
     {
@@ -4666,28 +4729,7 @@
       "game_id": 2025021004,
       "matchup": "CHI @ DAL",
       "goal_probability": 0.099,
-      "rank": 220,
-      "is_hot": false
-    },
-    {
-      "player_id": 8474567,
-      "name": "Zach Bogosian",
-      "position": "D",
-      "team": "MIN",
-      "games_played": 30,
-      "season_goals": 2,
-      "season_shots": 23,
-      "avg_goals": 0.067,
-      "avg_shots": 0.77,
-      "shooting_pct": 0.087,
-      "last5_goals": 1,
-      "last5_points": 1,
-      "opponent": "COL",
-      "is_home": false,
-      "game_id": 2025021001,
-      "matchup": "MIN @ COL",
-      "goal_probability": 0.099,
-      "rank": 221,
+      "rank": 223,
       "is_hot": false
     },
     {
@@ -4708,7 +4750,7 @@
       "game_id": 2025021005,
       "matchup": "NJD vs DET",
       "goal_probability": 0.098,
-      "rank": 222,
+      "rank": 224,
       "is_hot": false
     },
     {
@@ -4729,7 +4771,7 @@
       "game_id": 2025021004,
       "matchup": "CHI @ DAL",
       "goal_probability": 0.095,
-      "rank": 223,
+      "rank": 225,
       "is_hot": false
     },
     {
@@ -4750,28 +4792,7 @@
       "game_id": 2025021002,
       "matchup": "BOS @ PIT",
       "goal_probability": 0.094,
-      "rank": 224,
-      "is_hot": false
-    },
-    {
-      "player_id": 8474716,
-      "name": "Jared Spurgeon",
-      "position": "D",
-      "team": "MIN",
-      "games_played": 63,
-      "season_goals": 6,
-      "season_shots": 72,
-      "avg_goals": 0.095,
-      "avg_shots": 1.14,
-      "shooting_pct": 0.083,
-      "last5_goals": 0,
-      "last5_points": 1,
-      "opponent": "COL",
-      "is_home": false,
-      "game_id": 2025021001,
-      "matchup": "MIN @ COL",
-      "goal_probability": 0.093,
-      "rank": 225,
+      "rank": 226,
       "is_hot": false
     },
     {
@@ -4792,7 +4813,7 @@
       "game_id": 2025021005,
       "matchup": "DET @ NJD",
       "goal_probability": 0.092,
-      "rank": 226,
+      "rank": 227,
       "is_hot": false
     },
     {
@@ -4813,7 +4834,28 @@
       "game_id": 2025021005,
       "matchup": "DET @ NJD",
       "goal_probability": 0.092,
-      "rank": 227,
+      "rank": 228,
+      "is_hot": false
+    },
+    {
+      "player_id": 8474716,
+      "name": "Jared Spurgeon",
+      "position": "D",
+      "team": "MIN",
+      "games_played": 64,
+      "season_goals": 6,
+      "season_shots": 73,
+      "avg_goals": 0.094,
+      "avg_shots": 1.14,
+      "shooting_pct": 0.082,
+      "last5_goals": 0,
+      "last5_points": 1,
+      "opponent": "COL",
+      "is_home": false,
+      "game_id": 2025021001,
+      "matchup": "MIN @ COL",
+      "goal_probability": 0.092,
+      "rank": 229,
       "is_hot": false
     },
     {
@@ -4834,7 +4876,7 @@
       "game_id": 2025021002,
       "matchup": "BOS @ PIT",
       "goal_probability": 0.091,
-      "rank": 228,
+      "rank": 230,
       "is_hot": false
     },
     {
@@ -4855,7 +4897,7 @@
       "game_id": 2025021003,
       "matchup": "BUF vs TBL",
       "goal_probability": 0.089,
-      "rank": 229,
+      "rank": 231,
       "is_hot": false
     },
     {
@@ -4876,7 +4918,7 @@
       "game_id": 2025021007,
       "matchup": "VGK vs EDM",
       "goal_probability": 0.089,
-      "rank": 230,
+      "rank": 232,
       "is_hot": false
     },
     {
@@ -4897,7 +4939,7 @@
       "game_id": 2025021007,
       "matchup": "EDM @ VGK",
       "goal_probability": 0.088,
-      "rank": 231,
+      "rank": 233,
       "is_hot": false
     },
     {
@@ -4918,7 +4960,7 @@
       "game_id": 2025021006,
       "matchup": "STL @ ANA",
       "goal_probability": 0.088,
-      "rank": 232,
+      "rank": 234,
       "is_hot": false
     },
     {
@@ -4939,7 +4981,7 @@
       "game_id": 2025021001,
       "matchup": "MIN @ COL",
       "goal_probability": 0.087,
-      "rank": 233,
+      "rank": 235,
       "is_hot": false
     },
     {
@@ -4960,7 +5002,7 @@
       "game_id": 2025021005,
       "matchup": "DET @ NJD",
       "goal_probability": 0.086,
-      "rank": 234,
+      "rank": 236,
       "is_hot": false
     },
     {
@@ -4981,7 +5023,7 @@
       "game_id": 2025021005,
       "matchup": "DET @ NJD",
       "goal_probability": 0.085,
-      "rank": 235,
+      "rank": 237,
       "is_hot": false
     },
     {
@@ -5002,7 +5044,7 @@
       "game_id": 2025021005,
       "matchup": "DET @ NJD",
       "goal_probability": 0.085,
-      "rank": 236,
+      "rank": 238,
       "is_hot": false
     },
     {
@@ -5023,7 +5065,7 @@
       "game_id": 2025021006,
       "matchup": "STL @ ANA",
       "goal_probability": 0.085,
-      "rank": 237,
+      "rank": 239,
       "is_hot": false
     },
     {
@@ -5044,7 +5086,7 @@
       "game_id": 2025021004,
       "matchup": "CHI @ DAL",
       "goal_probability": 0.083,
-      "rank": 238,
+      "rank": 240,
       "is_hot": false
     },
     {
@@ -5065,7 +5107,7 @@
       "game_id": 2025021004,
       "matchup": "DAL vs CHI",
       "goal_probability": 0.083,
-      "rank": 239,
+      "rank": 241,
       "is_hot": false
     },
     {
@@ -5086,7 +5128,7 @@
       "game_id": 2025021006,
       "matchup": "STL @ ANA",
       "goal_probability": 0.083,
-      "rank": 240,
+      "rank": 242,
       "is_hot": false
     },
     {
@@ -5107,7 +5149,7 @@
       "game_id": 2025021004,
       "matchup": "DAL vs CHI",
       "goal_probability": 0.082,
-      "rank": 241,
+      "rank": 243,
       "is_hot": false
     },
     {
@@ -5128,7 +5170,7 @@
       "game_id": 2025021005,
       "matchup": "DET @ NJD",
       "goal_probability": 0.082,
-      "rank": 242,
+      "rank": 244,
       "is_hot": false
     },
     {
@@ -5149,28 +5191,7 @@
       "game_id": 2025021007,
       "matchup": "EDM @ VGK",
       "goal_probability": 0.08,
-      "rank": 243,
-      "is_hot": false
-    },
-    {
-      "player_id": 8478462,
-      "name": "Nicolas Roy",
-      "position": "C",
-      "team": "COL",
-      "games_played": 60,
-      "season_goals": 5,
-      "season_shots": 56,
-      "avg_goals": 0.083,
-      "avg_shots": 0.93,
-      "shooting_pct": 0.089,
-      "last5_goals": 0,
-      "last5_points": 0,
-      "opponent": "MIN",
-      "is_home": true,
-      "game_id": 2025021001,
-      "matchup": "COL vs MIN",
-      "goal_probability": 0.079,
-      "rank": 244,
+      "rank": 245,
       "is_hot": false
     },
     {
@@ -5191,7 +5212,7 @@
       "game_id": 2025021007,
       "matchup": "VGK vs EDM",
       "goal_probability": 0.079,
-      "rank": 245,
+      "rank": 246,
       "is_hot": false
     },
     {
@@ -5212,7 +5233,7 @@
       "game_id": 2025021003,
       "matchup": "TBL @ BUF",
       "goal_probability": 0.078,
-      "rank": 246,
+      "rank": 247,
       "is_hot": false
     },
     {
@@ -5233,7 +5254,7 @@
       "game_id": 2025021002,
       "matchup": "BOS @ PIT",
       "goal_probability": 0.077,
-      "rank": 247,
+      "rank": 248,
       "is_hot": false
     },
     {
@@ -5241,12 +5262,12 @@
       "name": "Jonas Brodin",
       "position": "D",
       "team": "MIN",
-      "games_played": 44,
+      "games_played": 45,
       "season_goals": 3,
-      "season_shots": 44,
-      "avg_goals": 0.068,
-      "avg_shots": 1.0,
-      "shooting_pct": 0.068,
+      "season_shots": 46,
+      "avg_goals": 0.067,
+      "avg_shots": 1.02,
+      "shooting_pct": 0.065,
       "last5_goals": 0,
       "last5_points": 1,
       "opponent": "COL",
@@ -5254,7 +5275,7 @@
       "game_id": 2025021001,
       "matchup": "MIN @ COL",
       "goal_probability": 0.077,
-      "rank": 248,
+      "rank": 249,
       "is_hot": false
     },
     {
@@ -5275,7 +5296,7 @@
       "game_id": 2025021003,
       "matchup": "TBL @ BUF",
       "goal_probability": 0.077,
-      "rank": 249,
+      "rank": 250,
       "is_hot": false
     },
     {
@@ -5296,7 +5317,7 @@
       "game_id": 2025021004,
       "matchup": "CHI @ DAL",
       "goal_probability": 0.076,
-      "rank": 250,
+      "rank": 251,
       "is_hot": false
     },
     {
@@ -5317,7 +5338,7 @@
       "game_id": 2025021007,
       "matchup": "VGK vs EDM",
       "goal_probability": 0.076,
-      "rank": 251,
+      "rank": 252,
       "is_hot": false
     },
     {
@@ -5338,7 +5359,7 @@
       "game_id": 2025021002,
       "matchup": "PIT vs BOS",
       "goal_probability": 0.075,
-      "rank": 252,
+      "rank": 253,
       "is_hot": false
     },
     {
@@ -5359,7 +5380,7 @@
       "game_id": 2025021006,
       "matchup": "STL @ ANA",
       "goal_probability": 0.075,
-      "rank": 253,
+      "rank": 254,
       "is_hot": false
     },
     {
@@ -5380,7 +5401,7 @@
       "game_id": 2025021006,
       "matchup": "STL @ ANA",
       "goal_probability": 0.075,
-      "rank": 254,
+      "rank": 255,
       "is_hot": false
     },
     {
@@ -5401,7 +5422,7 @@
       "game_id": 2025021006,
       "matchup": "ANA vs STL",
       "goal_probability": 0.074,
-      "rank": 255,
+      "rank": 256,
       "is_hot": false
     },
     {
@@ -5422,7 +5443,7 @@
       "game_id": 2025021006,
       "matchup": "STL @ ANA",
       "goal_probability": 0.074,
-      "rank": 256,
+      "rank": 257,
       "is_hot": false
     },
     {
@@ -5443,7 +5464,7 @@
       "game_id": 2025021006,
       "matchup": "STL @ ANA",
       "goal_probability": 0.074,
-      "rank": 257,
+      "rank": 258,
       "is_hot": false
     },
     {
@@ -5464,7 +5485,7 @@
       "game_id": 2025021005,
       "matchup": "NJD vs DET",
       "goal_probability": 0.073,
-      "rank": 258,
+      "rank": 259,
       "is_hot": false
     },
     {
@@ -5485,7 +5506,7 @@
       "game_id": 2025021007,
       "matchup": "VGK vs EDM",
       "goal_probability": 0.073,
-      "rank": 259,
+      "rank": 260,
       "is_hot": false
     },
     {
@@ -5506,7 +5527,7 @@
       "game_id": 2025021004,
       "matchup": "DAL vs CHI",
       "goal_probability": 0.072,
-      "rank": 260,
+      "rank": 261,
       "is_hot": false
     },
     {
@@ -5527,7 +5548,7 @@
       "game_id": 2025021007,
       "matchup": "EDM @ VGK",
       "goal_probability": 0.072,
-      "rank": 261,
+      "rank": 262,
       "is_hot": false
     },
     {
@@ -5548,7 +5569,7 @@
       "game_id": 2025021006,
       "matchup": "ANA vs STL",
       "goal_probability": 0.071,
-      "rank": 262,
+      "rank": 263,
       "is_hot": false
     },
     {
@@ -5569,7 +5590,7 @@
       "game_id": 2025021002,
       "matchup": "BOS @ PIT",
       "goal_probability": 0.071,
-      "rank": 263,
+      "rank": 264,
       "is_hot": false
     },
     {
@@ -5590,7 +5611,7 @@
       "game_id": 2025021004,
       "matchup": "DAL vs CHI",
       "goal_probability": 0.071,
-      "rank": 264,
+      "rank": 265,
       "is_hot": false
     },
     {
@@ -5611,7 +5632,7 @@
       "game_id": 2025021007,
       "matchup": "EDM @ VGK",
       "goal_probability": 0.071,
-      "rank": 265,
+      "rank": 266,
       "is_hot": false
     },
     {
@@ -5632,7 +5653,7 @@
       "game_id": 2025021002,
       "matchup": "PIT vs BOS",
       "goal_probability": 0.071,
-      "rank": 266,
+      "rank": 267,
       "is_hot": false
     },
     {
@@ -5653,7 +5674,7 @@
       "game_id": 2025021003,
       "matchup": "BUF vs TBL",
       "goal_probability": 0.07,
-      "rank": 267,
+      "rank": 268,
       "is_hot": false
     },
     {
@@ -5674,7 +5695,7 @@
       "game_id": 2025021005,
       "matchup": "NJD vs DET",
       "goal_probability": 0.07,
-      "rank": 268,
+      "rank": 269,
       "is_hot": false
     },
     {
@@ -5695,7 +5716,7 @@
       "game_id": 2025021006,
       "matchup": "STL @ ANA",
       "goal_probability": 0.07,
-      "rank": 269,
+      "rank": 270,
       "is_hot": false
     },
     {
@@ -5703,39 +5724,18 @@
       "name": "Joel Kiviranta",
       "position": "L",
       "team": "COL",
-      "games_played": 31,
+      "games_played": 32,
       "season_goals": 2,
-      "season_shots": 26,
-      "avg_goals": 0.065,
-      "avg_shots": 0.84,
-      "shooting_pct": 0.077,
+      "season_shots": 28,
+      "avg_goals": 0.062,
+      "avg_shots": 0.88,
+      "shooting_pct": 0.071,
       "last5_goals": 0,
-      "last5_points": 0,
+      "last5_points": 1,
       "opponent": "MIN",
       "is_home": true,
       "game_id": 2025021001,
       "matchup": "COL vs MIN",
-      "goal_probability": 0.069,
-      "rank": 270,
-      "is_hot": false
-    },
-    {
-      "player_id": 8481477,
-      "name": "Nico Sturm",
-      "position": "C",
-      "team": "MIN",
-      "games_played": 40,
-      "season_goals": 3,
-      "season_shots": 30,
-      "avg_goals": 0.075,
-      "avg_shots": 0.75,
-      "shooting_pct": 0.1,
-      "last5_goals": 0,
-      "last5_points": 0,
-      "opponent": "COL",
-      "is_home": false,
-      "game_id": 2025021001,
-      "matchup": "MIN @ COL",
       "goal_probability": 0.069,
       "rank": 271,
       "is_hot": false
@@ -5867,27 +5867,6 @@
       "is_hot": false
     },
     {
-      "player_id": 8476967,
-      "name": "Brett Kulak",
-      "position": "D",
-      "team": "COL",
-      "games_played": 62,
-      "season_goals": 1,
-      "season_shots": 68,
-      "avg_goals": 0.016,
-      "avg_shots": 1.1,
-      "shooting_pct": 0.015,
-      "last5_goals": 0,
-      "last5_points": 1,
-      "opponent": "MIN",
-      "is_home": true,
-      "game_id": 2025021001,
-      "matchup": "COL vs MIN",
-      "goal_probability": 0.063,
-      "rank": 278,
-      "is_hot": false
-    },
-    {
       "player_id": 8485512,
       "name": "Tim Washe",
       "position": "C",
@@ -5904,6 +5883,27 @@
       "is_home": true,
       "game_id": 2025021006,
       "matchup": "ANA vs STL",
+      "goal_probability": 0.062,
+      "rank": 278,
+      "is_hot": false
+    },
+    {
+      "player_id": 8476967,
+      "name": "Brett Kulak",
+      "position": "D",
+      "team": "COL",
+      "games_played": 63,
+      "season_goals": 1,
+      "season_shots": 68,
+      "avg_goals": 0.016,
+      "avg_shots": 1.08,
+      "shooting_pct": 0.015,
+      "last5_goals": 0,
+      "last5_points": 2,
+      "opponent": "MIN",
+      "is_home": true,
+      "game_id": 2025021001,
+      "matchup": "COL vs MIN",
       "goal_probability": 0.062,
       "rank": 279,
       "is_hot": false
@@ -6413,27 +6413,6 @@
       "is_hot": false
     },
     {
-      "player_id": 8478136,
-      "name": "Jake Middleton",
-      "position": "D",
-      "team": "MIN",
-      "games_played": 56,
-      "season_goals": 1,
-      "season_shots": 45,
-      "avg_goals": 0.018,
-      "avg_shots": 0.8,
-      "shooting_pct": 0.022,
-      "last5_goals": 0,
-      "last5_points": 1,
-      "opponent": "COL",
-      "is_home": false,
-      "game_id": 2025021001,
-      "matchup": "MIN @ COL",
-      "goal_probability": 0.049,
-      "rank": 304,
-      "is_hot": false
-    },
-    {
       "player_id": 8474149,
       "name": "Evgenii Dadonov",
       "position": "L",
@@ -6451,7 +6430,7 @@
       "game_id": 2025021005,
       "matchup": "NJD vs DET",
       "goal_probability": 0.049,
-      "rank": 305,
+      "rank": 304,
       "is_hot": false
     },
     {
@@ -6472,7 +6451,7 @@
       "game_id": 2025021002,
       "matchup": "PIT vs BOS",
       "goal_probability": 0.049,
-      "rank": 306,
+      "rank": 305,
       "is_hot": false
     },
     {
@@ -6492,6 +6471,27 @@
       "is_home": false,
       "game_id": 2025021002,
       "matchup": "BOS @ PIT",
+      "goal_probability": 0.048,
+      "rank": 306,
+      "is_hot": false
+    },
+    {
+      "player_id": 8478136,
+      "name": "Jake Middleton",
+      "position": "D",
+      "team": "MIN",
+      "games_played": 57,
+      "season_goals": 1,
+      "season_shots": 45,
+      "avg_goals": 0.018,
+      "avg_shots": 0.79,
+      "shooting_pct": 0.022,
+      "last5_goals": 0,
+      "last5_points": 0,
+      "opponent": "COL",
+      "is_home": false,
+      "game_id": 2025021001,
+      "matchup": "MIN @ COL",
       "goal_probability": 0.048,
       "rank": 307,
       "is_hot": false
@@ -6690,19 +6690,19 @@
       "name": "Zakhar Bardakov",
       "position": "C",
       "team": "COL",
-      "games_played": 47,
+      "games_played": 48,
       "season_goals": 1,
-      "season_shots": 25,
+      "season_shots": 26,
       "avg_goals": 0.021,
-      "avg_shots": 0.53,
-      "shooting_pct": 0.04,
+      "avg_shots": 0.54,
+      "shooting_pct": 0.038,
       "last5_goals": 0,
       "last5_points": 0,
       "opponent": "MIN",
       "is_home": true,
       "game_id": 2025021001,
       "matchup": "COL vs MIN",
-      "goal_probability": 0.037,
+      "goal_probability": 0.038,
       "rank": 317,
       "is_hot": false
     },
@@ -6810,7 +6810,28 @@
       "goal_probability": 0.026,
       "rank": 322,
       "is_hot": false
+    },
+    {
+      "player_id": 8484509,
+      "name": "Josh Samanski",
+      "position": "C",
+      "team": "EDM",
+      "games_played": 6,
+      "season_goals": 0,
+      "season_shots": 2,
+      "avg_goals": 0.0,
+      "avg_shots": 0.33,
+      "shooting_pct": 0.0,
+      "last5_goals": 0,
+      "last5_points": 2,
+      "opponent": "VGK",
+      "is_home": false,
+      "game_id": 2025021007,
+      "matchup": "EDM @ VGK",
+      "goal_probability": 0.02,
+      "rank": 323,
+      "is_hot": false
     }
   ],
-  "generated_at": "2026-03-08T15:24:33.436640"
+  "generated_at": "2026-03-08T18:56:28.148496"
 }

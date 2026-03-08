@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NHL Goal Predictor | Mohammad G. Nasiri</title>
-    <meta name="description" content="Daily NHL goal predictions for  Hockey Challenge using Machine Learning">
-    
+    <meta name="description" content="Daily NHL goal predictions for Hockey Challenge using Monte Carlo Simulation">
+
     <!-- Bootstrap & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -417,6 +417,152 @@
             opacity: 0.8;
         }
         
+        /* Model Selector */
+        .model-selector {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .model-btn {
+            background: var(--midnight-light);
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            color: var(--slate);
+            padding: 0.5rem 1.25rem;
+            font-size: 0.8rem;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .model-btn:hover {
+            border-color: var(--gold);
+            color: var(--ivory);
+        }
+
+        .model-btn.active {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+            color: var(--midnight);
+            border-color: var(--gold);
+            font-weight: 500;
+        }
+
+        /* Comparison Section */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .model-card {
+            background: var(--midnight);
+            border: 1px solid rgba(197, 160, 89, 0.12);
+            padding: 1.25rem;
+        }
+
+        .model-card.winner {
+            border-color: var(--gold);
+            box-shadow: 0 0 15px rgba(197, 160, 89, 0.1);
+        }
+
+        .model-card h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            color: var(--ivory);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .model-card h4 .badge {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.6rem;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .badge-new {
+            background: var(--gold);
+            color: var(--midnight);
+        }
+
+        .badge-old {
+            background: var(--slate);
+            color: var(--midnight);
+        }
+
+        .model-rate {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--gold);
+            text-align: center;
+        }
+
+        .model-rate .unit {
+            font-size: 0.9rem;
+            color: var(--slate);
+        }
+
+        /* Tim Hortons Section */
+        .tims-section {
+            padding: 2rem 0;
+            background: var(--midnight-light);
+            border-top: 1px solid rgba(197, 160, 89, 0.08);
+        }
+
+        .tims-groups {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .tims-group-card {
+            background: var(--midnight);
+            border: 1px solid rgba(197, 160, 89, 0.12);
+            padding: 1.5rem;
+        }
+
+        .tims-group-card h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.15rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .tims-pick-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.06);
+        }
+
+        .tims-pick-item:last-child {
+            border-bottom: none;
+        }
+
+        .tims-pick-item .pick-rank {
+            font-weight: 600;
+            color: var(--gold);
+            width: 24px;
+        }
+
+        .tims-pick-item.recommended {
+            background: rgba(197, 160, 89, 0.06);
+            padding: 0.5rem;
+            margin: 0 -0.5rem;
+        }
+
+        .tims-pick-item .pick-prob {
+            font-weight: 500;
+            color: var(--ivory);
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .page-header {
@@ -452,13 +598,21 @@
             .hits-display .number {
                 font-size: 2rem;
             }
-            
+
             .stats-grid {
                 gap: 0.5rem;
             }
-            
+
             .stat-item .value {
                 font-size: 1.25rem;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tims-groups {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -485,12 +639,24 @@
     <!-- Page Header -->
     <header class="page-header">
         <div class="container">
-            <p class="subtitle"> Hockey Challenge</p>
+            <p class="subtitle">Hockey Challenge</p>
             <h1>NHL Goal Predictor</h1>
             <div class="gold-line"></div>
             <p class="date" id="prediction-date">Loading...</p>
+            <div class="model-selector" style="margin-top: 1.5rem;">
+                <button class="model-btn" data-model="monte_carlo" onclick="switchModel('monte_carlo')" type="button">Monte Carlo v2</button>
+                <button class="model-btn" data-model="neural_network" onclick="switchModel('neural_network')" type="button">Neural Network v1</button>
+            </div>
         </div>
     </header>
+
+    <!-- Tim Hortons Section (shown when Monte Carlo has tims data) -->
+    <section class="tims-section" id="tims-section" style="display: none;">
+        <div class="container">
+            <h2 class="section-title">Tim Hortons Challenge Picks</h2>
+            <div class="tims-groups" id="tims-groups"></div>
+        </div>
+    </section>
 
     <!-- Performance Section -->
     <section class="performance-section">
@@ -512,7 +678,7 @@
                 <!-- Model Stats -->
                 <div class="col-lg-6">
                     <div class="performance-card">
-                        <h3>Model <span>Performance</span></h3>
+                        <h3>Model <span>Comparison</span></h3>
                         <div id="model-stats">
                             <div class="loading">
                                 <div class="loading-spinner"></div>
@@ -573,7 +739,7 @@
     <footer>
         <div class="container">
             <p>Last updated: <span id="last-updated">--</span></p>
-            <p>Automated daily predictions using Neural Network</p>
+            <p>Monte Carlo v2: 10,000 simulations | Opponent-adjusted | Tim Hortons Challenge</p>
             <p><a href="../../index.html">← Back to Portfolio</a></p>
         </div>
     </footer>
@@ -582,297 +748,522 @@
     
     <script>
         // =====================================================================
-        // CONFIGURATION
+        // CONFIGURATION — supports both Monte Carlo v2 and Neural Network v1
         // =====================================================================
-        const PREDICTIONS_PATH = './data/predictions/neural_network/latest.json';
         const RESULTS_PATH = './data/results/latest.json';
         const STATS_PATH = './data/stats.json';
-        
-        const getTeamLogo = (team) => `https://assets.nhle.com/logos/nhl/svg/${team}_dark.svg`;
-        
+
+        const MODELS = {
+            monte_carlo: {
+                name: 'Monte Carlo v2',
+                path: './data/predictions/monte_carlo/latest.json',
+            },
+            neural_network: {
+                name: 'Neural Network v1',
+                path: './data/predictions/neural_network/latest.json',
+            }
+        };
+
+        let currentModel = 'monte_carlo';
         let allPredictions = [];
-        
+        const getTeamLogo = (team) =>
+            'https://assets.nhle.com/logos/nhl/svg/' + team + '_dark.svg';
+
         // =====================================================================
-        // LOAD TODAY'S PREDICTIONS
+        // MODEL SWITCHER
+        // =====================================================================
+        function switchModel(modelName) {
+            currentModel = modelName;
+            document.querySelectorAll('.model-btn').forEach(function(btn) {
+                if (btn.dataset.model === modelName) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            loadPredictions();
+        }
+
+        // =====================================================================
+        // LOAD PREDICTIONS
         // =====================================================================
         async function loadPredictions() {
+            var model = MODELS[currentModel];
+            if (!model) return;
+
             try {
-                const response = await fetch(PREDICTIONS_PATH);
-                if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                
-                const data = await response.json();
-                
-                // Update header date
-                document.getElementById('prediction-date').textContent = 
-                    data.date ? `📅 ${data.date}` : 'No date';
-                
-                // Update last updated
+                var response = await fetch(model.path);
+                var data;
+                if (!response.ok && currentModel === 'monte_carlo') {
+                    var nnResp = await fetch(MODELS.neural_network.path);
+                    if (!nnResp.ok) throw new Error('No predictions');
+                    data = await nnResp.json();
+                } else if (!response.ok) {
+                    throw new Error('No predictions');
+                } else {
+                    data = await response.json();
+                }
+
+                var dateEl = document.getElementById('prediction-date');
+                dateEl.textContent = data.date
+                    ? data.date + ' | ' + (data.games_count || 0) + ' games | ' + model.name
+                    : 'No date';
+
                 if (data.generated_at) {
-                    document.getElementById('last-updated').textContent = 
+                    document.getElementById('last-updated').textContent =
                         new Date(data.generated_at).toLocaleString();
                 }
-                
-                // Check if there are games today
+
                 if (!data.games || data.games.length === 0) {
-                    document.getElementById('predictions-body').innerHTML = 
-                        '<tr><td colspan="7"><div class="no-data">No games scheduled for today</div></td></tr>';
+                    document.getElementById('predictions-body').textContent = '';
+                    var noGameRow = document.createElement('tr');
+                    var noGameCell = document.createElement('td');
+                    noGameCell.colSpan = 7;
+                    noGameCell.className = 'no-data';
+                    noGameCell.textContent = 'No games scheduled for today';
+                    noGameRow.appendChild(noGameCell);
+                    document.getElementById('predictions-body').appendChild(noGameRow);
+                    document.getElementById('tims-section').style.display = 'none';
                     return;
                 }
-                
-                // Store and render predictions
+
+                // Tim Hortons groups
+                var timsSection = document.getElementById('tims-section');
+                if (data.tims_group_rankings && Object.keys(data.tims_group_rankings).length > 0) {
+                    renderTimsGroups(data.tims_group_rankings);
+                    timsSection.style.display = 'block';
+                } else {
+                    timsSection.style.display = 'none';
+                }
+
                 allPredictions = data.predictions || [];
                 renderPredictions();
-                
+
             } catch (error) {
                 console.error('Error loading predictions:', error);
-                document.getElementById('predictions-body').innerHTML = 
-                    '<tr><td colspan="7"><div class="no-data">Unable to load predictions</div></td></tr>';
+                var tbody = document.getElementById('predictions-body');
+                tbody.textContent = '';
+                var errRow = document.createElement('tr');
+                var errCell = document.createElement('td');
+                errCell.colSpan = 7;
+                errCell.className = 'no-data';
+                errCell.textContent = 'Unable to load predictions';
+                errRow.appendChild(errCell);
+                tbody.appendChild(errRow);
             }
         }
-        
+
         // =====================================================================
-        // LOAD YESTERDAY'S RESULTS
+        // TIM HORTONS GROUPS
+        // =====================================================================
+        function renderTimsGroups(groups) {
+            var container = document.getElementById('tims-groups');
+            container.textContent = '';
+
+            var sortedKeys = Object.keys(groups).sort();
+            for (var k = 0; k < sortedKeys.length; k++) {
+                var gid = sortedKeys[k];
+                var players = groups[gid];
+
+                var card = document.createElement('div');
+                card.className = 'tims-group-card';
+
+                var title = document.createElement('h4');
+                title.textContent = 'Group ' + gid;
+                card.appendChild(title);
+
+                for (var i = 0; i < players.length; i++) {
+                    var p = players[i];
+                    var prob = (p.goal_probability * 100).toFixed(1);
+                    var isTop = (i === 0);
+
+                    var item = document.createElement('div');
+                    item.className = 'tims-pick-item' + (isTop ? ' recommended' : '');
+
+                    var rankSpan = document.createElement('span');
+                    rankSpan.className = 'pick-rank';
+                    rankSpan.textContent = isTop ? '\u2605' : String(i + 1);
+                    item.appendChild(rankSpan);
+
+                    var info = document.createElement('div');
+                    info.className = 'player-info';
+                    var logo = document.createElement('img');
+                    logo.src = getTeamLogo(p.team);
+                    logo.alt = p.team;
+                    logo.style.width = '20px';
+                    logo.style.height = '20px';
+                    logo.onerror = function() { this.style.display = 'none'; };
+                    info.appendChild(logo);
+                    var nameSpan = document.createElement('span');
+                    nameSpan.className = 'name';
+                    nameSpan.style.color = 'var(--ivory)';
+                    nameSpan.style.fontSize = '0.85rem';
+                    nameSpan.textContent = p.name;
+                    info.appendChild(nameSpan);
+                    item.appendChild(info);
+
+                    var probSpan = document.createElement('span');
+                    probSpan.className = 'pick-prob';
+                    probSpan.textContent = prob + '%';
+                    item.appendChild(probSpan);
+
+                    card.appendChild(item);
+                }
+
+                container.appendChild(card);
+            }
+        }
+
+        // =====================================================================
+        // YESTERDAY'S RESULTS
         // =====================================================================
         async function loadResults() {
-            const container = document.getElementById('yesterday-top10');
-            
+            var container = document.getElementById('yesterday-top10');
+
             try {
-                const response = await fetch(RESULTS_PATH);
-                if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                
-                const data = await response.json();
-                
-                // No games yesterday
+                var response = await fetch(RESULTS_PATH);
+                if (!response.ok) throw new Error('No results');
+                var data = await response.json();
+
                 if (!data.games_count || data.games_count === 0) {
-                    container.innerHTML = '<div class="no-data-message">No games yesterday</div>';
+                    container.textContent = '';
+                    var msg = document.createElement('div');
+                    msg.className = 'no-data-message';
+                    msg.textContent = 'No games yesterday';
+                    container.appendChild(msg);
                     return;
                 }
-                
-                // Find our model's comparison
-                const comparison = data.model_comparisons?.find(m => m.model === 'neural_network');
-                
-                if (comparison && comparison.top10_picks && comparison.top10_picks.length > 0) {
-                    renderYesterdayResults(comparison.top10_picks, data.date, comparison.hits);
-                } else {
-                    // Fallback: load predictions file directly
-                    await loadYesterdayPredictionsFallback(data);
+
+                var comparison = null;
+                if (data.model_comparisons) {
+                    comparison = data.model_comparisons.find(function(m) { return m.model === 'monte_carlo'; });
+                    if (!comparison) {
+                        comparison = data.model_comparisons.find(function(m) { return m.model === 'neural_network'; });
+                    }
                 }
-                
+
+                if (comparison && comparison.top10_picks && comparison.top10_picks.length > 0) {
+                    renderYesterdayResults(comparison.top10_picks, data.date, comparison.hits, comparison.model);
+                } else {
+                    await loadYesterdayFallback(data);
+                }
+
             } catch (error) {
                 console.error('Error loading results:', error);
-                container.innerHTML = '<div class="no-data-message">Results not available</div>';
+                container.textContent = '';
+                var errMsg = document.createElement('div');
+                errMsg.className = 'no-data-message';
+                errMsg.textContent = 'Results not available';
+                container.appendChild(errMsg);
             }
         }
-        
-        // Fallback if model_comparisons doesn't have top10
-        async function loadYesterdayPredictionsFallback(resultsData) {
-            const container = document.getElementById('yesterday-top10');
-            
+
+        async function loadYesterdayFallback(resultsData) {
+            var container = document.getElementById('yesterday-top10');
             try {
-                const predPath = `./data/predictions/neural_network/${resultsData.date}.json`;
-                const response = await fetch(predPath);
-                if (!response.ok) throw new Error('No predictions file');
-                
-                const predData = await response.json();
-                const top10 = (predData.predictions || []).slice(0, 10);
-                
-                if (top10.length === 0) {
-                    container.innerHTML = '<div class="no-data-message">No predictions found</div>';
+                var predData = null;
+                var models = ['monte_carlo', 'neural_network'];
+                for (var m = 0; m < models.length; m++) {
+                    try {
+                        var resp = await fetch('./data/predictions/' + models[m] + '/' + resultsData.date + '.json');
+                        if (resp.ok) { predData = await resp.json(); break; }
+                    } catch (e) {}
+                }
+                if (!predData) {
+                    container.textContent = 'No predictions found';
                     return;
                 }
-                
-                // Get scorer IDs
-                const scorerIds = new Set((resultsData.all_scorers || []).map(s => s.player_id));
-                
-                // Build picks with scored status
-                let hits = 0;
-                const picks = top10.map((p, i) => {
-                    const scored = scorerIds.has(p.player_id);
+                var top10 = (predData.predictions || []).slice(0, 10);
+                var scorerIds = {};
+                (resultsData.all_scorers || []).forEach(function(s) { scorerIds[s.player_id] = true; });
+                var hits = 0;
+                var picks = top10.map(function(p, i) {
+                    var scored = !!scorerIds[p.player_id];
                     if (scored) hits++;
-                    return {
-                        rank: i + 1,
-                        name: p.name,
-                        team: p.team,
-                        scored: scored
-                    };
+                    return { rank: i + 1, name: p.name, team: p.team, scored: scored };
                 });
-                
-                renderYesterdayResults(picks, resultsData.date, hits);
-                
+                renderYesterdayResults(picks, resultsData.date, hits, predData.model || '');
             } catch (error) {
-                console.error('Fallback failed:', error);
-                container.innerHTML = '<div class="no-data-message">Could not load results</div>';
+                container.textContent = 'Could not load results';
             }
         }
-        
-        // Render yesterday's top 10
-        function renderYesterdayResults(picks, date, totalHits) {
-            const container = document.getElementById('yesterday-top10');
-            
-            let html = `
-                <div class="hits-display">
-                    <div class="number">${totalHits}/10</div>
-                    <div class="label">${date}</div>
-                </div>
-            `;
-            
-            picks.forEach((p, i) => {
-                const logoUrl = getTeamLogo(p.team);
-                html += `
-                    <div class="result-item">
-                        <span class="rank">${i + 1}.</span>
-                        <div class="player-info">
-                            <img src="${logoUrl}" alt="${p.team}" onerror="this.style.display='none'">
-                            <span class="name">${p.name}</span>
-                        </div>
-                        <span class="status">${p.scored ? '✅' : '❌'}</span>
-                    </div>
-                `;
+
+        function renderYesterdayResults(picks, date, totalHits, modelName) {
+            var container = document.getElementById('yesterday-top10');
+            container.textContent = '';
+            var displayName = modelName === 'monte_carlo' ? 'MC v2' : 'NN v1';
+
+            var hitsDiv = document.createElement('div');
+            hitsDiv.className = 'hits-display';
+            var numDiv = document.createElement('div');
+            numDiv.className = 'number';
+            numDiv.textContent = totalHits + '/10';
+            hitsDiv.appendChild(numDiv);
+            var lblDiv = document.createElement('div');
+            lblDiv.className = 'label';
+            lblDiv.textContent = date + ' (' + displayName + ')';
+            hitsDiv.appendChild(lblDiv);
+            container.appendChild(hitsDiv);
+
+            picks.forEach(function(p, i) {
+                var item = document.createElement('div');
+                item.className = 'result-item';
+
+                var rankSpan = document.createElement('span');
+                rankSpan.className = 'rank';
+                rankSpan.textContent = (i + 1) + '.';
+                item.appendChild(rankSpan);
+
+                var info = document.createElement('div');
+                info.className = 'player-info';
+                var img = document.createElement('img');
+                img.src = getTeamLogo(p.team);
+                img.alt = p.team;
+                img.onerror = function() { this.style.display = 'none'; };
+                info.appendChild(img);
+                var name = document.createElement('span');
+                name.className = 'name';
+                name.textContent = p.name;
+                info.appendChild(name);
+                item.appendChild(info);
+
+                var status = document.createElement('span');
+                status.className = 'status';
+                status.textContent = p.scored ? '\u2705' : '\u274C';
+                item.appendChild(status);
+
+                container.appendChild(item);
             });
-            
-            container.innerHTML = html;
         }
-        
+
         // =====================================================================
-        // LOAD MODEL STATS
+        // MODEL STATS (COMPARISON)
         // =====================================================================
         async function loadStats() {
-            const container = document.getElementById('model-stats');
-            
+            var container = document.getElementById('model-stats');
+
             try {
-                // First try stats.json
-                let stats = null;
-                
+                var allStats = {};
                 try {
-                    const statsResponse = await fetch(STATS_PATH);
-                    if (statsResponse.ok) {
-                        const statsData = await statsResponse.json();
-                        stats = statsData.models?.neural_network;
+                    var statsResp = await fetch(STATS_PATH);
+                    if (statsResp.ok) {
+                        var statsData = await statsResp.json();
+                        allStats = statsData.models || {};
                     }
-                } catch (e) {
-                    console.log('No stats.json, using results fallback');
-                }
-                
-                // Fallback to latest results
-                if (!stats) {
-                    const resultsResponse = await fetch(RESULTS_PATH);
-                    if (resultsResponse.ok) {
-                        const resultsData = await resultsResponse.json();
-                        const comparison = resultsData.model_comparisons?.find(m => m.model === 'neural_network');
-                        if (comparison) {
-                            stats = {
-                                hit_rate: comparison.hit_rate || Math.round((comparison.hits || 0) / 10 * 100),
-                                total_hits: comparison.hits || 0,
-                                total_days: 1,
-                                avg_hits_per_day: comparison.hits || 0
-                            };
-                        }
+                } catch (e) {}
+
+                var mc = allStats.monte_carlo;
+                var nn = allStats.neural_network;
+
+                container.textContent = '';
+
+                if (mc && nn) {
+                    var mcWins = (mc.hit_rate || 0) > (nn.hit_rate || 0);
+
+                    var grid = document.createElement('div');
+                    grid.className = 'comparison-grid';
+
+                    // MC card
+                    var mcCard = document.createElement('div');
+                    mcCard.className = 'model-card' + (mcWins ? ' winner' : '');
+                    var mcTitle = document.createElement('h4');
+                    mcTitle.textContent = 'Monte Carlo v2 ';
+                    var mcBadge = document.createElement('span');
+                    mcBadge.className = 'badge badge-new';
+                    mcBadge.textContent = 'NEW';
+                    mcTitle.appendChild(mcBadge);
+                    mcCard.appendChild(mcTitle);
+                    var mcRate = document.createElement('div');
+                    mcRate.className = 'model-rate';
+                    mcRate.textContent = (mc.hit_rate || 0) + '%';
+                    mcCard.appendChild(mcRate);
+                    var mcStats = document.createElement('div');
+                    mcStats.className = 'stats-grid';
+                    mcStats.style.gridTemplateColumns = '1fr 1fr';
+                    mcStats.innerHTML = '<div class="stat-item"><div class="value">' + (mc.total_hits || 0) + '</div><div class="label">Hits</div></div><div class="stat-item"><div class="value">' + (mc.total_days || 0) + '</div><div class="label">Days</div></div>';
+                    mcCard.appendChild(mcStats);
+                    grid.appendChild(mcCard);
+
+                    // NN card
+                    var nnCard = document.createElement('div');
+                    nnCard.className = 'model-card' + (!mcWins ? ' winner' : '');
+                    var nnTitle = document.createElement('h4');
+                    nnTitle.textContent = 'Neural Net v1 ';
+                    var nnBadge = document.createElement('span');
+                    nnBadge.className = 'badge badge-old';
+                    nnBadge.textContent = 'v1';
+                    nnTitle.appendChild(nnBadge);
+                    nnCard.appendChild(nnTitle);
+                    var nnRate = document.createElement('div');
+                    nnRate.className = 'model-rate';
+                    nnRate.textContent = (nn.hit_rate || 0) + '%';
+                    nnCard.appendChild(nnRate);
+                    var nnStats = document.createElement('div');
+                    nnStats.className = 'stats-grid';
+                    nnStats.style.gridTemplateColumns = '1fr 1fr';
+                    nnStats.innerHTML = '<div class="stat-item"><div class="value">' + (nn.total_hits || 0) + '</div><div class="label">Hits</div></div><div class="stat-item"><div class="value">' + (nn.total_days || 0) + '</div><div class="label">Days</div></div>';
+                    nnCard.appendChild(nnStats);
+                    grid.appendChild(nnCard);
+
+                    container.appendChild(grid);
+                } else {
+                    var stats = mc || nn || null;
+                    var name = mc ? 'Monte Carlo v2' : 'Neural Network v1';
+                    if (!stats) {
+                        var noMsg = document.createElement('div');
+                        noMsg.className = 'no-data-message';
+                        noMsg.textContent = 'No stats available yet';
+                        container.appendChild(noMsg);
+                        return;
                     }
+                    var hd = document.createElement('div');
+                    hd.className = 'hits-display';
+                    var hdNum = document.createElement('div');
+                    hdNum.className = 'number';
+                    hdNum.textContent = (stats.hit_rate || 0) + '%';
+                    hd.appendChild(hdNum);
+                    var hdLbl = document.createElement('div');
+                    hdLbl.className = 'label';
+                    hdLbl.textContent = name + ' \u2014 Top 10 Hit Rate';
+                    hd.appendChild(hdLbl);
+                    container.appendChild(hd);
+
+                    var sg = document.createElement('div');
+                    sg.className = 'stats-grid';
+                    sg.innerHTML = '<div class="stat-item"><div class="value">' + (stats.total_hits || 0) + '</div><div class="label">Total Hits</div></div><div class="stat-item"><div class="value">' + (stats.total_days || 0) + '</div><div class="label">Days</div></div><div class="stat-item"><div class="value">' + (stats.avg_hits_per_day ? stats.avg_hits_per_day.toFixed(1) : 0) + '</div><div class="label">Avg/Day</div></div>';
+                    container.appendChild(sg);
                 }
-                
-                if (!stats) {
-                    container.innerHTML = '<div class="no-data-message">No stats available yet</div>';
-                    return;
-                }
-                
-                container.innerHTML = `
-                    <div class="hits-display">
-                        <div class="number">${stats.hit_rate || 0}%</div>
-                        <div class="label">Top 10 Hit Rate</div>
-                    </div>
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <div class="value">${stats.total_hits || 0}</div>
-                            <div class="label">Total Hits</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="value">${stats.total_days || 0}</div>
-                            <div class="label">Days</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="value">${stats.avg_hits_per_day?.toFixed(1) || 0}</div>
-                            <div class="label">Avg/Day</div>
-                        </div>
-                    </div>
-                `;
-                
+
             } catch (error) {
                 console.error('Error loading stats:', error);
-                container.innerHTML = '<div class="no-data-message">Stats not available</div>';
+                container.textContent = '';
+                var errMsg = document.createElement('div');
+                errMsg.className = 'no-data-message';
+                errMsg.textContent = 'Stats not available';
+                container.appendChild(errMsg);
             }
         }
-        
+
         // =====================================================================
-        // RENDER PREDICTIONS TABLE
+        // PREDICTIONS TABLE
         // =====================================================================
         function renderPredictions() {
-            const tbody = document.getElementById('predictions-body');
-            const searchTerm = document.getElementById('search-input').value.toLowerCase();
-            const positionFilter = document.getElementById('position-filter').value;
-            
-            let filtered = allPredictions;
-            
-            // Apply search filter
+            var tbody = document.getElementById('predictions-body');
+            var searchTerm = document.getElementById('search-input').value.toLowerCase();
+            var positionFilter = document.getElementById('position-filter').value;
+
+            var filtered = allPredictions;
             if (searchTerm) {
-                filtered = filtered.filter(p => 
-                    (p.name && p.name.toLowerCase().includes(searchTerm)) ||
-                    (p.team && p.team.toLowerCase().includes(searchTerm))
-                );
+                filtered = filtered.filter(function(p) {
+                    return (p.name && p.name.toLowerCase().indexOf(searchTerm) !== -1) ||
+                           (p.team && p.team.toLowerCase().indexOf(searchTerm) !== -1);
+                });
             }
-            
-            // Apply position filter
             if (positionFilter) {
-                filtered = filtered.filter(p => p.position === positionFilter);
+                filtered = filtered.filter(function(p) { return p.position === positionFilter; });
             }
-            
-            // No results
+
+            tbody.textContent = '';
+
             if (filtered.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7"><div class="no-data">No players found</div></td></tr>';
+                var noRow = document.createElement('tr');
+                var noCell = document.createElement('td');
+                noCell.colSpan = 7;
+                noCell.className = 'no-data';
+                noCell.textContent = 'No players found';
+                noRow.appendChild(noCell);
+                tbody.appendChild(noRow);
                 return;
             }
-            
-            // Render rows
-            tbody.innerHTML = filtered.map(p => {
-                const prob = ((p.goal_probability || 0) * 100).toFixed(1);
-                const probWidth = Math.min((p.goal_probability || 0) / 0.6 * 100, 100).toFixed(0);
-                const rankClass = p.rank <= 3 ? `rank-${p.rank}` : '';
-                const hotBadge = p.is_hot ? '<span class="hot-badge">HOT</span>' : '';
-                const logoUrl = getTeamLogo(p.team);
-                
-                return `
-                    <tr>
-                        <td class="rank-cell ${rankClass}">${p.rank || '-'}</td>
-                        <td>
-                            <div class="player-cell">
-                                <img src="${logoUrl}" alt="${p.team}" class="team-logo" onerror="this.style.display='none'">
-                                <span class="player-name">${p.name || 'Unknown'}${hotBadge}</span>
-                            </div>
-                        </td>
-                        <td class="hide-mobile">${p.position || '-'}</td>
-                        <td>
-                            ${prob}%
-                            <div class="prob-bar">
-                                <div class="prob-fill" style="width: ${probWidth}%"></div>
-                            </div>
-                        </td>
-                        <td class="hide-mobile">${p.season_goals || 0}</td>
-                        <td>${p.last5_goals || 0}</td>
-                        <td class="hide-mobile">${p.matchup || '-'}</td>
-                    </tr>
-                `;
-            }).join('');
+
+            filtered.forEach(function(p) {
+                var prob = ((p.goal_probability || 0) * 100).toFixed(1);
+                var probWidth = Math.min((p.goal_probability || 0) / 0.6 * 100, 100).toFixed(0);
+                var row = document.createElement('tr');
+
+                // Rank
+                var rankCell = document.createElement('td');
+                rankCell.className = 'rank-cell' + (p.rank <= 3 ? ' rank-' + p.rank : '');
+                rankCell.textContent = p.rank || p.tims_rank || '-';
+                row.appendChild(rankCell);
+
+                // Player
+                var playerCell = document.createElement('td');
+                var playerDiv = document.createElement('div');
+                playerDiv.className = 'player-cell';
+                var logo = document.createElement('img');
+                logo.src = getTeamLogo(p.team);
+                logo.alt = p.team;
+                logo.className = 'team-logo';
+                logo.onerror = function() { this.style.display = 'none'; };
+                playerDiv.appendChild(logo);
+                var nameSpan = document.createElement('span');
+                nameSpan.className = 'player-name';
+                nameSpan.textContent = p.name || 'Unknown';
+                playerDiv.appendChild(nameSpan);
+                if (p.is_hot) {
+                    var hotSpan = document.createElement('span');
+                    hotSpan.className = 'hot-badge';
+                    hotSpan.textContent = 'HOT';
+                    playerDiv.appendChild(hotSpan);
+                }
+                if (p.tims_group) {
+                    var gSpan = document.createElement('span');
+                    gSpan.className = 'hot-badge';
+                    gSpan.style.background = 'var(--slate)';
+                    gSpan.textContent = 'G' + p.tims_group;
+                    playerDiv.appendChild(gSpan);
+                }
+                playerCell.appendChild(playerDiv);
+                row.appendChild(playerCell);
+
+                // Position
+                var posCell = document.createElement('td');
+                posCell.className = 'hide-mobile';
+                posCell.textContent = p.position || '-';
+                row.appendChild(posCell);
+
+                // Probability
+                var probCell = document.createElement('td');
+                probCell.textContent = prob + '% ';
+                var barDiv = document.createElement('div');
+                barDiv.className = 'prob-bar';
+                var fillDiv = document.createElement('div');
+                fillDiv.className = 'prob-fill';
+                fillDiv.style.width = probWidth + '%';
+                barDiv.appendChild(fillDiv);
+                probCell.appendChild(barDiv);
+                row.appendChild(probCell);
+
+                // Goals
+                var goalsCell = document.createElement('td');
+                goalsCell.className = 'hide-mobile';
+                goalsCell.textContent = p.season_goals || 0;
+                row.appendChild(goalsCell);
+
+                // L5
+                var l5Cell = document.createElement('td');
+                l5Cell.textContent = p.last5_goals || 0;
+                row.appendChild(l5Cell);
+
+                // Matchup
+                var matchCell = document.createElement('td');
+                matchCell.className = 'hide-mobile';
+                matchCell.textContent = p.matchup || '-';
+                row.appendChild(matchCell);
+
+                tbody.appendChild(row);
+            });
         }
-        
+
         // =====================================================================
-        // EVENT LISTENERS
+        // EVENT LISTENERS & INIT
         // =====================================================================
         document.getElementById('search-input').addEventListener('input', renderPredictions);
         document.getElementById('position-filter').addEventListener('change', renderPredictions);
-        
-        // =====================================================================
-        // INITIALIZE
-        // =====================================================================
-        loadPredictions();
+
+        // Default to Monte Carlo v2
+        switchModel('monte_carlo');
         loadResults();
         loadStats();
     </script>

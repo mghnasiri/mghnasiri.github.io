@@ -1,0 +1,126 @@
+# .github/workflows/nhl_v2_update.yml
+# Monte Carlo v2 Pipeline + Tim Hortons Scraper + Telegram Notifications
+
+name: NHL Monte Carlo v2 Pipeline
+
+on:
+  schedule:
+    # Predictions: Run at 2:00 PM UTC (9:00 AM Toronto)
+    - cron: '0 14 * * *'
+    # Results: Run at 6:30 AM UTC (1:30 AM Toronto)
+    - cron: '30 6 * * *'
+
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Action to run'
+        required: true
+        default: 'predictions'
+        type: choice
+        options:
+          - predictions
+          - results
+          - both
+          - tims_only
+          - telegram_test
+
+jobs:
+  predictions:
+    runs-on: ubuntu-latest
+    if: >-
+      github.event.schedule == '0 14 * * *' ||
+      github.event.inputs.action == 'predictions' ||
+      github.event.inputs.action == 'both' ||
+      github.event.inputs.action == 'tims_only'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install numpy requests
+
+      - name: Scrape Tim Hortons player pool
+        working-directory: projects/nhl-hockey
+        run: python scripts/fetch_tims_players.py
+        continue-on-error: true
+
+      - name: Run Monte Carlo predictions
+        if: github.event.inputs.action != 'tims_only'
+        working-directory: projects/nhl-hockey
+        run: python scripts/monte_carlo_predict.py
+
+      - name: Send Telegram notification
+        if: github.event.inputs.action != 'tims_only'
+        working-directory: projects/nhl-hockey
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python scripts/telegram_notify.py predictions
+        continue-on-error: true
+
+      - name: Commit and push
+        env:
+          COMMIT_DATE: ${{ github.event.schedule && '' || '' }}
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          DATESTAMP=$(date +%Y-%m-%d)
+          git diff --staged --quiet || git commit -m "MC v2 predictions for ${DATESTAMP}"
+          git push origin main || (git pull --rebase origin main && git push origin main)
+
+  results:
+    runs-on: ubuntu-latest
+    if: >-
+      github.event.schedule == '30 6 * * *' ||
+      github.event.inputs.action == 'results' ||
+      github.event.inputs.action == 'both'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install numpy requests
+
+      - name: Send Telegram results notification
+        working-directory: projects/nhl-hockey
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python scripts/telegram_notify.py results
+        continue-on-error: true
+
+  telegram_test:
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'telegram_test'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Send test notification
+        working-directory: projects/nhl-hockey
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python scripts/telegram_notify.py both
