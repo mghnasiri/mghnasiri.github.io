@@ -644,6 +644,7 @@
             <div class="gold-line"></div>
             <p class="date" id="prediction-date">Loading...</p>
             <div class="model-selector" style="margin-top: 1.5rem;">
+                <button class="model-btn" data-model="xg_v3" onclick="switchModel('xg_v3')" type="button">xG XGBoost v3</button>
                 <button class="model-btn" data-model="monte_carlo" onclick="switchModel('monte_carlo')" type="button">Monte Carlo v2</button>
                 <button class="model-btn" data-model="neural_network" onclick="switchModel('neural_network')" type="button">Neural Network v1</button>
             </div>
@@ -754,6 +755,10 @@
         const STATS_PATH = './data/stats.json';
 
         const MODELS = {
+            xg_v3: {
+                name: 'xG XGBoost v3',
+                path: './data/predictions/xg_v3/latest.json',
+            },
             monte_carlo: {
                 name: 'Monte Carlo v2',
                 path: './data/predictions/monte_carlo/latest.json',
@@ -764,7 +769,7 @@
             }
         };
 
-        let currentModel = 'monte_carlo';
+        let currentModel = 'xg_v3';
         let allPredictions = [];
         const getTeamLogo = (team) =>
             'https://assets.nhle.com/logos/nhl/svg/' + team + '_dark.svg';
@@ -794,12 +799,17 @@
             try {
                 var response = await fetch(model.path);
                 var data;
-                if (!response.ok && currentModel === 'monte_carlo') {
-                    var nnResp = await fetch(MODELS.neural_network.path);
-                    if (!nnResp.ok) throw new Error('No predictions');
-                    data = await nnResp.json();
-                } else if (!response.ok) {
-                    throw new Error('No predictions');
+                if (!response.ok) {
+                    // Fallback chain: xg_v3 -> monte_carlo -> neural_network
+                    var fallbacks = ['xg_v3', 'monte_carlo', 'neural_network'].filter(function(m) { return m !== currentModel; });
+                    var found = false;
+                    for (var fi = 0; fi < fallbacks.length; fi++) {
+                        if (MODELS[fallbacks[fi]]) {
+                            var fbResp = await fetch(MODELS[fallbacks[fi]].path);
+                            if (fbResp.ok) { data = await fbResp.json(); model = MODELS[fallbacks[fi]]; found = true; break; }
+                        }
+                    }
+                    if (!found) throw new Error('No predictions');
                 } else {
                     data = await response.json();
                 }
@@ -936,7 +946,10 @@
 
                 var comparison = null;
                 if (data.model_comparisons) {
-                    comparison = data.model_comparisons.find(function(m) { return m.model === 'monte_carlo'; });
+                    comparison = data.model_comparisons.find(function(m) { return m.model === 'xg_v3'; });
+                    if (!comparison) {
+                        comparison = data.model_comparisons.find(function(m) { return m.model === 'monte_carlo'; });
+                    }
                     if (!comparison) {
                         comparison = data.model_comparisons.find(function(m) { return m.model === 'neural_network'; });
                     }
@@ -962,7 +975,7 @@
             var container = document.getElementById('yesterday-top10');
             try {
                 var predData = null;
-                var models = ['monte_carlo', 'neural_network'];
+                var models = ['xg_v3', 'monte_carlo', 'neural_network'];
                 for (var m = 0; m < models.length; m++) {
                     try {
                         var resp = await fetch('./data/predictions/' + models[m] + '/' + resultsData.date + '.json');
@@ -1262,8 +1275,8 @@
         document.getElementById('search-input').addEventListener('input', renderPredictions);
         document.getElementById('position-filter').addEventListener('change', renderPredictions);
 
-        // Default to Monte Carlo v2
-        switchModel('monte_carlo');
+        // Default to xG XGBoost v3 (falls back to MC v2 -> NN v1)
+        switchModel('xg_v3');
         loadResults();
         loadStats();
     </script>

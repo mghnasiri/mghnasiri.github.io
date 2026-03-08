@@ -1,0 +1,99 @@
+# .github/workflows/nhl_xg_v3_update.yml
+# xG XGBoost v3 Pipeline — Shot data collection + ML predictions
+# No untrusted inputs used in run: commands — only static strings and date
+
+name: NHL xG v3 Pipeline
+
+on:
+  schedule:
+    # Daily at 2:05 PM UTC (9:05 AM Toronto) — 5 min after MC v2
+    - cron: '5 14 * * *'
+
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Action to run'
+        required: true
+        default: 'predictions'
+        type: choice
+        options:
+          - predictions
+          - backfill_14
+          - train_model
+          - full_pipeline
+
+jobs:
+  predictions:
+    runs-on: ubuntu-latest
+    if: >-
+      github.event.schedule == '5 14 * * *' ||
+      github.event.inputs.action == 'predictions' ||
+      github.event.inputs.action == 'full_pipeline'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install numpy pandas requests xgboost scikit-learn
+
+      - name: Collect yesterday's shot data
+        working-directory: projects/nhl-hockey
+        run: python scripts/collect_xg_data.py
+        continue-on-error: true
+
+      - name: Run xG predictions
+        working-directory: projects/nhl-hockey
+        run: python scripts/xg_predict.py
+
+      - name: Commit and push
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          DATESTAMP=$(date +%Y-%m-%d)
+          git diff --staged --quiet || git commit -m "xG v3 predictions for ${DATESTAMP}"
+          git push origin main || (git pull --rebase origin main && git push origin main)
+
+  backfill_and_train:
+    runs-on: ubuntu-latest
+    if: >-
+      github.event.inputs.action == 'backfill_14' ||
+      github.event.inputs.action == 'train_model' ||
+      github.event.inputs.action == 'full_pipeline'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install numpy pandas requests xgboost scikit-learn
+
+      - name: Backfill shot data (14 days)
+        if: >-
+          github.event.inputs.action == 'backfill_14' ||
+          github.event.inputs.action == 'full_pipeline'
+        working-directory: projects/nhl-hockey
+        run: python scripts/collect_xg_data.py --backfill 14
+
+      - name: Train xG model
+        working-directory: projects/nhl-hockey
+        run: python scripts/train_xg_model.py
+
+      - name: Commit and push
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git diff --staged --quiet || git commit -m "xG v3 data/model update"
+          git push origin main || (git pull --rebase origin main && git push origin main)

@@ -32,6 +32,7 @@ class Config:
     CHAT_ID = os.environ.get('TELEGRAM_CHAT_ID', '')
 
     DATA_DIR = "data"
+    XG_PREDICTIONS_DIR = f"{DATA_DIR}/predictions/xg_v3"
     MC_PREDICTIONS_DIR = f"{DATA_DIR}/predictions/monte_carlo"
     NN_PREDICTIONS_DIR = f"{DATA_DIR}/predictions/neural_network"
     RESULTS_DIR = f"{DATA_DIR}/results"
@@ -118,7 +119,7 @@ def build_daily_message():
     lines.append("")
     lines.append("━━━━━━━━━━━━━━━━━━━━━━━━━━")
     lines.append(f"🔗  <a href='{Config.DASHBOARD_URL}'>Full Dashboard</a>")
-    lines.append("🎲  10,000 Monte Carlo simulations/game")
+    lines.append("🧠  3 Models: xG XGBoost · Monte Carlo · Neural Net")
     lines.append("━━━━━━━━━━━━━━━━━━━━━━━━━━")
 
     return "\n".join(lines)
@@ -196,27 +197,33 @@ def add_results_section(lines):
 def add_predictions_section(lines):
     """
     Add today's predictions to message.
+    Prefers xG v3 data, falls back to MC v2, then NN v1.
     Returns True if predictions were found, False otherwise.
     Never raises errors — silently skips if data unavailable.
     """
+    xg_data = load_json(f"{Config.XG_PREDICTIONS_DIR}/latest.json")
     mc_data = load_json(f"{Config.MC_PREDICTIONS_DIR}/latest.json")
     nn_data = load_json(f"{Config.NN_PREDICTIONS_DIR}/latest.json")
 
-    if not mc_data:
+    # Use best available model as primary (xG v3 > MC v2 > NN v1)
+    primary = xg_data or mc_data or nn_data
+    if not primary:
         return False
 
-    date = mc_data.get('date', Config.TODAY)
-    games_count = mc_data.get('games_count', 0)
-    predictions = mc_data.get('predictions', [])
-    tims_groups = mc_data.get('tims_group_rankings', {})
-    games = mc_data.get('games', [])
+    date = primary.get('date', Config.TODAY)
+    games_count = primary.get('games_count', 0)
+    predictions = primary.get('predictions', [])
+    tims_groups = primary.get('tims_group_rankings', {})
+    games = primary.get('games', [])
+
+    primary_name = "xG v3" if xg_data else ("MC v2" if mc_data else "NN v1")
 
     if not predictions:
         return False
 
     lines.append("")
     lines.append("🎯  <b>TODAY'S PREDICTIONS</b>")
-    lines.append(f"     {date}  •  {games_count} games")
+    lines.append(f"     {date}  •  {games_count} games  •  {primary_name}")
     lines.append("┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
 
     # Games list
@@ -284,22 +291,29 @@ def add_predictions_section(lines):
             lines.append(f"  {rank:>2}.  {name} ({team}){hot}")
             lines.append(f"       {bar}  {prob:.1f}%")
 
-    # Model comparison (compact)
-    if nn_data:
-        nn_preds = nn_data.get('predictions', [])[:3]
-        mc_top3 = predictions[:3]
+    # 3-model comparison (compact — show top 3 from each available model)
+    model_tops = []
+    if xg_data and xg_data.get('predictions'):
+        model_tops.append(("xG v3", xg_data['predictions'][:3]))
+    if mc_data and mc_data.get('predictions'):
+        model_tops.append(("MC v2", mc_data['predictions'][:3]))
+    if nn_data and nn_data.get('predictions'):
+        model_tops.append(("NN v1", nn_data['predictions'][:3]))
 
-        if nn_preds and mc_top3:
-            lines.append("")
-            lines.append("  📊  <b>MC v2 vs NN v1</b>")
-            for i in range(min(3, len(mc_top3), len(nn_preds))):
-                mc_p = mc_top3[i]
-                nn_p = nn_preds[i]
-                mc_name = mc_p.get('name', '?')[:14]
-                nn_name = nn_p.get('name', '?')[:14]
-                mc_prob = mc_p.get('goal_probability', 0) * 100
-                nn_prob = nn_p.get('goal_probability', 0) * 100
-                lines.append(f"      {mc_name} {mc_prob:.0f}%  vs  {nn_name} {nn_prob:.0f}%")
+    if len(model_tops) >= 2:
+        lines.append("")
+        names = " vs ".join(m[0] for m in model_tops)
+        lines.append(f"  📊  <b>{names}</b>")
+        for rank in range(3):
+            parts = []
+            for model_name, preds in model_tops:
+                if rank < len(preds):
+                    p = preds[rank]
+                    name = p.get('name', '?')[:12]
+                    prob = p.get('goal_probability', 0) * 100
+                    parts.append(f"{name} {prob:.0f}%")
+            if parts:
+                lines.append(f"   {rank+1}.  {'  │  '.join(parts)}")
 
     return True
 
