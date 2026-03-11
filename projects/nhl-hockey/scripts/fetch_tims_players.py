@@ -4,7 +4,11 @@ Tim Hortons Hockey Challenge - Player Pool Scraper
 Scrapes daily eligible players and their group assignments from
 timnhlassist.com (SvelteKit __data.json endpoint).
 
-Falls back to all players from today's games if scraping fails.
+Fallback strategy when scraping fails:
+  1. Load cached_pool.json (last successful full scrape)
+  2. Fetch today's NHL schedule
+  3. Filter cached pool to only players whose teams play today
+  4. This preserves correct group assignments even when the source is down
 
 Author: Mohammad G. Nasiri
 """
@@ -21,11 +25,15 @@ from datetime import datetime
 class Config:
     DATA_DIR = "data"
     TIMS_DIR = f"{DATA_DIR}/tims_players"
+    CACHED_POOL = f"{TIMS_DIR}/cached_pool.json"
     TODAY = datetime.now().strftime("%Y-%m-%d")
 
     # Primary source: timnhlassist.com (SvelteKit SSR with __data.json)
     PRIMARY_URL = "https://www.timnhlassist.com/__data.json"
     FALLBACK_URL = "https://www.timnhlassist.com/"
+
+    # NHL schedule API (for cache-based fallback)
+    NHL_SCHEDULE_URL = "https://api-web.nhle.com/v1/schedule"
 
     # Request headers to mimic browser
     HEADERS = {
@@ -295,6 +303,94 @@ def assign_groups(players, num_groups=3):
 
 
 # =============================================================================
+# CACHE FALLBACK
+# =============================================================================
+def get_teams_playing_today():
+    """Fetch today's NHL schedule and return set of team abbreviations."""
+    try:
+        url = f"{Config.NHL_SCHEDULE_URL}/{Config.TODAY}"
+        resp = requests.get(url, timeout=10)
+        if resp.status_code != 200:
+            return set()
+
+        schedule = resp.json()
+        teams = set()
+        for week in schedule.get('gameWeek', []):
+            if week.get('date') == Config.TODAY:
+                for g in week.get('games', []):
+                    if g.get('gameState') in ('FUT', 'PRE', 'LIVE'):
+                        teams.add(g['awayTeam']['abbrev'])
+                        teams.add(g['homeTeam']['abbrev'])
+        return teams
+    except Exception as e:
+        print(f"   ⚠️ Could not fetch schedule: {e}")
+        return set()
+
+
+def save_cached_pool(groups):
+    """Save the full player pool with group assignments for future fallback."""
+    cache = {
+        "cached_at": datetime.now().isoformat(),
+        "groups": groups,
+    }
+    with open(Config.CACHED_POOL, 'w', encoding='utf-8') as f:
+        json.dump(cache, f, indent=2, ensure_ascii=False)
+    print(f"   💾 Updated cached pool ({sum(len(g) for g in groups.values())} players)")
+
+
+def load_cached_pool_for_today():
+    """
+    Load cached player pool and filter to only teams playing today.
+    Returns (players_list, groups_dict) or (None, None) if no cache.
+    """
+    if not os.path.exists(Config.CACHED_POOL):
+        print("   ⚠️ No cached pool found")
+        return None, None
+
+    try:
+        with open(Config.CACHED_POOL, 'r', encoding='utf-8') as f:
+            cache = json.load(f)
+
+        cached_groups = cache.get('groups', {})
+        cached_at = cache.get('cached_at', 'unknown')
+
+        if not cached_groups:
+            return None, None
+
+        # Get today's teams
+        teams_today = get_teams_playing_today()
+        if not teams_today:
+            print("   ⚠️ Could not determine today's teams")
+            return None, None
+
+        print(f"   📋 Loaded cached pool (from {cached_at[:10]})")
+        print(f"   🏒 Teams playing today: {', '.join(sorted(teams_today))}")
+
+        # Filter each group to only players whose team plays today
+        filtered_groups = {}
+        filtered_players = []
+        for gid, gplayers in cached_groups.items():
+            filtered = [p for p in gplayers if p.get('team', '') in teams_today]
+            if filtered:
+                filtered_groups[gid] = filtered
+                filtered_players.extend(filtered)
+
+        if not filtered_players:
+            print("   ⚠️ No cached players match today's teams")
+            return None, None
+
+        print(f"   ✅ Filtered to {len(filtered_players)} players from today's games")
+        for gid in sorted(filtered_groups.keys()):
+            print(f"      📦 Group {gid}: {len(filtered_groups[gid])} players")
+
+        return filtered_players, filtered_groups
+
+    except Exception as e:
+        print(f"   ⚠️ Cache read error: {e}")
+        return None, None
+
+
+# =============================================================================
 # MAIN
 # =============================================================================
 
@@ -303,21 +399,7 @@ players = scrape_from_sveltekit_data()
 if not players:
     players = scrape_from_html()
 
-if not players:
-    print("\n⚠️ Could not scrape Tim Hortons players from any source")
-    print("   The prediction script will use all players from today's games")
-
-    # Save an empty file to indicate we tried
-    output = {
-        "date": Config.TODAY,
-        "source": "none",
-        "players_count": 0,
-        "groups": {},
-        "all_players": [],
-        "scraped_at": datetime.now().isoformat(),
-        "error": "Could not scrape Tim Hortons player pool"
-    }
-else:
+if players:
     print(f"\n✅ Successfully scraped {len(players)} players")
 
     # Assign to groups
@@ -329,6 +411,20 @@ else:
             print(f"      - {p['name']} ({p.get('team', '?')})")
         if len(gplayers) > 3:
             print(f"      ... and {len(gplayers) - 3} more")
+
+    # Update the cached pool for future fallback
+    save_cached_pool({
+        gid: [
+            {
+                'name': p['name'],
+                'player_id': p.get('player_id', 0),
+                'team': p.get('team', ''),
+                'position': p.get('position', ''),
+            }
+            for p in gplayers
+        ]
+        for gid, gplayers in groups.items()
+    })
 
     output = {
         "date": Config.TODAY,
@@ -359,6 +455,35 @@ else:
         ],
         "scraped_at": datetime.now().isoformat()
     }
+
+else:
+    # Scraping failed — try cached pool fallback
+    print("\n⚠️ Scraping failed, trying cached pool fallback...")
+    cached_players, cached_groups = load_cached_pool_for_today()
+
+    if cached_players and cached_groups:
+        print(f"\n✅ Using cached pool ({len(cached_players)} players for today)")
+        output = {
+            "date": Config.TODAY,
+            "source": "cached_pool",
+            "players_count": len(cached_players),
+            "groups": cached_groups,
+            "all_players": cached_players,
+            "scraped_at": datetime.now().isoformat(),
+            "note": "Scraped from cache — source was unavailable"
+        }
+    else:
+        print("\n❌ No cached pool available either")
+        print("   The prediction script will use all players from today's games")
+        output = {
+            "date": Config.TODAY,
+            "source": "none",
+            "players_count": 0,
+            "groups": {},
+            "all_players": [],
+            "scraped_at": datetime.now().isoformat(),
+            "error": "Could not scrape Tim Hortons player pool"
+        }
 
 # Save
 output_file = f"{Config.TIMS_DIR}/{Config.TODAY}.json"
