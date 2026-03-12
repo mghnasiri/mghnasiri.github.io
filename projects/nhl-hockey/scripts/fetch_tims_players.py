@@ -327,20 +327,53 @@ def get_teams_playing_today():
         return set()
 
 
-def save_cached_pool(groups):
-    """Save the full player pool with group assignments for future fallback."""
+def save_cached_pool(all_players, groups):
+    """
+    Save the FULL master roster of all Tim Hortons players ever seen.
+    Merges with existing cache so we accumulate players across days.
+    Also saves today's group assignments as a reference.
+    """
+    existing_roster = {}
+
+    # Load existing cache and merge
+    if os.path.exists(Config.CACHED_POOL):
+        try:
+            with open(Config.CACHED_POOL, 'r', encoding='utf-8') as f:
+                old_cache = json.load(f)
+            for p in old_cache.get('master_roster', []):
+                key = p.get('name', '')
+                if key:
+                    existing_roster[key] = p
+        except Exception:
+            pass
+
+    # Merge today's players into master roster (overwrite with fresh data)
+    for p in all_players:
+        name = p.get('name', '')
+        if name:
+            existing_roster[name] = {
+                'name': name,
+                'player_id': p.get('player_id', 0),
+                'team': p.get('team', ''),
+                'position': p.get('position', ''),
+            }
+
     cache = {
-        "cached_at": datetime.now().isoformat(),
-        "groups": groups,
+        "last_updated": datetime.now().isoformat(),
+        "last_scrape_date": Config.TODAY,
+        "master_roster": list(existing_roster.values()),
+        "last_groups": groups,
     }
     with open(Config.CACHED_POOL, 'w', encoding='utf-8') as f:
         json.dump(cache, f, indent=2, ensure_ascii=False)
-    print(f"   💾 Updated cached pool ({sum(len(g) for g in groups.values())} players)")
+    print(f"   💾 Updated master roster ({len(existing_roster)} total players)")
 
 
 def load_cached_pool_for_today():
     """
-    Load cached player pool and filter to only teams playing today.
+    Load master roster and filter to only teams playing today.
+    Distributes players evenly into 3 groups (since we can't know
+    Tim Hortons' actual group assignments when the site is down).
     Returns (players_list, groups_dict) or (None, None) if no cache.
     """
     if not os.path.exists(Config.CACHED_POOL):
@@ -351,10 +384,10 @@ def load_cached_pool_for_today():
         with open(Config.CACHED_POOL, 'r', encoding='utf-8') as f:
             cache = json.load(f)
 
-        cached_groups = cache.get('groups', {})
-        cached_at = cache.get('cached_at', 'unknown')
+        master_roster = cache.get('master_roster', [])
+        last_date = cache.get('last_scrape_date', 'unknown')
 
-        if not cached_groups:
+        if not master_roster:
             return None, None
 
         # Get today's teams
@@ -363,27 +396,28 @@ def load_cached_pool_for_today():
             print("   ⚠️ Could not determine today's teams")
             return None, None
 
-        print(f"   📋 Loaded cached pool (from {cached_at[:10]})")
+        print(f"   📋 Master roster: {len(master_roster)} players (last scrape: {last_date})")
         print(f"   🏒 Teams playing today: {', '.join(sorted(teams_today))}")
 
-        # Filter each group to only players whose team plays today
-        filtered_groups = {}
-        filtered_players = []
-        for gid, gplayers in cached_groups.items():
-            filtered = [p for p in gplayers if p.get('team', '') in teams_today]
-            if filtered:
-                filtered_groups[gid] = filtered
-                filtered_players.extend(filtered)
+        # Filter to players whose teams play today
+        todays_players = [p for p in master_roster if p.get('team', '') in teams_today]
 
-        if not filtered_players:
-            print("   ⚠️ No cached players match today's teams")
+        if not todays_players:
+            print("   ⚠️ No roster players match today's teams")
             return None, None
 
-        print(f"   ✅ Filtered to {len(filtered_players)} players from today's games")
-        for gid in sorted(filtered_groups.keys()):
-            print(f"      📦 Group {gid}: {len(filtered_groups[gid])} players")
+        # Distribute into 3 groups (round-robin by team for balance)
+        todays_players.sort(key=lambda p: (p.get('team', ''), p.get('name', '')))
+        groups = {'1': [], '2': [], '3': []}
+        for i, p in enumerate(todays_players):
+            gid = str((i % 3) + 1)
+            groups[gid].append(p)
 
-        return filtered_players, filtered_groups
+        print(f"   ✅ {len(todays_players)} players from today's {len(teams_today)} teams")
+        for gid in sorted(groups.keys()):
+            print(f"      📦 Group {gid}: {len(groups[gid])} players")
+
+        return todays_players, groups
 
     except Exception as e:
         print(f"   ⚠️ Cache read error: {e}")
@@ -412,8 +446,8 @@ if players:
         if len(gplayers) > 3:
             print(f"      ... and {len(gplayers) - 3} more")
 
-    # Update the cached pool for future fallback
-    save_cached_pool({
+    # Update the master roster cache for future fallback
+    save_cached_pool(players, {
         gid: [
             {
                 'name': p['name'],

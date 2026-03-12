@@ -452,15 +452,15 @@
         /* Comparison Section */
         .comparison-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
             margin-top: 1.5rem;
         }
 
         .model-card {
             background: var(--midnight);
             border: 1px solid rgba(197, 160, 89, 0.12);
-            padding: 1.25rem;
+            padding: 1rem;
         }
 
         .model-card.winner {
@@ -470,12 +470,13 @@
 
         .model-card h4 {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             color: var(--ivory);
             margin-bottom: 0.75rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
+            flex-wrap: wrap;
         }
 
         .model-card h4 .badge {
@@ -740,7 +741,7 @@
     <footer>
         <div class="container">
             <p>Last updated: <span id="last-updated">--</span></p>
-            <p>Monte Carlo v2: 10,000 simulations | Opponent-adjusted | Tim Hortons Challenge</p>
+            <p>3 Models: xG XGBoost v3 · Monte Carlo v2 · Neural Net v1 | Tim Hortons Challenge</p>
             <p><a href="../../index.html">← Back to Portfolio</a></p>
         </div>
     </footer>
@@ -1004,7 +1005,7 @@
         function renderYesterdayResults(picks, date, totalHits, modelName) {
             var container = document.getElementById('yesterday-top10');
             container.textContent = '';
-            var displayName = modelName === 'monte_carlo' ? 'MC v2' : 'NN v1';
+            var displayName = modelName === 'xg_v3' ? 'xG v3' : (modelName === 'monte_carlo' ? 'MC v2' : 'NN v1');
 
             var hitsDiv = document.createElement('div');
             hitsDiv.className = 'hits-display';
@@ -1065,70 +1066,67 @@
                     }
                 } catch (e) {}
 
-                var mc = allStats.monte_carlo;
-                var nn = allStats.neural_network;
+                var modelDefs = [
+                    { key: 'xg_v3', label: 'xG XGBoost v3', badge: 'v3', badgeClass: 'badge-new' },
+                    { key: 'monte_carlo', label: 'Monte Carlo v2', badge: 'v2', badgeClass: 'badge-new' },
+                    { key: 'neural_network', label: 'Neural Net v1', badge: 'v1', badgeClass: 'badge-old' }
+                ];
+
+                var available = modelDefs.filter(function(m) { return allStats[m.key]; });
 
                 container.textContent = '';
 
-                if (mc && nn) {
-                    var mcWins = (mc.hit_rate || 0) > (nn.hit_rate || 0);
+                if (available.length === 0) {
+                    var noMsg = document.createElement('div');
+                    noMsg.className = 'no-data-message';
+                    noMsg.textContent = 'No stats available yet';
+                    container.appendChild(noMsg);
+                    return;
+                }
 
+                // Find winner (highest hit rate)
+                var bestRate = -1;
+                var bestKey = '';
+                available.forEach(function(m) {
+                    var rate = allStats[m.key].hit_rate || 0;
+                    if (rate > bestRate) { bestRate = rate; bestKey = m.key; }
+                });
+
+                if (available.length >= 2) {
                     var grid = document.createElement('div');
                     grid.className = 'comparison-grid';
+                    grid.style.gridTemplateColumns = 'repeat(' + available.length + ', 1fr)';
 
-                    // MC card
-                    var mcCard = document.createElement('div');
-                    mcCard.className = 'model-card' + (mcWins ? ' winner' : '');
-                    var mcTitle = document.createElement('h4');
-                    mcTitle.textContent = 'Monte Carlo v2 ';
-                    var mcBadge = document.createElement('span');
-                    mcBadge.className = 'badge badge-new';
-                    mcBadge.textContent = 'NEW';
-                    mcTitle.appendChild(mcBadge);
-                    mcCard.appendChild(mcTitle);
-                    var mcRate = document.createElement('div');
-                    mcRate.className = 'model-rate';
-                    mcRate.textContent = (mc.hit_rate || 0) + '%';
-                    mcCard.appendChild(mcRate);
-                    var mcStats = document.createElement('div');
-                    mcStats.className = 'stats-grid';
-                    mcStats.style.gridTemplateColumns = '1fr 1fr';
-                    mcStats.innerHTML = '<div class="stat-item"><div class="value">' + (mc.total_hits || 0) + '</div><div class="label">Hits</div></div><div class="stat-item"><div class="value">' + (mc.total_days || 0) + '</div><div class="label">Days</div></div>';
-                    mcCard.appendChild(mcStats);
-                    grid.appendChild(mcCard);
+                    available.forEach(function(m) {
+                        var stats = allStats[m.key];
+                        var isWinner = (m.key === bestKey);
 
-                    // NN card
-                    var nnCard = document.createElement('div');
-                    nnCard.className = 'model-card' + (!mcWins ? ' winner' : '');
-                    var nnTitle = document.createElement('h4');
-                    nnTitle.textContent = 'Neural Net v1 ';
-                    var nnBadge = document.createElement('span');
-                    nnBadge.className = 'badge badge-old';
-                    nnBadge.textContent = 'v1';
-                    nnTitle.appendChild(nnBadge);
-                    nnCard.appendChild(nnTitle);
-                    var nnRate = document.createElement('div');
-                    nnRate.className = 'model-rate';
-                    nnRate.textContent = (nn.hit_rate || 0) + '%';
-                    nnCard.appendChild(nnRate);
-                    var nnStats = document.createElement('div');
-                    nnStats.className = 'stats-grid';
-                    nnStats.style.gridTemplateColumns = '1fr 1fr';
-                    nnStats.innerHTML = '<div class="stat-item"><div class="value">' + (nn.total_hits || 0) + '</div><div class="label">Hits</div></div><div class="stat-item"><div class="value">' + (nn.total_days || 0) + '</div><div class="label">Days</div></div>';
-                    nnCard.appendChild(nnStats);
-                    grid.appendChild(nnCard);
+                        var card = document.createElement('div');
+                        card.className = 'model-card' + (isWinner ? ' winner' : '');
+                        var title = document.createElement('h4');
+                        title.textContent = m.label + ' ';
+                        var badge = document.createElement('span');
+                        badge.className = 'badge ' + m.badgeClass;
+                        badge.textContent = m.badge;
+                        title.appendChild(badge);
+                        card.appendChild(title);
+                        var rate = document.createElement('div');
+                        rate.className = 'model-rate';
+                        rate.textContent = (stats.hit_rate || 0) + '%';
+                        card.appendChild(rate);
+                        var sg = document.createElement('div');
+                        sg.className = 'stats-grid';
+                        sg.style.gridTemplateColumns = '1fr 1fr';
+                        sg.innerHTML = '<div class="stat-item"><div class="value">' + (stats.total_hits || 0) + '</div><div class="label">Hits</div></div><div class="stat-item"><div class="value">' + (stats.total_days || 0) + '</div><div class="label">Days</div></div>';
+                        card.appendChild(sg);
+                        grid.appendChild(card);
+                    });
 
                     container.appendChild(grid);
                 } else {
-                    var stats = mc || nn || null;
-                    var name = mc ? 'Monte Carlo v2' : 'Neural Network v1';
-                    if (!stats) {
-                        var noMsg = document.createElement('div');
-                        noMsg.className = 'no-data-message';
-                        noMsg.textContent = 'No stats available yet';
-                        container.appendChild(noMsg);
-                        return;
-                    }
+                    // Single model fallback
+                    var m = available[0];
+                    var stats = allStats[m.key];
                     var hd = document.createElement('div');
                     hd.className = 'hits-display';
                     var hdNum = document.createElement('div');
@@ -1137,7 +1135,7 @@
                     hd.appendChild(hdNum);
                     var hdLbl = document.createElement('div');
                     hdLbl.className = 'label';
-                    hdLbl.textContent = name + ' \u2014 Top 10 Hit Rate';
+                    hdLbl.textContent = m.label + ' \u2014 Top 10 Hit Rate';
                     hd.appendChild(hdLbl);
                     container.appendChild(hd);
 

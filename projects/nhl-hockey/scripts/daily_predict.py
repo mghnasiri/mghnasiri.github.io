@@ -26,7 +26,8 @@ class Config:
     PREDICTIONS_DIR = f"{DATA_DIR}/predictions/{MODEL_NAME}"
     RESULTS_DIR = f"{DATA_DIR}/results"
     HISTORICAL_FILE = f"{DATA_DIR}/historical/all_raw_stats.csv"
-    
+    TIMS_DIR = f"{DATA_DIR}/tims_players"
+
     TODAY = datetime.now().strftime("%Y-%m-%d")
     CURRENT_SEASON = "20242025"
 
@@ -258,6 +259,76 @@ for i, player in enumerate(all_players):
     player['is_hot'] = player.get('last5_goals', 0) >= 3
 
 # =============================================================================
+# 5.5 TIM HORTONS FILTERING
+# =============================================================================
+def load_tims_players(date):
+    """Load Tim Hortons eligible players."""
+    tims_file = f"{Config.TIMS_DIR}/{date}.json"
+    if os.path.exists(tims_file):
+        try:
+            with open(tims_file, 'r') as f:
+                data = json.load(f)
+            count = sum(len(v) for v in data.get('groups', {}).values())
+            print(f"  Loaded Tim Hortons players: {count} players")
+            return data
+        except Exception:
+            pass
+    return None
+
+def normalize_name(name):
+    return name.lower().strip().replace('.', '').replace("'", "").replace('-', ' ')
+
+tims_data = load_tims_players(Config.TODAY)
+tims_mode = tims_data is not None and bool(tims_data.get('groups'))
+tims_group_rankings = {}
+output_players = all_players
+
+if tims_mode:
+    print("\n🍩 Tim Hortons mode: filtering predictions...")
+    tims_groups = {}
+    all_tims_names = set()
+    for group_id, players in tims_data['groups'].items():
+        group_names = set()
+        for p in players:
+            name = p if isinstance(p, str) else p.get('name', '')
+            group_names.add(normalize_name(name))
+            all_tims_names.add(normalize_name(name))
+        tims_groups[group_id] = group_names
+
+    tims_filtered = []
+    for player in all_players:
+        pname = normalize_name(player['name'])
+        if pname in all_tims_names:
+            for gid, names in tims_groups.items():
+                if pname in names:
+                    player['tims_group'] = gid
+                    break
+            tims_filtered.append(player)
+
+    # Build group rankings (sorted by probability within each group)
+    for p in tims_filtered:
+        gid = p.get('tims_group')
+        if gid:
+            if gid not in tims_group_rankings:
+                tims_group_rankings[gid] = []
+            tims_group_rankings[gid].append({
+                'rank_in_group': len(tims_group_rankings[gid]) + 1,
+                'player_id': p.get('player_id', 0),
+                'name': p['name'],
+                'team': p['team'],
+                'goal_probability': p['goal_probability'],
+                'matchup': p.get('matchup', ''),
+            })
+
+    # Re-rank filtered players
+    for i, p in enumerate(tims_filtered):
+        p['tims_rank'] = i + 1
+    output_players = tims_filtered
+    print(f"  ✅ Matched {len(tims_filtered)} Tim Hortons players")
+else:
+    print("\n📭 No Tim Hortons data — using full player list")
+
+# =============================================================================
 # 6. SAVE OUTPUT
 # =============================================================================
 print("\n💾 Saving predictions...")
@@ -268,8 +339,10 @@ output = {
     "model_display_name": Config.MODEL_DISPLAY_NAME,
     "games_count": len(todays_games),
     "games": todays_games,
-    "players_count": len(all_players),
-    "predictions": all_players,
+    "players_count": len(output_players),
+    "predictions": output_players,
+    "tims_mode": tims_mode,
+    "tims_group_rankings": tims_group_rankings if tims_mode else {},
     "generated_at": datetime.now().isoformat()
 }
 
