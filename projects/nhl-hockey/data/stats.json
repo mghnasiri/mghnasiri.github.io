@@ -1,26 +1,20 @@
 {
-  "generated_at": "2026-03-11T06:53:58.932764",
-  "total_days_tracked": 55,
+  "generated_at": "2026-03-12T06:55:35.806858",
+  "total_days_tracked": 56,
   "models": {
     "neural_network": {
-      "total_days": 55,
-      "total_hits": 177,
-      "total_predictions": 550,
-      "hit_rate": 32.2,
-      "avg_hits_per_day": 3.22,
+      "total_days": 56,
+      "total_hits": 178,
+      "total_predictions": 560,
+      "hit_rate": 31.8,
+      "avg_hits_per_day": 3.18,
       "last_7_days": {
         "days": 7,
-        "hits": 21,
+        "hits": 20,
         "total": 70,
-        "hit_rate": 30.0
+        "hit_rate": 28.6
       },
       "daily_results": [
-        {
-          "date": "2026-01-21",
-          "hits": 0,
-          "total": 10,
-          "hit_rate": 0.0
-        },
         {
           "date": "2026-01-22",
           "hits": 1,
@@ -194,20 +188,26 @@
           "hits": 3,
           "total": 10,
           "hit_rate": 30.0
+        },
+        {
+          "date": "2026-03-11",
+          "hits": 1,
+          "total": 10,
+          "hit_rate": 10.0
         }
       ]
     },
     "xg_v3": {
-      "total_days": 3,
-      "total_hits": 8,
-      "total_predictions": 30,
-      "hit_rate": 26.7,
-      "avg_hits_per_day": 2.67,
+      "total_days": 4,
+      "total_hits": 10,
+      "total_predictions": 40,
+      "hit_rate": 25.0,
+      "avg_hits_per_day": 2.5,
       "last_7_days": {
-        "days": 3,
-        "hits": 8,
-        "total": 30,
-        "hit_rate": 26.7
+        "days": 4,
+        "hits": 10,
+        "total": 40,
+        "hit_rate": 25.0
       },
       "daily_results": [
         {
@@ -227,19 +227,25 @@
           "hits": 3,
           "total": 10,
           "hit_rate": 30.0
+        },
+        {
+          "date": "2026-03-11",
+          "hits": 2,
+          "total": 10,
+          "hit_rate": 20.0
         }
       ]
     },
     "monte_carlo": {
-      "total_days": 3,
-      "total_hits": 6,
-      "total_predictions": 30,
+      "total_days": 4,
+      "total_hits": 8,
+      "total_predictions": 40,
       "hit_rate": 20.0,
       "avg_hits_per_day": 2.0,
       "last_7_days": {
-        "days": 3,
-        "hits": 6,
-        "total": 30,
+        "days": 4,
+        "hits": 8,
+        "total": 40,
         "hit_rate": 20.0
       },
       "daily_results": [
@@ -260,6 +266,12 @@
           "hits": 3,
           "total": 10,
           "hit_rate": 30.0
+        },
+        {
+          "date": "2026-03-11",
+          "hits": 2,
+          "total": 10,
+          "hit_rate": 20.0
         }
       ]
     }
