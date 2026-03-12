@@ -798,7 +798,8 @@
             if (!model) return;
 
             try {
-                var response = await fetch(model.path);
+                var cacheBust = '?v=' + Date.now();
+                var response = await fetch(model.path + cacheBust);
                 var data;
                 if (!response.ok) {
                     // Fallback chain: xg_v3 -> monte_carlo -> neural_network
@@ -806,7 +807,7 @@
                     var found = false;
                     for (var fi = 0; fi < fallbacks.length; fi++) {
                         if (MODELS[fallbacks[fi]]) {
-                            var fbResp = await fetch(MODELS[fallbacks[fi]].path);
+                            var fbResp = await fetch(MODELS[fallbacks[fi]].path + cacheBust);
                             if (fbResp.ok) { data = await fbResp.json(); model = MODELS[fallbacks[fi]]; found = true; break; }
                         }
                     }
@@ -932,7 +933,7 @@
             var container = document.getElementById('yesterday-top10');
 
             try {
-                var response = await fetch(RESULTS_PATH);
+                var response = await fetch(RESULTS_PATH + '?v=' + Date.now());
                 if (!response.ok) throw new Error('No results');
                 var data = await response.json();
 
@@ -1059,7 +1060,7 @@
             try {
                 var allStats = {};
                 try {
-                    var statsResp = await fetch(STATS_PATH);
+                    var statsResp = await fetch(STATS_PATH + '?v=' + Date.now());
                     if (statsResp.ok) {
                         var statsData = await statsResp.json();
                         allStats = statsData.models || {};
