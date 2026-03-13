@@ -58,7 +58,13 @@ jobs:
           git add -A
           DATESTAMP=$(date +%Y-%m-%d)
           git diff --staged --quiet || git commit -m "xG v3 predictions for ${DATESTAMP}"
-          git push origin main || (git pull --rebase origin main && git push origin main)
+          for i in 1 2 3; do
+            git push origin main && break
+            echo "Push attempt $i failed, pulling and retrying..."
+            git pull --rebase -X theirs origin main || (git rebase --abort 2>/dev/null; git pull --no-rebase -X theirs origin main)
+            git push origin main && break
+            sleep 5
+          done
 
   backfill_and_train:
     runs-on: ubuntu-latest

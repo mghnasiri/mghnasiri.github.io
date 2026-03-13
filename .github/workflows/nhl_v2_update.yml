@@ -19,6 +19,7 @@ on:
         options:
           - predictions
           - tims_only
+          - telegram_daily
           - telegram_test
 
 jobs:
@@ -67,7 +68,36 @@ jobs:
           git add -A
           DATESTAMP=$(date +%Y-%m-%d)
           git diff --staged --quiet || git commit -m "MC v2 predictions for ${DATESTAMP}"
-          git push origin main || (git pull --rebase origin main && git push origin main)
+          for i in 1 2 3; do
+            git push origin main && break
+            echo "Push attempt $i failed, pulling and retrying..."
+            git pull --rebase -X theirs origin main || (git rebase --abort 2>/dev/null; git pull --no-rebase -X theirs origin main)
+            git push origin main && break
+            sleep 5
+          done
+
+  telegram_daily:
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'telegram_daily'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Send daily Telegram message
+        working-directory: projects/nhl-hockey
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python scripts/telegram_notify.py daily
 
   telegram_test:
     runs-on: ubuntu-latest

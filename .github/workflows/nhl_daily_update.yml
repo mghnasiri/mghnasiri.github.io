@@ -45,8 +45,14 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add -A
-          git diff --staged --quiet || git commit -m "🏒 Predictions for $(date +%Y-%m-%d)"
-          git push origin main || (git pull --rebase origin main && git push origin main)
+          git diff --staged --quiet || git commit -m "🏒 NN v1 predictions for $(date +%Y-%m-%d)"
+          for i in 1 2 3; do
+            git push origin main && break
+            echo "Push attempt $i failed, pulling and retrying..."
+            git pull --rebase -X theirs origin main || (git rebase --abort 2>/dev/null; git pull --no-rebase -X theirs origin main)
+            git push origin main && break
+            sleep 5
+          done
 
   results:
     runs-on: ubuntu-latest
@@ -78,4 +84,10 @@ jobs:
           git config --local user.name "GitHub Action"
           git add -A
           git diff --staged --quiet || git commit -m "📊 Results for $(date -d 'yesterday' +%Y-%m-%d)"
-          git push origin main || (git pull --rebase origin main && git push origin main)
+          for i in 1 2 3; do
+            git push origin main && break
+            echo "Push attempt $i failed, pulling and retrying..."
+            git pull --rebase -X theirs origin main || (git rebase --abort 2>/dev/null; git pull --no-rebase -X theirs origin main)
+            git push origin main && break
+            sleep 5
+          done
