@@ -19,6 +19,7 @@ import numpy as np
 import json
 import os
 import sys
+import time
 from datetime import datetime
 
 # =============================================================================
@@ -199,9 +200,15 @@ def get_player_stats(player_id):
 
 
 def get_team_roster(team_abbrev):
-    """Get team roster (forwards + defensemen only)"""
-    data = api_get(f"https://api-web.nhle.com/v1/roster/{team_abbrev}/current")
+    """Get team roster (forwards + defensemen only) with retry"""
+    for attempt in range(3):
+        data = api_get(f"https://api-web.nhle.com/v1/roster/{team_abbrev}/current")
+        if data:
+            break
+        if attempt < 2:
+            time.sleep(2)
     if not data:
+        print(f"⚠️ Failed to fetch roster for {team_abbrev} after 3 attempts")
         return []
 
     players = []
@@ -466,12 +473,16 @@ for g in todays_games:
     }
 
 all_players = []
-for team in sorted(all_teams):
-    print(f"   Fetching {team}...", end=" ")
+for idx, team in enumerate(sorted(all_teams)):
+    if idx > 0:
+        time.sleep(1)  # Rate limit: pause between teams
+    print(f"   Fetching {team}...", end=" ", flush=True)
     roster = get_team_roster(team)
     team_players = []
 
-    for p in roster:
+    for i, p in enumerate(roster):
+        if i > 0 and i % 10 == 0:
+            time.sleep(0.5)  # Rate limit: pause every 10 players
         stats = get_player_stats(p['player_id'])
         if stats:
             p.update(stats)

@@ -12,6 +12,7 @@ import numpy as np
 from datetime import datetime, timedelta
 import json
 import os
+import time
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -97,10 +98,17 @@ def get_player_current_stats(player_id):
     """Get current season stats for a player from NHL API"""
     url = f"https://api-web.nhle.com/v1/player/{player_id}/landing"
     try:
-        resp = requests.get(url, timeout=10)
+        for attempt in range(3):
+            resp = requests.get(url, timeout=15)
+            if resp.status_code == 200:
+                break
+            if resp.status_code == 404:
+                return None
+            if attempt < 2:
+                time.sleep(1)
         if resp.status_code != 200:
             return None
-        
+
         data = resp.json()
         
         # Get current season stats
@@ -140,36 +148,48 @@ def get_player_current_stats(player_id):
 def get_team_roster_with_stats(team_abbrev):
     """Get team roster with current season stats"""
     url = f"https://api-web.nhle.com/v1/roster/{team_abbrev}/current"
-    try:
-        resp = requests.get(url, timeout=10)
-        if resp.status_code != 200:
-            return []
-        
-        data = resp.json()
-        players = []
-        
-        for group in ['forwards', 'defensemen']:
-            for p in data.get(group, []):
-                player_id = p['id']
-                name = f"{p['firstName']['default']} {p['lastName']['default']}"
-                position = p['positionCode']
-                
-                # Get current stats
-                stats = get_player_current_stats(player_id)
-                
-                if stats and stats['games_played'] >= 3:
-                    players.append({
-                        'player_id': player_id,
-                        'name': name,
-                        'position': position,
-                        'team': team_abbrev,
-                        **stats
-                    })
-        
-        return players
-    except Exception as e:
-        print(f"   ⚠️ Error fetching {team_abbrev}: {e}")
+    data = None
+    for attempt in range(3):
+        try:
+            resp = requests.get(url, timeout=15)
+            if resp.status_code == 200:
+                data = resp.json()
+                break
+        except requests.RequestException:
+            pass
+        if attempt < 2:
+            time.sleep(2)
+
+    if not data:
+        print(f"   ⚠️ Failed to fetch roster for {team_abbrev} after 3 attempts")
         return []
+
+    players = []
+    roster_list = []
+    for group in ['forwards', 'defensemen']:
+        for p in data.get(group, []):
+            roster_list.append(p)
+
+    for i, p in enumerate(roster_list):
+        if i > 0 and i % 10 == 0:
+            time.sleep(0.5)  # Rate limit: pause every 10 players
+        player_id = p['id']
+        name = f"{p['firstName']['default']} {p['lastName']['default']}"
+        position = p['positionCode']
+
+        # Get current stats
+        stats = get_player_current_stats(player_id)
+
+        if stats and stats['games_played'] >= 3:
+            players.append({
+                'player_id': player_id,
+                'name': name,
+                'position': position,
+                'team': team_abbrev,
+                **stats
+            })
+
+    return players
 
 # =============================================================================
 # 3. COLLECT ALL PLAYERS
@@ -182,8 +202,10 @@ for g in todays_games:
     all_teams.add(g['away_team'])
 
 all_players = []
-for team in sorted(all_teams):
-    print(f"   Fetching {team}...", end=" ")
+for idx, team in enumerate(sorted(all_teams)):
+    if idx > 0:
+        time.sleep(1)  # Rate limit: pause between teams
+    print(f"   Fetching {team}...", end=" ", flush=True)
     roster = get_team_roster_with_stats(team)
     all_players.extend(roster)
     print(f"{len(roster)} players")
