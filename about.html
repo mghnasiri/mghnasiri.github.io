@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-X3F4KE0WSF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-X3F4KE0WSF');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Mohammad G. Nasiri</title>
+    <meta name="description" content="About Mohammad G. Nasiri - PhD Student in Operations & Decision Systems at Université Laval, specializing in optimization and healthcare logistics.">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --midnight: #0A192F;
+            --midnight-light: #112240;
+            --gold: #C5A059;
+            --gold-light: #D4AF37;
+            --ivory: #F8F9FA;
+            --slate: #8892B0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--midnight);
+            color: var(--ivory);
+            font-weight: 300;
+            letter-spacing: 0.02em;
+            line-height: 1.8;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        .navbar {
+            padding: 2rem 0;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.1);
+        }
+
+        .navbar .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            font-size: 1.2rem;
+            color: var(--ivory);
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            color: var(--slate);
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--gold);
+        }
+
+        /* Main */
+        main {
+            flex: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 5rem 2rem 4rem;
+            width: 100%;
+        }
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 400;
+            color: var(--ivory);
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+        }
+
+        .gold-line {
+            width: 40px;
+            height: 1px;
+            background: var(--gold);
+            margin-bottom: 3rem;
+        }
+
+        /* Bio */
+        .bio {
+            margin-bottom: 3.5rem;
+        }
+
+        .bio p {
+            color: var(--slate);
+            font-size: 0.95rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .bio p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Research Interests */
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 400;
+            color: var(--ivory);
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.15);
+        }
+
+        .interests {
+            margin-bottom: 3.5rem;
+        }
+
+        .interest-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .interest-list li {
+            color: var(--slate);
+            font-size: 0.9rem;
+            padding-left: 1rem;
+            position: relative;
+            margin-bottom: 0.6rem;
+        }
+
+        .interest-list li::before {
+            content: '–';
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+        }
+
+        /* Links */
+        .about-links {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .about-links a {
+            color: var(--slate);
+            text-decoration: none;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            padding-bottom: 2px;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+            transition: all 0.3s;
+        }
+
+        .about-links a:hover {
+            color: var(--gold);
+            border-bottom-color: var(--gold);
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        footer p {
+            color: var(--slate);
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .nav-links a {
+                font-size: 0.7rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">M. G. NASIRI</a>
+            <div class="nav-links">
+                <a href="about.html" class="active">About</a>
+                <a href="cv.html">CV</a>
+                <a href="index.html#projects">Projects</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <h1>About</h1>
+        <div class="gold-line"></div>
+
+        <div class="bio">
+            <p>
+                I'm a Ph.D. student in Operations and Decision Systems at Université Laval in Quebec City. My research focuses on robust optimization methods for emergency department staff rostering.
+            </p>
+            <p>
+                Before starting my doctorate, I worked as a researcher at CIRRELT, developing optimization models for transportation networks using MILP, constraint programming, and metaheuristic algorithms.
+            </p>
+            <p>
+                I hold a M.Sc. in Industrial Engineering from Tarbiat Modares University and a B.Sc. from Ferdowsi University of Mashhad. My work sits at the intersection of operations research, machine learning, and healthcare logistics.
+            </p>
+        </div>
+
+        <div class="interests">
+            <h2 class="section-title">Research Interests</h2>
+            <ul class="interest-list">
+                <li>Robust &amp; stochastic optimization</li>
+                <li>Healthcare operations &amp; staff scheduling</li>
+                <li>Machine learning for decision support</li>
+                <li>Transportation &amp; logistics optimization</li>
+                <li>Process mining</li>
+            </ul>
+        </div>
+
+        <div class="about-links">
+            <a href="https://www.linkedin.com/in/mohammad-nasiri-0653aa83/" target="_blank">LinkedIn</a>
+            <a href="https://github.com/mghnasiri" target="_blank">GitHub</a>
+            <a href="mailto:mohammad.ghafourian-nasiri.1@ulaval.ca">Email</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Mohammad G. Nasiri</p>
+    </footer>
+</body>
+</html>
