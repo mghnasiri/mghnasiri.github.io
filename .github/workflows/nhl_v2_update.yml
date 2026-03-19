@@ -1,6 +1,6 @@
 # .github/workflows/nhl_v2_update.yml
-# Monte Carlo v2 Pipeline + Tim Hortons Scraper + Telegram Notifications
-# Sends ONE daily message: yesterday's results + today's predictions
+# Monte Carlo v2 Pipeline + Tim Hortons Scraper
+# Telegram moved to nhl_daily_update.yml (NN v1, runs last at 15:00 UTC)
 
 name: NHL Monte Carlo v2 Pipeline
 
@@ -19,8 +19,6 @@ on:
         options:
           - predictions
           - tims_only
-          - telegram_daily
-          - telegram_test
 
 jobs:
   predictions:
@@ -52,15 +50,6 @@ jobs:
         working-directory: projects/nhl-hockey
         run: python scripts/monte_carlo_predict.py
 
-      - name: Send Telegram daily message
-        if: github.event.inputs.action != 'tims_only'
-        working-directory: projects/nhl-hockey
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: python scripts/telegram_notify.py daily
-        continue-on-error: true
-
       - name: Commit and push
         run: |
           git config --local user.email "action@github.com"
@@ -76,48 +65,3 @@ jobs:
             sleep 5
           done
 
-  telegram_daily:
-    runs-on: ubuntu-latest
-    if: github.event.inputs.action == 'telegram_daily'
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Install dependencies
-        run: pip install requests
-
-      - name: Send daily Telegram message
-        working-directory: projects/nhl-hockey
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: python scripts/telegram_notify.py daily
-
-  telegram_test:
-    runs-on: ubuntu-latest
-    if: github.event.inputs.action == 'telegram_test'
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Install dependencies
-        run: pip install requests
-
-      - name: Send test notification
-        working-directory: projects/nhl-hockey
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: python scripts/telegram_notify.py test

@@ -201,9 +201,21 @@ def add_predictions_section(lines):
     Returns True if predictions were found, False otherwise.
     Never raises errors — silently skips if data unavailable.
     """
-    xg_data = load_json(f"{Config.XG_PREDICTIONS_DIR}/latest.json")
-    mc_data = load_json(f"{Config.MC_PREDICTIONS_DIR}/latest.json")
-    nn_data = load_json(f"{Config.NN_PREDICTIONS_DIR}/latest.json")
+    # Load predictions — prefer today's dated file, fall back to latest.json
+    xg_data = load_json(f"{Config.XG_PREDICTIONS_DIR}/{Config.TODAY}.json") or load_json(f"{Config.XG_PREDICTIONS_DIR}/latest.json")
+    mc_data = load_json(f"{Config.MC_PREDICTIONS_DIR}/{Config.TODAY}.json") or load_json(f"{Config.MC_PREDICTIONS_DIR}/latest.json")
+    nn_data = load_json(f"{Config.NN_PREDICTIONS_DIR}/{Config.TODAY}.json") or load_json(f"{Config.NN_PREDICTIONS_DIR}/latest.json")
+
+    # Only use data that matches today's date (reject stale predictions)
+    if xg_data and xg_data.get('date') != Config.TODAY:
+        print(f"  Warning: xG v3 latest is {xg_data.get('date')}, not today ({Config.TODAY}) — skipping")
+        xg_data = None
+    if mc_data and mc_data.get('date') != Config.TODAY:
+        print(f"  Warning: MC v2 latest is {mc_data.get('date')}, not today ({Config.TODAY}) — skipping")
+        mc_data = None
+    if nn_data and nn_data.get('date') != Config.TODAY:
+        print(f"  Warning: NN v1 latest is {nn_data.get('date')}, not today ({Config.TODAY}) — skipping")
+        nn_data = None
 
     # Use best available model as primary (xG v3 > MC v2 > NN v1)
     primary = xg_data or mc_data or nn_data
@@ -346,7 +358,7 @@ def main():
             f"📅  {Config.TODAY}\n"
             "\n"
             "You will receive daily predictions\n"
-            "every morning at 9:00 AM Toronto time.\n"
+            "every morning at 10:00 AM Toronto time.\n"
             "\n"
             "━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
             f"🔗  <a href='{Config.DASHBOARD_URL}'>Full Dashboard</a>\n"

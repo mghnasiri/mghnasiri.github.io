@@ -1,4 +1,7 @@
 # .github/workflows/nhl_daily_update.yml
+# NN v1 Pipeline + Telegram Notifications (runs last at 15:00 UTC)
+# Sends ONE daily message: yesterday's results + today's predictions
+# All 3 models (MC v2 14:00, xG v3 14:05) are ready by 15:00
 
 name: NHL Daily Predictions
 
@@ -18,28 +21,30 @@ on:
           - predictions
           - results
           - both
+          - telegram_daily
+          - telegram_test
 
 jobs:
   predictions:
     runs-on: ubuntu-latest
     if: github.event.schedule == '0 15 * * *' || github.event.inputs.action == 'predictions' || github.event.inputs.action == 'both'
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      
+
       - name: Install dependencies
         run: pip install pandas numpy requests
-      
+
       - name: Run predictions
         working-directory: projects/nhl-hockey
         run: python scripts/daily_predict.py
-      
+
       - name: Commit and push
         run: |
           git config --local user.email "action@github.com"
@@ -53,6 +58,17 @@ jobs:
             git push origin main && break
             sleep 5
           done
+
+      - name: Pull latest (MC v2 + xG v3 data)
+        run: git pull --rebase origin main || git pull --no-rebase origin main
+
+      - name: Send Telegram daily message
+        working-directory: projects/nhl-hockey
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python scripts/telegram_notify.py daily
+        continue-on-error: true
 
   results:
     runs-on: ubuntu-latest
@@ -91,3 +107,49 @@ jobs:
             git push origin main && break
             sleep 5
           done
+
+  telegram_daily:
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'telegram_daily'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Send daily Telegram message
+        working-directory: projects/nhl-hockey
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python scripts/telegram_notify.py daily
+
+  telegram_test:
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'telegram_test'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Send test notification
+        working-directory: projects/nhl-hockey
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python scripts/telegram_notify.py test
