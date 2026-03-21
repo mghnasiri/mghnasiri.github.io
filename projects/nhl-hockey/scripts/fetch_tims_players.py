@@ -17,6 +17,7 @@ import requests
 import json
 import os
 import re
+import time
 from datetime import datetime
 
 # =============================================================================
@@ -41,6 +42,10 @@ class Config:
         'Accept': 'application/json, text/html',
     }
 
+    # Retry settings
+    MAX_RETRIES = 3
+    RETRY_DELAY = 5  # seconds between retries
+
 os.makedirs(Config.TIMS_DIR, exist_ok=True)
 
 print("=" * 60)
@@ -52,6 +57,29 @@ print("=" * 60)
 # =============================================================================
 # SCRAPING METHODS
 # =============================================================================
+def fetch_with_retry(url, headers=None, timeout=15):
+    """Fetch URL with retry logic. Returns response or None."""
+    for attempt in range(1, Config.MAX_RETRIES + 1):
+        try:
+            resp = requests.get(url, headers=headers or Config.HEADERS, timeout=timeout)
+            if resp.status_code == 200:
+                return resp
+            print(f"   ⚠️ Attempt {attempt}/{Config.MAX_RETRIES}: status {resp.status_code}")
+        except requests.exceptions.Timeout:
+            print(f"   ⚠️ Attempt {attempt}/{Config.MAX_RETRIES}: timeout after {timeout}s")
+        except requests.exceptions.ConnectionError:
+            print(f"   ⚠️ Attempt {attempt}/{Config.MAX_RETRIES}: connection error")
+        except Exception as e:
+            print(f"   ⚠️ Attempt {attempt}/{Config.MAX_RETRIES}: {e}")
+
+        if attempt < Config.MAX_RETRIES:
+            delay = Config.RETRY_DELAY * attempt  # progressive backoff
+            print(f"   ⏳ Retrying in {delay}s...")
+            time.sleep(delay)
+
+    return None
+
+
 def scrape_from_sveltekit_data():
     """
     Scrape player data from timnhlassist.com's __data.json endpoint.
@@ -67,12 +95,12 @@ def scrape_from_sveltekit_data():
       fullname, player_id, pick_number (group), tri_code (team),
       goals, shots, games, position, last_ten_goals, power_play_goals
     """
-    print("\n📡 Method 1: Fetching from __data.json...")
+    print("\n📡 Method 1: Fetching from __data.json (up to 3 retries)...")
 
     try:
-        resp = requests.get(Config.PRIMARY_URL, headers=Config.HEADERS, timeout=15)
-        if resp.status_code != 200:
-            print(f"   ⚠️ Got status {resp.status_code}")
+        resp = fetch_with_retry(Config.PRIMARY_URL)
+        if not resp:
+            print("   ❌ All retries failed for __data.json")
             return None
 
         raw_data = resp.json()
@@ -183,12 +211,12 @@ def scrape_from_html():
     Fallback: scrape player data from HTML page content.
     Looks for embedded JSON in script tags.
     """
-    print("\n📡 Method 2: Fetching from HTML page...")
+    print("\n📡 Method 2: Fetching from HTML page (up to 3 retries)...")
 
     try:
-        resp = requests.get(Config.FALLBACK_URL, headers=Config.HEADERS, timeout=15)
-        if resp.status_code != 200:
-            print(f"   ⚠️ Got status {resp.status_code}")
+        resp = fetch_with_retry(Config.FALLBACK_URL)
+        if not resp:
+            print("   ❌ All retries failed for HTML page")
             return None
 
         html = resp.text

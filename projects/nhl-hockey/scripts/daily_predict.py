@@ -291,7 +291,10 @@ def load_tims_players(date):
             with open(tims_file, 'r') as f:
                 data = json.load(f)
             count = sum(len(v) for v in data.get('groups', {}).values())
-            print(f"  Loaded Tim Hortons players: {count} players")
+            source = data.get('source', 'unknown')
+            print(f"  Loaded Tim Hortons players: {count} players (source: {source})")
+            if source == 'cached_pool':
+                print(f"  ⚠️ WARNING: Using cached pool — players may not match Tim Hortons app")
             return data
         except Exception:
             pass
@@ -364,6 +367,7 @@ output = {
     "players_count": len(output_players),
     "predictions": output_players,
     "tims_mode": tims_mode,
+    "tims_source": tims_data.get('source', 'unknown') if tims_data else None,
     "tims_group_rankings": tims_group_rankings if tims_mode else {},
     "generated_at": datetime.now().isoformat()
 }

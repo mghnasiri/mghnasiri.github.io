@@ -247,8 +247,12 @@ def add_predictions_section(lines):
         lines.append("")
 
     # Tim Hortons groups
+    tims_source = primary.get('tims_source')
     if tims_groups:
         lines.append("🍩  <b>TIM HORTONS PICKS</b>")
+        if tims_source == 'cached_pool':
+            lines.append("     ⚠️ <i>Source unavailable — using cached roster</i>")
+            lines.append("     <i>Players may differ from Tim Hortons app</i>")
         lines.append("")
 
         best_picks = []
