@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-03-20T14:41:26.442921",
-  "last_scrape_date": "2026-03-20",
+  "last_updated": "2026-03-22T14:27:18.806045",
+  "last_scrape_date": "2026-03-22",
   "master_roster": [
     {
       "name": "Connor McDavid",
@@ -1507,14 +1507,92 @@
       "player_id": 8481122,
       "team": "TOR",
       "position": "Defensemen"
+    },
+    {
+      "name": "Bryan Rust",
+      "player_id": 8475810,
+      "team": "PIT",
+      "position": "Forward"
+    },
+    {
+      "name": "Alexis Lafrenière",
+      "player_id": 8482109,
+      "team": "NYR",
+      "position": "Forward"
+    },
+    {
+      "name": "Boone Jenner",
+      "player_id": 8476432,
+      "team": "CBJ",
+      "position": "Forward"
+    },
+    {
+      "name": "Mitchell Marner",
+      "player_id": 8478483,
+      "team": "VGK",
+      "position": "Forward"
+    },
+    {
+      "name": "Anthony Cirelli",
+      "player_id": 8478519,
+      "team": "TBL",
+      "position": "Forward"
+    },
+    {
+      "name": "Victor Olofsson",
+      "player_id": 8478109,
+      "team": "CGY",
+      "position": "Forward"
+    },
+    {
+      "name": "Josh Norris",
+      "player_id": 8480064,
+      "team": "BUF",
+      "position": "Forward"
+    },
+    {
+      "name": "Owen Power",
+      "player_id": 8482671,
+      "team": "BUF",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Wyatt Kaiser",
+      "player_id": 8482176,
+      "team": "CHI",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Noah Hanifin",
+      "player_id": 8478396,
+      "team": "VGK",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Mason Marchment",
+      "player_id": 8478975,
+      "team": "CBJ",
+      "position": "Forward"
+    },
+    {
+      "name": "Martin Fehervary",
+      "player_id": 8480796,
+      "team": "WSH",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Brady Skjei",
+      "player_id": 8476869,
+      "team": "NSH",
+      "position": "Defenseman"
     }
   ],
   "last_groups": {
     "1": [
       {
-        "name": "Nathan MacKinnon",
-        "player_id": 8477492,
-        "team": "COL",
+        "name": "Wyatt Johnston",
+        "player_id": 8482740,
+        "team": "DAL",
         "position": "Forward"
       },
       {
@@ -1524,45 +1602,39 @@
         "position": "Forward"
       },
       {
-        "name": "Seth Jarvis",
-        "player_id": 8482093,
+        "name": "Kyle Connor",
+        "player_id": 8478398,
+        "team": "WPG",
+        "position": "Forward"
+      },
+      {
+        "name": "Mika Zibanejad",
+        "player_id": 8476459,
+        "team": "NYR",
+        "position": "Forward"
+      },
+      {
+        "name": "Bo Horvat",
+        "player_id": 8477500,
+        "team": "NYI",
+        "position": "Forward"
+      },
+      {
+        "name": "Bryan Rust",
+        "player_id": 8475810,
+        "team": "PIT",
+        "position": "Forward"
+      },
+      {
+        "name": "Sebastian Aho",
+        "player_id": 8478427,
         "team": "CAR",
         "position": "Forward"
       },
       {
-        "name": "Sam Bennett",
-        "player_id": 8477935,
-        "team": "FLA",
-        "position": "Forward"
-      },
-      {
-        "name": "Tom Wilson",
-        "player_id": 8476880,
-        "team": "WSH",
-        "position": "Forward"
-      },
-      {
-        "name": "William Nylander",
-        "player_id": 8477939,
-        "team": "TOR",
-        "position": "Forward"
-      },
-      {
-        "name": "John Tavares",
-        "player_id": 8475166,
-        "team": "TOR",
-        "position": "Forward"
-      },
-      {
-        "name": "Clayton Keller",
-        "player_id": 8479343,
-        "team": "UTA",
-        "position": "Forward"
-      },
-      {
-        "name": "Aliaksei Protas",
-        "player_id": 8481656,
-        "team": "WSH",
+        "name": "Alexis Lafrenière",
+        "player_id": 8482109,
+        "team": "NYR",
         "position": "Forward"
       },
       {
@@ -1578,60 +1650,78 @@
         "position": "Forward"
       },
       {
-        "name": "Valeri Nichushkin",
-        "player_id": 8477501,
-        "team": "COL",
-        "position": "Forward"
-      },
-      {
-        "name": "Yegor Sharangovich",
-        "player_id": 8481068,
+        "name": "Blake Coleman",
+        "player_id": 8476399,
         "team": "CGY",
         "position": "Forward"
       },
       {
-        "name": "Nazem Kadri",
-        "player_id": 8475172,
-        "team": "COL",
+        "name": "Anze Kopitar",
+        "player_id": 8471685,
+        "team": "LAK",
+        "position": "Forward"
+      },
+      {
+        "name": "Erik Haula",
+        "player_id": 8475287,
+        "team": "NSH",
+        "position": "Forward"
+      },
+      {
+        "name": "Boone Jenner",
+        "player_id": 8476432,
+        "team": "CBJ",
+        "position": "Forward"
+      },
+      {
+        "name": "Cole Perfetti",
+        "player_id": 8482149,
+        "team": "WPG",
         "position": "Forward"
       }
     ],
     "2": [
       {
-        "name": "Nikolaj Ehlers",
-        "player_id": 8477940,
-        "team": "CAR",
+        "name": "Mitchell Marner",
+        "player_id": 8478483,
+        "team": "VGK",
         "position": "Forward"
       },
       {
-        "name": "Matthew Knies",
-        "player_id": 8482720,
-        "team": "TOR",
+        "name": "Anthony Cirelli",
+        "player_id": 8478519,
+        "team": "TBL",
         "position": "Forward"
       },
       {
-        "name": "Anton Lundell",
-        "player_id": 8482113,
-        "team": "FLA",
-        "position": "Forward"
-      },
-      {
-        "name": "Nicholas Robertson",
-        "player_id": 8481582,
-        "team": "TOR",
-        "position": "Forward"
-      },
-      {
-        "name": "Connor Zary",
-        "player_id": 8482074,
+        "name": "Morgan Frost",
+        "player_id": 8480028,
         "team": "CGY",
         "position": "Forward"
       },
       {
-        "name": "Max Domi",
-        "player_id": 8477503,
-        "team": "TOR",
+        "name": "Jean-Gabriel Pageau",
+        "player_id": 8476419,
+        "team": "NYI",
         "position": "Forward"
+      },
+      {
+        "name": "Matt Duchene",
+        "player_id": 8475168,
+        "team": "DAL",
+        "position": "Forward"
+      },
+      {
+        "name": "Victor Olofsson",
+        "player_id": 8478109,
+        "team": "CGY",
+        "position": "Forward"
+      },
+      {
+        "name": "Erik Karlsson",
+        "player_id": 8474578,
+        "team": "PIT",
+        "position": "Defenseman"
       },
       {
         "name": "Alex Killorn",
@@ -1640,96 +1730,72 @@
         "position": "Forward"
       },
       {
-        "name": "Jordan Martinook",
-        "player_id": 8476921,
-        "team": "CAR",
+        "name": "Alex Iafallo",
+        "player_id": 8480113,
+        "team": "WPG",
         "position": "Forward"
       },
       {
-        "name": "Jackson LaCombe",
-        "player_id": 8481605,
-        "team": "ANA",
+        "name": "Josh Norris",
+        "player_id": 8480064,
+        "team": "BUF",
+        "position": "Forward"
+      },
+      {
+        "name": "Owen Power",
+        "player_id": 8482671,
+        "team": "BUF",
         "position": "Defenseman"
       },
       {
-        "name": "Paul Cotter",
-        "player_id": 8481032,
-        "team": "NJD",
-        "position": "Forward"
-      },
-      {
-        "name": "Sean Durzi",
-        "player_id": 8480434,
-        "team": "UTA",
+        "name": "Wyatt Kaiser",
+        "player_id": 8482176,
+        "team": "CHI",
         "position": "Defenseman"
       },
       {
-        "name": "Pierre-Luc Dubois",
-        "player_id": 8479400,
-        "team": "WSH",
+        "name": "Adam Lowry",
+        "player_id": 8476392,
+        "team": "WPG",
         "position": "Forward"
       },
       {
-        "name": "Gustav Forsling",
-        "player_id": 8478055,
-        "team": "FLA",
+        "name": "Noah Hanifin",
+        "player_id": 8478396,
+        "team": "VGK",
         "position": "Defenseman"
-      },
-      {
-        "name": "Alex Kerfoot",
-        "player_id": 8477021,
-        "team": "UTA",
-        "position": "Forward"
-      },
-      {
-        "name": "Martin Pospisil",
-        "player_id": 8481028,
-        "team": "CGY",
-        "position": "Forward"
       }
     ],
     "3": [
       {
-        "name": "Cody Glass",
-        "player_id": 8479996,
-        "team": "NJD",
+        "name": "Mason Marchment",
+        "player_id": 8478975,
+        "team": "CBJ",
         "position": "Forward"
       },
       {
-        "name": "John Carlson",
-        "player_id": 8474590,
-        "team": "ANA",
-        "position": "Defenseman"
-      },
-      {
-        "name": "Andrew Mangiapane",
-        "player_id": 8478233,
-        "team": "CHI",
+        "name": "Anthony Duclair",
+        "player_id": 8477407,
+        "team": "NYI",
         "position": "Forward"
       },
       {
-        "name": "William Carrier",
-        "player_id": 8477478,
+        "name": "Sean Walker",
+        "player_id": 8480336,
         "team": "CAR",
-        "position": "Forward"
-      },
-      {
-        "name": "Nate Schmidt",
-        "player_id": 8477220,
-        "team": "UTA",
         "position": "Defenseman"
       },
       {
-        "name": "John Marino",
-        "player_id": 8478507,
-        "team": "UTA",
-        "position": "Defenseman"
+        "name": "Ondrej Palat",
+        "player_id": 8476292,
+        "team": "NYI",
+        "position": "Forward"
       },
       {
-        "name": "Ryan Strome",
-        "player_id": 8476458,
-        "team": "CGY",
-        "position": "Forward"
+        "name": "Martin Fehervary",
+        "player_id": 8480796,
+        "team": "WSH",
+        "position": "Defenseman"
       },
       {
         "name": "Ryan Lomberg",
@@ -1744,39 +1810,45 @@
         "position": "Defenseman"
       },
       {
-        "name": "Bo Groulx",
-        "player_id": 8480870,
-        "team": "TOR",
-        "position": "Forward"
-      },
-      {
-        "name": "Trevor van Riemsdyk",
-        "player_id": 8477845,
-        "team": "WSH",
+        "name": "Dylan DeMelo",
+        "player_id": 8476331,
+        "team": "WPG",
         "position": "Defenseman"
       },
       {
-        "name": "Brandon Carlo",
-        "player_id": 8478443,
-        "team": "TOR",
+        "name": "Nicolas Hague",
+        "player_id": 8479980,
+        "team": "NSH",
         "position": "Defenseman"
       },
       {
-        "name": "Jaccob Slavin",
-        "player_id": 8476958,
-        "team": "CAR",
+        "name": "Brian Dumoulin",
+        "player_id": 8475208,
+        "team": "LAK",
         "position": "Defenseman"
       },
       {
-        "name": "Simon Benoit",
-        "player_id": 8481122,
-        "team": "TOR",
-        "position": "Defensemen"
+        "name": "Connor Clifton",
+        "player_id": 8477365,
+        "team": "PIT",
+        "position": "Defenseman"
       },
       {
-        "name": "Johnathan Kovacevic",
-        "player_id": 8480192,
-        "team": "NJD",
+        "name": "Brady Skjei",
+        "player_id": 8476869,
+        "team": "NSH",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Dylan Samberg",
+        "player_id": 8480049,
+        "team": "WPG",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Olli Maatta",
+        "player_id": 8476874,
+        "team": "CGY",
         "position": "Defenseman"
       }
     ]
