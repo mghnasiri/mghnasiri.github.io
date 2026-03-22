@@ -42,6 +42,14 @@ jobs:
       - name: Install dependencies
         run: pip install numpy pandas requests xgboost scikit-learn
 
+      - name: Pull latest (get MC v2 tims data if available)
+        run: git pull --rebase origin main || git pull --no-rebase origin main
+
+      - name: Scrape Tim Hortons player pool
+        working-directory: projects/nhl-hockey
+        run: python scripts/fetch_tims_players.py
+        continue-on-error: true
+
       - name: Collect yesterday's shot data
         working-directory: projects/nhl-hockey
         run: python scripts/collect_xg_data.py
