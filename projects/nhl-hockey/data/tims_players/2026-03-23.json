@@ -1,18 +1,36 @@
 {
   "date": "2026-03-23",
-  "source": "timnhlassist.com",
+  "source": "cached_pool",
   "players_count": 28,
   "groups": {
     "1": [
       {
-        "name": "Tim Stützle",
-        "player_id": 8482116,
-        "team": "OTT",
+        "name": "Adam Edstrom",
+        "player_id": 8481726,
+        "team": "NYR",
         "position": "Forward"
       },
       {
-        "name": "Mika Zibanejad",
-        "player_id": 8476459,
+        "name": "Braden Schneider",
+        "player_id": 8482073,
+        "team": "NYR",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Matthew Robertson",
+        "player_id": 8481525,
+        "team": "NYR",
+        "position": "Defensemen"
+      },
+      {
+        "name": "Vincent Trocheck",
+        "player_id": 8476389,
+        "team": "NYR",
+        "position": "Forward"
+      },
+      {
+        "name": "Will Cuylle",
+        "player_id": 8482157,
         "team": "NYR",
         "position": "Forward"
       },
@@ -23,16 +41,54 @@
         "position": "Forward"
       },
       {
-        "name": "Dylan Cozens",
-        "player_id": 8481528,
+        "name": "Jordan Spence",
+        "player_id": 8481606,
         "team": "OTT",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Nikolas Matinpalo",
+        "player_id": 8484321,
+        "team": "OTT",
+        "position": "Defensemen"
+      },
+      {
+        "name": "Thomas Chabot",
+        "player_id": 8478469,
+        "team": "OTT",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Warren Foegele",
+        "player_id": 8477998,
+        "team": "OTT",
+        "position": "Forward"
+      }
+    ],
+    "2": [
+      {
+        "name": "Adam Fox",
+        "player_id": 8479323,
+        "team": "NYR",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Conor Sheary",
+        "player_id": 8477839,
+        "team": "NYR",
         "position": "Forward"
       },
       {
-        "name": "Alexis Lafrenière",
-        "player_id": 8482109,
+        "name": "Mika Zibanejad",
+        "player_id": 8476459,
         "team": "NYR",
         "position": "Forward"
+      },
+      {
+        "name": "Vladislav Gavrikov",
+        "player_id": 8478882,
+        "team": "NYR",
+        "position": "Defenseman"
       },
       {
         "name": "Brady Tkachuk",
@@ -41,40 +97,8 @@
         "position": "Forward"
       },
       {
-        "name": "Vincent Trocheck",
-        "player_id": 8476389,
-        "team": "NYR",
-        "position": "Forward"
-      },
-      {
-        "name": "J.T. Miller",
-        "player_id": 8476468,
-        "team": "NYR",
-        "position": "Forward"
-      },
-      {
-        "name": "Fabian Zetterlund",
-        "player_id": 8480188,
-        "team": "OTT",
-        "position": "Forward"
-      }
-    ],
-    "2": [
-      {
-        "name": "Shane Pinto",
-        "player_id": 8481596,
-        "team": "OTT",
-        "position": "Forward"
-      },
-      {
-        "name": "Will Cuylle",
-        "player_id": 8482157,
-        "team": "NYR",
-        "position": "Forward"
-      },
-      {
-        "name": "Claude Giroux",
-        "player_id": 8473512,
+        "name": "Dylan Cozens",
+        "player_id": 8481528,
         "team": "OTT",
         "position": "Forward"
       },
@@ -91,47 +115,23 @@
         "position": "Forward"
       },
       {
-        "name": "Warren Foegele",
-        "player_id": 8477998,
+        "name": "Tim Stützle",
+        "player_id": 8482116,
         "team": "OTT",
         "position": "Forward"
-      },
-      {
-        "name": "Thomas Chabot",
-        "player_id": 8478469,
-        "team": "OTT",
-        "position": "Defenseman"
-      },
-      {
-        "name": "Adam Fox",
-        "player_id": 8479323,
-        "team": "NYR",
-        "position": "Defenseman"
-      },
-      {
-        "name": "Matthew Robertson",
-        "player_id": 8481525,
-        "team": "NYR",
-        "position": "Defensemen"
-      },
-      {
-        "name": "Braden Schneider",
-        "player_id": 8482073,
-        "team": "NYR",
-        "position": "Defenseman"
       }
     ],
     "3": [
       {
-        "name": "Vladislav Gavrikov",
-        "player_id": 8478882,
+        "name": "Alexis Lafrenière",
+        "player_id": 8482109,
         "team": "NYR",
-        "position": "Defenseman"
+        "position": "Forward"
       },
       {
-        "name": "Nick Cousins",
-        "player_id": 8476393,
-        "team": "OTT",
+        "name": "J.T. Miller",
+        "player_id": 8476468,
+        "team": "NYR",
         "position": "Forward"
       },
       {
@@ -147,32 +147,32 @@
         "position": "Defenseman"
       },
       {
-        "name": "Jordan Spence",
-        "player_id": 8481606,
+        "name": "Claude Giroux",
+        "player_id": 8473512,
         "team": "OTT",
-        "position": "Defenseman"
+        "position": "Forward"
+      },
+      {
+        "name": "Fabian Zetterlund",
+        "player_id": 8480188,
+        "team": "OTT",
+        "position": "Forward"
+      },
+      {
+        "name": "Nick Cousins",
+        "player_id": 8476393,
+        "team": "OTT",
+        "position": "Forward"
+      },
+      {
+        "name": "Shane Pinto",
+        "player_id": 8481596,
+        "team": "OTT",
+        "position": "Forward"
       },
       {
         "name": "Tyler Kleven",
         "player_id": 8482095,
-        "team": "OTT",
-        "position": "Defensemen"
-      },
-      {
-        "name": "Conor Sheary",
-        "player_id": 8477839,
-        "team": "NYR",
-        "position": "Forward"
-      },
-      {
-        "name": "Adam Edstrom",
-        "player_id": 8481726,
-        "team": "NYR",
-        "position": "Forward"
-      },
-      {
-        "name": "Nikolas Matinpalo",
-        "player_id": 8484321,
         "team": "OTT",
         "position": "Defensemen"
       }
@@ -180,229 +180,174 @@
   },
   "all_players": [
     {
-      "name": "Tim Stützle",
-      "player_id": 8482116,
-      "team": "OTT",
-      "position": "Forward",
-      "goals": 32,
-      "shots": 169
-    },
-    {
-      "name": "Mika Zibanejad",
-      "player_id": 8476459,
+      "name": "Adam Edstrom",
+      "player_id": 8481726,
       "team": "NYR",
-      "position": "Forward",
-      "goals": 30,
-      "shots": 183
-    },
-    {
-      "name": "Drake Batherson",
-      "player_id": 8480208,
-      "team": "OTT",
-      "position": "Forward",
-      "goals": 27,
-      "shots": 145
-    },
-    {
-      "name": "Dylan Cozens",
-      "player_id": 8481528,
-      "team": "OTT",
-      "position": "Forward",
-      "goals": 24,
-      "shots": 166
-    },
-    {
-      "name": "Alexis Lafrenière",
-      "player_id": 8482109,
-      "team": "NYR",
-      "position": "Forward",
-      "goals": 20,
-      "shots": 139
-    },
-    {
-      "name": "Brady Tkachuk",
-      "player_id": 8480801,
-      "team": "OTT",
-      "position": "Forward",
-      "goals": 19,
-      "shots": 189
-    },
-    {
-      "name": "Vincent Trocheck",
-      "player_id": 8476389,
-      "team": "NYR",
-      "position": "Forward",
-      "goals": 15,
-      "shots": 98
-    },
-    {
-      "name": "J.T. Miller",
-      "player_id": 8476468,
-      "team": "NYR",
-      "position": "Forward",
-      "goals": 14,
-      "shots": 120
-    },
-    {
-      "name": "Fabian Zetterlund",
-      "player_id": 8480188,
-      "team": "OTT",
-      "position": "Forward",
-      "goals": 13,
-      "shots": 113
-    },
-    {
-      "name": "Shane Pinto",
-      "player_id": 8481596,
-      "team": "OTT",
-      "position": "Forward",
-      "goals": 18,
-      "shots": 133
-    },
-    {
-      "name": "Will Cuylle",
-      "player_id": 8482157,
-      "team": "NYR",
-      "position": "Forward",
-      "goals": 16,
-      "shots": 131
-    },
-    {
-      "name": "Claude Giroux",
-      "player_id": 8473512,
-      "team": "OTT",
-      "position": "Forward",
-      "goals": 12,
-      "shots": 115
-    },
-    {
-      "name": "Michael Amadio",
-      "player_id": 8478020,
-      "team": "OTT",
-      "position": "Forward",
-      "goals": 12,
-      "shots": 86
-    },
-    {
-      "name": "Ridly Greig",
-      "player_id": 8482092,
-      "team": "OTT",
-      "position": "Forward",
-      "goals": 11,
-      "shots": 108
-    },
-    {
-      "name": "Warren Foegele",
-      "player_id": 8477998,
-      "team": "OTT",
-      "position": "Forward",
-      "goals": 11,
-      "shots": 87
-    },
-    {
-      "name": "Thomas Chabot",
-      "player_id": 8478469,
-      "team": "OTT",
-      "position": "Defenseman",
-      "goals": 7,
-      "shots": 95
+      "position": "Forward"
     },
     {
       "name": "Adam Fox",
       "player_id": 8479323,
       "team": "NYR",
-      "position": "Defenseman",
-      "goals": 5,
-      "shots": 72
+      "position": "Defenseman"
     },
     {
-      "name": "Matthew Robertson",
-      "player_id": 8481525,
+      "name": "Alexis Lafrenière",
+      "player_id": 8482109,
       "team": "NYR",
-      "position": "Defensemen",
-      "goals": 4,
-      "shots": 70
+      "position": "Forward"
     },
     {
       "name": "Braden Schneider",
       "player_id": 8482073,
       "team": "NYR",
-      "position": "Defenseman",
-      "goals": 2,
-      "shots": 87
-    },
-    {
-      "name": "Vladislav Gavrikov",
-      "player_id": 8478882,
-      "team": "NYR",
-      "position": "Defenseman",
-      "goals": 14,
-      "shots": 105
-    },
-    {
-      "name": "Nick Cousins",
-      "player_id": 8476393,
-      "team": "OTT",
-      "position": "Forward",
-      "goals": 8,
-      "shots": 63
-    },
-    {
-      "name": "Tye Kartye",
-      "player_id": 8481789,
-      "team": "NYR",
-      "position": "Forward",
-      "goals": 6,
-      "shots": 42
-    },
-    {
-      "name": "Will Borgen",
-      "player_id": 8478840,
-      "team": "NYR",
-      "position": "Defenseman",
-      "goals": 5,
-      "shots": 65
-    },
-    {
-      "name": "Jordan Spence",
-      "player_id": 8481606,
-      "team": "OTT",
-      "position": "Defenseman",
-      "goals": 4,
-      "shots": 84
-    },
-    {
-      "name": "Tyler Kleven",
-      "player_id": 8482095,
-      "team": "OTT",
-      "position": "Defensemen",
-      "goals": 3,
-      "shots": 78
+      "position": "Defenseman"
     },
     {
       "name": "Conor Sheary",
       "player_id": 8477839,
       "team": "NYR",
-      "position": "Forward",
-      "goals": 3,
-      "shots": 65
+      "position": "Forward"
     },
     {
-      "name": "Adam Edstrom",
-      "player_id": 8481726,
+      "name": "J.T. Miller",
+      "player_id": 8476468,
       "team": "NYR",
-      "position": "Forward",
-      "goals": 3,
-      "shots": 31
+      "position": "Forward"
+    },
+    {
+      "name": "Matthew Robertson",
+      "player_id": 8481525,
+      "team": "NYR",
+      "position": "Defensemen"
+    },
+    {
+      "name": "Mika Zibanejad",
+      "player_id": 8476459,
+      "team": "NYR",
+      "position": "Forward"
+    },
+    {
+      "name": "Tye Kartye",
+      "player_id": 8481789,
+      "team": "NYR",
+      "position": "Forward"
+    },
+    {
+      "name": "Vincent Trocheck",
+      "player_id": 8476389,
+      "team": "NYR",
+      "position": "Forward"
+    },
+    {
+      "name": "Vladislav Gavrikov",
+      "player_id": 8478882,
+      "team": "NYR",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Will Borgen",
+      "player_id": 8478840,
+      "team": "NYR",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Will Cuylle",
+      "player_id": 8482157,
+      "team": "NYR",
+      "position": "Forward"
+    },
+    {
+      "name": "Brady Tkachuk",
+      "player_id": 8480801,
+      "team": "OTT",
+      "position": "Forward"
+    },
+    {
+      "name": "Claude Giroux",
+      "player_id": 8473512,
+      "team": "OTT",
+      "position": "Forward"
+    },
+    {
+      "name": "Drake Batherson",
+      "player_id": 8480208,
+      "team": "OTT",
+      "position": "Forward"
+    },
+    {
+      "name": "Dylan Cozens",
+      "player_id": 8481528,
+      "team": "OTT",
+      "position": "Forward"
+    },
+    {
+      "name": "Fabian Zetterlund",
+      "player_id": 8480188,
+      "team": "OTT",
+      "position": "Forward"
+    },
+    {
+      "name": "Jordan Spence",
+      "player_id": 8481606,
+      "team": "OTT",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Michael Amadio",
+      "player_id": 8478020,
+      "team": "OTT",
+      "position": "Forward"
+    },
+    {
+      "name": "Nick Cousins",
+      "player_id": 8476393,
+      "team": "OTT",
+      "position": "Forward"
     },
     {
       "name": "Nikolas Matinpalo",
       "player_id": 8484321,
       "team": "OTT",
-      "position": "Defensemen",
-      "goals": 0,
-      "shots": 24
+      "position": "Defensemen"
+    },
+    {
+      "name": "Ridly Greig",
+      "player_id": 8482092,
+      "team": "OTT",
+      "position": "Forward"
+    },
+    {
+      "name": "Shane Pinto",
+      "player_id": 8481596,
+      "team": "OTT",
+      "position": "Forward"
+    },
+    {
+      "name": "Thomas Chabot",
+      "player_id": 8478469,
+      "team": "OTT",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Tim Stützle",
+      "player_id": 8482116,
+      "team": "OTT",
+      "position": "Forward"
+    },
+    {
+      "name": "Tyler Kleven",
+      "player_id": 8482095,
+      "team": "OTT",
+      "position": "Defensemen"
+    },
+    {
+      "name": "Warren Foegele",
+      "player_id": 8477998,
+      "team": "OTT",
+      "position": "Forward"
     }
   ],
-  "scraped_at": "2026-03-23T15:06:05.971558"
+  "scraped_at": "2026-03-23T16:00:02.474734",
+  "note": "Scraped from cache — source was unavailable"
 }
