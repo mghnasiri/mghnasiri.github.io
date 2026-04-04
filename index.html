@@ -366,11 +366,12 @@
     </script>
 </head>
 <body>
+    <a href="#main-content" class="visually-hidden-focusable">Skip to main content</a>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
             <a class="navbar-brand" href="#">M. G. NASIRI</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-expanded="false" aria-controls="navbarNav" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
@@ -384,6 +385,7 @@
         </div>
     </nav>
 
+    <main id="main-content">
     <!-- Hero -->
     <section class="hero-section">
         <div class="hero-content">
@@ -392,14 +394,17 @@
             <p class="affiliation">Université Laval · Quebec, Canada</p>
             <div class="gold-line"></div>
             <div class="hero-links">
-                <a href="mailto:mohammad.ghafourian-nasiri.1@ulaval.ca" title="Email">
-                    <i class="fas fa-envelope"></i>
+                <a href="mailto:mohammad.ghafourian-nasiri.1@ulaval.ca" title="Email" aria-label="Email">
+                    <i class="fas fa-envelope" aria-hidden="true"></i>
+                    <span class="visually-hidden">Email</span>
                 </a>
-                <a href="https://www.linkedin.com/in/mohammad-nasiri-0653aa83/" target="_blank" title="LinkedIn">
-                    <i class="fab fa-linkedin-in"></i>
+                <a href="https://www.linkedin.com/in/mohammad-nasiri-0653aa83/" target="_blank" title="LinkedIn" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+                    <span class="visually-hidden">LinkedIn</span>
                 </a>
-                <a href="https://github.com/mghnasiri" target="_blank" title="GitHub">
-                    <i class="fab fa-github"></i>
+                <a href="https://github.com/mghnasiri" target="_blank" title="GitHub" aria-label="GitHub">
+                    <i class="fab fa-github" aria-hidden="true"></i>
+                    <span class="visually-hidden">GitHub</span>
                 </a>
             </div>
         </div>
@@ -421,7 +426,7 @@
                         <span class="project-type">Personal Project</span>
                         <span class="tech-badge">Python</span>
                         <span class="tech-badge">Neural Network</span>
-                        <h5 class="card-title">NHL Goal Prediction</h5>
+                        <h3 class="card-title">NHL Goal Prediction</h3>
                         <p class="card-text">
                             Machine learning pipeline to predict goal-scoring events in NHL games with automated daily predictions.
                         </p>
@@ -437,7 +442,7 @@
                         <span class="project-type">Academic Project</span>
                         <span class="tech-badge">R</span>
                         <span class="tech-badge">Random Forest</span>
-                        <h5 class="card-title">Obesity Risk Prediction</h5>
+                        <h3 class="card-title">Obesity Risk Prediction</h3>
                         <p class="card-text">
                             Comparative analysis of tree-based ML models to predict obesity risk from behavioral and demographic factors.
                         </p>
@@ -453,7 +458,7 @@
                         <span class="project-type">Research</span>
                         <span class="tech-badge">R</span>
                         <span class="tech-badge">Healthcare</span>
-                        <h5 class="card-title">Process Mining in Healthcare</h5>
+                        <h3 class="card-title">Process Mining in Healthcare</h3>
                         <p class="card-text">
                             Systematic literature review on optimizing healthcare logistics using process mining techniques.
                         </p>
@@ -467,7 +472,7 @@
                         <span class="project-type">Research</span>
                         <span class="tech-badge">Gurobi</span>
                         <span class="tech-badge">OR-Tools</span>
-                        <h5 class="card-title">Transportation Optimization</h5>
+                        <h3 class="card-title">Transportation Optimization</h3>
                         <p class="card-text">
                             Modular toolbox for freight transportation using MILP and metaheuristic algorithms.
                         </p>
@@ -482,7 +487,7 @@
                         <span class="tech-badge">Python</span>
                         <span class="tech-badge">Operations Research</span>
                         <span class="tech-badge">Optimization</span>
-                        <h5 class="card-title">Mathematical Modeling &amp; OR</h5>
+                        <h3 class="card-title">Mathematical Modeling &amp; OR</h3>
                         <p class="card-text">
                             Comprehensive repository of 57 Operations Research problems across 10 families — scheduling, routing, packing, network optimization, stochastic programming, and more. 2,339 tests with academic rigor.
                         </p>
@@ -499,7 +504,7 @@
                         <span class="tech-badge">Python</span>
                         <span class="tech-badge">JavaScript</span>
                         <span class="tech-badge">OR Intelligence</span>
-                        <h5 class="card-title">PORID — OR Intelligence Dashboard</h5>
+                        <h3 class="card-title">PORID — OR Intelligence Dashboard</h3>
                         <p class="card-text">
                             Real-time aggregation of OR publications, software releases, conferences, and academic opportunities with automated daily email digests and keyword-based classification.
                         </p>
@@ -512,6 +517,8 @@
             </div>
         </div>
     </section>
+
+    </main>
 
     <!-- Footer -->
     <footer>
