@@ -1,34 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- ═══════════════════════════════════════════════ -->
-  <!-- Main Site Pages                                 -->
-  <!-- ═══════════════════════════════════════════════ -->
-
-  <!-- Homepage -->
+  <!-- Main Site Pages -->
   <url>
     <loc>https://mghnasiri.github.io/</loc>
     <lastmod>2026-03-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
-
-  <!-- About -->
   <url>
     <loc>https://mghnasiri.github.io/about.html</loc>
     <lastmod>2026-03-15</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
-
-  <!-- CV / Resume -->
   <url>
     <loc>https://mghnasiri.github.io/cv.html</loc>
     <lastmod>2026-03-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-
-  <!-- Contact -->
   <url>
     <loc>https://mghnasiri.github.io/contact.html</loc>
     <lastmod>2026-03-15</lastmod>
@@ -36,19 +26,13 @@
     <priority>0.6</priority>
   </url>
 
-  <!-- ═══════════════════════════════════════════════ -->
-  <!-- Project Pages                                   -->
-  <!-- ═══════════════════════════════════════════════ -->
-
-  <!-- NHL Goal Predictor Dashboard -->
+  <!-- Project Pages -->
   <url>
     <loc>https://mghnasiri.github.io/projects/nhl-hockey/</loc>
     <lastmod>2026-03-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
-
-  <!-- Obesity Prediction Project -->
   <url>
     <loc>https://mghnasiri.github.io/projects/obesity-prediction/</loc>
     <lastmod>2026-03-08</lastmod>
@@ -56,11 +40,7 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- ═══════════════════════════════════════════════ -->
-  <!-- Mathematical Modeling & Operations Research     -->
-  <!-- ═══════════════════════════════════════════════ -->
-
-  <!-- Main landing page -->
+  <!-- Mathematical Modeling and Operations Research -->
   <url>
     <loc>https://mghnasiri.github.io/MathematicalModeling/</loc>
     <lastmod>2026-03-15</lastmod>
@@ -68,7 +48,7 @@
     <priority>0.9</priority>
   </url>
 
-  <!-- ─── Problem Family Pages (9) ─── -->
+  <!-- Problem Family Pages -->
   <url>
     <loc>https://mghnasiri.github.io/MathematicalModeling/families/scheduling.html</loc>
     <lastmod>2026-03-15</lastmod>
@@ -124,7 +104,7 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- ─── Application Demo Pages (14) ─── -->
+  <!-- Application Demo Pages -->
   <url>
     <loc>https://mghnasiri.github.io/MathematicalModeling/applications/emergency-routing.html</loc>
     <lastmod>2026-03-15</lastmod>
