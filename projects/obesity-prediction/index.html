@@ -502,7 +502,7 @@
             <h1 class="hero-title">Predicting Obesity Risk from Behavioral & Demographic Factors</h1>
             <p class="hero-subtitle">A comparative analysis of tree-based machine learning models to predict obesity risk using behavioral patterns, lifestyle factors, and demographic characteristics.</p>
             
-            <div class="gold-line"></div>
+            <div class="gold-line" aria-hidden="true"></div>
             
             <div class="meta-info">
                 <div class="meta-item">
@@ -617,14 +617,15 @@
             
             <div class="table-responsive mt-4">
                 <table class="results-table">
+                    <caption class="visually-hidden">Model performance comparison — error rate and AUC scores</caption>
                     <thead>
                         <tr>
-                            <th>Model</th>
-                            <th>Error Rate</th>
-                            <th>AUC Score</th>
-                            <th>Normal Class Error</th>
-                            <th>Overweight Error</th>
-                            <th>Obese Error</th>
+                            <th scope="col">Model</th>
+                            <th scope="col">Error Rate</th>
+                            <th scope="col">AUC Score</th>
+                            <th scope="col">Normal Class Error</th>
+                            <th scope="col">Overweight Error</th>
+                            <th scope="col">Obese Error</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -678,7 +679,7 @@
                             <i class="fas fa-trophy"></i>
                         </div>
                         <div class="finding-content">
-                            <h4>Random Forest Wins</h4>
+                            <h3>Random Forest Wins</h3>
                             <p>Achieved lowest error rate (31.8%) and highest AUC (0.75) by decorrelating trees through random feature selection at each split.</p>
                         </div>
                     </div>
@@ -688,7 +689,7 @@
                             <i class="fas fa-user-clock"></i>
                         </div>
                         <div class="finding-content">
-                            <h4>Age is #1 Predictor</h4>
+                            <h3>Age is #1 Predictor</h3>
                             <p>Age emerged as the most influential variable (importance: 24.7), followed by Height (16.4) and Water Intake (16.7).</p>
                         </div>
                     </div>
@@ -698,7 +699,7 @@
                             <i class="fas fa-dna"></i>
                         </div>
                         <div class="finding-content">
-                            <h4>Genetics Matter</h4>
+                            <h3>Genetics Matter</h3>
                             <p>Family history of overweight showed strong predictive power (importance: 15.0), with higher proportion of obese individuals reporting family history.</p>
                         </div>
                     </div>
@@ -710,7 +711,7 @@
                             <i class="fas fa-exclamation-triangle"></i>
                         </div>
                         <div class="finding-content">
-                            <h4>Overweight Challenge</h4>
+                            <h3>Overweight Challenge</h3>
                             <p>All models struggled with the "Overweight" class (69-81% error), as it shares characteristics with both Normal and Obese groups.</p>
                         </div>
                     </div>
@@ -720,7 +721,7 @@
                             <i class="fas fa-hamburger"></i>
                         </div>
                         <div class="finding-content">
-                            <h4>Diet Type Less Important</h4>
+                            <h3>Diet Type Less Important</h3>
                             <p>High-calorie food consumption was ubiquitous (~90%) across all classes, making "what you eat" less predictive than "how much you eat."</p>
                         </div>
                     </div>
@@ -730,7 +731,7 @@
                             <i class="fas fa-running"></i>
                         </div>
                         <div class="finding-content">
-                            <h4>Activity Correlation</h4>
+                            <h3>Activity Correlation</h3>
                             <p>Physical activity levels were generally lower in Overweight and Obese groups, suggesting negative correlation with obesity risk.</p>
                         </div>
                     </div>

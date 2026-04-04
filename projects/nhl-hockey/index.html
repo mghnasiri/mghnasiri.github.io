@@ -668,7 +668,7 @@
         <div class="container">
             <p class="subtitle">Hockey Challenge</p>
             <h1>NHL Goal Predictor</h1>
-            <div class="gold-line"></div>
+            <div class="gold-line" aria-hidden="true"></div>
             <p class="date" id="prediction-date">Loading...</p>
             <div class="model-selector" style="margin-top: 1.5rem;">
                 <button class="model-btn" data-model="xg_v3" onclick="switchModel('xg_v3')" type="button">xG XGBoost v3</button>
@@ -725,7 +725,9 @@
             <h2 class="section-title">Today's Predictions</h2>
             
             <div class="filter-bar">
+                <label for="search-input" class="visually-hidden">Search player or team</label>
                 <input type="text" id="search-input" placeholder="Search player or team...">
+                <label for="position-filter" class="visually-hidden">Filter by position</label>
                 <select id="position-filter">
                     <option value="">All Positions</option>
                     <option value="C">Center</option>
@@ -737,15 +739,16 @@
             
             <div class="table-container">
                 <table>
+                    <caption class="visually-hidden">Today's NHL goal predictions ranked by probability</caption>
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Player</th>
-                            <th class="hide-mobile">Pos</th>
-                            <th>Probability</th>
-                            <th class="hide-mobile">Goals</th>
-                            <th>L5</th>
-                            <th class="hide-mobile">Matchup</th>
+                            <th scope="col">#</th>
+                            <th scope="col">Player</th>
+                            <th scope="col" class="hide-mobile">Pos</th>
+                            <th scope="col">Probability</th>
+                            <th scope="col" class="hide-mobile">Goals</th>
+                            <th scope="col">L5</th>
+                            <th scope="col" class="hide-mobile">Matchup</th>
                         </tr>
                     </thead>
                     <tbody id="predictions-body">
