@@ -1,0 +1,126 @@
+{
+  "date": "2026-04-16",
+  "model": "meta_ensemble",
+  "model_display_name": "Meta Ensemble v1",
+  "games_count": 6,
+  "games": [
+    {
+      "game_id": 2025021309,
+      "home_team": "UTA",
+      "away_team": "STL",
+      "start_time": "2026-04-16T23:30:00Z"
+    },
+    {
+      "game_id": 2025021307,
+      "home_team": "NSH",
+      "away_team": "ANA",
+      "start_time": "2026-04-17T00:00:00Z"
+    },
+    {
+      "game_id": 2025021308,
+      "home_team": "WPG",
+      "away_team": "SJS",
+      "start_time": "2026-04-17T00:00:00Z"
+    },
+    {
+      "game_id": 2025021310,
+      "home_team": "CGY",
+      "away_team": "LAK",
+      "start_time": "2026-04-17T01:00:00Z"
+    },
+    {
+      "game_id": 2025021311,
+      "home_team": "EDM",
+      "away_team": "VAN",
+      "start_time": "2026-04-17T01:00:00Z"
+    },
+    {
+      "game_id": 2025021312,
+      "home_team": "COL",
+      "away_team": "SEA",
+      "start_time": "2026-04-17T02:00:00Z"
+    }
+  ],
+  "players_count": 2,
+  "predictions": [
+    {
+      "player_id": 8481605,
+      "name": "Jackson LaCombe",
+      "position": "D",
+      "team": "ANA",
+      "opponent": "NSH",
+      "is_home": false,
+      "game_id": 2025021307,
+      "matchup": "ANA @ NSH",
+      "season_goals": 9,
+      "last5_goals": 0,
+      "goal_probability": 0.1538,
+      "goal_probability_raw": 0.6891,
+      "opp_goalie_sv_pct": 0.9058,
+      "rank": 1,
+      "is_hot": false,
+      "tims_group": "2",
+      "tims_rank": 1
+    },
+    {
+      "player_id": 8476399,
+      "name": "Blake Coleman",
+      "position": "L",
+      "team": "CGY",
+      "opponent": "LAK",
+      "is_home": true,
+      "game_id": 2025021310,
+      "matchup": "CGY vs LAK",
+      "season_goals": 20,
+      "last5_goals": 1,
+      "goal_probability": 0.1538,
+      "goal_probability_raw": 0.6942,
+      "opp_goalie_sv_pct": 0.9089,
+      "rank": 2,
+      "is_hot": false,
+      "tims_group": "1",
+      "tims_rank": 2
+    }
+  ],
+  "tims_mode": true,
+  "tims_source": "timnhlassist.com",
+  "tims_group_rankings": {
+    "2": [
+      {
+        "rank_in_group": 1,
+        "player_id": 8481605,
+        "name": "Jackson LaCombe",
+        "team": "ANA",
+        "goal_probability": 0.1538,
+        "matchup": "ANA @ NSH"
+      }
+    ],
+    "1": [
+      {
+        "rank_in_group": 1,
+        "player_id": 8476399,
+        "name": "Blake Coleman",
+        "team": "CGY",
+        "goal_probability": 0.1538,
+        "matchup": "CGY vs LAK"
+      }
+    ]
+  },
+  "model_params": {
+    "base_models": [
+      "neural_network",
+      "monte_carlo",
+      "xg_v3"
+    ],
+    "features": [
+      "p_linear",
+      "p_mc",
+      "p_xg",
+      "model_disagreement",
+      "goalie_sv_pct",
+      "is_home",
+      "opp_ga_per_game"
+    ]
+  },
+  "generated_at": "2026-04-16T16:49:48.265431"
+}
