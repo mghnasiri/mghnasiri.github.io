@@ -32,6 +32,7 @@ class Config:
     CHAT_ID = os.environ.get('TELEGRAM_CHAT_ID', '')
 
     DATA_DIR = "data"
+    META_PREDICTIONS_DIR = f"{DATA_DIR}/predictions/meta_ensemble"
     XG_PREDICTIONS_DIR = f"{DATA_DIR}/predictions/xg_v3"
     MC_PREDICTIONS_DIR = f"{DATA_DIR}/predictions/monte_carlo"
     NN_PREDICTIONS_DIR = f"{DATA_DIR}/predictions/neural_network"
@@ -119,7 +120,7 @@ def build_daily_message():
     lines.append("")
     lines.append("━━━━━━━━━━━━━━━━━━━━━━━━━━")
     lines.append(f"🔗  <a href='{Config.DASHBOARD_URL}'>Full Dashboard</a>")
-    lines.append("🧠  3 Models: xG XGBoost · Monte Carlo · Neural Net")
+    lines.append("🧠  4 Models: Meta Ensemble · xG XGBoost · Monte Carlo · Weighted Linear")
     lines.append("━━━━━━━━━━━━━━━━━━━━━━━━━━")
 
     return "\n".join(lines)
@@ -202,11 +203,15 @@ def add_predictions_section(lines):
     Never raises errors — silently skips if data unavailable.
     """
     # Load predictions — prefer today's dated file, fall back to latest.json
+    meta_data = load_json(f"{Config.META_PREDICTIONS_DIR}/{Config.TODAY}.json") or load_json(f"{Config.META_PREDICTIONS_DIR}/latest.json")
     xg_data = load_json(f"{Config.XG_PREDICTIONS_DIR}/{Config.TODAY}.json") or load_json(f"{Config.XG_PREDICTIONS_DIR}/latest.json")
     mc_data = load_json(f"{Config.MC_PREDICTIONS_DIR}/{Config.TODAY}.json") or load_json(f"{Config.MC_PREDICTIONS_DIR}/latest.json")
     nn_data = load_json(f"{Config.NN_PREDICTIONS_DIR}/{Config.TODAY}.json") or load_json(f"{Config.NN_PREDICTIONS_DIR}/latest.json")
 
     # Only use data that matches today's date (reject stale predictions)
+    if meta_data and meta_data.get('date') != Config.TODAY:
+        print(f"  Warning: Meta latest is {meta_data.get('date')}, not today ({Config.TODAY}) — skipping")
+        meta_data = None
     if xg_data and xg_data.get('date') != Config.TODAY:
         print(f"  Warning: xG v3 latest is {xg_data.get('date')}, not today ({Config.TODAY}) — skipping")
         xg_data = None
@@ -214,11 +219,11 @@ def add_predictions_section(lines):
         print(f"  Warning: MC v2 latest is {mc_data.get('date')}, not today ({Config.TODAY}) — skipping")
         mc_data = None
     if nn_data and nn_data.get('date') != Config.TODAY:
-        print(f"  Warning: NN v1 latest is {nn_data.get('date')}, not today ({Config.TODAY}) — skipping")
+        print(f"  Warning: Linear v1 latest is {nn_data.get('date')}, not today ({Config.TODAY}) — skipping")
         nn_data = None
 
-    # Use best available model as primary (xG v3 > MC v2 > NN v1)
-    primary = xg_data or mc_data or nn_data
+    # Use best available model as primary (Meta > xG v3 > MC v2 > Linear v1)
+    primary = meta_data or xg_data or mc_data or nn_data
     if not primary:
         return False
 
@@ -228,7 +233,7 @@ def add_predictions_section(lines):
     tims_groups = primary.get('tims_group_rankings', {})
     games = primary.get('games', [])
 
-    primary_name = "xG v3" if xg_data else ("MC v2" if mc_data else "NN v1")
+    primary_name = "Meta" if meta_data else ("xG v3" if xg_data else ("MC v2" if mc_data else "Linear v1"))
 
     if not predictions:
         return False
@@ -307,14 +312,16 @@ def add_predictions_section(lines):
             lines.append(f"  {rank:>2}.  {name} ({team}){hot}")
             lines.append(f"       {bar}  {prob:.1f}%")
 
-    # 3-model comparison (compact — show top 3 from each available model)
+    # 4-model comparison (compact — show top 3 from each available model)
     model_tops = []
+    if meta_data and meta_data.get('predictions'):
+        model_tops.append(("Meta", meta_data['predictions'][:3]))
     if xg_data and xg_data.get('predictions'):
         model_tops.append(("xG v3", xg_data['predictions'][:3]))
     if mc_data and mc_data.get('predictions'):
         model_tops.append(("MC v2", mc_data['predictions'][:3]))
     if nn_data and nn_data.get('predictions'):
-        model_tops.append(("NN v1", nn_data['predictions'][:3]))
+        model_tops.append(("Lin v1", nn_data['predictions'][:3]))
 
     if len(model_tops) >= 2:
         lines.append("")

@@ -134,51 +134,42 @@ def get_team_stats_from_standings():
 # =============================================================================
 # 3. FETCH PLAYER STATS
 # =============================================================================
+def _parse_toi(toi_str):
+    """Parse TOI string 'MM:SS' to float minutes."""
+    try:
+        parts = str(toi_str).split(':')
+        return int(parts[0]) + int(parts[1]) / 60 if len(parts) == 2 else 0
+    except (ValueError, IndexError):
+        return 0
+
 def get_player_stats(player_id):
-    """Get comprehensive player stats from NHL API"""
-    data = api_get(f"https://api-web.nhle.com/v1/player/{player_id}/landing")
+    """Get player stats from game log (leak-free: excludes today's games)."""
+    data = api_get(f"https://api-web.nhle.com/v1/player/{player_id}/game-log/now")
     if not data:
         return None
 
-    # Current season stats
-    featured = data.get('featuredStats', {})
-    regular = featured.get('regularSeason', {})
-    sub = regular.get('subSeason', {})
-
-    if not sub:
-        return None
-
-    gp = sub.get('gamesPlayed', 0)
+    game_log = data.get('gameLog', [])
+    prior = [g for g in game_log if g.get('gameDate', '9999') < Config.TODAY]
+    gp = len(prior)
     if gp < Config.MIN_GAMES_PLAYED:
         return None
 
-    goals = sub.get('goals', 0)
-    shots = sub.get('shots', 0)
-    assists = sub.get('assists', 0)
-    points = sub.get('points', 0)
-    pp_goals = sub.get('powerPlayGoals', 0)
-    pp_points = sub.get('powerPlayPoints', 0)
-    toi_per_game = sub.get('avgToi', '0:00')
+    goals = sum(g.get('goals', 0) for g in prior)
+    shots = sum(g.get('shots', 0) for g in prior)
+    assists = sum(g.get('assists', 0) for g in prior)
+    points = sum(g.get('points', 0) for g in prior)
+    pp_goals = sum(g.get('powerPlayGoals', 0) for g in prior)
+    pp_points = sum(g.get('powerPlayPoints', 0) for g in prior)
+    total_toi = sum(_parse_toi(g.get('toi', '0:00')) for g in prior)
 
-    # Parse TOI string "MM:SS" to minutes
-    try:
-        parts = str(toi_per_game).split(':')
-        toi_minutes = int(parts[0]) + int(parts[1]) / 60 if len(parts) == 2 else 0
-    except (ValueError, IndexError):
-        toi_minutes = 0
-
-    # Last N games
-    last_games = data.get('last5Games', [])
-    last_n_goals = sum(g.get('goals', 0) for g in last_games)
-    last_n_shots = sum(g.get('shots', 0) for g in last_games)
-    last_n_games_count = len(last_games)
-
-    # Calculate shooting percentage
     shooting_pct = goals / shots if shots > 0 else 0
-
-    # Calculate recent form (goals per game in recent games)
-    recent_gpg = last_n_goals / last_n_games_count if last_n_games_count > 0 else 0
     season_gpg = goals / gp if gp > 0 else 0
+
+    last5 = prior[:5]  # newest-first
+    last5_goals = sum(g.get('goals', 0) for g in last5)
+    last5_shots = sum(g.get('shots', 0) for g in last5)
+    last5_count = len(last5)
+    recent_gpg = last5_goals / last5_count if last5_count > 0 else 0
 
     return {
         'games_played': gp,
@@ -188,13 +179,13 @@ def get_player_stats(player_id):
         'season_points': points,
         'pp_goals': pp_goals,
         'pp_points': pp_points,
-        'avg_toi_minutes': round(toi_minutes, 1),
+        'avg_toi_minutes': round(total_toi / gp, 1) if gp > 0 else 0,
         'avg_goals': round(season_gpg, 4),
         'avg_shots': round(shots / gp, 2) if gp > 0 else 0,
         'shooting_pct': round(shooting_pct, 4),
-        'last5_goals': last_n_goals,
-        'last5_shots': last_n_shots,
-        'last5_games': last_n_games_count,
+        'last5_goals': last5_goals,
+        'last5_shots': last5_shots,
+        'last5_games': last5_count,
         'recent_gpg': round(recent_gpg, 4),
     }
 
@@ -341,8 +332,8 @@ def calculate_player_weights(players, team_stats):
         pp_goals = p.get('pp_goals', 0)
         shots_per_game = p.get('avg_shots', 0)
 
-        # Base weight: season goals per game, SQUARED to amplify star power
-        # A 0.5 GPG player gets 25x weight of a 0.1 GPG player (vs 5x linear)
+        # Base weight: season goals per game, raised to power 1.8 to amplify star power
+        # A 0.5 GPG player gets ~19x weight of a 0.1 GPG player (vs 5x linear)
         season_gpg = season_goals / max(gp, 1)
         base = season_gpg ** 1.8  # Power > 1 amplifies differences
 
@@ -525,7 +516,7 @@ else:
 # Step 6: Run Monte Carlo simulation per game
 print(f"\n🎲 Running Monte Carlo simulations ({Config.NUM_SIMULATIONS:,} per game)...")
 
-np.random.seed(42)  # Reproducibility
+np.random.seed(hash(Config.TODAY) % 2**31)  # Reproducible per day, varied across days
 
 # Group players by game
 games_players = {}

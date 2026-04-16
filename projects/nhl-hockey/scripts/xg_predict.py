@@ -70,6 +70,26 @@ class Config:
         'wrap-around': 0.02,
     }
 
+    # Position-specific shot profiles (angle + shot-type distributions)
+    POSITION_PROFILES = {
+        'D': {'angle_mean': 28, 'angle_std': 15,
+              'shot_types': {'wrist': 0.30, 'slap': 0.30, 'snap': 0.20,
+                             'tip-in': 0.05, 'backhand': 0.05,
+                             'deflected': 0.05, 'wrap-around': 0.05}},
+        'C': {'angle_mean': 18, 'angle_std': 10,
+              'shot_types': {'wrist': 0.45, 'snap': 0.20, 'backhand': 0.12,
+                             'tip-in': 0.10, 'slap': 0.05,
+                             'deflected': 0.05, 'wrap-around': 0.03}},
+        'L': {'angle_mean': 22, 'angle_std': 11,
+              'shot_types': {'wrist': 0.42, 'snap': 0.22, 'slap': 0.10,
+                             'backhand': 0.10, 'tip-in': 0.08,
+                             'deflected': 0.05, 'wrap-around': 0.03}},
+        'R': {'angle_mean': 22, 'angle_std': 11,
+              'shot_types': {'wrist': 0.42, 'snap': 0.22, 'slap': 0.10,
+                             'backhand': 0.10, 'tip-in': 0.08,
+                             'deflected': 0.05, 'wrap-around': 0.03}},
+    }
+
 
 os.makedirs(Config.PREDICTIONS_DIR, exist_ok=True)
 
@@ -138,42 +158,45 @@ def get_team_stats_from_standings():
 
 
 def get_player_stats(player_id):
-    """Get comprehensive player stats from NHL API"""
-    data = api_get(f"https://api-web.nhle.com/v1/player/{player_id}/landing")
+    """Get player stats from game log (leak-free: excludes today's games)."""
+    data = api_get(f"https://api-web.nhle.com/v1/player/{player_id}/game-log/now")
     if not data:
         return None
-    featured = data.get('featuredStats', {})
-    sub = featured.get('regularSeason', {}).get('subSeason', {})
-    if not sub:
-        return None
-    gp = sub.get('gamesPlayed', 0)
+    game_log = data.get('gameLog', [])
+    # Only count games strictly before today
+    prior = [g for g in game_log if g.get('gameDate', '9999') < Config.TODAY]
+    gp = len(prior)
     if gp < Config.MIN_GAMES_PLAYED:
         return None
-    goals = sub.get('goals', 0)
-    shots = sub.get('shots', 0)
-    pp_goals = sub.get('powerPlayGoals', 0)
-    pp_points = sub.get('powerPlayPoints', 0)
-    last_games = data.get('last5Games', [])
-    last_n_goals = sum(g.get('goals', 0) for g in last_games)
-    last_n_shots = sum(g.get('shots', 0) for g in last_games)
-    last_n_count = len(last_games)
+    goals = sum(g.get('goals', 0) for g in prior)
+    shots = sum(g.get('shots', 0) for g in prior)
+    assists = sum(g.get('assists', 0) for g in prior)
+    points = sum(g.get('points', 0) for g in prior)
+    pp_goals = sum(g.get('powerPlayGoals', 0) for g in prior)
+    pp_points = sum(g.get('powerPlayPoints', 0) for g in prior)
     shooting_pct = goals / shots if shots > 0 else 0
+
+    last5 = prior[:5]  # newest-first
+    last5_goals = sum(g.get('goals', 0) for g in last5)
+    last5_shots = sum(g.get('shots', 0) for g in last5)
+    last5_count = len(last5)
+
     return {
         'games_played': gp,
         'season_goals': goals,
         'season_shots': shots,
-        'season_assists': sub.get('assists', 0),
-        'season_points': sub.get('points', 0),
+        'season_assists': assists,
+        'season_points': points,
         'pp_goals': pp_goals,
         'pp_points': pp_points,
         'avg_toi_minutes': 0.0,
         'avg_goals': round(goals / gp, 4),
         'avg_shots': round(shots / gp, 2) if gp > 0 else 0,
         'shooting_pct': round(shooting_pct, 4),
-        'last5_goals': last_n_goals,
-        'last5_shots': last_n_shots,
-        'last5_games': last_n_count,
-        'recent_gpg': round(last_n_goals / max(last_n_count, 1), 4),
+        'last5_goals': last5_goals,
+        'last5_shots': last5_shots,
+        'last5_games': last5_count,
+        'recent_gpg': round(last5_goals / max(last5_count, 1), 4),
     }
 
 
@@ -281,12 +304,19 @@ def estimate_shot_profile(player, position):
     else:
         rebound_fraction = 0.03
 
+    # Position-specific angle and shot-type distributions
+    pos_key = position[0] if position else 'C'  # normalize LD/RD→D, LW/RW→L/R
+    if pos_key in ('D',):
+        pos_key = 'D'
+    pos_profile = Config.POSITION_PROFILES.get(pos_key, Config.POSITION_PROFILES['C'])
+
     return {
         'expected_shots': avg_shots,
         'distance_mean': distance_mean,
         'distance_std': distance_std,
-        'angle_mean': Config.DEFAULT_ANGLE_MEAN,
-        'angle_std': Config.DEFAULT_ANGLE_STD,
+        'angle_mean': pos_profile['angle_mean'],
+        'angle_std': pos_profile['angle_std'],
+        'shot_types': pos_profile['shot_types'],
         'pp_fraction': min(pp_fraction, 0.5),
         'rebound_fraction': rebound_fraction,
     }
@@ -295,7 +325,7 @@ def estimate_shot_profile(player, position):
 # =============================================================================
 # XG CALCULATION
 # =============================================================================
-def calculate_xg_with_model(model, metadata, profile, num_shots=20):
+def calculate_xg_with_model(model, metadata, profile, num_shots=20, player_id=0):
     """
     Generate representative synthetic shots and score them through XGBoost.
     Returns average xG per shot.
@@ -307,8 +337,8 @@ def calculate_xg_with_model(model, metadata, profile, num_shots=20):
     if not feature_names:
         return None
 
-    # Generate synthetic shots
-    np.random.seed(hash(str(profile['distance_mean'])) % 2**31)
+    # Generate synthetic shots — seed per player+date for reproducibility
+    np.random.seed(hash(str(player_id) + Config.TODAY) % 2**31)
 
     distances = np.clip(
         np.random.normal(profile['distance_mean'], profile['distance_std'], num_shots),
@@ -319,12 +349,19 @@ def calculate_xg_with_model(model, metadata, profile, num_shots=20):
         0, 80
     )
 
-    shot_types_list = list(Config.SHOT_TYPE_DISTRIBUTION.keys())
-    shot_types_probs = list(Config.SHOT_TYPE_DISTRIBUTION.values())
+    # Use position-specific shot types if available, else global fallback
+    pos_shot_types = profile.get('shot_types', Config.SHOT_TYPE_DISTRIBUTION)
+    shot_types_list = list(pos_shot_types.keys())
+    shot_types_probs = list(pos_shot_types.values())
     shot_types = np.random.choice(shot_types_list, size=num_shots, p=shot_types_probs)
 
     is_pp = np.random.binomial(1, profile['pp_fraction'], num_shots)
     is_rebound = np.random.binomial(1, profile['rebound_fraction'], num_shots)
+
+    # Vary period and score differential across synthetic shots
+    periods = np.random.choice([1, 2, 3], num_shots, p=[0.33, 0.34, 0.33])
+    score_diffs = np.random.choice([-2, -1, 0, 1, 2], num_shots,
+                                   p=[0.10, 0.20, 0.40, 0.20, 0.10])
 
     rows = []
     for i in range(num_shots):
@@ -335,8 +372,8 @@ def calculate_xg_with_model(model, metadata, profile, num_shots=20):
             'is_rebound': int(is_rebound[i]),
             'seconds_since_last_event': 5.0 if is_rebound[i] else 15.0,
             'is_empty_net': 0,
-            'score_differential': 0,
-            'period': 2,
+            'score_differential': int(score_diffs[i]),
+            'period': int(periods[i]),
             'prior_event_distance': distances[i] + 10 if not is_rebound[i] else distances[i] + 3,
             'distance_x_angle': distances[i] * angles[i],
             'is_slot_shot': int(distances[i] < 20),
@@ -437,7 +474,8 @@ def calculate_player_goal_probability(player, profile, model, metadata,
     # Step 1: Average xG per shot
     if mode == "xgboost" and model is not None:
         avg_shot_xg = calculate_xg_with_model(
-            model, metadata, profile, Config.NUM_REPRESENTATIVE_SHOTS
+            model, metadata, profile, Config.NUM_REPRESENTATIVE_SHOTS,
+            player_id=player.get('player_id', 0)
         )
         if avg_shot_xg is None:
             avg_shot_xg = calculate_xg_with_fallback(fallback, profile)

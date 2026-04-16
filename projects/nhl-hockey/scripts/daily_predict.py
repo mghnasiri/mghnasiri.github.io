@@ -21,12 +21,11 @@ warnings.filterwarnings('ignore')
 # =============================================================================
 class Config:
     MODEL_NAME = "neural_network"
-    MODEL_DISPLAY_NAME = "Neural Network v1"
-    
+    MODEL_DISPLAY_NAME = "Weighted Linear v1"
+
     DATA_DIR = "data"
     PREDICTIONS_DIR = f"{DATA_DIR}/predictions/{MODEL_NAME}"
     RESULTS_DIR = f"{DATA_DIR}/results"
-    HISTORICAL_FILE = f"{DATA_DIR}/historical/all_raw_stats.csv"
     TIMS_DIR = f"{DATA_DIR}/tims_players"
 
     TODAY = datetime.now().strftime("%Y-%m-%d")
@@ -94,9 +93,34 @@ print(f"✅ Found {len(todays_games)} games")
 # =============================================================================
 # 2. GET PLAYER STATS FROM API (Current Season)
 # =============================================================================
+def compute_stats_from_gamelog(game_log, today_date):
+    """Compute season stats from game log, excluding games on or after today_date."""
+    prior_games = [g for g in game_log if g.get('gameDate', '9999') < today_date]
+    if not prior_games:
+        return None
+
+    games_played = len(prior_games)
+    goals = sum(g.get('goals', 0) for g in prior_games)
+    shots = sum(g.get('shots', 0) for g in prior_games)
+
+    last5 = prior_games[:5]  # game log is newest-first
+    last5_goals = sum(g.get('goals', 0) for g in last5)
+    last5_points = sum(g.get('points', 0) for g in last5)
+
+    return {
+        'games_played': games_played,
+        'season_goals': goals,
+        'season_shots': shots,
+        'avg_goals': round(goals / games_played, 3) if games_played > 0 else 0,
+        'avg_shots': round(shots / games_played, 2) if games_played > 0 else 0,
+        'shooting_pct': round(goals / shots, 3) if shots > 0 else 0,
+        'last5_goals': last5_goals,
+        'last5_points': last5_points,
+    }
+
 def get_player_current_stats(player_id):
-    """Get current season stats for a player from NHL API"""
-    url = f"https://api-web.nhle.com/v1/player/{player_id}/landing"
+    """Get current season stats for a player from NHL API game log (leak-free)."""
+    url = f"https://api-web.nhle.com/v1/player/{player_id}/game-log/now"
     try:
         for attempt in range(3):
             resp = requests.get(url, timeout=15)
@@ -110,38 +134,11 @@ def get_player_current_stats(player_id):
             return None
 
         data = resp.json()
-        
-        # Get current season stats
-        featured_stats = data.get('featuredStats', {})
-        regular_season = featured_stats.get('regularSeason', {})
-        sub_season = regular_season.get('subSeason', {})
-        
-        if not sub_season:
+        game_log = data.get('gameLog', [])
+        stats = compute_stats_from_gamelog(game_log, Config.TODAY)
+        if stats is None or stats['games_played'] < 1:
             return None
-        
-        games_played = sub_season.get('gamesPlayed', 0)
-        if games_played < 1:
-            return None
-        
-        goals = sub_season.get('goals', 0)
-        shots = sub_season.get('shots', 0)
-        points = sub_season.get('points', 0)
-        
-        # Get last 5 games
-        last5 = data.get('last5Games', [])
-        last5_goals = sum(g.get('goals', 0) for g in last5)
-        last5_points = sum(g.get('points', 0) for g in last5)
-        
-        return {
-            'games_played': games_played,
-            'season_goals': goals,
-            'season_shots': shots,
-            'avg_goals': round(goals / games_played, 3) if games_played > 0 else 0,
-            'avg_shots': round(shots / games_played, 2) if games_played > 0 else 0,
-            'shooting_pct': round(goals / shots, 3) if shots > 0 else 0,
-            'last5_goals': last5_goals,
-            'last5_points': last5_points,
-        }
+        return stats
     except Exception as e:
         return None
 

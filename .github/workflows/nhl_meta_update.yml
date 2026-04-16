@@ -1,0 +1,104 @@
+# .github/workflows/nhl_meta_update.yml
+# Meta Ensemble v1 Pipeline — Stacked meta-learner + Telegram notification
+# Runs LAST (15:15 UTC) after MC v2 (14:00), xG v3 (14:05), Linear v1 (15:00)
+# Sends ONE daily Telegram message with all 4 models' predictions + results
+# No untrusted inputs used in run: commands — only static strings and date
+
+name: NHL Meta Ensemble v1 Pipeline
+
+on:
+  schedule:
+    # Daily at 3:15 PM UTC (10:15 AM Toronto) — after all 3 base models
+    - cron: '15 15 * * *'
+
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Action to run'
+        required: true
+        default: 'predictions'
+        type: choice
+        options:
+          - predictions
+          - train_model
+          - full_pipeline
+
+jobs:
+  predictions:
+    runs-on: ubuntu-latest
+    if: >-
+      github.event.schedule == '15 15 * * *' ||
+      github.event.inputs.action == 'predictions' ||
+      github.event.inputs.action == 'full_pipeline'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install numpy pandas requests lightgbm scikit-learn
+
+      - name: Pull latest (get all 3 base model predictions)
+        run: git pull --rebase origin main || git pull --no-rebase origin main
+
+      - name: Run meta-ensemble predictions
+        working-directory: projects/nhl-hockey
+        run: python scripts/meta_predict.py
+
+      - name: Commit and push
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          DATESTAMP=$(date +%Y-%m-%d)
+          git diff --staged --quiet || git commit -m "Meta Ensemble predictions for ${DATESTAMP}"
+          for i in 1 2 3; do
+            git push origin main && break
+            echo "Push attempt $i failed, pulling and retrying..."
+            git pull --rebase -X theirs origin main || (git rebase --abort 2>/dev/null; git pull --no-rebase -X theirs origin main)
+            git push origin main && break
+            sleep 5
+          done
+
+      - name: Send Telegram daily message
+        working-directory: projects/nhl-hockey
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python scripts/telegram_notify.py daily
+        continue-on-error: true
+
+  train_model:
+    runs-on: ubuntu-latest
+    if: >-
+      github.event.inputs.action == 'train_model' ||
+      github.event.inputs.action == 'full_pipeline'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install numpy pandas requests lightgbm scikit-learn
+
+      - name: Train meta-model
+        working-directory: projects/nhl-hockey
+        run: python scripts/meta_predict.py --train
+
+      - name: Commit and push
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git diff --staged --quiet || git commit -m "Meta Ensemble model retrained"
+          git push origin main || (git pull --rebase origin main && git push origin main)
