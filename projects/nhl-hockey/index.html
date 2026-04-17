@@ -874,10 +874,50 @@
                     var noGameCell = document.createElement('td');
                     noGameCell.colSpan = 7;
                     noGameCell.className = 'no-data';
-                    noGameCell.textContent = 'No games scheduled for today';
+                    noGameCell.textContent = 'No games scheduled for today — looking up next game...';
                     noGameRow.appendChild(noGameCell);
                     document.getElementById('predictions-body').appendChild(noGameRow);
                     document.getElementById('tims-section').style.display = 'none';
+
+                    // Look up the next game date from the NHL API
+                    fetch('https://api-web.nhle.com/v1/schedule/' + data.date)
+                        .then(function(r) { return r.ok ? r.json() : null; })
+                        .then(function(schedule) {
+                            if (!schedule) return;
+                            var nextDate = null;
+                            var nextGames = [];
+                            for (var i = 0; i < (schedule.gameWeek || []).length; i++) {
+                                var day = schedule.gameWeek[i];
+                                if (day.date > data.date && day.games && day.games.length > 0) {
+                                    nextDate = day.date;
+                                    nextGames = day.games;
+                                    break;
+                                }
+                            }
+                            if (nextDate) {
+                                noGameCell.textContent = '';
+                                var title = document.createElement('div');
+                                title.style.fontSize = '1.1rem';
+                                title.style.fontWeight = 'bold';
+                                title.style.marginBottom = '0.75rem';
+                                var isPlayoff = nextGames[0] && nextGames[0].gameType === 3;
+                                title.textContent = 'Off-day — next games on ' + nextDate +
+                                    (isPlayoff ? ' (Playoffs!)' : '');
+                                noGameCell.appendChild(title);
+                                var list = document.createElement('div');
+                                list.style.fontSize = '0.9rem';
+                                list.style.opacity = '0.75';
+                                var matchups = nextGames.slice(0, 6).map(function(g) {
+                                    return (g.awayTeam && g.awayTeam.abbrev) + ' @ ' +
+                                           (g.homeTeam && g.homeTeam.abbrev);
+                                }).join('  •  ');
+                                list.textContent = matchups;
+                                noGameCell.appendChild(list);
+                            } else {
+                                noGameCell.textContent = 'No games scheduled for today';
+                            }
+                        })
+                        .catch(function() {});
                     return;
                 }
 
