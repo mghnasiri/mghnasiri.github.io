@@ -58,8 +58,9 @@ class Config:
     CURRENT_SEASON = "20242025"
 
     BASE_MODELS = ['neural_network', 'monte_carlo', 'xg_v3']
+    MARKET_MODEL = 'market_odds'
     FEATURE_NAMES = [
-        'p_linear', 'p_mc', 'p_xg',
+        'p_linear', 'p_mc', 'p_xg', 'p_market',
         'model_disagreement',
         'goalie_sv_pct',
         'is_home',
@@ -236,6 +237,17 @@ def build_training_data():
                 p['player_id']: p for p in pred_data.get('predictions', [])
             }
 
+        # Load market odds if available for this date
+        market_path = f"{Config.DATA_DIR}/predictions/{Config.MARKET_MODEL}/{date}.json"
+        market_preds = {}
+        if os.path.exists(market_path):
+            try:
+                with open(market_path, 'r') as f:
+                    mdata = json.load(f)
+                market_preds = {p['player_id']: p for p in mdata.get('predictions', [])}
+            except Exception:
+                pass
+
         nn_preds = preds_by_model.get('neural_network', {})
         mc_preds = preds_by_model.get('monte_carlo', {})
         xg_preds = preds_by_model.get('xg_v3', {})
@@ -246,17 +258,20 @@ def build_training_data():
             nn = nn_preds[pid]
             mc = mc_preds[pid]
             xg = xg_preds[pid]
+            mkt = market_preds.get(pid, {})
 
             p_nn = nn.get('goal_probability', 0)
             p_mc = mc.get('goal_probability', 0)
             p_xg = xg.get('goal_probability', 0)
+            p_mkt = mkt.get('goal_probability', 0)
 
             row = {
                 'p_linear': p_nn,
                 'p_mc': p_mc,
                 'p_xg': p_xg,
+                'p_market': p_mkt,
                 'model_disagreement': float(np.std([p_nn, p_mc, p_xg])),
-                'goalie_sv_pct': 0.900,  # Backfilling historical goalie data is slow
+                'goalie_sv_pct': 0.900,
                 'is_home': int(mc.get('is_home', xg.get('is_home', False))),
                 'opp_ga_per_game': xg.get('opp_ga_per_game',
                                           mc.get('opp_ga_per_game', 3.07)),
@@ -414,6 +429,18 @@ def predict_today():
         team_goalie_sv[team] = get_opponent_goalie_sv_pct(team, games, goalie_cache)
     save_goalie_cache(goalie_cache)
 
+    # Load market odds if available
+    market_preds = {}
+    market_path = f"{Config.DATA_DIR}/predictions/{Config.MARKET_MODEL}/latest.json"
+    if os.path.exists(market_path):
+        with open(market_path, 'r') as f:
+            mdata = json.load(f)
+        if mdata.get('date') == Config.TODAY:
+            market_preds = {p['player_id']: p for p in mdata.get('predictions', [])}
+            print(f"    market_odds: {len(market_preds)} players")
+        else:
+            print(f"  WARNING: market_odds is from {mdata.get('date')}, not today")
+
     nn = base_preds.get('neural_network', {})
     mc = base_preds.get('monte_carlo', {})
     xg = base_preds.get('xg_v3', {})
@@ -426,9 +453,11 @@ def predict_today():
 
     for pid in common_ids:
         nn_p, mc_p, xg_p = nn[pid], mc[pid], xg[pid]
+        mkt_p = market_preds.get(pid, {})
         p_nn = nn_p.get('goal_probability', 0)
         p_mc = mc_p.get('goal_probability', 0)
         p_xg = xg_p.get('goal_probability', 0)
+        p_mkt = mkt_p.get('goal_probability', 0)
 
         team = mc_p.get('team', xg_p.get('team', ''))
 
@@ -436,6 +465,7 @@ def predict_today():
             'p_linear': p_nn,
             'p_mc': p_mc,
             'p_xg': p_xg,
+            'p_market': p_mkt,
             'model_disagreement': float(np.std([p_nn, p_mc, p_xg])),
             'goalie_sv_pct': team_goalie_sv.get(team, 0.900),
             'is_home': int(mc_p.get('is_home', xg_p.get('is_home', False))),

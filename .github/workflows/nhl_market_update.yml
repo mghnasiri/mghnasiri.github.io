@@ -1,0 +1,62 @@
+# .github/workflows/nhl_market_update.yml
+# Market Odds v1 Pipeline — Fetches sportsbook anytime-goal-scorer odds
+# Runs at 14:30 UTC (after MC v2 14:00, xG v3 14:05, before Linear 15:00)
+# Needs base model predictions available for player ID matching
+# No untrusted inputs used in run: commands — only static strings and date
+
+name: NHL Market Odds v1 Pipeline
+
+on:
+  schedule:
+    # Daily at 2:30 PM UTC (9:30 AM Toronto) — after MC/xG, before Linear
+    - cron: '30 14 * * *'
+
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Action to run'
+        required: true
+        default: 'predictions'
+        type: choice
+        options:
+          - predictions
+
+jobs:
+  predictions:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Pull latest (get base model predictions for ID matching)
+        run: git pull --rebase origin main || git pull --no-rebase origin main
+
+      - name: Fetch market odds and generate predictions
+        working-directory: projects/nhl-hockey
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API }}
+        run: python scripts/market_predict.py
+
+      - name: Commit and push
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          DATESTAMP=$(date +%Y-%m-%d)
+          git diff --staged --quiet || git commit -m "Market Odds predictions for ${DATESTAMP}"
+          for i in 1 2 3; do
+            git push origin main && break
+            echo "Push attempt $i failed, pulling and retrying..."
+            git pull --rebase -X theirs origin main || (git rebase --abort 2>/dev/null; git pull --no-rebase -X theirs origin main)
+            git push origin main && break
+            sleep 5
+          done

@@ -1,15 +1,15 @@
 # .github/workflows/nhl_meta_update.yml
 # Meta Ensemble v1 Pipeline — Stacked meta-learner + Telegram notification
-# Runs LAST (15:15 UTC) after MC v2 (14:00), xG v3 (14:05), Linear v1 (15:00)
-# Sends ONE daily Telegram message with all 4 models' predictions + results
+# Runs LAST (15:20 UTC) after MC(14:00), xG(14:05), Market(14:30), Linear(15:00)
+# Sends ONE daily Telegram message with all 5 models' predictions + results
 # No untrusted inputs used in run: commands — only static strings and date
 
 name: NHL Meta Ensemble v1 Pipeline
 
 on:
   schedule:
-    # Daily at 3:15 PM UTC (10:15 AM Toronto) — after all 3 base models
-    - cron: '15 15 * * *'
+    # Daily at 3:20 PM UTC (10:20 AM Toronto) — after all 4 base models + market
+    - cron: '20 15 * * *'
 
   workflow_dispatch:
     inputs:
@@ -27,7 +27,7 @@ jobs:
   predictions:
     runs-on: ubuntu-latest
     if: >-
-      github.event.schedule == '15 15 * * *' ||
+      github.event.schedule == '20 15 * * *' ||
       github.event.inputs.action == 'predictions' ||
       github.event.inputs.action == 'full_pipeline'
 

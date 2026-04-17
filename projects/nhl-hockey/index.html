@@ -672,6 +672,7 @@
             <div class="gold-line" aria-hidden="true"></div>
             <p class="date" id="prediction-date">Loading...</p>
             <div class="model-selector" style="margin-top: 1.5rem;">
+                <button class="model-btn" data-model="market_odds" onclick="switchModel('market_odds')" type="button">Market Odds v1</button>
                 <button class="model-btn" data-model="meta_ensemble" onclick="switchModel('meta_ensemble')" type="button">Meta Ensemble v1</button>
                 <button class="model-btn" data-model="xg_v3" onclick="switchModel('xg_v3')" type="button">xG XGBoost v3</button>
                 <button class="model-btn" data-model="monte_carlo" onclick="switchModel('monte_carlo')" type="button">Monte Carlo v2</button>
@@ -774,7 +775,7 @@
     <footer>
         <div class="container">
             <p>Last updated: <span id="last-updated">--</span></p>
-            <p>4 Models: Meta Ensemble v1 · xG XGBoost v3 · Monte Carlo v2 · Weighted Linear v1 | Tim Hortons Challenge</p>
+            <p>5 Models: Market Odds v1 · Meta Ensemble v1 · xG XGBoost v3 · Monte Carlo v2 · Weighted Linear v1 | Tim Hortons Challenge</p>
             <p><a href="../../index.html">← Back to Portfolio</a></p>
         </div>
     </footer>
@@ -789,6 +790,10 @@
         const STATS_PATH = './data/stats.json';
 
         const MODELS = {
+            market_odds: {
+                name: 'Market Odds v1',
+                path: './data/predictions/market_odds/latest.json',
+            },
             meta_ensemble: {
                 name: 'Meta Ensemble v1',
                 path: './data/predictions/meta_ensemble/latest.json',
@@ -807,7 +812,7 @@
             }
         };
 
-        let currentModel = 'meta_ensemble';
+        let currentModel = 'market_odds';
         let allPredictions = [];
         const getTeamLogo = (team) =>
             'https://assets.nhle.com/logos/nhl/svg/' + team + '_dark.svg';
@@ -839,8 +844,8 @@
                 var response = await fetch(model.path + cacheBust);
                 var data;
                 if (!response.ok) {
-                    // Fallback chain: meta_ensemble -> xg_v3 -> monte_carlo -> neural_network
-                    var fallbacks = ['meta_ensemble', 'xg_v3', 'monte_carlo', 'neural_network'].filter(function(m) { return m !== currentModel; });
+                    // Fallback chain: market_odds -> meta_ensemble -> xg_v3 -> monte_carlo -> neural_network
+                    var fallbacks = ['market_odds', 'meta_ensemble', 'xg_v3', 'monte_carlo', 'neural_network'].filter(function(m) { return m !== currentModel; });
                     var found = false;
                     for (var fi = 0; fi < fallbacks.length; fi++) {
                         if (MODELS[fallbacks[fi]]) {
@@ -985,7 +990,10 @@
 
                 var comparison = null;
                 if (data.model_comparisons) {
-                    comparison = data.model_comparisons.find(function(m) { return m.model === 'meta_ensemble'; });
+                    comparison = data.model_comparisons.find(function(m) { return m.model === 'market_odds'; });
+                    if (!comparison) {
+                        comparison = data.model_comparisons.find(function(m) { return m.model === 'meta_ensemble'; });
+                    }
                     if (!comparison) {
                         comparison = data.model_comparisons.find(function(m) { return m.model === 'xg_v3'; });
                     }
@@ -1017,7 +1025,7 @@
             var container = document.getElementById('yesterday-top10');
             try {
                 var predData = null;
-                var models = ['meta_ensemble', 'xg_v3', 'monte_carlo', 'neural_network'];
+                var models = ['market_odds', 'meta_ensemble', 'xg_v3', 'monte_carlo', 'neural_network'];
                 for (var m = 0; m < models.length; m++) {
                     try {
                         var resp = await fetch('./data/predictions/' + models[m] + '/' + resultsData.date + '.json');
@@ -1046,7 +1054,7 @@
         function renderYesterdayResults(picks, date, totalHits, modelName) {
             var container = document.getElementById('yesterday-top10');
             container.textContent = '';
-            var displayName = modelName === 'meta_ensemble' ? 'Meta' : (modelName === 'xg_v3' ? 'xG v3' : (modelName === 'monte_carlo' ? 'MC v2' : 'Linear v1'));
+            var displayName = modelName === 'market_odds' ? 'Market' : (modelName === 'meta_ensemble' ? 'Meta' : (modelName === 'xg_v3' ? 'xG v3' : (modelName === 'monte_carlo' ? 'MC v2' : 'Linear v1')));
 
             var hitsDiv = document.createElement('div');
             hitsDiv.className = 'hits-display';
@@ -1108,6 +1116,7 @@
                 } catch (e) {}
 
                 var modelDefs = [
+                    { key: 'market_odds', label: 'Market Odds v1', badge: 'MARKET', badgeClass: 'badge-new' },
                     { key: 'meta_ensemble', label: 'Meta Ensemble v1', badge: 'META', badgeClass: 'badge-new' },
                     { key: 'xg_v3', label: 'xG XGBoost v3', badge: 'v3', badgeClass: 'badge-new' },
                     { key: 'monte_carlo', label: 'Monte Carlo v2', badge: 'v2', badgeClass: 'badge-new' },
@@ -1315,7 +1324,7 @@
         document.getElementById('search-input').addEventListener('input', renderPredictions);
         document.getElementById('position-filter').addEventListener('change', renderPredictions);
 
-        // Default to Meta Ensemble v1 (falls back to xG v3 -> MC v2 -> Linear v1)
+        // Default to Market Odds v1 (falls back to Meta -> xG v3 -> MC v2 -> Linear v1)
         switchModel('xg_v3');
         loadResults();
         loadStats();
