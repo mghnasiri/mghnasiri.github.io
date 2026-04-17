@@ -411,10 +411,44 @@ def predict_today():
         print("  ERROR: Need at least 2 base models.")
         return None
 
+    # If all base models have 0 players, it's an off-day — don't fail
+    total_base_players = sum(len(v) for v in base_preds.values())
+    if total_base_players == 0:
+        print("  All base models have 0 players — off-day detected.")
+        empty_output = {
+            "date": Config.TODAY,
+            "model": Config.MODEL_NAME,
+            "model_display_name": Config.MODEL_DISPLAY_NAME,
+            "games_count": 0, "games": [], "players_count": 0,
+            "predictions": [], "tims_mode": False,
+            "tims_source": None, "tims_group_rankings": {},
+            "generated_at": datetime.now().isoformat()
+        }
+        for path in [f"{Config.PREDICTIONS_DIR}/{Config.TODAY}.json",
+                     f"{Config.PREDICTIONS_DIR}/latest.json"]:
+            with open(path, 'w', encoding='utf-8') as f:
+                json.dump(empty_output, f, indent=2, ensure_ascii=False)
+            print(f"  Saved empty: {path}")
+        sys.exit(0)
+
     games = get_todays_games(Config.TODAY)
     if not games:
-        print("  No games today.")
-        return None
+        print("  No games today — writing empty predictions and exiting cleanly.")
+        empty_output = {
+            "date": Config.TODAY,
+            "model": Config.MODEL_NAME,
+            "model_display_name": Config.MODEL_DISPLAY_NAME,
+            "games_count": 0, "games": [], "players_count": 0,
+            "predictions": [], "tims_mode": False,
+            "tims_source": None, "tims_group_rankings": {},
+            "generated_at": datetime.now().isoformat()
+        }
+        for path in [f"{Config.PREDICTIONS_DIR}/{Config.TODAY}.json",
+                     f"{Config.PREDICTIONS_DIR}/latest.json"]:
+            with open(path, 'w', encoding='utf-8') as f:
+                json.dump(empty_output, f, indent=2, ensure_ascii=False)
+            print(f"  Saved empty: {path}")
+        sys.exit(0)
     print(f"  {len(games)} games today")
 
     # Build team -> opponent goalie SV% map
