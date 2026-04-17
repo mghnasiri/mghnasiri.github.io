@@ -1,13 +1,208 @@
 {
-  "generated_at": "2026-04-16T07:46:11.486550",
-  "total_days_tracked": 90,
+  "generated_at": "2026-04-17T07:46:44.183879",
+  "total_days_tracked": 91,
   "models": {
-    "monte_carlo": {
-      "total_days": 38,
-      "total_hits": 105,
-      "total_predictions": 380,
-      "hit_rate": 27.6,
-      "avg_hits_per_day": 2.76,
+    "neural_network": {
+      "total_days": 91,
+      "total_hits": 274,
+      "total_predictions": 910,
+      "hit_rate": 30.1,
+      "avg_hits_per_day": 3.01,
+      "last_7_days": {
+        "days": 7,
+        "hits": 22,
+        "total": 70,
+        "hit_rate": 31.4
+      },
+      "daily_results": [
+        {
+          "date": "2026-03-17",
+          "hits": 1,
+          "total": 10,
+          "hit_rate": 10.0
+        },
+        {
+          "date": "2026-03-18",
+          "hits": 2,
+          "total": 10,
+          "hit_rate": 20.0
+        },
+        {
+          "date": "2026-03-19",
+          "hits": 1,
+          "total": 10,
+          "hit_rate": 10.0
+        },
+        {
+          "date": "2026-03-20",
+          "hits": 3,
+          "total": 10,
+          "hit_rate": 30.0
+        },
+        {
+          "date": "2026-03-21",
+          "hits": 4,
+          "total": 10,
+          "hit_rate": 40.0
+        },
+        {
+          "date": "2026-03-22",
+          "hits": 4,
+          "total": 10,
+          "hit_rate": 40.0
+        },
+        {
+          "date": "2026-03-23",
+          "hits": 2,
+          "total": 10,
+          "hit_rate": 20.0
+        },
+        {
+          "date": "2026-03-24",
+          "hits": 3,
+          "total": 10,
+          "hit_rate": 30.0
+        },
+        {
+          "date": "2026-03-25",
+          "hits": 4,
+          "total": 10,
+          "hit_rate": 40.0
+        },
+        {
+          "date": "2026-03-26",
+          "hits": 2,
+          "total": 10,
+          "hit_rate": 20.0
+        },
+        {
+          "date": "2026-03-27",
+          "hits": 4,
+          "total": 10,
+          "hit_rate": 40.0
+        },
+        {
+          "date": "2026-03-28",
+          "hits": 2,
+          "total": 10,
+          "hit_rate": 20.0
+        },
+        {
+          "date": "2026-03-29",
+          "hits": 2,
+          "total": 10,
+          "hit_rate": 20.0
+        },
+        {
+          "date": "2026-03-30",
+          "hits": 4,
+          "total": 10,
+          "hit_rate": 40.0
+        },
+        {
+          "date": "2026-03-31",
+          "hits": 3,
+          "total": 10,
+          "hit_rate": 30.0
+        },
+        {
+          "date": "2026-04-01",
+          "hits": 5,
+          "total": 10,
+          "hit_rate": 50.0
+        },
+        {
+          "date": "2026-04-02",
+          "hits": 3,
+          "total": 10,
+          "hit_rate": 30.0
+        },
+        {
+          "date": "2026-04-03",
+          "hits": 2,
+          "total": 10,
+          "hit_rate": 20.0
+        },
+        {
+          "date": "2026-04-04",
+          "hits": 2,
+          "total": 10,
+          "hit_rate": 20.0
+        },
+        {
+          "date": "2026-04-05",
+          "hits": 2,
+          "total": 10,
+          "hit_rate": 20.0
+        },
+        {
+          "date": "2026-04-06",
+          "hits": 2,
+          "total": 10,
+          "hit_rate": 20.0
+        },
+        {
+          "date": "2026-04-07",
+          "hits": 3,
+          "total": 10,
+          "hit_rate": 30.0
+        },
+        {
+          "date": "2026-04-08",
+          "hits": 2,
+          "total": 10,
+          "hit_rate": 20.0
+        },
+        {
+          "date": "2026-04-09",
+          "hits": 5,
+          "total": 10,
+          "hit_rate": 50.0
+        },
+        {
+          "date": "2026-04-11",
+          "hits": 2,
+          "total": 10,
+          "hit_rate": 20.0
+        },
+        {
+          "date": "2026-04-12",
+          "hits": 5,
+          "total": 10,
+          "hit_rate": 50.0
+        },
+        {
+          "date": "2026-04-13",
+          "hits": 2,
+          "total": 10,
+          "hit_rate": 20.0
+        },
+        {
+          "date": "2026-04-14",
+          "hits": 4,
+          "total": 10,
+          "hit_rate": 40.0
+        },
+        {
+          "date": "2026-04-15",
+          "hits": 1,
+          "total": 10,
+          "hit_rate": 10.0
+        },
+        {
+          "date": "2026-04-16",
+          "hits": 3,
+          "total": 10,
+          "hit_rate": 30.0
+        }
+      ]
+    },
+    "xg_v3": {
+      "total_days": 39,
+      "total_hits": 93,
+      "total_predictions": 390,
+      "hit_rate": 23.8,
+      "avg_hits_per_day": 2.38,
       "last_7_days": {
         "days": 7,
         "hits": 18,
@@ -16,11 +211,200 @@
       },
       "daily_results": [
         {
-          "date": "2026-03-16",
+          "date": "2026-03-17",
+          "hits": 0,
+          "total": 10,
+          "hit_rate": 0.0
+        },
+        {
+          "date": "2026-03-18",
+          "hits": 1,
+          "total": 10,
+          "hit_rate": 10.0
+        },
+        {
+          "date": "2026-03-19",
+          "hits": 1,
+          "total": 10,
+          "hit_rate": 10.0
+        },
+        {
+          "date": "2026-03-20",
+          "hits": 1,
+          "total": 10,
+          "hit_rate": 10.0
+        },
+        {
+          "date": "2026-03-21",
           "hits": 3,
           "total": 10,
           "hit_rate": 30.0
         },
+        {
+          "date": "2026-03-22",
+          "hits": 2,
+          "total": 10,
+          "hit_rate": 20.0
+        },
+        {
+          "date": "2026-03-23",
+          "hits": 2,
+          "total": 10,
+          "hit_rate": 20.0
+        },
+        {
+          "date": "2026-03-24",
+          "hits": 1,
+          "total": 10,
+          "hit_rate": 10.0
+        },
+        {
+          "date": "2026-03-25",
+          "hits": 4,
+          "total": 10,
+          "hit_rate": 40.0
+        },
+        {
+          "date": "2026-03-26",
+          "hits": 1,
+          "total": 10,
+          "hit_rate": 10.0
+        },
+        {
+          "date": "2026-03-27",
+          "hits": 4,
+          "total": 10,
+          "hit_rate": 40.0
+        },
+        {
+          "date": "2026-03-28",
+          "hits": 2,
+          "total": 10,
+          "hit_rate": 20.0
+        },
+        {
+          "date": "2026-03-29",
+          "hits": 1,
+          "total": 10,
+          "hit_rate": 10.0
+        },
+        {
+          "date": "2026-03-30",
+          "hits": 5,
+          "total": 10,
+          "hit_rate": 50.0
+        },
+        {
+          "date": "2026-03-31",
+          "hits": 4,
+          "total": 10,
+          "hit_rate": 40.0
+        },
+        {
+          "date": "2026-04-01",
+          "hits": 2,
+          "total": 10,
+          "hit_rate": 20.0
+        },
+        {
+          "date": "2026-04-02",
+          "hits": 2,
+          "total": 10,
+          "hit_rate": 20.0
+        },
+        {
+          "date": "2026-04-03",
+          "hits": 2,
+          "total": 10,
+          "hit_rate": 20.0
+        },
+        {
+          "date": "2026-04-04",
+          "hits": 2,
+          "total": 10,
+          "hit_rate": 20.0
+        },
+        {
+          "date": "2026-04-05",
+          "hits": 1,
+          "total": 10,
+          "hit_rate": 10.0
+        },
+        {
+          "date": "2026-04-06",
+          "hits": 3,
+          "total": 10,
+          "hit_rate": 30.0
+        },
+        {
+          "date": "2026-04-07",
+          "hits": 3,
+          "total": 10,
+          "hit_rate": 30.0
+        },
+        {
+          "date": "2026-04-08",
+          "hits": 3,
+          "total": 10,
+          "hit_rate": 30.0
+        },
+        {
+          "date": "2026-04-09",
+          "hits": 0,
+          "total": 10,
+          "hit_rate": 0.0
+        },
+        {
+          "date": "2026-04-11",
+          "hits": 3,
+          "total": 10,
+          "hit_rate": 30.0
+        },
+        {
+          "date": "2026-04-12",
+          "hits": 3,
+          "total": 10,
+          "hit_rate": 30.0
+        },
+        {
+          "date": "2026-04-13",
+          "hits": 2,
+          "total": 10,
+          "hit_rate": 20.0
+        },
+        {
+          "date": "2026-04-14",
+          "hits": 5,
+          "total": 10,
+          "hit_rate": 50.0
+        },
+        {
+          "date": "2026-04-15",
+          "hits": 2,
+          "total": 10,
+          "hit_rate": 20.0
+        },
+        {
+          "date": "2026-04-16",
+          "hits": 3,
+          "total": 10,
+          "hit_rate": 30.0
+        }
+      ]
+    },
+    "monte_carlo": {
+      "total_days": 39,
+      "total_hits": 107,
+      "total_predictions": 390,
+      "hit_rate": 27.4,
+      "avg_hits_per_day": 2.74,
+      "last_7_days": {
+        "days": 7,
+        "hits": 18,
+        "total": 70,
+        "hit_rate": 25.7
+      },
+      "daily_results": [
         {
           "date": "2026-03-17",
           "hits": 1,
@@ -194,396 +578,33 @@
           "hits": 2,
           "total": 10,
           "hit_rate": 20.0
+        },
+        {
+          "date": "2026-04-16",
+          "hits": 2,
+          "total": 10,
+          "hit_rate": 20.0
         }
       ]
     },
-    "neural_network": {
-      "total_days": 90,
-      "total_hits": 271,
-      "total_predictions": 900,
-      "hit_rate": 30.1,
-      "avg_hits_per_day": 3.01,
+    "meta_ensemble": {
+      "total_days": 1,
+      "total_hits": 1,
+      "total_predictions": 10,
+      "hit_rate": 10.0,
+      "avg_hits_per_day": 1.0,
       "last_7_days": {
-        "days": 7,
-        "hits": 21,
-        "total": 70,
-        "hit_rate": 30.0
+        "days": 1,
+        "hits": 1,
+        "total": 10,
+        "hit_rate": 10.0
       },
       "daily_results": [
         {
-          "date": "2026-03-16",
-          "hits": 3,
-          "total": 10,
-          "hit_rate": 30.0
-        },
-        {
-          "date": "2026-03-17",
+          "date": "2026-04-16",
           "hits": 1,
           "total": 10,
           "hit_rate": 10.0
-        },
-        {
-          "date": "2026-03-18",
-          "hits": 2,
-          "total": 10,
-          "hit_rate": 20.0
-        },
-        {
-          "date": "2026-03-19",
-          "hits": 1,
-          "total": 10,
-          "hit_rate": 10.0
-        },
-        {
-          "date": "2026-03-20",
-          "hits": 3,
-          "total": 10,
-          "hit_rate": 30.0
-        },
-        {
-          "date": "2026-03-21",
-          "hits": 4,
-          "total": 10,
-          "hit_rate": 40.0
-        },
-        {
-          "date": "2026-03-22",
-          "hits": 4,
-          "total": 10,
-          "hit_rate": 40.0
-        },
-        {
-          "date": "2026-03-23",
-          "hits": 2,
-          "total": 10,
-          "hit_rate": 20.0
-        },
-        {
-          "date": "2026-03-24",
-          "hits": 3,
-          "total": 10,
-          "hit_rate": 30.0
-        },
-        {
-          "date": "2026-03-25",
-          "hits": 4,
-          "total": 10,
-          "hit_rate": 40.0
-        },
-        {
-          "date": "2026-03-26",
-          "hits": 2,
-          "total": 10,
-          "hit_rate": 20.0
-        },
-        {
-          "date": "2026-03-27",
-          "hits": 4,
-          "total": 10,
-          "hit_rate": 40.0
-        },
-        {
-          "date": "2026-03-28",
-          "hits": 2,
-          "total": 10,
-          "hit_rate": 20.0
-        },
-        {
-          "date": "2026-03-29",
-          "hits": 2,
-          "total": 10,
-          "hit_rate": 20.0
-        },
-        {
-          "date": "2026-03-30",
-          "hits": 4,
-          "total": 10,
-          "hit_rate": 40.0
-        },
-        {
-          "date": "2026-03-31",
-          "hits": 3,
-          "total": 10,
-          "hit_rate": 30.0
-        },
-        {
-          "date": "2026-04-01",
-          "hits": 5,
-          "total": 10,
-          "hit_rate": 50.0
-        },
-        {
-          "date": "2026-04-02",
-          "hits": 3,
-          "total": 10,
-          "hit_rate": 30.0
-        },
-        {
-          "date": "2026-04-03",
-          "hits": 2,
-          "total": 10,
-          "hit_rate": 20.0
-        },
-        {
-          "date": "2026-04-04",
-          "hits": 2,
-          "total": 10,
-          "hit_rate": 20.0
-        },
-        {
-          "date": "2026-04-05",
-          "hits": 2,
-          "total": 10,
-          "hit_rate": 20.0
-        },
-        {
-          "date": "2026-04-06",
-          "hits": 2,
-          "total": 10,
-          "hit_rate": 20.0
-        },
-        {
-          "date": "2026-04-07",
-          "hits": 3,
-          "total": 10,
-          "hit_rate": 30.0
-        },
-        {
-          "date": "2026-04-08",
-          "hits": 2,
-          "total": 10,
-          "hit_rate": 20.0
-        },
-        {
-          "date": "2026-04-09",
-          "hits": 5,
-          "total": 10,
-          "hit_rate": 50.0
-        },
-        {
-          "date": "2026-04-11",
-          "hits": 2,
-          "total": 10,
-          "hit_rate": 20.0
-        },
-        {
-          "date": "2026-04-12",
-          "hits": 5,
-          "total": 10,
-          "hit_rate": 50.0
-        },
-        {
-          "date": "2026-04-13",
-          "hits": 2,
-          "total": 10,
-          "hit_rate": 20.0
-        },
-        {
-          "date": "2026-04-14",
-          "hits": 4,
-          "total": 10,
-          "hit_rate": 40.0
-        },
-        {
-          "date": "2026-04-15",
-          "hits": 1,
-          "total": 10,
-          "hit_rate": 10.0
-        }
-      ]
-    },
-    "xg_v3": {
-      "total_days": 38,
-      "total_hits": 90,
-      "total_predictions": 380,
-      "hit_rate": 23.7,
-      "avg_hits_per_day": 2.37,
-      "last_7_days": {
-        "days": 7,
-        "hits": 18,
-        "total": 70,
-        "hit_rate": 25.7
-      },
-      "daily_results": [
-        {
-          "date": "2026-03-16",
-          "hits": 3,
-          "total": 10,
-          "hit_rate": 30.0
-        },
-        {
-          "date": "2026-03-17",
-          "hits": 0,
-          "total": 10,
-          "hit_rate": 0.0
-        },
-        {
-          "date": "2026-03-18",
-          "hits": 1,
-          "total": 10,
-          "hit_rate": 10.0
-        },
-        {
-          "date": "2026-03-19",
-          "hits": 1,
-          "total": 10,
-          "hit_rate": 10.0
-        },
-        {
-          "date": "2026-03-20",
-          "hits": 1,
-          "total": 10,
-          "hit_rate": 10.0
-        },
-        {
-          "date": "2026-03-21",
-          "hits": 3,
-          "total": 10,
-          "hit_rate": 30.0
-        },
-        {
-          "date": "2026-03-22",
-          "hits": 2,
-          "total": 10,
-          "hit_rate": 20.0
-        },
-        {
-          "date": "2026-03-23",
-          "hits": 2,
-          "total": 10,
-          "hit_rate": 20.0
-        },
-        {
-          "date": "2026-03-24",
-          "hits": 1,
-          "total": 10,
-          "hit_rate": 10.0
-        },
-        {
-          "date": "2026-03-25",
-          "hits": 4,
-          "total": 10,
-          "hit_rate": 40.0
-        },
-        {
-          "date": "2026-03-26",
-          "hits": 1,
-          "total": 10,
-          "hit_rate": 10.0
-        },
-        {
-          "date": "2026-03-27",
-          "hits": 4,
-          "total": 10,
-          "hit_rate": 40.0
-        },
-        {
-          "date": "2026-03-28",
-          "hits": 2,
-          "total": 10,
-          "hit_rate": 20.0
-        },
-        {
-          "date": "2026-03-29",
-          "hits": 1,
-          "total": 10,
-          "hit_rate": 10.0
-        },
-        {
-          "date": "2026-03-30",
-          "hits": 5,
-          "total": 10,
-          "hit_rate": 50.0
-        },
-        {
-          "date": "2026-03-31",
-          "hits": 4,
-          "total": 10,
-          "hit_rate": 40.0
-        },
-        {
-          "date": "2026-04-01",
-          "hits": 2,
-          "total": 10,
-          "hit_rate": 20.0
-        },
-        {
-          "date": "2026-04-02",
-          "hits": 2,
-          "total": 10,
-          "hit_rate": 20.0
-        },
-        {
-          "date": "2026-04-03",
-          "hits": 2,
-          "total": 10,
-          "hit_rate": 20.0
-        },
-        {
-          "date": "2026-04-04",
-          "hits": 2,
-          "total": 10,
-          "hit_rate": 20.0
-        },
-        {
-          "date": "2026-04-05",
-          "hits": 1,
-          "total": 10,
-          "hit_rate": 10.0
-        },
-        {
-          "date": "2026-04-06",
-          "hits": 3,
-          "total": 10,
-          "hit_rate": 30.0
-        },
-        {
-          "date": "2026-04-07",
-          "hits": 3,
-          "total": 10,
-          "hit_rate": 30.0
-        },
-        {
-          "date": "2026-04-08",
-          "hits": 3,
-          "total": 10,
-          "hit_rate": 30.0
-        },
-        {
-          "date": "2026-04-09",
-          "hits": 0,
-          "total": 10,
-          "hit_rate": 0.0
-        },
-        {
-          "date": "2026-04-11",
-          "hits": 3,
-          "total": 10,
-          "hit_rate": 30.0
-        },
-        {
-          "date": "2026-04-12",
-          "hits": 3,
-          "total": 10,
-          "hit_rate": 30.0
-        },
-        {
-          "date": "2026-04-13",
-          "hits": 2,
-          "total": 10,
-          "hit_rate": 20.0
-        },
-        {
-          "date": "2026-04-14",
-          "hits": 5,
-          "total": 10,
-          "hit_rate": 50.0
-        },
-        {
-          "date": "2026-04-15",
-          "hits": 2,
-          "total": 10,
-          "hit_rate": 20.0
         }
       ]
     }
