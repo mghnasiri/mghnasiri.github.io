@@ -184,40 +184,112 @@ def normalize_name(name):
             .replace('-', ' ').replace('  ', ' '))
 
 
-def build_name_to_id_map():
+def fetch_todays_rosters(events):
     """
-    Build a player name -> player_id map from existing model predictions.
-    Uses whichever base model has today's predictions available.
+    Fetch NHL rosters for the teams in today's Odds API events.
+    Uses the NHL schedule API to bridge full team names (e.g. 'Pittsburgh
+    Penguins') to abbreviations (e.g. 'PIT'), then fetches current rosters.
+    Returns: dict of normalized_name -> player info, with matchup context
+    derived from the odds events themselves.
     """
-    name_map = {}  # normalized_name -> {player_id, name, team, position, ...}
+    # 1. Map Odds API full names -> NHL abbreviations via today's schedule
+    schedule_url = f"https://api-web.nhle.com/v1/schedule/{Config.TODAY}"
+    name_to_abbrev = {}
+    try:
+        resp = requests.get(schedule_url, timeout=15)
+        if resp.status_code == 200:
+            for day in resp.json().get('gameWeek', []):
+                if day.get('date') != Config.TODAY:
+                    continue
+                for g in day.get('games', []):
+                    for t in [g.get('homeTeam', {}), g.get('awayTeam', {})]:
+                        place = t.get('placeName', {}).get('default', '')
+                        common = t.get('commonName', {}).get('default', '')
+                        full = f"{place} {common}".strip()
+                        if full and t.get('abbrev'):
+                            name_to_abbrev[full] = t['abbrev']
+    except Exception as e:
+        print(f"  NHL schedule fetch failed: {e}")
+        return {}
 
+    # 2. Build per-team matchup context from Odds API events
+    team_context = {}
+    for event in events:
+        ha = name_to_abbrev.get(event.get('home_team', ''))
+        aa = name_to_abbrev.get(event.get('away_team', ''))
+        eid = event.get('id', '')
+        if ha and aa:
+            team_context[ha] = {
+                'opponent': aa, 'is_home': True,
+                'game_id': eid, 'matchup': f"{ha} vs {aa}",
+            }
+            team_context[aa] = {
+                'opponent': ha, 'is_home': False,
+                'game_id': eid, 'matchup': f"{aa} @ {ha}",
+            }
+
+    # 3. Fetch rosters for each team in today's events
+    name_map = {}
+    for abbrev, ctx in team_context.items():
+        roster_url = f"https://api-web.nhle.com/v1/roster/{abbrev}/current"
+        try:
+            resp = requests.get(roster_url, timeout=15)
+            if resp.status_code != 200:
+                continue
+            data = resp.json()
+            for group in ['forwards', 'defensemen']:
+                for p in data.get(group, []):
+                    name = f"{p['firstName']['default']} {p['lastName']['default']}"
+                    nname = normalize_name(name)
+                    name_map[nname] = {
+                        'player_id': p['id'],
+                        'name': name,
+                        'position': p.get('positionCode', ''),
+                        'team': abbrev,
+                        'opponent': ctx['opponent'],
+                        'is_home': ctx['is_home'],
+                        'game_id': ctx['game_id'],
+                        'matchup': ctx['matchup'],
+                        'season_goals': 0,
+                        'last5_goals': 0,
+                    }
+        except Exception as e:
+            print(f"  Roster fetch failed for {abbrev}: {e}")
+            continue
+
+    return name_map
+
+
+def build_name_to_id_map(events):
+    """
+    Build a player name -> player_id map.
+    Primary source: NHL roster API — covers every team in today's odds events.
+    Overlay: base-model stats (season_goals, last5_goals) for richer display.
+    """
+    name_map = fetch_todays_rosters(events)
+    if name_map:
+        print(f"  Loaded {len(name_map)} players from NHL roster API")
+
+    # Overlay base-model stats when today's data is available
+    overlaid = 0
     for source_path in Config.PLAYER_ID_SOURCES:
         if not os.path.exists(source_path):
             continue
         try:
             with open(source_path, 'r') as f:
                 data = json.load(f)
-            # Accept if it's from today or latest
+            if data.get('date') != Config.TODAY:
+                continue
             for p in data.get('predictions', []):
                 nname = normalize_name(p.get('name', ''))
-                if nname and p.get('player_id'):
-                    name_map[nname] = {
-                        'player_id': p['player_id'],
-                        'name': p.get('name', ''),
-                        'position': p.get('position', ''),
-                        'team': p.get('team', ''),
-                        'opponent': p.get('opponent', ''),
-                        'is_home': p.get('is_home', False),
-                        'game_id': p.get('game_id', ''),
-                        'matchup': p.get('matchup', ''),
-                        'season_goals': p.get('season_goals', 0),
-                        'last5_goals': p.get('last5_goals', 0),
-                    }
-            if name_map:
-                print(f"  Loaded {len(name_map)} player IDs from {source_path}")
-                break
+                if nname in name_map:
+                    name_map[nname]['season_goals'] = p.get('season_goals', 0)
+                    name_map[nname]['last5_goals'] = p.get('last5_goals', 0)
+                    overlaid += 1
         except Exception:
             continue
+    if overlaid:
+        print(f"  Overlaid base-model stats for {overlaid} players")
 
     return name_map
 
@@ -352,10 +424,9 @@ print(f"  Cached odds: {odds_file}")
 
 # Step 3: Match to player IDs
 print("\n  Matching player names to NHL API IDs...")
-name_map = build_name_to_id_map()
+name_map = build_name_to_id_map(events)
 if not name_map:
-    print("  WARNING: No base model predictions found for player ID matching.")
-    print("  Run at least one base model first (MC v2 or xG v3).")
+    print("  WARNING: Could not build name map (NHL API unreachable?).")
 
 all_players = match_odds_to_players(all_player_probs, name_map)
 print(f"  Matched: {len(all_players)} players")
