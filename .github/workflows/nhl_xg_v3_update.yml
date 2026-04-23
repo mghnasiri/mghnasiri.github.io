@@ -71,6 +71,11 @@ jobs:
         run: python scripts/xg_predict.py --synthetic-only
         continue-on-error: true
 
+      - name: Run Lineup TOI v1 predictions (TOI-scaled xG)
+        working-directory: projects/nhl-hockey
+        run: python scripts/xg_predict.py --lineup-adjusted
+        continue-on-error: true
+
       - name: Commit and push
         run: |
           git config --local user.email "action@github.com"

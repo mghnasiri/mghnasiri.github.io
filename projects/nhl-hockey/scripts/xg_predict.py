@@ -47,26 +47,32 @@ except ImportError:
 
 
 # =============================================================================
-# A/B SHADOW FLAG
+# MODEL VARIANT FLAGS
 # =============================================================================
-# `--synthetic-only` forces the old pre-upgrade behavior: skip real shots,
-# always synthesize. Output is written to a parallel predictions folder so
-# fetch_results.py picks it up as a second model for head-to-head hit-rate
-# comparison. Remove this flag + the workflow shadow step once the real-shot
-# path has proven itself for a couple of weeks (see Phase 4.4 of
-# docs/real-shot-xg-upgrade.md).
-SYNTHETIC_ONLY = "--synthetic-only" in sys.argv
+# Multiple model variants share this script to keep logic in one place:
+#   (no flag)         -> xg_v3: real-shot xG with retrained model
+#   --synthetic-only  -> xg_v3_synthetic: Phase 4 A/B shadow, pre-upgrade behavior
+#   --lineup-adjusted -> lineup_v1: xg_v3 + scale expected_shots by
+#                        (recent TOI / season TOI) so scratches/demotions
+#                        don't keep ranking on their full-minutes history
+# These are mutually exclusive; lineup-adjusted wins if both are given.
+LINEUP_ADJUSTED = "--lineup-adjusted" in sys.argv
+SYNTHETIC_ONLY = not LINEUP_ADJUSTED and "--synthetic-only" in sys.argv
 
 
 # =============================================================================
 # CONFIGURATION
 # =============================================================================
 class Config:
-    MODEL_NAME = "xg_v3_synthetic" if SYNTHETIC_ONLY else "xg_v3"
-    MODEL_DISPLAY_NAME = (
-        "xG XGBoost v3 (synthetic shadow)" if SYNTHETIC_ONLY
-        else "xG XGBoost v3"
-    )
+    if LINEUP_ADJUSTED:
+        MODEL_NAME = "lineup_v1"
+        MODEL_DISPLAY_NAME = "Lineup TOI v1"
+    elif SYNTHETIC_ONLY:
+        MODEL_NAME = "xg_v3_synthetic"
+        MODEL_DISPLAY_NAME = "xG XGBoost v3 (synthetic shadow)"
+    else:
+        MODEL_NAME = "xg_v3"
+        MODEL_DISPLAY_NAME = "xG XGBoost v3"
 
     DATA_DIR = "data"
     PREDICTIONS_DIR = f"{DATA_DIR}/predictions/{MODEL_NAME}"
@@ -145,6 +151,15 @@ def api_get(url, timeout=15):
     return None
 
 
+def _parse_toi_minutes(toi_str):
+    """Parse NHL TOI string 'MM:SS' to float minutes. Returns 0 on malformed."""
+    try:
+        parts = str(toi_str).split(':')
+        return int(parts[0]) + int(parts[1]) / 60 if len(parts) == 2 else 0
+    except (ValueError, IndexError):
+        return 0
+
+
 def get_todays_games(date):
     """Get all NHL games scheduled for today"""
     data = api_get(f"https://api-web.nhle.com/v1/schedule/{date}")
@@ -212,12 +227,14 @@ def get_player_stats(player_id):
     points = sum(g.get('points', 0) for g in prior)
     pp_goals = sum(g.get('powerPlayGoals', 0) for g in prior)
     pp_points = sum(g.get('powerPlayPoints', 0) for g in prior)
+    total_toi = sum(_parse_toi_minutes(g.get('toi', '0:00')) for g in prior)
     shooting_pct = goals / shots if shots > 0 else 0
 
     last5 = prior[:5]  # newest-first
     last5_goals = sum(g.get('goals', 0) for g in last5)
     last5_shots = sum(g.get('shots', 0) for g in last5)
     last5_count = len(last5)
+    last5_toi = sum(_parse_toi_minutes(g.get('toi', '0:00')) for g in last5)
 
     return {
         'games_played': gp,
@@ -227,7 +244,8 @@ def get_player_stats(player_id):
         'season_points': points,
         'pp_goals': pp_goals,
         'pp_points': pp_points,
-        'avg_toi_minutes': 0.0,
+        'avg_toi_minutes': round(total_toi / gp, 1) if gp > 0 else 0,
+        'recent_toi_minutes': round(last5_toi / last5_count, 1) if last5_count > 0 else 0,
         'avg_goals': round(goals / gp, 4),
         'avg_shots': round(shots / gp, 2) if gp > 0 else 0,
         'shooting_pct': round(shooting_pct, 4),
@@ -637,19 +655,43 @@ def calculate_player_goal_probability(player, profile, model, metadata,
         form_ratio = recent_gpg / season_gpg
         expected_shots *= (0.6 + 0.4 * min(form_ratio, 2.0))
 
+    # Lineup v1 adjustment: scale expected_shots by how much the player is
+    # ACTUALLY playing lately. A 4th-line guy bumped to the top line gets
+    # boosted; a healthy scratch gets zeroed out. Without this, scratches
+    # and demotions keep ranking on their full-minutes career average.
+    toi_factor = 1.0
+    if LINEUP_ADJUSTED:
+        recent_toi = player.get('recent_toi_minutes', 0)
+        season_toi = player.get('avg_toi_minutes', 0)
+        if season_toi > 0:
+            toi_factor = recent_toi / season_toi
+            # Clamp to a sane range: zero-ish TOI = effectively scratched;
+            # 1.5x = called-up role change. Beyond those, noise dominates.
+            toi_factor = max(0.05, min(1.5, toi_factor))
+        else:
+            # No season TOI means we have no way to normalize; fall back to
+            # absolute minutes vs a league-typical 15 min/game.
+            toi_factor = max(0.05, min(1.5, recent_toi / 15.0)) if recent_toi else 0.3
+        expected_shots *= toi_factor
+
     # Step 3: Total expected goals
     player_xg = avg_shot_xg * expected_shots
 
     # Step 4: Poisson probability of at least 1 goal
     prob = 1.0 - math.exp(-player_xg)
 
-    return {
+    result = {
         'goal_probability': round(prob, 4),
         'player_xg': round(player_xg, 4),
         'expected_shots': round(expected_shots, 2),
         'avg_shot_xg': round(avg_shot_xg, 4),
         'xg_source': xg_source,
     }
+    if LINEUP_ADJUSTED:
+        result['toi_factor'] = round(toi_factor, 3)
+        result['recent_toi_minutes'] = player.get('recent_toi_minutes', 0)
+        result['avg_toi_minutes'] = player.get('avg_toi_minutes', 0)
+    return result
 
 
 # =============================================================================
