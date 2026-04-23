@@ -26,6 +26,17 @@ import math
 import glob
 from datetime import datetime, timedelta
 
+
+def current_season_id(date=None):
+    """NHL seasonId like '20252026' for a date. Season starts in early October;
+    month >= 8 rolls the ID forward so July/Aug/early-Sep still returns the
+    upcoming season and keeps API calls pointed at data that actually exists."""
+    d = date or datetime.now()
+    if isinstance(d, str):
+        d = datetime.strptime(d, "%Y-%m-%d")
+    start = d.year if d.month >= 8 else d.year - 1
+    return f"{start}{start + 1}"
+
 try:
     import lightgbm as lgb
     HAS_LGB = True
@@ -55,7 +66,7 @@ class Config:
     TIMS_DIR = f"{DATA_DIR}/tims_players"
 
     TODAY = datetime.now().strftime("%Y-%m-%d")
-    CURRENT_SEASON = "20242025"
+    CURRENT_SEASON = current_season_id()
 
     BASE_MODELS = ['neural_network', 'monte_carlo', 'xg_v3']
     MARKET_MODEL = 'market_odds'
@@ -142,11 +153,18 @@ def fetch_goalie_sv_pct(goalie_id, cache):
         if cached.get('fetched_date', '') >= Config.TODAY:
             return cached.get('sv_pct', 0.900)
 
-    data = api_get(f"https://api-web.nhle.com/v1/player/{goalie_id}/game-log/now")
-    if not data:
+    # Fetch regular-season + playoff game logs for the current season and merge.
+    # Avoids the `/game-log/now` gotcha where the endpoint returns only playoff
+    # data once a goalie's team enters the postseason, giving wildly unstable
+    # SV% estimates off a 1-2 game sample.
+    season = Config.CURRENT_SEASON
+    reg = api_get(f"https://api-web.nhle.com/v1/player/{goalie_id}/game-log/{season}/2")
+    po = api_get(f"https://api-web.nhle.com/v1/player/{goalie_id}/game-log/{season}/3")
+    game_log = (reg.get('gameLog', []) if reg else []) + \
+               (po.get('gameLog', []) if po else [])
+    if not game_log:
         return 0.900
-
-    game_log = data.get('gameLog', [])
+    game_log.sort(key=lambda g: g.get('gameDate', ''), reverse=True)
     prior = [g for g in game_log if g.get('gameDate', '9999') < Config.TODAY]
     if not prior:
         return 0.900

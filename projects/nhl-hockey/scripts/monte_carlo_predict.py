@@ -22,6 +22,17 @@ import sys
 import time
 from datetime import datetime
 
+
+def current_season_id(date=None):
+    """NHL seasonId like '20252026' for a date. Season starts in early October;
+    month >= 8 rolls the ID forward so July/Aug/early-Sep still returns the
+    upcoming season and keeps API calls pointed at data that actually exists."""
+    d = date or datetime.now()
+    if isinstance(d, str):
+        d = datetime.strptime(d, "%Y-%m-%d")
+    start = d.year if d.month >= 8 else d.year - 1
+    return f"{start}{start + 1}"
+
 # =============================================================================
 # CONFIGURATION
 # =============================================================================
@@ -34,7 +45,7 @@ class Config:
     TIMS_DIR = f"{DATA_DIR}/tims_players"
 
     TODAY = datetime.now().strftime("%Y-%m-%d")
-    CURRENT_SEASON = "20242025"
+    CURRENT_SEASON = current_season_id()
 
     NUM_SIMULATIONS = 10000
     LEAGUE_AVG_GOALS = 3.07       # 2024-25 NHL league average goals per team per game
@@ -143,12 +154,21 @@ def _parse_toi(toi_str):
         return 0
 
 def get_player_stats(player_id):
-    """Get player stats from game log (leak-free: excludes today's games)."""
-    data = api_get(f"https://api-web.nhle.com/v1/player/{player_id}/game-log/now")
-    if not data:
-        return None
+    """Get player stats from game log (leak-free: excludes today's games).
 
-    game_log = data.get('gameLog', [])
+    Pulls the current season's regular-season (type 2) and playoff (type 3)
+    logs explicitly and merges them newest-first. The `/game-log/now` endpoint
+    silently switches to playoff-only data once a player's team enters the
+    postseason, leaving healthy scorers with 0-3 games and causing them to
+    fail the MIN_GAMES_PLAYED filter — this call pattern avoids that."""
+    season = Config.CURRENT_SEASON
+    reg = api_get(f"https://api-web.nhle.com/v1/player/{player_id}/game-log/{season}/2")
+    po = api_get(f"https://api-web.nhle.com/v1/player/{player_id}/game-log/{season}/3")
+    game_log = (reg.get('gameLog', []) if reg else []) + \
+               (po.get('gameLog', []) if po else [])
+    if not game_log:
+        return None
+    game_log.sort(key=lambda g: g.get('gameDate', ''), reverse=True)
     prior = [g for g in game_log if g.get('gameDate', '9999') < Config.TODAY]
     gp = len(prior)
     if gp < Config.MIN_GAMES_PLAYED:

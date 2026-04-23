@@ -50,9 +50,9 @@ jobs:
         run: python scripts/fetch_tims_players.py
         continue-on-error: true
 
-      - name: Collect yesterday's shot data
+      - name: Collect recent shot data (3-day self-healing window)
         working-directory: projects/nhl-hockey
-        run: python scripts/collect_xg_data.py
+        run: python scripts/collect_xg_data.py --backfill 3
         continue-on-error: true
 
       - name: Run xG predictions

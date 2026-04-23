@@ -16,6 +16,17 @@ import time
 import warnings
 warnings.filterwarnings('ignore')
 
+
+def current_season_id(date=None):
+    """NHL seasonId like '20252026' for a date. Season starts in early October;
+    month >= 8 rolls the ID forward so July/Aug/early-Sep still returns the
+    upcoming season and keeps API calls pointed at data that actually exists."""
+    d = date or datetime.now()
+    if isinstance(d, str):
+        d = datetime.strptime(d, "%Y-%m-%d")
+    start = d.year if d.month >= 8 else d.year - 1
+    return f"{start}{start + 1}"
+
 # =============================================================================
 # CONFIGURATION
 # =============================================================================
@@ -29,7 +40,7 @@ class Config:
     TIMS_DIR = f"{DATA_DIR}/tims_players"
 
     TODAY = datetime.now().strftime("%Y-%m-%d")
-    CURRENT_SEASON = "20242025"
+    CURRENT_SEASON = current_season_id()
 
 os.makedirs(Config.PREDICTIONS_DIR, exist_ok=True)
 os.makedirs(Config.RESULTS_DIR, exist_ok=True)
@@ -118,29 +129,43 @@ def compute_stats_from_gamelog(game_log, today_date):
         'last5_points': last5_points,
     }
 
-def get_player_current_stats(player_id):
-    """Get current season stats for a player from NHL API game log (leak-free)."""
-    url = f"https://api-web.nhle.com/v1/player/{player_id}/game-log/now"
+def _fetch_game_log(player_id, season, game_type):
+    """One game-log fetch with retry. Returns list (possibly empty) or None on hard error."""
+    url = f"https://api-web.nhle.com/v1/player/{player_id}/game-log/{season}/{game_type}"
     try:
         for attempt in range(3):
             resp = requests.get(url, timeout=15)
             if resp.status_code == 200:
-                break
+                return resp.json().get('gameLog', [])
             if resp.status_code == 404:
-                return None
+                return []
             if attempt < 2:
                 time.sleep(1)
-        if resp.status_code != 200:
-            return None
-
-        data = resp.json()
-        game_log = data.get('gameLog', [])
-        stats = compute_stats_from_gamelog(game_log, Config.TODAY)
-        if stats is None or stats['games_played'] < 1:
-            return None
-        return stats
-    except Exception as e:
         return None
+    except Exception:
+        return None
+
+
+def get_player_current_stats(player_id):
+    """Get current season stats for a player from NHL API game log (leak-free).
+
+    Pulls regular-season (type 2) + playoff (type 3) logs for the current
+    season explicitly and merges them. The `/game-log/now` endpoint silently
+    switches to playoff-only mode once a team enters the postseason, so
+    healthy scorers end up with 0-3 games and fall below the min-games filter."""
+    season = Config.CURRENT_SEASON
+    reg = _fetch_game_log(player_id, season, 2)
+    po = _fetch_game_log(player_id, season, 3)
+    if reg is None and po is None:
+        return None
+    game_log = (reg or []) + (po or [])
+    if not game_log:
+        return None
+    game_log.sort(key=lambda g: g.get('gameDate', ''), reverse=True)
+    stats = compute_stats_from_gamelog(game_log, Config.TODAY)
+    if stats is None or stats['games_played'] < 1:
+        return None
+    return stats
 
 def get_team_roster_with_stats(team_abbrev):
     """Get team roster with current season stats"""
