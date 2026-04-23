@@ -1,0 +1,52 @@
+# .github/workflows/nhl_neural_v2_train.yml
+# Neural v2 trainer — runs once a month and on manual dispatch.
+# Inference happens in nhl_xg_v3_update.yml alongside the other xG variants;
+# this workflow only (re)trains the model weights and commits them.
+# No untrusted inputs used in run: commands — only static strings and date.
+
+name: NHL Neural v2 Trainer
+
+on:
+  schedule:
+    # 1st of each month at 04:00 UTC (11 PM Toronto the night before)
+    - cron: '0 4 1 * *'
+
+  workflow_dispatch:
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies (CPU torch wheel)
+        run: |
+          pip install --index-url https://download.pytorch.org/whl/cpu torch
+          pip install numpy scikit-learn
+
+      - name: Train Neural v2
+        working-directory: projects/nhl-hockey
+        run: python scripts/train_neural_v2.py
+
+      - name: Commit and push model weights
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          DATESTAMP=$(date +%Y-%m-%d)
+          git diff --staged --quiet || git commit -m "Neural v2 retrain (${DATESTAMP})"
+          for i in 1 2 3; do
+            git push origin main && break
+            echo "Push attempt $i failed, pulling and retrying..."
+            git pull --rebase -X theirs origin main || (git rebase --abort 2>/dev/null; git pull --no-rebase -X theirs origin main)
+            git push origin main && break
+            sleep 5
+          done

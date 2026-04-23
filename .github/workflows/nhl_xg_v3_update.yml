@@ -42,7 +42,12 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install numpy pandas requests xgboost scikit-learn
+        run: |
+          pip install numpy pandas requests xgboost scikit-learn
+          # CPU-only torch wheel so the Neural v2 inference step can load
+          # the model; install size stays modest (~200MB) and no GPU runner
+          # is needed for forward passes.
+          pip install --index-url https://download.pytorch.org/whl/cpu torch
 
       - name: Pull latest (get MC v2 tims data if available)
         run: git pull --rebase origin main || git pull --no-rebase origin main
@@ -79,6 +84,11 @@ jobs:
       - name: Run Neural v1 predictions (MLP re-ranker on MC features)
         working-directory: projects/nhl-hockey
         run: python scripts/neural_predict.py
+        continue-on-error: true
+
+      - name: Run Neural v2 predictions (PyTorch MLP + player embeddings)
+        working-directory: projects/nhl-hockey
+        run: python scripts/neural_v2_predict.py
         continue-on-error: true
 
       - name: Commit and push
