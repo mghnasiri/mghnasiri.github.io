@@ -42,11 +42,14 @@ MIN_SHOTS_FOR_PLAYER_FILE = 20
 # Decision C: flat weighting (no decay). Not a knob yet — change here if
 # you add time decay later.
 
-# Feature schema — must match data/xg_model/metadata.json
-SHOT_TYPES = ["backhand", "bat", "between-legs", "deflected", "poke",
-              "slap", "snap", "tip-in", "wrap-around", "wrist"]
-STRENGTH_STATES = ["1v0", "3v3", "3v4", "4v3", "4v4", "4v5", "4v6",
-                   "5v3", "5v4", "5v5", "5v6", "6v4", "6v5"]
+# Feature schema — MUST match data/xg_model/metadata.json shot_type_* and
+# strength_state_* columns. If train_xg_model.py adds new categories (e.g.
+# rare shot types that appear once a season), extend these lists or the
+# one-hot encoding will drop them to all-zero (silently mispredicting).
+SHOT_TYPES = ["backhand", "bat", "between-legs", "cradle", "deflected",
+              "poke", "slap", "snap", "tip-in", "wrap-around", "wrist"]
+STRENGTH_STATES = ["1v0", "3v3", "3v4", "3v5", "4v3", "4v4", "4v5", "4v6",
+                   "5v3", "5v4", "5v5", "5v6", "6v3", "6v4", "6v5"]
 POSITION_KEYS = ("C", "L", "R", "D")  # priors are keyed by first letter
 DEFAULT_POSITION = "C"
 

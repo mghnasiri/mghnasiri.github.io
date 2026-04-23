@@ -47,11 +47,26 @@ except ImportError:
 
 
 # =============================================================================
+# A/B SHADOW FLAG
+# =============================================================================
+# `--synthetic-only` forces the old pre-upgrade behavior: skip real shots,
+# always synthesize. Output is written to a parallel predictions folder so
+# fetch_results.py picks it up as a second model for head-to-head hit-rate
+# comparison. Remove this flag + the workflow shadow step once the real-shot
+# path has proven itself for a couple of weeks (see Phase 4.4 of
+# docs/real-shot-xg-upgrade.md).
+SYNTHETIC_ONLY = "--synthetic-only" in sys.argv
+
+
+# =============================================================================
 # CONFIGURATION
 # =============================================================================
 class Config:
-    MODEL_NAME = "xg_v3"
-    MODEL_DISPLAY_NAME = "xG XGBoost v3"
+    MODEL_NAME = "xg_v3_synthetic" if SYNTHETIC_ONLY else "xg_v3"
+    MODEL_DISPLAY_NAME = (
+        "xG XGBoost v3 (synthetic shadow)" if SYNTHETIC_ONLY
+        else "xG XGBoost v3"
+    )
 
     DATA_DIR = "data"
     PREDICTIONS_DIR = f"{DATA_DIR}/predictions/{MODEL_NAME}"
@@ -425,7 +440,12 @@ def calculate_xg_with_model(model, metadata, profile, num_shots=20,
         return None, None
 
     # ── Source 1 & 2: real shots or position prior ─────────────────────
-    loaded_shots, loaded_source = load_real_shots(player_id, position)
+    # In --synthetic-only shadow mode, skip real-shot lookup entirely so the
+    # output reproduces the pre-upgrade behavior as a baseline control.
+    loaded_shots, loaded_source = (
+        (None, None) if SYNTHETIC_ONLY
+        else load_real_shots(player_id, position)
+    )
     if loaded_shots:
         df = pd.DataFrame(loaded_shots)
         for col in feature_names:

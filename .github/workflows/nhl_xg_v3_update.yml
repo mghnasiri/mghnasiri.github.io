@@ -64,6 +64,11 @@ jobs:
         working-directory: projects/nhl-hockey
         run: python scripts/xg_predict.py
 
+      - name: Run xG predictions — synthetic-only shadow (Phase 4 A/B)
+        working-directory: projects/nhl-hockey
+        run: python scripts/xg_predict.py --synthetic-only
+        continue-on-error: true
+
       - name: Commit and push
         run: |
           git config --local user.email "action@github.com"
