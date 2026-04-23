@@ -1,0 +1,25 @@
+{
+  "cv_auc": 0.4929514563817598,
+  "in_sample_auc": 0.5283338885289269,
+  "num_rows": 2532,
+  "positive_rate": 0.1504739336492891,
+  "feature_names": [
+    "avg_goals",
+    "avg_shots",
+    "shooting_pct",
+    "pp_goals",
+    "pp_points",
+    "recent_gpg",
+    "last5_goals",
+    "last5_shots",
+    "opp_ga_per_game",
+    "team_gf_per_game",
+    "is_home"
+  ],
+  "hidden_layer_sizes": [
+    64,
+    32,
+    16
+  ],
+  "trained_at": "2026-04-23T14:31:37.912488"
+}

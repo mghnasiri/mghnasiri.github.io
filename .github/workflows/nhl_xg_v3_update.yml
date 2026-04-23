@@ -76,6 +76,11 @@ jobs:
         run: python scripts/xg_predict.py --lineup-adjusted
         continue-on-error: true
 
+      - name: Run Neural v1 predictions (MLP re-ranker on MC features)
+        working-directory: projects/nhl-hockey
+        run: python scripts/neural_predict.py
+        continue-on-error: true
+
       - name: Commit and push
         run: |
           git config --local user.email "action@github.com"
@@ -135,6 +140,11 @@ jobs:
       - name: Train xG model
         working-directory: projects/nhl-hockey
         run: python scripts/train_xg_model.py
+
+      - name: Train Neural v1 model (MLP on prediction+results history)
+        working-directory: projects/nhl-hockey
+        run: python scripts/train_neural_model.py
+        continue-on-error: true
 
       - name: Regenerate per-player shot aggregations
         if: >-
