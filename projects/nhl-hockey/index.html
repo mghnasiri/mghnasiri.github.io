@@ -521,6 +521,21 @@
             color: var(--midnight);
         }
 
+        /* Auto-status badges from data/model_status.json */
+        .badge-champion { background: #FFD700; color: #000; font-weight: 600; }
+        .badge-active   { background: var(--success); color: var(--midnight); }
+        .badge-warning  { background: #FFA726; color: var(--midnight); }
+        .badge-deprecated { background: var(--danger); color: var(--ivory); }
+        .badge-grace    { background: rgba(255,255,255,0.15); color: var(--ivory); }
+
+        .model-card.status-deprecated { opacity: 0.55; filter: grayscale(0.3); }
+        .model-card.status-warning    { border-color: #FFA726; }
+        .model-card.status-champion   { border-color: #FFD700; box-shadow: 0 0 12px rgba(255,215,0,0.25); }
+
+        .model-btn.status-deprecated { opacity: 0.5; text-decoration: line-through; }
+        .model-btn.status-warning::after { content: ' ⚠'; font-size: 0.8em; color: #FFA726; }
+        .model-btn.status-champion::after { content: ' 🏆'; font-size: 0.8em; }
+
         .model-rate {
             font-size: 2rem;
             font-weight: 600;
@@ -790,6 +805,8 @@
         // =====================================================================
         const RESULTS_PATH = './data/results/latest.json';
         const STATS_PATH = './data/stats.json';
+        const MODEL_STATUS_PATH = './data/model_status.json';
+        let MODEL_STATUS = {};  // loaded on first render, { model_key: {status, ...} }
 
         const MODELS = {
             market_odds: {
@@ -826,6 +843,26 @@
         let allPredictions = [];
         const getTeamLogo = (team) =>
             'https://assets.nhle.com/logos/nhl/svg/' + team + '_dark.svg';
+
+        // =====================================================================
+        // MODEL STATUS — apply auto-classification classes to the button row
+        // =====================================================================
+        function applyStatusToButtons() {
+            document.querySelectorAll('.model-btn').forEach(function(btn) {
+                ['status-champion','status-warning','status-deprecated',
+                 'status-new','status-active'].forEach(function(c) {
+                    btn.classList.remove(c);
+                });
+                var key = btn.dataset.model;
+                var meta = MODEL_STATUS[key];
+                if (!meta) return;
+                btn.classList.add('status-' + meta.status);
+                btn.title = 'Status: ' + meta.status
+                    + '  |  14d hit rate: ' + meta.trailing_14_hit_rate + '%'
+                    + '  |  30d: ' + meta.trailing_30_hit_rate + '%'
+                    + '  |  days tracked: ' + meta.total_days;
+            });
+        }
 
         // =====================================================================
         // MODEL SWITCHER
@@ -1171,6 +1208,18 @@
                     }
                 } catch (e) {}
 
+                // Auto-status: champion / active / warning / deprecated / new.
+                // Tolerated absent — if the file isn't generated yet, fall back
+                // to the old behavior (highest-hit-rate winner only).
+                try {
+                    var statusResp = await fetch(MODEL_STATUS_PATH + '?v=' + Date.now());
+                    if (statusResp.ok) {
+                        var statusData = await statusResp.json();
+                        MODEL_STATUS = statusData.models || {};
+                    }
+                } catch (e) {}
+                applyStatusToButtons();
+
                 var modelDefs = [
                     { key: 'market_odds', label: 'Market Odds v1', badge: 'MARKET', badgeClass: 'badge-new' },
                     { key: 'meta_ensemble', label: 'Meta Ensemble v1', badge: 'META', badgeClass: 'badge-new' },
@@ -1193,6 +1242,28 @@
                     return;
                 }
 
+                // Sort cards so best-performing and champion models surface on
+                // top and deprecated ones sink to the bottom. Uses trailing
+                // 30-day hit rate when status data is present, falling back to
+                // overall hit rate otherwise.
+                available.sort(function(a, b) {
+                    var sa = MODEL_STATUS[a.key] || {};
+                    var sb = MODEL_STATUS[b.key] || {};
+                    var depA = sa.status === 'deprecated' ? 1 : 0;
+                    var depB = sb.status === 'deprecated' ? 1 : 0;
+                    if (depA !== depB) return depA - depB;
+                    var champA = sa.status === 'champion' ? 1 : 0;
+                    var champB = sb.status === 'champion' ? 1 : 0;
+                    if (champA !== champB) return champB - champA;
+                    var ra = sa.trailing_30_hit_rate != null
+                        ? sa.trailing_30_hit_rate
+                        : (allStats[a.key].hit_rate || 0);
+                    var rb = sb.trailing_30_hit_rate != null
+                        ? sb.trailing_30_hit_rate
+                        : (allStats[b.key].hit_rate || 0);
+                    return rb - ra;
+                });
+
                 // Find winner (highest hit rate)
                 var bestRate = -1;
                 var bestKey = '';
@@ -1209,15 +1280,32 @@
                     available.forEach(function(m) {
                         var stats = allStats[m.key];
                         var isWinner = (m.key === bestKey);
+                        var meta = MODEL_STATUS[m.key] || null;
 
                         var card = document.createElement('div');
                         card.className = 'model-card' + (isWinner ? ' winner' : '');
+                        if (meta) card.classList.add('status-' + meta.status);
                         var title = document.createElement('h4');
                         title.textContent = m.label + ' ';
                         var badge = document.createElement('span');
                         badge.className = 'badge ' + m.badgeClass;
                         badge.textContent = m.badge;
                         title.appendChild(badge);
+                        if (meta) {
+                            var statusBadge = document.createElement('span');
+                            statusBadge.className = 'badge badge-' + meta.status;
+                            statusBadge.textContent = {
+                                champion: '🏆 CHAMP',
+                                active: 'ACTIVE',
+                                warning: '⚠ WARN',
+                                deprecated: '✖ DEPRECATED',
+                                "new": '★ NEW'
+                            }[meta.status] || meta.status.toUpperCase();
+                            statusBadge.title = '14d: ' + meta.trailing_14_hit_rate
+                                + '%  |  30d: ' + meta.trailing_30_hit_rate
+                                + '%  |  ' + meta.total_days + ' days tracked';
+                            title.appendChild(statusBadge);
+                        }
                         card.appendChild(title);
                         var rate = document.createElement('div');
                         rate.className = 'model-rate';

@@ -88,6 +88,11 @@ jobs:
       - name: Update dashboard
         working-directory: projects/nhl-hockey
         run: python scripts/update_dashboard.py
+
+      - name: Classify model status (champion / active / warning / deprecated)
+        working-directory: projects/nhl-hockey
+        run: python scripts/update_model_status.py
+        continue-on-error: true
       
       - name: Commit and push
         run: |
