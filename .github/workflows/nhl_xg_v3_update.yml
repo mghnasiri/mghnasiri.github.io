@@ -55,6 +55,11 @@ jobs:
         run: python scripts/collect_xg_data.py --backfill 3
         continue-on-error: true
 
+      - name: Aggregate per-player real-shot distributions
+        working-directory: projects/nhl-hockey
+        run: python scripts/aggregate_player_shots.py
+        continue-on-error: true
+
       - name: Run xG predictions
         working-directory: projects/nhl-hockey
         run: python scripts/xg_predict.py

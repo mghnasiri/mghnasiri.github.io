@@ -60,6 +60,8 @@ class Config:
     MODEL_FILE = f"{XG_MODEL_DIR}/model.json"
     METADATA_FILE = f"{XG_MODEL_DIR}/metadata.json"
     FALLBACK_TABLE = f"{XG_MODEL_DIR}/fallback_table.json"
+    PLAYER_SHOTS_DIR = f"{DATA_DIR}/player_shots"
+    POSITION_PRIORS_FILE = f"{PLAYER_SHOTS_DIR}/_position_priors.json"
 
     TODAY = datetime.now().strftime("%Y-%m-%d")
     CURRENT_SEASON = current_season_id()
@@ -286,6 +288,61 @@ def load_xg_model():
 
 
 # =============================================================================
+# REAL-SHOT LOADING (from aggregate_player_shots.py output)
+# =============================================================================
+_POSITION_PRIORS_CACHE = {"loaded": False, "data": {}}
+
+
+def load_position_priors():
+    """Lazy-load position-based shot priors. Cold-start fallback when a
+    player has no per-player shot file (rookies, call-ups, low-volume)."""
+    if not _POSITION_PRIORS_CACHE["loaded"]:
+        _POSITION_PRIORS_CACHE["loaded"] = True
+        path = Config.POSITION_PRIORS_FILE
+        if os.path.exists(path):
+            try:
+                with open(path, "r", encoding="utf-8") as f:
+                    _POSITION_PRIORS_CACHE["data"] = json.load(f)
+            except Exception as e:
+                print(f"  Could not load position priors: {e}")
+    return _POSITION_PRIORS_CACHE["data"]
+
+
+def load_real_shots(player_id, position):
+    """Return (shots, source) for a player.
+
+    source in {"real", "position_prior", None} — None means caller should
+    fall back to synthetic shot generation (cold-start rookie with no
+    priors, or aggregator hasn't run yet)."""
+    # First choice: player-specific recent shots
+    if player_id:
+        player_file = f"{Config.PLAYER_SHOTS_DIR}/{player_id}.json"
+        if os.path.exists(player_file):
+            try:
+                with open(player_file, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                shots = data.get("shots")
+                if shots:
+                    return shots, "real"
+            except Exception:
+                pass  # fall through
+
+    # Second choice: position-based prior
+    priors = load_position_priors()
+    pos_key = (position or "C")[0].upper()
+    if pos_key not in ("C", "L", "R", "D"):
+        pos_key = "C"
+    prior = priors.get(pos_key)
+    if prior:
+        shots = prior.get("shots")
+        if shots:
+            return shots, "position_prior"
+
+    # Neither available — caller synthesizes
+    return None, None
+
+
+# =============================================================================
 # SHOT PROFILE ESTIMATION
 # =============================================================================
 def estimate_shot_profile(player, position):
@@ -346,18 +403,44 @@ def estimate_shot_profile(player, position):
 # =============================================================================
 # XG CALCULATION
 # =============================================================================
-def calculate_xg_with_model(model, metadata, profile, num_shots=20, player_id=0):
-    """
-    Generate representative synthetic shots and score them through XGBoost.
-    Returns average xG per shot.
+def calculate_xg_with_model(model, metadata, profile, num_shots=20,
+                            player_id=0, position=None):
+    """Score a player's shots through XGBoost and return (avg_xg, source).
+
+    Tries three sources in order:
+      1. Real shots from data/player_shots/{player_id}.json (populated by
+         aggregate_player_shots.py)
+      2. Position prior from data/player_shots/_position_priors.json
+      3. Synthetic shots from the player's estimated profile (original
+         behavior — used when aggregator hasn't run or player has no data)
+
+    Returning the source lets the caller tag predictions so A/B analysis
+    can look at hit rate broken down by data quality.
     """
     if not HAS_PANDAS:
-        return None
+        return None, None
 
     feature_names = metadata.get('feature_names', [])
     if not feature_names:
-        return None
+        return None, None
 
+    # ── Source 1 & 2: real shots or position prior ─────────────────────
+    loaded_shots, loaded_source = load_real_shots(player_id, position)
+    if loaded_shots:
+        df = pd.DataFrame(loaded_shots)
+        for col in feature_names:
+            if col not in df.columns:
+                df[col] = 0
+        df = df[feature_names]
+        try:
+            probas = model.predict_proba(df)[:, 1]
+            return float(np.mean(probas)), loaded_source
+        except Exception as e:
+            # Real-shot path failed (corrupt file, schema mismatch) — fall
+            # through to synthetic so the pipeline keeps producing output.
+            print(f"    WARN: real-shot scoring failed for {player_id}: {e}")
+
+    # ── Source 3: synthetic shots (fallback) ────────────────────────────
     # Generate synthetic shots — seed per player+date for reproducibility
     np.random.seed(hash(str(player_id) + Config.TODAY) % 2**31)
 
@@ -423,9 +506,9 @@ def calculate_xg_with_model(model, metadata, profile, num_shots=20, player_id=0)
     # Predict
     try:
         probas = model.predict_proba(df)[:, 1]
-        return float(np.mean(probas))
+        return float(np.mean(probas)), "synthetic"
     except Exception:
-        return None
+        return None, None
 
 
 def calculate_xg_with_fallback(fallback, profile):
@@ -492,14 +575,18 @@ def calculate_player_goal_probability(player, profile, model, metadata,
       3. Calculate total expected goals: avg_xG × expected_shots
       4. Convert to probability: P(>=1 goal) = 1 - e^(-total_xG)
     """
-    # Step 1: Average xG per shot
+    # Step 1: Average xG per shot. Tracks which data source was used so
+    # the output JSON can carry that label for later A/B analysis.
+    xg_source = "lookup_table"
     if mode == "xgboost" and model is not None:
-        avg_shot_xg = calculate_xg_with_model(
+        avg_shot_xg, xg_source = calculate_xg_with_model(
             model, metadata, profile, Config.NUM_REPRESENTATIVE_SHOTS,
-            player_id=player.get('player_id', 0)
+            player_id=player.get('player_id', 0),
+            position=player.get('position'),
         )
         if avg_shot_xg is None:
             avg_shot_xg = calculate_xg_with_fallback(fallback, profile)
+            xg_source = "lookup_table"
     else:
         avg_shot_xg = calculate_xg_with_fallback(fallback, profile)
 
@@ -541,6 +628,7 @@ def calculate_player_goal_probability(player, profile, model, metadata,
         'player_xg': round(player_xg, 4),
         'expected_shots': round(expected_shots, 2),
         'avg_shot_xg': round(avg_shot_xg, 4),
+        'xg_source': xg_source,
     }
 
 
