@@ -19,6 +19,8 @@ on:
         options:
           - predictions
           - backfill_14
+          - backfill_season
+          - backfill_multi_season
           - train_model
           - full_pipeline
 
@@ -86,8 +88,13 @@ jobs:
 
   backfill_and_train:
     runs-on: ubuntu-latest
+    # Long backfills (1-2 seasons) may need multiple hours of API calls.
+    # ubuntu-latest default timeout is 360 min which covers a 2-season pull.
+    timeout-minutes: 330
     if: >-
       github.event.inputs.action == 'backfill_14' ||
+      github.event.inputs.action == 'backfill_season' ||
+      github.event.inputs.action == 'backfill_multi_season' ||
       github.event.inputs.action == 'train_model' ||
       github.event.inputs.action == 'full_pipeline'
 
@@ -110,9 +117,27 @@ jobs:
         working-directory: projects/nhl-hockey
         run: python scripts/collect_xg_data.py --backfill 14
 
+      - name: Backfill shot data (1 season = 365 days)
+        if: github.event.inputs.action == 'backfill_season'
+        working-directory: projects/nhl-hockey
+        run: python scripts/collect_xg_data.py --backfill 365
+
+      - name: Backfill shot data (multi-season = 730 days)
+        if: github.event.inputs.action == 'backfill_multi_season'
+        working-directory: projects/nhl-hockey
+        run: python scripts/collect_xg_data.py --backfill 730
+
       - name: Train xG model
         working-directory: projects/nhl-hockey
         run: python scripts/train_xg_model.py
+
+      - name: Regenerate per-player shot aggregations
+        if: >-
+          github.event.inputs.action == 'backfill_season' ||
+          github.event.inputs.action == 'backfill_multi_season'
+        working-directory: projects/nhl-hockey
+        run: python scripts/aggregate_player_shots.py
+        continue-on-error: true
 
       - name: Commit and push
         run: |
