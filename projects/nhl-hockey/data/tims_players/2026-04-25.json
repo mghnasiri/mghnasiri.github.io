@@ -1,31 +1,25 @@
 {
   "date": "2026-04-25",
-  "source": "timnhlassist.com",
-  "players_count": 45,
+  "source": "cached_pool",
+  "players_count": 87,
   "groups": {
     "1": [
       {
-        "name": "Sidney Crosby",
-        "player_id": 8471675,
-        "team": "PIT",
-        "position": "Forward"
-      },
-      {
-        "name": "Owen Tippett",
-        "player_id": 8480015,
-        "team": "PHI",
-        "position": "Forward"
-      },
-      {
-        "name": "Sebastian Aho",
-        "player_id": 8478427,
+        "name": "Andrei Svechnikov",
+        "player_id": 8480830,
         "team": "CAR",
         "position": "Forward"
       },
       {
-        "name": "Travis Konecny",
-        "player_id": 8478439,
-        "team": "PHI",
+        "name": "Jordan Martinook",
+        "player_id": 8476921,
+        "team": "CAR",
+        "position": "Forward"
+      },
+      {
+        "name": "Logan Stankoven",
+        "player_id": 8482702,
+        "team": "CAR",
         "position": "Forward"
       },
       {
@@ -35,9 +29,57 @@
         "position": "Forward"
       },
       {
-        "name": "Trevor Zegras",
-        "player_id": 8481533,
-        "team": "PHI",
+        "name": "Seth Jarvis",
+        "player_id": 8482093,
+        "team": "CAR",
+        "position": "Forward"
+      },
+      {
+        "name": "William Carrier",
+        "player_id": 8477478,
+        "team": "CAR",
+        "position": "Forward"
+      },
+      {
+        "name": "Ilya Lyubushkin",
+        "player_id": 8480950,
+        "team": "DAL",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Matt Duchene",
+        "player_id": 8475168,
+        "team": "DAL",
+        "position": "Forward"
+      },
+      {
+        "name": "Oskar Bäck",
+        "player_id": 8480840,
+        "team": "DAL",
+        "position": "Forward"
+      },
+      {
+        "name": "Thomas Harley",
+        "player_id": 8481581,
+        "team": "DAL",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Brock Faber",
+        "player_id": 8482122,
+        "team": "MIN",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Marcus Foligno",
+        "player_id": 8475220,
+        "team": "MIN",
+        "position": "Forward"
+      },
+      {
+        "name": "Michael McCarron",
+        "player_id": 8477446,
+        "team": "MIN",
         "position": "Forward"
       },
       {
@@ -47,9 +89,179 @@
         "position": "Forward"
       },
       {
-        "name": "Mikko Rantanen",
-        "player_id": 8478420,
+        "name": "Artem Zub",
+        "player_id": 8482245,
+        "team": "OTT",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Drake Batherson",
+        "player_id": 8480208,
+        "team": "OTT",
+        "position": "Forward"
+      },
+      {
+        "name": "Jake Sanderson",
+        "player_id": 8482105,
+        "team": "OTT",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Nick Cousins",
+        "player_id": 8476393,
+        "team": "OTT",
+        "position": "Forward"
+      },
+      {
+        "name": "Shane Pinto",
+        "player_id": 8481596,
+        "team": "OTT",
+        "position": "Forward"
+      },
+      {
+        "name": "Tyler Kleven",
+        "player_id": 8482095,
+        "team": "OTT",
+        "position": "Defensemen"
+      },
+      {
+        "name": "Christian Dvorak",
+        "player_id": 8477989,
+        "team": "PHI",
+        "position": "Forward"
+      },
+      {
+        "name": "Nick Seeler",
+        "player_id": 8476372,
+        "team": "PHI",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Owen Tippett",
+        "player_id": 8480015,
+        "team": "PHI",
+        "position": "Forward"
+      },
+      {
+        "name": "Travis Konecny",
+        "player_id": 8478439,
+        "team": "PHI",
+        "position": "Forward"
+      },
+      {
+        "name": "Anthony Mantha",
+        "player_id": 8477511,
+        "team": "PIT",
+        "position": "Forward"
+      },
+      {
+        "name": "Connor Dewar",
+        "player_id": 8480980,
+        "team": "PIT",
+        "position": "Forward"
+      },
+      {
+        "name": "Justin Brazeau",
+        "player_id": 8479638,
+        "team": "PIT",
+        "position": "Forward"
+      },
+      {
+        "name": "Noel Acciari",
+        "player_id": 8478569,
+        "team": "PIT",
+        "position": "Forward"
+      },
+      {
+        "name": "Sidney Crosby",
+        "player_id": 8471675,
+        "team": "PIT",
+        "position": "Forward"
+      }
+    ],
+    "2": [
+      {
+        "name": "Jaccob Slavin",
+        "player_id": 8476958,
+        "team": "CAR",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Jordan Staal",
+        "player_id": 8473533,
+        "team": "CAR",
+        "position": "Forward"
+      },
+      {
+        "name": "Mike Reilly",
+        "player_id": 8476422,
+        "team": "CAR",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Sean Walker",
+        "player_id": 8480336,
+        "team": "CAR",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Shayne Gostisbehere",
+        "player_id": 8476906,
+        "team": "CAR",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Colin Blackwell",
+        "player_id": 8476278,
         "team": "DAL",
+        "position": "Forward"
+      },
+      {
+        "name": "Jamie Benn",
+        "player_id": 8473994,
+        "team": "DAL",
+        "position": "Forward"
+      },
+      {
+        "name": "Mavrik Bourque",
+        "player_id": 8482145,
+        "team": "DAL",
+        "position": "Forward"
+      },
+      {
+        "name": "Radek Faksa",
+        "player_id": 8476889,
+        "team": "DAL",
+        "position": "Forward"
+      },
+      {
+        "name": "Wyatt Johnston",
+        "player_id": 8482740,
+        "team": "DAL",
+        "position": "Forward"
+      },
+      {
+        "name": "Joel Eriksson Ek",
+        "player_id": 8478493,
+        "team": "MIN",
+        "position": "Forward"
+      },
+      {
+        "name": "Marcus Johansson",
+        "player_id": 8475149,
+        "team": "MIN",
+        "position": "Forward"
+      },
+      {
+        "name": "Nick Foligno",
+        "player_id": 8473422,
+        "team": "MIN",
+        "position": "Forward"
+      },
+      {
+        "name": "Vladimir Tarasenko",
+        "player_id": 8475765,
+        "team": "MIN",
         "position": "Forward"
       },
       {
@@ -59,52 +271,38 @@
         "position": "Forward"
       },
       {
-        "name": "Jordan Staal",
-        "player_id": 8473533,
-        "team": "CAR",
-        "position": "Forward"
-      },
-      {
-        "name": "Evgeni Malkin",
-        "player_id": 8471215,
-        "team": "PIT",
-        "position": "Forward"
-      },
-      {
-        "name": "Taylor Hall",
-        "player_id": 8475791,
-        "team": "CAR",
-        "position": "Forward"
-      },
-      {
-        "name": "Fabian Zetterlund",
-        "player_id": 8480188,
+        "name": "Dylan Cozens",
+        "player_id": 8481528,
         "team": "OTT",
         "position": "Forward"
       },
       {
-        "name": "Tommy Novak",
-        "player_id": 8478438,
-        "team": "PIT",
+        "name": "Jordan Spence",
+        "player_id": 8481606,
+        "team": "OTT",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Nikolas Matinpalo",
+        "player_id": 8484321,
+        "team": "OTT",
+        "position": "Defensemen"
+      },
+      {
+        "name": "Thomas Chabot",
+        "player_id": 8478469,
+        "team": "OTT",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Warren Foegele",
+        "player_id": 8477998,
+        "team": "OTT",
         "position": "Forward"
       },
       {
-        "name": "Kevin Hayes",
-        "player_id": 8475763,
-        "team": "PIT",
-        "position": "Forward"
-      }
-    ],
-    "2": [
-      {
-        "name": "Jackson Blake",
-        "player_id": 8482809,
-        "team": "CAR",
-        "position": "Forward"
-      },
-      {
-        "name": "Matvei Michkov",
-        "player_id": 8484387,
+        "name": "Denver Barkey",
+        "player_id": 8484142,
         "team": "PHI",
         "position": "Forward"
       },
@@ -115,15 +313,21 @@
         "position": "Forward"
       },
       {
-        "name": "Justin Brazeau",
-        "player_id": 8479638,
-        "team": "PIT",
-        "position": "Forward"
+        "name": "Rasmus Ristolainen",
+        "player_id": 8477499,
+        "team": "PHI",
+        "position": "Defenseman"
       },
       {
-        "name": "Matt Duchene",
-        "player_id": 8475168,
-        "team": "DAL",
+        "name": "Travis Sanheim",
+        "player_id": 8477948,
+        "team": "PHI",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Bryan Rust",
+        "player_id": 8475810,
+        "team": "PIT",
         "position": "Forward"
       },
       {
@@ -133,77 +337,71 @@
         "position": "Defenseman"
       },
       {
-        "name": "Claude Giroux",
-        "player_id": 8473512,
-        "team": "OTT",
-        "position": "Forward"
-      },
-      {
-        "name": "Shayne Gostisbehere",
-        "player_id": 8476906,
-        "team": "CAR",
-        "position": "Defenseman"
-      },
-      {
-        "name": "Jordan Martinook",
-        "player_id": 8476921,
-        "team": "CAR",
-        "position": "Forward"
-      },
-      {
-        "name": "Thomas Chabot",
-        "player_id": 8478469,
-        "team": "OTT",
-        "position": "Defenseman"
-      },
-      {
-        "name": "Thomas Harley",
-        "player_id": 8481581,
-        "team": "DAL",
-        "position": "Defenseman"
-      },
-      {
-        "name": "Cam York",
-        "player_id": 8481546,
-        "team": "PHI",
-        "position": "Defenseman"
-      },
-      {
-        "name": "Jonas Brodin",
-        "player_id": 8476463,
-        "team": "MIN",
-        "position": "Defenseman"
-      },
-      {
-        "name": "Connor Clifton",
-        "player_id": 8477365,
+        "name": "Kevin Hayes",
+        "player_id": 8475763,
         "team": "PIT",
-        "position": "Defenseman"
+        "position": "Forward"
       },
       {
-        "name": "Jaccob Slavin",
-        "player_id": 8476958,
-        "team": "CAR",
-        "position": "Defenseman"
+        "name": "Rickard Rakell",
+        "player_id": 8476483,
+        "team": "PIT",
+        "position": "Forward"
+      },
+      {
+        "name": "Tommy Novak",
+        "player_id": 8478438,
+        "team": "PIT",
+        "position": "Forward"
       }
     ],
     "3": [
       {
-        "name": "Logan Stankoven",
-        "player_id": 8482702,
+        "name": "Jackson Blake",
+        "player_id": 8482809,
         "team": "CAR",
         "position": "Forward"
       },
       {
-        "name": "Brock Faber",
-        "player_id": 8482122,
-        "team": "MIN",
+        "name": "K'Andre Miller",
+        "player_id": 8480817,
+        "team": "CAR",
         "position": "Defenseman"
       },
       {
-        "name": "Bobby Brink",
-        "player_id": 8481553,
-        "team": "MIN",
+        "name": "Nicolas Deslauriers",
+        "player_id": 8475235,
+        "team": "CAR",
+        "position": "Forward"
+      },
+      {
+        "name": "Sebastian Aho",
+        "player_id": 8478427,
+        "team": "CAR",
+        "position": "Forward"
+      },
+      {
+        "name": "Taylor Hall",
+        "player_id": 8475791,
+        "team": "CAR",
+        "position": "Forward"
+      },
+      {
+        "name": "Esa Lindell",
+        "player_id": 8476902,
+        "team": "DAL",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Jason Robertson",
+        "player_id": 8480027,
+        "team": "DAL",
+        "position": "Forward"
+      },
+      {
+        "name": "Mikko Rantanen",
+        "player_id": 8478420,
+        "team": "DAL",
         "position": "Forward"
       },
       {
@@ -213,33 +411,21 @@
         "position": "Forward"
       },
       {
-        "name": "Travis Sanheim",
-        "player_id": 8477948,
-        "team": "PHI",
-        "position": "Defenseman"
-      },
-      {
-        "name": "Jordan Spence",
-        "player_id": 8481606,
-        "team": "OTT",
-        "position": "Defenseman"
-      },
-      {
-        "name": "William Carrier",
-        "player_id": 8477478,
-        "team": "CAR",
+        "name": "Bobby Brink",
+        "player_id": 8481553,
+        "team": "MIN",
         "position": "Forward"
       },
       {
-        "name": "Denver Barkey",
-        "player_id": 8484142,
-        "team": "PHI",
-        "position": "Forward"
+        "name": "Jonas Brodin",
+        "player_id": 8476463,
+        "team": "MIN",
+        "position": "Defenseman"
       },
       {
-        "name": "Oskar Bäck",
-        "player_id": 8480840,
-        "team": "DAL",
+        "name": "Mats Zuccarello",
+        "player_id": 8475692,
+        "team": "MIN",
         "position": "Forward"
       },
       {
@@ -249,15 +435,87 @@
         "position": "Forward"
       },
       {
-        "name": "Colin Blackwell",
-        "player_id": 8476278,
-        "team": "DAL",
+        "name": "Zach Bogosian",
+        "player_id": 8474567,
+        "team": "MIN",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Claude Giroux",
+        "player_id": 8473512,
+        "team": "OTT",
         "position": "Forward"
       },
       {
-        "name": "Nick Seeler",
-        "player_id": 8476372,
+        "name": "Fabian Zetterlund",
+        "player_id": 8480188,
+        "team": "OTT",
+        "position": "Forward"
+      },
+      {
+        "name": "Michael Amadio",
+        "player_id": 8478020,
+        "team": "OTT",
+        "position": "Forward"
+      },
+      {
+        "name": "Ridly Greig",
+        "player_id": 8482092,
+        "team": "OTT",
+        "position": "Forward"
+      },
+      {
+        "name": "Tim Stützle",
+        "player_id": 8482116,
+        "team": "OTT",
+        "position": "Forward"
+      },
+      {
+        "name": "Cam York",
+        "player_id": 8481546,
         "team": "PHI",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Matvei Michkov",
+        "player_id": 8484387,
+        "team": "PHI",
+        "position": "Forward"
+      },
+      {
+        "name": "Noah Juulsen",
+        "player_id": 8478454,
+        "team": "PHI",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Sean Couturier",
+        "player_id": 8476461,
+        "team": "PHI",
+        "position": "Forward"
+      },
+      {
+        "name": "Trevor Zegras",
+        "player_id": 8481533,
+        "team": "PHI",
+        "position": "Forward"
+      },
+      {
+        "name": "Connor Clifton",
+        "player_id": 8477365,
+        "team": "PIT",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Evgeni Malkin",
+        "player_id": 8471215,
+        "team": "PIT",
+        "position": "Forward"
+      },
+      {
+        "name": "Kris Letang",
+        "player_id": 8471724,
+        "team": "PIT",
         "position": "Defenseman"
       },
       {
@@ -267,380 +525,537 @@
         "position": "Defenseman"
       },
       {
-        "name": "Zach Bogosian",
-        "player_id": 8474567,
-        "team": "MIN",
-        "position": "Defenseman"
-      },
-      {
-        "name": "Nikolas Matinpalo",
-        "player_id": 8484321,
-        "team": "OTT",
-        "position": "Defensemen"
+        "name": "Yegor Chinakhov",
+        "player_id": 8482475,
+        "team": "PIT",
+        "position": "Forward"
       }
     ]
   },
   "all_players": [
     {
-      "name": "Sidney Crosby",
-      "player_id": 8471675,
-      "team": "PIT",
-      "position": "Forward",
-      "goals": 29,
-      "shots": 160
-    },
-    {
-      "name": "Owen Tippett",
-      "player_id": 8480015,
-      "team": "PHI",
-      "position": "Forward",
-      "goals": 28,
-      "shots": 220
-    },
-    {
-      "name": "Sebastian Aho",
-      "player_id": 8478427,
+      "name": "Andrei Svechnikov",
+      "player_id": 8480830,
       "team": "CAR",
-      "position": "Forward",
-      "goals": 27,
-      "shots": 195
-    },
-    {
-      "name": "Travis Konecny",
-      "player_id": 8478439,
-      "team": "PHI",
-      "position": "Forward",
-      "goals": 27,
-      "shots": 168
-    },
-    {
-      "name": "Nikolaj Ehlers",
-      "player_id": 8477940,
-      "team": "CAR",
-      "position": "Forward",
-      "goals": 26,
-      "shots": 207
-    },
-    {
-      "name": "Trevor Zegras",
-      "player_id": 8481533,
-      "team": "PHI",
-      "position": "Forward",
-      "goals": 26,
-      "shots": 167
-    },
-    {
-      "name": "Ryan Hartman",
-      "player_id": 8477451,
-      "team": "MIN",
-      "position": "Forward",
-      "goals": 23,
-      "shots": 167
-    },
-    {
-      "name": "Mikko Rantanen",
-      "player_id": 8478420,
-      "team": "DAL",
-      "position": "Forward",
-      "goals": 22,
-      "shots": 139
-    },
-    {
-      "name": "Brady Tkachuk",
-      "player_id": 8480801,
-      "team": "OTT",
-      "position": "Forward",
-      "goals": 22,
-      "shots": 221
-    },
-    {
-      "name": "Jordan Staal",
-      "player_id": 8473533,
-      "team": "CAR",
-      "position": "Forward",
-      "goals": 20,
-      "shots": 107
-    },
-    {
-      "name": "Evgeni Malkin",
-      "player_id": 8471215,
-      "team": "PIT",
-      "position": "Forward",
-      "goals": 19,
-      "shots": 148
-    },
-    {
-      "name": "Taylor Hall",
-      "player_id": 8475791,
-      "team": "CAR",
-      "position": "Forward",
-      "goals": 18,
-      "shots": 137
-    },
-    {
-      "name": "Fabian Zetterlund",
-      "player_id": 8480188,
-      "team": "OTT",
-      "position": "Forward",
-      "goals": 17,
-      "shots": 132
-    },
-    {
-      "name": "Tommy Novak",
-      "player_id": 8478438,
-      "team": "PIT",
-      "position": "Forward",
-      "goals": 16,
-      "shots": 130
-    },
-    {
-      "name": "Kevin Hayes",
-      "player_id": 8475763,
-      "team": "PIT",
-      "position": "Forward",
-      "goals": 4,
-      "shots": 45
-    },
-    {
-      "name": "Jackson Blake",
-      "player_id": 8482809,
-      "team": "CAR",
-      "position": "Forward",
-      "goals": 22,
-      "shots": 174
-    },
-    {
-      "name": "Matvei Michkov",
-      "player_id": 8484387,
-      "team": "PHI",
-      "position": "Forward",
-      "goals": 20,
-      "shots": 163
-    },
-    {
-      "name": "Noah Cates",
-      "player_id": 8480220,
-      "team": "PHI",
-      "position": "Forward",
-      "goals": 18,
-      "shots": 132
-    },
-    {
-      "name": "Justin Brazeau",
-      "player_id": 8479638,
-      "team": "PIT",
-      "position": "Forward",
-      "goals": 17,
-      "shots": 104
-    },
-    {
-      "name": "Matt Duchene",
-      "player_id": 8475168,
-      "team": "DAL",
-      "position": "Forward",
-      "goals": 16,
-      "shots": 89
-    },
-    {
-      "name": "Erik Karlsson",
-      "player_id": 8474578,
-      "team": "PIT",
-      "position": "Defenseman",
-      "goals": 15,
-      "shots": 176
-    },
-    {
-      "name": "Claude Giroux",
-      "player_id": 8473512,
-      "team": "OTT",
-      "position": "Forward",
-      "goals": 14,
-      "shots": 138
-    },
-    {
-      "name": "Shayne Gostisbehere",
-      "player_id": 8476906,
-      "team": "CAR",
-      "position": "Defenseman",
-      "goals": 13,
-      "shots": 116
-    },
-    {
-      "name": "Jordan Martinook",
-      "player_id": 8476921,
-      "team": "CAR",
-      "position": "Forward",
-      "goals": 12,
-      "shots": 109
-    },
-    {
-      "name": "Thomas Chabot",
-      "player_id": 8478469,
-      "team": "OTT",
-      "position": "Defenseman",
-      "goals": 7,
-      "shots": 99
-    },
-    {
-      "name": "Thomas Harley",
-      "player_id": 8481581,
-      "team": "DAL",
-      "position": "Defenseman",
-      "goals": 6,
-      "shots": 113
-    },
-    {
-      "name": "Cam York",
-      "player_id": 8481546,
-      "team": "PHI",
-      "position": "Defenseman",
-      "goals": 4,
-      "shots": 89
-    },
-    {
-      "name": "Jonas Brodin",
-      "player_id": 8476463,
-      "team": "MIN",
-      "position": "Defenseman",
-      "goals": 4,
-      "shots": 76
-    },
-    {
-      "name": "Connor Clifton",
-      "player_id": 8477365,
-      "team": "PIT",
-      "position": "Defenseman",
-      "goals": 2,
-      "shots": 35
+      "position": "Forward"
     },
     {
       "name": "Jaccob Slavin",
       "player_id": 8476958,
       "team": "CAR",
-      "position": "Defenseman",
-      "goals": 1,
-      "shots": 63
+      "position": "Defenseman"
+    },
+    {
+      "name": "Jackson Blake",
+      "player_id": 8482809,
+      "team": "CAR",
+      "position": "Forward"
+    },
+    {
+      "name": "Jordan Martinook",
+      "player_id": 8476921,
+      "team": "CAR",
+      "position": "Forward"
+    },
+    {
+      "name": "Jordan Staal",
+      "player_id": 8473533,
+      "team": "CAR",
+      "position": "Forward"
+    },
+    {
+      "name": "K'Andre Miller",
+      "player_id": 8480817,
+      "team": "CAR",
+      "position": "Defenseman"
     },
     {
       "name": "Logan Stankoven",
       "player_id": 8482702,
       "team": "CAR",
-      "position": "Forward",
-      "goals": 21,
-      "shots": 166
+      "position": "Forward"
     },
     {
-      "name": "Brock Faber",
-      "player_id": 8482122,
-      "team": "MIN",
-      "position": "Defenseman",
-      "goals": 15,
-      "shots": 173
+      "name": "Mike Reilly",
+      "player_id": 8476422,
+      "team": "CAR",
+      "position": "Defenseman"
     },
     {
-      "name": "Bobby Brink",
-      "player_id": 8481553,
-      "team": "MIN",
-      "position": "Forward",
-      "goals": 15,
-      "shots": 104
+      "name": "Nicolas Deslauriers",
+      "player_id": 8475235,
+      "team": "CAR",
+      "position": "Forward"
     },
     {
-      "name": "Sam Steel",
-      "player_id": 8479351,
-      "team": "DAL",
-      "position": "Forward",
-      "goals": 12,
-      "shots": 82
+      "name": "Nikolaj Ehlers",
+      "player_id": 8477940,
+      "team": "CAR",
+      "position": "Forward"
     },
     {
-      "name": "Travis Sanheim",
-      "player_id": 8477948,
-      "team": "PHI",
-      "position": "Defenseman",
-      "goals": 11,
-      "shots": 95
+      "name": "Sean Walker",
+      "player_id": 8480336,
+      "team": "CAR",
+      "position": "Defenseman"
     },
     {
-      "name": "Jordan Spence",
-      "player_id": 8481606,
-      "team": "OTT",
-      "position": "Defenseman",
-      "goals": 7,
-      "shots": 108
+      "name": "Sebastian Aho",
+      "player_id": 8478427,
+      "team": "CAR",
+      "position": "Forward"
+    },
+    {
+      "name": "Seth Jarvis",
+      "player_id": 8482093,
+      "team": "CAR",
+      "position": "Forward"
+    },
+    {
+      "name": "Shayne Gostisbehere",
+      "player_id": 8476906,
+      "team": "CAR",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Taylor Hall",
+      "player_id": 8475791,
+      "team": "CAR",
+      "position": "Forward"
     },
     {
       "name": "William Carrier",
       "player_id": 8477478,
       "team": "CAR",
-      "position": "Forward",
-      "goals": 7,
-      "shots": 80
-    },
-    {
-      "name": "Denver Barkey",
-      "player_id": 8484142,
-      "team": "PHI",
-      "position": "Forward",
-      "goals": 5,
-      "shots": 43
-    },
-    {
-      "name": "Oskar Bäck",
-      "player_id": 8480840,
-      "team": "DAL",
-      "position": "Forward",
-      "goals": 5,
-      "shots": 42
-    },
-    {
-      "name": "Nico Sturm",
-      "player_id": 8481477,
-      "team": "MIN",
-      "position": "Forward",
-      "goals": 5,
-      "shots": 37
+      "position": "Forward"
     },
     {
       "name": "Colin Blackwell",
       "player_id": 8476278,
       "team": "DAL",
-      "position": "Forward",
-      "goals": 4,
-      "shots": 61
+      "position": "Forward"
     },
     {
-      "name": "Nick Seeler",
-      "player_id": 8476372,
-      "team": "PHI",
-      "position": "Defenseman",
-      "goals": 4,
-      "shots": 94
+      "name": "Esa Lindell",
+      "player_id": 8476902,
+      "team": "DAL",
+      "position": "Defenseman"
     },
     {
-      "name": "Samuel Girard",
-      "player_id": 8479398,
-      "team": "PIT",
-      "position": "Defenseman",
-      "goals": 3,
-      "shots": 41
+      "name": "Ilya Lyubushkin",
+      "player_id": 8480950,
+      "team": "DAL",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Jamie Benn",
+      "player_id": 8473994,
+      "team": "DAL",
+      "position": "Forward"
+    },
+    {
+      "name": "Jason Robertson",
+      "player_id": 8480027,
+      "team": "DAL",
+      "position": "Forward"
+    },
+    {
+      "name": "Matt Duchene",
+      "player_id": 8475168,
+      "team": "DAL",
+      "position": "Forward"
+    },
+    {
+      "name": "Mavrik Bourque",
+      "player_id": 8482145,
+      "team": "DAL",
+      "position": "Forward"
+    },
+    {
+      "name": "Mikko Rantanen",
+      "player_id": 8478420,
+      "team": "DAL",
+      "position": "Forward"
+    },
+    {
+      "name": "Oskar Bäck",
+      "player_id": 8480840,
+      "team": "DAL",
+      "position": "Forward"
+    },
+    {
+      "name": "Radek Faksa",
+      "player_id": 8476889,
+      "team": "DAL",
+      "position": "Forward"
+    },
+    {
+      "name": "Sam Steel",
+      "player_id": 8479351,
+      "team": "DAL",
+      "position": "Forward"
+    },
+    {
+      "name": "Thomas Harley",
+      "player_id": 8481581,
+      "team": "DAL",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Wyatt Johnston",
+      "player_id": 8482740,
+      "team": "DAL",
+      "position": "Forward"
+    },
+    {
+      "name": "Bobby Brink",
+      "player_id": 8481553,
+      "team": "MIN",
+      "position": "Forward"
+    },
+    {
+      "name": "Brock Faber",
+      "player_id": 8482122,
+      "team": "MIN",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Joel Eriksson Ek",
+      "player_id": 8478493,
+      "team": "MIN",
+      "position": "Forward"
+    },
+    {
+      "name": "Jonas Brodin",
+      "player_id": 8476463,
+      "team": "MIN",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Marcus Foligno",
+      "player_id": 8475220,
+      "team": "MIN",
+      "position": "Forward"
+    },
+    {
+      "name": "Marcus Johansson",
+      "player_id": 8475149,
+      "team": "MIN",
+      "position": "Forward"
+    },
+    {
+      "name": "Mats Zuccarello",
+      "player_id": 8475692,
+      "team": "MIN",
+      "position": "Forward"
+    },
+    {
+      "name": "Michael McCarron",
+      "player_id": 8477446,
+      "team": "MIN",
+      "position": "Forward"
+    },
+    {
+      "name": "Nick Foligno",
+      "player_id": 8473422,
+      "team": "MIN",
+      "position": "Forward"
+    },
+    {
+      "name": "Nico Sturm",
+      "player_id": 8481477,
+      "team": "MIN",
+      "position": "Forward"
+    },
+    {
+      "name": "Ryan Hartman",
+      "player_id": 8477451,
+      "team": "MIN",
+      "position": "Forward"
+    },
+    {
+      "name": "Vladimir Tarasenko",
+      "player_id": 8475765,
+      "team": "MIN",
+      "position": "Forward"
     },
     {
       "name": "Zach Bogosian",
       "player_id": 8474567,
       "team": "MIN",
-      "position": "Defenseman",
-      "goals": 2,
-      "shots": 30
+      "position": "Defenseman"
+    },
+    {
+      "name": "Artem Zub",
+      "player_id": 8482245,
+      "team": "OTT",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Brady Tkachuk",
+      "player_id": 8480801,
+      "team": "OTT",
+      "position": "Forward"
+    },
+    {
+      "name": "Claude Giroux",
+      "player_id": 8473512,
+      "team": "OTT",
+      "position": "Forward"
+    },
+    {
+      "name": "Drake Batherson",
+      "player_id": 8480208,
+      "team": "OTT",
+      "position": "Forward"
+    },
+    {
+      "name": "Dylan Cozens",
+      "player_id": 8481528,
+      "team": "OTT",
+      "position": "Forward"
+    },
+    {
+      "name": "Fabian Zetterlund",
+      "player_id": 8480188,
+      "team": "OTT",
+      "position": "Forward"
+    },
+    {
+      "name": "Jake Sanderson",
+      "player_id": 8482105,
+      "team": "OTT",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Jordan Spence",
+      "player_id": 8481606,
+      "team": "OTT",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Michael Amadio",
+      "player_id": 8478020,
+      "team": "OTT",
+      "position": "Forward"
+    },
+    {
+      "name": "Nick Cousins",
+      "player_id": 8476393,
+      "team": "OTT",
+      "position": "Forward"
     },
     {
       "name": "Nikolas Matinpalo",
       "player_id": 8484321,
       "team": "OTT",
-      "position": "Defensemen",
-      "goals": 0,
-      "shots": 37
+      "position": "Defensemen"
+    },
+    {
+      "name": "Ridly Greig",
+      "player_id": 8482092,
+      "team": "OTT",
+      "position": "Forward"
+    },
+    {
+      "name": "Shane Pinto",
+      "player_id": 8481596,
+      "team": "OTT",
+      "position": "Forward"
+    },
+    {
+      "name": "Thomas Chabot",
+      "player_id": 8478469,
+      "team": "OTT",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Tim Stützle",
+      "player_id": 8482116,
+      "team": "OTT",
+      "position": "Forward"
+    },
+    {
+      "name": "Tyler Kleven",
+      "player_id": 8482095,
+      "team": "OTT",
+      "position": "Defensemen"
+    },
+    {
+      "name": "Warren Foegele",
+      "player_id": 8477998,
+      "team": "OTT",
+      "position": "Forward"
+    },
+    {
+      "name": "Cam York",
+      "player_id": 8481546,
+      "team": "PHI",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Christian Dvorak",
+      "player_id": 8477989,
+      "team": "PHI",
+      "position": "Forward"
+    },
+    {
+      "name": "Denver Barkey",
+      "player_id": 8484142,
+      "team": "PHI",
+      "position": "Forward"
+    },
+    {
+      "name": "Matvei Michkov",
+      "player_id": 8484387,
+      "team": "PHI",
+      "position": "Forward"
+    },
+    {
+      "name": "Nick Seeler",
+      "player_id": 8476372,
+      "team": "PHI",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Noah Cates",
+      "player_id": 8480220,
+      "team": "PHI",
+      "position": "Forward"
+    },
+    {
+      "name": "Noah Juulsen",
+      "player_id": 8478454,
+      "team": "PHI",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Owen Tippett",
+      "player_id": 8480015,
+      "team": "PHI",
+      "position": "Forward"
+    },
+    {
+      "name": "Rasmus Ristolainen",
+      "player_id": 8477499,
+      "team": "PHI",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Sean Couturier",
+      "player_id": 8476461,
+      "team": "PHI",
+      "position": "Forward"
+    },
+    {
+      "name": "Travis Konecny",
+      "player_id": 8478439,
+      "team": "PHI",
+      "position": "Forward"
+    },
+    {
+      "name": "Travis Sanheim",
+      "player_id": 8477948,
+      "team": "PHI",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Trevor Zegras",
+      "player_id": 8481533,
+      "team": "PHI",
+      "position": "Forward"
+    },
+    {
+      "name": "Anthony Mantha",
+      "player_id": 8477511,
+      "team": "PIT",
+      "position": "Forward"
+    },
+    {
+      "name": "Bryan Rust",
+      "player_id": 8475810,
+      "team": "PIT",
+      "position": "Forward"
+    },
+    {
+      "name": "Connor Clifton",
+      "player_id": 8477365,
+      "team": "PIT",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Connor Dewar",
+      "player_id": 8480980,
+      "team": "PIT",
+      "position": "Forward"
+    },
+    {
+      "name": "Erik Karlsson",
+      "player_id": 8474578,
+      "team": "PIT",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Evgeni Malkin",
+      "player_id": 8471215,
+      "team": "PIT",
+      "position": "Forward"
+    },
+    {
+      "name": "Justin Brazeau",
+      "player_id": 8479638,
+      "team": "PIT",
+      "position": "Forward"
+    },
+    {
+      "name": "Kevin Hayes",
+      "player_id": 8475763,
+      "team": "PIT",
+      "position": "Forward"
+    },
+    {
+      "name": "Kris Letang",
+      "player_id": 8471724,
+      "team": "PIT",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Noel Acciari",
+      "player_id": 8478569,
+      "team": "PIT",
+      "position": "Forward"
+    },
+    {
+      "name": "Rickard Rakell",
+      "player_id": 8476483,
+      "team": "PIT",
+      "position": "Forward"
+    },
+    {
+      "name": "Samuel Girard",
+      "player_id": 8479398,
+      "team": "PIT",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Sidney Crosby",
+      "player_id": 8471675,
+      "team": "PIT",
+      "position": "Forward"
+    },
+    {
+      "name": "Tommy Novak",
+      "player_id": 8478438,
+      "team": "PIT",
+      "position": "Forward"
+    },
+    {
+      "name": "Yegor Chinakhov",
+      "player_id": 8482475,
+      "team": "PIT",
+      "position": "Forward"
     }
   ],
-  "scraped_at": "2026-04-25T14:54:09.994345"
+  "scraped_at": "2026-04-25T15:39:30.764961",
+  "note": "Scraped from cache — source was unavailable"
 }
