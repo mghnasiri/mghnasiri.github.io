@@ -119,8 +119,10 @@ class NeuralV2(nn.Module):
 # NHL API (subset needed for tonight's matchups)
 # =============================================================================
 def api_get(url, timeout=15):
+    """Safe API GET with exponential-backoff retry (1s, 2s)."""
     import requests as _requests
-    for _ in range(3):
+    import time as _time
+    for attempt in range(3):
         try:
             r = _requests.get(url, timeout=timeout)
             if r.status_code == 200:
@@ -129,6 +131,8 @@ def api_get(url, timeout=15):
                 return None
         except _requests.RequestException:
             pass
+        if attempt < 2:
+            _time.sleep(2 ** attempt)
     return None
 
 

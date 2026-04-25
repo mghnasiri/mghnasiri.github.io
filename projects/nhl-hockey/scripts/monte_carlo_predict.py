@@ -68,7 +68,9 @@ print("=" * 70)
 # NHL API HELPERS
 # =============================================================================
 def api_get(url, timeout=15):
-    """Safe API GET request with retry"""
+    """Safe API GET with exponential-backoff retry (1s, 2s).
+    Without backoff, three immediate retries hit the same throttled
+    state and all fail in <1s, returning None silently."""
     for attempt in range(3):
         try:
             resp = requests.get(url, timeout=timeout)
@@ -77,8 +79,9 @@ def api_get(url, timeout=15):
             if resp.status_code == 404:
                 return None
         except requests.RequestException:
-            if attempt == 2:
-                return None
+            pass
+        if attempt < 2:
+            time.sleep(2 ** attempt)
     return None
 
 

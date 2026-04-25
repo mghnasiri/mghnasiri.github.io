@@ -55,7 +55,10 @@ os.makedirs(Config.XG_TRAINING_DIR, exist_ok=True)
 # API HELPERS
 # =============================================================================
 def api_get(url, timeout=15):
-    """Safe API GET with retry and rate limiting"""
+    """Safe API GET with exponential-backoff retry (1s, 2s).
+    Without backoff between retries, all 3 attempts hit the same
+    throttled state and fail in <1s. Backs off on 429, 5xx, and
+    network exceptions; returns immediately on 200 or 404."""
     for attempt in range(3):
         try:
             resp = requests.get(url, timeout=timeout)
@@ -63,13 +66,10 @@ def api_get(url, timeout=15):
                 return resp.json()
             if resp.status_code == 404:
                 return None
-            if resp.status_code == 429:
-                time.sleep(2 * (attempt + 1))
-                continue
         except requests.RequestException:
-            if attempt == 2:
-                return None
-            time.sleep(1)
+            pass
+        if attempt < 2:
+            time.sleep(2 ** attempt)
     return None
 
 

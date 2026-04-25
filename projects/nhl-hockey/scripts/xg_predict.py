@@ -138,7 +138,16 @@ print("=" * 70)
 # NHL API HELPERS (reused from monte_carlo_predict.py)
 # =============================================================================
 def api_get(url, timeout=15):
-    """Safe API GET request with retry"""
+    """Safe API GET request with exponential-backoff retry.
+
+    The retry loop *must* sleep between attempts. Without backoff, three
+    immediate retries hit the same throttled state and all fail in <1s,
+    returning None silently. That bug caused 4 of 6 teams to silently
+    return 0-player rosters during today's daily run despite the
+    per-team sleep already in the caller — the rate limit had to be
+    waited *out*, not just spaced *between* unrelated calls.
+    Backoff: 1s, 2s, 4s. 200 returns immediately; 404 is permanent;
+    everything else (429/500/timeout/connection error) backs off."""
     for attempt in range(3):
         try:
             resp = requests.get(url, timeout=timeout)
@@ -147,8 +156,9 @@ def api_get(url, timeout=15):
             if resp.status_code == 404:
                 return None
         except requests.RequestException:
-            if attempt == 2:
-                return None
+            pass
+        if attempt < 2:
+            time.sleep(2 ** attempt)  # 1s then 2s
     return None
 
 
