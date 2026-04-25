@@ -474,10 +474,14 @@
             font-weight: 500;
         }
 
-        /* Comparison Section */
+        /* Comparison Section.
+           auto-fit minmax: cards size themselves to fit content + min, then
+           wrap to a new row when the container is narrower than N * min. This
+           handles 5/6/7/8/N models without edits and avoids the right-edge
+           clipping that happened with repeat(N, 1fr). */
         .comparison-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 1rem;
             margin-top: 1.5rem;
         }
@@ -1539,7 +1543,9 @@
                 if (available.length >= 2) {
                     var grid = document.createElement('div');
                     grid.className = 'comparison-grid';
-                    grid.style.gridTemplateColumns = 'repeat(' + available.length + ', 1fr)';
+                    // Don't override grid-template-columns — let the CSS
+                    // auto-fit/minmax rule wrap cards to multiple rows when
+                    // there are too many to fit one row.
 
                     available.forEach(function(m) {
                         var stats = allStats[m.key];
@@ -1781,11 +1787,41 @@
         // CONSENSUS PICKS — fetch every model, count top-10 appearances per
         // player, render the players that the most models agree on.
         // =====================================================================
+        // Per-model weight for consensus. Better-performing models get a
+        // proportionally larger vote so consensus reflects "what the good
+        // models think" rather than "what the count says."
+        //   - deprecated   -> 0   (don't count rotten output)
+        //   - new          -> 15  (neutral default until tracked >= 7 days)
+        //   - active/champ -> trailing_30_hit_rate, clamped >= 1
+        // 15 is roughly the "warning vs active" boundary in update_model_status.py
+        // so a brand-new model votes about as loudly as a borderline-active one.
+        function getModelWeight(modelKey) {
+            var meta = MODEL_STATUS[modelKey];
+            if (!meta) return 15;
+            if (meta.status === 'deprecated') return 0;
+            if (meta.status === 'new' || meta.trailing_30_hit_rate == null) return 15;
+            return Math.max(1, meta.trailing_30_hit_rate);
+        }
+
         async function loadConsensus() {
             var grid = document.getElementById('consensus-grid');
             var subtitle = document.getElementById('consensus-subtitle');
             var modelKeys = Object.keys(MODELS);
             var cb = '?v=' + Date.now();
+
+            // Make sure MODEL_STATUS is populated before we compute weights —
+            // loadStats() and loadConsensus() race at init time. If the file
+            // isn't there or the fetch failed, MODEL_STATUS stays empty and
+            // every model gets the neutral weight of 15.
+            if (!MODEL_STATUS || Object.keys(MODEL_STATUS).length === 0) {
+                try {
+                    var statusResp = await fetch(MODEL_STATUS_PATH + cb);
+                    if (statusResp.ok) {
+                        var statusData = await statusResp.json();
+                        MODEL_STATUS = statusData.models || {};
+                    }
+                } catch (e) {}
+            }
 
             // Fetch all 8 models in parallel; tolerate failures
             var responses = await Promise.all(modelKeys.map(function(k) {
@@ -1824,6 +1860,7 @@
                         key: mk,
                         rank: idx + 1,
                         prob: p.goal_probability || 0,
+                        weight: getModelWeight(mk),
                     });
                 });
             }
@@ -1837,22 +1874,30 @@
                 return;
             }
 
-            // Compute aggregate metrics + sort
+            // Compute aggregate metrics + sort.
+            // weighted_score is the sum of each picking model's weight (its
+            // trailing 30-day hit rate). A player picked by champ (28%) +
+            // active (22%) gets 50; a player picked by 3 warning models at
+            // 12%, 10%, 9% gets 31. So broad weak consensus loses to a
+            // smaller strong consensus — exactly the intent.
             var ranked = Object.values(players).map(function(p) {
                 p.consensus_count = p.models.length;
                 p.avg_prob = p.models.reduce(function(s, m) { return s + m.prob; }, 0) / p.models.length;
                 p.avg_rank = p.models.reduce(function(s, m) { return s + m.rank; }, 0) / p.models.length;
+                p.weighted_score = p.models.reduce(function(s, m) { return s + m.weight; }, 0);
                 return p;
             }).sort(function(a, b) {
-                if (b.consensus_count !== a.consensus_count) return b.consensus_count - a.consensus_count;
+                if (b.weighted_score !== a.weighted_score) return b.weighted_score - a.weighted_score;
                 return b.avg_prob - a.avg_prob;
             });
 
             var top = ranked.slice(0, 8);
 
+            // Subtitle reflects what the user is actually seeing — weighted
+            // by 30-day hit rate so champions count more than newcomers.
             subtitle.textContent =
-                modelsAvailable + ' models compared · ' +
-                top.length + ' players ranked · ' +
+                modelsAvailable + ' models · weighted by 30d hit rate · ' +
+                top.length + ' players · ' +
                 (sharedDate ? sharedDate : '');
 
             grid.textContent = '';
@@ -1912,11 +1957,25 @@
                 strong.textContent = p.consensus_count + ' / ' + modelsAvailable;
                 cm.appendChild(strong);
                 cm.appendChild(document.createTextNode(
-                    ' models · avg rank #' + p.avg_rank.toFixed(1)
+                    ' models · score ' + Math.round(p.weighted_score)
                 ));
 
+                // Dots — one per picking model, in descending weight order so
+                // a strong-model pick sits leftmost. Gold = lit (this model
+                // picked the player); dim = not picked.
+                var pickedKeys = p.models
+                    .slice()
+                    .sort(function(a, b) { return b.weight - a.weight; })
+                    .map(function(m) { return m.key; });
+                var pickedSet = {};
+                pickedKeys.forEach(function(k) { pickedSet[k] = true; });
                 var dots = document.createElement('span');
                 dots.className = 'consensus-dots';
+                dots.title = 'Picked by: ' + p.models
+                    .map(function(m) {
+                        var lbl = (MODELS[m.key] && MODELS[m.key].name) || m.key;
+                        return lbl + ' (rank ' + m.rank + ', wt ' + Math.round(m.weight) + ')';
+                    }).join('; ');
                 for (var d = 0; d < modelsAvailable; d++) {
                     var dot = document.createElement('span');
                     dot.className = 'consensus-dot' + (d < p.consensus_count ? ' lit' : '');
