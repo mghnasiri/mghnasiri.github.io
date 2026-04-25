@@ -585,49 +585,114 @@
             letter-spacing: 0.5px;
         }
 
-        .consensus-grid {
+        /* One column per Tim Hortons group — matches the structure of the
+           Tim Hortons Challenge Picks section directly below. */
+        .consensus-groups {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
         }
 
-        @media (max-width: 992px) {
-            .consensus-grid { grid-template-columns: repeat(2, 1fr); }
+        @media (max-width: 768px) {
+            .consensus-groups { grid-template-columns: 1fr; }
         }
-        @media (max-width: 576px) {
-            .consensus-grid { grid-template-columns: 1fr; }
+
+        .consensus-group-col {
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+        }
+
+        .consensus-group-header {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            color: var(--gold);
+            text-align: center;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 0.2rem;
+        }
+
+        .consensus-empty-group {
+            background: var(--midnight);
+            border: 1px dashed rgba(197, 160, 89, 0.15);
+            padding: 1rem;
+            color: var(--slate);
+            text-align: center;
+            font-size: 0.8rem;
+            font-style: italic;
         }
 
         .consensus-card {
             background: var(--midnight);
             border: 1px solid rgba(197, 160, 89, 0.15);
-            padding: 1.25rem 1rem 1rem;
+            padding: 1rem 0.9rem 0.85rem;
             position: relative;
             display: flex;
             flex-direction: column;
-            gap: 0.6rem;
+            gap: 0.5rem;
             transition: border-color 0.15s ease, transform 0.15s ease;
         }
 
         .consensus-card:hover {
             border-color: var(--gold);
-            transform: translateY(-2px);
+            transform: translateY(-1px);
         }
 
+        /* "TOP PICK" treatment — first card in each group, visually dominant */
         .consensus-card.top-pick {
             border-color: var(--gold);
             box-shadow: 0 0 14px rgba(197, 160, 89, 0.18);
+            padding: 1.25rem 1rem 1rem;
+        }
+
+        .consensus-card.top-pick .player-name {
+            font-size: 1.05rem;
+            font-weight: 600;
+        }
+
+        .consensus-card.top-pick::before {
+            content: '★ TOP PICK';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gold);
+            color: var(--midnight);
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            padding: 2px 10px;
+            white-space: nowrap;
+        }
+
+        /* Compact "alternate" cards — same data, smaller treatment */
+        .consensus-card.alternate {
+            padding: 0.7rem 0.9rem;
+            gap: 0.35rem;
+        }
+
+        .consensus-card.alternate .player-name {
+            font-size: 0.85rem;
+        }
+
+        .consensus-card.alternate .matchup {
+            font-size: 0.65rem;
         }
 
         .consensus-rank {
             position: absolute;
-            top: 0.5rem;
+            top: 0.45rem;
             right: 0.7rem;
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 600;
             color: rgba(197, 160, 89, 0.45);
             line-height: 1;
+        }
+
+        .consensus-card.alternate .consensus-rank {
+            font-size: 1rem;
         }
 
         .consensus-card .player-row {
@@ -899,16 +964,16 @@
         </div>
     </header>
 
-    <!-- Consensus Picks — answers "who do I bet on tonight?" by aggregating
-         all 8 models. A player who 6 of 8 models rank in their top 10 is
-         a stronger pick than one a single model loves but the rest ignore. -->
+    <!-- Consensus Picks — organized by Tim Hortons group so each column maps
+         to one of the three players the user actually has to choose tonight.
+         Weighted across all models by 30-day hit rate. -->
     <section class="consensus-section" id="consensus-section">
         <div class="container">
             <h2 class="section-title">Today's <span>Consensus Picks</span></h2>
             <p class="section-subtitle" id="consensus-subtitle">
-                Aggregated across all models — players ranked by how many models pick them
+                Best pick per group, weighted across all models
             </p>
-            <div class="consensus-grid" id="consensus-grid">
+            <div class="consensus-groups" id="consensus-groups">
                 <div class="loading">
                     <div class="loading-spinner"></div>
                     Loading consensus...
@@ -1804,7 +1869,7 @@
         }
 
         async function loadConsensus() {
-            var grid = document.getElementById('consensus-grid');
+            var grid = document.getElementById('consensus-groups');
             var subtitle = document.getElementById('consensus-subtitle');
             var modelKeys = Object.keys(MODELS);
             var cb = '?v=' + Date.now();
@@ -1853,8 +1918,14 @@
                             matchup: p.matchup,
                             season_goals: p.season_goals,
                             last5_goals: p.last5_goals,
+                            tims_group: p.tims_group || null,
                             models: [],
                         };
+                    }
+                    // tims_group occasionally only appears in some models'
+                    // outputs; backfill if we hit a populated value later.
+                    if (!players[pid].tims_group && p.tims_group) {
+                        players[pid].tims_group = p.tims_group;
                     }
                     players[pid].models.push({
                         key: mk,
@@ -1891,101 +1962,129 @@
                 return b.avg_prob - a.avg_prob;
             });
 
-            var top = ranked.slice(0, 8);
+            // Group ranked players by their Tim Hortons group. Each column
+            // in the layout = one of the three groups the user must pick from.
+            var byGroup = {};
+            ranked.forEach(function(p) {
+                var g = p.tims_group || 'unknown';
+                if (!byGroup[g]) byGroup[g] = [];
+                byGroup[g].push(p);
+            });
+            var groupKeys = Object.keys(byGroup).sort();
+            // Move "unknown" to the end if present
+            groupKeys = groupKeys.filter(function(k) { return k !== 'unknown'; })
+                .concat(groupKeys.filter(function(k) { return k === 'unknown'; }));
 
-            // Subtitle reflects what the user is actually seeing — weighted
-            // by 30-day hit rate so champions count more than newcomers.
             subtitle.textContent =
                 modelsAvailable + ' models · weighted by 30d hit rate · ' +
-                top.length + ' players · ' +
+                groupKeys.length + ' groups · ' +
                 (sharedDate ? sharedDate : '');
 
             grid.textContent = '';
-            top.forEach(function(p, i) {
-                var card = document.createElement('div');
-                card.className = 'consensus-card';
-                if (i < 3) card.classList.add('top-pick');
 
-                var rank = document.createElement('span');
-                rank.className = 'consensus-rank';
-                rank.textContent = (i + 1);
-                card.appendChild(rank);
+            // Render up to 3 picks per group: 1 highlighted + 2 alternates
+            var PICKS_PER_GROUP = 3;
+            groupKeys.forEach(function(g) {
+                var col = document.createElement('div');
+                col.className = 'consensus-group-col';
 
-                // Player row: logo + name (+ matchup)
-                var pr = document.createElement('div');
-                pr.className = 'player-row';
-                var img = document.createElement('img');
-                img.src = getTeamLogo(p.team || '');
-                img.alt = p.team || '';
-                img.onerror = function() { this.style.display = 'none'; };
-                pr.appendChild(img);
-                var nm = document.createElement('div');
-                nm.style.flex = '1';
-                nm.style.minWidth = '0';
-                var pn = document.createElement('div');
-                pn.className = 'player-name';
-                pn.textContent = p.name;
-                nm.appendChild(pn);
-                var mu = document.createElement('div');
-                mu.className = 'matchup';
-                mu.textContent = p.matchup || (p.team || '');
-                nm.appendChild(mu);
-                pr.appendChild(nm);
-                card.appendChild(pr);
+                var header = document.createElement('div');
+                header.className = 'consensus-group-header';
+                header.textContent = g === 'unknown' ? 'Other' : 'Group ' + g;
+                col.appendChild(header);
 
-                // Probability bar + percentage
-                var bar = document.createElement('div');
-                bar.className = 'consensus-bar-row';
-                var barWrap = document.createElement('div');
-                barWrap.className = 'consensus-bar';
-                var fill = document.createElement('div');
-                fill.className = 'consensus-bar-fill';
-                fill.style.width = Math.min(100, p.avg_prob * 100 / 0.5) + '%';
-                barWrap.appendChild(fill);
-                bar.appendChild(barWrap);
-                var pct = document.createElement('span');
-                pct.className = 'consensus-pct';
-                pct.textContent = (p.avg_prob * 100).toFixed(1) + '%';
-                bar.appendChild(pct);
-                card.appendChild(bar);
-
-                // Consensus indicator: dots + "X of Y models"
-                var cm = document.createElement('div');
-                cm.className = 'consensus-models';
-
-                var strong = document.createElement('strong');
-                strong.textContent = p.consensus_count + ' / ' + modelsAvailable;
-                cm.appendChild(strong);
-                cm.appendChild(document.createTextNode(
-                    ' models · score ' + Math.round(p.weighted_score)
-                ));
-
-                // Dots — one per picking model, in descending weight order so
-                // a strong-model pick sits leftmost. Gold = lit (this model
-                // picked the player); dim = not picked.
-                var pickedKeys = p.models
-                    .slice()
-                    .sort(function(a, b) { return b.weight - a.weight; })
-                    .map(function(m) { return m.key; });
-                var pickedSet = {};
-                pickedKeys.forEach(function(k) { pickedSet[k] = true; });
-                var dots = document.createElement('span');
-                dots.className = 'consensus-dots';
-                dots.title = 'Picked by: ' + p.models
-                    .map(function(m) {
-                        var lbl = (MODELS[m.key] && MODELS[m.key].name) || m.key;
-                        return lbl + ' (rank ' + m.rank + ', wt ' + Math.round(m.weight) + ')';
-                    }).join('; ');
-                for (var d = 0; d < modelsAvailable; d++) {
-                    var dot = document.createElement('span');
-                    dot.className = 'consensus-dot' + (d < p.consensus_count ? ' lit' : '');
-                    dots.appendChild(dot);
+                var groupPicks = byGroup[g].slice(0, PICKS_PER_GROUP);
+                if (groupPicks.length === 0) {
+                    var empty = document.createElement('div');
+                    empty.className = 'consensus-empty-group';
+                    empty.textContent = 'No consensus pick';
+                    col.appendChild(empty);
+                    grid.appendChild(col);
+                    return;
                 }
-                cm.appendChild(dots);
-                card.appendChild(cm);
 
-                grid.appendChild(card);
+                groupPicks.forEach(function(p, idx) {
+                    col.appendChild(buildConsensusCard(p, idx, modelsAvailable));
+                });
+
+                grid.appendChild(col);
             });
+        }
+
+        function buildConsensusCard(p, idxInGroup, modelsAvailable) {
+            var card = document.createElement('div');
+            card.className = 'consensus-card' + (idxInGroup === 0 ? ' top-pick' : ' alternate');
+
+            var rank = document.createElement('span');
+            rank.className = 'consensus-rank';
+            rank.textContent = '#' + (idxInGroup + 1);
+            card.appendChild(rank);
+
+            // Player row: logo + name (+ matchup)
+            var pr = document.createElement('div');
+            pr.className = 'player-row';
+            var img = document.createElement('img');
+            img.src = getTeamLogo(p.team || '');
+            img.alt = p.team || '';
+            img.onerror = function() { this.style.display = 'none'; };
+            pr.appendChild(img);
+            var nm = document.createElement('div');
+            nm.style.flex = '1';
+            nm.style.minWidth = '0';
+            var pn = document.createElement('div');
+            pn.className = 'player-name';
+            pn.textContent = p.name;
+            nm.appendChild(pn);
+            var mu = document.createElement('div');
+            mu.className = 'matchup';
+            mu.textContent = p.matchup || (p.team || '');
+            nm.appendChild(mu);
+            pr.appendChild(nm);
+            card.appendChild(pr);
+
+            // Probability bar + percentage
+            var bar = document.createElement('div');
+            bar.className = 'consensus-bar-row';
+            var barWrap = document.createElement('div');
+            barWrap.className = 'consensus-bar';
+            var fill = document.createElement('div');
+            fill.className = 'consensus-bar-fill';
+            fill.style.width = Math.min(100, p.avg_prob * 100 / 0.5) + '%';
+            barWrap.appendChild(fill);
+            bar.appendChild(barWrap);
+            var pct = document.createElement('span');
+            pct.className = 'consensus-pct';
+            pct.textContent = (p.avg_prob * 100).toFixed(1) + '%';
+            bar.appendChild(pct);
+            card.appendChild(bar);
+
+            // Consensus indicator: dots + "X of Y models"
+            var cm = document.createElement('div');
+            cm.className = 'consensus-models';
+
+            var strong = document.createElement('strong');
+            strong.textContent = p.consensus_count + ' / ' + modelsAvailable;
+            cm.appendChild(strong);
+            cm.appendChild(document.createTextNode(
+                ' models · score ' + Math.round(p.weighted_score)
+            ));
+
+            var dots = document.createElement('span');
+            dots.className = 'consensus-dots';
+            dots.title = 'Picked by: ' + p.models
+                .map(function(m) {
+                    var lbl = (MODELS[m.key] && MODELS[m.key].name) || m.key;
+                    return lbl + ' (rank ' + m.rank + ', wt ' + Math.round(m.weight) + ')';
+                }).join('; ');
+            for (var d = 0; d < modelsAvailable; d++) {
+                var dot = document.createElement('span');
+                dot.className = 'consensus-dot' + (d < p.consensus_count ? ' lit' : '');
+                dots.appendChild(dot);
+            }
+            cm.appendChild(dots);
+            card.appendChild(cm);
+
+            return card;
         }
 
         // =====================================================================
