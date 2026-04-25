@@ -11,10 +11,16 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Google AdSense site ownership verification. Required for AdSense
-         to confirm we own the property; the JS-side publisher ID below
-         actually serves the ads. -->
+    <!-- Google AdSense site ownership verification + library loader.
+         The meta tag is the lightweight ownership claim; the script is
+         what Google's verification flow actually expects to find ("AdSense
+         code snippet" verification method). After approval, the script
+         + per-slot push() calls in the dashboard JS together fill the
+         ad units. -->
     <meta name="google-adsense-account" content="ca-pub-8325932379385204">
+    <script async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8325932379385204"
+        crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -2285,9 +2291,13 @@
         }
 
         function loadAdSenseLibrary() {
-            if (!ADSENSE_PUBLISHER_ID) return;          // not configured yet
-            if (window.__adsenseLoaded) return;          // idempotent
-            window.__adsenseLoaded = true;
+            // The adsbygoogle.js script is loaded in <head> directly so
+            // Google's site-verification flow can detect it. This function
+            // now just configures the per-slot data attributes and triggers
+            // adsbygoogle.push() so each <ins> fills with an ad. Idempotent.
+            if (!ADSENSE_PUBLISHER_ID) return;
+            if (window.__adsenseSlotsActivated) return;
+            window.__adsenseSlotsActivated = true;
 
             // Map slot containers to their configured AdSense slot IDs.
             // If a slot ID is empty, that slot stays hidden — useful when
@@ -2306,19 +2316,11 @@
                 });
             });
 
-            var s = document.createElement('script');
-            s.async = true;
-            s.crossOrigin = 'anonymous';
-            s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client='
-                    + ADSENSE_PUBLISHER_ID;
-            document.head.appendChild(s);
-
             // Each <ins.adsbygoogle> with a configured slot ID gets one
             // push() so AdSense fills it.
             document.querySelectorAll('ins.adsbygoogle[data-ad-slot]').forEach(function(slot) {
                 try { (window.adsbygoogle = window.adsbygoogle || []).push({}); }
                 catch (e) {}
-                // Reveal this slot's container once configured.
                 var container = slot.closest('.ad-slot');
                 if (container) container.style.display = 'block';
             });
