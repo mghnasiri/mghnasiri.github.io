@@ -11,6 +11,10 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google AdSense site ownership verification. Required for AdSense
+         to confirm we own the property; the JS-side publisher ID below
+         actually serves the ads. -->
+    <meta name="google-adsense-account" content="ca-pub-8325932379385204">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -1250,9 +1254,15 @@
         // approval goes in <head> as <meta name="google-adsense-account"
         // content="ca-pub-...">. Put it there before applying.
         // =====================================================================
-        const ADSENSE_PUBLISHER_ID = '';   // 'ca-pub-XXXXXXXXXXXXXXXX'
-        const ADSENSE_SLOT_AFTER_TIMS = ''; // slot ID for the in-content ad after Tims picks
-        const ADSENSE_SLOT_AFTER_PERF = ''; // slot ID for the ad after performance section
+        const ADSENSE_PUBLISHER_ID = 'ca-pub-8325932379385204';
+        // Slot IDs are filled in AFTER AdSense approves the site and you
+        // create display ad units in the AdSense console. Until then,
+        // these stay empty and the manual ad slots stay hidden — but
+        // Auto Ads (configured in the AdSense console) can still serve
+        // because the AdSense library loads as soon as a visitor accepts
+        // the consent banner.
+        const ADSENSE_SLOT_AFTER_TIMS = ''; // fill after creating slot 1
+        const ADSENSE_SLOT_AFTER_PERF = ''; // fill after creating slot 2
 
         // =====================================================================
         // CONFIGURATION — supports both Monte Carlo v2 and Weighted Linear v1
