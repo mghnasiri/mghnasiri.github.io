@@ -72,8 +72,53 @@ def american_to_prob(odds):
         return abs(odds) / (abs(odds) + 100.0)
 
 
+def _nhl_today_team_pairs():
+    """Set of (home_full_name, away_full_name) for NHL's actual game-date today.
+
+    NHL's "game date" doesn't equal UTC calendar date — late games (9-10pm ET)
+    start past midnight UTC, so a UTC-date filter on Odds API events drops
+    them. We use NHL's own /schedule/{date} as the source of truth for which
+    games count as "today" and match Odds events by full team names.
+    """
+    pairs = set()
+    try:
+        resp = requests.get(
+            f"https://api-web.nhle.com/v1/schedule/{Config.TODAY}", timeout=15
+        )
+        if resp.status_code != 200:
+            return pairs
+        for day in resp.json().get('gameWeek', []):
+            if day.get('date') != Config.TODAY:
+                continue
+            for g in day.get('games', []):
+                ht = g.get('homeTeam', {})
+                at = g.get('awayTeam', {})
+                home_full = (
+                    ht.get('placeName', {}).get('default', '') + ' ' +
+                    ht.get('commonName', {}).get('default', '')
+                ).strip()
+                away_full = (
+                    at.get('placeName', {}).get('default', '') + ' ' +
+                    at.get('commonName', {}).get('default', '')
+                ).strip()
+                if home_full and away_full:
+                    pairs.add((home_full, away_full))
+    except Exception as e:
+        print(f"  NHL schedule cross-ref failed: {e}")
+    return pairs
+
+
 def fetch_events():
-    """Fetch today's NHL events from The Odds API."""
+    """Fetch today's NHL events from The Odds API.
+
+    Filters Odds API events by NHL's authoritative game-date schedule so
+    late games (post-midnight UTC) aren't dropped by a naive UTC-date prefix.
+    """
+    nhl_pairs = _nhl_today_team_pairs()
+    if not nhl_pairs:
+        print("  WARNING: NHL schedule had no games for today — falling back "
+              "to UTC-date filter (may miss late games)")
+
     url = f"{Config.ODDS_API_BASE}/sports/{Config.SPORT}/events"
     params = {
         'apiKey': Config.ODDS_API_KEY,
@@ -81,19 +126,30 @@ def fetch_events():
     }
     try:
         resp = requests.get(url, params=params, timeout=15)
-        if resp.status_code == 200:
-            events = resp.json()
-            # Filter to today's events
-            today_events = [e for e in events
-                           if e.get('commence_time', '').startswith(Config.TODAY)]
-            print(f"  API returned {len(events)} events, {len(today_events)} today")
-            return today_events
-        else:
+        if resp.status_code != 200:
             print(f"  Events API error: {resp.status_code} — {resp.text[:200]}")
             return []
+        events = resp.json()
     except Exception as e:
         print(f"  Events API failed: {e}")
         return []
+
+    if nhl_pairs:
+        # Match by team names against NHL's authoritative schedule
+        matched = [
+            e for e in events
+            if (e.get('home_team', ''), e.get('away_team', '')) in nhl_pairs
+        ]
+        print(f"  API returned {len(events)} events; "
+              f"{len(matched)} match NHL's {Config.TODAY} schedule "
+              f"({len(nhl_pairs)} games scheduled)")
+        return matched
+
+    # Fallback: legacy UTC-date filter
+    today_events = [e for e in events
+                    if e.get('commence_time', '').startswith(Config.TODAY)]
+    print(f"  API returned {len(events)} events, {len(today_events)} match UTC today")
+    return today_events
 
 
 def fetch_player_odds(event_id):

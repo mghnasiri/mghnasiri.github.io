@@ -541,7 +541,14 @@ def predict_today():
     X = pd.DataFrame(player_rows, columns=Config.FEATURE_NAMES)
     raw_preds = model.predict(X)
 
-    if calibrator is not None:
+    # Calibrator was trained on ~500 held-out rows with ~7% positive rate
+    # and produced a 12-pivot isotonic step function: top quartile saturates
+    # to 1.0, mid-range collapses into flat ties (e.g. five players all at
+    # 0.1538). The result is unrealistic probabilities and broken ranking.
+    # Bypass calibration until we have ≥2,000 held-out rows. Raw LightGBM
+    # output is already a probability in [0,1] and ranks players correctly.
+    USE_CALIBRATOR = False
+    if USE_CALIBRATOR and calibrator is not None:
         calibrated = np.interp(raw_preds,
                                calibrator.X_thresholds_,
                                calibrator.y_thresholds_)
