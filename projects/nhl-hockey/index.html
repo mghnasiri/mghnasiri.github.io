@@ -820,6 +820,104 @@
             border-top: 1px solid rgba(197, 160, 89, 0.08);
         }
 
+        /* AdSense slots — neutral container that doesn't fight with the
+           gold/midnight aesthetic. Slots stay display:none until the AdSense
+           library is loaded (post-consent + valid PUBLISHER_ID). */
+        .ad-slot {
+            padding: 1.5rem 0;
+            background: var(--midnight);
+        }
+
+        .ad-slot .ad-label {
+            text-align: center;
+            font-size: 0.65rem;
+            letter-spacing: 1.5px;
+            color: var(--slate);
+            text-transform: uppercase;
+            margin: 0 0 0.5rem;
+            opacity: 0.7;
+        }
+
+        /* Cookie consent banner — fixed bottom, doesn't push content. */
+        .consent-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--midnight-light);
+            border-top: 1px solid var(--gold);
+            padding: 1rem 0;
+            z-index: 1000;
+            box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .consent-inner {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .consent-text {
+            flex: 1;
+            min-width: 280px;
+        }
+
+        .consent-text strong {
+            color: var(--gold);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.05rem;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .consent-text p {
+            color: var(--ivory);
+            font-size: 0.85rem;
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .consent-text a {
+            color: var(--gold);
+            text-decoration: underline;
+        }
+
+        .consent-actions {
+            display: flex;
+            gap: 0.6rem;
+            flex-shrink: 0;
+        }
+
+        .btn-consent {
+            padding: 0.6rem 1.4rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            border: 1px solid var(--gold);
+            background: transparent;
+            color: var(--ivory);
+            cursor: pointer;
+            transition: background 0.15s ease, color 0.15s ease;
+        }
+
+        .btn-consent.btn-accept {
+            background: var(--gold);
+            color: var(--midnight);
+            font-weight: 600;
+        }
+
+        .btn-consent:hover {
+            background: var(--gold-light);
+            color: var(--midnight);
+        }
+
+        .btn-consent.btn-reject:hover {
+            background: rgba(197, 160, 89, 0.1);
+            color: var(--ivory);
+        }
+
         .tims-groups {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -990,6 +1088,20 @@
         </div>
     </section>
 
+    <!-- Ad slot #1 — between Tim Hortons picks and performance section.
+         Hidden by default; revealed only after consent + AdSense activation
+         in the loadAdSenseLibrary() flow. The data-ad-slot value is filled
+         in via ADSENSE_SLOT_AFTER_TIMS at runtime. -->
+    <section class="ad-slot ad-slot-1" style="display: none;">
+        <div class="container">
+            <p class="ad-label">Advertisement</p>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+    </section>
+
     <!-- Performance Section -->
     <section class="performance-section">
         <div class="container">
@@ -1020,6 +1132,17 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Ad slot #2 — between performance section and the predictions table. -->
+    <section class="ad-slot ad-slot-2" style="display: none;">
+        <div class="container">
+            <p class="ad-label">Advertisement</p>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
         </div>
     </section>
 
@@ -1072,18 +1195,65 @@
 
     </main>
 
+    <!-- Cookie consent banner — only shown when ADSENSE_PUBLISHER_ID is set
+         AND the user hasn't yet decided. Hidden by default; initConsent()
+         flips display to flex when needed. -->
+    <div id="consent-banner" class="consent-banner" style="display: none;" role="dialog"
+         aria-labelledby="consent-title" aria-describedby="consent-body">
+        <div class="container consent-inner">
+            <div class="consent-text">
+                <strong id="consent-title">Heads up — we use cookies for ads</strong>
+                <p id="consent-body">
+                    This page shows ads from Google AdSense to keep the project
+                    free. AdSense uses cookies for ad personalisation and analytics.
+                    You can choose to accept or reject — your choice is remembered
+                    locally. See the
+                    <a href="./privacy.html">privacy policy</a> for details.
+                </p>
+            </div>
+            <div class="consent-actions">
+                <button id="consent-reject" class="btn-consent btn-reject" type="button">Reject</button>
+                <button id="consent-accept" class="btn-consent btn-accept" type="button">Accept</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer>
         <div class="container">
             <p>Last updated: <span id="last-updated">--</span></p>
             <p>8 Models: Market Odds v1 · Meta Ensemble v1 · xG XGBoost v3 · Lineup TOI v1 · Neural MLP v1 · Neural Embed v2 · Monte Carlo v2 · Weighted Linear v1 | Tim Hortons Challenge</p>
-            <p><a href="../../index.html">← Back to Portfolio</a></p>
+            <p>
+                <a href="../../index.html">← Back to Portfolio</a>
+                &nbsp;·&nbsp;
+                <a href="./privacy.html">Privacy Policy</a>
+            </p>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
     
     <script>
+        // =====================================================================
+        // ADSENSE CONFIG — fill in after Google AdSense approval, then push.
+        // Until ADSENSE_PUBLISHER_ID is set, no AdSense markup is loaded and
+        // no consent banner is shown — page behaves identically to before.
+        //
+        // After your application is approved at https://adsense.google.com :
+        //   1. Set ADSENSE_PUBLISHER_ID to your 'ca-pub-XXXXXXXXXXXXXXXX' ID
+        //   2. Create at least 2 display ad units in the AdSense dashboard
+        //      and set ADSENSE_SLOT_AFTER_TIMS / ADSENSE_SLOT_AFTER_PERF
+        //   3. (Optional) For EU traffic, configure Funding Choices
+        //      (Google's free CMP) in your AdSense console.
+        //
+        // The site verification meta tag Google asks you to add during
+        // approval goes in <head> as <meta name="google-adsense-account"
+        // content="ca-pub-...">. Put it there before applying.
+        // =====================================================================
+        const ADSENSE_PUBLISHER_ID = '';   // 'ca-pub-XXXXXXXXXXXXXXXX'
+        const ADSENSE_SLOT_AFTER_TIMS = ''; // slot ID for the in-content ad after Tims picks
+        const ADSENSE_SLOT_AFTER_PERF = ''; // slot ID for the ad after performance section
+
         // =====================================================================
         // CONFIGURATION — supports both Monte Carlo v2 and Weighted Linear v1
         // =====================================================================
@@ -2088,6 +2258,99 @@
         }
 
         // =====================================================================
+        // COOKIE CONSENT + ADSENSE LOADER
+        // ---------------------------------------------------------------------
+        // GDPR-conscious flow: don't load any AdSense tracker until the user
+        // explicitly accepts. Choice is stored in localStorage so we don't
+        // re-prompt on every visit. Banner is suppressed entirely if no
+        // ADSENSE_PUBLISHER_ID is configured (current state).
+        // =====================================================================
+        const CONSENT_KEY = 'nhl_dash_consent';  // 'accepted' | 'rejected'
+
+        function getConsent() {
+            try { return localStorage.getItem(CONSENT_KEY); } catch (e) { return null; }
+        }
+        function setConsent(value) {
+            try { localStorage.setItem(CONSENT_KEY, value); } catch (e) {}
+        }
+
+        function loadAdSenseLibrary() {
+            if (!ADSENSE_PUBLISHER_ID) return;          // not configured yet
+            if (window.__adsenseLoaded) return;          // idempotent
+            window.__adsenseLoaded = true;
+
+            // Map slot containers to their configured AdSense slot IDs.
+            // If a slot ID is empty, that slot stays hidden — useful when
+            // you've only created some of the AdSense ad units in your
+            // dashboard.
+            var slotMap = [
+                ['.ad-slot-1 ins.adsbygoogle', ADSENSE_SLOT_AFTER_TIMS],
+                ['.ad-slot-2 ins.adsbygoogle', ADSENSE_SLOT_AFTER_PERF],
+            ];
+            slotMap.forEach(function(pair) {
+                var sel = pair[0], slotId = pair[1];
+                if (!slotId) return;
+                document.querySelectorAll(sel).forEach(function(slot) {
+                    slot.setAttribute('data-ad-client', ADSENSE_PUBLISHER_ID);
+                    slot.setAttribute('data-ad-slot', slotId);
+                });
+            });
+
+            var s = document.createElement('script');
+            s.async = true;
+            s.crossOrigin = 'anonymous';
+            s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client='
+                    + ADSENSE_PUBLISHER_ID;
+            document.head.appendChild(s);
+
+            // Each <ins.adsbygoogle> with a configured slot ID gets one
+            // push() so AdSense fills it.
+            document.querySelectorAll('ins.adsbygoogle[data-ad-slot]').forEach(function(slot) {
+                try { (window.adsbygoogle = window.adsbygoogle || []).push({}); }
+                catch (e) {}
+                // Reveal this slot's container once configured.
+                var container = slot.closest('.ad-slot');
+                if (container) container.style.display = 'block';
+            });
+        }
+
+        function showConsentBanner() {
+            // Don't show if AdSense isn't configured — there's nothing to consent to.
+            if (!ADSENSE_PUBLISHER_ID) return;
+            if (getConsent()) return;  // already decided
+
+            var banner = document.getElementById('consent-banner');
+            if (banner) banner.style.display = 'flex';
+        }
+
+        function initConsent() {
+            // Pre-decided users
+            var saved = getConsent();
+            if (saved === 'accepted') { loadAdSenseLibrary(); return; }
+            if (saved === 'rejected') return;
+
+            // First-time users — show banner if AdSense is configured
+            showConsentBanner();
+        }
+
+        // Wire up the consent banner buttons (no-ops if banner doesn't exist)
+        var acceptBtn = document.getElementById('consent-accept');
+        var rejectBtn = document.getElementById('consent-reject');
+        if (acceptBtn) {
+            acceptBtn.addEventListener('click', function() {
+                setConsent('accepted');
+                document.getElementById('consent-banner').style.display = 'none';
+                loadAdSenseLibrary();
+            });
+        }
+        if (rejectBtn) {
+            rejectBtn.addEventListener('click', function() {
+                setConsent('rejected');
+                document.getElementById('consent-banner').style.display = 'none';
+            });
+        }
+
+        // =====================================================================
         // EVENT LISTENERS & INIT
         // =====================================================================
         document.getElementById('search-input').addEventListener('input', renderPredictions);
@@ -2098,6 +2361,7 @@
         loadResults();
         loadStats();
         loadConsensus();
+        initConsent();
     </script>
 </body>
 </html>
