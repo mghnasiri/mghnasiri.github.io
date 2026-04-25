@@ -20,6 +20,7 @@ import json
 import os
 import sys
 import math
+import time
 from datetime import datetime
 
 
@@ -807,11 +808,19 @@ for g in todays_games:
     }
 
 all_players = []
-for team in sorted(all_teams):
-    print(f"    Fetching {team}...", end=" ")
+# Rate-limit between teams + within team rosters. Without this the NHL API
+# silently throttles after the first few teams: today's daily run got
+# CAR/DAL fully but returned 0 players for MIN/OTT/PHI/PIT, leaving the
+# Tims pool 32 of 45 unmatched. Mirrors the pattern in monte_carlo_predict.py.
+for idx, team in enumerate(sorted(all_teams)):
+    if idx > 0:
+        time.sleep(1)
+    print(f"    Fetching {team}...", end=" ", flush=True)
     roster = get_team_roster(team)
     team_players = []
-    for p in roster:
+    for i, p in enumerate(roster):
+        if i > 0 and i % 10 == 0:
+            time.sleep(0.5)
         stats = get_player_stats(p['player_id'])
         if stats:
             p.update(stats)

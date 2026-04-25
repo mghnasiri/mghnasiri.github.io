@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-25T10:56:42.827577",
+  "generated_at": "2026-04-25T11:30:26.939885",
   "today": "2026-04-25",
   "thresholds": {
     "min_team_coverage": 0.6,
@@ -10,15 +10,48 @@
   },
   "models": {
     "lineup_v1": {
-      "status": "fail",
+      "status": "ok",
       "checks": {
         "freshness": [
-          "fail",
-          "date=2026-04-24 (expected 2026-04-25) \u2014 workflow may have failed"
+          "ok",
+          "date=2026-04-25"
         ],
         "team_coverage": [
           "ok",
-          "100.0% of game teams covered"
+          "no games today"
+        ],
+        "player_count": [
+          "ok",
+          "0 predictions, no games"
+        ],
+        "no_saturation": [
+          "ok",
+          "no predictions"
+        ],
+        "no_zero": [
+          "ok",
+          "no predictions"
+        ],
+        "prob_max_sane": [
+          "ok",
+          "no predictions"
+        ],
+        "no_flat_ties": [
+          "ok",
+          "too few predictions to check"
+        ]
+      }
+    },
+    "market_odds": {
+      "status": "ok",
+      "checks": {
+        "freshness": [
+          "ok",
+          "date=2026-04-25"
+        ],
+        "team_coverage": [
+          "ok",
+          "100.0% team coverage (6 pred teams vs 6 game teams)"
         ],
         "player_count": [
           "ok",
@@ -34,40 +67,7 @@
         ],
         "prob_max_sane": [
           "ok",
-          "top prob = 0.502"
-        ],
-        "no_flat_ties": [
-          "ok",
-          "max tie size = 1"
-        ]
-      }
-    },
-    "market_odds": {
-      "status": "fail",
-      "checks": {
-        "freshness": [
-          "fail",
-          "date=2026-04-24 (expected 2026-04-25) \u2014 workflow may have failed"
-        ],
-        "team_coverage": [
-          "fail",
-          "only 0.0% of game teams covered (missing ['Montr\u00e9al Canadiens', 'Tampa Bay Lightning'])"
-        ],
-        "player_count": [
-          "ok",
-          "9 predictions for 1 games"
-        ],
-        "no_saturation": [
-          "ok",
-          "no saturated probabilities"
-        ],
-        "no_zero": [
-          "ok",
-          "no zero probabilities"
-        ],
-        "prob_max_sane": [
-          "ok",
-          "top prob = 0.288"
+          "top prob = 0.356"
         ],
         "no_flat_ties": [
           "ok",
@@ -84,7 +84,7 @@
         ],
         "team_coverage": [
           "ok",
-          "100.0% of game teams covered"
+          "100.0% team coverage (6 pred teams vs 6 game teams)"
         ],
         "player_count": [
           "ok",
@@ -117,7 +117,7 @@
         ],
         "team_coverage": [
           "ok",
-          "100.0% of game teams covered"
+          "100.0% team coverage (6 pred teams vs 6 game teams)"
         ],
         "player_count": [
           "ok",
@@ -150,7 +150,7 @@
         ],
         "team_coverage": [
           "ok",
-          "100.0% of game teams covered"
+          "100.0% team coverage (6 pred teams vs 6 game teams)"
         ],
         "player_count": [
           "ok",
@@ -175,19 +175,19 @@
       }
     },
     "neural_v1": {
-      "status": "fail",
+      "status": "ok",
       "checks": {
         "freshness": [
-          "fail",
-          "date=2026-04-24 (expected 2026-04-25) \u2014 workflow may have failed"
+          "ok",
+          "date=2026-04-25"
         ],
         "team_coverage": [
           "ok",
-          "100.0% of game teams covered"
+          "100.0% team coverage (6 pred teams vs 6 game teams)"
         ],
         "player_count": [
           "ok",
-          "43 predictions for 3 games"
+          "45 predictions for 3 games"
         ],
         "no_saturation": [
           "ok",
@@ -199,44 +199,44 @@
         ],
         "prob_max_sane": [
           "ok",
-          "top prob = 0.418"
-        ],
-        "no_flat_ties": [
-          "ok",
-          "max tie size = 1"
-        ]
-      }
-    },
-    "neural_v2": {
-      "status": "fail",
-      "checks": {
-        "freshness": [
-          "fail",
-          "date=2026-04-24 (expected 2026-04-25) \u2014 workflow may have failed"
-        ],
-        "team_coverage": [
-          "ok",
-          "100.0% of game teams covered"
-        ],
-        "player_count": [
-          "ok",
-          "43 predictions for 3 games"
-        ],
-        "no_saturation": [
-          "ok",
-          "no saturated probabilities"
-        ],
-        "no_zero": [
-          "ok",
-          "no zero probabilities"
-        ],
-        "prob_max_sane": [
-          "warn",
-          "top prob = 0.628 (high but plausible)"
+          "top prob = 0.420"
         ],
         "no_flat_ties": [
           "ok",
           "max tie size = 2"
+        ]
+      }
+    },
+    "neural_v2": {
+      "status": "ok",
+      "checks": {
+        "freshness": [
+          "ok",
+          "date=2026-04-25"
+        ],
+        "team_coverage": [
+          "ok",
+          "no games today"
+        ],
+        "player_count": [
+          "ok",
+          "0 predictions, no games"
+        ],
+        "no_saturation": [
+          "ok",
+          "no predictions"
+        ],
+        "no_zero": [
+          "ok",
+          "no predictions"
+        ],
+        "prob_max_sane": [
+          "ok",
+          "no predictions"
+        ],
+        "no_flat_ties": [
+          "ok",
+          "too few predictions to check"
         ]
       }
     },
@@ -244,16 +244,16 @@
       "status": "fail",
       "checks": {
         "freshness": [
-          "fail",
-          "date=2026-04-24 (expected 2026-04-25) \u2014 workflow may have failed"
+          "ok",
+          "date=2026-04-25"
         ],
         "team_coverage": [
-          "ok",
-          "100.0% of game teams covered"
+          "fail",
+          "only 33.3% of game teams covered (missing ['MIN', 'OTT', 'PHI', 'PIT'])"
         ],
         "player_count": [
           "ok",
-          "43 predictions for 3 games"
+          "13 predictions for 3 games"
         ],
         "no_saturation": [
           "ok",
@@ -265,44 +265,44 @@
         ],
         "prob_max_sane": [
           "ok",
-          "top prob = 0.497"
-        ],
-        "no_flat_ties": [
-          "ok",
-          "max tie size = 2"
-        ]
-      }
-    },
-    "xg_v3_synthetic": {
-      "status": "fail",
-      "checks": {
-        "freshness": [
-          "fail",
-          "date=2026-04-24 (expected 2026-04-25) \u2014 workflow may have failed"
-        ],
-        "team_coverage": [
-          "ok",
-          "100.0% of game teams covered"
-        ],
-        "player_count": [
-          "ok",
-          "43 predictions for 3 games"
-        ],
-        "no_saturation": [
-          "ok",
-          "no saturated probabilities"
-        ],
-        "no_zero": [
-          "ok",
-          "no zero probabilities"
-        ],
-        "prob_max_sane": [
-          "ok",
-          "top prob = 0.867 (model exempt \u2014 A/B control)"
+          "top prob = 0.470"
         ],
         "no_flat_ties": [
           "ok",
           "max tie size = 1"
+        ]
+      }
+    },
+    "xg_v3_synthetic": {
+      "status": "ok",
+      "checks": {
+        "freshness": [
+          "ok",
+          "date=2026-04-25"
+        ],
+        "team_coverage": [
+          "ok",
+          "no games today"
+        ],
+        "player_count": [
+          "ok",
+          "0 predictions, no games"
+        ],
+        "no_saturation": [
+          "ok",
+          "no predictions"
+        ],
+        "no_zero": [
+          "ok",
+          "no predictions"
+        ],
+        "prob_max_sane": [
+          "ok",
+          "no predictions"
+        ],
+        "no_flat_ties": [
+          "ok",
+          "too few predictions to check"
         ]
       }
     }
