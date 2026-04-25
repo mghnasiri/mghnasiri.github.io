@@ -154,6 +154,21 @@ def extract_shots_from_game(game_info):
     shots = []
     prev_event = None
 
+    # PBP score-differential leakage fix:
+    # The NHL PBP API only populates `homeScore`/`awayScore` on GOAL events
+    # (post-goal). For shot-on-goal / missed-shot events, those fields are
+    # absent and default to 0 — making score_diff = 0 for ~99% of non-goal
+    # shots while goal rows have arbitrary values. The xG model then learns
+    # the trivial "score_diff != 0 -> goal" leak, inflating CV AUC and
+    # producing miscalibrated predictions.
+    #
+    # Fix: track running home/away score ourselves through the play list.
+    # We increment ONLY after a goal event has been recorded, so the score
+    # at the moment of any shot is the score BEFORE the shot's outcome —
+    # the same view a real-time predictor would have.
+    running_home_score = 0
+    running_away_score = 0
+
     for i, play in enumerate(plays):
         event_type = play.get('typeDescKey', '')
 
@@ -225,12 +240,13 @@ def extract_shots_from_game(game_info):
         is_empty_net = 1 if (goalie_id is None or goalie_id == 0) else 0
 
         # ── Score differential ──
-        home_score = details.get('homeScore', 0) or 0
-        away_score = details.get('awayScore', 0) or 0
+        # Use our running tally (pre-shot score) instead of the API field
+        # (which is post-goal-only and creates label leakage). See the
+        # comment at the top of this loop.
         if event_team_id == home_team_id:
-            score_diff = home_score - away_score
+            score_diff = running_home_score - running_away_score
         else:
-            score_diff = away_score - home_score
+            score_diff = running_away_score - running_home_score
 
         # ── Time-based features ──
         seconds_since_last = 0.0
@@ -289,6 +305,14 @@ def extract_shots_from_game(game_info):
             'prior_event_distance': round(prior_event_distance, 2),
             'is_goal': is_goal,
         })
+
+        # If this shot was a goal, advance the running score AFTER recording
+        # the shot row — so the row itself reflects the pre-shot score.
+        if is_goal:
+            if event_team_id == home_team_id:
+                running_home_score += 1
+            elif event_team_id == away_team_id:
+                running_away_score += 1
 
         # Update prev_event
         prev_event = {

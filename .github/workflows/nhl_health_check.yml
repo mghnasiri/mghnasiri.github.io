@@ -1,0 +1,64 @@
+# .github/workflows/nhl_health_check.yml
+# Daily health check — runs after all prediction workflows finish.
+# Pulls latest, validates every model's latest.json, commits the health
+# report, and pings Telegram if anything failed. This is the watchdog that
+# would have caught the meta_ensemble saturation and market_odds missing-
+# games bugs (both shipped while CI was green for days).
+# No untrusted inputs used in run: commands — only static strings, date,
+# and secrets passed via env.
+
+name: NHL Daily Health Check
+
+on:
+  schedule:
+    # 16:30 UTC daily — after MC v2 (14:00), xG v3 (14:05), Market (14:30),
+    # Linear (15:00), Meta (15:20). All daily workflows should have committed
+    # their latest.json files by 16:30.
+    - cron: '30 16 * * *'
+
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Pull latest (other workflows commit through the day)
+        run: git pull --rebase origin main || git pull --no-rebase origin main
+
+      - name: Run prediction validator
+        id: validate
+        working-directory: projects/nhl-hockey
+        continue-on-error: true
+        run: python scripts/validate_predictions.py
+
+      - name: Send Telegram health alert (only on FAIL)
+        if: steps.validate.outcome == 'failure'
+        working-directory: projects/nhl-hockey
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python scripts/health_alert.py
+        continue-on-error: true
+
+      - name: Commit health report
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          DATESTAMP=$(date +%Y-%m-%d)
+          git diff --staged --quiet || git commit -m "Health report ${DATESTAMP}"
+          for i in 1 2 3; do
+            git push origin main && break
+            git pull --rebase -X theirs origin main || (git rebase --abort 2>/dev/null; git pull --no-rebase -X theirs origin main)
+            git push origin main && break
+            sleep 5
+          done
