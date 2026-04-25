@@ -499,6 +499,34 @@ def predict_today():
     common_ids = set(nn.keys()) & set(mc.keys()) & set(xg.keys())
     print(f"  Common players across all models: {len(common_ids)}")
 
+    # Empty intersection happens when base models are out of sync — typically
+    # after a manual mid-day re-trigger before the slower base models have
+    # completed today's run. LightGBM crashes on an empty DataFrame, so
+    # bail cleanly with an empty prediction file. Tomorrow's scheduled run
+    # (where MC -> xG -> NN -> Meta runs in order) won't hit this path.
+    if len(common_ids) == 0:
+        print("  No overlap across base models — writing empty predictions "
+              "and exiting cleanly. This usually means a base model is from "
+              "yesterday's slate (run order broken). Will resolve on next "
+              "regularly-scheduled run.")
+        empty_output = {
+            "date": Config.TODAY,
+            "model": Config.MODEL_NAME,
+            "model_display_name": Config.MODEL_DISPLAY_NAME,
+            "games_count": len(games), "games": games,
+            "players_count": 0, "predictions": [],
+            "tims_mode": False, "tims_source": None,
+            "tims_group_rankings": {},
+            "note": "no overlap across base models — pipeline out of sync",
+            "generated_at": datetime.now().isoformat(),
+        }
+        for path in [f"{Config.PREDICTIONS_DIR}/{Config.TODAY}.json",
+                     f"{Config.PREDICTIONS_DIR}/latest.json"]:
+            with open(path, 'w', encoding='utf-8') as f:
+                json.dump(empty_output, f, indent=2, ensure_ascii=False)
+            print(f"  Saved empty: {path}")
+        sys.exit(0)
+
     import pandas as pd
     player_rows = []
     player_meta = []
