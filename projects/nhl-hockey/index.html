@@ -21,6 +21,12 @@
     <script async
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8325932379385204"
         crossorigin="anonymous"></script>
+    <!-- Google Funding Choices CMP — IAB-TCF v2 compliant consent
+         platform. Configured at privacymessaging.google.com. Auto
+         renders to EU/UK/Swiss visitors only; ignored elsewhere. -->
+    <script async
+        src="https://fundingchoicesmessages.google.com/i/pub-8325932379385204?ers=1"></script>
+    <script>(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {var iframe = document.createElement('iframe'); iframe.style = 'width:0;height:0;border:none;z-index:-1000;left:-1000px;top:-1000px'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}} signalGooglefcPresent();})();</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -848,85 +854,9 @@
             opacity: 0.7;
         }
 
-        /* Cookie consent banner — fixed bottom, doesn't push content. */
-        .consent-banner {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--midnight-light);
-            border-top: 1px solid var(--gold);
-            padding: 1rem 0;
-            z-index: 1000;
-            box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.4);
-        }
-
-        .consent-inner {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .consent-text {
-            flex: 1;
-            min-width: 280px;
-        }
-
-        .consent-text strong {
-            color: var(--gold);
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.05rem;
-            display: block;
-            margin-bottom: 0.3rem;
-        }
-
-        .consent-text p {
-            color: var(--ivory);
-            font-size: 0.85rem;
-            margin: 0;
-            line-height: 1.4;
-        }
-
-        .consent-text a {
-            color: var(--gold);
-            text-decoration: underline;
-        }
-
-        .consent-actions {
-            display: flex;
-            gap: 0.6rem;
-            flex-shrink: 0;
-        }
-
-        .btn-consent {
-            padding: 0.6rem 1.4rem;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.8rem;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            border: 1px solid var(--gold);
-            background: transparent;
-            color: var(--ivory);
-            cursor: pointer;
-            transition: background 0.15s ease, color 0.15s ease;
-        }
-
-        .btn-consent.btn-accept {
-            background: var(--gold);
-            color: var(--midnight);
-            font-weight: 600;
-        }
-
-        .btn-consent:hover {
-            background: var(--gold-light);
-            color: var(--midnight);
-        }
-
-        .btn-consent.btn-reject:hover {
-            background: rgba(197, 160, 89, 0.1);
-            color: var(--ivory);
-        }
+        /* Note: cookie consent CSS was removed in favor of Google Funding
+           Choices (loaded in <head>). Funding Choices renders its own
+           configurable banner in EU/UK/Swiss regions. */
 
         .tims-groups {
             display: grid;
@@ -1205,28 +1135,15 @@
 
     </main>
 
-    <!-- Cookie consent banner — only shown when ADSENSE_PUBLISHER_ID is set
-         AND the user hasn't yet decided. Hidden by default; initConsent()
-         flips display to flex when needed. -->
-    <div id="consent-banner" class="consent-banner" style="display: none;" role="dialog"
-         aria-labelledby="consent-title" aria-describedby="consent-body">
-        <div class="container consent-inner">
-            <div class="consent-text">
-                <strong id="consent-title">Heads up — we use cookies for ads</strong>
-                <p id="consent-body">
-                    This page shows ads from Google AdSense to keep the project
-                    free. AdSense uses cookies for ad personalisation and analytics.
-                    You can choose to accept or reject — your choice is remembered
-                    locally. See the
-                    <a href="./privacy.html">privacy policy</a> for details.
-                </p>
-            </div>
-            <div class="consent-actions">
-                <button id="consent-reject" class="btn-consent btn-reject" type="button">Reject</button>
-                <button id="consent-accept" class="btn-consent btn-accept" type="button">Accept</button>
-            </div>
-        </div>
-    </div>
+    <!-- Consent UI is now handled by Google Funding Choices (loaded in
+         <head>). The previous home-baked banner was removed because:
+           • Funding Choices is IAB-TCF v2 compliant — ad networks honor
+             its consent signal; my localStorage flag was decorative.
+           • Funding Choices is region-aware — only shows to EU/UK/Swiss
+             visitors who actually need GDPR consent. My banner showed
+             to everyone, which over-collected.
+           • Two consent banners on the same page would be a UX disaster.
+         Configure the Funding Choices message at privacymessaging.google.com -->
 
     <!-- Footer -->
     <footer>
@@ -2274,22 +2191,17 @@
         }
 
         // =====================================================================
-        // COOKIE CONSENT + ADSENSE LOADER
+        // ADSENSE SLOT ACTIVATION
         // ---------------------------------------------------------------------
-        // GDPR-conscious flow: don't load any AdSense tracker until the user
-        // explicitly accepts. Choice is stored in localStorage so we don't
-        // re-prompt on every visit. Banner is suppressed entirely if no
-        // ADSENSE_PUBLISHER_ID is configured (current state).
+        // The adsbygoogle.js library is loaded in <head> for Google's
+        // verification flow. Consent is handled by Google Funding Choices
+        // (also in <head>) — IAB-TCF v2 compliant, region-aware, configured
+        // at privacymessaging.google.com.
+        //
+        // This function configures each <ins.adsbygoogle> with its slot ID
+        // and fires adsbygoogle.push() so the slot fills with an ad. Slots
+        // with no configured ID stay hidden (display: none).
         // =====================================================================
-        const CONSENT_KEY = 'nhl_dash_consent';  // 'accepted' | 'rejected'
-
-        function getConsent() {
-            try { return localStorage.getItem(CONSENT_KEY); } catch (e) { return null; }
-        }
-        function setConsent(value) {
-            try { localStorage.setItem(CONSENT_KEY, value); } catch (e) {}
-        }
-
         function loadAdSenseLibrary() {
             // The adsbygoogle.js script is loaded in <head> directly so
             // Google's site-verification flow can detect it. This function
@@ -2326,42 +2238,6 @@
             });
         }
 
-        function showConsentBanner() {
-            // Don't show if AdSense isn't configured — there's nothing to consent to.
-            if (!ADSENSE_PUBLISHER_ID) return;
-            if (getConsent()) return;  // already decided
-
-            var banner = document.getElementById('consent-banner');
-            if (banner) banner.style.display = 'flex';
-        }
-
-        function initConsent() {
-            // Pre-decided users
-            var saved = getConsent();
-            if (saved === 'accepted') { loadAdSenseLibrary(); return; }
-            if (saved === 'rejected') return;
-
-            // First-time users — show banner if AdSense is configured
-            showConsentBanner();
-        }
-
-        // Wire up the consent banner buttons (no-ops if banner doesn't exist)
-        var acceptBtn = document.getElementById('consent-accept');
-        var rejectBtn = document.getElementById('consent-reject');
-        if (acceptBtn) {
-            acceptBtn.addEventListener('click', function() {
-                setConsent('accepted');
-                document.getElementById('consent-banner').style.display = 'none';
-                loadAdSenseLibrary();
-            });
-        }
-        if (rejectBtn) {
-            rejectBtn.addEventListener('click', function() {
-                setConsent('rejected');
-                document.getElementById('consent-banner').style.display = 'none';
-            });
-        }
-
         // =====================================================================
         // EVENT LISTENERS & INIT
         // =====================================================================
@@ -2373,7 +2249,10 @@
         loadResults();
         loadStats();
         loadConsensus();
-        initConsent();
+        // Activate any configured AdSense slots. Funding Choices (loaded in
+        // <head>) handles consent independently. AdSense's library only
+        // serves ads to users who have consented (or are outside CMP regions).
+        loadAdSenseLibrary();
     </script>
 </body>
 </html>
