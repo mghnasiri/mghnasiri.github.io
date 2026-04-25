@@ -372,10 +372,10 @@
         }
         
         .prob-bar {
-            width: 70px;
-            height: 4px;
+            width: 110px;
+            height: 7px;
             background: rgba(197, 160, 89, 0.15);
-            border-radius: 2px;
+            border-radius: 3px;
             overflow: hidden;
             display: inline-block;
             margin-left: 10px;
@@ -548,7 +548,203 @@
             color: var(--slate);
         }
 
+        .model-trend {
+            font-size: 0.7rem;
+            color: var(--slate);
+            text-align: center;
+            margin-top: -0.3rem;
+            margin-bottom: 0.3rem;
+            letter-spacing: 0.4px;
+        }
+
+        .trend-arrow {
+            color: var(--slate);
+            font-weight: 600;
+        }
+        .trend-arrow.up { color: var(--success); }
+        .trend-arrow.down { color: var(--danger); }
+
         /* Tim Hortons Section */
+        /* Consensus Picks (top of page) — visually loudest section since
+           it answers the user's main question: who to bet on tonight. */
+        .consensus-section {
+            padding: 2.5rem 0 2rem;
+            background: var(--midnight-light);
+            border-top: 1px solid rgba(197, 160, 89, 0.08);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--slate);
+            font-size: 0.85rem;
+            margin: -0.5rem 0 1.5rem;
+            letter-spacing: 0.5px;
+        }
+
+        .consensus-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
+        @media (max-width: 992px) {
+            .consensus-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 576px) {
+            .consensus-grid { grid-template-columns: 1fr; }
+        }
+
+        .consensus-card {
+            background: var(--midnight);
+            border: 1px solid rgba(197, 160, 89, 0.15);
+            padding: 1.25rem 1rem 1rem;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            transition: border-color 0.15s ease, transform 0.15s ease;
+        }
+
+        .consensus-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-2px);
+        }
+
+        .consensus-card.top-pick {
+            border-color: var(--gold);
+            box-shadow: 0 0 14px rgba(197, 160, 89, 0.18);
+        }
+
+        .consensus-rank {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.7rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: rgba(197, 160, 89, 0.45);
+            line-height: 1;
+        }
+
+        .consensus-card .player-row {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .consensus-card .player-row img {
+            width: 28px;
+            height: 28px;
+            flex-shrink: 0;
+        }
+
+        .consensus-card .player-name {
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            color: var(--ivory);
+            font-size: 0.95rem;
+            line-height: 1.2;
+        }
+
+        .consensus-card .matchup {
+            font-size: 0.7rem;
+            color: var(--slate);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .consensus-bar-row {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-top: 0.2rem;
+        }
+
+        .consensus-bar {
+            flex: 1;
+            height: 6px;
+            background: rgba(197, 160, 89, 0.12);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .consensus-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+        }
+
+        .consensus-pct {
+            font-weight: 600;
+            color: var(--gold);
+            font-size: 0.85rem;
+            min-width: 42px;
+            text-align: right;
+        }
+
+        .consensus-models {
+            font-size: 0.7rem;
+            color: var(--slate);
+            margin-top: 0.2rem;
+            letter-spacing: 0.3px;
+        }
+
+        .consensus-models strong {
+            color: var(--ivory);
+            font-weight: 500;
+        }
+
+        .consensus-dots {
+            display: inline-flex;
+            gap: 3px;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+
+        .consensus-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .consensus-dot.lit {
+            background: var(--gold);
+        }
+
+        /* Per-model "yesterday" mini-strip — quick scan of all models'
+           last-night performance. */
+        .yesterday-strip {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .yesterday-pill {
+            background: var(--midnight);
+            border: 1px solid rgba(197, 160, 89, 0.1);
+            padding: 0.4rem 0.7rem;
+            font-size: 0.75rem;
+            color: var(--slate);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .yesterday-pill strong {
+            color: var(--ivory);
+            font-weight: 500;
+        }
+
+        .yesterday-pill .hits {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .yesterday-pill .hits.zero {
+            color: var(--danger);
+        }
+
         .tims-section {
             padding: 2rem 0;
             background: var(--midnight-light);
@@ -698,6 +894,24 @@
             </div>
         </div>
     </header>
+
+    <!-- Consensus Picks — answers "who do I bet on tonight?" by aggregating
+         all 8 models. A player who 6 of 8 models rank in their top 10 is
+         a stronger pick than one a single model loves but the rest ignore. -->
+    <section class="consensus-section" id="consensus-section">
+        <div class="container">
+            <h2 class="section-title">Today's <span>Consensus Picks</span></h2>
+            <p class="section-subtitle" id="consensus-subtitle">
+                Aggregated across all models — players ranked by how many models pick them
+            </p>
+            <div class="consensus-grid" id="consensus-grid">
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    Loading consensus...
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Tim Hortons Section (shown when Monte Carlo has tims data) -->
     <section class="tims-section" id="tims-section" style="display: none;">
@@ -1107,7 +1321,8 @@
                 }
 
                 if (comparison && comparison.top10_picks && comparison.top10_picks.length > 0) {
-                    renderYesterdayResults(comparison.top10_picks, data.date, comparison.hits, comparison.model);
+                    renderYesterdayResults(comparison.top10_picks, data.date, comparison.hits,
+                                           comparison.model, data.model_comparisons || []);
                 } else {
                     await loadYesterdayFallback(data);
                 }
@@ -1152,10 +1367,50 @@
             }
         }
 
-        function renderYesterdayResults(picks, date, totalHits, modelName) {
+        function renderYesterdayResults(picks, date, totalHits, modelName, allComparisons) {
             var container = document.getElementById('yesterday-top10');
             container.textContent = '';
-            var displayName = modelName === 'market_odds' ? 'Market' : (modelName === 'meta_ensemble' ? 'Meta' : (modelName === 'xg_v3' ? 'xG v3' : (modelName === 'lineup_v1' ? 'Lineup' : (modelName === 'neural_v1' ? 'NeurMLP' : (modelName === 'neural_v2' ? 'NeurEmb' : (modelName === 'monte_carlo' ? 'MC v2' : 'Linear v1'))))));
+            var labelMap = {
+                market_odds: 'Market', meta_ensemble: 'Meta', xg_v3: 'xG v3',
+                lineup_v1: 'Lineup', neural_v1: 'NeurMLP', neural_v2: 'NeurEmb',
+                monte_carlo: 'MC v2', neural_network: 'Linear v1',
+                xg_v3_synthetic: 'xG syn',
+            };
+            var displayName = labelMap[modelName] || modelName;
+
+            // All-models strip — quick-scan of every model's last-night result.
+            // Click a pill to switch the dashboard to that model.
+            if (allComparisons && allComparisons.length > 1) {
+                var sortedComps = allComparisons.slice().sort(function(a, b) {
+                    return (b.hits || 0) - (a.hits || 0);
+                });
+                var strip = document.createElement('div');
+                strip.className = 'yesterday-strip';
+                sortedComps.forEach(function(c) {
+                    var pill = document.createElement('div');
+                    pill.className = 'yesterday-pill';
+                    pill.style.cursor = 'pointer';
+                    var lbl = document.createElement('strong');
+                    lbl.textContent = labelMap[c.model] || c.model;
+                    pill.appendChild(lbl);
+                    var hits = document.createElement('span');
+                    hits.className = 'hits' + (c.hits === 0 ? ' zero' : '');
+                    hits.textContent = (c.hits || 0) + '/' + (c.total_predictions || 10);
+                    pill.appendChild(hits);
+                    pill.title = 'Click to view ' + (labelMap[c.model] || c.model)
+                                 + "'s today picks";
+                    (function(mk) {
+                        pill.addEventListener('click', function() {
+                            if (MODELS[mk]) {
+                                switchModel(mk);
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                            }
+                        });
+                    })(c.model);
+                    strip.appendChild(pill);
+                });
+                container.appendChild(strip);
+            }
 
             var hitsDiv = document.createElement('div');
             hitsDiv.className = 'hits-display';
@@ -1316,15 +1571,64 @@
                             title.appendChild(statusBadge);
                         }
                         card.appendChild(title);
+                        // Big rate (30d trailing if available, else overall)
                         var rate = document.createElement('div');
                         rate.className = 'model-rate';
-                        rate.textContent = (stats.hit_rate || 0) + '%';
+                        var headlineRate = meta && meta.trailing_30_hit_rate != null
+                            ? meta.trailing_30_hit_rate
+                            : (stats.hit_rate || 0);
+                        rate.textContent = headlineRate + '%';
                         card.appendChild(rate);
+
+                        // Trend line: 7-day rate + arrow vs 30-day
+                        if (stats.last_7_days && stats.last_7_days.hit_rate != null) {
+                            var trend = document.createElement('div');
+                            trend.className = 'model-trend';
+                            var d7 = stats.last_7_days.hit_rate;
+                            var arrow = '→';
+                            var arrowClass = '';
+                            if (d7 > headlineRate + 1) { arrow = '▲'; arrowClass = 'up'; }
+                            else if (d7 < headlineRate - 1) { arrow = '▼'; arrowClass = 'down'; }
+                            var arrowEl = document.createElement('span');
+                            arrowEl.className = 'trend-arrow ' + arrowClass;
+                            arrowEl.textContent = arrow;
+                            trend.appendChild(arrowEl);
+                            trend.appendChild(document.createTextNode(
+                                ' last 7d: ' + d7 + '%'
+                            ));
+                            card.appendChild(trend);
+                        }
+
+                        // Compact stats: hits / days, built without innerHTML
                         var sg = document.createElement('div');
                         sg.className = 'stats-grid';
                         sg.style.gridTemplateColumns = '1fr 1fr';
-                        sg.innerHTML = '<div class="stat-item"><div class="value">' + (stats.total_hits || 0) + '</div><div class="label">Hits</div></div><div class="stat-item"><div class="value">' + (stats.total_days || 0) + '</div><div class="label">Days</div></div>';
+                        var statsItems = [
+                            { value: stats.total_hits || 0, label: 'Hits' },
+                            { value: stats.total_days || 0, label: 'Days' },
+                        ];
+                        statsItems.forEach(function(item) {
+                            var si = document.createElement('div');
+                            si.className = 'stat-item';
+                            var sv = document.createElement('div');
+                            sv.className = 'value';
+                            sv.textContent = item.value;
+                            si.appendChild(sv);
+                            var sl = document.createElement('div');
+                            sl.className = 'label';
+                            sl.textContent = item.label;
+                            si.appendChild(sl);
+                            sg.appendChild(si);
+                        });
                         card.appendChild(sg);
+                        // Click-to-switch
+                        card.style.cursor = 'pointer';
+                        (function(modelKey) {
+                            card.addEventListener('click', function() {
+                                switchModel(modelKey);
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                            });
+                        })(m.key);
                         grid.appendChild(card);
                     });
 
@@ -1474,6 +1778,158 @@
         }
 
         // =====================================================================
+        // CONSENSUS PICKS — fetch every model, count top-10 appearances per
+        // player, render the players that the most models agree on.
+        // =====================================================================
+        async function loadConsensus() {
+            var grid = document.getElementById('consensus-grid');
+            var subtitle = document.getElementById('consensus-subtitle');
+            var modelKeys = Object.keys(MODELS);
+            var cb = '?v=' + Date.now();
+
+            // Fetch all 8 models in parallel; tolerate failures
+            var responses = await Promise.all(modelKeys.map(function(k) {
+                return fetch(MODELS[k].path + cb)
+                    .then(function(r) { return r.ok ? r.json() : null; })
+                    .catch(function() { return null; });
+            }));
+
+            // Aggregate: for each player, list of (model, rank, prob)
+            var TOP_N = 10;
+            var players = {};
+            var modelsAvailable = 0;
+            var sharedDate = null;
+            for (var i = 0; i < responses.length; i++) {
+                var data = responses[i];
+                if (!data || !data.predictions || data.predictions.length === 0) continue;
+                modelsAvailable++;
+                if (data.date) sharedDate = data.date;
+                var mk = modelKeys[i];
+                data.predictions.slice(0, TOP_N).forEach(function(p, idx) {
+                    var pid = p.player_id;
+                    if (!pid) return;
+                    if (!players[pid]) {
+                        players[pid] = {
+                            player_id: pid,
+                            name: p.name,
+                            team: p.team,
+                            position: p.position,
+                            matchup: p.matchup,
+                            season_goals: p.season_goals,
+                            last5_goals: p.last5_goals,
+                            models: [],
+                        };
+                    }
+                    players[pid].models.push({
+                        key: mk,
+                        rank: idx + 1,
+                        prob: p.goal_probability || 0,
+                    });
+                });
+            }
+
+            if (modelsAvailable === 0) {
+                grid.textContent = '';
+                var empty = document.createElement('div');
+                empty.className = 'no-data-message';
+                empty.textContent = 'No predictions available yet today.';
+                grid.appendChild(empty);
+                return;
+            }
+
+            // Compute aggregate metrics + sort
+            var ranked = Object.values(players).map(function(p) {
+                p.consensus_count = p.models.length;
+                p.avg_prob = p.models.reduce(function(s, m) { return s + m.prob; }, 0) / p.models.length;
+                p.avg_rank = p.models.reduce(function(s, m) { return s + m.rank; }, 0) / p.models.length;
+                return p;
+            }).sort(function(a, b) {
+                if (b.consensus_count !== a.consensus_count) return b.consensus_count - a.consensus_count;
+                return b.avg_prob - a.avg_prob;
+            });
+
+            var top = ranked.slice(0, 8);
+
+            subtitle.textContent =
+                modelsAvailable + ' models compared · ' +
+                top.length + ' players ranked · ' +
+                (sharedDate ? sharedDate : '');
+
+            grid.textContent = '';
+            top.forEach(function(p, i) {
+                var card = document.createElement('div');
+                card.className = 'consensus-card';
+                if (i < 3) card.classList.add('top-pick');
+
+                var rank = document.createElement('span');
+                rank.className = 'consensus-rank';
+                rank.textContent = (i + 1);
+                card.appendChild(rank);
+
+                // Player row: logo + name (+ matchup)
+                var pr = document.createElement('div');
+                pr.className = 'player-row';
+                var img = document.createElement('img');
+                img.src = getTeamLogo(p.team || '');
+                img.alt = p.team || '';
+                img.onerror = function() { this.style.display = 'none'; };
+                pr.appendChild(img);
+                var nm = document.createElement('div');
+                nm.style.flex = '1';
+                nm.style.minWidth = '0';
+                var pn = document.createElement('div');
+                pn.className = 'player-name';
+                pn.textContent = p.name;
+                nm.appendChild(pn);
+                var mu = document.createElement('div');
+                mu.className = 'matchup';
+                mu.textContent = p.matchup || (p.team || '');
+                nm.appendChild(mu);
+                pr.appendChild(nm);
+                card.appendChild(pr);
+
+                // Probability bar + percentage
+                var bar = document.createElement('div');
+                bar.className = 'consensus-bar-row';
+                var barWrap = document.createElement('div');
+                barWrap.className = 'consensus-bar';
+                var fill = document.createElement('div');
+                fill.className = 'consensus-bar-fill';
+                fill.style.width = Math.min(100, p.avg_prob * 100 / 0.5) + '%';
+                barWrap.appendChild(fill);
+                bar.appendChild(barWrap);
+                var pct = document.createElement('span');
+                pct.className = 'consensus-pct';
+                pct.textContent = (p.avg_prob * 100).toFixed(1) + '%';
+                bar.appendChild(pct);
+                card.appendChild(bar);
+
+                // Consensus indicator: dots + "X of Y models"
+                var cm = document.createElement('div');
+                cm.className = 'consensus-models';
+
+                var strong = document.createElement('strong');
+                strong.textContent = p.consensus_count + ' / ' + modelsAvailable;
+                cm.appendChild(strong);
+                cm.appendChild(document.createTextNode(
+                    ' models · avg rank #' + p.avg_rank.toFixed(1)
+                ));
+
+                var dots = document.createElement('span');
+                dots.className = 'consensus-dots';
+                for (var d = 0; d < modelsAvailable; d++) {
+                    var dot = document.createElement('span');
+                    dot.className = 'consensus-dot' + (d < p.consensus_count ? ' lit' : '');
+                    dots.appendChild(dot);
+                }
+                cm.appendChild(dots);
+                card.appendChild(cm);
+
+                grid.appendChild(card);
+            });
+        }
+
+        // =====================================================================
         // EVENT LISTENERS & INIT
         // =====================================================================
         document.getElementById('search-input').addEventListener('input', renderPredictions);
@@ -1483,6 +1939,7 @@
         switchModel('xg_v3');
         loadResults();
         loadStats();
+        loadConsensus();
     </script>
 </body>
 </html>
