@@ -1,9 +1,63 @@
 {
   "date": "2026-04-27",
-  "source": "timnhlassist.com",
-  "players_count": 45,
+  "source": "cached_pool",
+  "players_count": 59,
   "groups": {
     "1": [
+      {
+        "name": "Cam York",
+        "player_id": 8481546,
+        "team": "PHI",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Jamie Drysdale",
+        "player_id": 8482142,
+        "team": "PHI",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Noah Cates",
+        "player_id": 8480220,
+        "team": "PHI",
+        "position": "Forward"
+      },
+      {
+        "name": "Rasmus Ristolainen",
+        "player_id": 8477499,
+        "team": "PHI",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Travis Sanheim",
+        "player_id": 8477948,
+        "team": "PHI",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Blake Lizotte",
+        "player_id": 8481481,
+        "team": "PIT",
+        "position": "Forward"
+      },
+      {
+        "name": "Connor Dewar",
+        "player_id": 8480980,
+        "team": "PIT",
+        "position": "Forward"
+      },
+      {
+        "name": "Justin Brazeau",
+        "player_id": 8479638,
+        "team": "PIT",
+        "position": "Forward"
+      },
+      {
+        "name": "Noel Acciari",
+        "player_id": 8478569,
+        "team": "PIT",
+        "position": "Forward"
+      },
       {
         "name": "Sidney Crosby",
         "player_id": 8471675,
@@ -11,10 +65,200 @@
         "position": "Forward"
       },
       {
+        "name": "Alex Kerfoot",
+        "player_id": 8477021,
+        "team": "UTA",
+        "position": "Forward"
+      },
+      {
+        "name": "Ian Cole",
+        "player_id": 8474013,
+        "team": "UTA",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Kevin Stenlund",
+        "player_id": 8478831,
+        "team": "UTA",
+        "position": "Forward"
+      },
+      {
+        "name": "MacKenzie Weegar",
+        "player_id": 8477346,
+        "team": "UTA",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Nate Schmidt",
+        "player_id": 8477220,
+        "team": "UTA",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Brett Howden",
+        "player_id": 8479353,
+        "team": "VGK",
+        "position": "Forward"
+      },
+      {
+        "name": "Jack Eichel",
+        "player_id": 8478403,
+        "team": "VGK",
+        "position": "Forward"
+      },
+      {
+        "name": "Mark Stone",
+        "player_id": 8475913,
+        "team": "VGK",
+        "position": "Forward"
+      },
+      {
+        "name": "Noah Hanifin",
+        "player_id": 8478396,
+        "team": "VGK",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Shea Theodore",
+        "player_id": 8477447,
+        "team": "VGK",
+        "position": "Defenseman"
+      }
+    ],
+    "2": [
+      {
+        "name": "Christian Dvorak",
+        "player_id": 8477989,
+        "team": "PHI",
+        "position": "Forward"
+      },
+      {
+        "name": "Matvei Michkov",
+        "player_id": 8484387,
+        "team": "PHI",
+        "position": "Forward"
+      },
+      {
+        "name": "Noah Juulsen",
+        "player_id": 8478454,
+        "team": "PHI",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Sean Couturier",
+        "player_id": 8476461,
+        "team": "PHI",
+        "position": "Forward"
+      },
+      {
+        "name": "Trevor Zegras",
+        "player_id": 8481533,
+        "team": "PHI",
+        "position": "Forward"
+      },
+      {
         "name": "Bryan Rust",
         "player_id": 8475810,
         "team": "PIT",
         "position": "Forward"
+      },
+      {
+        "name": "Erik Karlsson",
+        "player_id": 8474578,
+        "team": "PIT",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Kevin Hayes",
+        "player_id": 8475763,
+        "team": "PIT",
+        "position": "Forward"
+      },
+      {
+        "name": "Rickard Rakell",
+        "player_id": 8476483,
+        "team": "PIT",
+        "position": "Forward"
+      },
+      {
+        "name": "Tommy Novak",
+        "player_id": 8478438,
+        "team": "PIT",
+        "position": "Forward"
+      },
+      {
+        "name": "Clayton Keller",
+        "player_id": 8479343,
+        "team": "UTA",
+        "position": "Forward"
+      },
+      {
+        "name": "Jack McBain",
+        "player_id": 8480855,
+        "team": "UTA",
+        "position": "Forward"
+      },
+      {
+        "name": "Lawson Crouse",
+        "player_id": 8478474,
+        "team": "UTA",
+        "position": "Forward"
+      },
+      {
+        "name": "Michael Carcone",
+        "player_id": 8479619,
+        "team": "UTA",
+        "position": "Forward"
+      },
+      {
+        "name": "Sean Durzi",
+        "player_id": 8480434,
+        "team": "UTA",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Colton Sissons",
+        "player_id": 8476925,
+        "team": "VGK",
+        "position": "Forward"
+      },
+      {
+        "name": "Jeremy Lauzon",
+        "player_id": 8478468,
+        "team": "VGK",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Mitchell Marner",
+        "player_id": 8478483,
+        "team": "VGK",
+        "position": "Forward"
+      },
+      {
+        "name": "Rasmus Andersson",
+        "player_id": 8478397,
+        "team": "VGK",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Tomas Hertl",
+        "player_id": 8476881,
+        "team": "VGK",
+        "position": "Forward"
+      }
+    ],
+    "3": [
+      {
+        "name": "Denver Barkey",
+        "player_id": 8484142,
+        "team": "PHI",
+        "position": "Forward"
+      },
+      {
+        "name": "Nick Seeler",
+        "player_id": 8476372,
+        "team": "PHI",
+        "position": "Defenseman"
       },
       {
         "name": "Owen Tippett",
@@ -29,34 +273,16 @@
         "position": "Forward"
       },
       {
-        "name": "Trevor Zegras",
-        "player_id": 8481533,
-        "team": "PHI",
+        "name": "Anthony Mantha",
+        "player_id": 8477511,
+        "team": "PIT",
         "position": "Forward"
       },
       {
-        "name": "Mitchell Marner",
-        "player_id": 8478483,
-        "team": "VGK",
-        "position": "Forward"
-      },
-      {
-        "name": "Tomas Hertl",
-        "player_id": 8476881,
-        "team": "VGK",
-        "position": "Forward"
-      },
-      {
-        "name": "Lawson Crouse",
-        "player_id": 8478474,
-        "team": "UTA",
-        "position": "Forward"
-      },
-      {
-        "name": "Logan Cooley",
-        "player_id": 8483431,
-        "team": "UTA",
-        "position": "Forward"
+        "name": "Connor Clifton",
+        "player_id": 8477365,
+        "team": "PIT",
+        "position": "Defenseman"
       },
       {
         "name": "Evgeni Malkin",
@@ -65,100 +291,44 @@
         "position": "Forward"
       },
       {
-        "name": "Tommy Novak",
-        "player_id": 8478438,
+        "name": "Kris Letang",
+        "player_id": 8471724,
+        "team": "PIT",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Samuel Girard",
+        "player_id": 8479398,
+        "team": "PIT",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Yegor Chinakhov",
+        "player_id": 8482475,
         "team": "PIT",
         "position": "Forward"
       },
       {
-        "name": "Reilly Smith",
-        "player_id": 8475191,
-        "team": "VGK",
+        "name": "Dylan Guenther",
+        "player_id": 8482699,
+        "team": "UTA",
         "position": "Forward"
       },
       {
-        "name": "Sean Couturier",
-        "player_id": 8476461,
-        "team": "PHI",
-        "position": "Forward"
-      },
-      {
-        "name": "MacKenzie Weegar",
-        "player_id": 8477346,
+        "name": "John Marino",
+        "player_id": 8478507,
         "team": "UTA",
         "position": "Defenseman"
       },
       {
-        "name": "Kevin Hayes",
-        "player_id": 8475763,
-        "team": "PIT",
+        "name": "Logan Cooley",
+        "player_id": 8483431,
+        "team": "UTA",
         "position": "Forward"
-      }
-    ],
-    "2": [
-      {
-        "name": "Matvei Michkov",
-        "player_id": 8484387,
-        "team": "PHI",
-        "position": "Forward"
-      },
-      {
-        "name": "Christian Dvorak",
-        "player_id": 8477989,
-        "team": "PHI",
-        "position": "Forward"
-      },
-      {
-        "name": "Noah Cates",
-        "player_id": 8480220,
-        "team": "PHI",
-        "position": "Forward"
-      },
-      {
-        "name": "Justin Brazeau",
-        "player_id": 8479638,
-        "team": "PIT",
-        "position": "Forward"
-      },
-      {
-        "name": "Erik Karlsson",
-        "player_id": 8474578,
-        "team": "PIT",
-        "position": "Defenseman"
-      },
-      {
-        "name": "Brett Howden",
-        "player_id": 8479353,
-        "team": "VGK",
-        "position": "Forward"
-      },
-      {
-        "name": "Travis Sanheim",
-        "player_id": 8477948,
-        "team": "PHI",
-        "position": "Defenseman"
       },
       {
         "name": "Mikhail Sergachev",
         "player_id": 8479410,
-        "team": "UTA",
-        "position": "Defenseman"
-      },
-      {
-        "name": "Alex Kerfoot",
-        "player_id": 8477021,
-        "team": "UTA",
-        "position": "Forward"
-      },
-      {
-        "name": "Keegan Kolesar",
-        "player_id": 8478434,
-        "team": "VGK",
-        "position": "Forward"
-      },
-      {
-        "name": "Sean Durzi",
-        "player_id": 8480434,
         "team": "UTA",
         "position": "Defenseman"
       },
@@ -169,478 +339,387 @@
         "position": "Defenseman"
       },
       {
-        "name": "Kris Letang",
-        "player_id": 8471724,
-        "team": "PIT",
-        "position": "Defenseman"
-      },
-      {
-        "name": "Noah Hanifin",
-        "player_id": 8478396,
-        "team": "VGK",
-        "position": "Defenseman"
-      },
-      {
-        "name": "Connor Clifton",
-        "player_id": 8477365,
-        "team": "PIT",
-        "position": "Defenseman"
-      }
-    ],
-    "3": [
-      {
-        "name": "Rasmus Andersson",
-        "player_id": 8478397,
-        "team": "VGK",
-        "position": "Defenseman"
-      },
-      {
-        "name": "Michael Carcone",
-        "player_id": 8479619,
-        "team": "UTA",
-        "position": "Forward"
-      },
-      {
-        "name": "Connor Dewar",
-        "player_id": 8480980,
-        "team": "PIT",
-        "position": "Forward"
-      },
-      {
-        "name": "Noel Acciari",
-        "player_id": 8478569,
-        "team": "PIT",
-        "position": "Forward"
-      },
-      {
-        "name": "Shea Theodore",
-        "player_id": 8477447,
-        "team": "VGK",
-        "position": "Defenseman"
-      },
-      {
-        "name": "Jamie Drysdale",
-        "player_id": 8482142,
-        "team": "PHI",
-        "position": "Defenseman"
-      },
-      {
-        "name": "Blake Lizotte",
-        "player_id": 8481481,
-        "team": "PIT",
-        "position": "Forward"
-      },
-      {
-        "name": "Colton Sissons",
-        "player_id": 8476925,
+        "name": "Ivan Barbashev",
+        "player_id": 8477964,
         "team": "VGK",
         "position": "Forward"
       },
       {
-        "name": "Nate Schmidt",
-        "player_id": 8477220,
-        "team": "UTA",
-        "position": "Defenseman"
-      },
-      {
-        "name": "John Marino",
-        "player_id": 8478507,
-        "team": "UTA",
-        "position": "Defenseman"
-      },
-      {
-        "name": "Kevin Stenlund",
-        "player_id": 8478831,
-        "team": "UTA",
+        "name": "Keegan Kolesar",
+        "player_id": 8478434,
+        "team": "VGK",
         "position": "Forward"
       },
       {
-        "name": "Nick Seeler",
-        "player_id": 8476372,
-        "team": "PHI",
-        "position": "Defenseman"
-      },
-      {
-        "name": "Samuel Girard",
-        "player_id": 8479398,
-        "team": "PIT",
-        "position": "Defenseman"
-      },
-      {
-        "name": "Jeremy Lauzon",
-        "player_id": 8478468,
+        "name": "Nic Dowd",
+        "player_id": 8475343,
         "team": "VGK",
-        "position": "Defenseman"
+        "position": "Forward"
       },
       {
-        "name": "Noah Juulsen",
-        "player_id": 8478454,
-        "team": "PHI",
-        "position": "Defenseman"
+        "name": "Reilly Smith",
+        "player_id": 8475191,
+        "team": "VGK",
+        "position": "Forward"
       }
     ]
   },
   "all_players": [
     {
-      "name": "Sidney Crosby",
-      "player_id": 8471675,
-      "team": "PIT",
-      "position": "Forward",
-      "goals": 29,
-      "shots": 160
-    },
-    {
-      "name": "Bryan Rust",
-      "player_id": 8475810,
-      "team": "PIT",
-      "position": "Forward",
-      "goals": 29,
-      "shots": 183
-    },
-    {
-      "name": "Owen Tippett",
-      "player_id": 8480015,
+      "name": "Cam York",
+      "player_id": 8481546,
       "team": "PHI",
-      "position": "Forward",
-      "goals": 28,
-      "shots": 220
-    },
-    {
-      "name": "Travis Konecny",
-      "player_id": 8478439,
-      "team": "PHI",
-      "position": "Forward",
-      "goals": 27,
-      "shots": 168
-    },
-    {
-      "name": "Trevor Zegras",
-      "player_id": 8481533,
-      "team": "PHI",
-      "position": "Forward",
-      "goals": 26,
-      "shots": 167
-    },
-    {
-      "name": "Mitchell Marner",
-      "player_id": 8478483,
-      "team": "VGK",
-      "position": "Forward",
-      "goals": 24,
-      "shots": 165
-    },
-    {
-      "name": "Tomas Hertl",
-      "player_id": 8476881,
-      "team": "VGK",
-      "position": "Forward",
-      "goals": 24,
-      "shots": 202
-    },
-    {
-      "name": "Lawson Crouse",
-      "player_id": 8478474,
-      "team": "UTA",
-      "position": "Forward",
-      "goals": 24,
-      "shots": 141
-    },
-    {
-      "name": "Logan Cooley",
-      "player_id": 8483431,
-      "team": "UTA",
-      "position": "Forward",
-      "goals": 24,
-      "shots": 102
-    },
-    {
-      "name": "Evgeni Malkin",
-      "player_id": 8471215,
-      "team": "PIT",
-      "position": "Forward",
-      "goals": 19,
-      "shots": 148
-    },
-    {
-      "name": "Tommy Novak",
-      "player_id": 8478438,
-      "team": "PIT",
-      "position": "Forward",
-      "goals": 16,
-      "shots": 130
-    },
-    {
-      "name": "Reilly Smith",
-      "player_id": 8475191,
-      "team": "VGK",
-      "position": "Forward",
-      "goals": 16,
-      "shots": 95
-    },
-    {
-      "name": "Sean Couturier",
-      "player_id": 8476461,
-      "team": "PHI",
-      "position": "Forward",
-      "goals": 12,
-      "shots": 119
-    },
-    {
-      "name": "MacKenzie Weegar",
-      "player_id": 8477346,
-      "team": "UTA",
-      "position": "Defenseman",
-      "goals": 4,
-      "shots": 154
-    },
-    {
-      "name": "Kevin Hayes",
-      "player_id": 8475763,
-      "team": "PIT",
-      "position": "Forward",
-      "goals": 4,
-      "shots": 45
-    },
-    {
-      "name": "Matvei Michkov",
-      "player_id": 8484387,
-      "team": "PHI",
-      "position": "Forward",
-      "goals": 20,
-      "shots": 163
+      "position": "Defenseman"
     },
     {
       "name": "Christian Dvorak",
       "player_id": 8477989,
       "team": "PHI",
-      "position": "Forward",
-      "goals": 18,
-      "shots": 151
+      "position": "Forward"
     },
     {
-      "name": "Noah Cates",
-      "player_id": 8480220,
+      "name": "Denver Barkey",
+      "player_id": 8484142,
       "team": "PHI",
-      "position": "Forward",
-      "goals": 18,
-      "shots": 132
-    },
-    {
-      "name": "Justin Brazeau",
-      "player_id": 8479638,
-      "team": "PIT",
-      "position": "Forward",
-      "goals": 17,
-      "shots": 104
-    },
-    {
-      "name": "Erik Karlsson",
-      "player_id": 8474578,
-      "team": "PIT",
-      "position": "Defenseman",
-      "goals": 15,
-      "shots": 176
-    },
-    {
-      "name": "Brett Howden",
-      "player_id": 8479353,
-      "team": "VGK",
-      "position": "Forward",
-      "goals": 12,
-      "shots": 66
-    },
-    {
-      "name": "Travis Sanheim",
-      "player_id": 8477948,
-      "team": "PHI",
-      "position": "Defenseman",
-      "goals": 11,
-      "shots": 95
-    },
-    {
-      "name": "Mikhail Sergachev",
-      "player_id": 8479410,
-      "team": "UTA",
-      "position": "Defenseman",
-      "goals": 10,
-      "shots": 159
-    },
-    {
-      "name": "Alex Kerfoot",
-      "player_id": 8477021,
-      "team": "UTA",
-      "position": "Forward",
-      "goals": 7,
-      "shots": 28
-    },
-    {
-      "name": "Keegan Kolesar",
-      "player_id": 8478434,
-      "team": "VGK",
-      "position": "Forward",
-      "goals": 6,
-      "shots": 67
-    },
-    {
-      "name": "Sean Durzi",
-      "player_id": 8480434,
-      "team": "UTA",
-      "position": "Defenseman",
-      "goals": 5,
-      "shots": 84
-    },
-    {
-      "name": "Brayden McNabb",
-      "player_id": 8475188,
-      "team": "VGK",
-      "position": "Defenseman",
-      "goals": 5,
-      "shots": 81
-    },
-    {
-      "name": "Kris Letang",
-      "player_id": 8471724,
-      "team": "PIT",
-      "position": "Defenseman",
-      "goals": 3,
-      "shots": 104
-    },
-    {
-      "name": "Noah Hanifin",
-      "player_id": 8478396,
-      "team": "VGK",
-      "position": "Defenseman",
-      "goals": 3,
-      "shots": 135
-    },
-    {
-      "name": "Connor Clifton",
-      "player_id": 8477365,
-      "team": "PIT",
-      "position": "Defenseman",
-      "goals": 2,
-      "shots": 35
-    },
-    {
-      "name": "Rasmus Andersson",
-      "player_id": 8478397,
-      "team": "VGK",
-      "position": "Defenseman",
-      "goals": 17,
-      "shots": 178
-    },
-    {
-      "name": "Michael Carcone",
-      "player_id": 8479619,
-      "team": "UTA",
-      "position": "Forward",
-      "goals": 16,
-      "shots": 147
-    },
-    {
-      "name": "Connor Dewar",
-      "player_id": 8480980,
-      "team": "PIT",
-      "position": "Forward",
-      "goals": 14,
-      "shots": 110
-    },
-    {
-      "name": "Noel Acciari",
-      "player_id": 8478569,
-      "team": "PIT",
-      "position": "Forward",
-      "goals": 13,
-      "shots": 93
-    },
-    {
-      "name": "Shea Theodore",
-      "player_id": 8477447,
-      "team": "VGK",
-      "position": "Defenseman",
-      "goals": 10,
-      "shots": 130
+      "position": "Forward"
     },
     {
       "name": "Jamie Drysdale",
       "player_id": 8482142,
       "team": "PHI",
-      "position": "Defenseman",
-      "goals": 8,
-      "shots": 101
+      "position": "Defenseman"
     },
     {
-      "name": "Blake Lizotte",
-      "player_id": 8481481,
-      "team": "PIT",
-      "position": "Forward",
-      "goals": 7,
-      "shots": 49
-    },
-    {
-      "name": "Colton Sissons",
-      "player_id": 8476925,
-      "team": "VGK",
-      "position": "Forward",
-      "goals": 6,
-      "shots": 74
-    },
-    {
-      "name": "Nate Schmidt",
-      "player_id": 8477220,
-      "team": "UTA",
-      "position": "Defenseman",
-      "goals": 5,
-      "shots": 86
-    },
-    {
-      "name": "John Marino",
-      "player_id": 8478507,
-      "team": "UTA",
-      "position": "Defenseman",
-      "goals": 4,
-      "shots": 55
-    },
-    {
-      "name": "Kevin Stenlund",
-      "player_id": 8478831,
-      "team": "UTA",
-      "position": "Forward",
-      "goals": 4,
-      "shots": 66
+      "name": "Matvei Michkov",
+      "player_id": 8484387,
+      "team": "PHI",
+      "position": "Forward"
     },
     {
       "name": "Nick Seeler",
       "player_id": 8476372,
       "team": "PHI",
-      "position": "Defenseman",
-      "goals": 4,
-      "shots": 94
+      "position": "Defenseman"
     },
     {
-      "name": "Samuel Girard",
-      "player_id": 8479398,
-      "team": "PIT",
-      "position": "Defenseman",
-      "goals": 3,
-      "shots": 41
-    },
-    {
-      "name": "Jeremy Lauzon",
-      "player_id": 8478468,
-      "team": "VGK",
-      "position": "Defenseman",
-      "goals": 1,
-      "shots": 73
+      "name": "Noah Cates",
+      "player_id": 8480220,
+      "team": "PHI",
+      "position": "Forward"
     },
     {
       "name": "Noah Juulsen",
       "player_id": 8478454,
       "team": "PHI",
-      "position": "Defenseman",
-      "goals": 1,
-      "shots": 26
+      "position": "Defenseman"
+    },
+    {
+      "name": "Owen Tippett",
+      "player_id": 8480015,
+      "team": "PHI",
+      "position": "Forward"
+    },
+    {
+      "name": "Rasmus Ristolainen",
+      "player_id": 8477499,
+      "team": "PHI",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Sean Couturier",
+      "player_id": 8476461,
+      "team": "PHI",
+      "position": "Forward"
+    },
+    {
+      "name": "Travis Konecny",
+      "player_id": 8478439,
+      "team": "PHI",
+      "position": "Forward"
+    },
+    {
+      "name": "Travis Sanheim",
+      "player_id": 8477948,
+      "team": "PHI",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Trevor Zegras",
+      "player_id": 8481533,
+      "team": "PHI",
+      "position": "Forward"
+    },
+    {
+      "name": "Anthony Mantha",
+      "player_id": 8477511,
+      "team": "PIT",
+      "position": "Forward"
+    },
+    {
+      "name": "Blake Lizotte",
+      "player_id": 8481481,
+      "team": "PIT",
+      "position": "Forward"
+    },
+    {
+      "name": "Bryan Rust",
+      "player_id": 8475810,
+      "team": "PIT",
+      "position": "Forward"
+    },
+    {
+      "name": "Connor Clifton",
+      "player_id": 8477365,
+      "team": "PIT",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Connor Dewar",
+      "player_id": 8480980,
+      "team": "PIT",
+      "position": "Forward"
+    },
+    {
+      "name": "Erik Karlsson",
+      "player_id": 8474578,
+      "team": "PIT",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Evgeni Malkin",
+      "player_id": 8471215,
+      "team": "PIT",
+      "position": "Forward"
+    },
+    {
+      "name": "Justin Brazeau",
+      "player_id": 8479638,
+      "team": "PIT",
+      "position": "Forward"
+    },
+    {
+      "name": "Kevin Hayes",
+      "player_id": 8475763,
+      "team": "PIT",
+      "position": "Forward"
+    },
+    {
+      "name": "Kris Letang",
+      "player_id": 8471724,
+      "team": "PIT",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Noel Acciari",
+      "player_id": 8478569,
+      "team": "PIT",
+      "position": "Forward"
+    },
+    {
+      "name": "Rickard Rakell",
+      "player_id": 8476483,
+      "team": "PIT",
+      "position": "Forward"
+    },
+    {
+      "name": "Samuel Girard",
+      "player_id": 8479398,
+      "team": "PIT",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Sidney Crosby",
+      "player_id": 8471675,
+      "team": "PIT",
+      "position": "Forward"
+    },
+    {
+      "name": "Tommy Novak",
+      "player_id": 8478438,
+      "team": "PIT",
+      "position": "Forward"
+    },
+    {
+      "name": "Yegor Chinakhov",
+      "player_id": 8482475,
+      "team": "PIT",
+      "position": "Forward"
+    },
+    {
+      "name": "Alex Kerfoot",
+      "player_id": 8477021,
+      "team": "UTA",
+      "position": "Forward"
+    },
+    {
+      "name": "Clayton Keller",
+      "player_id": 8479343,
+      "team": "UTA",
+      "position": "Forward"
+    },
+    {
+      "name": "Dylan Guenther",
+      "player_id": 8482699,
+      "team": "UTA",
+      "position": "Forward"
+    },
+    {
+      "name": "Ian Cole",
+      "player_id": 8474013,
+      "team": "UTA",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Jack McBain",
+      "player_id": 8480855,
+      "team": "UTA",
+      "position": "Forward"
+    },
+    {
+      "name": "John Marino",
+      "player_id": 8478507,
+      "team": "UTA",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Kevin Stenlund",
+      "player_id": 8478831,
+      "team": "UTA",
+      "position": "Forward"
+    },
+    {
+      "name": "Lawson Crouse",
+      "player_id": 8478474,
+      "team": "UTA",
+      "position": "Forward"
+    },
+    {
+      "name": "Logan Cooley",
+      "player_id": 8483431,
+      "team": "UTA",
+      "position": "Forward"
+    },
+    {
+      "name": "MacKenzie Weegar",
+      "player_id": 8477346,
+      "team": "UTA",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Michael Carcone",
+      "player_id": 8479619,
+      "team": "UTA",
+      "position": "Forward"
+    },
+    {
+      "name": "Mikhail Sergachev",
+      "player_id": 8479410,
+      "team": "UTA",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Nate Schmidt",
+      "player_id": 8477220,
+      "team": "UTA",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Sean Durzi",
+      "player_id": 8480434,
+      "team": "UTA",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Brayden McNabb",
+      "player_id": 8475188,
+      "team": "VGK",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Brett Howden",
+      "player_id": 8479353,
+      "team": "VGK",
+      "position": "Forward"
+    },
+    {
+      "name": "Colton Sissons",
+      "player_id": 8476925,
+      "team": "VGK",
+      "position": "Forward"
+    },
+    {
+      "name": "Ivan Barbashev",
+      "player_id": 8477964,
+      "team": "VGK",
+      "position": "Forward"
+    },
+    {
+      "name": "Jack Eichel",
+      "player_id": 8478403,
+      "team": "VGK",
+      "position": "Forward"
+    },
+    {
+      "name": "Jeremy Lauzon",
+      "player_id": 8478468,
+      "team": "VGK",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Keegan Kolesar",
+      "player_id": 8478434,
+      "team": "VGK",
+      "position": "Forward"
+    },
+    {
+      "name": "Mark Stone",
+      "player_id": 8475913,
+      "team": "VGK",
+      "position": "Forward"
+    },
+    {
+      "name": "Mitchell Marner",
+      "player_id": 8478483,
+      "team": "VGK",
+      "position": "Forward"
+    },
+    {
+      "name": "Nic Dowd",
+      "player_id": 8475343,
+      "team": "VGK",
+      "position": "Forward"
+    },
+    {
+      "name": "Noah Hanifin",
+      "player_id": 8478396,
+      "team": "VGK",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Rasmus Andersson",
+      "player_id": 8478397,
+      "team": "VGK",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Reilly Smith",
+      "player_id": 8475191,
+      "team": "VGK",
+      "position": "Forward"
+    },
+    {
+      "name": "Shea Theodore",
+      "player_id": 8477447,
+      "team": "VGK",
+      "position": "Defenseman"
+    },
+    {
+      "name": "Tomas Hertl",
+      "player_id": 8476881,
+      "team": "VGK",
+      "position": "Forward"
     }
   ],
-  "scraped_at": "2026-04-27T16:25:50.814692"
+  "scraped_at": "2026-04-27T17:57:42.486434",
+  "note": "Scraped from cache — source was unavailable"
 }
