@@ -817,34 +817,69 @@ for g in todays_games:
         'opponent': g['home_team'], 'is_home': False, 'game_id': g['game_id']
     }
 
-all_players = []
-# Rate-limit between teams + within team rosters. Without this the NHL API
-# silently throttles after the first few teams: today's daily run got
-# CAR/DAL fully but returned 0 players for MIN/OTT/PHI/PIT, leaving the
-# Tims pool 32 of 45 unmatched. Mirrors the pattern in monte_carlo_predict.py.
-for idx, team in enumerate(sorted(all_teams)):
-    if idx > 0:
-        time.sleep(1)
-    print(f"    Fetching {team}...", end=" ", flush=True)
-    roster = get_team_roster(team)
-    team_players = []
-    for i, p in enumerate(roster):
-        if i > 0 and i % 10 == 0:
-            time.sleep(0.5)
-        stats = get_player_stats(p['player_id'])
-        if stats:
-            p.update(stats)
-            matchup = game_matchups.get(team, {})
-            p['opponent'] = matchup.get('opponent', '')
-            p['is_home'] = matchup.get('is_home', False)
-            p['game_id'] = matchup.get('game_id', '')
-            p['matchup'] = (
-                f"{team} vs {p['opponent']}" if p['is_home']
-                else f"{team} @ {p['opponent']}"
-            )
-            team_players.append(p)
-    all_players.extend(team_players)
-    print(f"{len(team_players)} players")
+# Per-day cache of fetched roster + player stats. Three xG-pipeline
+# variants run back-to-back from the same workflow (xg_v3 main, then
+# --synthetic-only, then --lineup-adjusted). Each was independently
+# hitting the NHL roster + game-log endpoints for the same ~150 players,
+# producing a cumulative ~600 API calls in 2 minutes — enough to trip
+# sliding-window rate limits on runs 2 and 3. With the cache, only the
+# first run fetches; the rest read from disk.
+PLAYERS_CACHE_DIR = f"{Config.DATA_DIR}/cache"
+PLAYERS_CACHE_FILE = f"{PLAYERS_CACHE_DIR}/players_{Config.TODAY}.json"
+os.makedirs(PLAYERS_CACHE_DIR, exist_ok=True)
+
+all_players = None
+if os.path.exists(PLAYERS_CACHE_FILE):
+    try:
+        with open(PLAYERS_CACHE_FILE, 'r', encoding='utf-8') as f:
+            cached = json.load(f)
+        if cached.get('date') == Config.TODAY and cached.get('players'):
+            all_players = cached['players']
+            print(f"  Loaded {len(all_players)} players from cache: "
+                  f"{PLAYERS_CACHE_FILE}")
+    except Exception as e:
+        print(f"  Cache read failed ({e}); will refetch")
+        all_players = None
+
+if all_players is None:
+    all_players = []
+    # Rate-limit between teams + within team rosters. NHL API silently
+    # throttles bursts; combined with api_get's exponential backoff this
+    # spreads the load enough for first-run success.
+    for idx, team in enumerate(sorted(all_teams)):
+        if idx > 0:
+            time.sleep(1)
+        print(f"    Fetching {team}...", end=" ", flush=True)
+        roster = get_team_roster(team)
+        team_players = []
+        for i, p in enumerate(roster):
+            if i > 0 and i % 10 == 0:
+                time.sleep(0.5)
+            stats = get_player_stats(p['player_id'])
+            if stats:
+                p.update(stats)
+                matchup = game_matchups.get(team, {})
+                p['opponent'] = matchup.get('opponent', '')
+                p['is_home'] = matchup.get('is_home', False)
+                p['game_id'] = matchup.get('game_id', '')
+                p['matchup'] = (
+                    f"{team} vs {p['opponent']}" if p['is_home']
+                    else f"{team} @ {p['opponent']}"
+                )
+                team_players.append(p)
+        all_players.extend(team_players)
+        print(f"{len(team_players)} players")
+
+    # Persist for sibling runs in this workflow window
+    if all_players:
+        try:
+            with open(PLAYERS_CACHE_FILE, 'w', encoding='utf-8') as f:
+                json.dump({'date': Config.TODAY, 'players': all_players,
+                           'cached_at': datetime.now().isoformat()},
+                          f, ensure_ascii=False)
+            print(f"  Cached {len(all_players)} players to {PLAYERS_CACHE_FILE}")
+        except Exception as e:
+            print(f"  Cache write failed: {e}")
 
 print(f"\n  Total players with stats: {len(all_players)}")
 if not all_players:

@@ -209,4 +209,9 @@ __marimo__/
 # NHL predictor — regenerated daily by aggregate_player_shots.py.
 # Derived from data/xg_training/shots.csv, ~24MB of churn, no value in git.
 projects/nhl-hockey/data/player_shots/
+
+# Per-day NHL roster + player-stats cache shared between xG-pipeline runs
+# in the same workflow. Regenerated automatically; daily file accumulation.
+projects/nhl-hockey/data/cache/
+
 .claude/

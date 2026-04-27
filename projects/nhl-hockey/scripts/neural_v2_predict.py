@@ -392,28 +392,48 @@ def main():
             "opponent": g["home_team"], "is_home": False, "game_id": g["game_id"]
         }
 
-    print("\n  Fetching rosters + stats...")
-    all_players = []
-    for team in sorted(all_teams):
-        print(f"    {team}...", end=" ", flush=True)
-        roster = get_team_roster(team)
-        team_players = []
-        for p in roster:
-            stats = get_player_stats(p["player_id"])
-            if not stats:
-                continue
-            p.update(stats)
-            mu = matchups.get(team, {})
-            p["opponent"] = mu.get("opponent", "")
-            p["is_home"] = mu.get("is_home", False)
-            p["game_id"] = mu.get("game_id", "")
-            p["matchup"] = (
-                f"{team} vs {p['opponent']}" if p["is_home"]
-                else f"{team} @ {p['opponent']}"
-            )
-            team_players.append(p)
-        all_players.extend(team_players)
-        print(f"{len(team_players)}")
+    # Reuse the cache xg_predict.py wrote earlier in the same workflow run.
+    # Without this, neural_v2 independently re-fetches the same ~150 players,
+    # and at this point in the pipeline (4th in sequence) the NHL API is
+    # already throttled — yesterday's neural_v2 produced 0 predictions.
+    cache_dir = f"{Config.DATA_DIR}/cache"
+    cache_file = f"{cache_dir}/players_{Config.TODAY}.json"
+    all_players = None
+    if os.path.exists(cache_file):
+        try:
+            with open(cache_file, "r", encoding="utf-8") as f:
+                cached = json.load(f)
+            if cached.get("date") == Config.TODAY and cached.get("players"):
+                all_players = cached["players"]
+                print(f"\n  Loaded {len(all_players)} players from cache "
+                      f"(written by xg_predict.py)")
+        except Exception as e:
+            print(f"\n  Cache read failed ({e}); refetching")
+            all_players = None
+
+    if all_players is None:
+        print("\n  Fetching rosters + stats (no cache available)...")
+        all_players = []
+        for team in sorted(all_teams):
+            print(f"    {team}...", end=" ", flush=True)
+            roster = get_team_roster(team)
+            team_players = []
+            for p in roster:
+                stats = get_player_stats(p["player_id"])
+                if not stats:
+                    continue
+                p.update(stats)
+                mu = matchups.get(team, {})
+                p["opponent"] = mu.get("opponent", "")
+                p["is_home"] = mu.get("is_home", False)
+                p["game_id"] = mu.get("game_id", "")
+                p["matchup"] = (
+                    f"{team} vs {p['opponent']}" if p["is_home"]
+                    else f"{team} @ {p['opponent']}"
+                )
+                team_players.append(p)
+            all_players.extend(team_players)
+            print(f"{len(team_players)}")
 
     # Filter Tim Hortons
     tims_player_ids = None
