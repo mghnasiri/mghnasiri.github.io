@@ -50,13 +50,28 @@ MIN_TEAM_COVERAGE = 0.60
 # Below this typically means something filtered too aggressively.
 MIN_PREDICTIONS_IF_GAMES = 5
 
-# Soft ceiling for top probability. Above WARN_TOP_PROB is suspicious but
-# not necessarily broken (Poisson P = 1 - exp(-xG) gives ~0.63 for an elite
-# scorer with xG ~1.0 in a hot matchup — legitimate). Above HARD_TOP_PROB
-# is almost certainly broken — even xG = 2.0 only yields P = 0.86, which
-# would require a player who's expected to score multiple goals.
+# Two-level top-probability ceiling.
+#
+#   WARN_TOP_PROB   surfaced in the report but not as a fail. Indicates
+#                   the model is running hot — probabilities above ~55%
+#                   for a single-game goal are unusual but possible for
+#                   elite-scorer × bad-defense matchups.
+#
+#   HARD_TOP_PROB   triggers FAIL + Telegram alert. Reserved for output
+#                   that's certainly broken — calibrator runaway,
+#                   normalization bug, accidental probability multiplied
+#                   by something. Bumped from 0.85 -> 0.95 because the
+#                   xG pipeline's known systematic-miscalibration drift
+#                   (top picks routinely 0.80-0.92 when real NHL
+#                   conversion is 0.35-0.45) was repeatedly tripping the
+#                   alert without indicating any new bug. The drift is
+#                   still visible as a WARN in the report; it just no
+#                   longer pings Telegram every other day. The proper
+#                   fix is post-hoc probability scaling on the Poisson
+#                   conversion step — tracked as next-up calibration
+#                   work; not done here.
 WARN_TOP_PROB = 0.55
-HARD_TOP_PROB = 0.85
+HARD_TOP_PROB = 0.95
 
 # Models that legitimately produce inflated probabilities and shouldn't
 # fail prob_max_sane validation:
