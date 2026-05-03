@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-X3F4KE0WSF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-X3F4KE0WSF');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-adsense-account" content="ca-pub-8325932379385204">
+    <script async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8325932379385204"
+        crossorigin="anonymous"></script>
+    <script async
+        src="https://fundingchoicesmessages.google.com/i/pub-8325932379385204?ers=1"></script>
+    <script>(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {var iframe = document.createElement('iframe'); iframe.style = 'width:0;height:0;border:none;z-index:-1000;left:-1000px;top:-1000px'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}} signalGooglefcPresent();})();</script>
+
+    <title>Archive — Daily Prediction Results | NHL Goal Predictor</title>
+    <meta name="description" content="Historical archive of NHL Goal Predictor performance: daily top-10 hit rates per model, calibration drift over time, and links to each day's full prediction file and the actual goal scorers.">
+    <link rel="canonical" href="https://mghnasiri.github.io/projects/nhl-hockey/archive.html" />
+
+    <meta property="og:title" content="Archive — Daily Prediction Results">
+    <meta property="og:description" content="Historical performance of every model in the NHL Goal Predictor stack, day by day.">
+    <meta property="og:url" content="https://mghnasiri.github.io/projects/nhl-hockey/archive.html">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+
+    <style>
+        :root {
+            --midnight: #0A192F;
+            --midnight-light: #112240;
+            --gold: #C5A059;
+            --gold-light: #D4AF37;
+            --ivory: #F8F9FA;
+            --slate: #8892B0;
+            --success: #4CAF50;
+            --danger: #ef5350;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--midnight);
+            color: var(--ivory);
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-weight: 300;
+            line-height: 1.7;
+            letter-spacing: 0.01em;
+        }
+        a { color: var(--gold); text-decoration: none; }
+        a:hover { color: var(--gold-light); text-decoration: underline; }
+        .navbar {
+            background: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.25rem 0;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.1);
+        }
+        .navbar-brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            font-size: 1.25rem;
+            color: var(--ivory) !important;
+            letter-spacing: 2px;
+        }
+        .nav-link {
+            color: var(--slate) !important;
+            font-size: 0.8rem;
+            font-weight: 400;
+            margin: 0 0.85rem;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+        }
+        .nav-link:hover { color: var(--gold) !important; }
+        .article-wrap {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 6rem 1.5rem 5rem;
+        }
+        .eyebrow {
+            color: var(--gold);
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            color: var(--ivory);
+            font-size: 2.6rem;
+            line-height: 1.2;
+            letter-spacing: 1px;
+            margin-bottom: 1.25rem;
+        }
+        .deck {
+            color: var(--slate);
+            font-size: 1.05rem;
+            font-style: italic;
+            margin-bottom: 2.5rem;
+            border-left: 2px solid var(--gold);
+            padding-left: 1.1rem;
+        }
+        h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            color: var(--gold);
+            font-size: 1.55rem;
+            letter-spacing: 1px;
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+        }
+        p, li {
+            color: var(--ivory);
+            font-size: 0.96rem;
+            margin-bottom: 1rem;
+        }
+        ul { padding-left: 1.4rem; margin-bottom: 1.2rem; }
+        li { margin-bottom: 0.4rem; }
+        strong { color: var(--gold); font-weight: 500; }
+        em { color: var(--ivory); font-style: italic; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.83rem;
+            background: rgba(197, 160, 89, 0.08);
+            color: var(--gold);
+            padding: 1px 6px;
+            border-radius: 3px;
+        }
+        .archive-table {
+            width: 100%;
+            margin-top: 1.5rem;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+        }
+        .archive-table th {
+            background: var(--midnight-light);
+            color: var(--gold);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            padding: 0.7rem 0.7rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+        }
+        .archive-table td {
+            color: var(--ivory);
+            padding: 0.65rem 0.7rem;
+            border-bottom: 1px solid rgba(136, 146, 176, 0.12);
+        }
+        .archive-table td.num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            text-align: right;
+        }
+        .archive-table td.date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--gold);
+            white-space: nowrap;
+        }
+        .pill {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.5px;
+        }
+        .pill.high { background: rgba(76, 175, 80, 0.18); color: #66bb6a; }
+        .pill.mid { background: rgba(197, 160, 89, 0.15); color: var(--gold); }
+        .pill.low { background: rgba(239, 83, 80, 0.15); color: #ef9a9a; }
+        .archive-loading {
+            color: var(--slate);
+            text-align: center;
+            padding: 2rem;
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+        .archive-status {
+            color: var(--slate);
+            font-size: 0.82rem;
+            margin-top: 1rem;
+            text-align: right;
+        }
+        .ad-slot {
+            margin: 3rem 0;
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(17, 34, 64, 0.4);
+            border: 1px dashed rgba(197, 160, 89, 0.15);
+            color: var(--slate);
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        footer {
+            background: var(--midnight-light);
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            border-top: 1px solid rgba(197, 160, 89, 0.1);
+        }
+        footer p {
+            color: var(--slate);
+            font-size: 0.78rem;
+            letter-spacing: 1px;
+            margin: 0.3rem 0;
+        }
+        footer a { color: var(--slate); }
+        footer a:hover { color: var(--gold); }
+        @media (max-width: 576px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.3rem; }
+            .article-wrap { padding: 5rem 1rem 4rem; }
+            .archive-table { font-size: 0.78rem; }
+            .archive-table th, .archive-table td { padding: 0.45rem 0.4rem; }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to main content</a>
+
+    <nav class="navbar fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">M. G. NASIRI</a>
+            <div>
+                <a class="nav-link d-inline-block" href="/projects/nhl-hockey/">Predictor</a>
+                <a class="nav-link d-inline-block" href="/projects/nhl-hockey/methodology.html">Methodology</a>
+                <a class="nav-link d-inline-block" href="/projects/nhl-hockey/glossary.html">Glossary</a>
+                <a class="nav-link d-inline-block" href="/projects/nhl-hockey/faq.html">FAQ</a>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main" class="article-wrap">
+        <p class="eyebrow">Archive · NHL Goal Predictor</p>
+        <h1>How the models actually did, day by day</h1>
+
+        <p class="deck">
+            The dashboard publishes tonight's predictions. This page publishes every previous night's predictions and what actually happened. The point is honesty: when a model claims "60% chance to score" tonight, the only way to know whether 60% means anything is to check it against thousands of past 60% claims and count how often they came true.
+        </p>
+
+        <h2>What this archive measures</h2>
+
+        <p>
+            Every game day at <code>06:00 UTC</code>, the results pipeline pulls each game's box score from the NHL API, identifies who actually scored, and writes a JSON file to <code>data/results/{date}.json</code>. The file records every scorer that night plus, for each model on the site, that model's top-10 picks and a boolean indicating whether each pick scored.
+        </p>
+
+        <p>
+            Two metrics matter most for understanding archive performance:
+        </p>
+
+        <ul>
+            <li><strong>Top-10 hit rate.</strong> Of the model's ten highest-probability picks for the night, how many actually scored at least one goal? On a typical eight-game NHL slate with ~14 to 22 actual goal scorers, a coin-flip baseline is roughly 1.5 to 2 hits in any randomly chosen 10 players. A model performing well comes in around 4 to 6 hits. A model performing poorly clusters with the random baseline.</li>
+            <li><strong>Calibration.</strong> Whether the model's predicted probabilities match observed frequencies. If the model's top pick is 0.45 across a hundred nights, the actual hit rate on those 100 picks should be near 45%. Calibration is harder to read in a single archive row but easy to spot across many rows: a model whose top picks come out at "55%" but actually score at 30% is overconfident, and the validator catches this.</li>
+        </ul>
+
+        <p>
+            The table below loads the most recent ~15 days of archive data straight from the JSON files in this repository. The dates link to the raw result files; click through to see exactly which players each model picked and which of them scored.
+        </p>
+
+        <h2>Recent results</h2>
+
+        <table class="archive-table" id="archive-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th class="num">Games</th>
+                    <th class="num">Scorers</th>
+                    <th class="num">Meta top-10</th>
+                    <th class="num">xG top-10</th>
+                    <th class="num">Market top-10</th>
+                    <th>Result file</th>
+                </tr>
+            </thead>
+            <tbody id="archive-tbody">
+                <tr><td colspan="7" class="archive-loading">Loading archive&hellip;</td></tr>
+            </tbody>
+        </table>
+        <div class="archive-status" id="archive-status"></div>
+
+        <div class="ad-slot">Advertisement</div>
+
+        <h2>How to read a hit-rate number</h2>
+
+        <p>
+            A few things worth keeping in mind when scanning this archive:
+        </p>
+
+        <p>
+            <strong>One night is noise.</strong> Hockey is a high-variance scoring environment. A 22-shot game can produce zero goals; a 17-shot game can produce six. Any single date's hit rate is dominated by random scoring variance, not model quality. The archive is most useful when you read it as a moving window — averaged over the last 10–15 game days, the patterns become real.
+        </p>
+
+        <p>
+            <strong>Some nights are easier than others.</strong> A four-game NHL slate gives the models fewer chances to land top-10 picks across many matchups; a 12-game slate gives them more. Hit rates tend to cluster higher on big-slate nights for purely combinatorial reasons. The archive shows the games count alongside the hit rate so you can normalize for this.
+        </p>
+
+        <p>
+            <strong>Different models are designed for different conditions.</strong> The Market Odds model can only contribute on games where bookmakers have posted prices — typically more than half of nightly games but not all of them. The Lineup TOI model leans on recent ice time data, which is noisier early in a season than late. The Meta Ensemble inherits all of these dependencies. A blank or unusually low cell is often "the model couldn't run cleanly tonight" rather than "the model was wrong."
+        </p>
+
+        <p>
+            <strong>The honest target is consistent calibration, not maximal hit rate.</strong> A model that produces well-calibrated probabilities is more useful for decision-making than a model that occasionally lands huge nights but is overconfident on average. The validator's calibration drift alerts are a louder signal than any individual day's hit rate, which is why the daily commit log will sometimes show calibration tweaks (e.g. raising the hard top-probability ceiling) without any change to the underlying models.
+        </p>
+
+        <h2>Where the data lives</h2>
+
+        <p>
+            All result and prediction files are public in the project repository:
+        </p>
+
+        <ul>
+            <li><code>data/results/{date}.json</code> — that night's actual goal scorers plus per-model top-10 picks and whether they scored.</li>
+            <li><code>data/predictions/meta_ensemble/{date}.json</code> — that morning's Meta Ensemble predictions before games started.</li>
+            <li><code>data/predictions/{model_name}/{date}.json</code> — same for every other model on the site.</li>
+            <li><code>data/health_report.json</code> — the validator's nightly summary of recent calibration and hit-rate drift.</li>
+        </ul>
+
+        <p>
+            For full context on how each model produces its top-10, see the <a href="/projects/nhl-hockey/methodology.html">methodology page</a>. For definitions of "hit rate," "calibration," and the other terms used here, see the <a href="/projects/nhl-hockey/glossary.html">glossary</a>.
+        </p>
+
+        <p style="color: var(--slate); font-size: 0.85rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(197, 160, 89, 0.15);">
+            Last updated 2026-05-03. The table above re-fetches every page load; if you see "Loading archive…" indefinitely, the JSON endpoints are temporarily unreachable and the static text on this page is what's still authoritative.
+        </p>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Mohammad G. Nasiri</p>
+        <p>
+            <a href="/">Home</a> &nbsp;·&nbsp;
+            <a href="/projects/nhl-hockey/">Predictor</a> &nbsp;·&nbsp;
+            <a href="/projects/nhl-hockey/methodology.html">Methodology</a> &nbsp;·&nbsp;
+            <a href="/projects/nhl-hockey/glossary.html">Glossary</a> &nbsp;·&nbsp;
+            <a href="/projects/nhl-hockey/faq.html">FAQ</a> &nbsp;·&nbsp;
+            <a href="/projects/nhl-hockey/about.html">About</a> &nbsp;·&nbsp;
+            <a href="/projects/nhl-hockey/privacy.html">Privacy</a>
+        </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+
+    <script>
+    (function () {
+        const tbody = document.getElementById('archive-tbody');
+        const status = document.getElementById('archive-status');
+        const today = new Date();
+        const dates = [];
+        for (let i = 1; i <= 30; i++) {
+            const d = new Date(today.getTime() - i * 86400000);
+            dates.push(d.toISOString().slice(0, 10));
+        }
+
+        function pillClass(hits) {
+            if (hits === null || hits === undefined) return '';
+            if (hits >= 5) return 'high';
+            if (hits >= 3) return 'mid';
+            return 'low';
+        }
+
+        function findHits(modelComparisons, displayMatch) {
+            if (!Array.isArray(modelComparisons)) return null;
+            for (const m of modelComparisons) {
+                const name = (m.model_display_name || m.model || '').toLowerCase();
+                if (name.includes(displayMatch.toLowerCase())) {
+                    const picks = m.top10_picks || [];
+                    return picks.filter(p => p.scored).length;
+                }
+            }
+            return null;
+        }
+
+        async function fetchOne(date) {
+            try {
+                const r = await fetch(`./data/results/${date}.json`, { cache: 'no-store' });
+                if (!r.ok) return null;
+                return await r.json();
+            } catch (e) { return null; }
+        }
+
+        function makeCell(className, text) {
+            const td = document.createElement('td');
+            if (className) td.className = className;
+            td.textContent = text;
+            return td;
+        }
+
+        function makePillCell(className, hits) {
+            const td = document.createElement('td');
+            if (className) td.className = className;
+            if (hits === null || hits === undefined) {
+                td.textContent = '—';
+                return td;
+            }
+            const pill = document.createElement('span');
+            pill.className = 'pill ' + pillClass(hits);
+            pill.textContent = hits + '/10';
+            td.appendChild(pill);
+            return td;
+        }
+
+        function makeLinkCell(date) {
+            const td = document.createElement('td');
+            const a = document.createElement('a');
+            a.href = './data/results/' + encodeURIComponent(date) + '.json';
+            a.target = '_blank';
+            a.rel = 'noopener';
+            a.textContent = 'json';
+            td.appendChild(a);
+            return td;
+        }
+
+        function renderRow(data) {
+            const meta = findHits(data.model_comparisons, 'Meta Ensemble');
+            const xg = findHits(data.model_comparisons, 'xG XGBoost');
+            const market = findHits(data.model_comparisons, 'Market');
+            const tr = document.createElement('tr');
+            tr.appendChild(makeCell('date', String(data.date || '')));
+            tr.appendChild(makeCell('num', String(data.games_count ?? '—')));
+            tr.appendChild(makeCell('num', String(data.scorers_count ?? '—')));
+            tr.appendChild(makePillCell('num', meta));
+            tr.appendChild(makePillCell('num', xg));
+            tr.appendChild(makePillCell('num', market));
+            tr.appendChild(makeLinkCell(String(data.date || '')));
+            tbody.appendChild(tr);
+        }
+
+        async function loadArchive() {
+            tbody.replaceChildren();
+            let loaded = 0;
+            for (const d of dates) {
+                if (loaded >= 15) break;
+                const data = await fetchOne(d);
+                if (data) {
+                    renderRow(data);
+                    loaded++;
+                }
+            }
+            if (loaded === 0) {
+                const tr = document.createElement('tr');
+                const td = document.createElement('td');
+                td.colSpan = 7;
+                td.className = 'archive-loading';
+                td.textContent = 'No archive files reachable. Check that the data directory is publicly readable.';
+                tr.appendChild(td);
+                tbody.appendChild(tr);
+            } else {
+                status.textContent = 'Loaded ' + loaded + ' of the last 30 days. Older results live in the repo at data/results/.';
+            }
+        }
+
+        loadArchive();
+    })();
+    </script>
+</body>
+</html>

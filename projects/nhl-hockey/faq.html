@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-X3F4KE0WSF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-X3F4KE0WSF');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-adsense-account" content="ca-pub-8325932379385204">
+    <script async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8325932379385204"
+        crossorigin="anonymous"></script>
+    <script async
+        src="https://fundingchoicesmessages.google.com/i/pub-8325932379385204?ers=1"></script>
+    <script>(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {var iframe = document.createElement('iframe'); iframe.style = 'width:0;height:0;border:none;z-index:-1000;left:-1000px;top:-1000px'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}} signalGooglefcPresent();})();</script>
+
+    <title>FAQ — Frequently Asked Questions | NHL Goal Predictor</title>
+    <meta name="description" content="Frequently asked questions about the NHL Goal Predictor: how accurate is it, where does the data come from, is this betting advice, why eight models, how to read the consensus picks, and what the validator does.">
+    <link rel="canonical" href="https://mghnasiri.github.io/projects/nhl-hockey/faq.html" />
+
+    <meta property="og:title" content="FAQ — NHL Goal Predictor">
+    <meta property="og:description" content="Common questions about the NHL Goal Predictor: accuracy, data sources, what the predictions mean, and what they explicitly aren't.">
+    <meta property="og:url" content="https://mghnasiri.github.io/projects/nhl-hockey/faq.html">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type": "Question", "name": "Is this betting advice?",
+         "acceptedAnswer": {"@type": "Answer", "text": "No. The NHL Goal Predictor publishes probability estimates for educational and entertainment purposes only. It does not recommend bets, account for sportsbook vig, or model bankroll variance. Whether any probability estimate is profitable against a market line depends on factors this project does not estimate."}},
+        {"@type": "Question", "name": "How accurate is the predictor?",
+         "acceptedAnswer": {"@type": "Answer", "text": "Accuracy varies by model and metric. The Meta Ensemble achieves a top-10 daily hit rate (the model's top-10 picks include at least one actual scorer) substantially above random, with calibration enforced via isotonic regression. The validator publishes per-model accuracy in the daily health report."}},
+        {"@type": "Question", "name": "Where does the data come from?",
+         "acceptedAnswer": {"@type": "Answer", "text": "Player and game data come from the public NHL Stats API at api-web.nhle.com. Sportsbook implied probabilities come from The Odds API. All pre-game shot training data comes from NHL play-by-play feeds. No proprietary data sources are used."}},
+        {"@type": "Question", "name": "Why eight models?",
+         "acceptedAnswer": {"@type": "Answer", "text": "No single approach dominates this problem. Each model fills in where another is weak: market odds embed lineup information but aren't always available; xG models capture shot quality but miss deployment; Monte Carlo handles squad-level uncertainty; the meta-ensemble combines them with calibration. Running them in parallel is more robust than any single model."}}
+      ]
+    }
+    </script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+
+    <style>
+        :root {
+            --midnight: #0A192F;
+            --midnight-light: #112240;
+            --gold: #C5A059;
+            --gold-light: #D4AF37;
+            --ivory: #F8F9FA;
+            --slate: #8892B0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--midnight);
+            color: var(--ivory);
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-weight: 300;
+            line-height: 1.75;
+            letter-spacing: 0.01em;
+        }
+        a { color: var(--gold); text-decoration: none; }
+        a:hover { color: var(--gold-light); text-decoration: underline; }
+        .navbar {
+            background: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.25rem 0;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.1);
+        }
+        .navbar-brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            font-size: 1.25rem;
+            color: var(--ivory) !important;
+            letter-spacing: 2px;
+        }
+        .nav-link {
+            color: var(--slate) !important;
+            font-size: 0.8rem;
+            font-weight: 400;
+            margin: 0 0.85rem;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+        }
+        .nav-link:hover { color: var(--gold) !important; }
+        .article-wrap {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 6rem 1.5rem 5rem;
+        }
+        .eyebrow {
+            color: var(--gold);
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            color: var(--ivory);
+            font-size: 2.6rem;
+            line-height: 1.2;
+            letter-spacing: 1px;
+            margin-bottom: 1.25rem;
+        }
+        .deck {
+            color: var(--slate);
+            font-size: 1.05rem;
+            font-style: italic;
+            margin-bottom: 2.5rem;
+            border-left: 2px solid var(--gold);
+            padding-left: 1.1rem;
+        }
+        h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            color: var(--gold);
+            font-size: 1.55rem;
+            letter-spacing: 1px;
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+        }
+        .qa { margin-bottom: 2.2rem; }
+        .question {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            color: var(--ivory);
+            font-size: 1.25rem;
+            margin-bottom: 0.8rem;
+            line-height: 1.4;
+        }
+        .question::before {
+            content: "Q.";
+            color: var(--gold);
+            margin-right: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+        .answer {
+            color: var(--ivory);
+            font-size: 0.96rem;
+        }
+        .answer p { margin-bottom: 0.9rem; }
+        .answer p:last-child { margin-bottom: 0; }
+        strong { color: var(--gold); font-weight: 500; }
+        em { color: var(--ivory); font-style: italic; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.83rem;
+            background: rgba(197, 160, 89, 0.08);
+            color: var(--gold);
+            padding: 1px 6px;
+            border-radius: 3px;
+        }
+        .disclaimer {
+            background: rgba(239, 83, 80, 0.05);
+            border: 1px solid rgba(239, 83, 80, 0.25);
+            padding: 1.2rem 1.4rem;
+            margin: 1rem 0 2rem;
+            border-radius: 2px;
+        }
+        .disclaimer-label {
+            color: #ef5350;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .disclaimer p { margin-bottom: 0.6rem; font-size: 0.93rem; }
+        .disclaimer p:last-child { margin-bottom: 0; }
+        .ad-slot {
+            margin: 3rem 0;
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(17, 34, 64, 0.4);
+            border: 1px dashed rgba(197, 160, 89, 0.15);
+            color: var(--slate);
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        footer {
+            background: var(--midnight-light);
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            border-top: 1px solid rgba(197, 160, 89, 0.1);
+        }
+        footer p {
+            color: var(--slate);
+            font-size: 0.78rem;
+            letter-spacing: 1px;
+            margin: 0.3rem 0;
+        }
+        footer a { color: var(--slate); }
+        footer a:hover { color: var(--gold); }
+        @media (max-width: 576px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.3rem; }
+            .article-wrap { padding: 5rem 1rem 4rem; }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to main content</a>
+
+    <nav class="navbar fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">M. G. NASIRI</a>
+            <div>
+                <a class="nav-link d-inline-block" href="/projects/nhl-hockey/">Predictor</a>
+                <a class="nav-link d-inline-block" href="/projects/nhl-hockey/methodology.html">Methodology</a>
+                <a class="nav-link d-inline-block" href="/projects/nhl-hockey/glossary.html">Glossary</a>
+                <a class="nav-link d-inline-block" href="/projects/nhl-hockey/about.html">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main" class="article-wrap">
+        <p class="eyebrow">FAQ · NHL Goal Predictor</p>
+        <h1>Frequently asked questions</h1>
+
+        <p class="deck">
+            What this site is, what it isn't, and the answers to the questions I get most often. If your question isn't here, the <a href="/projects/nhl-hockey/methodology.html">methodology page</a> goes deeper on every model.
+        </p>
+
+        <div class="disclaimer">
+            <span class="disclaimer-label">Important disclaimer</span>
+            <p>
+                The NHL Goal Predictor is a personal data-science project published for educational and entertainment purposes. It is <strong>not betting advice</strong>, not a financial product, and not affiliated with the NHL, any team, any sportsbook, or Tim Hortons. Probability estimates are model outputs that may be wrong on any given night.
+            </p>
+            <p>
+                Sports wagering, where legal, is solo responsibility. If you or someone you know has a gambling problem, contact the National Council on Problem Gambling: <a href="https://www.ncpgambling.org/" target="_blank" rel="noopener">ncpgambling.org</a> or call 1-800-GAMBLER.
+            </p>
+        </div>
+
+        <h2>The basics</h2>
+
+        <div class="qa">
+            <p class="question">What does this site actually do?</p>
+            <div class="answer">
+                <p>
+                    Every morning, eight different statistical and machine-learning models score every NHL skater playing tonight on their probability of scoring at least one goal. The models are described in detail on the <a href="/projects/nhl-hockey/methodology.html">methodology page</a>. The dashboard publishes the consensus picks, the per-model rankings, and a daily validator report on how the models did yesterday.
+                </p>
+            </div>
+        </div>
+
+        <div class="qa">
+            <p class="question">Is this betting advice?</p>
+            <div class="answer">
+                <p>
+                    <strong>No.</strong> A probability estimate is just an estimate. Whether it is "profitable" against a sportsbook line depends on the line, the bookmaker's vig, your bankroll variance, and ultimately whether the estimate is closer to the truth than the line is — none of which this site models.
+                </p>
+                <p>
+                    The site exists because predicting goal scorers is an interesting machine-learning problem in its own right, and because I play the Tim Hortons Hockey Challenge and wanted a defensible way to make my picks. It is not a betting tool, and the predictions are not optimized to be profitable against bookmaker prices.
+                </p>
+            </div>
+        </div>
+
+        <div class="qa">
+            <p class="question">How accurate is the predictor?</p>
+            <div class="answer">
+                <p>
+                    Two ways to answer this. First, <em>ranking</em> accuracy: the Meta Ensemble's top-10 picks include at least one actual goal scorer on the large majority of game nights — a result I track in the daily health report. Second, <em>calibration</em>: the predicted probabilities are run through isotonic regression so that, for example, players the model predicts at 20% actually score about 20% of the time over a large enough window. Both metrics drift with seasonal scoring environment changes and are monitored by the validator.
+                </p>
+                <p>
+                    The honest answer is "well above random, well below perfect, and with material variance night-to-night." Don't take a single night's results as evidence either way.
+                </p>
+            </div>
+        </div>
+
+        <div class="qa">
+            <p class="question">Where does the data come from?</p>
+            <div class="answer">
+                <p>
+                    All player stats, rosters, schedules, and per-game results come from the NHL's public Stats API at <code>api-web.nhle.com</code>. Sportsbook implied probabilities come from <a href="https://the-odds-api.com" target="_blank" rel="noopener">The Odds API</a>. Per-shot training data for the xG and neural models comes from NHL play-by-play feeds, processed nightly into <code>data/xg_training/shots.csv</code>. No proprietary or paid data sources are used.
+                </p>
+            </div>
+        </div>
+
+        <h2>Models and methodology</h2>
+
+        <div class="qa">
+            <p class="question">Why eight models? Wouldn't one good one be enough?</p>
+            <div class="answer">
+                <p>
+                    Because no single approach to this problem dominates. The market is the strongest single signal — except on nights when the books haven't priced a game. The xG model is sharp on shot quality — except when a player has been scratched. The Monte Carlo simulation captures squad-level uncertainty — except that it can't tell two depth-line wingers apart. Each model has a regime where it shines and a regime where it fails. Running them in parallel and stacking the results into a calibrated ensemble is meaningfully more robust than any single model.
+                </p>
+            </div>
+        </div>
+
+        <div class="qa">
+            <p class="question">Why not just use the sportsbook odds directly?</p>
+            <div class="answer">
+                <p>
+                    A reasonable question — Market Odds v1 is genuinely the strongest single model on the site. But sportsbook lines have three weaknesses the other models compensate for. First, the books don't post anytime-scorer prices for every player in every game, so on slow nights the market line covers maybe two-thirds of the slate. Second, prices include a vig (bookmaker margin) that systematically inflates implied probabilities. Third, the books occasionally underprice rookies and call-ups whose talent is genuinely mispriced — the kind of edge a stats model can find before the market reprices.
+                </p>
+            </div>
+        </div>
+
+        <div class="qa">
+            <p class="question">What's the difference between the consensus pick and the meta-ensemble's top pick?</p>
+            <div class="answer">
+                <p>
+                    The <strong>meta-ensemble</strong> is a single trained model (LightGBM + isotonic calibration) that learns to weight base models adaptively. The <strong>consensus pick</strong> on the dashboard is the simple average of all available models' probabilities for a given player. The two often agree but not always — the consensus is more robust when one base model produces an outlier, while the meta-ensemble is more robust when the right answer requires actively favoring one base model over the others.
+                </p>
+            </div>
+        </div>
+
+        <div class="qa">
+            <p class="question">Why does Connor McDavid (or any star) not always rank #1?</p>
+            <div class="answer">
+                <p>
+                    Goal probability is not the same as <em>goal-scoring talent</em>. The right question every night is "which player has the best chance to score <em>tonight</em>, given who they're playing, who's in net, and how their lineup deploys them?" A franchise center playing against a tough shutdown defense pair on a road game with a hot opposing goalie can have a lower probability than a depth player on a top line at home against a leaky team. The models are designed to surface exactly this kind of contextual edge.
+                </p>
+            </div>
+        </div>
+
+        <div class="ad-slot">Advertisement</div>
+
+        <h2>Operations and reliability</h2>
+
+        <div class="qa">
+            <p class="question">How often is the dashboard updated?</p>
+            <div class="answer">
+                <p>
+                    Predictions update once per game day, in the morning Eastern, after the NHL has confirmed schedules and most teams have posted lineup signals. The full schedule is on the <a href="/projects/nhl-hockey/about.html">project about page</a>. Predictions are <em>not</em> live-updated as the day progresses — late lineup changes after the morning run won't be reflected until the next day's pipeline.
+                </p>
+            </div>
+        </div>
+
+        <div class="qa">
+            <p class="question">Why aren't there predictions for every game?</p>
+            <div class="answer">
+                <p>
+                    A few reasons can lead to a player or game showing up empty: the NHL API can be slow or throttled in the morning window (the pipeline retries with exponential backoff but eventually gives up); a player may not have enough season data to clear the minimum-games threshold (currently 3 games played); the sportsbook may not have posted anytime-scorer prices for that game yet, in which case the Market Odds model produces no row. The meta-ensemble can still produce a prediction without market input, but the prediction will be tagged as having lower confidence.
+                </p>
+            </div>
+        </div>
+
+        <div class="qa">
+            <p class="question">What happens during the playoffs?</p>
+            <div class="answer">
+                <p>
+                    The pipeline handles regular-season and playoff game types identically — both are filtered in via NHL <code>gameType</code> codes 2 (regular) and 3 (playoff). What changes structurally in playoffs is that fewer games are played per night, so the slate is sparser, and the Tim Hortons Hockey Challenge typically pauses for the postseason. Model accuracy in playoffs is also slightly different because shooting percentages and scoring environments shift — the validator tracks per-game-type calibration separately.
+                </p>
+            </div>
+        </div>
+
+        <div class="qa">
+            <p class="question">What about injured players or game-time scratches?</p>
+            <div class="answer">
+                <p>
+                    The Lineup TOI v1 model is the project's main defense against scratches: it scales each player's expected shots by the ratio of their recent ice time to their season average, so a player who was scratched yesterday gets pulled toward zero on the shot side. A player ruled out before the morning run won't appear at all. A player ruled out after the morning run will still appear in the predictions until the next day's pipeline; the dashboard shows the timestamp of the most recent run so you can tell how fresh the data is.
+                </p>
+            </div>
+        </div>
+
+        <h2>About the project</h2>
+
+        <div class="qa">
+            <p class="question">Is the source code open?</p>
+            <div class="answer">
+                <p>
+                    Yes. The full prediction pipeline, training scripts, validators, and dashboard are public on GitHub at <a href="https://github.com/mghnasiri" target="_blank" rel="noopener">github.com/mghnasiri</a>. You can clone the repo and run the daily pipeline locally — it requires Python 3, the dependencies in <code>requirements.txt</code>, an Odds API key (free tier works), and a few hours of API time to backfill shot data on first run.
+                </p>
+            </div>
+        </div>
+
+        <div class="qa">
+            <p class="question">Can I use this in a fantasy hockey league?</p>
+            <div class="answer">
+                <p>
+                    The model output is a single-game goal probability, which is one input among many in fantasy hockey. It's reasonable as a tiebreaker between two close lineup decisions on a given night. It is <em>not</em> useful for season-long ranking, since a player's nightly probability depends heavily on opponent and matchup, not just inherent talent.
+                </p>
+            </div>
+        </div>
+
+        <div class="qa">
+            <p class="question">Why does the site use Google AdSense?</p>
+            <div class="answer">
+                <p>
+                    Honestly, mostly out of curiosity — running an AdSense-eligible site is a learning exercise in itself, and traffic on a personal academic site is small enough that ad revenue is essentially zero. The few ad slots in the dashboard are placed where they don't interfere with the actual prediction tables, and the site uses Google Funding Choices for IAB-TCF v2 compliant consent in regions that require it (EU, UK, Switzerland).
+                </p>
+            </div>
+        </div>
+
+        <div class="qa">
+            <p class="question">What's the privacy policy?</p>
+            <div class="answer">
+                <p>
+                    The site uses Google Analytics for traffic measurement and Google AdSense for advertising. No personally identifying information is collected by the prediction pipeline itself. Full details are in the <a href="/projects/nhl-hockey/privacy.html">privacy policy</a>.
+                </p>
+            </div>
+        </div>
+
+        <div class="qa">
+            <p class="question">Who built this and why?</p>
+            <div class="answer">
+                <p>
+                    Built by <a href="/about.html">Mohammad G. Nasiri</a>, a PhD student in Operations and Decision Systems at Université Laval in Quebec City. The project began as a private tool for the Tim Hortons Hockey Challenge and grew into a full prediction stack as I added models that fixed each previous version's weaknesses. The longer story is on the <a href="/projects/nhl-hockey/about.html">about page</a>.
+                </p>
+            </div>
+        </div>
+
+        <p style="color: var(--slate); font-size: 0.85rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(197, 160, 89, 0.15);">
+            Last updated 2026-05-03. Have a question that should be here? The contact link is in the footer.
+        </p>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Mohammad G. Nasiri</p>
+        <p>
+            <a href="/">Home</a> &nbsp;·&nbsp;
+            <a href="/projects/nhl-hockey/">Predictor</a> &nbsp;·&nbsp;
+            <a href="/projects/nhl-hockey/methodology.html">Methodology</a> &nbsp;·&nbsp;
+            <a href="/projects/nhl-hockey/glossary.html">Glossary</a> &nbsp;·&nbsp;
+            <a href="/projects/nhl-hockey/about.html">About</a> &nbsp;·&nbsp;
+            <a href="/projects/nhl-hockey/privacy.html">Privacy</a>
+        </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+</body>
+</html>

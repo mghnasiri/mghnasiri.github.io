@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-X3F4KE0WSF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-X3F4KE0WSF');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-adsense-account" content="ca-pub-8325932379385204">
+    <script async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8325932379385204"
+        crossorigin="anonymous"></script>
+    <script async
+        src="https://fundingchoicesmessages.google.com/i/pub-8325932379385204?ers=1"></script>
+    <script>(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {var iframe = document.createElement('iframe'); iframe.style = 'width:0;height:0;border:none;z-index:-1000;left:-1000px;top:-1000px'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}} signalGooglefcPresent();})();</script>
+
+    <title>Glossary — NHL + ML Terms Used in This Project | Mohammad G. Nasiri</title>
+    <meta name="description" content="Plain-English definitions of every hockey statistic, machine learning concept, and probability term used by the NHL Goal Predictor: xG, TOI, calibration, isotonic regression, Poisson, anytime goal scorer, and more.">
+    <link rel="canonical" href="https://mghnasiri.github.io/projects/nhl-hockey/glossary.html" />
+
+    <meta property="og:title" content="Glossary — NHL + ML Terms Used in This Project">
+    <meta property="og:description" content="Definitions of every hockey, ML, and probability term that appears in the NHL Goal Predictor.">
+    <meta property="og:url" content="https://mghnasiri.github.io/projects/nhl-hockey/glossary.html">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Glossary — NHL + ML Terms Used in This Project">
+    <meta name="twitter:description" content="Hockey, ML, and probability terms — defined.">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+
+    <style>
+        :root {
+            --midnight: #0A192F;
+            --midnight-light: #112240;
+            --gold: #C5A059;
+            --gold-light: #D4AF37;
+            --ivory: #F8F9FA;
+            --slate: #8892B0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--midnight);
+            color: var(--ivory);
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-weight: 300;
+            line-height: 1.7;
+            letter-spacing: 0.01em;
+        }
+        a { color: var(--gold); text-decoration: none; }
+        a:hover { color: var(--gold-light); text-decoration: underline; }
+        .navbar {
+            background: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.25rem 0;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.1);
+        }
+        .navbar-brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            font-size: 1.25rem;
+            color: var(--ivory) !important;
+            letter-spacing: 2px;
+        }
+        .nav-link {
+            color: var(--slate) !important;
+            font-size: 0.8rem;
+            font-weight: 400;
+            margin: 0 0.85rem;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+        }
+        .nav-link:hover { color: var(--gold) !important; }
+        .article-wrap {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 6rem 1.5rem 5rem;
+        }
+        .eyebrow {
+            color: var(--gold);
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            color: var(--ivory);
+            font-size: 2.6rem;
+            line-height: 1.2;
+            letter-spacing: 1px;
+            margin-bottom: 1.25rem;
+        }
+        .deck {
+            color: var(--slate);
+            font-size: 1.05rem;
+            font-style: italic;
+            margin-bottom: 2rem;
+            border-left: 2px solid var(--gold);
+            padding-left: 1.1rem;
+        }
+        h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            color: var(--gold);
+            font-size: 1.55rem;
+            letter-spacing: 1px;
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+        }
+        p {
+            color: var(--ivory);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+        strong { color: var(--gold); font-weight: 500; }
+        em { color: var(--ivory); font-style: italic; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.83rem;
+            background: rgba(197, 160, 89, 0.08);
+            color: var(--gold);
+            padding: 1px 6px;
+            border-radius: 3px;
+        }
+        .toc {
+            background: var(--midnight-light);
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            padding: 1.2rem 1.4rem;
+            margin: 1.5rem 0 2.5rem;
+            border-radius: 2px;
+        }
+        .toc-label {
+            color: var(--gold);
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+        }
+        .toc a {
+            display: inline-block;
+            margin-right: 0.7rem;
+            margin-bottom: 0.3rem;
+            color: var(--ivory);
+            font-size: 0.88rem;
+        }
+        .toc a:hover { color: var(--gold); }
+        dl {
+            margin-bottom: 1rem;
+        }
+        dt {
+            color: var(--gold);
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            font-size: 1.15rem;
+            letter-spacing: 0.5px;
+            margin-top: 1.6rem;
+            margin-bottom: 0.35rem;
+        }
+        dt .acronym {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--slate);
+            margin-left: 0.6rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+        dd {
+            color: var(--ivory);
+            font-size: 0.93rem;
+            margin-left: 0;
+            margin-bottom: 0;
+        }
+        .ad-slot {
+            margin: 3rem 0;
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(17, 34, 64, 0.4);
+            border: 1px dashed rgba(197, 160, 89, 0.15);
+            color: var(--slate);
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        footer {
+            background: var(--midnight-light);
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            border-top: 1px solid rgba(197, 160, 89, 0.1);
+        }
+        footer p {
+            color: var(--slate);
+            font-size: 0.78rem;
+            letter-spacing: 1px;
+            margin: 0.3rem 0;
+        }
+        footer a { color: var(--slate); }
+        footer a:hover { color: var(--gold); }
+        @media (max-width: 576px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.3rem; }
+            .article-wrap { padding: 5rem 1rem 4rem; }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to main content</a>
+
+    <nav class="navbar fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">M. G. NASIRI</a>
+            <div>
+                <a class="nav-link d-inline-block" href="/projects/nhl-hockey/">Predictor</a>
+                <a class="nav-link d-inline-block" href="/projects/nhl-hockey/methodology.html">Methodology</a>
+                <a class="nav-link d-inline-block" href="/projects/nhl-hockey/about.html">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main" class="article-wrap">
+        <p class="eyebrow">Glossary · NHL Goal Predictor</p>
+        <h1>Hockey, machine learning, and probability — defined</h1>
+
+        <p class="deck">
+            Every term used in the methodology and across the dashboard, defined in plain English. Hockey terms first, then machine learning, then probability and evaluation. If a term in the predictor confused you, it should be here.
+        </p>
+
+        <div class="toc">
+            <div class="toc-label">Sections</div>
+            <a href="#hockey">Hockey terms</a>
+            <a href="#ml">Machine learning</a>
+            <a href="#prob">Probability &amp; evaluation</a>
+            <a href="#project">Project-specific</a>
+        </div>
+
+        <h2 id="hockey">Hockey terms</h2>
+
+        <dl>
+            <dt>Anytime goal scorer<span class="acronym">prop</span></dt>
+            <dd>A sportsbook bet that pays if the named player scores at least one goal at any point in the game (regulation, overtime, or shootout). Different from "first goal scorer" or "exact number of goals." This site's <strong>Market Odds</strong> model uses anytime-scorer prices because they line up cleanly with the binary "did the player score" target.</dd>
+
+            <dt>Empty-net goal<span class="acronym">EN</span></dt>
+            <dd>A goal scored when the opposing team has pulled their goalie, usually for an extra attacker in the final 1–2 minutes when trailing. The xG model has an explicit <code>is_empty_net</code> feature because the conditional probability of any shot going in roughly triples in that state.</dd>
+
+            <dt>Even strength<span class="acronym">EV / 5v5</span></dt>
+            <dd>Both teams have the same number of skaters on the ice, typically five-on-five. Most goals happen at even strength, but per-shot goal probability is meaningfully <em>lower</em> here than on the power play because the defense has full coverage.</dd>
+
+            <dt>Goals against per game<span class="acronym">GA/GP</span></dt>
+            <dd>How many goals a team allows per game on average across the season. Used as the <em>opponent factor</em> in the Monte Carlo and xG models — facing a team that allows 3.5 goals per game (vs the league average ~3.07) bumps the expected scoring environment by roughly 14%.</dd>
+
+            <dt>Goals for per game<span class="acronym">GF/GP</span></dt>
+            <dd>How many goals a team scores per game on average. Used in Monte Carlo as the team-offense factor that multiplies into the team's nightly expected goal total.</dd>
+
+            <dt>High-danger chance</dt>
+            <dd>A shot taken from a high-probability area, typically defined as inside the slot at a sharp-enough angle. The xG model approximates this as <code>shot_distance &lt; 30 ft AND shot_angle &lt; 30°</code> via the engineered <code>is_high_danger</code> binary feature.</dd>
+
+            <dt>Hot streak / form</dt>
+            <dd>An above-average recent scoring rate. The Monte Carlo model gives a small, bounded boost (max +30%) to players whose last-five-games goals-per-game is meaningfully higher than their season average. The xG model has its own asymmetric form blend (40% recent, 60% season).</dd>
+
+            <dt>Penalty kill<span class="acronym">PK</span></dt>
+            <dd>The defensive special-teams unit on the ice when a team is short-handed. PK goals are rare events with very different shot distributions than even-strength goals; the xG model handles this via the one-hot <code>strength_state</code> feature.</dd>
+
+            <dt>Power play<span class="acronym">PP / 5v4 / 5v3</span></dt>
+            <dd>A team has more skaters than the opponent because of a penalty. Goal-scoring rates are roughly 2–3× higher per shot here than at even strength. The Monte Carlo model includes a small power-play bonus weighted by each player's PP-goals share.</dd>
+
+            <dt>Save percentage<span class="acronym">SV%</span></dt>
+            <dd>Goalie metric: the fraction of shots faced that did not go in. Used as <code>goalie_sv_pct</code> in the Meta Ensemble's feature set, because the identity of the goalie tonight materially shifts every shooter's probability of scoring.</dd>
+
+            <dt>Slot shot</dt>
+            <dd>A shot taken from the central area in front of the net (typically inside ~20 feet). The xG model encodes this as a binary <code>is_slot_shot</code> feature; the model learns these convert at much higher rates than perimeter shots.</dd>
+
+            <dt>Strength state<span class="acronym">5v5, 5v4, 4v3, 3v3, 6v5...</span></dt>
+            <dd>The skater-count matchup at the moment of a shot. Common states: 5v5 (even strength), 5v4 (power play), 4v5 (penalty kill), 3v3 (overtime), 6v5 (extra attacker). The xG and Neural v2 models one-hot encode all observed strength states because each has a meaningfully different scoring environment.</dd>
+
+            <dt>Time on ice<span class="acronym">TOI</span></dt>
+            <dd>Total minutes a player skates in a game (or season-average per game). The Lineup TOI v1 model uses recent vs season TOI ratio to detect scratches and lineup demotions that pure scoring history misses.</dd>
+        </dl>
+
+        <h2 id="ml">Machine learning</h2>
+
+        <dl>
+            <dt>Embedding</dt>
+            <dd>A learnable dense vector (32 dimensions in Neural v2) associated with a discrete entity — here, an NHL player. The embedding lets the network represent each player as a point in a 32-dim space whose coordinates are learned during training, capturing tendencies that aren't expressible from shot-level features alone.</dd>
+
+            <dt>Feature engineering</dt>
+            <dd>Manually constructing input variables from raw data. <code>distance × angle</code>, <code>is_slot_shot</code>, and <code>is_high_danger</code> in the xG model are engineered features — they are not raw NHL API outputs, but transformations the modeler chose because they improve fit.</dd>
+
+            <dt>Hyperparameters</dt>
+            <dd>Knobs you set <em>before</em> training that aren't learned from the data: tree depth, learning rate, number of estimators, batch size, dropout rate. The xG XGBoost model uses 200 estimators at depth 5 with learning rate 0.1; the Neural v2 model uses Adam at 3e-4 with batch size 256.</dd>
+
+            <dt>Isotonic regression</dt>
+            <dd>A non-parametric monotonic function-fitter that maps raw model probabilities to calibrated frequencies. Given pairs of (predicted_prob, actual_outcome), it produces a step-wise function that's the closest non-decreasing fit. The Meta Ensemble uses this to correct miscalibration after the LightGBM model is trained.</dd>
+
+            <dt>LightGBM</dt>
+            <dd>A gradient-boosted decision tree library by Microsoft, similar to XGBoost but typically faster on large datasets. The Meta Ensemble uses LightGBM as the stacked classifier. Tree-based methods are well suited to the meta-learning problem because the input features (base-model probabilities, disagreement, goalie quality) interact non-linearly.</dd>
+
+            <dt>MLP / Multi-layer perceptron</dt>
+            <dd>A standard feed-forward neural network with one or more hidden layers. Neural MLP v1 uses sklearn's <code>MLPClassifier</code> on aggregate player features; Neural Embed v2 uses a custom PyTorch MLP with player embeddings and residual connections.</dd>
+
+            <dt>One-hot encoding</dt>
+            <dd>Representing a categorical variable (like <code>shot_type</code>) as a set of binary columns, one per category, with exactly one set to 1. The XGBoost xG model one-hot encodes 11 shot types and ~15 strength states because tree models can split on these binary indicators directly.</dd>
+
+            <dt>Overfitting</dt>
+            <dd>When a model learns idiosyncrasies of the training set that don't generalize. Symptoms: training accuracy continues to rise while validation accuracy stalls or drops. Defenses on this site: capped tree depth (5), early stopping (patience 5 epochs), held-out calibration set (last 20% of training data).</dd>
+
+            <dt>Random forest</dt>
+            <dd>An ensemble of decision trees, each trained on a random subsample of data and features. Not directly used on this site but mentioned for context — XGBoost and LightGBM are gradient-boosted variants of the same general family.</dd>
+
+            <dt>Residual block</dt>
+            <dd>A neural network module that adds its input to its output (the "skip connection"). Neural v2 stacks three of these, each containing LayerNorm → Linear → ReLU → Dropout → Linear. The skip connection makes deep networks trainable by preventing gradient signal from vanishing through too many layers.</dd>
+
+            <dt>Stacked ensemble / meta-learner</dt>
+            <dd>A model that takes other models' predictions as input features. The Meta Ensemble is a classic stack: it sees <code>p_linear</code>, <code>p_mc</code>, <code>p_xg</code>, <code>p_market</code> from the four base models and learns a re-weighting that beats any individual model. Stacking works when base models have uncorrelated errors.</dd>
+
+            <dt>StandardScaler</dt>
+            <dd>A preprocessing step that subtracts each feature's mean and divides by its standard deviation, so all features end up on the same scale. Important for neural networks (which are scale-sensitive) but irrelevant for tree models (which are not). Neural v1 uses one; xG XGBoost does not.</dd>
+
+            <dt>XGBoost</dt>
+            <dd>The most-used gradient-boosted trees library. Works by adding decision trees one at a time, each correcting the previous trees' residuals. The xG XGBoost v3 model uses 200 trees at max depth 5 with learning rate 0.1 — typical "sane defaults" for a binary classification target on tabular data.</dd>
+        </dl>
+
+        <div class="ad-slot">Advertisement</div>
+
+        <h2 id="prob">Probability and evaluation</h2>
+
+        <dl>
+            <dt>AUC / ROC curve<span class="acronym">area under curve</span></dt>
+            <dd>A ranking metric: the probability that a randomly chosen positive example is ranked above a randomly chosen negative one. The xG model's training metadata reports CV AUC ≈ 0.93. AUC is invariant to threshold choice and class imbalance, which is why it's the standard for shot-quality models.</dd>
+
+            <dt>Brier score</dt>
+            <dd>Mean squared error between predicted probabilities and binary outcomes: <code>(p − y)²</code> averaged over all predictions. Lower is better. Unlike accuracy, Brier rewards <em>confident-and-correct</em> predictions and punishes <em>confident-and-wrong</em> ones — a model that says 90% and is right gains a lot more than one that says 51% and is right.</dd>
+
+            <dt>Calibration</dt>
+            <dd>The property that predicted probabilities match actual frequencies. A perfectly calibrated model that predicts 20% for a thousand events should see the event happen ≈ 200 times. The Meta Ensemble explicitly calibrates its output via isotonic regression because raw stacked-model probabilities are typically miscalibrated.</dd>
+
+            <dt>Calibration curve / reliability diagram</dt>
+            <dd>A plot of predicted probability buckets (x-axis) against observed frequency in each bucket (y-axis). A perfectly calibrated model traces the diagonal. The validator on this site computes these for every model and flags the ensemble when its curve drifts off the diagonal.</dd>
+
+            <dt>Cross-validation<span class="acronym">CV</span></dt>
+            <dd>Splitting training data into folds, training on all-but-one and evaluating on the held-out one, repeated for each fold. Standard practice for hyperparameter selection. Time-aware variants (see <em>time-series split</em>) are necessary when temporal ordering matters — which it does here, because predictions made today wouldn't see future games during deployment.</dd>
+
+            <dt>Devig / removing the vig</dt>
+            <dd>Sportsbook prices include a margin (the "vig" or "juice") that makes implied probabilities sum to slightly more than 100%. Devigging is the process of normalizing prices to true probability estimates. The Market Odds model considered several devig schemes and uses raw averaged implied probabilities in production because the ranking is preserved either way.</dd>
+
+            <dt>Hit rate / Top-N accuracy</dt>
+            <dd>The fraction of nights on which the actual top-N goal scorers include a player the model also ranked in its top-N. The dashboard's "Yesterday's Top 10" panel is a hit-rate display: of yesterday's top-10 model picks, how many actually scored?</dd>
+
+            <dt>Implied probability</dt>
+            <dd>The probability implicit in a sportsbook price. American odds → implied probability conversion: <code>100 / (odds + 100)</code> for positive odds, <code>abs(odds) / (abs(odds) + 100)</code> for negative odds. A +200 price implies 33.3%; a −150 price implies 60%.</dd>
+
+            <dt>Log loss / cross-entropy</dt>
+            <dd>The standard probabilistic loss function for binary classification: <code>−[y·log(p) + (1−y)·log(1−p)]</code> averaged over predictions. Heavily penalizes confident-but-wrong predictions (a 99% prediction that's wrong dominates the loss). Used as the LightGBM training objective in the Meta Ensemble.</dd>
+
+            <dt>Monte Carlo simulation</dt>
+            <dd>Estimating a probability or distribution by running many random simulations and averaging the result. The Monte Carlo v2 model runs 10,000 simulated games per matchup; each simulation is a Poisson draw for total goals followed by weighted random assignment of each goal to a player. The probability output is just the fraction of sims in which the player scored.</dd>
+
+            <dt>Poisson distribution</dt>
+            <dd>The probability distribution of the count of independent rare events per fixed unit (e.g. goals per game). Parameterized by a single rate <code>λ</code>: <code>P(k events) = λ^k · e^(−λ) / k!</code>. The probability of zero events is <code>e^(−λ)</code>, so the probability of at least one is <code>1 − e^(−λ)</code> — the formula every xG-based model on this site uses to convert expected goals into a per-game probability.</dd>
+
+            <dt>Time-series split</dt>
+            <dd>A train/test split that respects temporal ordering: earlier dates train, later dates evaluate. Necessary for any model deployed to predict future events from historical data, because random splits leak future information. The Meta Ensemble's last 20% of data (chronologically) is used for calibration, not training.</dd>
+        </dl>
+
+        <h2 id="project">Project-specific terms</h2>
+
+        <dl>
+            <dt>Consensus pick</dt>
+            <dd>The dashboard's headline output: the player whose <em>average</em> goal probability across all available models is highest within a matchup group. Designed to be more robust to any single model's outlier than the meta-ensemble's top pick alone.</dd>
+
+            <dt>Hard top-prob ceiling</dt>
+            <dd>A safety check in the validator: any model output above a fixed threshold (currently 0.95) is flagged as suspect. This catches the failure mode where a stacked model produces an obviously wrong &gt; 95% probability when one base predictor returns extreme values.</dd>
+
+            <dt>Health report</dt>
+            <dd>A nightly JSON file at <code>data/health_report.json</code> generated by the validator. Records each model's recent calibration, top-N hit rate, and any flagged anomalies. The dashboard uses it to show a "model status" indicator next to each model's name.</dd>
+
+            <dt>Tim Hortons Hockey Challenge</dt>
+            <dd>A fan game published by Tim Hortons (the Canadian coffee chain). Each NHL game day, three groups of five skaters are presented; players pick one per group and earn points based on how many goals + assists their picks accumulate. The dashboard's "Tim Hortons Challenge Picks" panel shows tonight's groups with the meta-ensemble's recommended pick from each.</dd>
+
+            <dt>Tims group rankings</dt>
+            <dd>Within each Tim Hortons group of five, the model-internal ranking of those five players by predicted goal probability. The pick is just whoever ranks first within the group, not necessarily the highest-probability player overall.</dd>
+
+            <dt>xG source tag</dt>
+            <dd>A field on every xG-based prediction (<code>real_shots</code>, <code>position_prior</code>, or <code>synthetic</code>) recording which data source produced the per-shot xG estimate. Used in A/B analysis to break down hit rate by data quality — predictions tagged <code>real_shots</code> are noticeably more accurate than <code>synthetic</code> ones, which is the entire reason the real-shot pipeline exists.</dd>
+        </dl>
+
+        <p style="color: var(--slate); font-size: 0.85rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(197, 160, 89, 0.15);">
+            Last updated 2026-05-03. New terms get added as the project introduces them; if a term in the dashboard or methodology is missing here, it's an oversight.
+        </p>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Mohammad G. Nasiri</p>
+        <p>
+            <a href="/">Home</a> &nbsp;·&nbsp;
+            <a href="/projects/nhl-hockey/">Predictor</a> &nbsp;·&nbsp;
+            <a href="/projects/nhl-hockey/methodology.html">Methodology</a> &nbsp;·&nbsp;
+            <a href="/projects/nhl-hockey/about.html">About</a> &nbsp;·&nbsp;
+            <a href="/projects/nhl-hockey/privacy.html">Privacy</a>
+        </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+</body>
+</html>

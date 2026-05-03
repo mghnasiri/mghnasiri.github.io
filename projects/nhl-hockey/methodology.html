@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-X3F4KE0WSF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-X3F4KE0WSF');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-adsense-account" content="ca-pub-8325932379385204">
+    <script async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8325932379385204"
+        crossorigin="anonymous"></script>
+    <script async
+        src="https://fundingchoicesmessages.google.com/i/pub-8325932379385204?ers=1"></script>
+    <script>(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {var iframe = document.createElement('iframe'); iframe.style = 'width:0;height:0;border:none;z-index:-1000;left:-1000px;top:-1000px'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}} signalGooglefcPresent();})();</script>
+
+    <title>Methodology — How the NHL Goal Predictor Works | Mohammad G. Nasiri</title>
+    <meta name="description" content="A technical walkthrough of the eight models powering the NHL Goal Predictor: market odds, weighted linear, Monte Carlo, XGBoost xG, lineup TOI, MLP re-ranker, neural embeddings, and a LightGBM stacked meta-ensemble.">
+    <link rel="canonical" href="https://mghnasiri.github.io/projects/nhl-hockey/methodology.html" />
+
+    <meta property="og:title" content="Methodology — How the NHL Goal Predictor Works">
+    <meta property="og:description" content="The eight models behind the daily NHL goal-scorer predictions, explained end to end: features, formulas, training pipelines, and where each one fails.">
+    <meta property="og:url" content="https://mghnasiri.github.io/projects/nhl-hockey/methodology.html">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Methodology — How the NHL Goal Predictor Works">
+    <meta name="twitter:description" content="Eight goal-scoring models from market odds to neural embeddings, stacked into a calibrated ensemble.">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "Methodology — How the NHL Goal Predictor Works",
+      "description": "Technical walkthrough of the eight models that produce daily NHL goal-scorer predictions, from sportsbook implied probabilities to a LightGBM stacked meta-ensemble with isotonic calibration.",
+      "author": {
+        "@type": "Person",
+        "name": "Mohammad G. Nasiri",
+        "url": "https://mghnasiri.github.io/"
+      },
+      "datePublished": "2026-05-03",
+      "mainEntityOfPage": "https://mghnasiri.github.io/projects/nhl-hockey/methodology.html"
+    }
+    </script>
+
+    <style>
+        :root {
+            --midnight: #0A192F;
+            --midnight-light: #112240;
+            --gold: #C5A059;
+            --gold-light: #D4AF37;
+            --ivory: #F8F9FA;
+            --slate: #8892B0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--midnight);
+            color: var(--ivory);
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-weight: 300;
+            line-height: 1.75;
+            letter-spacing: 0.01em;
+        }
+        a { color: var(--gold); text-decoration: none; }
+        a:hover { color: var(--gold-light); text-decoration: underline; }
+
+        /* Nav */
+        .navbar {
+            background: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.25rem 0;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.1);
+        }
+        .navbar-brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            font-size: 1.25rem;
+            color: var(--ivory) !important;
+            letter-spacing: 2px;
+        }
+        .nav-link {
+            color: var(--slate) !important;
+            font-size: 0.8rem;
+            font-weight: 400;
+            margin: 0 0.85rem;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+        }
+        .nav-link:hover { color: var(--gold) !important; }
+
+        /* Article wrapper */
+        .article-wrap {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 6rem 1.5rem 5rem;
+        }
+        .eyebrow {
+            color: var(--gold);
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            color: var(--ivory);
+            font-size: 2.6rem;
+            line-height: 1.2;
+            letter-spacing: 1px;
+            margin-bottom: 1.25rem;
+        }
+        .deck {
+            color: var(--slate);
+            font-size: 1.05rem;
+            font-style: italic;
+            margin-bottom: 2.5rem;
+            border-left: 2px solid var(--gold);
+            padding-left: 1.1rem;
+        }
+        h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            color: var(--gold);
+            font-size: 1.7rem;
+            letter-spacing: 1px;
+            margin-top: 3.2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+        }
+        h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            color: var(--ivory);
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+            margin-top: 2.2rem;
+            margin-bottom: 0.7rem;
+        }
+        p, li {
+            color: var(--ivory);
+            font-size: 0.97rem;
+            margin-bottom: 1.05rem;
+        }
+        ul, ol { padding-left: 1.4rem; margin-bottom: 1.2rem; }
+        li { margin-bottom: 0.4rem; }
+        strong { color: var(--gold); font-weight: 500; }
+        em { color: var(--ivory); font-style: italic; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: rgba(197, 160, 89, 0.08);
+            color: var(--gold);
+            padding: 1px 6px;
+            border-radius: 3px;
+        }
+        .formula {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.88rem;
+            background: var(--midnight-light);
+            border-left: 3px solid var(--gold);
+            padding: 1rem 1.2rem;
+            margin: 1.4rem 0;
+            color: var(--ivory);
+            overflow-x: auto;
+            white-space: pre;
+        }
+        .pull {
+            background: rgba(197, 160, 89, 0.06);
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            padding: 1.1rem 1.3rem;
+            margin: 1.6rem 0;
+            border-radius: 2px;
+        }
+        .pull p:last-child { margin-bottom: 0; }
+        .pull-label {
+            color: var(--gold);
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 0.4rem;
+            display: block;
+        }
+
+        /* Models index card */
+        .models-index {
+            background: var(--midnight-light);
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            padding: 1.5rem 1.7rem;
+            margin: 2rem 0 1rem;
+            border-radius: 2px;
+        }
+        .models-index ol { margin-bottom: 0; padding-left: 1.6rem; }
+        .models-index li { margin-bottom: 0.55rem; font-size: 0.92rem; }
+        .models-index a { color: var(--ivory); }
+        .models-index a:hover { color: var(--gold); }
+        .models-index .tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            color: var(--gold);
+            margin-left: 0.5rem;
+        }
+
+        /* Ad slots */
+        .ad-slot {
+            margin: 3rem 0;
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(17, 34, 64, 0.4);
+            border: 1px dashed rgba(197, 160, 89, 0.15);
+            color: var(--slate);
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--midnight-light);
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            border-top: 1px solid rgba(197, 160, 89, 0.1);
+        }
+        footer p {
+            color: var(--slate);
+            font-size: 0.78rem;
+            letter-spacing: 1px;
+            margin: 0.3rem 0;
+        }
+        footer a { color: var(--slate); }
+        footer a:hover { color: var(--gold); }
+
+        @media (max-width: 576px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.4rem; }
+            .article-wrap { padding: 5rem 1rem 4rem; }
+            .formula { font-size: 0.78rem; padding: 0.8rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to main content</a>
+
+    <nav class="navbar fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">M. G. NASIRI</a>
+            <div>
+                <a class="nav-link d-inline-block" href="/">Home</a>
+                <a class="nav-link d-inline-block" href="/projects/nhl-hockey/">Predictor</a>
+                <a class="nav-link d-inline-block" href="/about.html">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main" class="article-wrap">
+        <p class="eyebrow">Methodology · NHL Goal Predictor</p>
+        <h1>Eight ways to guess who scores tonight</h1>
+
+        <p class="deck">
+            Predicting goal scorers is a question almost every model gets partly right and none gets fully right. This site runs eight of them in parallel — a sportsbook baseline, a hand-tuned linear formula, a Monte Carlo simulation, a tree-based xG model, a lineup-aware variant, two neural networks, and a stacked meta-ensemble that ties them together. Here is what each one actually sees, what it computes, and where it tends to fail.
+        </p>
+
+        <h2>The problem, stated honestly</h2>
+
+        <p>
+            On any given NHL game day there are roughly 12 to 24 forwards and defensemen with a non-trivial chance of scoring a goal. The marginal pick — the difference between the player ranked 25th and the player ranked 60th in tonight's slate — usually comes down to a half-percent of probability. That is well below the noise floor of any stats-only model. The interesting question is not <em>"who will score"</em> in absolute terms; it is <em>"whose probability is higher than the market thinks it is, and by how much."</em>
+        </p>
+
+        <p>
+            That framing matters because it shapes every modeling choice on this site. I am not trying to outpredict a sportsbook on the obvious favorites — Connor McDavid is going to be near the top of every model on every list every night. I am trying to find the depth-line player whose recent shooting profile, opponent matchup, and lineup role disagree productively with the consensus.
+        </p>
+
+        <p>
+            To do that I run eight different models, each one biased toward a different signal:
+        </p>
+
+        <div class="models-index">
+            <ol>
+                <li><a href="#market">Market Odds v1</a><span class="tag">market</span> — bookmaker-implied probabilities</li>
+                <li><a href="#linear">Weighted Linear v1</a><span class="tag">baseline</span> — hand-tuned linear formula</li>
+                <li><a href="#mc">Monte Carlo v2</a><span class="tag">simulation</span> — 10,000-sim Poisson assignment</li>
+                <li><a href="#xg">xG XGBoost v3</a><span class="tag">tree</span> — per-shot xG from real play-by-play</li>
+                <li><a href="#lineup">Lineup TOI v1</a><span class="tag">tree</span> — xG v3 scaled by recent ice time</li>
+                <li><a href="#neural1">Neural MLP v1</a><span class="tag">re-ranker</span> — sklearn MLP over MC features</li>
+                <li><a href="#neural2">Neural Embed v2</a><span class="tag">deep</span> — PyTorch MLP with player embeddings</li>
+                <li><a href="#meta">Meta Ensemble v1</a><span class="tag">stacked</span> — LightGBM + isotonic calibration</li>
+            </ol>
+        </div>
+
+        <h2>Inputs and ground truth</h2>
+
+        <p>
+            Every model on the site shares the same upstream data scaffolding. Every morning the pipeline:
+        </p>
+
+        <ul>
+            <li>Pulls tonight's schedule from the NHL's public API at <code>api-web.nhle.com/v1/schedule/{date}</code>.</li>
+            <li>Pulls each team's roster and per-player season stats — games played, goals, shots, shooting percentage, power-play goals, time on ice.</li>
+            <li>Pulls each player's last-five-game log to compute recent form independently from season averages.</li>
+            <li>Pulls team-level scoring stats from <code>/v1/standings/now</code> for opponent adjustments — goals for and against per game.</li>
+            <li>For the xG-based models, ingests real play-by-play shot events into a CSV (<code>data/xg_training/shots.csv</code>) and aggregates per-player shot histories into <code>data/player_shots/{pid}.json</code>.</li>
+            <li>For the market model, fetches anytime-goal-scorer odds from The Odds API across multiple US sportsbooks.</li>
+            <li>For the meta-ensemble, fetches starting-goalie projections so the stacked model can see who is in the crease tonight.</li>
+        </ul>
+
+        <p>
+            Ground truth comes from the NHL boxscore endpoint after games finish: <code>data/results/{date}.json</code> records who actually scored. That file is the spine of everything backtested on this site — every claim about model accuracy, every calibration plot, every "yesterday's top 10 vs reality" panel on the dashboard reads from it.
+        </p>
+
+        <div class="ad-slot">Advertisement</div>
+
+        <h2 id="market">1. Market Odds v1 — the wisdom of the books</h2>
+
+        <p>
+            The Market Odds model is the simplest one on the site by code size, and structurally the hardest one to beat. Sportsbooks publish "anytime goal scorer" props for nearly every skater in every game. Each price implies a probability — convert American odds to implied probability with the standard formula, average across bookmakers (the script pulls from the US and US2 regions, which covers most major books), and you have a per-player number.
+        </p>
+
+        <div class="formula">implied_prob = 100 / (odds + 100)            if odds &gt; 0
+implied_prob = abs(odds) / (abs(odds) + 100)  if odds &lt; 0</div>
+
+        <p>
+            Two things make this model strong. First, sportsbook lines embed information no public stats model can see: confirmed lineups (who is actually playing top-line tonight), starting goalies (which changes every team's scoring environment), late injury news, and sharp money that has already moved the line. Second, the lines are implicitly trained on every previous bet that was ever settled, by people whose job is to be right about exactly this question.
+        </p>
+
+        <p>
+            Two things make it weak. First, anytime-scorer prices include a vig — bookmakers' margin — so the raw averaged probabilities are inflated by a few percent across the board. The script considered several devigging schemes (per-game normalization, power-method, flat 5% shrinkage) and ended up using the raw averaged probability because the <em>ranking</em> is what matters more than the absolute level. Second, the market is sometimes slow on rookies and in-season call-ups whose shooting talent is genuinely mispriced.
+        </p>
+
+        <div class="pull">
+            <span class="pull-label">Where this model fails</span>
+            <p>Bookmaker odds aren't published for every game (early-week mid-week games have thin markets). When there are no odds, this model produces no prediction for that game and the meta-ensemble has to fall back on the other features.</p>
+        </div>
+
+        <h2 id="linear">2. Weighted Linear v1 — the dumb baseline that refuses to die</h2>
+
+        <p>
+            Every machine-learning project needs a stupidly simple baseline whose only job is to embarrass the fancy models when they don't beat it. This is mine.
+        </p>
+
+        <p>
+            The formula is hand-tuned and computed per player, then min-max normalized so the top score in any given night caps at 0.55 and the floor sits at 0.02:
+        </p>
+
+        <div class="formula">raw = 0.40 × season_goals_per_game
+    + 0.08 × season_shots_per_game
+    + 0.05 × last_5_games_goals
+    + 0.15 × season_shooting_pct
+
+prob = clip(raw / max(raw_today) × 0.55, 0.02, 0.60)</div>
+
+        <p>
+            That is it. No opponent adjustment, no home-ice factor, no goalie quality, no power-play split. The four coefficients were chosen by inspection — they roughly reflect that goals-per-game is the strongest single signal, shooting percentage matters quite a bit, and shot volume and recent form contribute smaller corrections.
+        </p>
+
+        <p>
+            This model has no business being competitive, and yet it consistently lands in the middle of the pack on hit rate. That tells me something useful: <strong>most of the predictive signal in this problem is just "who scores a lot."</strong> Models that win on top of this baseline are the ones that find the small but real edge from matchup, deployment, and form. Models that lose to it are usually overfitting.
+        </p>
+
+        <h2 id="mc">3. Monte Carlo v2 — simulating the game</h2>
+
+        <p>
+            The Monte Carlo model treats each game as a stochastic process and simulates it 10,000 times. Two pieces fit together.
+        </p>
+
+        <p>
+            <strong>Team scoring rate.</strong> First it computes how many goals each team is expected to score in this matchup:
+        </p>
+
+        <div class="formula">team_xG = league_avg
+        × (team_GF_per_game / league_avg)
+        × (opp_GA_per_game / league_avg)
+        × home_factor
+
+home_factor = 1.026 if home else 0.974</div>
+
+        <p>
+            League average sits at 3.07 goals per team per game (from the 2024–25 season). Home teams score about 2.6% more than the league average and away teams 2.6% less, which is a smaller home-ice advantage than older studies suggested.
+        </p>
+
+        <p>
+            <strong>Per-player goal share.</strong> Then for each player on each team it computes a weight that determines how likely <em>that</em> player is to take any given goal:
+        </p>
+
+        <div class="formula">weight = (season_GPG ^ 1.8)
+       × form_boost
+       × (1 + min(shots_per_game × 0.02, 0.15))
+       × (1 + (pp_goals / season_goals) × 0.10)</div>
+
+        <p>
+            Two design choices matter here. The exponent of 1.8 is the most important parameter on the entire site. NHL goal scoring is heavily skewed — a 40-goal scorer is not "10× as likely" as a 4-goal scorer, but the linear baseline implicitly treats them that way. Raising goals-per-game to a power greater than 1 pulls the distribution back toward what you actually observe in nightly box scores: stars score much more disproportionately than their season averages alone suggest.
+        </p>
+
+        <p>
+            The form boost is an asymmetric multiplier: hot players (last-five GPG &gt; season GPG × 1.5) get a small bonus capped at +30%; cold players get pulled toward season average by 0.6 + 0.4 × form_ratio. Players with no season goals but recent goals get a flat 1.3× boost so call-ups aren't permanently zeroed.
+        </p>
+
+        <p>
+            <strong>The simulation.</strong> For each of the 10,000 sims:
+        </p>
+
+        <ol>
+            <li>Draw the team's total goals from <code>Poisson(team_xG)</code>.</li>
+            <li>For each goal, randomly pick a scorer using the normalized weight vector as a categorical distribution.</li>
+            <li>Mark which players got at least one goal in this sim.</li>
+        </ol>
+
+        <p>
+            A player's predicted probability is just the fraction of sims in which they scored at least once. The strength of this model is that it captures squad-level uncertainty: a high-weight star on a low-xG team gets penalized correctly, and a low-weight depth player on a high-xG night gets the lift they should get.
+        </p>
+
+        <h2 id="xg">4. xG XGBoost v3 — a per-shot model</h2>
+
+        <p>
+            The xG model answers a different question: <em>given the geometry and context of a specific shot, what is the probability it goes in?</em>
+        </p>
+
+        <p>
+            It is an XGBoost classifier trained on the play-by-play shot table accumulated nightly into <code>data/xg_training/shots.csv</code>. The hyperparameters are unremarkable — 200 trees, max depth 5, learning rate 0.1, subsample 0.8 — chosen so the model has enough capacity for shot-context interactions without wandering into overfitting territory on the sub-100k-row training set.
+        </p>
+
+        <p>
+            The interesting part is the feature set:
+        </p>
+
+        <ul>
+            <li><strong>Geometric:</strong> shot distance, shot angle, distance × angle interaction, an <code>is_slot_shot</code> flag (distance &lt; 20 ft), an <code>is_high_danger</code> flag (distance &lt; 30 ft AND angle &lt; 30°).</li>
+            <li><strong>Game state:</strong> is_powerplay, is_rebound, is_empty_net, score_differential, period, seconds since the last event, distance from the prior event.</li>
+            <li><strong>Categorical (one-hot):</strong> shot type (wrist, snap, slap, backhand, deflected, tip-in, wrap-around, etc.) and strength state (5v5, 5v4, 5v3, 4v3, 3v3, 6v5 and the rest of the rare combinations).</li>
+        </ul>
+
+        <p>
+            The model outputs an xG per shot. To turn that into a per-game scorer probability, the prediction script:
+        </p>
+
+        <ol>
+            <li>Estimates the player's expected shot count tonight from their season shots-per-game, scaled by an opponent factor (opp_GA / league_avg), a home/away factor, and a recent-form factor.</li>
+            <li>Pulls up to the player's 60 most recent real shots from <code>data/player_shots/{pid}.json</code> (the aggregator caps storage at 60 newest-first), scores each through the XGBoost model, and takes the mean to get a per-shot xG estimate.</li>
+            <li>Computes total xG = mean per-shot xG × expected shots.</li>
+            <li>Converts to a goal probability assuming Poisson scoring: <code>P(≥1 goal) = 1 − e^(−total_xG)</code>.</li>
+        </ol>
+
+        <p>
+            For players with no recent shots in the database — rookies, just-promoted call-ups — the model falls back to a position prior (forwards have a different baseline shot profile than defensemen). If even that is missing, it generates 20 synthetic shots from the player's estimated profile, scores those, and tags the prediction's <code>xg_source</code> field so anyone reading the JSON can see the prediction came from a fallback rather than real data.
+        </p>
+
+        <h2 id="lineup">5. Lineup TOI v1 — the same xG, told who is actually playing</h2>
+
+        <p>
+            One of the longest-standing weaknesses of every public goal-scorer model is that it ranks people on their full-minutes career history even when the team has scratched them, demoted them to the fourth line, or just called up a different forward. Pure "season averages" are blind to <em>tonight's deployment</em>.
+        </p>
+
+        <p>
+            Lineup TOI v1 is the same script as xG XGBoost v3 (same training, same features, same Poisson conversion) with one extra step. After computing expected shots, it multiplies by a TOI factor:
+        </p>
+
+        <div class="formula">toi_factor = clip(recent_TOI / season_TOI, 0.05, 1.5)</div>
+
+        <p>
+            A healthy scratch with effectively zero recent TOI gets driven to a 0.05 multiplier — effectively dropped. A bottom-six guy bumped to a top-line role for the night gets boosted up to 1.5×. The clamp matters: outside that range you are mostly looking at noise (TOI estimates are noisy at the day level), so the factor refuses to multiply or divide by extreme values.
+        </p>
+
+        <p>
+            This is the model that catches the situations where xG XGBoost v3 quietly embarrasses itself by ranking a guy who was scratched yesterday at 11% to score tonight.
+        </p>
+
+        <div class="ad-slot">Advertisement</div>
+
+        <h2 id="neural1">6. Neural MLP v1 — a re-ranker over Monte Carlo</h2>
+
+        <p>
+            The first neural model on the site is intentionally modest. It is a scikit-learn <code>MLPClassifier</code> with a <code>StandardScaler</code> in front of it, trained on the same player-level rows the Monte Carlo model already produces, with the actual game outcome as the binary target.
+        </p>
+
+        <p>
+            Eleven features, in this order (the scaler is positional, so order matters):
+        </p>
+
+        <ul>
+            <li><code>avg_goals</code>, <code>avg_shots</code>, <code>shooting_pct</code> — season offensive volume.</li>
+            <li><code>pp_goals</code>, <code>pp_points</code> — power-play production.</li>
+            <li><code>recent_gpg</code>, <code>last5_goals</code>, <code>last5_shots</code> — recent form.</li>
+            <li><code>opp_ga_per_game</code>, <code>team_gf_per_game</code> — matchup context.</li>
+            <li><code>is_home</code> — binary home indicator.</li>
+        </ul>
+
+        <p>
+            At prediction time, the script reads Monte Carlo v2's <code>latest.json</code>, builds the feature matrix in the trained order, scales it, and rescores every player. The output preserves the original Monte Carlo probability as <code>mc_probability</code> so the dashboard can show the delta between the simulation and the neural re-rank.
+        </p>
+
+        <p>
+            This model is useful precisely because it shares the Monte Carlo player pool. You learn whether the neural network is consistently moving probabilities up or down for certain feature combinations, and that disagreement is itself a signal — captured later by the meta-ensemble's <code>model_disagreement</code> feature.
+        </p>
+
+        <h2 id="neural2">7. Neural Embed v2 — letting the network learn each player</h2>
+
+        <p>
+            Neural Embed v2 is the most ambitious model on the site, and structurally the most different from everything else. Instead of operating on aggregated player stats, it works at the level of individual shots, with a learnable per-player embedding so the network can capture player-specific shooting tendencies that are invisible to the xG model's hand-crafted features.
+        </p>
+
+        <p>
+            The architecture, in PyTorch:
+        </p>
+
+        <ul>
+            <li><strong>Player embedding:</strong> <code>nn.Embedding(num_players + 1, 32)</code>. Index 0 is the neutral-player fallback for unseen players.</li>
+            <li><strong>Shot projection:</strong> <code>nn.Linear(num_features, 128)</code> over the same shot-level features the XGBoost model uses (geometry, game state, one-hot shot type and strength state).</li>
+            <li><strong>Player projection:</strong> <code>nn.Linear(32, 128)</code>.</li>
+            <li><strong>Combine:</strong> the player and shot projections are summed and passed through ReLU.</li>
+            <li><strong>Three residual blocks:</strong> each is <code>LayerNorm → Linear(128, 128) → ReLU → Dropout(0.1) → Linear(128, 128)</code>, with a skip connection.</li>
+            <li><strong>Head:</strong> <code>nn.Linear(128, 1)</code> producing a single goal logit per shot.</li>
+        </ul>
+
+        <p>
+            Training: Adam optimizer at <code>3e-4</code>, batch size 256, max 50 epochs with early stopping at patience 5, 10% validation holdout. The same shot CSV that trains xG XGBoost v3 trains this. Dropout is set to 0 at inference time.
+        </p>
+
+        <p>
+            At prediction time, for each player on tonight's slate the script pulls their cached recent shots, runs each one through the network with their embedding ID, averages the per-shot probabilities, and converts to a per-game probability via the same <code>1 − e^(−total_xG)</code> Poisson assumption used by xG v3. Players not seen during training get embedding index 0 plus a positional prior on the shot side.
+        </p>
+
+        <p>
+            The point of the embedding is to let the model represent things like <em>"this defenseman tends to shoot from way out but his shots go in more often than the geometry alone predicts"</em> — a pure shot-level xG model cannot represent that, because it does not know whose shot it is looking at.
+        </p>
+
+        <h2 id="meta">8. Meta Ensemble v1 — stacking and calibration</h2>
+
+        <p>
+            The Meta Ensemble is what closes the loop. It is a LightGBM classifier with isotonic calibration on top, trained on historical predictions from the base models alongside the actual outcomes.
+        </p>
+
+        <p>
+            For each player on each historical night, the training row contains:
+        </p>
+
+        <ul>
+            <li><code>p_linear</code> — Weighted Linear v1's probability for that player.</li>
+            <li><code>p_mc</code> — Monte Carlo v2's probability.</li>
+            <li><code>p_xg</code> — xG XGBoost v3's probability.</li>
+            <li><code>p_market</code> — Market Odds v1's probability.</li>
+            <li><code>model_disagreement</code> — the standard deviation of the three stats-based probabilities (<code>std([p_linear, p_mc, p_xg])</code>; the market is excluded so the disagreement signal is about the public-data models).</li>
+            <li><code>goalie_sv_pct</code> — the starting goalie's season save percentage.</li>
+            <li><code>is_home</code> — binary home indicator.</li>
+            <li><code>opp_ga_per_game</code> — opponent goals against per game.</li>
+        </ul>
+
+        <p>
+            The target is binary: did this player score at least one goal in the actual game? LightGBM is trained with a time-series split — earlier data trains the trees, the most recent 20% of the training window is held back for calibration.
+        </p>
+
+        <p>
+            <strong>Calibration matters more than people think.</strong> Even a model with great ranking can have miscalibrated probabilities — e.g. its "20% picks" might actually score 14% of the time. That gap looks small but compounds badly in any decision built on top of the probability. The ensemble fits an <code>IsotonicRegression</code> on the held-out 20% mapping raw predictions to observed frequencies, then saves both the LightGBM model and the calibrator so inference is just <code>cal(model.predict(X))</code>.
+        </p>
+
+        <div class="pull">
+            <span class="pull-label">A note on the "disagreement" feature</span>
+            <p>One of the more interesting things the meta-model has learned is that high disagreement across the stats-based models is itself information. When all three stats models agree closely, the consensus pick is usually right. When they disagree sharply, the market is often a better tiebreaker than any of them individually — and the ensemble has implicitly learned to weight the market more heavily in those cases.</p>
+        </div>
+
+        <h2>Backtesting and validation</h2>
+
+        <p>
+            None of the above is worth anything without continuous backtesting. The <code>fetch_results.py</code> script runs after every game day and writes that night's actual goal scorers to <code>data/results/{date}.json</code>. The <code>validate_predictions.py</code> script then joins predictions to outcomes and computes per-model metrics: top-N hit rate, Brier score, log-loss, calibration curves, and the most useful diagnostic — <em>"in the last 30 days, how often did the meta-ensemble's top pick actually score?"</em>
+        </p>
+
+        <p>
+            The dashboard surfaces a daily health report at <code>data/health_report.json</code> that flags any model whose recent calibration has drifted past acceptable bounds. There is a hard top-probability ceiling (currently 0.95) that catches cases where a model produces an obviously wrong &gt;95% probability — a known failure mode in stacked models when one base predictor returns extreme values.
+        </p>
+
+        <h2>What this site is not doing</h2>
+
+        <p>
+            A few honest limits:
+        </p>
+
+        <ul>
+            <li><strong>No betting advice.</strong> These are probability estimates. Whether an estimate is profitable against a market line depends on the line, the vig, and the variance of your bankroll — none of which this project models.</li>
+            <li><strong>No game-state awareness.</strong> Predictions are static at puck-drop. They do not update as the game progresses (no live-line model here).</li>
+            <li><strong>No multi-season training (yet).</strong> The xG and neural models train on the current season's accumulated shot data only. Multi-season training is one of the deferred upgrades on the roadmap; the bottleneck is that shot tracking data has changed format across NHL API versions and merging cleanly is non-trivial.</li>
+            <li><strong>No line combinations.</strong> Knowing who is playing on which line tonight, who is on the top power play unit, and who is matched against whom would meaningfully improve predictions. That data is not reliably available from the public API in advance, only after the game.</li>
+        </ul>
+
+        <p>
+            What the site <em>is</em> doing is publishing the probabilities, the model disagreement, and the historical accuracy openly so anyone can reproduce, criticize, or improve on them. The full source is on <a href="https://github.com/mghnasiri">GitHub</a>; tonight's predictions are <a href="/projects/nhl-hockey/">on the dashboard</a>.
+        </p>
+
+        <p style="color: var(--slate); font-size: 0.85rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(197, 160, 89, 0.15);">
+            Last updated 2026-05-03. Models, features, and calibration thresholds drift; this page describes the current production pipeline, not its historical state.
+        </p>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Mohammad G. Nasiri</p>
+        <p>
+            <a href="/">Home</a> &nbsp;·&nbsp;
+            <a href="/projects/nhl-hockey/">Predictor</a> &nbsp;·&nbsp;
+            <a href="/about.html">About</a> &nbsp;·&nbsp;
+            <a href="/projects/nhl-hockey/privacy.html">Privacy</a>
+        </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+</body>
+</html>

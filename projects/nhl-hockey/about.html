@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-X3F4KE0WSF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-X3F4KE0WSF');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-adsense-account" content="ca-pub-8325932379385204">
+    <script async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8325932379385204"
+        crossorigin="anonymous"></script>
+    <script async
+        src="https://fundingchoicesmessages.google.com/i/pub-8325932379385204?ers=1"></script>
+    <script>(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {var iframe = document.createElement('iframe'); iframe.style = 'width:0;height:0;border:none;z-index:-1000;left:-1000px;top:-1000px'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}} signalGooglefcPresent();})();</script>
+
+    <title>About the NHL Goal Predictor — A Project Story | Mohammad G. Nasiri</title>
+    <meta name="description" content="The story behind the NHL Goal Predictor: why eight different models, how the daily pipeline runs, what running it for a season has actually taught me, and what's deferred for the next iteration.">
+    <link rel="canonical" href="https://mghnasiri.github.io/projects/nhl-hockey/about.html" />
+
+    <meta property="og:title" content="About the NHL Goal Predictor — A Project Story">
+    <meta property="og:description" content="Why eight models, what the daily pipeline does, and what running this for a season has taught me.">
+    <meta property="og:url" content="https://mghnasiri.github.io/projects/nhl-hockey/about.html">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="About the NHL Goal Predictor — A Project Story">
+    <meta name="twitter:description" content="Why eight models, what the daily pipeline does, what I've learned.">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+
+    <style>
+        :root {
+            --midnight: #0A192F;
+            --midnight-light: #112240;
+            --gold: #C5A059;
+            --gold-light: #D4AF37;
+            --ivory: #F8F9FA;
+            --slate: #8892B0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--midnight);
+            color: var(--ivory);
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-weight: 300;
+            line-height: 1.75;
+            letter-spacing: 0.01em;
+        }
+        a { color: var(--gold); text-decoration: none; }
+        a:hover { color: var(--gold-light); text-decoration: underline; }
+        .navbar {
+            background: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.25rem 0;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.1);
+        }
+        .navbar-brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            font-size: 1.25rem;
+            color: var(--ivory) !important;
+            letter-spacing: 2px;
+        }
+        .nav-link {
+            color: var(--slate) !important;
+            font-size: 0.8rem;
+            font-weight: 400;
+            margin: 0 0.85rem;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+        }
+        .nav-link:hover { color: var(--gold) !important; }
+        .article-wrap {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 6rem 1.5rem 5rem;
+        }
+        .eyebrow {
+            color: var(--gold);
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            color: var(--ivory);
+            font-size: 2.6rem;
+            line-height: 1.2;
+            letter-spacing: 1px;
+            margin-bottom: 1.25rem;
+        }
+        .deck {
+            color: var(--slate);
+            font-size: 1.05rem;
+            font-style: italic;
+            margin-bottom: 2.5rem;
+            border-left: 2px solid var(--gold);
+            padding-left: 1.1rem;
+        }
+        h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            color: var(--gold);
+            font-size: 1.7rem;
+            letter-spacing: 1px;
+            margin-top: 3.2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+        }
+        p, li {
+            color: var(--ivory);
+            font-size: 0.97rem;
+            margin-bottom: 1.05rem;
+        }
+        ul, ol { padding-left: 1.4rem; margin-bottom: 1.2rem; }
+        li { margin-bottom: 0.4rem; }
+        strong { color: var(--gold); font-weight: 500; }
+        em { color: var(--ivory); font-style: italic; }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: rgba(197, 160, 89, 0.08);
+            color: var(--gold);
+            padding: 1px 6px;
+            border-radius: 3px;
+        }
+        .timeline {
+            background: var(--midnight-light);
+            border-left: 3px solid var(--gold);
+            padding: 1.2rem 1.4rem;
+            margin: 1.6rem 0;
+        }
+        .timeline-row {
+            display: flex;
+            gap: 1.1rem;
+            padding: 0.45rem 0;
+            border-bottom: 1px solid rgba(136, 146, 176, 0.12);
+            font-size: 0.9rem;
+        }
+        .timeline-row:last-child { border-bottom: none; }
+        .timeline-time {
+            color: var(--gold);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            min-width: 5.2rem;
+            flex-shrink: 0;
+        }
+        .timeline-what { color: var(--ivory); }
+        .ad-slot {
+            margin: 3rem 0;
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(17, 34, 64, 0.4);
+            border: 1px dashed rgba(197, 160, 89, 0.15);
+            color: var(--slate);
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        footer {
+            background: var(--midnight-light);
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            border-top: 1px solid rgba(197, 160, 89, 0.1);
+        }
+        footer p {
+            color: var(--slate);
+            font-size: 0.78rem;
+            letter-spacing: 1px;
+            margin: 0.3rem 0;
+        }
+        footer a { color: var(--slate); }
+        footer a:hover { color: var(--gold); }
+        @media (max-width: 576px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.4rem; }
+            .article-wrap { padding: 5rem 1rem 4rem; }
+            .timeline-row { flex-direction: column; gap: 0.2rem; }
+            .timeline-time { min-width: auto; }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to main content</a>
+
+    <nav class="navbar fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">M. G. NASIRI</a>
+            <div>
+                <a class="nav-link d-inline-block" href="/projects/nhl-hockey/">Predictor</a>
+                <a class="nav-link d-inline-block" href="/projects/nhl-hockey/methodology.html">Methodology</a>
+                <a class="nav-link d-inline-block" href="/about.html">Site About</a>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main" class="article-wrap">
+        <p class="eyebrow">About the project</p>
+        <h1>Eight models in a Quebec apartment</h1>
+
+        <p class="deck">
+            This project began as a private spreadsheet for the Tim Hortons Hockey Challenge and ended up as a daily-publishing prediction stack with eight models, a stacked meta-ensemble, and a calibration validator that tells me when my own models are lying. This page is the story of how it got there, what runs every morning, and what I have not yet built.
+        </p>
+
+        <h2>Why this exists</h2>
+
+        <p>
+            The Tim Hortons Hockey Challenge gives players a list of three groups of five NHL skaters per night and asks you to pick one player from each group whose total goals + assists for the night are higher than the players you didn't pick. It is mostly a casual game. It is also, structurally, a forced-choice ranking task — exactly the shape of problem statistics actually gives you traction on.
+        </p>
+
+        <p>
+            The first version of this project lived in a Google Sheet. I was averaging a few features by hand, scoring the player pool, and submitting picks. That worked badly enough — and was tedious enough — that I rewrote it as a Python script. The script worked well enough that I added another model. Then the second model disagreed with the first model often enough that I added a third to break ties. Then I noticed the first model was actually better than the third on certain matchups, and the only way to learn <em>which</em> matchups was to keep both models and measure. Roughly that pattern, repeated, is how I ended up with eight.
+        </p>
+
+        <p>
+            The whole point of running this many models is that <strong>no single approach to this problem dominates</strong>. A market-implied probability is great information but is silent on a third of the night's games where the books haven't posted. A pure xG model is sharp on shot quality but blind to whether a guy was a healthy scratch yesterday. A Monte Carlo simulation captures squad-level uncertainty but is mediocre at picking between two depth-line wingers. Each model fills in where another is weak.
+        </p>
+
+        <h2>The eight models, one paragraph each</h2>
+
+        <p>
+            <strong>Market Odds v1</strong> averages anytime-goal-scorer odds across major US sportsbooks and converts them to probabilities. Strongest single model on most nights; missing entirely on others.
+        </p>
+
+        <p>
+            <strong>Weighted Linear v1</strong> is a hand-tuned formula on season averages — the dumb baseline whose job is to embarrass the fancy models when they don't beat it. It often does.
+        </p>
+
+        <p>
+            <strong>Monte Carlo v2</strong> simulates each game 10,000 times: Poisson-draw the team's goals, then assign each goal to a player weighted by season scoring rate raised to the 1.8 power. The exponent is the trick — it captures how much more disproportionately stars score than their averages alone suggest.
+        </p>
+
+        <p>
+            <strong>xG XGBoost v3</strong> is a per-shot expected-goals model trained on play-by-play data and converted to a per-game probability via the player's expected shot count. The conversion is a Poisson assumption: <code>P(≥1 goal) = 1 − e^(−total_xG)</code>.
+        </p>
+
+        <p>
+            <strong>Lineup TOI v1</strong> is the same model as xG XGBoost v3, with one extra step that scales expected shots by the ratio of the player's recent ice time to their season average. It catches the cases where everyone else is still ranking a player who got benched yesterday.
+        </p>
+
+        <p>
+            <strong>Neural MLP v1</strong> is a small scikit-learn neural network that re-ranks the Monte Carlo output using player-level aggregate features. It learns where Monte Carlo is consistently too generous or too stingy.
+        </p>
+
+        <p>
+            <strong>Neural Embed v2</strong> is a PyTorch MLP with learnable 32-dimensional player embeddings on top of shot-level features. It's the only model on the site that can represent <em>"this defenseman's shots go in more often than the geometry alone predicts."</em>
+        </p>
+
+        <p>
+            <strong>Meta Ensemble v1</strong> stacks four base models (linear, MC, xG, market) plus disagreement, goalie, and matchup features into a LightGBM classifier with isotonic calibration on top. This is the model the site treats as canonical.
+        </p>
+
+        <p>
+            The technical writeup of every model — features, formulas, hyperparameters, failure modes — lives in <a href="/projects/nhl-hockey/methodology.html">methodology</a>.
+        </p>
+
+        <div class="ad-slot">Advertisement</div>
+
+        <h2>What the daily pipeline actually does</h2>
+
+        <p>
+            Every morning, a chain of GitHub Actions cron jobs runs, scheduled around when the day's matchups stabilize and lineup signals start to firm up. Times below are UTC; the schedule is timed to morning Eastern.
+        </p>
+
+        <div class="timeline">
+            <div class="timeline-row">
+                <div class="timeline-time">06:00</div>
+                <div class="timeline-what">Results pipeline writes yesterday's actual goal scorers to <code>data/results/</code> from the NHL boxscore endpoint.</div>
+            </div>
+            <div class="timeline-row">
+                <div class="timeline-time">14:00</div>
+                <div class="timeline-what">Monte Carlo v2 runs first; it builds the canonical player pool that downstream models reuse.</div>
+            </div>
+            <div class="timeline-row">
+                <div class="timeline-time">14:05</div>
+                <div class="timeline-what">xG XGBoost v3 + Lineup TOI v1 run from the shared shot pipeline.</div>
+            </div>
+            <div class="timeline-row">
+                <div class="timeline-time">14:30</div>
+                <div class="timeline-what">Market Odds v1 fetches anytime-goal-scorer prices from The Odds API.</div>
+            </div>
+            <div class="timeline-row">
+                <div class="timeline-time">15:00</div>
+                <div class="timeline-what">Weighted Linear v1 runs (legacy schedule, kept independent so it's never gated by the others).</div>
+            </div>
+            <div class="timeline-row">
+                <div class="timeline-time">15:20</div>
+                <div class="timeline-what">Meta Ensemble v1 reads all base predictions and produces the calibrated final ranking.</div>
+            </div>
+            <div class="timeline-row">
+                <div class="timeline-time">16:30</div>
+                <div class="timeline-what">Health Check validates every model's outputs and writes <code>data/health_report.json</code>.</div>
+            </div>
+            <div class="timeline-row">
+                <div class="timeline-time">monthly</div>
+                <div class="timeline-what">Neural v2 trainer retrains the player-embedding model on accumulated shot data.</div>
+            </div>
+        </div>
+
+        <p>
+            Each step writes its output as JSON into <code>data/predictions/{model_name}/</code> and commits to the repo. The dashboard you land on at <a href="/projects/nhl-hockey/">the predictor page</a> is plain static HTML that fetches those JSON files at load time. There is no backend; there is no database; there is a pipeline of small Python scripts and a folder of JSON files.
+        </p>
+
+        <h2>What running this for a season has taught me</h2>
+
+        <p>
+            A few things that were not obvious to me before:
+        </p>
+
+        <p>
+            <strong>The market is the strongest single feature, but it isn't a ceiling.</strong> The Meta Ensemble outperforms the market on its own roughly often enough to justify the rest of the stack — most of the lift comes from cases where the market hasn't priced a lineup change or a goalie matchup that the other models see clearly.
+        </p>
+
+        <p>
+            <strong>Calibration drifts.</strong> Models trained months ago against a different scoring environment quietly become overconfident — they keep predicting "20% to score" with the same calibration as before, but the league's overall scoring rate has shifted, or the opposing-goalie quality distribution has changed. The validator now flags this. The most recent calibration tweak, raising the hard top-probability ceiling from 0.85 to 0.95, was driven by exactly this kind of drift.
+        </p>
+
+        <p>
+            <strong>API throttling will eat you alive.</strong> The early version of this pipeline fetched every player's stats from scratch in every model. With six models running, that meant six separate hits on the same NHL endpoint per player per day. The fix was a per-day shared roster cache — predictable, boring, and the single biggest reliability improvement of the project.
+        </p>
+
+        <p>
+            <strong>Real shots beat synthetic shots by a lot.</strong> The xG model originally generated 20 fake shots per player from a position-based profile and scored those. Replacing that with the player's real recent shots from play-by-play data was the biggest predictive lift the site has had — and the simplest technical change. The fanciest model on this site is not the neural network with embeddings; it's the one that finally got to look at real data.
+        </p>
+
+        <h2>What I haven't built yet</h2>
+
+        <p>
+            Three deferred upgrades, in roughly the order I expect to tackle them:
+        </p>
+
+        <ul>
+            <li><strong>Multi-season training.</strong> Every model on the site is retrained from the current season only. Adding a few prior seasons of play-by-play data would help the xG and neural models in particular — more shots, more strength-state coverage, more rare-event examples like 3v3 overtime goals. The bottleneck is that the NHL's API has changed shot-tracking format across seasons and merging cleanly is more work than it sounds.</li>
+            <li><strong>Line combinations and pre-game deployment.</strong> Knowing in advance who is on each team's top line, who is on PP1, and who is matched against whom would push every model's accuracy up materially. The data exists publicly via beat reporters and projected lines sites; ingesting it reliably is a different problem.</li>
+            <li><strong>Neural sequence model.</strong> A model that treats a player's shot history as a sequence rather than as an unordered bag could capture form trajectories and matchup-specific patterns that the current architecture flattens away. This is the speculative one — I am not confident the dataset is large enough to support it without overfitting.</li>
+        </ul>
+
+        <p>
+            None of these are urgent. The pipeline as it stands runs reliably, the meta-ensemble is calibrated, and the daily output is good enough that I find it interesting most nights. The deferred list exists so that when I do come back to expand the project, I am not picking from feel.
+        </p>
+
+        <h2>Where to read more</h2>
+
+        <ul>
+            <li>The full source is at <a href="https://github.com/mghnasiri">github.com/mghnasiri</a>.</li>
+            <li>The <a href="/projects/nhl-hockey/methodology.html">methodology page</a> goes deep on each model's features, formulas, training, and conversion to per-game probability.</li>
+            <li><a href="/projects/nhl-hockey/">Tonight's predictions</a> live on the dashboard, refreshed every morning.</li>
+            <li>For the privacy and data-handling details, see the <a href="/projects/nhl-hockey/privacy.html">privacy policy</a>.</li>
+        </ul>
+
+        <p style="color: var(--slate); font-size: 0.85rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(197, 160, 89, 0.15);">
+            Last updated 2026-05-03. Model schedule and feature lists drift as the project evolves; this page reflects the current pipeline, not its historical state.
+        </p>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Mohammad G. Nasiri</p>
+        <p>
+            <a href="/">Home</a> &nbsp;·&nbsp;
+            <a href="/projects/nhl-hockey/">Predictor</a> &nbsp;·&nbsp;
+            <a href="/projects/nhl-hockey/methodology.html">Methodology</a> &nbsp;·&nbsp;
+            <a href="/projects/nhl-hockey/privacy.html">Privacy</a>
+        </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+</body>
+</html>
