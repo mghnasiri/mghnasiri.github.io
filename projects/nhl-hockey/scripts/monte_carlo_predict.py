@@ -192,6 +192,7 @@ def get_player_stats(player_id):
     last5_goals = sum(g.get('goals', 0) for g in last5)
     last5_shots = sum(g.get('shots', 0) for g in last5)
     last5_count = len(last5)
+    last5_toi = sum(_parse_toi(g.get('toi', '0:00')) for g in last5)
     recent_gpg = last5_goals / last5_count if last5_count > 0 else 0
 
     return {
@@ -203,6 +204,10 @@ def get_player_stats(player_id):
         'pp_goals': pp_goals,
         'pp_points': pp_points,
         'avg_toi_minutes': round(total_toi / gp, 1) if gp > 0 else 0,
+        # recent_toi_minutes mirrors xg_predict.py's schema so the
+        # shared per-day player cache is interchangeable between
+        # MC and xG. lineup_v1 needs this field.
+        'recent_toi_minutes': round(last5_toi / last5_count, 1) if last5_count > 0 else 0,
         'avg_goals': round(season_gpg, 4),
         'avg_shots': round(shots / gp, 2) if gp > 0 else 0,
         'shooting_pct': round(shooting_pct, 4),
@@ -486,32 +491,73 @@ for g in todays_games:
         'opponent': g['home_team'], 'is_home': False, 'game_id': g['game_id']
     }
 
-all_players = []
-for idx, team in enumerate(sorted(all_teams)):
-    if idx > 0:
-        time.sleep(1)  # Rate limit: pause between teams
-    print(f"   Fetching {team}...", end=" ", flush=True)
-    roster = get_team_roster(team)
-    team_players = []
+# Per-day cross-script cache (shared with xg_predict.py + neural_v2_predict.py).
+# MC v2 runs first in the daily pipeline at 14:00 UTC. Without the cache,
+# any rate-limit hit during MC's 200+ API calls leaves the cascade broken
+# (see 2026-05-06: MC got only ANA → neural_v1 + meta_ensemble inherited
+# the failure). With the cache, when one script writes a complete fetch,
+# any later sibling can skip its own fetch entirely. If MC fails first,
+# xG's later fetch still populates the cache for downstream scripts.
+PLAYERS_CACHE_DIR = f"{Config.DATA_DIR}/cache"
+PLAYERS_CACHE_FILE = f"{PLAYERS_CACHE_DIR}/players_{Config.TODAY}.json"
+os.makedirs(PLAYERS_CACHE_DIR, exist_ok=True)
 
-    for i, p in enumerate(roster):
-        if i > 0 and i % 10 == 0:
-            time.sleep(0.5)  # Rate limit: pause every 10 players
-        stats = get_player_stats(p['player_id'])
-        if stats:
-            p.update(stats)
-            matchup = game_matchups.get(team, {})
-            p['opponent'] = matchup.get('opponent', '')
-            p['is_home'] = matchup.get('is_home', False)
-            p['game_id'] = matchup.get('game_id', '')
-            p['matchup'] = (
-                f"{team} vs {p['opponent']}" if p['is_home']
-                else f"{team} @ {p['opponent']}"
-            )
-            team_players.append(p)
+all_players = None
+if os.path.exists(PLAYERS_CACHE_FILE):
+    try:
+        with open(PLAYERS_CACHE_FILE, 'r', encoding='utf-8') as f:
+            cached = json.load(f)
+        if cached.get('date') == Config.TODAY and cached.get('players'):
+            all_players = cached['players']
+            print(f"   Loaded {len(all_players)} players from cache: "
+                  f"{PLAYERS_CACHE_FILE}")
+    except Exception as e:
+        print(f"   Cache read failed ({e}); will refetch")
+        all_players = None
 
-    all_players.extend(team_players)
-    print(f"{len(team_players)} players")
+if all_players is None:
+    all_players = []
+    for idx, team in enumerate(sorted(all_teams)):
+        if idx > 0:
+            time.sleep(1)  # Rate limit: pause between teams
+        print(f"   Fetching {team}...", end=" ", flush=True)
+        roster = get_team_roster(team)
+        team_players = []
+
+        for i, p in enumerate(roster):
+            if i > 0 and i % 10 == 0:
+                time.sleep(0.5)  # Rate limit: pause every 10 players
+            stats = get_player_stats(p['player_id'])
+            if stats:
+                p.update(stats)
+                matchup = game_matchups.get(team, {})
+                p['opponent'] = matchup.get('opponent', '')
+                p['is_home'] = matchup.get('is_home', False)
+                p['game_id'] = matchup.get('game_id', '')
+                p['matchup'] = (
+                    f"{team} vs {p['opponent']}" if p['is_home']
+                    else f"{team} @ {p['opponent']}"
+                )
+                team_players.append(p)
+
+        all_players.extend(team_players)
+        print(f"{len(team_players)} players")
+
+    if all_players:
+        try:
+            with open(PLAYERS_CACHE_FILE, 'w', encoding='utf-8') as f:
+                json.dump({'date': Config.TODAY, 'players': all_players,
+                           'cached_at': datetime.now().isoformat()},
+                          f, ensure_ascii=False)
+            print(f"   Cached {len(all_players)} players to {PLAYERS_CACHE_FILE}")
+        except Exception as e:
+            print(f"   Cache write failed: {e}")
+else:
+    # Cache hit: still need to apply matchup info (cache contains it but
+    # different scripts might want to refresh it from today's schedule).
+    # The cached players already have matchup fields baked in, so this is
+    # a no-op for the common case.
+    pass
 
 print(f"\n✅ Total players with stats: {len(all_players)}")
 

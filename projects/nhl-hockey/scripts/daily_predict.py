@@ -216,21 +216,52 @@ def get_team_roster_with_stats(team_abbrev):
 # =============================================================================
 # 3. COLLECT ALL PLAYERS
 # =============================================================================
-print("\n👥 Fetching rosters and stats...")
-
 all_teams = set()
 for g in todays_games:
     all_teams.add(g['home_team'])
     all_teams.add(g['away_team'])
 
-all_players = []
-for idx, team in enumerate(sorted(all_teams)):
-    if idx > 0:
-        time.sleep(1)  # Rate limit: pause between teams
-    print(f"   Fetching {team}...", end=" ", flush=True)
-    roster = get_team_roster_with_stats(team)
-    all_players.extend(roster)
-    print(f"{len(roster)} players")
+# Per-day cross-script cache (shared with MC v2 + xG v3 + neural_v2). Linear
+# v1 runs at 15:00 UTC, AFTER MC (14:00) and xG (14:05). On a normal day
+# the cache is already populated when Linear starts — zero NHL API calls
+# needed. Falls back to fetching if no script ran successfully earlier.
+PLAYERS_CACHE_DIR = f"{Config.DATA_DIR}/cache"
+PLAYERS_CACHE_FILE = f"{PLAYERS_CACHE_DIR}/players_{Config.TODAY}.json"
+os.makedirs(PLAYERS_CACHE_DIR, exist_ok=True)
+
+all_players = None
+if os.path.exists(PLAYERS_CACHE_FILE):
+    try:
+        with open(PLAYERS_CACHE_FILE, 'r', encoding='utf-8') as f:
+            cached = json.load(f)
+        if cached.get('date') == Config.TODAY and cached.get('players'):
+            all_players = cached['players']
+            print(f"\n✅ Loaded {len(all_players)} players from cache: "
+                  f"{PLAYERS_CACHE_FILE}")
+    except Exception as e:
+        print(f"\n⚠️ Cache read failed ({e}); will refetch")
+        all_players = None
+
+if all_players is None:
+    print("\n👥 Fetching rosters and stats (no cache available)...")
+    all_players = []
+    for idx, team in enumerate(sorted(all_teams)):
+        if idx > 0:
+            time.sleep(1)  # Rate limit: pause between teams
+        print(f"   Fetching {team}...", end=" ", flush=True)
+        roster = get_team_roster_with_stats(team)
+        all_players.extend(roster)
+        print(f"{len(roster)} players")
+
+    if all_players:
+        try:
+            with open(PLAYERS_CACHE_FILE, 'w', encoding='utf-8') as f:
+                json.dump({'date': Config.TODAY, 'players': all_players,
+                           'cached_at': datetime.now().isoformat()},
+                          f, ensure_ascii=False)
+            print(f"   Cached {len(all_players)} players to {PLAYERS_CACHE_FILE}")
+        except Exception as e:
+            print(f"   Cache write failed: {e}")
 
 print(f"\n✅ Total players with stats: {len(all_players)}")
 
