@@ -129,21 +129,39 @@ def compute_stats_from_gamelog(game_log, today_date):
         'last5_points': last5_points,
     }
 
+def api_get(url, timeout=15, max_attempts=3):
+    """Safe API GET with exponential-backoff retry (1s, 2s, 4s).
+
+    Mirrors the helper in monte_carlo_predict.py / xg_predict.py. Without
+    backoff, three immediate retries hit the same throttled state and all
+    fail in <1s, returning None silently — the rate limit has to be waited
+    *out*, not just spaced *between* unrelated calls. Logs the actual
+    status code on final failure so the cause is visible in CI logs.
+    Returns parsed JSON on 200; None on 404 or terminal failure."""
+    last_status = None
+    for attempt in range(max_attempts):
+        try:
+            resp = requests.get(url, timeout=timeout)
+            last_status = resp.status_code
+            if resp.status_code == 200:
+                return resp.json()
+            if resp.status_code == 404:
+                return None
+        except requests.RequestException as e:
+            last_status = f"{type(e).__name__}: {e}"
+        if attempt < max_attempts - 1:
+            time.sleep(2 ** attempt)
+    print(f"   ⚠️ {url} → {last_status} after {max_attempts} attempts")
+    return None
+
+
 def _fetch_game_log(player_id, season, game_type):
     """One game-log fetch with retry. Returns list (possibly empty) or None on hard error."""
     url = f"https://api-web.nhle.com/v1/player/{player_id}/game-log/{season}/{game_type}"
-    try:
-        for attempt in range(3):
-            resp = requests.get(url, timeout=15)
-            if resp.status_code == 200:
-                return resp.json().get('gameLog', [])
-            if resp.status_code == 404:
-                return []
-            if attempt < 2:
-                time.sleep(1)
+    data = api_get(url)
+    if data is None:
         return None
-    except Exception:
-        return None
+    return data.get('gameLog', [])
 
 
 def get_player_current_stats(player_id):
@@ -170,20 +188,9 @@ def get_player_current_stats(player_id):
 def get_team_roster_with_stats(team_abbrev):
     """Get team roster with current season stats"""
     url = f"https://api-web.nhle.com/v1/roster/{team_abbrev}/current"
-    data = None
-    for attempt in range(3):
-        try:
-            resp = requests.get(url, timeout=15)
-            if resp.status_code == 200:
-                data = resp.json()
-                break
-        except requests.RequestException:
-            pass
-        if attempt < 2:
-            time.sleep(2)
-
+    data = api_get(url)
     if not data:
-        print(f"   ⚠️ Failed to fetch roster for {team_abbrev} after 3 attempts")
+        print(f"   ⚠️ Failed to fetch roster for {team_abbrev}")
         return []
 
     players = []
@@ -252,6 +259,22 @@ if all_players is None:
         roster = get_team_roster_with_stats(team)
         all_players.extend(roster)
         print(f"{len(roster)} players")
+
+    # Refuse to cache or commit partial team coverage. Mirrors the health
+    # check's min_team_coverage=0.6 — keeps yesterday's predictions in place
+    # rather than poisoning downstream models (Meta Ensemble) with biased
+    # data that only covers the teams whose rosters happened to fetch.
+    teams_with_data = {p['team'] for p in all_players}
+    coverage = len(teams_with_data) / max(1, len(all_teams))
+    missing = sorted(all_teams - teams_with_data)
+    if missing:
+        print(f"   Coverage: {coverage*100:.0f}% "
+              f"({len(teams_with_data)}/{len(all_teams)} teams). Missing: {missing}")
+    MIN_COVERAGE = 0.6
+    if coverage < MIN_COVERAGE:
+        print(f"⛔ Team coverage {coverage*100:.0f}% < {MIN_COVERAGE*100:.0f}% — "
+              f"refusing to overwrite predictions. Yesterday's latest.json stands.")
+        exit(1)
 
     if all_players:
         try:
