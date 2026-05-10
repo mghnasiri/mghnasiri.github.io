@@ -17,8 +17,141 @@
       "start_time": "2026-05-11T01:30:00Z"
     }
   ],
-  "players_count": 9,
+  "players_count": 24,
   "predictions": [
+    {
+      "player_id": 8478133,
+      "name": "Jake Evans",
+      "position": "C",
+      "team": "MTL",
+      "opponent": "BUF",
+      "is_home": true,
+      "game_id": 2025030213,
+      "matchup": "MTL vs BUF",
+      "season_goals": 12,
+      "last5_goals": 0,
+      "goal_probability": 0.8506,
+      "goal_probability_raw": 0.8506,
+      "opp_goalie_sv_pct": 0.9033,
+      "rank": 1,
+      "is_hot": false,
+      "tims_group": "2",
+      "tims_rank": 1
+    },
+    {
+      "player_id": 8481618,
+      "name": "Alex Newhook",
+      "position": "C",
+      "team": "MTL",
+      "opponent": "BUF",
+      "is_home": true,
+      "game_id": 2025030213,
+      "matchup": "MTL vs BUF",
+      "season_goals": 16,
+      "last5_goals": 3,
+      "goal_probability": 0.8452,
+      "goal_probability_raw": 0.8452,
+      "opp_goalie_sv_pct": 0.9033,
+      "rank": 2,
+      "is_hot": true,
+      "tims_group": "1",
+      "tims_rank": 2
+    },
+    {
+      "player_id": 8478851,
+      "name": "Alexandre Carrier",
+      "position": "D",
+      "team": "MTL",
+      "opponent": "BUF",
+      "is_home": true,
+      "game_id": 2025030213,
+      "matchup": "MTL vs BUF",
+      "season_goals": 8,
+      "last5_goals": 1,
+      "goal_probability": 0.8246,
+      "goal_probability_raw": 0.8246,
+      "opp_goalie_sv_pct": 0.9033,
+      "rank": 3,
+      "is_hot": false,
+      "tims_group": "3",
+      "tims_rank": 3
+    },
+    {
+      "player_id": 8476875,
+      "name": "Mike Matheson",
+      "position": "D",
+      "team": "MTL",
+      "opponent": "BUF",
+      "is_home": true,
+      "game_id": 2025030213,
+      "matchup": "MTL vs BUF",
+      "season_goals": 8,
+      "last5_goals": 1,
+      "goal_probability": 0.8158,
+      "goal_probability_raw": 0.8158,
+      "opp_goalie_sv_pct": 0.9033,
+      "rank": 4,
+      "is_hot": false,
+      "tims_group": "3",
+      "tims_rank": 4
+    },
+    {
+      "player_id": 8483457,
+      "name": "Lane Hutson",
+      "position": "D",
+      "team": "MTL",
+      "opponent": "BUF",
+      "is_home": true,
+      "game_id": 2025030213,
+      "matchup": "MTL vs BUF",
+      "season_goals": 14,
+      "last5_goals": 0,
+      "goal_probability": 0.8052,
+      "goal_probability_raw": 0.8052,
+      "opp_goalie_sv_pct": 0.9033,
+      "rank": 5,
+      "is_hot": false,
+      "tims_group": "2",
+      "tims_rank": 5
+    },
+    {
+      "player_id": 8480807,
+      "name": "Mattias Samuelsson",
+      "position": "D",
+      "team": "BUF",
+      "opponent": "MTL",
+      "is_home": false,
+      "game_id": 2025030213,
+      "matchup": "BUF @ MTL",
+      "season_goals": 15,
+      "last5_goals": 1,
+      "goal_probability": 0.7835,
+      "goal_probability_raw": 0.7835,
+      "opp_goalie_sv_pct": 0.9041,
+      "rank": 6,
+      "is_hot": false,
+      "tims_group": "3",
+      "tims_rank": 6
+    },
+    {
+      "player_id": 8476981,
+      "name": "Josh Anderson",
+      "position": "R",
+      "team": "MTL",
+      "opponent": "BUF",
+      "is_home": true,
+      "game_id": 2025030213,
+      "matchup": "MTL vs BUF",
+      "season_goals": 16,
+      "last5_goals": 0,
+      "goal_probability": 0.7658,
+      "goal_probability_raw": 0.7658,
+      "opp_goalie_sv_pct": 0.9033,
+      "rank": 7,
+      "is_hot": false,
+      "tims_group": "1",
+      "tims_rank": 7
+    },
     {
       "player_id": 8483490,
       "name": "Pavel Mintyukov",
@@ -33,10 +166,10 @@
       "goal_probability": 0.7296,
       "goal_probability_raw": 0.7296,
       "opp_goalie_sv_pct": 0.8988,
-      "rank": 1,
+      "rank": 8,
       "is_hot": false,
       "tims_group": "3",
-      "tims_rank": 1
+      "tims_rank": 8
     },
     {
       "player_id": 8479705,
@@ -52,10 +185,29 @@
       "goal_probability": 0.7271,
       "goal_probability_raw": 0.7271,
       "opp_goalie_sv_pct": 0.8988,
-      "rank": 2,
+      "rank": 9,
       "is_hot": false,
       "tims_group": "2",
-      "tims_rank": 2
+      "tims_rank": 9
+    },
+    {
+      "player_id": 8480839,
+      "name": "Rasmus Dahlin",
+      "position": "D",
+      "team": "BUF",
+      "opponent": "MTL",
+      "is_home": false,
+      "game_id": 2025030213,
+      "matchup": "BUF @ MTL",
+      "season_goals": 20,
+      "last5_goals": 1,
+      "goal_probability": 0.7118,
+      "goal_probability_raw": 0.7118,
+      "opp_goalie_sv_pct": 0.9041,
+      "rank": 10,
+      "is_hot": false,
+      "tims_group": "1",
+      "tims_rank": 10
     },
     {
       "player_id": 8475184,
@@ -71,10 +223,124 @@
       "goal_probability": 0.7097,
       "goal_probability_raw": 0.7097,
       "opp_goalie_sv_pct": 0.8988,
-      "rank": 3,
+      "rank": 11,
       "is_hot": false,
       "tims_group": "1",
-      "tims_rank": 3
+      "tims_rank": 11
+    },
+    {
+      "player_id": 8482671,
+      "name": "Owen Power",
+      "position": "D",
+      "team": "BUF",
+      "opponent": "MTL",
+      "is_home": false,
+      "game_id": 2025030213,
+      "matchup": "BUF @ MTL",
+      "season_goals": 8,
+      "last5_goals": 0,
+      "goal_probability": 0.7017,
+      "goal_probability_raw": 0.7017,
+      "opp_goalie_sv_pct": 0.9041,
+      "rank": 12,
+      "is_hot": false,
+      "tims_group": "2",
+      "tims_rank": 12
+    },
+    {
+      "player_id": 8475722,
+      "name": "Jason Zucker",
+      "position": "L",
+      "team": "BUF",
+      "opponent": "MTL",
+      "is_home": false,
+      "game_id": 2025030213,
+      "matchup": "BUF @ MTL",
+      "season_goals": 24,
+      "last5_goals": 0,
+      "goal_probability": 0.694,
+      "goal_probability_raw": 0.694,
+      "opp_goalie_sv_pct": 0.9041,
+      "rank": 13,
+      "is_hot": false,
+      "tims_group": "1",
+      "tims_rank": 13
+    },
+    {
+      "player_id": 8479982,
+      "name": "Conor Timmins",
+      "position": "D",
+      "team": "BUF",
+      "opponent": "MTL",
+      "is_home": false,
+      "game_id": 2025030213,
+      "matchup": "BUF @ MTL",
+      "season_goals": 0,
+      "last5_goals": 0,
+      "goal_probability": 0.6901,
+      "goal_probability_raw": 0.6901,
+      "opp_goalie_sv_pct": 0.9041,
+      "rank": 14,
+      "is_hot": false,
+      "tims_group": "3",
+      "tims_rank": 14
+    },
+    {
+      "player_id": 8480068,
+      "name": "Ryan Poehling",
+      "position": "C",
+      "team": "ANA",
+      "opponent": "VGK",
+      "is_home": true,
+      "game_id": 2025030244,
+      "matchup": "ANA vs VGK",
+      "season_goals": 15,
+      "last5_goals": 1,
+      "goal_probability": 0.6862,
+      "goal_probability_raw": 0.6862,
+      "opp_goalie_sv_pct": 0.8988,
+      "rank": 15,
+      "is_hot": false,
+      "tims_group": "1",
+      "tims_rank": 15
+    },
+    {
+      "player_id": 8481605,
+      "name": "Jackson LaCombe",
+      "position": "D",
+      "team": "ANA",
+      "opponent": "VGK",
+      "is_home": true,
+      "game_id": 2025030244,
+      "matchup": "ANA vs VGK",
+      "season_goals": 11,
+      "last5_goals": 0,
+      "goal_probability": 0.6782,
+      "goal_probability_raw": 0.6782,
+      "opp_goalie_sv_pct": 0.8988,
+      "rank": 16,
+      "is_hot": false,
+      "tims_group": "2",
+      "tims_rank": 16
+    },
+    {
+      "player_id": 8482087,
+      "name": "Kaiden Guhle",
+      "position": "D",
+      "team": "MTL",
+      "opponent": "BUF",
+      "is_home": true,
+      "game_id": 2025030213,
+      "matchup": "MTL vs BUF",
+      "season_goals": 2,
+      "last5_goals": 0,
+      "goal_probability": 0.6608,
+      "goal_probability_raw": 0.6608,
+      "opp_goalie_sv_pct": 0.9033,
+      "rank": 17,
+      "is_hot": false,
+      "tims_group": "3",
+      "tims_rank": 17
     },
     {
       "player_id": 8476885,
@@ -90,29 +356,29 @@
       "goal_probability": 0.6097,
       "goal_probability_raw": 0.6097,
       "opp_goalie_sv_pct": 0.8988,
-      "rank": 4,
+      "rank": 18,
       "is_hot": false,
       "tims_group": "2",
-      "tims_rank": 4
+      "tims_rank": 18
     },
     {
-      "player_id": 8481605,
-      "name": "Jackson LaCombe",
-      "position": "D",
-      "team": "ANA",
-      "opponent": "VGK",
-      "is_home": true,
-      "game_id": 2025030244,
-      "matchup": "ANA vs VGK",
-      "season_goals": 11,
-      "last5_goals": 0,
-      "goal_probability": 0.5914,
-      "goal_probability_raw": 0.5914,
-      "opp_goalie_sv_pct": 0.8988,
-      "rank": 5,
+      "player_id": 8478413,
+      "name": "Jordan Greenway",
+      "position": "L",
+      "team": "BUF",
+      "opponent": "MTL",
+      "is_home": false,
+      "game_id": 2025030213,
+      "matchup": "BUF @ MTL",
+      "season_goals": 2,
+      "last5_goals": 1,
+      "goal_probability": 0.591,
+      "goal_probability_raw": 0.591,
+      "opp_goalie_sv_pct": 0.9041,
+      "rank": 19,
       "is_hot": false,
       "tims_group": "2",
-      "tims_rank": 5
+      "tims_rank": 19
     },
     {
       "player_id": 8473986,
@@ -128,29 +394,48 @@
       "goal_probability": 0.5192,
       "goal_probability_raw": 0.5192,
       "opp_goalie_sv_pct": 0.8988,
-      "rank": 6,
+      "rank": 20,
       "is_hot": false,
       "tims_group": "1",
-      "tims_rank": 6
+      "tims_rank": 20
     },
     {
-      "player_id": 8480068,
-      "name": "Ryan Poehling",
-      "position": "C",
-      "team": "ANA",
-      "opponent": "VGK",
-      "is_home": true,
-      "game_id": 2025030244,
-      "matchup": "ANA vs VGK",
+      "player_id": 8481524,
+      "name": "Bowen Byram",
+      "position": "D",
+      "team": "BUF",
+      "opponent": "MTL",
+      "is_home": false,
+      "game_id": 2025030213,
+      "matchup": "BUF @ MTL",
       "season_goals": 15,
-      "last5_goals": 1,
-      "goal_probability": 0.4579,
-      "goal_probability_raw": 0.4579,
-      "opp_goalie_sv_pct": 0.8988,
-      "rank": 7,
+      "last5_goals": 2,
+      "goal_probability": 0.4859,
+      "goal_probability_raw": 0.4859,
+      "opp_goalie_sv_pct": 0.9041,
+      "rank": 21,
       "is_hot": false,
+      "tims_group": "2",
+      "tims_rank": 21
+    },
+    {
+      "player_id": 8484145,
+      "name": "Zach Benson",
+      "position": "L",
+      "team": "BUF",
+      "opponent": "MTL",
+      "is_home": false,
+      "game_id": 2025030213,
+      "matchup": "BUF @ MTL",
+      "season_goals": 16,
+      "last5_goals": 3,
+      "goal_probability": 0.4646,
+      "goal_probability_raw": 0.4646,
+      "opp_goalie_sv_pct": 0.9041,
+      "rank": 22,
+      "is_hot": true,
       "tims_group": "1",
-      "tims_rank": 7
+      "tims_rank": 22
     },
     {
       "player_id": 8474590,
@@ -166,10 +451,10 @@
       "goal_probability": 0.4093,
       "goal_probability_raw": 0.4093,
       "opp_goalie_sv_pct": 0.8988,
-      "rank": 8,
+      "rank": 23,
       "is_hot": false,
       "tims_group": "2",
-      "tims_rank": 8
+      "tims_rank": 23
     },
     {
       "player_id": 8481563,
@@ -185,36 +470,34 @@
       "goal_probability": 0.2056,
       "goal_probability_raw": 0.2056,
       "opp_goalie_sv_pct": 0.8988,
-      "rank": 9,
+      "rank": 24,
       "is_hot": false,
       "tims_group": "3",
-      "tims_rank": 9
+      "tims_rank": 24
     }
   ],
   "tims_mode": true,
   "tims_source": "timnhlassist.com",
   "tims_group_rankings": {
-    "3": [
-      {
-        "rank_in_group": 1,
-        "player_id": 8483490,
-        "name": "Pavel Mintyukov",
-        "team": "ANA",
-        "goal_probability": 0.7296,
-        "matchup": "ANA vs VGK"
-      },
-      {
-        "rank_in_group": 2,
-        "player_id": 8481563,
-        "name": "Drew Helleson",
-        "team": "ANA",
-        "goal_probability": 0.2056,
-        "matchup": "ANA vs VGK"
-      }
-    ],
     "2": [
       {
         "rank_in_group": 1,
+        "player_id": 8478133,
+        "name": "Jake Evans",
+        "team": "MTL",
+        "goal_probability": 0.8506,
+        "matchup": "MTL vs BUF"
+      },
+      {
+        "rank_in_group": 2,
+        "player_id": 8483457,
+        "name": "Lane Hutson",
+        "team": "MTL",
+        "goal_probability": 0.8052,
+        "matchup": "MTL vs BUF"
+      },
+      {
+        "rank_in_group": 3,
         "player_id": 8479705,
         "name": "Jeffrey Viel",
         "team": "ANA",
@@ -222,7 +505,23 @@
         "matchup": "ANA vs VGK"
       },
       {
-        "rank_in_group": 2,
+        "rank_in_group": 4,
+        "player_id": 8482671,
+        "name": "Owen Power",
+        "team": "BUF",
+        "goal_probability": 0.7017,
+        "matchup": "BUF @ MTL"
+      },
+      {
+        "rank_in_group": 5,
+        "player_id": 8481605,
+        "name": "Jackson LaCombe",
+        "team": "ANA",
+        "goal_probability": 0.6782,
+        "matchup": "ANA vs VGK"
+      },
+      {
+        "rank_in_group": 6,
         "player_id": 8476885,
         "name": "Jacob Trouba",
         "team": "ANA",
@@ -230,15 +529,23 @@
         "matchup": "ANA vs VGK"
       },
       {
-        "rank_in_group": 3,
-        "player_id": 8481605,
-        "name": "Jackson LaCombe",
-        "team": "ANA",
-        "goal_probability": 0.5914,
-        "matchup": "ANA vs VGK"
+        "rank_in_group": 7,
+        "player_id": 8478413,
+        "name": "Jordan Greenway",
+        "team": "BUF",
+        "goal_probability": 0.591,
+        "matchup": "BUF @ MTL"
       },
       {
-        "rank_in_group": 4,
+        "rank_in_group": 8,
+        "player_id": 8481524,
+        "name": "Bowen Byram",
+        "team": "BUF",
+        "goal_probability": 0.4859,
+        "matchup": "BUF @ MTL"
+      },
+      {
+        "rank_in_group": 9,
         "player_id": 8474590,
         "name": "John Carlson",
         "team": "ANA",
@@ -249,6 +556,30 @@
     "1": [
       {
         "rank_in_group": 1,
+        "player_id": 8481618,
+        "name": "Alex Newhook",
+        "team": "MTL",
+        "goal_probability": 0.8452,
+        "matchup": "MTL vs BUF"
+      },
+      {
+        "rank_in_group": 2,
+        "player_id": 8476981,
+        "name": "Josh Anderson",
+        "team": "MTL",
+        "goal_probability": 0.7658,
+        "matchup": "MTL vs BUF"
+      },
+      {
+        "rank_in_group": 3,
+        "player_id": 8480839,
+        "name": "Rasmus Dahlin",
+        "team": "BUF",
+        "goal_probability": 0.7118,
+        "matchup": "BUF @ MTL"
+      },
+      {
+        "rank_in_group": 4,
         "player_id": 8475184,
         "name": "Chris Kreider",
         "team": "ANA",
@@ -256,7 +587,23 @@
         "matchup": "ANA vs VGK"
       },
       {
-        "rank_in_group": 2,
+        "rank_in_group": 5,
+        "player_id": 8475722,
+        "name": "Jason Zucker",
+        "team": "BUF",
+        "goal_probability": 0.694,
+        "matchup": "BUF @ MTL"
+      },
+      {
+        "rank_in_group": 6,
+        "player_id": 8480068,
+        "name": "Ryan Poehling",
+        "team": "ANA",
+        "goal_probability": 0.6862,
+        "matchup": "ANA vs VGK"
+      },
+      {
+        "rank_in_group": 7,
         "player_id": 8473986,
         "name": "Alex Killorn",
         "team": "ANA",
@@ -264,11 +611,69 @@
         "matchup": "ANA vs VGK"
       },
       {
+        "rank_in_group": 8,
+        "player_id": 8484145,
+        "name": "Zach Benson",
+        "team": "BUF",
+        "goal_probability": 0.4646,
+        "matchup": "BUF @ MTL"
+      }
+    ],
+    "3": [
+      {
+        "rank_in_group": 1,
+        "player_id": 8478851,
+        "name": "Alexandre Carrier",
+        "team": "MTL",
+        "goal_probability": 0.8246,
+        "matchup": "MTL vs BUF"
+      },
+      {
+        "rank_in_group": 2,
+        "player_id": 8476875,
+        "name": "Mike Matheson",
+        "team": "MTL",
+        "goal_probability": 0.8158,
+        "matchup": "MTL vs BUF"
+      },
+      {
         "rank_in_group": 3,
-        "player_id": 8480068,
-        "name": "Ryan Poehling",
+        "player_id": 8480807,
+        "name": "Mattias Samuelsson",
+        "team": "BUF",
+        "goal_probability": 0.7835,
+        "matchup": "BUF @ MTL"
+      },
+      {
+        "rank_in_group": 4,
+        "player_id": 8483490,
+        "name": "Pavel Mintyukov",
         "team": "ANA",
-        "goal_probability": 0.4579,
+        "goal_probability": 0.7296,
+        "matchup": "ANA vs VGK"
+      },
+      {
+        "rank_in_group": 5,
+        "player_id": 8479982,
+        "name": "Conor Timmins",
+        "team": "BUF",
+        "goal_probability": 0.6901,
+        "matchup": "BUF @ MTL"
+      },
+      {
+        "rank_in_group": 6,
+        "player_id": 8482087,
+        "name": "Kaiden Guhle",
+        "team": "MTL",
+        "goal_probability": 0.6608,
+        "matchup": "MTL vs BUF"
+      },
+      {
+        "rank_in_group": 7,
+        "player_id": 8481563,
+        "name": "Drew Helleson",
+        "team": "ANA",
+        "goal_probability": 0.2056,
         "matchup": "ANA vs VGK"
       }
     ]
@@ -290,5 +695,5 @@
       "opp_ga_per_game"
     ]
   },
-  "generated_at": "2026-05-10T16:12:33.060601"
+  "generated_at": "2026-05-10T22:47:48.645297"
 }
