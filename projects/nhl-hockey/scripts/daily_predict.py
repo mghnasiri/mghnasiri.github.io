@@ -249,6 +249,44 @@ if os.path.exists(PLAYERS_CACHE_FILE):
         print(f"\n⚠️ Cache read failed ({e}); will refetch")
         all_players = None
 
+# MC v2 runs an hour earlier and persists per-player stats inside its
+# prediction file. When NHL API rate-limits this run (Azure runner IPs
+# share a quota with many other users), we can recover from MC v2's
+# committed output instead of failing.
+def players_from_mc(needed_teams, today):
+    """Map MC v2's prediction rows to daily's expected schema.
+    Returns [] if MC v2 is missing or stale (different date)."""
+    mc_path = f"{Config.DATA_DIR}/predictions/monte_carlo/latest.json"
+    if not os.path.exists(mc_path):
+        return []
+    try:
+        with open(mc_path, 'r', encoding='utf-8') as f:
+            mc = json.load(f)
+        if mc.get('date') != today:
+            return []
+    except Exception:
+        return []
+    out = []
+    for p in mc.get('predictions', []):
+        if p.get('team') not in needed_teams:
+            continue
+        out.append({
+            'player_id': p.get('player_id'),
+            'name': p.get('name'),
+            'position': p.get('position', ''),
+            'team': p.get('team'),
+            'games_played': p.get('games_played', 0),
+            'season_goals': p.get('season_goals', 0),
+            'season_shots': p.get('season_shots', 0),
+            'avg_goals': p.get('avg_goals', 0),
+            'avg_shots': p.get('avg_shots', 0),
+            'shooting_pct': p.get('shooting_pct', 0),
+            'last5_goals': p.get('last5_goals', 0),
+            'last5_points': 0,  # MC doesn't track; Linear formula doesn't use it
+        })
+    return out
+
+
 if all_players is None:
     print("\n👥 Fetching rosters and stats (no cache available)...")
     all_players = []
@@ -259,6 +297,20 @@ if all_players is None:
         roster = get_team_roster_with_stats(team)
         all_players.extend(roster)
         print(f"{len(roster)} players")
+
+    # MC v2 fallback (eager union). MC v2 ran ~1h earlier and committed
+    # per-player season stats for all of today's teams. Always merge them
+    # in: it's free coverage when our NHL fetch was throttled, and a
+    # cheap consistency boost when our fetch worked. Dedupe on (team,
+    # name) so we don't double-count players present in both sources.
+    mc_players = players_from_mc(all_teams, Config.TODAY)
+    if mc_players:
+        seen = {(p['team'], p['name']) for p in all_players}
+        new = [p for p in mc_players if (p['team'], p['name']) not in seen]
+        if new:
+            print(f"   📥 MC v2 union: +{len(new)} players "
+                  f"({sorted({p['team'] for p in new})})")
+            all_players.extend(new)
 
     # Refuse to cache or commit partial team coverage. Mirrors the health
     # check's min_team_coverage=0.6 — keeps yesterday's predictions in place
