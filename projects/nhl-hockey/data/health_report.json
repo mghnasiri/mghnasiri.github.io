@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-05-26T19:00:59.507785",
-  "today": "2026-05-26",
+  "generated_at": "2026-05-27T18:38:48.231935",
+  "today": "2026-05-27",
   "thresholds": {
     "min_team_coverage": 0.6,
     "min_predictions_if_games": 5,
@@ -14,7 +14,7 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-05-26"
+          "date=2026-05-27"
         ],
         "team_coverage": [
           "ok",
@@ -34,11 +34,11 @@
         ],
         "prob_max_sane": [
           "warn",
-          "top prob = 0.709 (high but plausible)"
+          "top prob = 0.716 (high but plausible)"
         ],
         "no_flat_ties": [
           "ok",
-          "max tie size = 1"
+          "max tie size = 2"
         ]
       }
     },
@@ -47,7 +47,7 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-05-26"
+          "date=2026-05-27"
         ],
         "team_coverage": [
           "ok",
@@ -67,7 +67,7 @@
         ],
         "prob_max_sane": [
           "ok",
-          "top prob = 0.284"
+          "top prob = 0.296"
         ],
         "no_flat_ties": [
           "ok",
@@ -80,7 +80,7 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-05-26"
+          "date=2026-05-27"
         ],
         "team_coverage": [
           "ok",
@@ -100,11 +100,11 @@
         ],
         "prob_max_sane": [
           "ok",
-          "top prob = 0.882 (model exempt \u2014 A/B control)"
+          "top prob = 0.866 (model exempt \u2014 A/B control)"
         ],
         "no_flat_ties": [
           "ok",
-          "max tie size = 1"
+          "max tie size = 2"
         ]
       }
     },
@@ -113,7 +113,7 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-05-26"
+          "date=2026-05-27"
         ],
         "team_coverage": [
           "ok",
@@ -133,7 +133,7 @@
         ],
         "prob_max_sane": [
           "ok",
-          "top prob = 0.341"
+          "top prob = 0.289"
         ],
         "no_flat_ties": [
           "ok",
@@ -146,7 +146,7 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-05-26"
+          "date=2026-05-27"
         ],
         "team_coverage": [
           "ok",
@@ -166,7 +166,7 @@
         ],
         "prob_max_sane": [
           "ok",
-          "top prob = 0.369"
+          "top prob = 0.407"
         ],
         "no_flat_ties": [
           "ok",
@@ -179,7 +179,7 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-05-26"
+          "date=2026-05-27"
         ],
         "team_coverage": [
           "ok",
@@ -199,7 +199,7 @@
         ],
         "prob_max_sane": [
           "ok",
-          "top prob = 0.357"
+          "top prob = 0.471"
         ],
         "no_flat_ties": [
           "ok",
@@ -212,7 +212,7 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-05-26"
+          "date=2026-05-27"
         ],
         "team_coverage": [
           "ok",
@@ -232,7 +232,7 @@
         ],
         "prob_max_sane": [
           "warn",
-          "top prob = 0.704 (high but plausible)"
+          "top prob = 0.668 (high but plausible)"
         ],
         "no_flat_ties": [
           "ok",
@@ -245,7 +245,7 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-05-26"
+          "date=2026-05-27"
         ],
         "team_coverage": [
           "ok",
@@ -265,7 +265,7 @@
         ],
         "prob_max_sane": [
           "warn",
-          "top prob = 0.724 (high but plausible)"
+          "top prob = 0.681 (high but plausible)"
         ],
         "no_flat_ties": [
           "ok",
@@ -278,7 +278,7 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-05-26"
+          "date=2026-05-27"
         ],
         "team_coverage": [
           "ok",
@@ -298,7 +298,7 @@
         ],
         "prob_max_sane": [
           "ok",
-          "top prob = 0.777 (model exempt \u2014 A/B control)"
+          "top prob = 0.764 (model exempt \u2014 A/B control)"
         ],
         "no_flat_ties": [
           "ok",
