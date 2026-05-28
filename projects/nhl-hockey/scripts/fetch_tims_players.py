@@ -461,6 +461,16 @@ players = scrape_from_sveltekit_data()
 if not players:
     players = scrape_from_html()
 
+# Sanity gate: a silent format change upstream can parse a tiny, partial list
+# that would otherwise count as a "successful" scrape AND overwrite the cached
+# pool (poisoning the fallback for days). Reject implausibly small scrapes and
+# fall through to the cache instead. Even a 1-game slate has ~8 Tims players.
+MIN_EXPECTED_PLAYERS = 6
+if players and len(players) < MIN_EXPECTED_PLAYERS:
+    print(f"\n⚠️ Only {len(players)} player(s) scraped (< {MIN_EXPECTED_PLAYERS}) "
+          f"— treating as a partial/broken scrape; falling back to cache.")
+    players = None
+
 if players:
     print(f"\n✅ Successfully scraped {len(players)} players")
 

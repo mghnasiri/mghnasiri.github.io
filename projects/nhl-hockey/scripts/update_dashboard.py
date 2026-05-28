@@ -82,8 +82,12 @@ for model_name in model_names:
         for comp in result.get('model_comparisons', []):
             if comp.get('model') == model_name:
                 hits = comp.get('hits', 0)
-                total = comp.get('total_predictions', 10)
-                
+                # Denominator = picks actually graded that day, not a hardcoded
+                # 10. Reading len(top10_picks) heals historical files (which
+                # stored total_predictions: 10) without re-fetching.
+                picks = comp.get('top10_picks', [])
+                total = len(picks) if picks else comp.get('total_predictions', 0)
+
                 total_hits += hits
                 total_predictions += total
                 

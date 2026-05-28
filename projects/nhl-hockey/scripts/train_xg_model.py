@@ -20,7 +20,7 @@ from datetime import datetime
 try:
     import pandas as pd
     import xgboost as xgb
-    from sklearn.model_selection import cross_val_score
+    from sklearn.model_selection import cross_val_score, TimeSeriesSplit
     from sklearn.metrics import roc_auc_score, log_loss
 except ImportError as e:
     print(f"Missing dependency: {e}")
@@ -43,10 +43,15 @@ class Config:
     MIN_SHOTS_TO_TRAIN = 500
     TARGET_COL = 'is_goal'
 
-    # Numeric features used directly
+    # Numeric features used directly. is_empty_net is intentionally excluded:
+    # empty-net / pulled-goalie shots are a different scoring process (~52% vs
+    # ~7% goal rate) that was dominating feature importance and distorting
+    # normal-shot xG. Those rows are also filtered out of training entirely
+    # (see load_and_preprocess), so the model learns even-strength/PP shot
+    # quality — what actually predicts whether a player scores a normal goal.
     NUMERIC_FEATURES = [
         'shot_distance', 'shot_angle', 'is_powerplay', 'is_rebound',
-        'seconds_since_last_event', 'is_empty_net', 'score_differential',
+        'seconds_since_last_event', 'score_differential',
         'period', 'prior_event_distance',
     ]
 
@@ -91,6 +96,20 @@ def load_and_preprocess():
     # Clean data
     df = df.dropna(subset=['shot_distance', 'shot_angle', 'is_goal'])
     df['is_goal'] = df['is_goal'].astype(int)
+
+    # Time-order rows so cross-validation can be forward-chaining (later games
+    # never leak into earlier folds). Lexical sort is correct for YYYY-MM-DD;
+    # event_index preserves intra-game order.
+    sort_cols = [c for c in ('game_date', 'event_index') if c in df.columns]
+    if sort_cols:
+        df = df.sort_values(sort_cols).reset_index(drop=True)
+
+    # Exclude empty-net / pulled-goalie shots (see NUMERIC_FEATURES note).
+    if 'is_empty_net' in df.columns:
+        en = pd.to_numeric(df['is_empty_net'], errors='coerce').fillna(0)
+        before = len(df)
+        df = df[en != 1].reset_index(drop=True)
+        print(f"  Excluded {before - len(df)} empty-net shots")
 
     # Fill missing numeric values
     for col in Config.NUMERIC_FEATURES:
@@ -148,10 +167,14 @@ def train_model(X, y):
 
     model = xgb.XGBClassifier(**params)
 
-    # Cross-validation
-    print("  Running 5-fold cross-validation...")
-    cv_auc = cross_val_score(model, X, y, cv=5, scoring='roc_auc')
-    cv_logloss = cross_val_score(model, X, y, cv=5, scoring='neg_log_loss')
+    # Forward-chaining temporal CV (rows are time-ordered in load_and_preprocess).
+    # Random K-fold leaks later games into earlier folds and inflates AUC — the
+    # 0.93 the old model reported was largely that leak plus the score-diff /
+    # empty-net leaks, not genuine skill.
+    print("  Running time-series cross-validation (5 forward-chaining folds)...")
+    tscv = TimeSeriesSplit(n_splits=5)
+    cv_auc = cross_val_score(model, X, y, cv=tscv, scoring='roc_auc')
+    cv_logloss = cross_val_score(model, X, y, cv=tscv, scoring='neg_log_loss')
 
     print(f"  CV AUC:     {cv_auc.mean():.4f} (+/- {cv_auc.std():.4f})")
     print(f"  CV LogLoss: {-cv_logloss.mean():.4f} (+/- {cv_logloss.std():.4f})")

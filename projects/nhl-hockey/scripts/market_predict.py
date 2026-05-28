@@ -44,6 +44,11 @@ class Config:
     REGIONS = "us,us2"
     ODDS_FORMAT = "american"
 
+    # Assumed per-outcome bookmaker hold on the (one-sided) anytime-scorer
+    # market, removed multiplicatively in extract_player_probs. ~6% is typical
+    # for NHL goal-scorer props; tune against realized scorer rates.
+    MARKET_HOLD = 0.06
+
     # Base model to use for player_id matching (any model with full roster)
     PLAYER_ID_SOURCES = [
         f"{DATA_DIR}/predictions/monte_carlo/latest.json",
@@ -175,14 +180,19 @@ def fetch_player_odds(event_id):
 
 def extract_player_probs(event_data):
     """
-    Extract per-player implied probabilities from bookmaker odds.
-    Averages across bookmakers and devigs to true probabilities.
+    Extract per-player de-vigged P(scores >= 1 goal) from bookmaker odds.
+
+    Anytime-scorer is a two-way (Yes/No) market, but the API returns only the
+    "Yes" side, so an exact two-sided devig isn't possible. We assume a constant
+    per-outcome hold and remove it multiplicatively: true_p ≈ implied / (1+hold).
+    This corrects the systematic ~4-8% inflation that otherwise feeds the
+    ensemble miscalibrated. MARKET_HOLD is the key calibration knob — tune it
+    against realized scorer rates.
     """
     if not event_data:
         return {}
 
-    # Collect all odds per player across bookmakers
-    player_odds = {}  # name -> list of implied probs
+    player_odds = {}  # name -> list of implied probs across bookmakers
     for bookmaker in event_data.get('bookmakers', []):
         for market in bookmaker.get('markets', []):
             if market.get('key') != Config.MARKET:
@@ -192,40 +202,13 @@ def extract_player_probs(event_data):
                 price = outcome.get('price')
                 if not name or price is None:
                     continue
-                prob = american_to_prob(price)
-                if name not in player_odds:
-                    player_odds[name] = []
-                player_odds[name].append(prob)
+                player_odds.setdefault(name, []).append(american_to_prob(price))
 
-    # Average across bookmakers
+    # Average implied prob across books, then remove the bookmaker hold.
     player_probs = {}
     for name, probs in player_odds.items():
-        player_probs[name] = sum(probs) / len(probs)
-
-    # Devig: normalize so probabilities reflect true estimates
-    # (remove bookmaker margin)
-    total = sum(player_probs.values())
-    if total > 0:
-        # Scale factor: if total implied = 1.15, devig by / 1.15
-        # But for anytime scorer, total can be >> 1 (many players)
-        # Instead, devig per-game: divide by sum of that game's players
-        # Since this is already one game's players, this works
-        for name in player_probs:
-            player_probs[name] = player_probs[name] / total * min(total, 1.0)
-            # Actually for goal scorer props, each player is independent
-            # (multiple can score), so we DON'T normalize to sum=1.
-            # Instead, remove the vig proportionally.
-            pass
-
-        # Better devig: average vig is ~5-10% per outcome.
-        # For independent props, multiply each by (1 - avg_vig_per_outcome)
-        # Simpler: if avg bookmaker has ~5% vig, multiply probs by 0.95
-        # Or: use the "power method" — raise each prob to a power that
-        # makes the total correct. For independent events this is tricky.
-        # Simplest correct approach: just use the averaged implied probs as-is.
-        # They're slightly inflated but the ranking is correct.
-        player_probs = {name: sum(probs) / len(probs)
-                        for name, probs in player_odds.items()}
+        implied = sum(probs) / len(probs)
+        player_probs[name] = min(implied / (1.0 + Config.MARKET_HOLD), 0.99)
 
     return player_probs
 
@@ -363,19 +346,21 @@ def match_odds_to_players(player_probs, name_map):
         player_info = name_map.get(nname)
 
         if not player_info:
-            # Try last-name-first-initial match for edge cases
-            # e.g., "C. McDavid" vs "Connor McDavid"
+            # Fallback for punctuation/diacritic spelling differences only.
+            # Require BOTH first and last name to match exactly after
+            # normalization — the old "same first initial" rule silently
+            # matched different players (e.g. two "S. Aho"s / "E. Pettersson"s)
+            # to the wrong id+team. Same-name collisions across teams still
+            # need team-aware matching (tracked as a follow-up).
             parts = nname.split()
             if len(parts) >= 2:
-                # Try "firstname lastname" patterns
                 for stored_name, info in name_map.items():
                     stored_parts = stored_name.split()
-                    if len(stored_parts) >= 2 and stored_parts[-1] == parts[-1]:
-                        # Same last name — check first name/initial
-                        if (stored_parts[0] == parts[0] or
-                            stored_parts[0][0] == parts[0][0]):
-                            player_info = info
-                            break
+                    if (len(stored_parts) >= 2
+                            and stored_parts[-1] == parts[-1]
+                            and stored_parts[0] == parts[0]):
+                        player_info = info
+                        break
 
         if player_info:
             matched.append({

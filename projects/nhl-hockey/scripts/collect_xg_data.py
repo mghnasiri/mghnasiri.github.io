@@ -264,8 +264,12 @@ def extract_shots_from_game(game_info):
                 prev_secs = int(prev_parts[0]) * 60 + int(prev_parts[1])
 
                 if play.get('periodDescriptor', {}).get('number', 1) == prev_event.get('period', 1):
-                    # NHL clock counts down, so previous event has higher time
-                    seconds_since_last = max(prev_secs - cur_secs, 0)
+                    # NHL api-web `timeInPeriod` is ELAPSED time (counts UP from
+                    # 00:00), so this shot (the later event) has the higher
+                    # value. Gap = current - previous. (The old code subtracted
+                    # the other way on a "clock counts down" assumption, which
+                    # clamped every gap to 0 and silently killed this feature.)
+                    seconds_since_last = max(cur_secs - prev_secs, 0)
                 else:
                     seconds_since_last = 30.0  # Different period
             except (ValueError, IndexError):
@@ -370,6 +374,7 @@ def main():
     # Parse arguments
     backfill_days = 1  # Default: yesterday only
     target_date = None
+    rebuild = False  # --rebuild: re-collect every game from scratch
 
     args = sys.argv[1:]
     i = 0
@@ -380,6 +385,9 @@ def main():
         elif args[i] == '--date' and i + 1 < len(args):
             target_date = args[i + 1]
             i += 2
+        elif args[i] == '--rebuild':
+            rebuild = True
+            i += 1
         else:
             i += 1
 
@@ -388,7 +396,18 @@ def main():
     print(f"  {datetime.now().strftime('%Y-%m-%d %H:%M')}")
     print("=" * 60)
 
-    processed_games = load_collection_log()
+    if rebuild:
+        # Flush the append-only CSV and dedup set so every game in the range
+        # is re-collected from scratch. Required after a shot-feature fix
+        # (e.g. the timeInPeriod gap correction) — a normal backfill skips
+        # already-processed games and would leave old corrupted rows in place.
+        print("  --rebuild: discarding existing shots.csv + dedup log")
+        for path in (Config.SHOTS_CSV, Config.COLLECTION_LOG):
+            if os.path.exists(path):
+                os.remove(path)
+        processed_games = set()
+    else:
+        processed_games = load_collection_log()
     print(f"  Previously processed: {len(processed_games)} games")
 
     # Determine dates to collect

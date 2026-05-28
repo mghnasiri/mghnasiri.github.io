@@ -170,29 +170,47 @@ if not games:
 
 print(f"✅ Found {len(games)} games")
 
-# 2. Get all scorers
+# 2. Get all scorers — only from completed games. Grading a LIVE/scheduled
+#    game records real scorers as "did not score" and understates hit rate.
 print("\n⚽ Fetching goal scorers...")
+FINAL_STATES = {"OFF", "FINAL"}
 all_scorers = []
+final_games = 0
 
 for game in games:
     matchup = f"{game['away_team']} @ {game['home_team']}"
+    state = game.get('game_state', '')
+    if state not in FINAL_STATES:
+        print(f"   {matchup}... SKIPPED (state={state or '?'}, not final)")
+        continue
+    final_games += 1
     print(f"   {matchup}...", end=" ")
-    
+
     scorers = get_scorers(game['game_id'])
-    
     for scorer in scorers:
         scorer['game_id'] = game['game_id']
         scorer['matchup'] = matchup
-    
     all_scorers.extend(scorers)
     print(f"{len(scorers)} scorers")
 
-print(f"\n✅ Total scorers: {len(all_scorers)}")
+print(f"\n✅ Total scorers: {len(all_scorers)} from {final_games}/{len(games)} final games")
+
+# If nothing is final yet, do NOT grade — recording every pick as a miss
+# would poison the hit-rate metric. Leave yesterday's result file untouched.
+if final_games == 0:
+    print("⛔ No completed games yet — skipping grading to avoid false zeros.")
+    exit(0)
+
+partial = final_games < len(games)
+if partial:
+    print(f"⚠️ {len(games) - final_games} game(s) not final — grading is partial.")
 
 # 3. Compare with predictions
 print("\n📊 Comparing with predictions...")
 
-scorer_ids = set(s['player_id'] for s in all_scorers)
+# Drop missing/None ids so a boxscore gap can't collapse to a single None
+# that a player_id=0 prediction would then falsely match.
+scorer_ids = {s['player_id'] for s in all_scorers if s.get('player_id')}
 model_comparisons = []
 
 # Check each model
@@ -212,48 +230,52 @@ if os.path.exists(Config.PREDICTIONS_DIR):
         with open(pred_file, 'r') as f:
             predictions = json.load(f)
         
-        # Get Top 10
-        top10 = predictions.get('predictions', [])[:10]
-        
-        if not top10:
+        # Grade the model's top picks. Denominator is the number of picks
+        # actually graded — a Tims-filtered model can have <10 on short slates,
+        # and dividing by a hardcoded 10 understated hit rate on those days.
+        TOP_N = 10
+        top_picks = predictions.get('predictions', [])[:TOP_N]
+
+        if not top_picks:
             print(f"   ⚠️ {model_name}: No predictions")
             continue
-        
-        # Check each prediction
+
         hits = 0
-        top10_picks = []
-        
-        for pred in top10:
-            scored = pred['player_id'] in scorer_ids
+        graded_picks = []
+
+        for pred in top_picks:
+            pid = pred.get('player_id')
+            scored = bool(pid) and pid in scorer_ids
             if scored:
                 hits += 1
-            
-            top10_picks.append({
+
+            graded_picks.append({
                 'rank': pred.get('rank', 0),
-                'player_id': pred['player_id'],
+                'player_id': pid,
                 'name': pred['name'],
                 'team': pred['team'],
                 'probability': pred.get('goal_probability', 0),
                 'scored': scored
             })
-        
-        # Save comparison
+
+        n = len(graded_picks)
+        # Save comparison ('top10_picks' key kept for dashboard/telegram compat)
         model_comparisons.append({
             'model': model_name,
             'model_display_name': predictions.get('model_display_name', model_name),
-            'top10_picks': top10_picks,
+            'top10_picks': graded_picks,
             'hits': hits,
-            'total_predictions': 10,
-            'hit_rate': round(hits / 10 * 100, 1)
+            'total_predictions': n,
+            'hit_rate': round(hits / n * 100, 1) if n else 0.0
         })
-        
+
         # Print results
         print(f"\n   📈 {model_name}:")
-        for p in top10_picks:
+        for p in graded_picks:
             icon = "✅" if p['scored'] else "❌"
             print(f"      {p['rank']:>2}. {p['name']:<24} {p['probability']*100:>5.1f}% {icon}")
         print(f"      {'─' * 45}")
-        print(f"      Result: {hits}/10 ({round(hits/10*100)}%)")
+        print(f"      Result: {hits}/{n} ({round(hits / n * 100) if n else 0}%)")
 
 # 4. Save results
 print("\n💾 Saving results...")
@@ -261,6 +283,8 @@ print("\n💾 Saving results...")
 output = {
     "date": Config.YESTERDAY,
     "games_count": len(games),
+    "final_games": final_games,
+    "partial": partial,
     "games": games,
     "all_scorers": all_scorers,
     "scorers_count": len(all_scorers),

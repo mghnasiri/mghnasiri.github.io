@@ -42,14 +42,39 @@ MIN_SHOTS_FOR_PLAYER_FILE = 20
 # Decision C: flat weighting (no decay). Not a knob yet — change here if
 # you add time decay later.
 
-# Feature schema — MUST match data/xg_model/metadata.json shot_type_* and
-# strength_state_* columns. If train_xg_model.py adds new categories (e.g.
-# rare shot types that appear once a season), extend these lists or the
-# one-hot encoding will drop them to all-zero (silently mispredicting).
-SHOT_TYPES = ["backhand", "bat", "between-legs", "cradle", "deflected",
-              "poke", "slap", "snap", "tip-in", "wrap-around", "wrist"]
-STRENGTH_STATES = ["1v0", "3v3", "3v4", "3v5", "4v3", "4v4", "4v5", "4v6",
-                   "5v3", "5v4", "5v5", "5v6", "6v3", "6v4", "6v5"]
+# Feature schema. Derived from the trained model's metadata at runtime so the
+# one-hot encoding can never silently desync from the model (a new shot type in
+# the data would otherwise be dropped to all-zero, mispredicting). The static
+# lists below are only a fallback if metadata is unavailable.
+METADATA_FILE = "data/xg_model/metadata.json"
+SHOT_TYPES_FALLBACK = ["backhand", "bat", "between-legs", "cradle", "deflected",
+                       "poke", "slap", "snap", "tip-in", "wrap-around", "wrist"]
+STRENGTH_STATES_FALLBACK = ["1v0", "3v3", "3v4", "3v5", "4v3", "4v4", "4v5",
+                            "4v6", "5v3", "5v4", "5v5", "5v6", "6v3", "6v4", "6v5"]
+
+
+def _load_categories():
+    """Return (shot_types, strength_states) from model metadata feature names."""
+    try:
+        with open(METADATA_FILE, "r", encoding="utf-8") as f:
+            feats = json.load(f).get("feature_names", [])
+        sts = [c[len("shot_type_"):] for c in feats if c.startswith("shot_type_")]
+        sss = [c[len("strength_state_"):] for c in feats if c.startswith("strength_state_")]
+        if sts and sss:
+            return sts, sss
+    except Exception:
+        pass
+    return SHOT_TYPES_FALLBACK, STRENGTH_STATES_FALLBACK
+
+
+SHOT_TYPES, STRENGTH_STATES = _load_categories()
+
+# Exclude empty-net / pulled-goalie shots from player buckets — they're a
+# different scoring process (a single empty-netter would inflate a depth
+# player's avg xG and push a non-scorer into the picks). Matches the same
+# exclusion in train_xg_model.py.
+EXCLUDE_EMPTY_NET = True
+
 POSITION_KEYS = ("C", "L", "R", "D")  # priors are keyed by first letter
 DEFAULT_POSITION = "C"
 
@@ -152,6 +177,8 @@ def main():
             total_rows += 1
             feat = row_to_feature_dict(row)
             if feat is None:
+                continue
+            if EXCLUDE_EMPTY_NET and feat.get("is_empty_net"):
                 continue
             try:
                 pid = int(row["player_id"])

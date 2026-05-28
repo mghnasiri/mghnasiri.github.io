@@ -51,10 +51,14 @@ class Config:
     MODEL_FILE = f"{OUT_DIR}/model.pt"
     META_FILE = f"{OUT_DIR}/metadata.json"
 
-    # Same feature set xg_v3 uses — guarantees 1:1 comparability
+    # Same feature set xg_v3 uses — guarantees 1:1 comparability. is_empty_net
+    # is excluded (label leakage: it's ~unknowable at predict time and near-
+    # perfectly correlated with goals); empty-net rows are also dropped in
+    # load_dataset. neural_v2_predict.py reads feature_names from metadata, so
+    # this takes effect automatically on the next retrain with no mismatch.
     NUMERIC_FEATURES = [
         "shot_distance", "shot_angle", "is_powerplay", "is_rebound",
-        "seconds_since_last_event", "is_empty_net", "score_differential",
+        "seconds_since_last_event", "score_differential",
         "period", "prior_event_distance",
     ]
     SHOT_TYPES = ["backhand", "bat", "between-legs", "cradle", "deflected",
@@ -123,7 +127,7 @@ def row_to_feature_vec(row, feature_names):
 def build_feature_names():
     names = [
         "shot_distance", "shot_angle", "is_powerplay", "is_rebound",
-        "seconds_since_last_event", "is_empty_net", "score_differential",
+        "seconds_since_last_event", "score_differential",
         "period", "prior_event_distance",
         "distance_x_angle", "is_slot_shot", "is_high_danger",
     ]
@@ -140,6 +144,10 @@ def load_dataset():
         for r in csv.DictReader(f):
             vec = row_to_feature_vec(r, feature_names)
             if vec is None:
+                skipped += 1
+                continue
+            # Drop empty-net / pulled-goalie shots (different scoring process).
+            if int(float(r.get("is_empty_net", 0) or 0)) == 1:
                 skipped += 1
                 continue
             try:

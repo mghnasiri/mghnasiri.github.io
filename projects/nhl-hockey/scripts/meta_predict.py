@@ -1,18 +1,24 @@
 """
 NHL Goal Predictor — Meta Ensemble v1
 ======================================
-Stacked meta-learner that combines predictions from all base models
-(Weighted Linear, Monte Carlo, xG XGBoost) plus goalie quality and
-context features. Trains a LightGBM classifier with isotonic calibration.
+Stacked LightGBM meta-learner over the base models. The intersection of the
+three longest-history models (Weighted Linear [dir: neural_network], Monte
+Carlo, xG XGBoost) defines the row universe; market_odds, lineup_v1 and
+neural_v2 are left-joined as extra features so the ensemble can exploit the
+current champions it previously ignored.
+
+Features: p_linear, p_mc, p_xg, p_market, p_lineup, p_neural_v2,
+          model_disagreement, is_home, opp_ga_per_game.
 
 Pipeline:
-  1. Load today's predictions from all 3 base models
-  2. Fetch starting goalie data for tonight's games
-  3. Score through trained meta-model + isotonic calibrator
+  1. Auto-retrain if the saved model is stale or its feature set changed
+  2. Load today's predictions from all available models
+  3. Score through the trained meta-model
   4. Output in standard prediction JSON format
 
 Training:
-  Run with --train flag to build the meta-model from historical predictions.
+  Run with --train to (re)build the meta-model from historical predictions.
+  The daily run self-heals via model_needs_retrain() — no manual schedule.
 
 Author: Mohammad G. Nasiri
 """
@@ -45,7 +51,7 @@ except ImportError:
     HAS_LGB = False
 
 try:
-    from sklearn.isotonic import IsotonicRegression
+    from sklearn.linear_model import LogisticRegression
     HAS_SKLEARN = True
 except ImportError:
     HAS_SKLEARN = False
@@ -63,21 +69,37 @@ class Config:
     META_MODEL_DIR = f"{DATA_DIR}/meta_model"
     META_MODEL_FILE = f"{META_MODEL_DIR}/model.txt"
     CALIBRATOR_FILE = f"{META_MODEL_DIR}/calibrator.json"
-    GOALIE_CACHE_FILE = f"{META_MODEL_DIR}/goalie_cache.json"
+    META_METADATA_FILE = f"{META_MODEL_DIR}/metadata.json"
     TIMS_DIR = f"{DATA_DIR}/tims_players"
 
     TODAY = datetime.now().strftime("%Y-%m-%d")
     CURRENT_SEASON = current_season_id()
 
+    # The intersection of these three (longest-history) models defines the
+    # training/prediction row universe.
     BASE_MODELS = ['neural_network', 'monte_carlo', 'xg_v3']
     MARKET_MODEL = 'market_odds'
+    # Optional models, left-joined as extra features: dir -> feature column.
+    # Missing on dates before a model existed (LightGBM handles the gap).
+    # lineup_v1 and neural_v2 are current champions the old ensemble ignored.
+    OPTIONAL_MODELS = {
+        'market_odds': 'p_market',
+        'lineup_v1': 'p_lineup',
+        'neural_v2': 'p_neural_v2',
+    }
+    # goalie_sv_pct was dropped: it was hardcoded to 0.900 in training, so the
+    # model could never split on it (zero variance) — the live goalie fetch was
+    # wasted. Re-add only with real historical SV% on BOTH train and predict.
     FEATURE_NAMES = [
-        'p_linear', 'p_mc', 'p_xg', 'p_market',
+        'p_linear', 'p_mc', 'p_xg', 'p_market', 'p_lineup', 'p_neural_v2',
         'model_disagreement',
-        'goalie_sv_pct',
         'is_home',
         'opp_ga_per_game',
     ]
+    # Auto-retrain if the saved model is older than this, or if its feature set
+    # no longer matches FEATURE_NAMES. Prevents silently serving a stale model
+    # (the prior failure mode: model 6 weeks old, ignoring newer base models).
+    RETRAIN_IF_OLDER_DAYS = 7
 
 
 os.makedirs(Config.PREDICTIONS_DIR, exist_ok=True)
@@ -130,94 +152,49 @@ def get_todays_games(date):
 
 
 # =============================================================================
-# GOALIE DATA
+# FEATURE CONSTRUCTION (shared by training + prediction — no train/serve skew)
 # =============================================================================
-def load_goalie_cache():
-    """Load cached goalie stats."""
-    if os.path.exists(Config.GOALIE_CACHE_FILE):
-        try:
-            with open(Config.GOALIE_CACHE_FILE, 'r') as f:
-                return json.load(f)
-        except Exception:
-            pass
-    return {}
+def _load_optional_preds(date):
+    """feature_col -> {player_id: goal_probability} for each optional model on
+    a given date ('latest' or 'YYYY-MM-DD'). Missing files yield empty dicts."""
+    out = {}
+    for mdir, col in Config.OPTIONAL_MODELS.items():
+        path = f"{Config.DATA_DIR}/predictions/{mdir}/{date}.json"
+        preds = {}
+        if os.path.exists(path):
+            try:
+                with open(path, 'r') as f:
+                    data = json.load(f)
+                # For 'latest' guard against a stale date upstream.
+                if date != 'latest' or data.get('date') == Config.TODAY:
+                    preds = {p['player_id']: p.get('goal_probability', 0.0)
+                             for p in data.get('predictions', [])}
+            except Exception:
+                pass
+        out[col] = preds
+    return out
 
 
-def save_goalie_cache(cache):
-    """Save goalie cache to disk."""
-    with open(Config.GOALIE_CACHE_FILE, 'w') as f:
-        json.dump(cache, f, indent=2)
-
-
-def fetch_goalie_sv_pct(goalie_id, cache):
-    """Fetch goalie season save percentage from game log."""
-    cache_key = str(goalie_id)
-    if cache_key in cache:
-        cached = cache[cache_key]
-        if cached.get('fetched_date', '') >= Config.TODAY:
-            return cached.get('sv_pct', 0.900)
-
-    # Fetch regular-season + playoff game logs for the current season and merge.
-    # Avoids the `/game-log/now` gotcha where the endpoint returns only playoff
-    # data once a goalie's team enters the postseason, giving wildly unstable
-    # SV% estimates off a 1-2 game sample.
-    season = Config.CURRENT_SEASON
-    reg = api_get(f"https://api-web.nhle.com/v1/player/{goalie_id}/game-log/{season}/2")
-    po = api_get(f"https://api-web.nhle.com/v1/player/{goalie_id}/game-log/{season}/3")
-    game_log = (reg.get('gameLog', []) if reg else []) + \
-               (po.get('gameLog', []) if po else [])
-    if not game_log:
-        return 0.900
-    game_log.sort(key=lambda g: g.get('gameDate', ''), reverse=True)
-    prior = [g for g in game_log if g.get('gameDate', '9999') < Config.TODAY]
-    if not prior:
-        return 0.900
-
-    total_saves = 0
-    total_shots_against = 0
-    for g in prior:
-        sa = g.get('shotsAgainst', 0)
-        ga = g.get('goalsAgainst', 0)
-        total_shots_against += sa
-        total_saves += (sa - ga)
-
-    sv_pct = total_saves / total_shots_against if total_shots_against > 0 else 0.900
-
-    cache[cache_key] = {
-        'sv_pct': round(sv_pct, 4),
-        'games': len(prior),
-        'fetched_date': Config.TODAY,
+def _build_feature_row(pid, nn, mc, xg, optional_preds):
+    """Build one model-input row. Used identically in training and prediction."""
+    p_nn = nn.get('goal_probability', 0)
+    p_mc = mc.get('goal_probability', 0)
+    p_xg = xg.get('goal_probability', 0)
+    opt = {col: preds.get(pid, 0.0) for col, preds in optional_preds.items()}
+    # Disagreement over whatever base signals are present (>0) that day.
+    base_probs = [p_nn, p_mc, p_xg] + [v for v in opt.values() if v]
+    return {
+        'p_linear': p_nn,
+        'p_mc': p_mc,
+        'p_xg': p_xg,
+        'p_market': opt.get('p_market', 0.0),
+        'p_lineup': opt.get('p_lineup', 0.0),
+        'p_neural_v2': opt.get('p_neural_v2', 0.0),
+        'model_disagreement': float(np.std(base_probs)) if len(base_probs) > 1 else 0.0,
+        'is_home': int(mc.get('is_home', xg.get('is_home', False))),
+        'opp_ga_per_game': xg.get('opp_ga_per_game',
+                                  mc.get('opp_ga_per_game', 3.07)),
     }
-    return round(sv_pct, 4)
-
-
-def get_opponent_goalie_sv_pct(team_abbrev, games, goalie_cache):
-    """
-    For a given team, find the opponent and look up their starting goalie SV%.
-    Falls back to 0.900 (league average) if starter unknown.
-    """
-    opponent = None
-    for g in games:
-        if g['home_team'] == team_abbrev:
-            opponent = g['away_team']
-            break
-        elif g['away_team'] == team_abbrev:
-            opponent = g['home_team']
-            break
-
-    if not opponent:
-        return 0.900
-
-    data = api_get(f"https://api-web.nhle.com/v1/roster/{opponent}/current")
-    if not data:
-        return 0.900
-
-    goalies = data.get('goalies', [])
-    if not goalies:
-        return 0.900
-
-    # Use first listed goalie (typically starter)
-    return fetch_goalie_sv_pct(goalies[0]['id'], goalie_cache)
 
 
 # =============================================================================
@@ -249,7 +226,8 @@ def build_training_data():
     for date in overlap:
         with open(result_dates[date], 'r') as f:
             result_data = json.load(f)
-        scorer_ids = set(s['player_id'] for s in result_data.get('all_scorers', []))
+        scorer_ids = {s['player_id'] for s in result_data.get('all_scorers', [])
+                      if s.get('player_id')}
 
         preds_by_model = {}
         for m in Config.BASE_MODELS:
@@ -259,46 +237,17 @@ def build_training_data():
                 p['player_id']: p for p in pred_data.get('predictions', [])
             }
 
-        # Load market odds if available for this date
-        market_path = f"{Config.DATA_DIR}/predictions/{Config.MARKET_MODEL}/{date}.json"
-        market_preds = {}
-        if os.path.exists(market_path):
-            try:
-                with open(market_path, 'r') as f:
-                    mdata = json.load(f)
-                market_preds = {p['player_id']: p for p in mdata.get('predictions', [])}
-            except Exception:
-                pass
+        # Optional models (left-joined). Missing dates -> empty -> 0.0 feature.
+        optional_preds = _load_optional_preds(date)
 
         nn_preds = preds_by_model.get('neural_network', {})
         mc_preds = preds_by_model.get('monte_carlo', {})
         xg_preds = preds_by_model.get('xg_v3', {})
-
-        common_ids = set(nn_preds.keys()) & set(mc_preds.keys()) & set(xg_preds.keys())
+        common_ids = set(nn_preds) & set(mc_preds) & set(xg_preds)
 
         for pid in common_ids:
-            nn = nn_preds[pid]
-            mc = mc_preds[pid]
-            xg = xg_preds[pid]
-            mkt = market_preds.get(pid, {})
-
-            p_nn = nn.get('goal_probability', 0)
-            p_mc = mc.get('goal_probability', 0)
-            p_xg = xg.get('goal_probability', 0)
-            p_mkt = mkt.get('goal_probability', 0)
-
-            row = {
-                'p_linear': p_nn,
-                'p_mc': p_mc,
-                'p_xg': p_xg,
-                'p_market': p_mkt,
-                'model_disagreement': float(np.std([p_nn, p_mc, p_xg])),
-                'goalie_sv_pct': 0.900,
-                'is_home': int(mc.get('is_home', xg.get('is_home', False))),
-                'opp_ga_per_game': xg.get('opp_ga_per_game',
-                                          mc.get('opp_ga_per_game', 3.07)),
-            }
-            rows.append(row)
+            rows.append(_build_feature_row(
+                pid, nn_preds[pid], mc_preds[pid], xg_preds[pid], optional_preds))
             labels.append(1 if pid in scorer_ids else 0)
 
     print(f"  Built {len(rows)} training rows ({sum(labels)} goals, "
@@ -307,7 +256,7 @@ def build_training_data():
 
 
 def train_meta_model():
-    """Train the LightGBM meta-model with isotonic calibration."""
+    """Train the LightGBM meta-model with Platt (monotonic) calibration."""
     if not HAS_LGB:
         print("  ERROR: lightgbm not installed. pip install lightgbm")
         return False
@@ -358,30 +307,70 @@ def train_meta_model():
     importance = {k: int(v) for k, v in zip(Config.FEATURE_NAMES, model.feature_importance())}
     print(f"  Feature importance: {json.dumps(importance, indent=4)}")
 
-    # Isotonic calibration
-    calibrator = IsotonicRegression(out_of_bounds='clip')
-    calibrator.fit(cal_preds, y_cal)
+    # Platt calibration (logistic): p_cal = sigmoid(a * p_raw + b). Strictly
+    # monotonic, so it makes the output an honest probability WITHOUT changing
+    # player ranking — hit rate is unaffected, only the displayed numbers get
+    # realistic. Replaces the old isotonic calibrator, which produced flat tie
+    # regions that broke ranking (the reason calibration had been disabled).
+    platt = LogisticRegression(C=1e6, solver='lbfgs')
+    platt.fit(cal_preds.reshape(-1, 1), y_cal)
+    platt_a = float(platt.coef_[0][0])
+    platt_b = float(platt.intercept_[0])
+    print(f"  Platt calibration: a={platt_a:.4f}, b={platt_b:.4f}")
 
     # Save model (LightGBM native format)
     model.save_model(Config.META_MODEL_FILE)
 
-    # Save calibrator as JSON (safe serialization)
-    cal_data = {
-        'X_thresholds': calibrator.X_thresholds_.tolist(),
-        'y_thresholds': calibrator.y_thresholds_.tolist(),
-        'increasing': bool(calibrator.increasing_),
-    }
     with open(Config.CALIBRATOR_FILE, 'w') as f:
-        json.dump(cal_data, f)
+        json.dump({'method': 'platt', 'a': platt_a, 'b': platt_b}, f)
+
+    # Metadata drives auto-retrain. Use a committed `trained_at` date rather
+    # than the model file's mtime, because `git checkout` in CI resets mtimes
+    # to the run time (staleness by mtime would never trigger).
+    with open(Config.META_METADATA_FILE, 'w') as f:
+        json.dump({
+            'trained_at': Config.TODAY,
+            'feature_names': Config.FEATURE_NAMES,
+            'n_train_rows': int(len(X_train)),
+            'n_cal_rows': int(len(X_cal)),
+        }, f, indent=2)
 
     print(f"\n  Saved model: {Config.META_MODEL_FILE}")
     print(f"  Saved calibrator: {Config.CALIBRATOR_FILE}")
+    print(f"  Saved metadata: {Config.META_METADATA_FILE}")
     return True
 
 
 # =============================================================================
 # DAILY PREDICTION
 # =============================================================================
+def model_needs_retrain():
+    """Return (bool, reason). Retrain when the model is missing, stale, or was
+    trained on a different feature set than Config.FEATURE_NAMES."""
+    if not os.path.exists(Config.META_MODEL_FILE):
+        return True, "no model file"
+    meta = {}
+    if os.path.exists(Config.META_METADATA_FILE):
+        try:
+            with open(Config.META_METADATA_FILE) as f:
+                meta = json.load(f)
+        except Exception:
+            pass
+    if list(meta.get('feature_names', [])) != list(Config.FEATURE_NAMES):
+        return True, "feature set changed"
+    trained_at = meta.get('trained_at')
+    if not trained_at:
+        return True, "no trained_at metadata"
+    try:
+        age = (datetime.strptime(Config.TODAY, "%Y-%m-%d")
+               - datetime.strptime(trained_at, "%Y-%m-%d")).days
+    except ValueError:
+        return True, "unparseable trained_at"
+    if age > Config.RETRAIN_IF_OLDER_DAYS:
+        return True, f"model is {age} days old"
+    return False, f"fresh ({age}d)"
+
+
 def load_meta_model():
     """Load the trained meta-model and calibrator."""
     if not HAS_LGB:
@@ -394,23 +383,33 @@ def load_meta_model():
 
     model = lgb.Booster(model_file=Config.META_MODEL_FILE)
 
+    # Calibrator is a Platt (a, b) tuple, applied as sigmoid(a*p_raw + b).
     calibrator = None
-    if HAS_SKLEARN and os.path.exists(Config.CALIBRATOR_FILE):
-        with open(Config.CALIBRATOR_FILE, 'r') as f:
-            cal_data = json.load(f)
-        calibrator = IsotonicRegression(out_of_bounds='clip')
-        calibrator.X_thresholds_ = np.array(cal_data['X_thresholds'])
-        calibrator.y_thresholds_ = np.array(cal_data['y_thresholds'])
-        calibrator.increasing_ = cal_data['increasing']
-        calibrator.X_min_ = calibrator.X_thresholds_[0]
-        calibrator.X_max_ = calibrator.X_thresholds_[-1]
-        calibrator.f_ = None  # Will use thresholds directly
+    if os.path.exists(Config.CALIBRATOR_FILE):
+        try:
+            with open(Config.CALIBRATOR_FILE, 'r') as f:
+                cal_data = json.load(f)
+            if cal_data.get('method') == 'platt':
+                calibrator = (float(cal_data['a']), float(cal_data['b']))
+        except Exception:
+            calibrator = None
 
     return model, calibrator
 
 
 def predict_today():
     """Generate meta-ensemble predictions for today."""
+    # Self-healing freshness: retrain before predicting if the model is stale
+    # or its feature set changed. This is what keeps the ensemble from silently
+    # running a months-old model that ignores newer base models.
+    need, why = model_needs_retrain()
+    if need:
+        print(f"  Auto-retrain triggered: {why}")
+        if HAS_LGB and HAS_SKLEARN:
+            train_meta_model()
+        else:
+            print("  lightgbm/sklearn unavailable — skipping retrain.")
+
     model, calibrator = load_meta_model()
     if model is None:
         return None
@@ -473,29 +472,12 @@ def predict_today():
         sys.exit(0)
     print(f"  {len(games)} games today")
 
-    # Build team -> opponent goalie SV% map
-    print("  Fetching opponent goalie data...")
-    goalie_cache = load_goalie_cache()
-    team_goalie_sv = {}
-    all_teams = set()
-    for g in games:
-        all_teams.add(g['home_team'])
-        all_teams.add(g['away_team'])
-    for team in all_teams:
-        team_goalie_sv[team] = get_opponent_goalie_sv_pct(team, games, goalie_cache)
-    save_goalie_cache(goalie_cache)
-
-    # Load market odds if available
-    market_preds = {}
-    market_path = f"{Config.DATA_DIR}/predictions/{Config.MARKET_MODEL}/latest.json"
-    if os.path.exists(market_path):
-        with open(market_path, 'r') as f:
-            mdata = json.load(f)
-        if mdata.get('date') == Config.TODAY:
-            market_preds = {p['player_id']: p for p in mdata.get('predictions', [])}
-            print(f"    market_odds: {len(market_preds)} players")
-        else:
-            print(f"  WARNING: market_odds is from {mdata.get('date')}, not today")
+    # Load optional-model probabilities (market_odds, lineup_v1, neural_v2),
+    # each guarded to today's date inside the helper.
+    optional_preds = _load_optional_preds('latest')
+    for col, preds in optional_preds.items():
+        if preds:
+            print(f"    {col}: {len(preds)} players")
 
     nn = base_preds.get('neural_network', {})
     mc = base_preds.get('monte_carlo', {})
@@ -537,26 +519,9 @@ def predict_today():
 
     for pid in common_ids:
         nn_p, mc_p, xg_p = nn[pid], mc[pid], xg[pid]
-        mkt_p = market_preds.get(pid, {})
-        p_nn = nn_p.get('goal_probability', 0)
-        p_mc = mc_p.get('goal_probability', 0)
-        p_xg = xg_p.get('goal_probability', 0)
-        p_mkt = mkt_p.get('goal_probability', 0)
+        player_rows.append(_build_feature_row(pid, nn_p, mc_p, xg_p, optional_preds))
 
         team = mc_p.get('team', xg_p.get('team', ''))
-
-        row = {
-            'p_linear': p_nn,
-            'p_mc': p_mc,
-            'p_xg': p_xg,
-            'p_market': p_mkt,
-            'model_disagreement': float(np.std([p_nn, p_mc, p_xg])),
-            'goalie_sv_pct': team_goalie_sv.get(team, 0.900),
-            'is_home': int(mc_p.get('is_home', xg_p.get('is_home', False))),
-            'opp_ga_per_game': xg_p.get('opp_ga_per_game',
-                                        mc_p.get('opp_ga_per_game', 3.07)),
-        }
-        player_rows.append(row)
         player_meta.append({
             'player_id': pid,
             'name': mc_p.get('name', xg_p.get('name', '')),
@@ -573,19 +538,19 @@ def predict_today():
     X = pd.DataFrame(player_rows, columns=Config.FEATURE_NAMES)
     raw_preds = model.predict(X)
 
-    # Calibrator was trained on ~500 held-out rows with ~7% positive rate
-    # and produced a 12-pivot isotonic step function: top quartile saturates
-    # to 1.0, mid-range collapses into flat ties (e.g. five players all at
-    # 0.1538). The result is unrealistic probabilities and broken ranking.
-    # Bypass calibration until we have ≥2,000 held-out rows. Raw LightGBM
-    # output is already a probability in [0,1] and ranks players correctly.
-    USE_CALIBRATOR = False
-    if USE_CALIBRATOR and calibrator is not None:
-        calibrated = np.interp(raw_preds,
-                               calibrator.X_thresholds_,
-                               calibrator.y_thresholds_)
-    else:
-        calibrated = raw_preds
+    # Apply Platt calibration: p_cal = sigmoid(a*p_raw + b). It is strictly
+    # monotonic, so the ranking (and thus hit rate) is identical to raw — only
+    # the displayed probabilities become realistic. Guarded: any failure falls
+    # back to raw output (the previous safe behavior). This replaces the old
+    # isotonic path, which broke ranking via flat tie regions.
+    calibrated = np.asarray(raw_preds, dtype=float)
+    if calibrator is not None:
+        try:
+            a, b = calibrator
+            calibrated = 1.0 / (1.0 + np.exp(-(a * calibrated + b)))
+        except Exception as e:
+            print(f"  Calibration failed ({e}); using raw output.")
+            calibrated = np.asarray(raw_preds, dtype=float)
 
     all_players = []
     for i, meta in enumerate(player_meta):
@@ -593,7 +558,6 @@ def predict_today():
             **meta,
             'goal_probability': round(float(calibrated[i]), 4),
             'goal_probability_raw': round(float(raw_preds[i]), 4),
-            'opp_goalie_sv_pct': player_rows[i]['goalie_sv_pct'],
         }
         all_players.append(player)
 
@@ -721,13 +685,12 @@ for path in [f"{Config.PREDICTIONS_DIR}/{Config.TODAY}.json",
 print("\n" + "=" * 70)
 print("  TOP 20 META ENSEMBLE PREDICTIONS")
 print("=" * 70)
-print(f"  {'#':<4} {'Name':<25} {'Team':<5} {'Prob':>7} {'SV%':>7}")
-print(f"  {'-' * 50}")
+print(f"  {'#':<4} {'Name':<25} {'Team':<5} {'Prob':>7}")
+print(f"  {'-' * 43}")
 for p in output_players[:20]:
     hot = " *" if p.get('is_hot') else ""
-    sv = p.get('opp_goalie_sv_pct', 0)
     print(f"  {p['rank']:<4} {p['name']:<25} {p['team']:<5} "
-          f"{p['goal_probability']*100:>6.1f}% {sv:>6.3f}{hot}")
+          f"{p['goal_probability']*100:>6.1f}%{hot}")
 
 print(f"\n  Total: {len(output_players)} players ranked")
 print(f"\n  Meta Ensemble v1 predictions complete!")
