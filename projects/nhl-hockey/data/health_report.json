@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-03T20:01:58.364709",
-  "today": "2026-06-03",
+  "generated_at": "2026-06-04T18:34:51.320937",
+  "today": "2026-06-04",
   "thresholds": {
     "min_team_coverage": 0.6,
     "min_predictions_if_games": 5,
@@ -10,35 +10,35 @@
   },
   "models": {
     "lineup_v1": {
-      "status": "ok",
+      "status": "warn",
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-06-03"
+          "date=2026-06-04"
         ],
         "team_coverage": [
           "ok",
-          "no games today"
+          "100.0% team coverage (2 pred teams vs 2 game teams)"
         ],
         "player_count": [
           "ok",
-          "0 predictions, no games"
+          "30 predictions for 1 games"
         ],
         "no_saturation": [
           "ok",
-          "no predictions"
+          "no saturated probabilities"
         ],
         "no_zero": [
           "ok",
-          "no predictions"
+          "no zero probabilities"
         ],
         "prob_max_sane": [
-          "ok",
-          "no predictions"
+          "warn",
+          "top prob = 0.646 (high but plausible)"
         ],
         "no_flat_ties": [
           "ok",
-          "too few predictions to check"
+          "max tie size = 1"
         ]
       }
     },
@@ -47,31 +47,31 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-06-03"
+          "date=2026-06-04"
         ],
         "team_coverage": [
           "ok",
-          "no games today"
+          "100.0% team coverage (2 pred teams vs 2 game teams)"
         ],
         "player_count": [
           "ok",
-          "0 predictions, no games"
+          "29 predictions for 1 games"
         ],
         "no_saturation": [
           "ok",
-          "no predictions"
+          "no saturated probabilities"
         ],
         "no_zero": [
           "ok",
-          "no predictions"
+          "no zero probabilities"
         ],
         "prob_max_sane": [
           "ok",
-          "no predictions"
+          "top prob = 0.290"
         ],
         "no_flat_ties": [
           "ok",
-          "too few predictions to check"
+          "max tie size = 2"
         ]
       }
     },
@@ -80,31 +80,31 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-06-03"
+          "date=2026-06-04"
         ],
         "team_coverage": [
           "ok",
-          "no games today"
+          "100.0% team coverage (2 pred teams vs 2 game teams)"
         ],
         "player_count": [
           "ok",
-          "0 predictions, no games"
+          "30 predictions for 1 games"
         ],
         "no_saturation": [
           "ok",
-          "no predictions"
+          "no saturated probabilities"
         ],
         "no_zero": [
           "ok",
-          "no predictions"
+          "no zero probabilities"
         ],
         "prob_max_sane": [
           "ok",
-          "no predictions"
+          "top prob = 0.193 (model exempt \u2014 A/B control)"
         ],
         "no_flat_ties": [
           "ok",
-          "too few predictions to check"
+          "max tie size = 1"
         ]
       }
     },
@@ -113,31 +113,31 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-06-03"
+          "date=2026-06-04"
         ],
         "team_coverage": [
           "ok",
-          "no games today"
+          "100.0% team coverage (2 pred teams vs 2 game teams)"
         ],
         "player_count": [
           "ok",
-          "0 predictions, no games"
+          "30 predictions for 1 games"
         ],
         "no_saturation": [
           "ok",
-          "no predictions"
+          "no saturated probabilities"
         ],
         "no_zero": [
           "ok",
-          "no predictions"
+          "no zero probabilities"
         ],
         "prob_max_sane": [
           "ok",
-          "no predictions"
+          "top prob = 0.386"
         ],
         "no_flat_ties": [
           "ok",
-          "too few predictions to check"
+          "max tie size = 1"
         ]
       }
     },
@@ -146,31 +146,31 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-06-03"
+          "date=2026-06-04"
         ],
         "team_coverage": [
           "ok",
-          "no games today"
+          "100.0% team coverage (2 pred teams vs 2 game teams)"
         ],
         "player_count": [
           "ok",
-          "0 predictions, no games"
+          "30 predictions for 1 games"
         ],
         "no_saturation": [
           "ok",
-          "no predictions"
+          "no saturated probabilities"
         ],
         "no_zero": [
           "ok",
-          "no predictions"
+          "no zero probabilities"
         ],
         "prob_max_sane": [
           "ok",
-          "no predictions"
+          "top prob = 0.533"
         ],
         "no_flat_ties": [
           "ok",
-          "too few predictions to check"
+          "max tie size = 2"
         ]
       }
     },
@@ -179,97 +179,97 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-06-03"
+          "date=2026-06-04"
         ],
         "team_coverage": [
           "ok",
-          "no games today"
+          "100.0% team coverage (2 pred teams vs 2 game teams)"
         ],
         "player_count": [
           "ok",
-          "0 predictions, no games"
+          "30 predictions for 1 games"
         ],
         "no_saturation": [
           "ok",
-          "no predictions"
+          "no saturated probabilities"
         ],
         "no_zero": [
           "ok",
-          "no predictions"
+          "no zero probabilities"
         ],
         "prob_max_sane": [
           "ok",
-          "no predictions"
+          "top prob = 0.414"
         ],
         "no_flat_ties": [
           "ok",
-          "too few predictions to check"
+          "max tie size = 1"
         ]
       }
     },
     "neural_v2": {
-      "status": "ok",
+      "status": "warn",
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-06-03"
+          "date=2026-06-04"
         ],
         "team_coverage": [
           "ok",
-          "no games today"
+          "100.0% team coverage (2 pred teams vs 2 game teams)"
         ],
         "player_count": [
           "ok",
-          "0 predictions, no games"
+          "30 predictions for 1 games"
         ],
         "no_saturation": [
           "ok",
-          "no predictions"
+          "no saturated probabilities"
         ],
         "no_zero": [
           "ok",
-          "no predictions"
+          "no zero probabilities"
         ],
         "prob_max_sane": [
-          "ok",
-          "no predictions"
+          "warn",
+          "top prob = 0.670 (high but plausible)"
         ],
         "no_flat_ties": [
           "ok",
-          "too few predictions to check"
+          "max tie size = 1"
         ]
       }
     },
     "xg_v3": {
-      "status": "ok",
+      "status": "warn",
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-06-03"
+          "date=2026-06-04"
         ],
         "team_coverage": [
           "ok",
-          "no games today"
+          "100.0% team coverage (2 pred teams vs 2 game teams)"
         ],
         "player_count": [
           "ok",
-          "0 predictions, no games"
+          "30 predictions for 1 games"
         ],
         "no_saturation": [
           "ok",
-          "no predictions"
+          "no saturated probabilities"
         ],
         "no_zero": [
           "ok",
-          "no predictions"
+          "no zero probabilities"
         ],
         "prob_max_sane": [
-          "ok",
-          "no predictions"
+          "warn",
+          "top prob = 0.699 (high but plausible)"
         ],
         "no_flat_ties": [
           "ok",
-          "too few predictions to check"
+          "max tie size = 1"
         ]
       }
     },
@@ -278,31 +278,31 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-06-03"
+          "date=2026-06-04"
         ],
         "team_coverage": [
           "ok",
-          "no games today"
+          "100.0% team coverage (2 pred teams vs 2 game teams)"
         ],
         "player_count": [
           "ok",
-          "0 predictions, no games"
+          "30 predictions for 1 games"
         ],
         "no_saturation": [
           "ok",
-          "no predictions"
+          "no saturated probabilities"
         ],
         "no_zero": [
           "ok",
-          "no predictions"
+          "no zero probabilities"
         ],
         "prob_max_sane": [
           "ok",
-          "no predictions"
+          "top prob = 0.768 (model exempt \u2014 A/B control)"
         ],
         "no_flat_ties": [
           "ok",
-          "too few predictions to check"
+          "max tie size = 1"
         ]
       }
     }
