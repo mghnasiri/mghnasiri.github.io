@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-25T09:20:26.749867",
+  "generated_at": "2026-06-26T09:25:42.117002",
   "rules": {
     "grace_period_days": 7,
     "trailing_window": 14,
@@ -10,15 +10,6 @@
     "champion_tie_tolerance": 1.0
   },
   "models": {
-    "neural_v1": {
-      "status": "active",
-      "total_days": 39,
-      "trailing_14_hit_rate": 17.9,
-      "trailing_14_sample_size": 14,
-      "trailing_30_hit_rate": 17.0,
-      "trailing_30_sample_size": 30,
-      "overall_hit_rate": 18.4
-    },
     "neural_network": {
       "status": "active",
       "total_days": 135,
@@ -27,26 +18,6 @@
       "trailing_30_hit_rate": 25.0,
       "trailing_30_sample_size": 30,
       "overall_hit_rate": 28.2
-    },
-    "xg_v3_synthetic": {
-      "status": "champion",
-      "total_days": 35,
-      "trailing_14_hit_rate": 27.1,
-      "trailing_14_sample_size": 14,
-      "trailing_30_hit_rate": 25.7,
-      "trailing_30_sample_size": 30,
-      "overall_hit_rate": 25.7,
-      "is_champion": true
-    },
-    "lineup_v1": {
-      "status": "champion",
-      "total_days": 37,
-      "trailing_14_hit_rate": 28.6,
-      "trailing_14_sample_size": 14,
-      "trailing_30_hit_rate": 26.3,
-      "trailing_30_sample_size": 30,
-      "overall_hit_rate": 26.5,
-      "is_champion": true
     },
     "monte_carlo": {
       "status": "active",
@@ -57,14 +28,32 @@
       "trailing_30_sample_size": 30,
       "overall_hit_rate": 24.5
     },
-    "market_odds": {
-      "status": "champion",
-      "total_days": 44,
-      "trailing_14_hit_rate": 25.7,
+    "neural_v1": {
+      "status": "active",
+      "total_days": 39,
+      "trailing_14_hit_rate": 17.9,
       "trailing_14_sample_size": 14,
-      "trailing_30_hit_rate": 25.7,
+      "trailing_30_hit_rate": 17.0,
       "trailing_30_sample_size": 30,
-      "overall_hit_rate": 22.4,
+      "overall_hit_rate": 18.4
+    },
+    "meta_ensemble": {
+      "status": "active",
+      "total_days": 45,
+      "trailing_14_hit_rate": 22.1,
+      "trailing_14_sample_size": 14,
+      "trailing_30_hit_rate": 19.3,
+      "trailing_30_sample_size": 30,
+      "overall_hit_rate": 18.2
+    },
+    "lineup_v1": {
+      "status": "champion",
+      "total_days": 37,
+      "trailing_14_hit_rate": 28.6,
+      "trailing_14_sample_size": 14,
+      "trailing_30_hit_rate": 26.3,
+      "trailing_30_sample_size": 30,
+      "overall_hit_rate": 26.5,
       "is_champion": true
     },
     "xg_v3": {
@@ -77,14 +66,25 @@
       "overall_hit_rate": 24.8,
       "is_champion": true
     },
-    "meta_ensemble": {
-      "status": "active",
-      "total_days": 45,
-      "trailing_14_hit_rate": 22.1,
+    "xg_v3_synthetic": {
+      "status": "champion",
+      "total_days": 35,
+      "trailing_14_hit_rate": 27.1,
       "trailing_14_sample_size": 14,
-      "trailing_30_hit_rate": 19.3,
+      "trailing_30_hit_rate": 25.7,
       "trailing_30_sample_size": 30,
-      "overall_hit_rate": 18.2
+      "overall_hit_rate": 25.7,
+      "is_champion": true
+    },
+    "market_odds": {
+      "status": "champion",
+      "total_days": 44,
+      "trailing_14_hit_rate": 25.7,
+      "trailing_14_sample_size": 14,
+      "trailing_30_hit_rate": 25.7,
+      "trailing_30_sample_size": 30,
+      "overall_hit_rate": 22.4,
+      "is_champion": true
     },
     "neural_v2": {
       "status": "active",
