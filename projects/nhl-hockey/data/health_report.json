@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-08-28T01:03:58.155522",
-  "today": "2026-08-28",
+  "generated_at": "2026-08-29T00:37:07.501085",
+  "today": "2026-08-29",
   "thresholds": {
     "min_team_coverage": 0.6,
     "min_predictions_if_games": 5,
@@ -14,7 +14,7 @@
       "checks": {
         "freshness": [
           "fail",
-          "date=2026-08-27 (expected 2026-08-28) \u2014 workflow may have failed"
+          "date=2026-08-28 (expected 2026-08-29) \u2014 workflow may have failed"
         ],
         "team_coverage": [
           "ok",
@@ -47,7 +47,7 @@
       "checks": {
         "freshness": [
           "fail",
-          "date=2026-08-27 (expected 2026-08-28) \u2014 workflow may have failed"
+          "date=2026-08-28 (expected 2026-08-29) \u2014 workflow may have failed"
         ],
         "team_coverage": [
           "ok",
@@ -80,7 +80,7 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-08-28"
+          "date=2026-08-29"
         ],
         "team_coverage": [
           "ok",
@@ -113,7 +113,7 @@
       "checks": {
         "freshness": [
           "fail",
-          "date=2026-08-27 (expected 2026-08-28) \u2014 workflow may have failed"
+          "date=2026-08-28 (expected 2026-08-29) \u2014 workflow may have failed"
         ],
         "team_coverage": [
           "ok",
@@ -142,11 +142,11 @@
       }
     },
     "neural_network": {
-      "status": "ok",
+      "status": "fail",
       "checks": {
         "freshness": [
-          "ok",
-          "date=2026-08-28"
+          "fail",
+          "date=2026-08-28 (expected 2026-08-29) \u2014 workflow may have failed"
         ],
         "team_coverage": [
           "ok",
@@ -179,7 +179,7 @@
       "checks": {
         "freshness": [
           "fail",
-          "date=2026-08-27 (expected 2026-08-28) \u2014 workflow may have failed"
+          "date=2026-08-28 (expected 2026-08-29) \u2014 workflow may have failed"
         ],
         "team_coverage": [
           "ok",
@@ -212,7 +212,7 @@
       "checks": {
         "freshness": [
           "fail",
-          "date=2026-08-27 (expected 2026-08-28) \u2014 workflow may have failed"
+          "date=2026-08-28 (expected 2026-08-29) \u2014 workflow may have failed"
         ],
         "team_coverage": [
           "ok",
@@ -245,7 +245,7 @@
       "checks": {
         "freshness": [
           "fail",
-          "date=2026-08-27 (expected 2026-08-28) \u2014 workflow may have failed"
+          "date=2026-08-28 (expected 2026-08-29) \u2014 workflow may have failed"
         ],
         "team_coverage": [
           "ok",
@@ -278,7 +278,7 @@
       "checks": {
         "freshness": [
           "fail",
-          "date=2026-08-27 (expected 2026-08-28) \u2014 workflow may have failed"
+          "date=2026-08-28 (expected 2026-08-29) \u2014 workflow may have failed"
         ],
         "team_coverage": [
           "ok",
