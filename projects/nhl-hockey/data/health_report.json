@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-29T00:37:07.501085",
+  "generated_at": "2026-08-29T19:28:27.081736",
   "today": "2026-08-29",
   "thresholds": {
     "min_team_coverage": 0.6,
@@ -10,11 +10,11 @@
   },
   "models": {
     "lineup_v1": {
-      "status": "fail",
+      "status": "ok",
       "checks": {
         "freshness": [
-          "fail",
-          "date=2026-08-28 (expected 2026-08-29) \u2014 workflow may have failed"
+          "ok",
+          "date=2026-08-29"
         ],
         "team_coverage": [
           "ok",
@@ -43,11 +43,11 @@
       }
     },
     "market_odds": {
-      "status": "fail",
+      "status": "ok",
       "checks": {
         "freshness": [
-          "fail",
-          "date=2026-08-28 (expected 2026-08-29) \u2014 workflow may have failed"
+          "ok",
+          "date=2026-08-29"
         ],
         "team_coverage": [
           "ok",
@@ -109,11 +109,11 @@
       }
     },
     "monte_carlo": {
-      "status": "fail",
+      "status": "ok",
       "checks": {
         "freshness": [
-          "fail",
-          "date=2026-08-28 (expected 2026-08-29) \u2014 workflow may have failed"
+          "ok",
+          "date=2026-08-29"
         ],
         "team_coverage": [
           "ok",
@@ -142,11 +142,11 @@
       }
     },
     "neural_network": {
-      "status": "fail",
+      "status": "ok",
       "checks": {
         "freshness": [
-          "fail",
-          "date=2026-08-28 (expected 2026-08-29) \u2014 workflow may have failed"
+          "ok",
+          "date=2026-08-29"
         ],
         "team_coverage": [
           "ok",
@@ -175,11 +175,11 @@
       }
     },
     "neural_v1": {
-      "status": "fail",
+      "status": "ok",
       "checks": {
         "freshness": [
-          "fail",
-          "date=2026-08-28 (expected 2026-08-29) \u2014 workflow may have failed"
+          "ok",
+          "date=2026-08-29"
         ],
         "team_coverage": [
           "ok",
@@ -208,11 +208,11 @@
       }
     },
     "neural_v2": {
-      "status": "fail",
+      "status": "ok",
       "checks": {
         "freshness": [
-          "fail",
-          "date=2026-08-28 (expected 2026-08-29) \u2014 workflow may have failed"
+          "ok",
+          "date=2026-08-29"
         ],
         "team_coverage": [
           "ok",
@@ -241,11 +241,11 @@
       }
     },
     "xg_v3": {
-      "status": "fail",
+      "status": "ok",
       "checks": {
         "freshness": [
-          "fail",
-          "date=2026-08-28 (expected 2026-08-29) \u2014 workflow may have failed"
+          "ok",
+          "date=2026-08-29"
         ],
         "team_coverage": [
           "ok",
@@ -274,11 +274,11 @@
       }
     },
     "xg_v3_synthetic": {
-      "status": "fail",
+      "status": "ok",
       "checks": {
         "freshness": [
-          "fail",
-          "date=2026-08-28 (expected 2026-08-29) \u2014 workflow may have failed"
+          "ok",
+          "date=2026-08-29"
         ],
         "team_coverage": [
           "ok",
