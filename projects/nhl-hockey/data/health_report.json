@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-18T19:06:56.138371",
-  "today": "2026-09-18",
+  "generated_at": "2026-09-19T18:44:45.494582",
+  "today": "2026-09-19",
   "thresholds": {
     "min_team_coverage": 0.6,
     "min_predictions_if_games": 5,
@@ -14,7 +14,7 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-09-18"
+          "date=2026-09-19"
         ],
         "team_coverage": [
           "ok",
@@ -43,11 +43,11 @@
       }
     },
     "market_odds": {
-      "status": "ok",
+      "status": "fail",
       "checks": {
         "freshness": [
-          "ok",
-          "date=2026-09-18"
+          "fail",
+          "date=2026-09-18 (expected 2026-09-19) \u2014 workflow may have failed"
         ],
         "team_coverage": [
           "ok",
@@ -80,7 +80,7 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-09-18"
+          "date=2026-09-19"
         ],
         "team_coverage": [
           "ok",
@@ -113,7 +113,7 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-09-18"
+          "date=2026-09-19"
         ],
         "team_coverage": [
           "ok",
@@ -146,7 +146,7 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-09-18"
+          "date=2026-09-19"
         ],
         "team_coverage": [
           "ok",
@@ -179,7 +179,7 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-09-18"
+          "date=2026-09-19"
         ],
         "team_coverage": [
           "ok",
@@ -212,7 +212,7 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-09-18"
+          "date=2026-09-19"
         ],
         "team_coverage": [
           "ok",
@@ -245,7 +245,7 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-09-18"
+          "date=2026-09-19"
         ],
         "team_coverage": [
           "ok",
@@ -278,7 +278,7 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-09-18"
+          "date=2026-09-19"
         ],
         "team_coverage": [
           "ok",
