@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-28T22:13:42.345845",
-  "today": "2026-09-28",
+  "generated_at": "2026-09-29T20:58:24.341976",
+  "today": "2026-09-29",
   "thresholds": {
     "min_team_coverage": 0.6,
     "min_predictions_if_games": 5,
@@ -10,11 +10,11 @@
   },
   "models": {
     "lineup_v1": {
-      "status": "ok",
+      "status": "fail",
       "checks": {
         "freshness": [
-          "ok",
-          "date=2026-09-28"
+          "fail",
+          "date=2026-09-28 (expected 2026-09-29) \u2014 workflow may have failed"
         ],
         "team_coverage": [
           "ok",
@@ -47,31 +47,31 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-09-28"
+          "date=2026-09-29"
         ],
         "team_coverage": [
           "ok",
-          "no games today"
+          "100.0% team coverage (10 pred teams vs 10 game teams)"
         ],
         "player_count": [
           "ok",
-          "0 predictions, no games"
+          "176 predictions for 5 games"
         ],
         "no_saturation": [
           "ok",
-          "no predictions"
+          "no saturated probabilities"
         ],
         "no_zero": [
           "ok",
-          "no predictions"
+          "no zero probabilities"
         ],
         "prob_max_sane": [
           "ok",
-          "no predictions"
+          "top prob = 0.466"
         ],
         "no_flat_ties": [
           "ok",
-          "too few predictions to check"
+          "max tie size = 2"
         ]
       }
     },
@@ -80,7 +80,7 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-09-28"
+          "date=2026-09-29"
         ],
         "team_coverage": [
           "ok",
@@ -109,11 +109,11 @@
       }
     },
     "monte_carlo": {
-      "status": "ok",
+      "status": "fail",
       "checks": {
         "freshness": [
-          "ok",
-          "date=2026-09-28"
+          "fail",
+          "date=2026-09-28 (expected 2026-09-29) \u2014 workflow may have failed"
         ],
         "team_coverage": [
           "ok",
@@ -142,11 +142,11 @@
       }
     },
     "neural_network": {
-      "status": "ok",
+      "status": "fail",
       "checks": {
         "freshness": [
-          "ok",
-          "date=2026-09-28"
+          "fail",
+          "date=2026-09-28 (expected 2026-09-29) \u2014 workflow may have failed"
         ],
         "team_coverage": [
           "ok",
@@ -175,11 +175,11 @@
       }
     },
     "neural_v1": {
-      "status": "ok",
+      "status": "fail",
       "checks": {
         "freshness": [
-          "ok",
-          "date=2026-09-28"
+          "fail",
+          "date=2026-09-28 (expected 2026-09-29) \u2014 workflow may have failed"
         ],
         "team_coverage": [
           "ok",
@@ -208,11 +208,11 @@
       }
     },
     "neural_v2": {
-      "status": "ok",
+      "status": "fail",
       "checks": {
         "freshness": [
-          "ok",
-          "date=2026-09-28"
+          "fail",
+          "date=2026-09-28 (expected 2026-09-29) \u2014 workflow may have failed"
         ],
         "team_coverage": [
           "ok",
@@ -241,11 +241,11 @@
       }
     },
     "xg_v3": {
-      "status": "ok",
+      "status": "fail",
       "checks": {
         "freshness": [
-          "ok",
-          "date=2026-09-28"
+          "fail",
+          "date=2026-09-28 (expected 2026-09-29) \u2014 workflow may have failed"
         ],
         "team_coverage": [
           "ok",
@@ -274,11 +274,11 @@
       }
     },
     "xg_v3_synthetic": {
-      "status": "ok",
+      "status": "fail",
       "checks": {
         "freshness": [
-          "ok",
-          "date=2026-09-28"
+          "fail",
+          "date=2026-09-28 (expected 2026-09-29) \u2014 workflow may have failed"
         ],
         "team_coverage": [
           "ok",
