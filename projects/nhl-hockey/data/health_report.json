@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-29T20:58:24.341976",
-  "today": "2026-09-29",
+  "generated_at": "2026-09-30T20:56:23.152923",
+  "today": "2026-09-30",
   "thresholds": {
     "min_team_coverage": 0.6,
     "min_predictions_if_games": 5,
@@ -14,7 +14,7 @@
       "checks": {
         "freshness": [
           "fail",
-          "date=2026-09-28 (expected 2026-09-29) \u2014 workflow may have failed"
+          "date=2026-09-28 (expected 2026-09-30) \u2014 workflow may have failed"
         ],
         "team_coverage": [
           "ok",
@@ -47,15 +47,15 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-09-29"
+          "date=2026-09-30"
         ],
         "team_coverage": [
           "ok",
-          "100.0% team coverage (10 pred teams vs 10 game teams)"
+          "100.0% team coverage (6 pred teams vs 6 game teams)"
         ],
         "player_count": [
           "ok",
-          "176 predictions for 5 games"
+          "105 predictions for 3 games"
         ],
         "no_saturation": [
           "ok",
@@ -67,7 +67,7 @@
         ],
         "prob_max_sane": [
           "ok",
-          "top prob = 0.466"
+          "top prob = 0.442"
         ],
         "no_flat_ties": [
           "ok",
@@ -80,7 +80,7 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-09-29"
+          "date=2026-09-30"
         ],
         "team_coverage": [
           "ok",
@@ -113,7 +113,7 @@
       "checks": {
         "freshness": [
           "fail",
-          "date=2026-09-28 (expected 2026-09-29) \u2014 workflow may have failed"
+          "date=2026-09-28 (expected 2026-09-30) \u2014 workflow may have failed"
         ],
         "team_coverage": [
           "ok",
@@ -146,7 +146,7 @@
       "checks": {
         "freshness": [
           "fail",
-          "date=2026-09-28 (expected 2026-09-29) \u2014 workflow may have failed"
+          "date=2026-09-28 (expected 2026-09-30) \u2014 workflow may have failed"
         ],
         "team_coverage": [
           "ok",
@@ -179,7 +179,7 @@
       "checks": {
         "freshness": [
           "fail",
-          "date=2026-09-28 (expected 2026-09-29) \u2014 workflow may have failed"
+          "date=2026-09-28 (expected 2026-09-30) \u2014 workflow may have failed"
         ],
         "team_coverage": [
           "ok",
@@ -212,7 +212,7 @@
       "checks": {
         "freshness": [
           "fail",
-          "date=2026-09-28 (expected 2026-09-29) \u2014 workflow may have failed"
+          "date=2026-09-28 (expected 2026-09-30) \u2014 workflow may have failed"
         ],
         "team_coverage": [
           "ok",
@@ -245,7 +245,7 @@
       "checks": {
         "freshness": [
           "fail",
-          "date=2026-09-28 (expected 2026-09-29) \u2014 workflow may have failed"
+          "date=2026-09-28 (expected 2026-09-30) \u2014 workflow may have failed"
         ],
         "team_coverage": [
           "ok",
@@ -278,7 +278,7 @@
       "checks": {
         "freshness": [
           "fail",
-          "date=2026-09-28 (expected 2026-09-29) \u2014 workflow may have failed"
+          "date=2026-09-28 (expected 2026-09-30) \u2014 workflow may have failed"
         ],
         "team_coverage": [
           "ok",
