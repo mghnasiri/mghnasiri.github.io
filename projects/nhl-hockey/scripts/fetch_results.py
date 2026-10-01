@@ -4,13 +4,20 @@ NHL Goal Predictor - Fetch Results
 Fetches actual goal scorers from completed games
 Compares with Top 10 predictions
 
+Grades yesterday, plus any day in the last BACKFILL_DAYS that has
+predictions but no results or only partial ones (games not final yet at
+run time, a throttled boxscore, a failed run). Those used to stay
+ungraded or half-graded for good.
+
 Author: Mohammad G. Nasiri
 """
 
-import requests
 import json
 import os
+import sys
 from datetime import datetime, timedelta
+
+from nhl_api import api_get
 
 # =============================================================================
 # CONFIGURATION
@@ -19,245 +26,133 @@ class Config:
     DATA_DIR = "data"
     RESULTS_DIR = f"{DATA_DIR}/results"
     PREDICTIONS_DIR = f"{DATA_DIR}/predictions"
-    
+
+    # NHL dates are Eastern; the workflow runs with TZ=America/Toronto.
     YESTERDAY = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
+    BACKFILL_DAYS = 7
+
+FINAL_STATES = {"OFF", "FINAL"}
 
 # Create directories
 os.makedirs(Config.RESULTS_DIR, exist_ok=True)
-
-print("=" * 60)
-print("🏒 NHL GOAL PREDICTOR - FETCH RESULTS")
-print(f"📅 Date: {Config.YESTERDAY}")
-print("=" * 60)
 
 # =============================================================================
 # FETCH GAMES
 # =============================================================================
 def get_games(date):
-    """Get all NHL games for a specific date"""
-    url = f"https://api-web.nhle.com/v1/schedule/{date}"
-    
-    try:
-        response = requests.get(url, timeout=15)
-        if response.status_code != 200:
-            return []
-        
-        data = response.json()
-        games = []
-        
-        for day in data.get('gameWeek', []):
-            if day['date'] == date:
-                for game in day.get('games', []):
-                    # Only regular season (2) and playoffs (3)
-                    if game.get('gameType') in [2, 3]:
-                        games.append({
-                            'game_id': game['id'],
-                            'home_team': game['homeTeam']['abbrev'],
-                            'away_team': game['awayTeam']['abbrev'],
-                            'game_state': game.get('gameState', '')
-                        })
-        
-        return games
-        
-    except Exception as e:
-        print(f"❌ Error fetching games: {e}")
-        return []
+    """All NHL games for a date; None if the schedule couldn't be fetched
+    (distinct from [] = a day with no games)."""
+    data = api_get(f"https://api-web.nhle.com/v1/schedule/{date}", attempts=6)
+    if not data:
+        return None
+    games = []
+    for day in data.get('gameWeek', []):
+        if day['date'] == date:
+            for game in day.get('games', []):
+                # Only regular season (2) and playoffs (3)
+                if game.get('gameType') in [2, 3]:
+                    games.append({
+                        'game_id': game['id'],
+                        'home_team': game['homeTeam']['abbrev'],
+                        'away_team': game['awayTeam']['abbrev'],
+                        'game_state': game.get('gameState', ''),
+                        # OK, or PPD/CNCL for a postponed/cancelled game
+                        'schedule_state': game.get('gameScheduleState', 'OK'),
+                    })
+    return games
 
 # =============================================================================
 # FETCH GOAL SCORERS
 # =============================================================================
-def get_scorers(game_id):
-    """Get all goal scorers from a game's boxscore"""
-    url = f"https://api-web.nhle.com/v1/gamecenter/{game_id}/boxscore"
-    
-    try:
-        response = requests.get(url, timeout=15)
-        if response.status_code != 200:
-            print(f"   ⚠️ API returned {response.status_code}")
-            return []
-        
-        data = response.json()
-        scorers = []
-        
-        # NEW API STRUCTURE: playerByGameStats
-        player_stats = data.get('playerByGameStats')
-        
-        if player_stats:
-            for team_type in ['awayTeam', 'homeTeam']:
-                team_data = player_stats.get(team_type, {})
-                
-                # Get team abbrev from main data
-                team_abbrev = data.get(team_type, {}).get('abbrev', '')
-                
-                # Check forwards and defense
-                for position_group in ['forwards', 'defense']:
-                    for player in team_data.get(position_group, []):
-                        goals = player.get('goals', 0)
-                        if goals > 0:
-                            # Handle name as dict or string
-                            name = player.get('name', {})
-                            if isinstance(name, dict):
-                                player_name = name.get('default', 'Unknown')
-                            else:
-                                player_name = str(name) if name else 'Unknown'
-                            
-                            scorers.append({
-                                'player_id': player.get('playerId'),
-                                'player_name': player_name,
-                                'team': team_abbrev,
-                                'goals': goals
-                            })
-        else:
-            # FALLBACK: Old structure
-            for team_type in ['homeTeam', 'awayTeam']:
-                team_data = data.get(team_type, {})
-                team_abbrev = team_data.get('abbrev', '')
-                
-                players = team_data.get('forwards', []) + team_data.get('defense', [])
-                
-                for player in players:
-                    goals = player.get('goals', 0)
-                    if goals > 0:
-                        name = player.get('name', {})
-                        if isinstance(name, dict):
-                            player_name = name.get('default', 'Unknown')
-                        else:
-                            player_name = str(name) if name else 'Unknown'
-                        
-                        scorers.append({
-                            'player_id': player.get('playerId'),
-                            'player_name': player_name,
-                            'team': team_abbrev,
-                            'goals': goals
-                        })
-        
-        return scorers
-        
-    except Exception as e:
-        print(f"   ⚠️ Error fetching boxscore: {e}")
-        return []
-
-# =============================================================================
-# MAIN LOGIC
-# =============================================================================
-
-# 1. Get games
-print("\n📡 Fetching games...")
-games = get_games(Config.YESTERDAY)
-
-# Handle no games
-if not games:
-    print("ℹ️  No games found for this date")
-    
-    output = {
-        "date": Config.YESTERDAY,
-        "games_count": 0,
-        "games": [],
-        "all_scorers": [],
-        "scorers_count": 0,
-        "model_comparisons": [],
-        "fetched_at": datetime.now().isoformat()
+def _scorer(player, team_abbrev):
+    # Handle name as dict or string
+    name = player.get('name', {})
+    if isinstance(name, dict):
+        player_name = name.get('default', 'Unknown')
+    else:
+        player_name = str(name) if name else 'Unknown'
+    return {
+        'player_id': player.get('playerId'),
+        'player_name': player_name,
+        'team': team_abbrev,
+        'goals': player.get('goals', 0)
     }
-    
-    # Save files
-    with open(f"{Config.RESULTS_DIR}/{Config.YESTERDAY}.json", 'w') as f:
-        json.dump(output, f, indent=2)
-    with open(f"{Config.RESULTS_DIR}/latest.json", 'w') as f:
-        json.dump(output, f, indent=2)
-    
-    print("✅ Saved empty results (no games)")
-    exit()
 
-print(f"✅ Found {len(games)} games")
 
-# 2. Get all scorers — only from completed games. Grading a LIVE/scheduled
-#    game records real scorers as "did not score" and understates hit rate.
-print("\n⚽ Fetching goal scorers...")
-FINAL_STATES = {"OFF", "FINAL"}
-all_scorers = []
-final_games = 0
+def get_scorers(game_id):
+    """All goal scorers from a game's boxscore; None if it didn't load, so
+    a fetch failure can't grade every pick in the game as a miss."""
+    data = api_get(f"https://api-web.nhle.com/v1/gamecenter/{game_id}/boxscore")
+    if data is None:
+        return None
+    scorers = []
 
-for game in games:
-    matchup = f"{game['away_team']} @ {game['home_team']}"
-    state = game.get('game_state', '')
-    if state not in FINAL_STATES:
-        print(f"   {matchup}... SKIPPED (state={state or '?'}, not final)")
-        continue
-    final_games += 1
-    print(f"   {matchup}...", end=" ")
+    # NEW API STRUCTURE: playerByGameStats
+    player_stats = data.get('playerByGameStats')
 
-    scorers = get_scorers(game['game_id'])
-    for scorer in scorers:
-        scorer['game_id'] = game['game_id']
-        scorer['matchup'] = matchup
-    all_scorers.extend(scorers)
-    print(f"{len(scorers)} scorers")
+    if player_stats:
+        for team_type in ['awayTeam', 'homeTeam']:
+            team_data = player_stats.get(team_type, {})
+            # Get team abbrev from main data
+            team_abbrev = data.get(team_type, {}).get('abbrev', '')
+            # Check forwards and defense
+            for position_group in ['forwards', 'defense']:
+                for player in team_data.get(position_group, []):
+                    if player.get('goals', 0) > 0:
+                        scorers.append(_scorer(player, team_abbrev))
+    else:
+        # FALLBACK: Old structure
+        for team_type in ['homeTeam', 'awayTeam']:
+            team_data = data.get(team_type, {})
+            team_abbrev = team_data.get('abbrev', '')
+            for player in team_data.get('forwards', []) + team_data.get('defense', []):
+                if player.get('goals', 0) > 0:
+                    scorers.append(_scorer(player, team_abbrev))
 
-print(f"\n✅ Total scorers: {len(all_scorers)} from {final_games}/{len(games)} final games")
+    return scorers
 
-# If nothing is final yet, do NOT grade — recording every pick as a miss
-# would poison the hit-rate metric. Leave yesterday's result file untouched.
-if final_games == 0:
-    print("⛔ No completed games yet — skipping grading to avoid false zeros.")
-    exit(0)
+# =============================================================================
+# GRADING
+# =============================================================================
+def compare_models(date, all_scorers, ungraded_teams):
+    """Grade every model's top-10 picks for `date` against its scorers.
+    Picks on teams whose game wasn't graded don't count either way."""
+    # Drop missing/None ids so a boxscore gap can't collapse to a single None
+    # that a player_id=0 prediction would then falsely match.
+    scorer_ids = {s['player_id'] for s in all_scorers if s.get('player_id')}
+    model_comparisons = []
+    if not os.path.exists(Config.PREDICTIONS_DIR):
+        return model_comparisons
 
-partial = final_games < len(games)
-if partial:
-    print(f"⚠️ {len(games) - final_games} game(s) not final — grading is partial.")
-
-# 3. Compare with predictions
-print("\n📊 Comparing with predictions...")
-
-# Drop missing/None ids so a boxscore gap can't collapse to a single None
-# that a player_id=0 prediction would then falsely match.
-scorer_ids = {s['player_id'] for s in all_scorers if s.get('player_id')}
-model_comparisons = []
-
-# Check each model
-if os.path.exists(Config.PREDICTIONS_DIR):
-    for model_name in os.listdir(Config.PREDICTIONS_DIR):
-        model_dir = f"{Config.PREDICTIONS_DIR}/{model_name}"
-        
-        if not os.path.isdir(model_dir):
-            continue
-        
-        pred_file = f"{model_dir}/{Config.YESTERDAY}.json"
-        
+    for model_name in sorted(os.listdir(Config.PREDICTIONS_DIR)):
+        pred_file = f"{Config.PREDICTIONS_DIR}/{model_name}/{date}.json"
         if not os.path.exists(pred_file):
             continue
-        
-        # Load predictions
         with open(pred_file, 'r') as f:
             predictions = json.load(f)
-        
+
         # Grade the model's top picks. Denominator is the number of picks
         # actually graded — a Tims-filtered model can have <10 on short slates,
         # and dividing by a hardcoded 10 understated hit rate on those days.
         TOP_N = 10
-        top_picks = predictions.get('predictions', [])[:TOP_N]
-
+        top_picks = [p for p in predictions.get('predictions', [])[:TOP_N]
+                     if p.get('team') not in ungraded_teams]
         if not top_picks:
             print(f"   ⚠️ {model_name}: No predictions")
             continue
 
-        hits = 0
         graded_picks = []
-
         for pred in top_picks:
             pid = pred.get('player_id')
-            scored = bool(pid) and pid in scorer_ids
-            if scored:
-                hits += 1
-
             graded_picks.append({
                 'rank': pred.get('rank', 0),
                 'player_id': pid,
                 'name': pred['name'],
                 'team': pred['team'],
                 'probability': pred.get('goal_probability', 0),
-                'scored': scored
+                'scored': bool(pid) and pid in scorer_ids
             })
-
+        hits = sum(p['scored'] for p in graded_picks)
         n = len(graded_picks)
         # Save comparison ('top10_picks' key kept for dashboard/telegram compat)
         model_comparisons.append({
@@ -268,52 +163,147 @@ if os.path.exists(Config.PREDICTIONS_DIR):
             'total_predictions': n,
             'hit_rate': round(hits / n * 100, 1) if n else 0.0
         })
+        print(f"   📈 {model_name}: {hits}/{n}")
+    return model_comparisons
 
-        # Print results
-        print(f"\n   📈 {model_name}:")
-        for p in graded_picks:
-            icon = "✅" if p['scored'] else "❌"
-            print(f"      {p['rank']:>2}. {p['name']:<24} {p['probability']*100:>5.1f}% {icon}")
-        print(f"      {'─' * 45}")
-        print(f"      Result: {hits}/{n} ({round(hits / n * 100) if n else 0}%)")
 
-# 4. Save results
-print("\n💾 Saving results...")
+def grade(date, games):
+    """Results for `date`'s games, or None when no game can be graded yet."""
+    # A postponed/cancelled game never goes final; counting it would leave
+    # the day partial for good.
+    unplayed = [g for g in games if g['schedule_state'] != 'OK']
+    games = [g for g in games if g['schedule_state'] == 'OK']
+    ungraded_teams = {t for g in unplayed for t in (g['home_team'], g['away_team'])}
+    for g in unplayed:
+        print(f"   {g['away_team']} @ {g['home_team']}... not played "
+              f"({g['schedule_state']}) — its picks aren't graded")
+    if not games:
+        print("   ℹ️  No games found for this date")
+        return {
+            "date": date,
+            "games_count": 0,
+            "games": [],
+            "all_scorers": [],
+            "scorers_count": 0,
+            "model_comparisons": [],
+            "fetched_at": datetime.now().isoformat()
+        }
 
-output = {
-    "date": Config.YESTERDAY,
-    "games_count": len(games),
-    "final_games": final_games,
-    "partial": partial,
-    "games": games,
-    "all_scorers": all_scorers,
-    "scorers_count": len(all_scorers),
-    "model_comparisons": model_comparisons,
-    "fetched_at": datetime.now().isoformat()
-}
+    # Only completed games whose boxscore loaded count. Grading a LIVE or
+    # unloaded game would record its real scorers as "did not score".
+    all_scorers = []
+    graded_games = 0
+    for game in games:
+        matchup = f"{game['away_team']} @ {game['home_team']}"
+        state = game.get('game_state', '')
+        if state not in FINAL_STATES:
+            print(f"   {matchup}... SKIPPED (state={state or '?'}, not final)")
+            ungraded_teams |= {game['home_team'], game['away_team']}
+            continue
+        scorers = get_scorers(game['game_id'])
+        if scorers is None:
+            print(f"   {matchup}... SKIPPED (boxscore didn't load)")
+            ungraded_teams |= {game['home_team'], game['away_team']}
+            continue
+        graded_games += 1
+        for scorer in scorers:
+            scorer['game_id'] = game['game_id']
+            scorer['matchup'] = matchup
+        all_scorers.extend(scorers)
+        print(f"   {matchup}... {len(scorers)} scorers")
 
-# Save dated file
-dated_file = f"{Config.RESULTS_DIR}/{Config.YESTERDAY}.json"
-with open(dated_file, 'w', encoding='utf-8') as f:
-    json.dump(output, f, indent=2, ensure_ascii=False)
-print(f"✅ Saved: {dated_file}")
+    # If nothing is graded, do NOT write a result — every pick would count
+    # as a miss and poison the hit-rate metric. A later run retries.
+    if graded_games == 0:
+        print("   ⛔ No completed game graded yet — leaving this day for a later run.")
+        return None
 
-# Save latest
-latest_file = f"{Config.RESULTS_DIR}/latest.json"
-with open(latest_file, 'w', encoding='utf-8') as f:
-    json.dump(output, f, indent=2, ensure_ascii=False)
-print(f"✅ Saved: {latest_file}")
+    partial = graded_games < len(games)
+    if partial:
+        print(f"   ⚠️ {len(games) - graded_games} game(s) not graded — partial; "
+              "a later run completes it.")
 
-# 5. Summary
-print("\n" + "=" * 60)
-print("📊 SUMMARY")
-print("=" * 60)
-print(f"🏒 Games: {len(games)}")
-print(f"⚽ Scorers: {len(all_scorers)}")
+    return {
+        "date": date,
+        "games_count": len(games),
+        "final_games": graded_games,
+        "partial": partial,
+        "games": games,
+        "all_scorers": all_scorers,
+        "scorers_count": len(all_scorers),
+        "model_comparisons": compare_models(date, all_scorers, ungraded_teams),
+        "fetched_at": datetime.now().isoformat()
+    }
 
-if model_comparisons:
-    print("\n📈 Model Results:")
-    for comp in model_comparisons:
-        print(f"   {comp['model']}: {comp['hits']}/10 ({comp['hit_rate']}%)")
 
-print("\n✅ Done!")
+def dates_to_grade():
+    """Yesterday, plus recent days with predictions whose results are
+    missing or partial."""
+    dates = []
+    yesterday = datetime.strptime(Config.YESTERDAY, "%Y-%m-%d")
+    for back in range(Config.BACKFILL_DAYS, 0, -1):
+        date = (yesterday - timedelta(days=back)).strftime("%Y-%m-%d")
+        has_preds = any(os.path.exists(f"{Config.PREDICTIONS_DIR}/{m}/{date}.json")
+                        for m in os.listdir(Config.PREDICTIONS_DIR)) \
+            if os.path.isdir(Config.PREDICTIONS_DIR) else False
+        result_file = f"{Config.RESULTS_DIR}/{date}.json"
+        if not has_preds:
+            continue
+        if not os.path.exists(result_file):
+            dates.append(date)
+            continue
+        with open(result_file, 'r') as f:
+            if json.load(f).get('partial'):
+                dates.append(date)
+    return dates + [Config.YESTERDAY]
+
+
+def save(path, output):
+    with open(path, 'w', encoding='utf-8') as f:
+        json.dump(output, f, indent=2, ensure_ascii=False)
+    print(f"   ✅ Saved: {path}")
+
+
+# =============================================================================
+# MAIN LOGIC
+# =============================================================================
+def main():
+    print("=" * 60)
+    print("🏒 NHL GOAL PREDICTOR - FETCH RESULTS")
+    print(f"📅 Date: {Config.YESTERDAY}")
+    print("=" * 60)
+
+    dates = dates_to_grade()
+    if len(dates) > 1:
+        print(f"\n🔁 Also re-grading missed/partial days: {dates[:-1]}")
+
+    for date in dates:
+        print(f"\n📅 {date}")
+        games = get_games(date)
+        if games is None:
+            # An outage would otherwise pass as a quiet night: fail so the
+            # alert fires; the next run re-grades the day.
+            print("   ❌ Could not fetch the schedule")
+            if date == Config.YESTERDAY:
+                return 1
+            continue
+        output = grade(date, games)
+        if output is None:
+            continue
+        path = f"{Config.RESULTS_DIR}/{date}.json"
+        if os.path.exists(path):
+            with open(path, 'r') as f:
+                before = json.load(f).get('final_games', 0)
+            if output.get('final_games', 0) < before:
+                print(f"   Keeping the earlier result ({before} games graded)")
+                continue
+        save(path, output)
+        if date == Config.YESTERDAY:
+            save(f"{Config.RESULTS_DIR}/latest.json", output)
+
+    print("\n✅ Done!")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

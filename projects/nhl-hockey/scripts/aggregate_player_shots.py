@@ -125,7 +125,7 @@ def build_position_map():
     # Walk all prediction JSONs (latest + recent dated) — position is stable
     # enough that we don't need to be clever about which one wins.
     candidates = glob.glob(PREDICTIONS_GLOB)
-    candidates += glob.glob("data/predictions/*/2026-*.json")
+    candidates += glob.glob("data/predictions/*/20*.json")
     for path in candidates:
         try:
             with open(path, "r", encoding="utf-8") as f:

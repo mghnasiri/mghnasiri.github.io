@@ -201,10 +201,10 @@ def build_training_data():
 
     model_dates = {}
     for m in Config.BASE_MODELS:
-        files = glob.glob(f"{Config.DATA_DIR}/predictions/{m}/2026-*.json")
+        files = glob.glob(f"{Config.DATA_DIR}/predictions/{m}/20*.json")
         model_dates[m] = {os.path.basename(f).replace('.json', ''): f for f in files}
 
-    result_files = glob.glob(f"{Config.DATA_DIR}/results/2026-*.json")
+    result_files = glob.glob(f"{Config.DATA_DIR}/results/20*.json")
     result_dates = {os.path.basename(f).replace('.json', ''): f for f in result_files}
 
     overlap = set(model_dates[Config.BASE_MODELS[0]].keys())
@@ -221,6 +221,10 @@ def build_training_data():
     for date in overlap:
         with open(result_dates[date], 'r') as f:
             result_data = json.load(f)
+        # Ungraded games would label their scorers 0; fetch_results
+        # completes partial days on a later run.
+        if result_data.get('partial'):
+            continue
         scorer_ids = {s['player_id'] for s in result_data.get('all_scorers', [])
                       if s.get('player_id')}
 
