@@ -27,6 +27,7 @@ but adds maintenance overhead per workflow; one centralized check is cheaper.
 Author: Mohammad G. Nasiri
 """
 
+import calendar
 import json
 import os
 import sys
@@ -221,6 +222,26 @@ def check_no_flat_ties(data):
     return "ok", f"max tie size = {biggest_tie_count}"
 
 
+def check_odds_credits(data, model_name=None):
+    """Market only: warn before the Odds API quota runs out mid-month. When
+    it does, Market exits 1 and the owner gets no picks at all."""
+    if model_name != "market_odds":
+        return "ok", "n/a"
+    params = data.get("model_params", {})
+    remaining = params.get("credits_remaining")
+    if remaining is None:
+        return "ok", "credits unknown"
+    if remaining <= 0:
+        return "fail", "Odds API quota exhausted — Market cannot fetch odds"
+    today = datetime.now()
+    days_left = calendar.monthrange(today.year, today.month)[1] - today.day
+    need = params.get("credits_per_event", 2) * len(data.get("games", [])) * days_left
+    if remaining < need:
+        return "warn", (f"{remaining} credits left; ~{need} needed for the rest "
+                        f"of the month at today's slate size")
+    return "ok", f"{remaining} credits left"
+
+
 CHECKS = {
     "freshness": check_freshness,
     "team_coverage": check_team_coverage,
@@ -229,6 +250,7 @@ CHECKS = {
     "no_zero": check_no_zero,
     "prob_max_sane": check_prob_max_sane,
     "no_flat_ties": check_no_flat_ties,
+    "odds_credits": check_odds_credits,
 }
 
 
@@ -278,7 +300,7 @@ def main():
         for k, fn in CHECKS.items():
             if k == "freshness":
                 continue
-            if k == "prob_max_sane":
+            if k in ("prob_max_sane", "odds_credits"):
                 results[k] = fn(data, model_name=name)
             else:
                 results[k] = fn(data)

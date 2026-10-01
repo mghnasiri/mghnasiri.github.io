@@ -115,6 +115,23 @@ def _nhl_today_team_pairs():
     return pairs
 
 
+# Odds API usage, read from response headers. The free tier is 500 credits a
+# month and each event costs one credit per region; when it runs out Market
+# exits 1 and there are no picks at all, so the balance is logged and checked.
+QUOTA = {'remaining': None, 'used': None}
+BOOKMAKERS_SEEN = set()
+
+
+def _record_quota(resp):
+    for key in ('remaining', 'used'):
+        value = resp.headers.get(f'x-requests-{key}')
+        if value is not None:
+            try:
+                QUOTA[key] = int(float(value))
+            except ValueError:
+                pass
+
+
 def fetch_events():
     """Fetch today's NHL events from The Odds API.
 
@@ -133,6 +150,7 @@ def fetch_events():
     }
     try:
         resp = requests.get(url, params=params, timeout=15)
+        _record_quota(resp)
         if resp.status_code != 200:
             print(f"  Events API error: {resp.status_code} — {resp.text[:200]}")
             return []
@@ -170,8 +188,11 @@ def fetch_player_odds(event_id):
     }
     try:
         resp = requests.get(url, params=params, timeout=15)
+        _record_quota(resp)
         if resp.status_code == 200:
-            return resp.json()
+            data = resp.json()
+            BOOKMAKERS_SEEN.update(b['key'] for b in data.get('bookmakers', []) if b.get('key'))
+            return data
         else:
             print(f"    Odds API error for {event_id}: {resp.status_code}")
             return None
@@ -453,6 +474,7 @@ for event in events:
     })
 
 print(f"\n  Total players with odds: {len(all_player_probs)}")
+print(f"  Odds API credits: {QUOTA['remaining']} remaining, {QUOTA['used']} used this month")
 
 # Cache raw odds
 odds_cache = {
@@ -548,10 +570,12 @@ output = {
         "source": "The Odds API",
         "market": Config.MARKET,
         "regions": Config.REGIONS,
-        "bookmakers_used": len(set(
-            b['key'] for e in [fetch_player_odds(ev['id']) for ev in events[:1]]
-            if e for b in e.get('bookmakers', [])
-        )) if events else 0,
+        # Counted from the odds already fetched; this used to re-fetch the
+        # first event's odds, a paid call made only for this display field.
+        "bookmakers_used": len(BOOKMAKERS_SEEN),
+        "credits_per_event": len(Config.REGIONS.split(',')),
+        "credits_remaining": QUOTA['remaining'],
+        "credits_used": QUOTA['used'],
     },
     "generated_at": datetime.now().isoformat()
 }
