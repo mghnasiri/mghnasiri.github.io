@@ -40,6 +40,7 @@ except ImportError as e:
     sys.exit(1)
 
 from season_prior import pad_game_log, shrink_team_rate
+from tims_match import match_tims
 
 
 # =============================================================================
@@ -229,34 +230,10 @@ def load_tims_players(date):
 
 
 def filter_tims(all_players, tims_data):
+    """Tim Hortons eligible players, matched by NHL player_id (tims_match.py)."""
     if not tims_data or "groups" not in tims_data:
         return all_players, {}
-
-    def norm(n):
-        return n.lower().strip().replace(".", "").replace("'", "").replace("-", " ")
-
-    groups = {}
-    all_names = set()
-    for gid, players in tims_data["groups"].items():
-        names = set()
-        for p in players:
-            name = p if isinstance(p, str) else p.get("name", "")
-            names.add(norm(name))
-            all_names.add(norm(name))
-        groups[gid] = names
-
-    filtered = []
-    pg = {}
-    for p in all_players:
-        n = norm(p["name"])
-        if n in all_names:
-            for gid, names in groups.items():
-                if n in names:
-                    p["tims_group"] = gid
-                    pg[p["player_id"]] = gid
-                    break
-            filtered.append(p)
-    return filtered, pg
+    return match_tims(all_players, tims_data, Config.MODEL_NAME)
 
 
 # =============================================================================

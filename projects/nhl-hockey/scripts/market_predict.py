@@ -24,6 +24,7 @@ import sys
 from datetime import datetime
 
 from season_prior import last5_is_real
+from tims_match import match_tims, normalize_name as tims_normalize_name
 
 # =============================================================================
 # CONFIGURATION
@@ -240,10 +241,9 @@ def extract_player_probs(event_data):
 # PLAYER ID MATCHING
 # =============================================================================
 def normalize_name(name):
-    """Normalize player name for matching."""
-    return (name.lower().strip()
-            .replace('.', '').replace("'", "").replace("'", "")
-            .replace('-', ' ').replace('  ', ' '))
+    """Normalize player name for matching (accents stripped, so a book's
+    'Slafkovsky' matches the roster's 'Slafkovský')."""
+    return tims_normalize_name(name)
 
 
 def fetch_todays_rosters(events):
@@ -251,8 +251,10 @@ def fetch_todays_rosters(events):
     Fetch NHL rosters for the teams in today's Odds API events.
     Uses the NHL schedule API to bridge full team names (e.g. 'Pittsburgh
     Penguins') to abbreviations (e.g. 'PIT'), then fetches current rosters.
-    Returns: dict of normalized_name -> player info, with matchup context
-    derived from the odds events themselves.
+    Returns: dict of (normalized_name, team) -> player info, with matchup
+    context (incl. the odds event id as game_id) from the odds events.
+    Keyed by team too: two same-name players on different teams used to
+    overwrite each other, sending one's odds to the other's id and team.
     """
     # 1. Map Odds API full names -> NHL abbreviations via today's schedule
     schedule_url = f"https://api-web.nhle.com/v1/schedule/{Config.TODAY}"
@@ -303,7 +305,7 @@ def fetch_todays_rosters(events):
                 for p in data.get(group, []):
                     name = f"{p['firstName']['default']} {p['lastName']['default']}"
                     nname = normalize_name(name)
-                    name_map[nname] = {
+                    name_map[(nname, abbrev)] = {
                         'player_id': p['id'],
                         'name': name,
                         'position': p.get('positionCode', ''),
@@ -332,7 +334,8 @@ def build_name_to_id_map(events):
     if name_map:
         print(f"  Loaded {len(name_map)} players from NHL roster API")
 
-    # Overlay base-model stats when today's data is available
+    # Overlay base-model stats when today's data is available (by player_id)
+    by_id = {info['player_id']: info for info in name_map.values()}
     overlaid = 0
     for source_path in Config.PLAYER_ID_SOURCES:
         if not os.path.exists(source_path):
@@ -343,12 +346,12 @@ def build_name_to_id_map(events):
             if data.get('date') != Config.TODAY:
                 continue
             for p in data.get('predictions', []):
-                nname = normalize_name(p.get('name', ''))
-                if nname in name_map:
-                    name_map[nname]['season_goals'] = p.get('season_goals', 0)
-                    name_map[nname]['last5_goals'] = p.get('last5_goals', 0)
-                    name_map[nname]['games_played'] = p.get('games_played', 0)
-                    name_map[nname]['prior_games'] = p.get('prior_games', 0)
+                info = by_id.get(p.get('player_id'))
+                if info:
+                    info['season_goals'] = p.get('season_goals', 0)
+                    info['last5_goals'] = p.get('last5_goals', 0)
+                    info['games_played'] = p.get('games_played', 0)
+                    info['prior_games'] = p.get('prior_games', 0)
                     overlaid += 1
         except Exception:
             continue
@@ -358,43 +361,46 @@ def build_name_to_id_map(events):
     return name_map
 
 
-def match_odds_to_players(player_probs, name_map):
+def match_odds_to_players(event_probs, name_map):
     """
-    Match Odds API player names to NHL API player IDs.
+    Match Odds API player names to NHL API player IDs, one event at a time:
+    each event's odds are matched only against the two rosters playing in
+    it, so a same-name player on another team can't take the odds.
+    event_probs: [(odds_event_id, {odds_name: prob})].
     Returns list of player dicts with goal_probability from market odds.
     """
     matched = []
     unmatched = []
 
-    for odds_name, prob in player_probs.items():
-        nname = normalize_name(odds_name)
-        player_info = name_map.get(nname)
+    for eid, player_probs in event_probs:
+        candidates = {nname: info for (nname, _), info in name_map.items()
+                      if info['game_id'] == eid}
+        for odds_name, prob in player_probs.items():
+            nname = normalize_name(odds_name)
+            player_info = candidates.get(nname)
 
-        if not player_info:
-            # Fallback for punctuation/diacritic spelling differences only.
-            # Require BOTH first and last name to match exactly after
-            # normalization — the old "same first initial" rule silently
-            # matched different players (e.g. two "S. Aho"s / "E. Pettersson"s)
-            # to the wrong id+team. Same-name collisions across teams still
-            # need team-aware matching (tracked as a follow-up).
-            parts = nname.split()
-            if len(parts) >= 2:
-                for stored_name, info in name_map.items():
-                    stored_parts = stored_name.split()
-                    if (len(stored_parts) >= 2
-                            and stored_parts[-1] == parts[-1]
-                            and stored_parts[0] == parts[0]):
-                        player_info = info
-                        break
+            if not player_info:
+                # Middle names / extra tokens: same first and last name after
+                # normalization, within this game only. (The old "same first
+                # initial" rule matched different players.)
+                parts = nname.split()
+                if len(parts) >= 2:
+                    for stored_name, info in candidates.items():
+                        stored_parts = stored_name.split()
+                        if (len(stored_parts) >= 2
+                                and stored_parts[-1] == parts[-1]
+                                and stored_parts[0] == parts[0]):
+                            player_info = info
+                            break
 
-        if player_info:
-            matched.append({
-                **player_info,
-                'goal_probability': round(prob, 4),
-                'odds_name': odds_name,
-            })
-        else:
-            unmatched.append(odds_name)
+            if player_info:
+                matched.append({
+                    **player_info,
+                    'goal_probability': round(prob, 4),
+                    'odds_name': odds_name,
+                })
+            else:
+                unmatched.append(odds_name)
 
     if unmatched and len(unmatched) <= 20:
         print(f"  Unmatched ({len(unmatched)}): {', '.join(unmatched[:10])}")
@@ -463,6 +469,7 @@ if not events:
 # Step 2: Fetch odds for each event
 print(f"\n  Fetching goal scorer odds for {len(events)} games...")
 all_player_probs = {}
+event_probs = []   # [(odds_event_id, {name: prob})] for per-game matching
 games = []
 
 for event in events:
@@ -476,6 +483,7 @@ for event in events:
     print(f"{len(probs)} players")
 
     all_player_probs.update(probs)
+    event_probs.append((eid, probs))
     games.append({
         'game_id': eid,
         'home_team': home,
@@ -505,7 +513,7 @@ name_map = build_name_to_id_map(events)
 if not name_map:
     print("  WARNING: Could not build name map (NHL API unreachable?).")
 
-all_players = match_odds_to_players(all_player_probs, name_map)
+all_players = match_odds_to_players(event_probs, name_map)
 print(f"  Matched: {len(all_players)} players")
 
 if not all_players:
@@ -525,25 +533,7 @@ tims_group_rankings = {}
 output_players = all_players
 
 if tims_mode:
-    all_tims_names = set()
-    tims_groups = {}
-    for gid, players in tims_data['groups'].items():
-        group_names = set()
-        for p in players:
-            name = p if isinstance(p, str) else p.get('name', '')
-            group_names.add(normalize_name(name))
-            all_tims_names.add(normalize_name(name))
-        tims_groups[gid] = group_names
-
-    filtered = []
-    for player in all_players:
-        pname = normalize_name(player['name'])
-        if pname in all_tims_names:
-            for gid, names in tims_groups.items():
-                if pname in names:
-                    player['tims_group'] = gid
-                    break
-            filtered.append(player)
+    filtered, _ = match_tims(all_players, tims_data, Config.MODEL_NAME)
 
     if filtered:
         for i, p in enumerate(filtered):

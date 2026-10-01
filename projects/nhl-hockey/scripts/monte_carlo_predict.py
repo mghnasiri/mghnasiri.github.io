@@ -23,6 +23,7 @@ import time
 from datetime import datetime
 
 from season_prior import pad_game_log, count_prior_games, shrink_team_rate, last5_is_real
+from tims_match import match_tims
 
 
 def current_season_id(date=None):
@@ -272,43 +273,11 @@ def load_tims_players(date):
 
 
 def filter_tims_players(all_players, tims_data):
-    """
-    Filter predictions to only Tim Hortons eligible players.
-    Matches by player name (fuzzy) since IDs may differ between sources.
-    """
+    """Filter predictions to Tim Hortons eligible players, matched by NHL
+    player_id (see tims_match.py)."""
     if not tims_data or 'groups' not in tims_data:
         return all_players, {}
-
-    # Build name lookup (lowercase, no accents)
-    def normalize(name):
-        return name.lower().strip().replace('.', '').replace("'", "").replace('-', ' ')
-
-    # Collect all tims player names by group
-    tims_groups = {}
-    all_tims_names = set()
-    for group_id, players in tims_data['groups'].items():
-        group_names = set()
-        for p in players:
-            name = p if isinstance(p, str) else p.get('name', '')
-            group_names.add(normalize(name))
-            all_tims_names.add(normalize(name))
-        tims_groups[group_id] = group_names
-
-    # Filter players
-    filtered = []
-    player_groups = {}
-    for player in all_players:
-        pname = normalize(player['name'])
-        if pname in all_tims_names:
-            # Find which group
-            for gid, names in tims_groups.items():
-                if pname in names:
-                    player['tims_group'] = gid
-                    player_groups[player['player_id']] = gid
-                    break
-            filtered.append(player)
-
-    return filtered, player_groups
+    return match_tims(all_players, tims_data, Config.MODEL_NAME)
 
 
 # =============================================================================

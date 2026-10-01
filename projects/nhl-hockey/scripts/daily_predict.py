@@ -17,6 +17,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 from season_prior import pad_game_log, count_prior_games, last5_is_real
+from tims_match import match_tims
 
 
 def current_season_id(date=None):
@@ -444,9 +445,6 @@ def load_tims_players(date):
             pass
     return None
 
-def normalize_name(name):
-    return name.lower().strip().replace('.', '').replace("'", "").replace('-', ' ')
-
 tims_data = load_tims_players(Config.TODAY)
 tims_mode = tims_data is not None and bool(tims_data.get('groups'))
 tims_group_rankings = {}
@@ -454,25 +452,7 @@ output_players = all_players
 
 if tims_mode:
     print("\n🍩 Tim Hortons mode: filtering predictions...")
-    tims_groups = {}
-    all_tims_names = set()
-    for group_id, players in tims_data['groups'].items():
-        group_names = set()
-        for p in players:
-            name = p if isinstance(p, str) else p.get('name', '')
-            group_names.add(normalize_name(name))
-            all_tims_names.add(normalize_name(name))
-        tims_groups[group_id] = group_names
-
-    tims_filtered = []
-    for player in all_players:
-        pname = normalize_name(player['name'])
-        if pname in all_tims_names:
-            for gid, names in tims_groups.items():
-                if pname in names:
-                    player['tims_group'] = gid
-                    break
-            tims_filtered.append(player)
+    tims_filtered, _ = match_tims(all_players, tims_data, Config.MODEL_NAME)
 
     # Build group rankings (sorted by probability within each group)
     for p in tims_filtered:

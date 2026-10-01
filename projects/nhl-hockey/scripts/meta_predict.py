@@ -34,6 +34,7 @@ import glob
 from datetime import datetime, timedelta
 
 from season_prior import last5_is_real
+from tims_match import match_tims
 
 
 def current_season_id(date=None):
@@ -598,28 +599,7 @@ tims_group_rankings = {}
 output_players = all_players
 
 if tims_mode:
-    def normalize(name):
-        return name.lower().strip().replace('.', '').replace("'", "").replace('-', ' ')
-
-    all_tims_names = set()
-    tims_groups = {}
-    for gid, players in tims_data['groups'].items():
-        group_names = set()
-        for p in players:
-            name = p if isinstance(p, str) else p.get('name', '')
-            group_names.add(normalize(name))
-            all_tims_names.add(normalize(name))
-        tims_groups[gid] = group_names
-
-    filtered = []
-    for player in all_players:
-        pname = normalize(player['name'])
-        if pname in all_tims_names:
-            for gid, names in tims_groups.items():
-                if pname in names:
-                    player['tims_group'] = gid
-                    break
-            filtered.append(player)
+    filtered, _ = match_tims(all_players, tims_data, Config.MODEL_NAME)
 
     if filtered:
         for i, p in enumerate(filtered):
