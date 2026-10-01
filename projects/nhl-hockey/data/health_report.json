@@ -1,6 +1,7 @@
 {
-  "generated_at": "2026-09-30T20:56:23.152923",
-  "today": "2026-09-30",
+  "generated_at": "2026-10-01T17:12:17.753666",
+  "today": "2026-10-01",
+  "real_games_today": 8,
   "thresholds": {
     "min_team_coverage": 0.6,
     "min_predictions_if_games": 5,
@@ -10,52 +11,19 @@
   },
   "models": {
     "lineup_v1": {
-      "status": "fail",
-      "checks": {
-        "freshness": [
-          "fail",
-          "date=2026-09-28 (expected 2026-09-30) \u2014 workflow may have failed"
-        ],
-        "team_coverage": [
-          "ok",
-          "no games today"
-        ],
-        "player_count": [
-          "ok",
-          "0 predictions, no games"
-        ],
-        "no_saturation": [
-          "ok",
-          "no predictions"
-        ],
-        "no_zero": [
-          "ok",
-          "no predictions"
-        ],
-        "prob_max_sane": [
-          "ok",
-          "no predictions"
-        ],
-        "no_flat_ties": [
-          "ok",
-          "too few predictions to check"
-        ]
-      }
-    },
-    "market_odds": {
       "status": "ok",
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-09-30"
+          "date=2026-10-01"
         ],
         "team_coverage": [
           "ok",
-          "100.0% team coverage (6 pred teams vs 6 game teams)"
+          "75.0% team coverage (12 pred teams vs 16 game teams)"
         ],
         "player_count": [
           "ok",
-          "105 predictions for 3 games"
+          "44 predictions for 8 games"
         ],
         "no_saturation": [
           "ok",
@@ -67,11 +35,60 @@
         ],
         "prob_max_sane": [
           "ok",
-          "top prob = 0.442"
+          "top prob = 0.291"
         ],
         "no_flat_ties": [
           "ok",
-          "max tie size = 2"
+          "max tie size = 1"
+        ],
+        "odds_credits": [
+          "ok",
+          "n/a"
+        ],
+        "scheduled_games": [
+          "ok",
+          "8 games scheduled, 44 predictions"
+        ]
+      }
+    },
+    "market_odds": {
+      "status": "ok",
+      "checks": {
+        "freshness": [
+          "ok",
+          "date=2026-10-01"
+        ],
+        "team_coverage": [
+          "ok",
+          "75.0% team coverage (12 pred teams vs 16 game teams)"
+        ],
+        "player_count": [
+          "ok",
+          "44 predictions for 8 games"
+        ],
+        "no_saturation": [
+          "ok",
+          "no saturated probabilities"
+        ],
+        "no_zero": [
+          "ok",
+          "no zero probabilities"
+        ],
+        "prob_max_sane": [
+          "ok",
+          "top prob = 0.373"
+        ],
+        "no_flat_ties": [
+          "ok",
+          "max tie size = 1"
+        ],
+        "odds_credits": [
+          "ok",
+          "484 credits left"
+        ],
+        "scheduled_games": [
+          "ok",
+          "8 games scheduled, 44 predictions"
         ]
       }
     },
@@ -80,229 +97,244 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-09-30"
+          "date=2026-10-01"
         ],
         "team_coverage": [
           "ok",
-          "no games today"
+          "75.0% team coverage (12 pred teams vs 16 game teams)"
         ],
         "player_count": [
           "ok",
-          "0 predictions, no games"
+          "44 predictions for 8 games"
         ],
         "no_saturation": [
           "ok",
-          "no predictions"
+          "no saturated probabilities"
         ],
         "no_zero": [
           "ok",
-          "no predictions"
+          "no zero probabilities"
         ],
         "prob_max_sane": [
           "ok",
-          "no predictions"
+          "top prob = 0.293 (model exempt \u2014 A/B control)"
         ],
         "no_flat_ties": [
           "ok",
-          "too few predictions to check"
+          "max tie size = 1"
+        ],
+        "odds_credits": [
+          "ok",
+          "n/a"
+        ],
+        "scheduled_games": [
+          "ok",
+          "8 games scheduled, 44 predictions"
         ]
       }
     },
     "monte_carlo": {
-      "status": "fail",
+      "status": "ok",
       "checks": {
         "freshness": [
-          "fail",
-          "date=2026-09-28 (expected 2026-09-30) \u2014 workflow may have failed"
+          "ok",
+          "date=2026-10-01"
         ],
         "team_coverage": [
           "ok",
-          "no games today"
+          "75.0% team coverage (12 pred teams vs 16 game teams)"
         ],
         "player_count": [
           "ok",
-          "0 predictions, no games"
+          "44 predictions for 8 games"
         ],
         "no_saturation": [
           "ok",
-          "no predictions"
+          "no saturated probabilities"
         ],
         "no_zero": [
           "ok",
-          "no predictions"
+          "no zero probabilities"
         ],
         "prob_max_sane": [
           "ok",
-          "no predictions"
+          "top prob = 0.523"
         ],
         "no_flat_ties": [
           "ok",
-          "too few predictions to check"
+          "max tie size = 1"
+        ],
+        "odds_credits": [
+          "ok",
+          "n/a"
+        ],
+        "scheduled_games": [
+          "ok",
+          "8 games scheduled, 44 predictions"
         ]
       }
     },
     "neural_network": {
-      "status": "fail",
+      "status": "ok",
       "checks": {
         "freshness": [
-          "fail",
-          "date=2026-09-28 (expected 2026-09-30) \u2014 workflow may have failed"
+          "ok",
+          "date=2026-10-01"
         ],
         "team_coverage": [
           "ok",
-          "no games today"
+          "75.0% team coverage (12 pred teams vs 16 game teams)"
         ],
         "player_count": [
           "ok",
-          "0 predictions, no games"
+          "44 predictions for 8 games"
         ],
         "no_saturation": [
           "ok",
-          "no predictions"
+          "no saturated probabilities"
         ],
         "no_zero": [
           "ok",
-          "no predictions"
+          "no zero probabilities"
         ],
         "prob_max_sane": [
           "ok",
-          "no predictions"
+          "top prob = 0.523"
         ],
         "no_flat_ties": [
           "ok",
-          "too few predictions to check"
-        ]
-      }
-    },
-    "neural_v1": {
-      "status": "fail",
-      "checks": {
-        "freshness": [
-          "fail",
-          "date=2026-09-28 (expected 2026-09-30) \u2014 workflow may have failed"
+          "max tie size = 2"
         ],
-        "team_coverage": [
+        "odds_credits": [
           "ok",
-          "no games today"
+          "n/a"
         ],
-        "player_count": [
+        "scheduled_games": [
           "ok",
-          "0 predictions, no games"
-        ],
-        "no_saturation": [
-          "ok",
-          "no predictions"
-        ],
-        "no_zero": [
-          "ok",
-          "no predictions"
-        ],
-        "prob_max_sane": [
-          "ok",
-          "no predictions"
-        ],
-        "no_flat_ties": [
-          "ok",
-          "too few predictions to check"
+          "8 games scheduled, 44 predictions"
         ]
       }
     },
     "neural_v2": {
-      "status": "fail",
+      "status": "ok",
       "checks": {
         "freshness": [
-          "fail",
-          "date=2026-09-28 (expected 2026-09-30) \u2014 workflow may have failed"
+          "ok",
+          "date=2026-10-01"
         ],
         "team_coverage": [
           "ok",
-          "no games today"
+          "75.0% team coverage (12 pred teams vs 16 game teams)"
         ],
         "player_count": [
           "ok",
-          "0 predictions, no games"
+          "44 predictions for 8 games"
         ],
         "no_saturation": [
           "ok",
-          "no predictions"
+          "no saturated probabilities"
         ],
         "no_zero": [
           "ok",
-          "no predictions"
+          "no zero probabilities"
         ],
         "prob_max_sane": [
           "ok",
-          "no predictions"
+          "top prob = 0.333"
         ],
         "no_flat_ties": [
           "ok",
-          "too few predictions to check"
+          "max tie size = 1"
+        ],
+        "odds_credits": [
+          "ok",
+          "n/a"
+        ],
+        "scheduled_games": [
+          "ok",
+          "8 games scheduled, 44 predictions"
         ]
       }
     },
     "xg_v3": {
-      "status": "fail",
+      "status": "ok",
       "checks": {
         "freshness": [
-          "fail",
-          "date=2026-09-28 (expected 2026-09-30) \u2014 workflow may have failed"
+          "ok",
+          "date=2026-10-01"
         ],
         "team_coverage": [
           "ok",
-          "no games today"
+          "75.0% team coverage (12 pred teams vs 16 game teams)"
         ],
         "player_count": [
           "ok",
-          "0 predictions, no games"
+          "44 predictions for 8 games"
         ],
         "no_saturation": [
           "ok",
-          "no predictions"
+          "no saturated probabilities"
         ],
         "no_zero": [
           "ok",
-          "no predictions"
+          "no zero probabilities"
         ],
         "prob_max_sane": [
           "ok",
-          "no predictions"
+          "top prob = 0.291"
         ],
         "no_flat_ties": [
           "ok",
-          "too few predictions to check"
+          "max tie size = 1"
+        ],
+        "odds_credits": [
+          "ok",
+          "n/a"
+        ],
+        "scheduled_games": [
+          "ok",
+          "8 games scheduled, 44 predictions"
         ]
       }
     },
     "xg_v3_synthetic": {
-      "status": "fail",
+      "status": "ok",
       "checks": {
         "freshness": [
-          "fail",
-          "date=2026-09-28 (expected 2026-09-30) \u2014 workflow may have failed"
+          "ok",
+          "date=2026-10-01"
         ],
         "team_coverage": [
           "ok",
-          "no games today"
+          "75.0% team coverage (12 pred teams vs 16 game teams)"
         ],
         "player_count": [
           "ok",
-          "0 predictions, no games"
+          "44 predictions for 8 games"
         ],
         "no_saturation": [
           "ok",
-          "no predictions"
+          "no saturated probabilities"
         ],
         "no_zero": [
           "ok",
-          "no predictions"
+          "no zero probabilities"
         ],
         "prob_max_sane": [
           "ok",
-          "no predictions"
+          "top prob = 0.527 (model exempt \u2014 A/B control)"
         ],
         "no_flat_ties": [
           "ok",
-          "too few predictions to check"
+          "max tie size = 1"
+        ],
+        "odds_credits": [
+          "ok",
+          "n/a"
+        ],
+        "scheduled_games": [
+          "ok",
+          "8 games scheduled, 44 predictions"
         ]
       }
     }
