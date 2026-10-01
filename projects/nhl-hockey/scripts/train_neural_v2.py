@@ -364,6 +364,9 @@ def run_training():
         "player_map": {str(k): v for k, v in pmap.items()},
         "cv_val_auc": final_auc,
         "cv_val_logloss": final_logloss,
+        # The loss up-weights goals by this much, so raw sigmoid outputs run
+        # ~pos_weight x too high in odds; neural_v2_predict.py undoes it.
+        "pos_weight": float(pos_weight.item()),
         "architecture": {
             "emb_dim": Config.EMB_DIM,
             "hidden": Config.HIDDEN,
