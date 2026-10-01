@@ -169,7 +169,7 @@ def main():
 
     print(f"\n  Reading {SHOTS_CSV}...")
     by_player = defaultdict(list)     # pid -> [(game_date, game_id, feature_dict)]
-    by_position = defaultdict(list)   # pos_key -> [feature_dict]
+    by_position = defaultdict(list)   # pos_key -> [(game_date, feature_dict)]
     total_rows = 0
 
     with open(SHOTS_CSV, "r", newline="", encoding="utf-8") as f:
@@ -193,7 +193,7 @@ def main():
             ))
             # Feed position priors bucket
             pos_key = normalize_position(pos_map.get(pid, DEFAULT_POSITION))
-            by_position[pos_key].append(feat)
+            by_position[pos_key].append((row.get("game_date", ""), feat))
 
     print(f"    Parsed {total_rows} rows into {len(by_player)} unique players")
 
@@ -248,8 +248,11 @@ def main():
     print(f"\n  Writing position priors ({PRIORS_FILE})...")
     priors = {}
     for pos_key in POSITION_KEYS:
-        shots = by_position.get(pos_key, [])
-        sample = shots[-POS_PRIOR_CAP:]  # take most recent (CSV is append-only chronological)
+        # Sort by date: CSV row order isn't chronological (a --rebuild
+        # collects newest-first, and backfills append out of order).
+        shots = [feat for _, feat in sorted(by_position.get(pos_key, []),
+                                            key=lambda s: s[0])]
+        sample = shots[-POS_PRIOR_CAP:]  # most recent
         priors[pos_key] = {"shot_count": len(sample), "shots": sample}
         print(f"    {pos_key}: {len(shots)} total, kept {len(sample)}")
 

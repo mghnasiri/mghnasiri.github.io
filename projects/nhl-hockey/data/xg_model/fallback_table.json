@@ -1,18 +1,18 @@
 {
   "description": "Empirical xG lookup table regenerated from training data",
-  "source": "Training data: 120999 shots",
-  "baseline_goal_rate": 0.0735,
+  "source": "Training data: 119727 shots",
+  "baseline_goal_rate": 0.0718,
   "distance_bins": {
     "0-10": {
-      "base_xg": 0.1343,
+      "base_xg": 0.132,
       "label": "Crease / Doorstep"
     },
     "10-20": {
-      "base_xg": 0.1139,
+      "base_xg": 0.1084,
       "label": "Slot"
     },
     "20-30": {
-      "base_xg": 0.093,
+      "base_xg": 0.0917,
       "label": "High Slot"
     },
     "30-40": {
@@ -29,17 +29,17 @@
     }
   },
   "shot_type_multipliers": {
-    "backhand": 1.3,
+    "backhand": 1.27,
     "bat": 1.32,
-    "between-legs": 1.66,
-    "cradle": 1.58,
-    "deflected": 1.63,
-    "poke": 1.72,
-    "slap": 0.69,
-    "snap": 1.19,
-    "tip-in": 0.96,
-    "wrap-around": 0.68,
+    "between-legs": 1.8,
+    "cradle": 1.46,
+    "deflected": 1.68,
+    "poke": 1.67,
+    "slap": 0.71,
+    "snap": 1.2,
+    "tip-in": 0.98,
+    "wrap-around": 0.62,
     "wrist": 1.0
   },
-  "regenerated_at": "2026-04-25T15:25:55.718632"
+  "regenerated_at": "2026-09-30T19:14:40.306142"
 }

@@ -185,6 +185,12 @@ def extract_shots_from_game(game_info):
             }
             continue
 
+        # Shootout attempts are not NHL goals and earn nothing in the Tims
+        # game; keeping them taught the model a 33%-goal "1v0" shot class.
+        # (Penalty shots in regulation/OT are real and stay.)
+        if play.get('periodDescriptor', {}).get('periodType') == 'SO':
+            continue
+
         # ── Extract raw data ──
         x_raw = details.get('xCoord', 0) or 0
         y_raw = details.get('yCoord', 0) or 0
