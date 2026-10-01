@@ -13,6 +13,9 @@ on:
 
   workflow_dispatch:
 
+env:
+  TZ: America/Toronto
+
 jobs:
   train:
     runs-on: ubuntu-latest

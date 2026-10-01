@@ -8,6 +8,8 @@ on:
   schedule:
     # Daily at 2:00 PM UTC (9:00 AM Toronto)
     - cron: '0 14 * * *'
+    # Early pass, only on matinee days (see scripts/matinee_gate.py)
+    - cron: '7 9 * * *'
 
   workflow_dispatch:
     inputs:
@@ -20,13 +22,34 @@ on:
           - predictions
           - tims_only
 
+# "Today" is the slate's Eastern date, also when a run slips past 00:00 UTC.
+env:
+  TZ: America/Toronto
+
 jobs:
-  predictions:
+  gate:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      run: ${{ steps.gate.outputs.run }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: gate
+        working-directory: projects/nhl-hockey
+        env:
+          EARLY: ${{ github.event.schedule == '7 9 * * *' }}
+        run: python3 scripts/matinee_gate.py
+
+  predictions:
+    needs: gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
     if: >-
+      needs.gate.outputs.run == 'true' && (
       github.event.schedule == '0 14 * * *' ||
+      github.event.schedule == '7 9 * * *' ||
       github.event.inputs.action == 'predictions' ||
-      github.event.inputs.action == 'tims_only'
+      github.event.inputs.action == 'tims_only')
 
     steps:
       - name: Checkout repository

@@ -9,7 +9,8 @@ on:
   schedule:
     - cron: '0 15 * * *'  # 10:00 AM Toronto
     - cron: '0 6 * * *'   # 01:00 AM Toronto
-  
+    - cron: '7 10 * * *'  # early pass, only on matinee days (scripts/matinee_gate.py)
+
   workflow_dispatch:
     inputs:
       action:
@@ -22,10 +23,34 @@ on:
           - results
           - both
 
+# "Today"/"yesterday" are Eastern dates, also when a run slips past 00:00 UTC.
+env:
+  TZ: America/Toronto
+
 jobs:
-  predictions:
+  gate:
     runs-on: ubuntu-latest
-    if: github.event.schedule == '0 15 * * *' || github.event.inputs.action == 'predictions' || github.event.inputs.action == 'both'
+    timeout-minutes: 5
+    outputs:
+      run: ${{ steps.gate.outputs.run }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: gate
+        working-directory: projects/nhl-hockey
+        env:
+          EARLY: ${{ github.event.schedule == '7 10 * * *' }}
+        run: python3 scripts/matinee_gate.py
+
+  predictions:
+    needs: gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    if: >-
+      needs.gate.outputs.run == 'true' && (
+      github.event.schedule == '0 15 * * *' ||
+      github.event.schedule == '7 10 * * *' ||
+      github.event.inputs.action == 'predictions' ||
+      github.event.inputs.action == 'both')
 
     steps:
       - name: Checkout repository
@@ -84,6 +109,7 @@ jobs:
 
   results:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     if: github.event.schedule == '0 6 * * *' || github.event.inputs.action == 'results' || github.event.inputs.action == 'both'
     
     steps:

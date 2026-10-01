@@ -18,9 +18,14 @@ on:
 
   workflow_dispatch:
 
+# "Today" is the slate's Eastern date, also when a run slips past 00:00 UTC.
+env:
+  TZ: America/Toronto
+
 jobs:
   validate:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
       - name: Checkout repository
