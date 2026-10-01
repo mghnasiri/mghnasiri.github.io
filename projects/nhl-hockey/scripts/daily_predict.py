@@ -56,12 +56,15 @@ print("=" * 70)
 # 1. FETCH TODAY'S GAMES
 # =============================================================================
 def get_todays_games(date):
+    """Today's games; None if the schedule couldn't be fetched (distinct
+    from [] = a day with no games)."""
     url = f"https://api-web.nhle.com/v1/schedule/{date}"
     try:
         resp = requests.get(url, timeout=10)
         if resp.status_code != 200:
-            return []
-        
+            print(f"❌ Schedule API returned {resp.status_code}")
+            return None
+
         data = resp.json()
         games = []
         
@@ -78,10 +81,16 @@ def get_todays_games(date):
         return games
     except Exception as e:
         print(f"❌ Error fetching games: {e}")
-        return []
+        return None
 
 print("\n📡 Fetching today's games...")
 todays_games = get_todays_games(Config.TODAY)
+
+if todays_games is None:
+    # Don't write an empty "no games" file the health check would accept as
+    # an off-day; yesterday's latest.json then fails its freshness check.
+    print("⛔ Could not fetch today's NHL schedule — not writing predictions.")
+    exit(1)
 
 if not todays_games:
     print("⚠️ No games found for today!")

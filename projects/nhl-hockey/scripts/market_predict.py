@@ -153,11 +153,11 @@ def fetch_events():
         _record_quota(resp)
         if resp.status_code != 200:
             print(f"  Events API error: {resp.status_code} — {resp.text[:200]}")
-            return []
+            return None
         events = resp.json()
     except Exception as e:
         print(f"  Events API failed: {e}")
-        return []
+        return None
 
     if nhl_pairs:
         # Match by team names against NHL's authoritative schedule
@@ -433,6 +433,16 @@ if not Config.ODDS_API_KEY:
 # Step 1: Fetch events
 print("\n  Fetching today's NHL events...")
 events = fetch_events()
+
+# Never write an empty "no games" file unless NHL really has no games: the
+# health check accepts that as an off-day. Exiting 1 leaves yesterday's
+# latest.json, which fails the freshness check and alerts.
+if events is None:
+    print("  ERROR: Odds API events call failed — not writing predictions.")
+    sys.exit(1)
+if not events and _nhl_today_team_pairs():
+    print("  ERROR: NHL has games today but no odds events matched — not writing predictions.")
+    sys.exit(1)
 
 if not events:
     print("  No events found for today.")

@@ -56,9 +56,18 @@ jobs:
           git add -A
           DATESTAMP=$(date +%Y-%m-%d)
           git diff --staged --quiet || git commit -m "Health report ${DATESTAMP}"
+          pushed=0
           for i in 1 2 3; do
-            git push origin main && break
+            git push origin main && { pushed=1; break; }
             git pull --rebase -X theirs origin main || (git rebase --abort 2>/dev/null; git pull --no-rebase -X theirs origin main)
-            git push origin main && break
+            git push origin main && { pushed=1; break; }
             sleep 5
           done
+          [ "$pushed" = 1 ] || { echo "::error::Push failed after 3 attempts; the health report was not saved"; exit 1; }
+
+      # The validate step uses continue-on-error so the report still gets
+      # committed and the alert sent; fail the run afterwards so a failing
+      # check shows red instead of green.
+      - name: Fail the run if validation failed
+        if: steps.validate.outcome == 'failure'
+        run: exit 1

@@ -1318,6 +1318,19 @@
         // =====================================================================
         // LOAD PREDICTIONS
         // =====================================================================
+        function showTableMessage(text) {
+            var body = document.getElementById('predictions-body');
+            body.textContent = '';
+            var row = document.createElement('tr');
+            var cell = document.createElement('td');
+            cell.colSpan = 7;
+            cell.className = 'no-data';
+            cell.textContent = text;
+            row.appendChild(cell);
+            body.appendChild(row);
+            document.getElementById('tims-section').style.display = 'none';
+        }
+
         async function loadPredictions() {
             var model = MODELS[currentModel];
             if (!model) return;
@@ -1341,14 +1354,26 @@
                     data = await response.json();
                 }
 
+                // A failed or not-yet-run model leaves an older file in place;
+                // compare with today's date in Eastern time (the slate's date)
+                // so old or empty output isn't presented as today's.
+                var todayET = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Toronto' });
+                var isStale = !!data.date && data.date !== todayET;
+
                 var dateEl = document.getElementById('prediction-date');
                 dateEl.textContent = data.date
-                    ? data.date + ' | ' + (data.games_count || 0) + ' games | ' + model.name
+                    ? data.date + ' | ' + (data.games_count || 0) + ' games | ' + model.name +
+                      (isStale ? ' — ⚠️ not today\'s slate' : '')
                     : 'No date';
 
                 if (data.generated_at) {
                     document.getElementById('last-updated').textContent =
                         new Date(data.generated_at).toLocaleString();
+                }
+
+                if (isStale && (!data.predictions || data.predictions.length === 0)) {
+                    showTableMessage(model.name + ' did not produce predictions for today — its last output is from ' + data.date + '.');
+                    return;
                 }
 
                 if (!data.games || data.games.length === 0) {
@@ -1401,6 +1426,13 @@
                             }
                         })
                         .catch(function() {});
+                    return;
+                }
+
+                if (!data.predictions || data.predictions.length === 0) {
+                    // Games today but this model produced no picks (failed or
+                    // out of sync) — say so instead of an empty table.
+                    showTableMessage(model.name + ' has no picks for today' + (data.note ? ' (' + data.note + ')' : '') + '.');
                     return;
                 }
 

@@ -135,10 +135,11 @@ def api_get(url, timeout=15):
 
 
 def get_todays_games(date):
-    """Get all NHL games scheduled for a date"""
+    """Get all NHL games scheduled for a date; None if the schedule couldn't
+    be fetched (distinct from [] = a day with no games)."""
     data = api_get(f"https://api-web.nhle.com/v1/schedule/{date}")
     if not data:
-        return []
+        return None
     games = []
     for day in data.get('gameWeek', []):
         if day['date'] == date:
@@ -399,6 +400,27 @@ def load_meta_model():
     return model, calibrator
 
 
+def _write_no_predictions(games, note):
+    """Write today's file with no predictions. games=[] is a real off-day;
+    games with no predictions is flagged by the health check."""
+    output = {
+        "date": Config.TODAY,
+        "model": Config.MODEL_NAME,
+        "model_display_name": Config.MODEL_DISPLAY_NAME,
+        "games_count": len(games), "games": games, "players_count": 0,
+        "predictions": [], "tims_mode": False,
+        "tims_source": None, "tims_group_rankings": {},
+        "generated_at": datetime.now().isoformat(),
+    }
+    if note:
+        output["note"] = note
+    for path in [f"{Config.PREDICTIONS_DIR}/{Config.TODAY}.json",
+                 f"{Config.PREDICTIONS_DIR}/latest.json"]:
+        with open(path, 'w', encoding='utf-8') as f:
+            json.dump(output, f, indent=2, ensure_ascii=False)
+        print(f"  Saved empty: {path}")
+
+
 def predict_today():
     """Generate meta-ensemble predictions for today."""
     # Self-healing freshness: retrain before predicting if the model is stale
@@ -416,6 +438,19 @@ def predict_today():
     if model is None:
         return None
 
+    # Schedule first. On 2026-09-29/30 the base models had failed, so "all
+    # bases have 0 players" was read as an off-day and an empty file was
+    # written on 5- and 3-game nights — which the health check accepted.
+    games = get_todays_games(Config.TODAY)
+    if games is None:
+        print("  ERROR: could not fetch today's NHL schedule — not writing predictions.")
+        sys.exit(1)
+    if not games:
+        print("  No games today — writing empty predictions and exiting cleanly.")
+        _write_no_predictions([], None)
+        sys.exit(0)
+    print(f"  {len(games)} games today")
+
     print("\n  Loading base model predictions...")
     base_preds = {}
     for m in Config.BASE_MODELS:
@@ -426,53 +461,12 @@ def predict_today():
         with open(path, 'r') as f:
             data = json.load(f)
         if data.get('date') != Config.TODAY:
-            print(f"  WARNING: {m} predictions are from {data.get('date')}, not today")
+            # Stacking a stale slate onto today's games ranks players who
+            # aren't playing; skip it instead.
+            print(f"  WARNING: skipping {m} — predictions are from {data.get('date')}, not today")
+            continue
         base_preds[m] = {p['player_id']: p for p in data.get('predictions', [])}
         print(f"    {m}: {len(base_preds[m])} players")
-
-    if len(base_preds) < 2:
-        print("  ERROR: Need at least 2 base models.")
-        return None
-
-    # If all base models have 0 players, it's an off-day — don't fail
-    total_base_players = sum(len(v) for v in base_preds.values())
-    if total_base_players == 0:
-        print("  All base models have 0 players — off-day detected.")
-        empty_output = {
-            "date": Config.TODAY,
-            "model": Config.MODEL_NAME,
-            "model_display_name": Config.MODEL_DISPLAY_NAME,
-            "games_count": 0, "games": [], "players_count": 0,
-            "predictions": [], "tims_mode": False,
-            "tims_source": None, "tims_group_rankings": {},
-            "generated_at": datetime.now().isoformat()
-        }
-        for path in [f"{Config.PREDICTIONS_DIR}/{Config.TODAY}.json",
-                     f"{Config.PREDICTIONS_DIR}/latest.json"]:
-            with open(path, 'w', encoding='utf-8') as f:
-                json.dump(empty_output, f, indent=2, ensure_ascii=False)
-            print(f"  Saved empty: {path}")
-        sys.exit(0)
-
-    games = get_todays_games(Config.TODAY)
-    if not games:
-        print("  No games today — writing empty predictions and exiting cleanly.")
-        empty_output = {
-            "date": Config.TODAY,
-            "model": Config.MODEL_NAME,
-            "model_display_name": Config.MODEL_DISPLAY_NAME,
-            "games_count": 0, "games": [], "players_count": 0,
-            "predictions": [], "tims_mode": False,
-            "tims_source": None, "tims_group_rankings": {},
-            "generated_at": datetime.now().isoformat()
-        }
-        for path in [f"{Config.PREDICTIONS_DIR}/{Config.TODAY}.json",
-                     f"{Config.PREDICTIONS_DIR}/latest.json"]:
-            with open(path, 'w', encoding='utf-8') as f:
-                json.dump(empty_output, f, indent=2, ensure_ascii=False)
-            print(f"  Saved empty: {path}")
-        sys.exit(0)
-    print(f"  {len(games)} games today")
 
     # Load optional-model probabilities (market_odds, lineup_v1, neural_v2),
     # each guarded to today's date inside the helper.
@@ -487,32 +481,16 @@ def predict_today():
     common_ids = set(nn.keys()) & set(mc.keys()) & set(xg.keys())
     print(f"  Common players across all models: {len(common_ids)}")
 
-    # Empty intersection happens when base models are out of sync — typically
-    # after a manual mid-day re-trigger before the slower base models have
-    # completed today's run. LightGBM crashes on an empty DataFrame, so
-    # bail cleanly with an empty prediction file. Tomorrow's scheduled run
-    # (where MC -> xG -> NN -> Meta runs in order) won't hit this path.
-    if len(common_ids) == 0:
-        print("  No overlap across base models — writing empty predictions "
-              "and exiting cleanly. This usually means a base model is from "
-              "yesterday's slate (run order broken). Will resolve on next "
-              "regularly-scheduled run.")
-        empty_output = {
-            "date": Config.TODAY,
-            "model": Config.MODEL_NAME,
-            "model_display_name": Config.MODEL_DISPLAY_NAME,
-            "games_count": len(games), "games": games,
-            "players_count": 0, "predictions": [],
-            "tims_mode": False, "tims_source": None,
-            "tims_group_rankings": {},
-            "note": "no overlap across base models — pipeline out of sync",
-            "generated_at": datetime.now().isoformat(),
-        }
-        for path in [f"{Config.PREDICTIONS_DIR}/{Config.TODAY}.json",
-                     f"{Config.PREDICTIONS_DIR}/latest.json"]:
-            with open(path, 'w', encoding='utf-8') as f:
-                json.dump(empty_output, f, indent=2, ensure_ascii=False)
-            print(f"  Saved empty: {path}")
+    # Games today, but a base model failed, is stale, or the slates don't
+    # overlap. Write the games with no predictions: the health check fails
+    # that (games but no picks) and alerts, instead of accepting a fake
+    # off-day. LightGBM would also crash on an empty DataFrame.
+    if not common_ids:
+        missing = [m for m in Config.BASE_MODELS if not base_preds.get(m)]
+        note = (f"base models missing or stale for today: {', '.join(missing)}"
+                if missing else "no overlap across base models")
+        print(f"  {note} — writing no predictions.")
+        _write_no_predictions(games, note)
         sys.exit(0)
 
     import pandas as pd

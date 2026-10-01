@@ -31,6 +31,8 @@ import calendar
 import json
 import os
 import sys
+import time
+import urllib.request
 from collections import Counter
 from datetime import datetime
 
@@ -222,6 +224,40 @@ def check_no_flat_ties(data):
     return "ok", f"max tie size = {biggest_tie_count}"
 
 
+# Today's real schedule, fetched once in main(). A model's own file can't be
+# trusted to say whether there are games: meta wrote "no games" files on the
+# 5- and 3-game opening nights of 2026-27 and every check passed.
+REAL_GAMES = None
+
+
+def fetch_real_game_count(today):
+    """Regular-season/playoff games on today's NHL schedule, or None if it
+    can't be fetched. urllib (this job installs nothing) with a browser
+    User-Agent, since api-web returns 403 to urllib's default one."""
+    req = urllib.request.Request(f"https://api-web.nhle.com/v1/schedule/{today}",
+                                 headers={"User-Agent": "Mozilla/5.0"})
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                data = json.load(resp)
+            return sum(1 for d in data.get("gameWeek", []) if d.get("date") == today
+                       for g in d.get("games", []) if g.get("gameType") in (2, 3))
+        except Exception:
+            if attempt < 2:
+                time.sleep(2 ** attempt)
+    return None
+
+
+def check_scheduled_games(data):
+    if REAL_GAMES is None:
+        return "warn", "could not fetch today's NHL schedule to cross-check"
+    preds = data.get("predictions", [])
+    if REAL_GAMES > 0 and not preds:
+        return "fail", (f"{REAL_GAMES} games on today's schedule but no predictions "
+                        f"(file says games_count={data.get('games_count', 0)})")
+    return "ok", f"{REAL_GAMES} games scheduled, {len(preds)} predictions"
+
+
 def check_odds_credits(data, model_name=None):
     """Market only: warn before the Odds API quota runs out mid-month. When
     it does, Market exits 1 and the owner gets no picks at all."""
@@ -251,6 +287,7 @@ CHECKS = {
     "prob_max_sane": check_prob_max_sane,
     "no_flat_ties": check_no_flat_ties,
     "odds_credits": check_odds_credits,
+    "scheduled_games": check_scheduled_games,
 }
 
 
@@ -258,10 +295,14 @@ CHECKS = {
 # MAIN
 # =============================================================================
 def main():
+    global REAL_GAMES
     today = datetime.now().strftime("%Y-%m-%d")
     print("=" * 70)
     print(f"  PREDICTION VALIDATOR — {today}")
     print("=" * 70)
+
+    REAL_GAMES = fetch_real_game_count(today)
+    print(f"  NHL schedule: {REAL_GAMES if REAL_GAMES is not None else 'unavailable'} games today")
 
     models = discover_models()
     if not models:
@@ -271,6 +312,7 @@ def main():
     report = {
         "generated_at": datetime.now().isoformat(),
         "today": today,
+        "real_games_today": REAL_GAMES,
         "thresholds": {
             "min_team_coverage": MIN_TEAM_COVERAGE,
             "min_predictions_if_games": MIN_PREDICTIONS_IF_GAMES,

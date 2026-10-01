@@ -6,6 +6,10 @@ a short summary of failures, and posts via the existing TELEGRAM_BOT_TOKEN /
 TELEGRAM_CHAT_ID secrets. Used by the daily health-check workflow.
 
 Silent if all models passed (we only want noise when there's a real problem).
+
+With --workflow-failed it instead sends a one-line alert for the failing
+workflow (WORKFLOW_NAME / RUN_URL env), from that workflow's own failure step,
+so problems surface within minutes instead of at the next health check.
 """
 
 import json
@@ -17,12 +21,35 @@ import urllib.request
 REPORT = "data/health_report.json"
 
 
+def _send(token, chat, msg):
+    url = f"https://api.telegram.org/bot{token}/sendMessage"
+    data = urllib.parse.urlencode({"chat_id": chat, "text": msg}).encode()
+    try:
+        with urllib.request.urlopen(url, data=data, timeout=10) as resp:
+            resp.read()
+    except Exception as e:
+        print(f"  Telegram send failed: {e}")
+        return 1
+    print("  Sent.")
+    return 0
+
+
+def workflow_failed(token, chat):
+    name = os.environ.get("WORKFLOW_NAME", "An NHL workflow")
+    run_url = os.environ.get("RUN_URL", "")
+    msg = f"⚠️ {name} failed — its picks for today may be missing or stale.\n{run_url}".strip()
+    print(f"  Sending failure alert: {msg}")
+    return _send(token, chat, msg)
+
+
 def main():
     token = os.environ.get("TELEGRAM_BOT_TOKEN", "")
     chat = os.environ.get("TELEGRAM_CHAT_ID", "")
     if not (token and chat):
         print("  No Telegram credentials in env — skipping alert.")
         return 0
+    if "--workflow-failed" in sys.argv:
+        return workflow_failed(token, chat)
     if not os.path.exists(REPORT):
         print(f"  No report at {REPORT} — nothing to alert about.")
         return 0
@@ -59,17 +86,7 @@ def main():
     msg = "\n".join(lines)
     print(f"  Sending alert ({len(msg)} chars):")
     print("\n".join("    " + line for line in lines))
-
-    url = f"https://api.telegram.org/bot{token}/sendMessage"
-    data = urllib.parse.urlencode({"chat_id": chat, "text": msg}).encode()
-    try:
-        with urllib.request.urlopen(url, data=data, timeout=10) as resp:
-            resp.read()
-    except Exception as e:
-        print(f"  Telegram send failed: {e}")
-        return 1
-    print("  Sent.")
-    return 0
+    return _send(token, chat, msg)
 
 
 if __name__ == "__main__":

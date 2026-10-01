@@ -43,10 +43,23 @@ jobs:
           git add -A
           DATESTAMP=$(date +%Y-%m-%d)
           git diff --staged --quiet || git commit -m "Neural v2 retrain (${DATESTAMP})"
+          pushed=0
           for i in 1 2 3; do
-            git push origin main && break
+            git push origin main && { pushed=1; break; }
             echo "Push attempt $i failed, pulling and retrying..."
             git pull --rebase -X theirs origin main || (git rebase --abort 2>/dev/null; git pull --no-rebase -X theirs origin main)
-            git push origin main && break
+            git push origin main && { pushed=1; break; }
             sleep 5
           done
+          [ "$pushed" = 1 ] || { echo "::error::Push failed after 3 attempts; the retrained model was not saved"; exit 1; }
+
+      - name: Alert on failure
+        if: failure()
+        working-directory: projects/nhl-hockey
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          WORKFLOW_NAME: ${{ github.workflow }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: python scripts/health_alert.py --workflow-failed
+        continue-on-error: true

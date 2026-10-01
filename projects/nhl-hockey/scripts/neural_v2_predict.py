@@ -139,9 +139,10 @@ def api_get(url, timeout=15):
 
 
 def get_todays_games(date):
+    """None if the schedule couldn't be fetched (distinct from [] = no games)."""
     data = api_get(f"https://api-web.nhle.com/v1/schedule/{date}")
     if not data:
-        return []
+        return None
     games = []
     for day in data.get("gameWeek", []):
         if day["date"] != date:
@@ -365,6 +366,10 @@ def main():
     # --- tonight's games ---
     print("\n  Fetching today's games...")
     games = get_todays_games(Config.TODAY)
+    if games is None:
+        # Don't write an empty "no games" file the health check would accept.
+        print("  Could not fetch today's NHL schedule — not writing predictions.")
+        return 1
     if not games:
         print("  No games today.")
         empty = {
