@@ -445,8 +445,8 @@ home_factor = 1.026 if home else 0.974</div>
 
         <ol>
             <li>Estimates the player's expected shot count tonight from their season shots-per-game, scaled by an opponent factor (opp_GA / league_avg), a home/away factor, and a recent-form factor.</li>
-            <li>Pulls up to the player's 60 most recent real shots from <code>data/player_shots/{pid}.json</code> (the aggregator caps storage at 60 newest-first), scores each through the XGBoost model, and takes the mean to get a per-shot xG estimate.</li>
-            <li>Computes total xG = mean per-shot xG × expected shots.</li>
+            <li>Pulls up to the player's 60 most recent real shots from <code>data/player_shots/{pid}.json</code> (the aggregator caps storage at 60 newest-first), scores each through the XGBoost model, and takes the mean to get a per-shot xG estimate. Training up-weights goals by <code>scale_pos_weight</code> (~13.7), which inflates each shot's odds by that factor, so each score is first mapped back with <code>p / (p + (1 − p) · scale_pos_weight)</code>.</li>
+            <li>Computes total xG = mean per-shot xG × expected shots × 1.4. The model scores unblocked attempts (goals, shots on goal, missed shots), but the shot count is shots on goal, and the league has about 1.4 unblocked attempts per shot on goal.</li>
             <li>Converts to a goal probability assuming Poisson scoring: <code>P(≥1 goal) = 1 − e^(−total_xG)</code>.</li>
         </ol>
 
@@ -526,7 +526,7 @@ home_factor = 1.026 if home else 0.974</div>
         </p>
 
         <p>
-            At prediction time, for each player on tonight's slate the script pulls their cached recent shots, runs each one through the network with their embedding ID, averages the per-shot probabilities, and converts to a per-game probability via the same <code>1 − e^(−total_xG)</code> Poisson assumption used by xG v3. Players not seen during training get embedding index 0 plus a positional prior on the shot side.
+            At prediction time, for each player on tonight's slate the script pulls their cached recent shots, runs each one through the network with their embedding ID, undoes the loss's goal up-weighting (<code>pos_weight</code>) the same way xG v3 does, averages the per-shot probabilities, and converts to a per-game probability via the same <code>1 − e^(−total_xG)</code> Poisson assumption used by xG v3. Players not seen during training get embedding index 0 plus a positional prior on the shot side.
         </p>
 
         <p>

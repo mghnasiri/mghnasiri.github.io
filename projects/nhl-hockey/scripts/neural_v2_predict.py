@@ -41,6 +41,7 @@ except ImportError as e:
 
 from season_prior import pad_game_log, shrink_team_rate
 from tims_match import match_tims
+from shot_calibration import ATTEMPTS_PER_SOG, undo_class_weight
 
 
 # =============================================================================
@@ -270,10 +271,12 @@ def load_real_shots(player_id, position):
 # SCORING
 # =============================================================================
 def score_player_shots(model, shots, feature_names, feat_mean, feat_std,
-                       player_idx, device):
-    """Return mean xG per shot for a player, or None if we can't score."""
+                       player_idx, device, pos_weight):
+    """Return (mean xG per shot, mean raw model output) for a player, or
+    (None, None) if we can't score. The raw output is inflated by the
+    training loss's pos_weight; the xG has it undone."""
     if not shots:
-        return None
+        return None, None
     X = np.array(
         [[float(s.get(f, 0) or 0) for f in feature_names] for s in shots],
         dtype=np.float32,
@@ -289,12 +292,15 @@ def score_player_shots(model, shots, feature_names, feat_mean, feat_std,
     with torch.no_grad():
         logits = model(x, p)
         probs = torch.sigmoid(logits).cpu().numpy()
-    return float(probs.mean())
+    return float(undo_class_weight(probs, pos_weight).mean()), float(probs.mean())
 
 
-def goal_probability_from_xg(avg_shot_xg, player, team_stats):
+def goal_probability_from_xg(avg_shot_xg, raw_shot_xg, player, team_stats,
+                             attempts_per_sog):
     """Same opponent + home/away adjustment as xg_v3 so the two models
-    differ ONLY in how they score shot quality."""
+    differ ONLY in how they score shot quality. Returns (probability,
+    raw probability, player_xg, expected_shots); the raw probability is the
+    pre-calibration scale Meta was trained on (meta_predict.py)."""
     base_shots = player.get("avg_shots", 0) or 0
     opp_ga = Config.LEAGUE_AVG_GOALS
     opp = player.get("opponent", "")
@@ -306,9 +312,11 @@ def goal_probability_from_xg(avg_shot_xg, player, team_stats):
         else (2.0 - Config.HOME_ADVANTAGE)
     )
     expected_shots = base_shots * opp_factor * ha_factor
-    player_xg = avg_shot_xg * expected_shots
+    # xG is per unblocked attempt; expected_shots counts shots on goal.
+    player_xg = avg_shot_xg * expected_shots * attempts_per_sog
     return (
         1.0 - math.exp(-player_xg),
+        1.0 - math.exp(-raw_shot_xg * expected_shots),
         round(player_xg, 4),
         round(expected_shots, 2),
     )
@@ -334,6 +342,13 @@ def main():
     feat_std = np.array(meta["feature_std"], dtype=np.float32)
     player_map = {int(k): v for k, v in meta["player_map"].items()}
     num_players = meta["num_players"]
+    pos_weight = meta.get("pos_weight")
+    attempts_per_sog = ATTEMPTS_PER_SOG
+    if pos_weight is None:
+        # Inflated outputs x 1.4 would only run hotter: keep the old scale.
+        print("  WARNING: model predates pos_weight in metadata; probabilities "
+              "stay uncalibrated until the next retrain")
+        pos_weight = attempts_per_sog = 1.0
 
     # CPU inference: lowest-common-denominator across laptop + CI
     device = torch.device("cpu")
@@ -438,13 +453,14 @@ def main():
     for p in all_players:
         shots, src = load_real_shots(p["player_id"], p.get("position"))
         player_idx = player_map.get(p["player_id"], 0)
-        avg_xg = None
+        avg_xg = raw_xg = None
         if shots:
-            avg_xg = score_player_shots(
+            avg_xg, raw_xg = score_player_shots(
                 model, shots, feature_names, feat_mean, feat_std,
-                player_idx, device,
+                player_idx, device, pos_weight,
             )
         p["_avg_shot_xg"] = avg_xg if avg_xg is not None else 0.066
+        p["_raw_shot_xg"] = raw_xg if raw_xg is not None else 0.066
         p["_xg_source"] = src if shots else "none"
         p["_known_player"] = player_idx != 0
         if p["_xg_source"] == "real":
@@ -457,16 +473,17 @@ def main():
 
     # Convert to goal probability with opponent + home/away adjustment
     for p in all_players:
-        prob, pxg, esh = goal_probability_from_xg(
-            p["_avg_shot_xg"], p, team_stats
+        prob, raw_prob, pxg, esh = goal_probability_from_xg(
+            p["_avg_shot_xg"], p["_raw_shot_xg"], p, team_stats, attempts_per_sog
         )
         p["goal_probability"] = round(prob, 4)
+        p["raw_goal_probability"] = round(raw_prob, 4)
         p["player_xg"] = pxg
         p["expected_shots"] = esh
         p["avg_shot_xg"] = round(p["_avg_shot_xg"], 4)
         p["xg_source"] = p["_xg_source"]
         p["known_in_embedding"] = p["_known_player"]
-        for k in ("_avg_shot_xg", "_xg_source", "_known_player"):
+        for k in ("_avg_shot_xg", "_raw_shot_xg", "_xg_source", "_known_player"):
             del p[k]
 
     all_players.sort(key=lambda q: q["goal_probability"], reverse=True)
@@ -510,6 +527,8 @@ def main():
             "val_auc": meta.get("cv_val_auc"),
             "num_params": meta.get("num_players", 0) * Config.EMB_DIM,
             "num_train_shots": meta.get("num_train"),
+            "pos_weight_undone": pos_weight,
+            "attempts_per_sog": attempts_per_sog,
         },
         "generated_at": datetime.now().isoformat(),
     }

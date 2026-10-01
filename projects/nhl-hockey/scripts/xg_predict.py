@@ -25,6 +25,7 @@ from datetime import datetime
 
 from season_prior import pad_game_log, count_prior_games, shrink_team_rate, last5_is_real
 from tims_match import match_tims
+from shot_calibration import ATTEMPTS_PER_SOG, undo_class_weight
 
 
 def current_season_id(date=None):
@@ -317,6 +318,11 @@ def load_xg_model():
             if os.path.exists(Config.METADATA_FILE):
                 with open(Config.METADATA_FILE, 'r') as f:
                     metadata = json.load(f)
+                # Training up-weighted goals by this much; scoring undoes it.
+                # The model file stores it as a string.
+                config = json.loads(model.get_booster().save_config())
+                metadata['scale_pos_weight'] = float(
+                    config['learner']['objective']['reg_loss_param']['scale_pos_weight'])
             mode = "xgboost"
             print(f"  Loaded XGBoost model (AUC: {metadata.get('cv_auc', '?')})")
         except Exception as e:
@@ -459,7 +465,9 @@ def estimate_shot_profile(player, position):
 # =============================================================================
 def calculate_xg_with_model(model, metadata, profile, num_shots=20,
                             player_id=0, position=None):
-    """Score a player's shots through XGBoost and return (avg_xg, source).
+    """Score a player's shots through XGBoost and return
+    (avg_xg, source, raw_avg_xg): avg_xg is the true per-shot goal chance,
+    raw_avg_xg the model's class-weighted output (what Meta trained on).
 
     Tries three sources in order:
       1. Real shots from data/player_shots/{player_id}.json (populated by
@@ -472,11 +480,12 @@ def calculate_xg_with_model(model, metadata, profile, num_shots=20,
     can look at hit rate broken down by data quality.
     """
     if not HAS_PANDAS:
-        return None, None
+        return None, None, None
 
     feature_names = metadata.get('feature_names', [])
     if not feature_names:
-        return None, None
+        return None, None, None
+    spw = metadata.get('scale_pos_weight', 1.0)
 
     # ── Source 1 & 2: real shots or position prior ─────────────────────
     # In --synthetic-only shadow mode, skip real-shot lookup entirely so the
@@ -493,7 +502,8 @@ def calculate_xg_with_model(model, metadata, profile, num_shots=20,
         df = df[feature_names]
         try:
             probas = model.predict_proba(df)[:, 1]
-            return float(np.mean(probas)), loaded_source
+            return (float(np.mean(undo_class_weight(probas, spw))), loaded_source,
+                    float(np.mean(probas)))
         except Exception as e:
             # Real-shot path failed (corrupt file, schema mismatch) — fall
             # through to synthetic so the pipeline keeps producing output.
@@ -565,9 +575,10 @@ def calculate_xg_with_model(model, metadata, profile, num_shots=20,
     # Predict
     try:
         probas = model.predict_proba(df)[:, 1]
-        return float(np.mean(probas)), "synthetic"
+        return (float(np.mean(undo_class_weight(probas, spw))), "synthetic",
+                float(np.mean(probas)))
     except Exception:
-        return None, None
+        return None, None, None
 
 
 def calculate_xg_with_fallback(fallback, profile):
@@ -630,15 +641,16 @@ def calculate_player_goal_probability(player, profile, model, metadata,
 
     Steps:
       1. Get average xG per shot (from model or fallback)
-      2. Estimate expected shots tonight (adjusted for opponent)
-      3. Calculate total expected goals: avg_xG × expected_shots
+      2. Estimate expected shots on goal tonight (adjusted for opponent)
+      3. Calculate total expected goals: avg_xG × expected_shots × attempts/SOG
       4. Convert to probability: P(>=1 goal) = 1 - e^(-total_xG)
     """
     # Step 1: Average xG per shot. Tracks which data source was used so
     # the output JSON can carry that label for later A/B analysis.
     xg_source = "lookup_table"
+    raw_shot_xg = None
     if mode == "xgboost" and model is not None:
-        avg_shot_xg, xg_source = calculate_xg_with_model(
+        avg_shot_xg, xg_source, raw_shot_xg = calculate_xg_with_model(
             model, metadata, profile, Config.NUM_REPRESENTATIVE_SHOTS,
             player_id=player.get('player_id', 0),
             position=player.get('position'),
@@ -648,6 +660,8 @@ def calculate_player_goal_probability(player, profile, model, metadata,
             xg_source = "lookup_table"
     else:
         avg_shot_xg = calculate_xg_with_fallback(fallback, profile)
+    if raw_shot_xg is None:
+        raw_shot_xg = avg_shot_xg  # the lookup table is unweighted
 
     # Step 2: Expected shots tonight
     base_shots = profile['expected_shots']
@@ -695,14 +709,17 @@ def calculate_player_goal_probability(player, profile, model, metadata,
             toi_factor = max(0.05, min(1.5, recent_toi / 15.0)) if recent_toi else 0.3
         expected_shots *= toi_factor
 
-    # Step 3: Total expected goals
-    player_xg = avg_shot_xg * expected_shots
+    # Step 3: Total expected goals. xG is per unblocked attempt;
+    # expected_shots counts shots on goal.
+    player_xg = avg_shot_xg * expected_shots * ATTEMPTS_PER_SOG
 
     # Step 4: Poisson probability of at least 1 goal
     prob = 1.0 - math.exp(-player_xg)
 
     result = {
         'goal_probability': round(prob, 4),
+        # Pre-calibration probability: Meta's input scale (meta_predict.py)
+        'raw_goal_probability': round(1.0 - math.exp(-raw_shot_xg * expected_shots), 4),
         'player_xg': round(player_xg, 4),
         'expected_shots': round(expected_shots, 2),
         'avg_shot_xg': round(avg_shot_xg, 4),
@@ -961,6 +978,8 @@ output = {
         "league_avg_goals": Config.LEAGUE_AVG_GOALS,
         "home_advantage": Config.HOME_ADVANTAGE,
         "num_representative_shots": Config.NUM_REPRESENTATIVE_SHOTS,
+        "scale_pos_weight_undone": xg_metadata.get('scale_pos_weight') if xg_metadata else None,
+        "attempts_per_sog": ATTEMPTS_PER_SOG,
     },
     "generated_at": datetime.now().isoformat()
 }

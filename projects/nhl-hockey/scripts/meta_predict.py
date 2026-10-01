@@ -160,6 +160,14 @@ def get_todays_games(date):
 # =============================================================================
 # FEATURE CONSTRUCTION (shared by training + prediction — no train/serve skew)
 # =============================================================================
+def _input_prob(pred):
+    """A base model's probability on the scale Meta's history uses. The shot
+    models (xG, lineup, Neural v2) now publish calibrated probabilities but
+    keep the old scale as raw_goal_probability; older files only have the
+    old scale, so this keeps training rows and today's inputs comparable."""
+    return pred.get('raw_goal_probability', pred.get('goal_probability', 0.0))
+
+
 def _load_optional_preds(date):
     """feature_col -> {player_id: goal_probability} for each optional model on
     a given date ('latest' or 'YYYY-MM-DD'). Missing files yield empty dicts."""
@@ -173,7 +181,7 @@ def _load_optional_preds(date):
                     data = json.load(f)
                 # For 'latest' guard against a stale date upstream.
                 if date != 'latest' or data.get('date') == Config.TODAY:
-                    preds = {p['player_id']: p.get('goal_probability', 0.0)
+                    preds = {p['player_id']: _input_prob(p)
                              for p in data.get('predictions', [])}
             except Exception:
                 pass
@@ -183,9 +191,9 @@ def _load_optional_preds(date):
 
 def _build_feature_row(pid, nn, mc, xg, optional_preds):
     """Build one model-input row. Used identically in training and prediction."""
-    p_nn = nn.get('goal_probability', 0)
-    p_mc = mc.get('goal_probability', 0)
-    p_xg = xg.get('goal_probability', 0)
+    p_nn = _input_prob(nn)
+    p_mc = _input_prob(mc)
+    p_xg = _input_prob(xg)
     opt = {col: preds.get(pid, 0.0) for col, preds in optional_preds.items()}
     # Disagreement over whatever base signals are present (>0) that day.
     base_probs = [p_nn, p_mc, p_xg] + [v for v in opt.values() if v]

@@ -69,10 +69,9 @@ MIN_PREDICTIONS_IF_GAMES = 5
 #                   conversion is 0.35-0.45) was repeatedly tripping the
 #                   alert without indicating any new bug. The drift is
 #                   still visible as a WARN in the report; it just no
-#                   longer pings Telegram every other day. The proper
-#                   fix is post-hoc probability scaling on the Poisson
-#                   conversion step — tracked as next-up calibration
-#                   work; not done here.
+#                   longer pings Telegram every other day. The drift
+#                   came from the shot models' class weighting, which
+#                   scoring now undoes (scripts/shot_calibration.py).
 WARN_TOP_PROB = 0.55
 HARD_TOP_PROB = 0.95
 
