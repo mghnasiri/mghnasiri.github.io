@@ -51,7 +51,10 @@ jobs:
         working-directory: projects/nhl-hockey
         run: python scripts/daily_predict.py
 
+      # Commit even when Linear failed (e.g. coverage gate), so the scraped
+      # Tims pool is kept. daily_predict exits before writing latest.json.
       - name: Commit and push
+        if: ${{ !cancelled() }}
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"

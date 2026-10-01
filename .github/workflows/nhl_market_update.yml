@@ -40,13 +40,24 @@ jobs:
       - name: Pull latest (get base model predictions for ID matching)
         run: git pull --rebase origin main || git pull --no-rebase origin main
 
+      # Market is often the only model with picks (and Telegram's first
+      # source), so it scrapes the pool itself instead of depending on MC/xG
+      # having committed it. Runs after the pull so the tree is clean.
+      - name: Scrape Tim Hortons player pool
+        working-directory: projects/nhl-hockey
+        run: python scripts/fetch_tims_players.py
+        continue-on-error: true
+
       - name: Fetch market odds and generate predictions
         working-directory: projects/nhl-hockey
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API }}
         run: python scripts/market_predict.py
 
+      # Commit even when Market failed, so the scraped Tims pool is kept;
+      # market_predict exits 1 before writing latest.json.
       - name: Commit and push
+        if: ${{ !cancelled() }}
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"

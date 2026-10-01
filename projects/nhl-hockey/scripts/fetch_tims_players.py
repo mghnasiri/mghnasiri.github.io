@@ -315,26 +315,18 @@ def assign_groups(players, num_groups=3):
                 groups[gid].append(p)
         return groups
 
-    # Otherwise, distribute evenly (sites usually list in group order)
-    chunk_size = len(players) // num_groups
-    remainder = len(players) % num_groups
-
-    idx = 0
-    for g in range(num_groups):
-        size = chunk_size + (1 if g < remainder else 0)
-        for _ in range(size):
-            if idx < len(players):
-                groups[str(g + 1)].append(players[idx])
-                idx += 1
-
-    return groups
+    # No group info scraped: return no groups rather than inventing them.
+    # Models then rank the full slate instead of fake per-group picks.
+    return {}
 
 
 # =============================================================================
 # CACHE FALLBACK
 # =============================================================================
-def get_teams_playing_today():
-    """Fetch today's NHL schedule and return set of team abbreviations."""
+def get_teams_playing_today(include_finished=False):
+    """Fetch today's NHL schedule and return set of team abbreviations.
+    include_finished=True also counts games already over (needed to validate
+    a pool scraped after a matinee ended)."""
     try:
         url = f"{Config.NHL_SCHEDULE_URL}/{Config.TODAY}"
         resp = requests.get(url, timeout=10)
@@ -346,7 +338,7 @@ def get_teams_playing_today():
         for week in schedule.get('gameWeek', []):
             if week.get('date') == Config.TODAY:
                 for g in week.get('games', []):
-                    if g.get('gameState') in ('FUT', 'PRE', 'LIVE'):
+                    if include_finished or g.get('gameState') in ('FUT', 'PRE', 'LIVE'):
                         teams.add(g['awayTeam']['abbrev'])
                         teams.add(g['homeTeam']['abbrev'])
         return teams
@@ -400,9 +392,10 @@ def save_cached_pool(all_players, groups):
 def load_cached_pool_for_today():
     """
     Load master roster and filter to only teams playing today.
-    Distributes players evenly into 3 groups (since we can't know
-    Tim Hortons' actual group assignments when the site is down).
-    Returns (players_list, groups_dict) or (None, None) if no cache.
+    Returns (players_list, {}) or (None, None) if no cache. Groups stay
+    empty: the real assignments can't be recovered from the cache, and the
+    old round-robin groups produced confident per-group picks for groups
+    that didn't exist.
     """
     if not os.path.exists(Config.CACHED_POOL):
         print("   ⚠️ No cached pool found")
@@ -434,18 +427,9 @@ def load_cached_pool_for_today():
             print("   ⚠️ No roster players match today's teams")
             return None, None
 
-        # Distribute into 3 groups (round-robin by team for balance)
-        todays_players.sort(key=lambda p: (p.get('team', ''), p.get('name', '')))
-        groups = {'1': [], '2': [], '3': []}
-        for i, p in enumerate(todays_players):
-            gid = str((i % 3) + 1)
-            groups[gid].append(p)
-
-        print(f"   ✅ {len(todays_players)} players from today's {len(teams_today)} teams")
-        for gid in sorted(groups.keys()):
-            print(f"      📦 Group {gid}: {len(groups[gid])} players")
-
-        return todays_players, groups
+        print(f"   ✅ {len(todays_players)} players from today's {len(teams_today)} teams "
+              f"(groups unknown)")
+        return todays_players, {}
 
     except Exception as e:
         print(f"   ⚠️ Cache read error: {e}")
@@ -470,6 +454,17 @@ if players and len(players) < MIN_EXPECTED_PLAYERS:
     print(f"\n⚠️ Only {len(players)} player(s) scraped (< {MIN_EXPECTED_PLAYERS}) "
           f"— treating as a partial/broken scrape; falling back to cache.")
     players = None
+
+# The site keeps showing the previous slate's pool until it updates; a run in
+# that window used to save last night's groups as today's. Reject a pool whose
+# teams aren't on today's schedule. (No games / schedule unreachable -> skip.)
+if players:
+    teams_today = get_teams_playing_today(include_finished=True)
+    stray = {p.get('team') for p in players if p.get('team')} - teams_today
+    if teams_today and stray:
+        print(f"\n⚠️ Scraped pool includes teams not playing today ({', '.join(sorted(stray))}) "
+              f"— likely the previous slate; treating as a failed scrape.")
+        players = None
 
 if players:
     print(f"\n✅ Successfully scraped {len(players)} players")
@@ -533,8 +528,8 @@ else:
     print("\n⚠️ Scraping failed, trying cached pool fallback...")
     cached_players, cached_groups = load_cached_pool_for_today()
 
-    if cached_players and cached_groups:
-        print(f"\n✅ Using cached pool ({len(cached_players)} players for today)")
+    if cached_players:
+        print(f"\n✅ Using cached pool ({len(cached_players)} players for today, groups unknown)")
         output = {
             "date": Config.TODAY,
             "source": "cached_pool",
@@ -557,8 +552,27 @@ else:
             "error": "Could not scrape Tim Hortons player pool"
         }
 
-# Save
+# Never replace today's pool with a worse one. Three workflows run this
+# scraper each day, and a later failed run used to overwrite the morning's
+# real groups with cached/empty ones.
+def _pool_quality(o):
+    if o.get('source') == 'timnhlassist.com' and o.get('groups'):
+        return 2   # real pool with groups
+    return 1 if o.get('players_count') else 0
+
 output_file = f"{Config.TIMS_DIR}/{Config.TODAY}.json"
+if os.path.exists(output_file):
+    try:
+        with open(output_file, 'r', encoding='utf-8') as f:
+            existing = json.load(f)
+    except (OSError, ValueError):
+        existing = {}
+    if _pool_quality(existing) > _pool_quality(output):
+        print(f"\n↩️ Keeping today's existing pool (source {existing.get('source')}, "
+              f"scraped {existing.get('scraped_at', '?')}); this run got {output['source']}")
+        output = existing
+
+# Save
 with open(output_file, 'w', encoding='utf-8') as f:
     json.dump(output, f, indent=2, ensure_ascii=False)
 print(f"\n💾 Saved: {output_file}")

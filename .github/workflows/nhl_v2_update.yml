@@ -50,7 +50,11 @@ jobs:
         working-directory: projects/nhl-hockey
         run: python scripts/monte_carlo_predict.py
 
+      # Commit even when the model step failed, so the scraped Tims pool is
+      # kept. The model scripts exit before writing latest.json on failure,
+      # and the job still shows red.
       - name: Commit and push
+        if: ${{ !cancelled() }}
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"

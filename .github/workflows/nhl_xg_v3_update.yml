@@ -91,7 +91,10 @@ jobs:
         run: python scripts/neural_v2_predict.py
         continue-on-error: true
 
+      # Commit even when xG failed, so collected shots and the Tims pool are
+      # kept. Model scripts exit before writing latest.json on failure.
       - name: Commit and push
+        if: ${{ !cancelled() }}
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
