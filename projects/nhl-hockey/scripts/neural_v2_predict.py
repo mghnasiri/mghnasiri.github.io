@@ -39,6 +39,7 @@ except ImportError as e:
     print("Install with: pip install torch numpy requests")
     sys.exit(1)
 
+from nhl_api import api_get
 from season_prior import pad_game_log, shrink_team_rate
 from tims_match import match_tims
 from shot_calibration import ATTEMPTS_PER_SOG, undo_class_weight
@@ -63,6 +64,7 @@ class Config:
     POSITION_PRIORS_FILE = f"{PLAYER_SHOTS_DIR}/_position_priors.json"
 
     TODAY = datetime.now().strftime("%Y-%m-%d")
+    PLAYOFFS = False  # set from today's schedule
 
     LEAGUE_AVG_GOALS = 3.07
     HOME_ADVANTAGE = 1.026
@@ -122,24 +124,6 @@ class NeuralV2(nn.Module):
 # =============================================================================
 # NHL API (subset needed for tonight's matchups)
 # =============================================================================
-def api_get(url, timeout=15, attempts=3):
-    """Safe API GET with exponential-backoff retry (1s, 2s, 4s, ...)."""
-    import requests as _requests
-    import time as _time
-    for attempt in range(attempts):
-        try:
-            r = _requests.get(url, timeout=timeout)
-            if r.status_code == 200:
-                return r.json()
-            if r.status_code == 404:
-                return None
-        except _requests.RequestException:
-            pass
-        if attempt < attempts - 1:
-            _time.sleep(2 ** attempt)
-    return None
-
-
 def get_todays_games(date):
     """None if the schedule couldn't be fetched (distinct from [] = no games)."""
     # Patient retries (~30s): a failure now stops the run.
@@ -157,6 +141,7 @@ def get_todays_games(date):
                     "home_team": g["homeTeam"]["abbrev"],
                     "away_team": g["awayTeam"]["abbrev"],
                     "start_time": g.get("startTimeUTC", ""),
+                    "game_type": g["gameType"],
                 })
     return games
 
@@ -193,16 +178,21 @@ def get_team_roster(team):
 
 
 def get_player_stats(player_id):
+    """Raises ConnectionError when a game log doesn't load (players without
+    games get 200 + an empty log), so a fetch failure can't pass as a
+    player who doesn't qualify."""
     season = current_season_id()
     reg = api_get(f"https://api-web.nhle.com/v1/player/{player_id}/game-log/{season}/2")
-    po = api_get(f"https://api-web.nhle.com/v1/player/{player_id}/game-log/{season}/3")
-    gl = (reg.get("gameLog", []) if reg else []) + \
-         (po.get("gameLog", []) if po else [])
+    # No playoff games exist this season until the playoffs start.
+    po = (api_get(f"https://api-web.nhle.com/v1/player/{player_id}/game-log/{season}/3")
+          if Config.PLAYOFFS else {})
+    if reg is None or po is None:
+        raise ConnectionError(f"game log for player {player_id} did not load")
+    gl = reg.get("gameLog", []) + po.get("gameLog", [])
     gl.sort(key=lambda g: g.get("gameDate", ""), reverse=True)
     prior = [g for g in gl if g.get("gameDate", "9999") < Config.TODAY]
-    if reg is not None:
-        # Early season: pad with last season's per-game rates (season_prior.py)
-        prior = pad_game_log(prior, player_id, season)
+    # Early season: pad with last season's per-game rates (season_prior.py)
+    prior = pad_game_log(prior, player_id, season)
     gp = len(prior)
     if gp < Config.MIN_GAMES_PLAYED:
         return None
@@ -363,6 +353,7 @@ def main():
         # Don't write an empty "no games" file the health check would accept.
         print("  Could not fetch today's NHL schedule — not writing predictions.")
         return 1
+    Config.PLAYOFFS = any(g["game_type"] == 3 for g in games)
     if not games:
         print("  No games today.")
         empty = {
@@ -419,12 +410,19 @@ def main():
     if all_players is None:
         print("\n  Fetching rosters + stats (no cache available)...")
         all_players = []
+        failed = []
         for team in sorted(all_teams):
             print(f"    {team}...", end=" ", flush=True)
             roster = get_team_roster(team)
+            if not roster:
+                failed.append(f"{team} roster")
             team_players = []
             for p in roster:
-                stats = get_player_stats(p["player_id"])
+                try:
+                    stats = get_player_stats(p["player_id"])
+                except ConnectionError:
+                    failed.append(p["name"])
+                    continue
                 if not stats:
                     continue
                 p.update(stats)
@@ -439,6 +437,10 @@ def main():
                 team_players.append(p)
             all_players.extend(team_players)
             print(f"{len(team_players)}")
+        # A partial slate can hide a group's best pick: fail loudly instead.
+        if failed:
+            print(f"  Could not load {failed} — not writing predictions.")
+            return 1
 
     # Filter Tim Hortons
     tims_player_ids = None

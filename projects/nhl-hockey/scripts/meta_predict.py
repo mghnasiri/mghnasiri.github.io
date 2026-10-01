@@ -23,16 +23,15 @@ Training:
 Author: Mohammad G. Nasiri
 """
 
-import requests
 import numpy as np
 import json
 import os
 import sys
-import time
 import math
 import glob
 from datetime import datetime, timedelta
 
+from nhl_api import api_get
 from season_prior import last5_is_real
 from tims_match import match_tims
 
@@ -117,24 +116,6 @@ print("=" * 70)
 # =============================================================================
 # NHL API HELPERS
 # =============================================================================
-def api_get(url, timeout=15, attempts=3):
-    """Safe API GET with exponential-backoff retry (1s, 2s, 4s, ...).
-    Without backoff, three immediate retries hit the same throttled
-    state and all fail in <1s, returning None silently."""
-    for attempt in range(attempts):
-        try:
-            resp = requests.get(url, timeout=timeout)
-            if resp.status_code == 200:
-                return resp.json()
-            if resp.status_code == 404:
-                return None
-        except requests.RequestException:
-            pass
-        if attempt < attempts - 1:
-            time.sleep(2 ** attempt)
-    return None
-
-
 def get_todays_games(date):
     """Get all NHL games scheduled for a date; None if the schedule couldn't
     be fetched (distinct from [] = a day with no games)."""

@@ -23,6 +23,7 @@ import os
 import sys
 from datetime import datetime
 
+from nhl_api import api_get
 from season_prior import last5_is_real
 from tims_match import match_tims, normalize_name as tims_normalize_name
 
@@ -90,12 +91,10 @@ def _nhl_today_team_pairs():
     """
     pairs = set()
     try:
-        resp = requests.get(
-            f"https://api-web.nhle.com/v1/schedule/{Config.TODAY}", timeout=15
-        )
-        if resp.status_code != 200:
+        data = api_get(f"https://api-web.nhle.com/v1/schedule/{Config.TODAY}", attempts=6)
+        if not data:
             return pairs
-        for day in resp.json().get('gameWeek', []):
+        for day in data.get('gameWeek', []):
             if day.get('date') != Config.TODAY:
                 continue
             for g in day.get('games', []):
@@ -260,9 +259,9 @@ def fetch_todays_rosters(events):
     schedule_url = f"https://api-web.nhle.com/v1/schedule/{Config.TODAY}"
     name_to_abbrev = {}
     try:
-        resp = requests.get(schedule_url, timeout=15)
-        if resp.status_code == 200:
-            for day in resp.json().get('gameWeek', []):
+        data = api_get(schedule_url, attempts=6)
+        if data:
+            for day in data.get('gameWeek', []):
                 if day.get('date') != Config.TODAY:
                     continue
                 for g in day.get('games', []):
@@ -297,10 +296,10 @@ def fetch_todays_rosters(events):
     for abbrev, ctx in team_context.items():
         roster_url = f"https://api-web.nhle.com/v1/roster/{abbrev}/current"
         try:
-            resp = requests.get(roster_url, timeout=15)
-            if resp.status_code != 200:
+            data = api_get(roster_url)
+            if not data:
+                print(f"  WARNING: no roster for {abbrev}; its odds can't be matched")
                 continue
-            data = resp.json()
             for group in ['forwards', 'defensemen']:
                 for p in data.get(group, []):
                     name = f"{p['firstName']['default']} {p['lastName']['default']}"

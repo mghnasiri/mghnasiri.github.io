@@ -14,7 +14,6 @@ Pipeline:
 Author: Mohammad G. Nasiri
 """
 
-import requests
 import numpy as np
 import json
 import os
@@ -23,6 +22,7 @@ import math
 import time
 from datetime import datetime
 
+from nhl_api import api_get
 from season_prior import pad_game_log, count_prior_games, shrink_team_rate, last5_is_real
 from tims_match import match_tims
 from shot_calibration import ATTEMPTS_PER_SOG, undo_class_weight
@@ -91,6 +91,7 @@ class Config:
 
     TODAY = datetime.now().strftime("%Y-%m-%d")
     CURRENT_SEASON = current_season_id()
+    PLAYOFFS = False  # set from today's schedule
 
     LEAGUE_AVG_GOALS = 3.07
     HOME_ADVANTAGE = 1.026
@@ -139,33 +140,8 @@ print("=" * 70)
 
 
 # =============================================================================
-# NHL API HELPERS (reused from monte_carlo_predict.py)
+# NHL API HELPERS
 # =============================================================================
-def api_get(url, timeout=15, attempts=3):
-    """Safe API GET request with exponential-backoff retry.
-
-    The retry loop *must* sleep between attempts. Without backoff, three
-    immediate retries hit the same throttled state and all fail in <1s,
-    returning None silently. That bug caused 4 of 6 teams to silently
-    return 0-player rosters during today's daily run despite the
-    per-team sleep already in the caller — the rate limit had to be
-    waited *out*, not just spaced *between* unrelated calls.
-    Backoff: 1s, 2s, 4s. 200 returns immediately; 404 is permanent;
-    everything else (429/500/timeout/connection error) backs off."""
-    for attempt in range(attempts):
-        try:
-            resp = requests.get(url, timeout=timeout)
-            if resp.status_code == 200:
-                return resp.json()
-            if resp.status_code == 404:
-                return None
-        except requests.RequestException:
-            pass
-        if attempt < attempts - 1:
-            time.sleep(2 ** attempt)  # 1s, 2s, 4s, ...
-    return None
-
-
 def _parse_toi_minutes(toi_str):
     """Parse NHL TOI string 'MM:SS' to float minutes. Returns 0 on malformed."""
     try:
@@ -192,6 +168,7 @@ def get_todays_games(date):
                         'home_team': game['homeTeam']['abbrev'],
                         'away_team': game['awayTeam']['abbrev'],
                         'start_time': game.get('startTimeUTC', ''),
+                        'game_type': game['gameType'],
                     })
     return games
 
@@ -225,20 +202,25 @@ def get_player_stats(player_id):
     logs explicitly and merges them newest-first. The `/game-log/now` endpoint
     silently switches to playoff-only data once a player's team enters the
     postseason, leaving healthy scorers with 0-3 games and causing them to
-    fail the MIN_GAMES_PLAYED filter — this call pattern avoids that."""
+    fail the MIN_GAMES_PLAYED filter — this call pattern avoids that.
+
+    Raises ConnectionError when a log doesn't load (the endpoint answers 200
+    with an empty log for players without games), so the caller can retry
+    instead of silently dropping the player."""
     season = Config.CURRENT_SEASON
     reg = api_get(f"https://api-web.nhle.com/v1/player/{player_id}/game-log/{season}/2")
-    po = api_get(f"https://api-web.nhle.com/v1/player/{player_id}/game-log/{season}/3")
-    game_log = (reg.get('gameLog', []) if reg else []) + \
-               (po.get('gameLog', []) if po else [])
+    # No playoff games exist this season until the playoffs start; skipping
+    # the empty log halves the API calls in the regular season.
+    po = (api_get(f"https://api-web.nhle.com/v1/player/{player_id}/game-log/{season}/3")
+          if Config.PLAYOFFS else {})
+    if reg is None or po is None:
+        raise ConnectionError(f"game log for player {player_id} did not load")
+    game_log = reg.get('gameLog', []) + po.get('gameLog', [])
     # Merge, newest-first, and strip today's games to stay leak-free
     game_log.sort(key=lambda g: g.get('gameDate', ''), reverse=True)
     prior = [g for g in game_log if g.get('gameDate', '9999') < Config.TODAY]
-    if reg is not None:
-        # Early season: pad with last season's per-game rates (season_prior.py).
-        # Only when the regular-season log loaded — a failed fetch must not
-        # become stale prior-only stats.
-        prior = pad_game_log(prior, player_id, season)
+    # Early season: pad with last season's per-game rates (season_prior.py).
+    prior = pad_game_log(prior, player_id, season)
     gp = len(prior)
     if gp < Config.MIN_GAMES_PLAYED:
         return None
@@ -778,6 +760,7 @@ if todays_games is None:
     # as an off-day. Leaving yesterday's latest.json fails its freshness check.
     print("  Could not fetch today's NHL schedule — not writing predictions.")
     sys.exit(1)
+Config.PLAYOFFS = any(g['game_type'] == 3 for g in todays_games)
 
 if not todays_games:
     print("  No games found for today!")
@@ -849,8 +832,30 @@ if os.path.exists(PLAYERS_CACHE_FILE):
         print(f"  Cache read failed ({e}); will refetch")
         all_players = None
 
+def add_player(team, p, out, failed):
+    """Fetch p's stats and tonight's matchup into `out`; queue (team, p) in
+    `failed` when its game log didn't load."""
+    try:
+        stats = get_player_stats(p['player_id'])
+    except ConnectionError:
+        failed.append((team, p))
+        return
+    if stats:
+        p.update(stats)
+        matchup = game_matchups.get(team, {})
+        p['opponent'] = matchup.get('opponent', '')
+        p['is_home'] = matchup.get('is_home', False)
+        p['game_id'] = matchup.get('game_id', '')
+        p['matchup'] = (
+            f"{team} vs {p['opponent']}" if p['is_home']
+            else f"{team} @ {p['opponent']}"
+        )
+        out.append(p)
+
+
 if all_players is None:
     all_players = []
+    failed = []
     # Rate-limit between teams + within team rosters. NHL API silently
     # throttles bursts; combined with api_get's exponential backoff this
     # spreads the load enough for first-run success.
@@ -859,24 +864,32 @@ if all_players is None:
             time.sleep(1)
         print(f"    Fetching {team}...", end=" ", flush=True)
         roster = get_team_roster(team)
+        if not roster:
+            print(f"  No roster for {team} — not writing predictions.")
+            sys.exit(1)
         team_players = []
         for i, p in enumerate(roster):
             if i > 0 and i % 10 == 0:
                 time.sleep(0.5)
-            stats = get_player_stats(p['player_id'])
-            if stats:
-                p.update(stats)
-                matchup = game_matchups.get(team, {})
-                p['opponent'] = matchup.get('opponent', '')
-                p['is_home'] = matchup.get('is_home', False)
-                p['game_id'] = matchup.get('game_id', '')
-                p['matchup'] = (
-                    f"{team} vs {p['opponent']}" if p['is_home']
-                    else f"{team} @ {p['opponent']}"
-                )
-                team_players.append(p)
+            add_player(team, p, team_players, failed)
         all_players.extend(team_players)
         print(f"{len(team_players)} players")
+
+    # A player whose log didn't load used to drop off the slate silently,
+    # and out of the cache the sibling runs reuse (2026-09-30 local run:
+    # PHI, PIT, TOR came back empty). Retry once the API has cooled down;
+    # stop if any still fail, since a partial slate can hide a group's
+    # best pick.
+    if failed:
+        retry, failed = failed, []
+        print(f"  {len(retry)} game log(s) didn't load; retrying in 60s...")
+        time.sleep(60)
+        for team, p in retry:
+            add_player(team, p, all_players, failed)
+        if failed:
+            print(f"  Game logs never loaded for {[p['name'] for _, p in failed]}"
+                  " — not writing predictions.")
+            sys.exit(1)
 
     # Persist for sibling runs in this workflow window
     if all_players:

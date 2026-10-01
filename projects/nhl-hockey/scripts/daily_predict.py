@@ -6,7 +6,6 @@ Generates predictions and saves as JSON for web dashboard
 Author: Mohammad
 """
 
-import requests
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
@@ -16,6 +15,7 @@ import time
 import warnings
 warnings.filterwarnings('ignore')
 
+from nhl_api import api_get
 from season_prior import pad_game_log, count_prior_games, last5_is_real
 from tims_match import match_tims
 
@@ -44,6 +44,7 @@ class Config:
 
     TODAY = datetime.now().strftime("%Y-%m-%d")
     CURRENT_SEASON = current_season_id()
+    PLAYOFFS = False  # set from today's schedule
 
 os.makedirs(Config.PREDICTIONS_DIR, exist_ok=True)
 os.makedirs(Config.RESULTS_DIR, exist_ok=True)
@@ -56,33 +57,26 @@ print("=" * 70)
 # =============================================================================
 # 1. FETCH TODAY'S GAMES
 # =============================================================================
-def get_todays_games(date, attempts=6):
+def get_todays_games(date):
     """Today's games; None if the schedule couldn't be fetched (distinct
-    from [] = a day with no games). Retries patiently (1s..16s backoff):
-    a failure now stops the run, so a short rate-limit window shouldn't."""
-    url = f"https://api-web.nhle.com/v1/schedule/{date}"
-    for attempt in range(attempts):
-        try:
-            resp = requests.get(url, timeout=10)
-            if resp.status_code == 200:
-                games = []
-                for day in resp.json().get('gameWeek', []):
-                    if day['date'] == date:
-                        for game in day.get('games', []):
-                            if game.get('gameType') in [2, 3]:
-                                games.append({
-                                    'game_id': game['id'],
-                                    'home_team': game['homeTeam']['abbrev'],
-                                    'away_team': game['awayTeam']['abbrev'],
-                                    'start_time': game.get('startTimeUTC', ''),
-                                })
-                return games
-            print(f"⚠️ Schedule API returned {resp.status_code} (attempt {attempt + 1}/{attempts})")
-        except Exception as e:
-            print(f"⚠️ Error fetching games (attempt {attempt + 1}/{attempts}): {e}")
-        if attempt < attempts - 1:
-            time.sleep(2 ** attempt)
-    return None
+    from [] = a day with no games). Retries patiently: a failure stops the
+    run, so a short rate-limit window shouldn't."""
+    data = api_get(f"https://api-web.nhle.com/v1/schedule/{date}", attempts=6)
+    if not data:
+        return None
+    games = []
+    for day in data.get('gameWeek', []):
+        if day['date'] == date:
+            for game in day.get('games', []):
+                if game.get('gameType') in [2, 3]:
+                    games.append({
+                        'game_id': game['id'],
+                        'home_team': game['homeTeam']['abbrev'],
+                        'away_team': game['awayTeam']['abbrev'],
+                        'start_time': game.get('startTimeUTC', ''),
+                        'game_type': game['gameType'],
+                    })
+    return games
 
 print("\n📡 Fetching today's games...")
 todays_games = get_todays_games(Config.TODAY)
@@ -92,6 +86,7 @@ if todays_games is None:
     # an off-day; yesterday's latest.json then fails its freshness check.
     print("⛔ Could not fetch today's NHL schedule — not writing predictions.")
     exit(1)
+Config.PLAYOFFS = any(g['game_type'] == 3 for g in todays_games)
 
 if not todays_games:
     print("⚠️ No games found for today!")
@@ -142,32 +137,6 @@ def compute_stats_from_gamelog(game_log, today_date):
         'prior_games': count_prior_games(prior_games),
     }
 
-def api_get(url, timeout=15, max_attempts=3):
-    """Safe API GET with exponential-backoff retry (1s, 2s, 4s).
-
-    Mirrors the helper in monte_carlo_predict.py / xg_predict.py. Without
-    backoff, three immediate retries hit the same throttled state and all
-    fail in <1s, returning None silently — the rate limit has to be waited
-    *out*, not just spaced *between* unrelated calls. Logs the actual
-    status code on final failure so the cause is visible in CI logs.
-    Returns parsed JSON on 200; None on 404 or terminal failure."""
-    last_status = None
-    for attempt in range(max_attempts):
-        try:
-            resp = requests.get(url, timeout=timeout)
-            last_status = resp.status_code
-            if resp.status_code == 200:
-                return resp.json()
-            if resp.status_code == 404:
-                return None
-        except requests.RequestException as e:
-            last_status = f"{type(e).__name__}: {e}"
-        if attempt < max_attempts - 1:
-            time.sleep(2 ** attempt)
-    print(f"   ⚠️ {url} → {last_status} after {max_attempts} attempts")
-    return None
-
-
 def _fetch_game_log(player_id, season, game_type):
     """One game-log fetch with retry. Returns list (possibly empty) or None on hard error."""
     url = f"https://api-web.nhle.com/v1/player/{player_id}/game-log/{season}/{game_type}"
@@ -186,7 +155,8 @@ def get_player_current_stats(player_id):
     healthy scorers end up with 0-3 games and fall below the min-games filter."""
     season = Config.CURRENT_SEASON
     reg = _fetch_game_log(player_id, season, 2)
-    po = _fetch_game_log(player_id, season, 3)
+    # No playoff games exist this season until the playoffs start.
+    po = _fetch_game_log(player_id, season, 3) if Config.PLAYOFFS else []
     if reg is None and po is None:
         return None
     game_log = (reg or []) + (po or [])
