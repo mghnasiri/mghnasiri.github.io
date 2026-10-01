@@ -120,11 +120,11 @@ class NeuralV2(nn.Module):
 # =============================================================================
 # NHL API (subset needed for tonight's matchups)
 # =============================================================================
-def api_get(url, timeout=15):
-    """Safe API GET with exponential-backoff retry (1s, 2s)."""
+def api_get(url, timeout=15, attempts=3):
+    """Safe API GET with exponential-backoff retry (1s, 2s, 4s, ...)."""
     import requests as _requests
     import time as _time
-    for attempt in range(3):
+    for attempt in range(attempts):
         try:
             r = _requests.get(url, timeout=timeout)
             if r.status_code == 200:
@@ -133,14 +133,15 @@ def api_get(url, timeout=15):
                 return None
         except _requests.RequestException:
             pass
-        if attempt < 2:
+        if attempt < attempts - 1:
             _time.sleep(2 ** attempt)
     return None
 
 
 def get_todays_games(date):
     """None if the schedule couldn't be fetched (distinct from [] = no games)."""
-    data = api_get(f"https://api-web.nhle.com/v1/schedule/{date}")
+    # Patient retries (~30s): a failure now stops the run.
+    data = api_get(f"https://api-web.nhle.com/v1/schedule/{date}", attempts=6)
     if not data:
         return None
     games = []

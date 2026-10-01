@@ -69,11 +69,11 @@ print("=" * 70)
 # =============================================================================
 # NHL API HELPERS
 # =============================================================================
-def api_get(url, timeout=15):
-    """Safe API GET with exponential-backoff retry (1s, 2s).
+def api_get(url, timeout=15, attempts=3):
+    """Safe API GET with exponential-backoff retry (1s, 2s, 4s, ...).
     Without backoff, three immediate retries hit the same throttled
     state and all fail in <1s, returning None silently."""
-    for attempt in range(3):
+    for attempt in range(attempts):
         try:
             resp = requests.get(url, timeout=timeout)
             if resp.status_code == 200:
@@ -82,7 +82,7 @@ def api_get(url, timeout=15):
                 return None
         except requests.RequestException:
             pass
-        if attempt < 2:
+        if attempt < attempts - 1:
             time.sleep(2 ** attempt)
     return None
 
@@ -93,7 +93,9 @@ def api_get(url, timeout=15):
 def get_todays_games(date):
     """Get all NHL games scheduled for today; None if the schedule couldn't
     be fetched (distinct from [] = a day with no games)."""
-    data = api_get(f"https://api-web.nhle.com/v1/schedule/{date}")
+    # Patient retries (~30s): a failure now stops the run, so a short
+    # rate-limit window shouldn't.
+    data = api_get(f"https://api-web.nhle.com/v1/schedule/{date}", attempts=6)
     if not data:
         return None
 

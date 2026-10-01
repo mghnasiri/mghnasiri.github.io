@@ -55,33 +55,33 @@ print("=" * 70)
 # =============================================================================
 # 1. FETCH TODAY'S GAMES
 # =============================================================================
-def get_todays_games(date):
+def get_todays_games(date, attempts=6):
     """Today's games; None if the schedule couldn't be fetched (distinct
-    from [] = a day with no games)."""
+    from [] = a day with no games). Retries patiently (1s..16s backoff):
+    a failure now stops the run, so a short rate-limit window shouldn't."""
     url = f"https://api-web.nhle.com/v1/schedule/{date}"
-    try:
-        resp = requests.get(url, timeout=10)
-        if resp.status_code != 200:
-            print(f"❌ Schedule API returned {resp.status_code}")
-            return None
-
-        data = resp.json()
-        games = []
-        
-        for day in data.get('gameWeek', []):
-            if day['date'] == date:
-                for game in day.get('games', []):
-                    if game.get('gameType') in [2, 3]:
-                        games.append({
-                            'game_id': game['id'],
-                            'home_team': game['homeTeam']['abbrev'],
-                            'away_team': game['awayTeam']['abbrev'],
-                            'start_time': game.get('startTimeUTC', ''),
-                        })
-        return games
-    except Exception as e:
-        print(f"❌ Error fetching games: {e}")
-        return None
+    for attempt in range(attempts):
+        try:
+            resp = requests.get(url, timeout=10)
+            if resp.status_code == 200:
+                games = []
+                for day in resp.json().get('gameWeek', []):
+                    if day['date'] == date:
+                        for game in day.get('games', []):
+                            if game.get('gameType') in [2, 3]:
+                                games.append({
+                                    'game_id': game['id'],
+                                    'home_team': game['homeTeam']['abbrev'],
+                                    'away_team': game['awayTeam']['abbrev'],
+                                    'start_time': game.get('startTimeUTC', ''),
+                                })
+                return games
+            print(f"⚠️ Schedule API returned {resp.status_code} (attempt {attempt + 1}/{attempts})")
+        except Exception as e:
+            print(f"⚠️ Error fetching games (attempt {attempt + 1}/{attempts}): {e}")
+        if attempt < attempts - 1:
+            time.sleep(2 ** attempt)
+    return None
 
 print("\n📡 Fetching today's games...")
 todays_games = get_todays_games(Config.TODAY)

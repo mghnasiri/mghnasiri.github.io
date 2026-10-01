@@ -139,7 +139,7 @@ print("=" * 70)
 # =============================================================================
 # NHL API HELPERS (reused from monte_carlo_predict.py)
 # =============================================================================
-def api_get(url, timeout=15):
+def api_get(url, timeout=15, attempts=3):
     """Safe API GET request with exponential-backoff retry.
 
     The retry loop *must* sleep between attempts. Without backoff, three
@@ -150,7 +150,7 @@ def api_get(url, timeout=15):
     waited *out*, not just spaced *between* unrelated calls.
     Backoff: 1s, 2s, 4s. 200 returns immediately; 404 is permanent;
     everything else (429/500/timeout/connection error) backs off."""
-    for attempt in range(3):
+    for attempt in range(attempts):
         try:
             resp = requests.get(url, timeout=timeout)
             if resp.status_code == 200:
@@ -159,8 +159,8 @@ def api_get(url, timeout=15):
                 return None
         except requests.RequestException:
             pass
-        if attempt < 2:
-            time.sleep(2 ** attempt)  # 1s then 2s
+        if attempt < attempts - 1:
+            time.sleep(2 ** attempt)  # 1s, 2s, 4s, ...
     return None
 
 
@@ -175,8 +175,9 @@ def _parse_toi_minutes(toi_str):
 
 def get_todays_games(date):
     """Get all NHL games scheduled for today; None if the schedule couldn't
-    be fetched (distinct from [] = a day with no games)."""
-    data = api_get(f"https://api-web.nhle.com/v1/schedule/{date}")
+    be fetched (distinct from [] = a day with no games). Retries patiently
+    (~30s): a failure stops the run, so a short rate-limit window shouldn't."""
+    data = api_get(f"https://api-web.nhle.com/v1/schedule/{date}", attempts=6)
     if not data:
         return None
     games = []
