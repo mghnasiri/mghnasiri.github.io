@@ -1022,7 +1022,7 @@
                 Three principles drive the project:
             </p>
             <ul style="color: var(--ivory); font-size: 0.95rem; line-height: 1.7; padding-left: 1.4rem; margin-bottom: 1rem;">
-                <li style="margin-bottom: 0.5rem;"><strong style="color: var(--gold);">No single model wins.</strong> Each of the eight has different strengths and failure modes. The Meta Ensemble combines them with isotonic calibration; the consensus average gives a second, simpler aggregation.</li>
+                <li style="margin-bottom: 0.5rem;"><strong style="color: var(--gold);">No single model wins.</strong> Each of the eight has different strengths and failure modes. The Meta Ensemble stacks them with Platt calibration; the consensus average gives a second, simpler aggregation.</li>
                 <li style="margin-bottom: 0.5rem;"><strong style="color: var(--gold);">Show the work.</strong> Every model's full output is committed to a public GitHub repository as JSON. Every prediction can be checked against the actual goal scorers later that night.</li>
                 <li style="margin-bottom: 0.5rem;"><strong style="color: var(--gold);">Probability is not advice.</strong> A 35% goal probability means the model thinks there is roughly a 35% chance the player scores at least one goal in tonight's game. It is not a betting recommendation, a financial product, or a guarantee. See the <a href="./faq.html" style="color: var(--gold);">FAQ</a> and <a href="/terms.html" style="color: var(--gold);">terms</a> for the full disclaimer.</li>
             </ul>
@@ -1294,8 +1294,11 @@
                 if (!meta) return;
                 btn.classList.add('status-' + meta.status);
                 btn.title = 'Status: ' + meta.status
-                    + '  |  14d hit rate: ' + meta.trailing_14_hit_rate + '%'
-                    + '  |  30d: ' + meta.trailing_30_hit_rate + '%'
+                    + '  |  14d hit rate: ' + (meta.trailing_14_hit_rate != null ? meta.trailing_14_hit_rate + '%' : '—')
+                    + '  |  30d: ' + (meta.trailing_30_hit_rate != null ? meta.trailing_30_hit_rate + '%' : '—')
+                    + (meta.group_top1_rate != null
+                        ? '  |  group top-1: ' + meta.group_top1_rate + '% vs random ' + meta.group_top1_baseline + '%'
+                        : '')
                     + '  |  days tracked: ' + meta.total_days;
             });
         }
@@ -1340,8 +1343,8 @@
                 var response = await fetch(model.path + cacheBust);
                 var data;
                 if (!response.ok) {
-                    // Fallback chain: market_odds -> meta_ensemble -> xg_v3 -> lineup_v1 -> neural_v1 -> neural_v2 -> monte_carlo -> neural_network
-                    var fallbacks = ['market_odds', 'meta_ensemble', 'xg_v3', 'lineup_v1', 'neural_v1', 'neural_v2', 'monte_carlo', 'neural_network'].filter(function(m) { return m !== currentModel; });
+                    // Fallback chain; meta_ensemble last — it is the weakest ranker
+                    var fallbacks = ['market_odds', 'xg_v3', 'lineup_v1', 'neural_v1', 'neural_v2', 'monte_carlo', 'neural_network', 'meta_ensemble'].filter(function(m) { return m !== currentModel; });
                     var found = false;
                     for (var fi = 0; fi < fallbacks.length; fi++) {
                         if (MODELS[fallbacks[fi]]) {
@@ -1547,9 +1550,6 @@
                 if (data.model_comparisons) {
                     comparison = data.model_comparisons.find(function(m) { return m.model === 'market_odds'; });
                     if (!comparison) {
-                        comparison = data.model_comparisons.find(function(m) { return m.model === 'meta_ensemble'; });
-                    }
-                    if (!comparison) {
                         comparison = data.model_comparisons.find(function(m) { return m.model === 'xg_v3'; });
                     }
                     if (!comparison) {
@@ -1566,6 +1566,9 @@
                     }
                     if (!comparison) {
                         comparison = data.model_comparisons.find(function(m) { return m.model === 'neural_network'; });
+                    }
+                    if (!comparison) {
+                        comparison = data.model_comparisons.find(function(m) { return m.model === 'meta_ensemble'; });
                     }
                 }
 
@@ -1590,7 +1593,7 @@
             var container = document.getElementById('yesterday-top10');
             try {
                 var predData = null;
-                var models = ['market_odds', 'meta_ensemble', 'xg_v3', 'lineup_v1', 'neural_v1', 'neural_v2', 'monte_carlo', 'neural_network'];
+                var models = ['market_odds', 'xg_v3', 'lineup_v1', 'neural_v1', 'neural_v2', 'monte_carlo', 'neural_network', 'meta_ensemble'];
                 for (var m = 0; m < models.length; m++) {
                     try {
                         var resp = await fetch('./data/predictions/' + models[m] + '/' + resultsData.date + '.json');
@@ -1816,9 +1819,9 @@
                                 deprecated: '✖ DEPRECATED',
                                 "new": '★ NEW'
                             }[meta.status] || meta.status.toUpperCase();
-                            statusBadge.title = '14d: ' + meta.trailing_14_hit_rate
-                                + '%  |  30d: ' + meta.trailing_30_hit_rate
-                                + '%  |  ' + meta.total_days + ' days tracked';
+                            statusBadge.title = '14d: ' + (meta.trailing_14_hit_rate != null ? meta.trailing_14_hit_rate + '%' : '—')
+                                + '  |  30d: ' + (meta.trailing_30_hit_rate != null ? meta.trailing_30_hit_rate + '%' : '—')
+                                + '  |  ' + meta.total_days + ' days tracked';
                             title.appendChild(statusBadge);
                         }
                         card.appendChild(title);
@@ -1848,6 +1851,16 @@
                                 ' last 7d: ' + d7 + '%'
                             ));
                             card.appendChild(trend);
+                        }
+
+                        // The metric that matches the game: did the model's top
+                        // pick in each Tims group score, vs a random pick.
+                        if (meta && meta.group_top1_rate != null) {
+                            var g1 = document.createElement('div');
+                            g1.className = 'model-trend';
+                            g1.textContent = 'group top-1: ' + meta.group_top1_rate + '% (' +
+                                meta.group_top1_n + ' groups) vs random ' + meta.group_top1_baseline + '%';
+                            card.appendChild(g1);
                         }
 
                         // Compact stats: hits / days, built without innerHTML

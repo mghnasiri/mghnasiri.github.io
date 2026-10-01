@@ -227,21 +227,24 @@ def add_predictions_section(lines):
         print(f"  Warning: Linear v1 latest is {nn_data.get('date')}, not today ({Config.TODAY}) — skipping")
         nn_data = None
 
-    # Use best available model as primary (Market > Meta > xG v3 > MC v2 > Linear v1)
-    primary = market_data or meta_data or xg_data or mc_data or nn_data
-    if not primary:
+    # Primary source: Market first (best calibrated, best within-group AUC),
+    # then the base models; Meta last — it is the weakest ranker (within-group
+    # AUC ~0.52, near random) and not monotonic in its inputs. Prefer a source
+    # with real Tims groups (the game is one pick per group), and never pick a
+    # file with no predictions: that used to suppress the whole message.
+    sources = [("Market", market_data), ("xG v3", xg_data), ("MC v2", mc_data),
+               ("Linear v1", nn_data), ("Meta", meta_data)]
+    with_picks = [(n, d) for n, d in sources if d and d.get('predictions')]
+    if not with_picks:
         return False
+    primary_name, primary = next(
+        ((n, d) for n, d in with_picks if d.get('tims_group_rankings')), with_picks[0])
 
     date = primary.get('date', Config.TODAY)
     games_count = primary.get('games_count', 0)
     predictions = primary.get('predictions', [])
     tims_groups = primary.get('tims_group_rankings', {})
     games = primary.get('games', [])
-
-    primary_name = "Market" if market_data else ("Meta" if meta_data else ("xG v3" if xg_data else ("MC v2" if mc_data else "Linear v1")))
-
-    if not predictions:
-        return False
 
     lines.append("")
     lines.append("🎯  <b>TODAY'S PREDICTIONS</b>")
