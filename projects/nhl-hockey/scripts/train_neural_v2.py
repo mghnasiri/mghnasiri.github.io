@@ -181,7 +181,8 @@ class ShotsDataset(Dataset):
             [pmap.get(r[1], 0) for r in rows], dtype=np.int64
         )
         X = np.array([r[2] for r in rows], dtype=np.float32)
-        self.X = (X - feat_mean) / np.where(feat_std > 0, feat_std, 1.0)
+        # Zero-variance columns -> 0, matching neural_v2_predict.score_player_shots
+        self.X = np.where(feat_std > 0, (X - feat_mean) / np.where(feat_std > 0, feat_std, 1.0), 0.0)
         self.y = np.array([r[3] for r in rows], dtype=np.float32)
 
     def __len__(self):

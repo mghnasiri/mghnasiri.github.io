@@ -16,6 +16,8 @@ import time
 import warnings
 warnings.filterwarnings('ignore')
 
+from season_prior import pad_game_log, count_prior_games, last5_is_real
+
 
 def current_season_id(date=None):
     """NHL seasonId like '20252026' for a date. Season starts in early October;
@@ -127,6 +129,7 @@ def compute_stats_from_gamelog(game_log, today_date):
         'shooting_pct': round(goals / shots, 3) if shots > 0 else 0,
         'last5_goals': last5_goals,
         'last5_points': last5_points,
+        'prior_games': count_prior_games(prior_games),
     }
 
 def api_get(url, timeout=15, max_attempts=3):
@@ -177,9 +180,12 @@ def get_player_current_stats(player_id):
     if reg is None and po is None:
         return None
     game_log = (reg or []) + (po or [])
-    if not game_log:
-        return None
     game_log.sort(key=lambda g: g.get('gameDate', ''), reverse=True)
+    if reg is not None:
+        # Early season: pad with last season's per-game rates (season_prior.py)
+        game_log = pad_game_log(
+            [g for g in game_log if g.get('gameDate', '9999') < Config.TODAY],
+            player_id, season)
     stats = compute_stats_from_gamelog(game_log, Config.TODAY)
     if stats is None or stats['games_played'] < 1:
         return None
@@ -283,6 +289,7 @@ def players_from_mc(needed_teams, today):
             'shooting_pct': p.get('shooting_pct', 0),
             'last5_goals': p.get('last5_goals', 0),
             'last5_points': 0,  # MC doesn't track; Linear formula doesn't use it
+            'prior_games': p.get('prior_games', 0),
         })
     return out
 
@@ -406,7 +413,7 @@ all_players.sort(key=lambda x: x['goal_probability'], reverse=True)
 # Add rank and hot indicator
 for i, player in enumerate(all_players):
     player['rank'] = i + 1
-    player['is_hot'] = player.get('last5_goals', 0) >= 3
+    player['is_hot'] = player.get('last5_goals', 0) >= 3 and last5_is_real(player)
 
 # =============================================================================
 # 5.5 TIM HORTONS FILTERING

@@ -1978,12 +1978,14 @@
                 // Goals
                 var goalsCell = document.createElement('td');
                 goalsCell.className = 'hide-mobile';
-                goalsCell.textContent = p.season_goals || 0;
+                // Early season this blends in last season's per-game rate
+                // (fractional); round so it reads cleanly.
+                goalsCell.textContent = Math.round((p.season_goals || 0) * 10) / 10;
                 row.appendChild(goalsCell);
 
                 // L5
                 var l5Cell = document.createElement('td');
-                l5Cell.textContent = p.last5_goals || 0;
+                l5Cell.textContent = Math.round((p.last5_goals || 0) * 10) / 10;
                 row.appendChild(l5Cell);
 
                 // Matchup

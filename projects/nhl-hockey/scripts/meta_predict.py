@@ -33,6 +33,8 @@ import math
 import glob
 from datetime import datetime, timedelta
 
+from season_prior import last5_is_real
+
 
 def current_season_id(date=None):
     """NHL seasonId like '20252026' for a date. Season starts in early October;
@@ -533,6 +535,8 @@ def predict_today():
             'matchup': mc_p.get('matchup', xg_p.get('matchup', '')),
             'season_goals': mc_p.get('season_goals', xg_p.get('season_goals', 0)),
             'last5_goals': mc_p.get('last5_goals', xg_p.get('last5_goals', 0)),
+            'games_played': mc_p.get('games_played', xg_p.get('games_played', 0)),
+            'prior_games': mc_p.get('prior_games', xg_p.get('prior_games', 0)),
         })
 
     X = pd.DataFrame(player_rows, columns=Config.FEATURE_NAMES)
@@ -564,7 +568,7 @@ def predict_today():
     all_players.sort(key=lambda x: x['goal_probability'], reverse=True)
     for i, p in enumerate(all_players):
         p['rank'] = i + 1
-        p['is_hot'] = p.get('last5_goals', 0) >= 3
+        p['is_hot'] = p.get('last5_goals', 0) >= 3 and last5_is_real(p)
 
     return all_players, games
 

@@ -23,6 +23,8 @@ import os
 import sys
 from datetime import datetime
 
+from season_prior import last5_is_real
+
 # =============================================================================
 # CONFIGURATION
 # =============================================================================
@@ -324,6 +326,8 @@ def build_name_to_id_map(events):
                 if nname in name_map:
                     name_map[nname]['season_goals'] = p.get('season_goals', 0)
                     name_map[nname]['last5_goals'] = p.get('last5_goals', 0)
+                    name_map[nname]['games_played'] = p.get('games_played', 0)
+                    name_map[nname]['prior_games'] = p.get('prior_games', 0)
                     overlaid += 1
         except Exception:
             continue
@@ -480,7 +484,7 @@ if not all_players:
 all_players.sort(key=lambda x: x['goal_probability'], reverse=True)
 for i, p in enumerate(all_players):
     p['rank'] = i + 1
-    p['is_hot'] = p.get('last5_goals', 0) >= 3
+    p['is_hot'] = p.get('last5_goals', 0) >= 3 and last5_is_real(p)
 
 # Step 5: Tim Hortons filtering
 tims_data = load_tims_players(Config.TODAY)

@@ -22,6 +22,8 @@ import sys
 import time
 from datetime import datetime
 
+from season_prior import pad_game_log, count_prior_games, shrink_team_rate, last5_is_real
+
 
 def current_season_id(date=None):
     """NHL seasonId like '20252026' for a date. Season starts in early October;
@@ -124,9 +126,7 @@ def get_team_stats_from_standings():
     team_stats = {}
     for team in data.get('standings', []):
         abbrev = team.get('teamAbbrev', {}).get('default', '')
-        gp = team.get('gamesPlayed', 1)
-        if gp == 0:
-            gp = 1
+        gp = team.get('gamesPlayed', 0) or 0
 
         gf = team.get('goalFor', 0)
         ga = team.get('goalAgainst', 0)
@@ -135,8 +135,10 @@ def get_team_stats_from_standings():
             'games_played': gp,
             'goals_for': gf,
             'goals_against': ga,
-            'gf_per_game': round(gf / gp, 3),
-            'ga_per_game': round(ga / gp, 3),
+            # Padded toward league average for the first few games so opening
+            # night isn't 0 GF over 0 GP (see season_prior.py).
+            'gf_per_game': round(shrink_team_rate(gf, gp, Config.LEAGUE_AVG_GOALS), 3),
+            'ga_per_game': round(shrink_team_rate(ga, gp, Config.LEAGUE_AVG_GOALS), 3),
             'wins': team.get('wins', 0),
             'losses': team.get('losses', 0),
             'points': team.get('points', 0),
@@ -169,10 +171,13 @@ def get_player_stats(player_id):
     po = api_get(f"https://api-web.nhle.com/v1/player/{player_id}/game-log/{season}/3")
     game_log = (reg.get('gameLog', []) if reg else []) + \
                (po.get('gameLog', []) if po else [])
-    if not game_log:
-        return None
     game_log.sort(key=lambda g: g.get('gameDate', ''), reverse=True)
     prior = [g for g in game_log if g.get('gameDate', '9999') < Config.TODAY]
+    if reg is not None:
+        # Early season: pad with last season's per-game rates (season_prior.py).
+        # Only when the regular-season log loaded — a failed fetch must not
+        # become stale prior-only stats.
+        prior = pad_game_log(prior, player_id, season)
     gp = len(prior)
     if gp < Config.MIN_GAMES_PLAYED:
         return None
@@ -215,6 +220,7 @@ def get_player_stats(player_id):
         'last5_shots': last5_shots,
         'last5_games': last5_count,
         'recent_gpg': round(recent_gpg, 4),
+        'prior_games': count_prior_games(prior),
     }
 
 
@@ -650,7 +656,7 @@ all_players.sort(key=lambda x: x['goal_probability'], reverse=True)
 # Add rank and hot indicator
 for i, p in enumerate(all_players):
     p['rank'] = i + 1
-    p['is_hot'] = p.get('last5_goals', 0) >= 3
+    p['is_hot'] = p.get('last5_goals', 0) >= 3 and last5_is_real(p)
 
 # Step 8: Prepare Tim Hortons group rankings
 tims_group_rankings = {}

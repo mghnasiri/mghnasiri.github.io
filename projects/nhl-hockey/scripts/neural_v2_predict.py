@@ -39,6 +39,8 @@ except ImportError as e:
     print("Install with: pip install torch numpy requests")
     sys.exit(1)
 
+from season_prior import pad_game_log, shrink_team_rate
+
 
 # =============================================================================
 # CONFIGURATION
@@ -162,10 +164,10 @@ def get_team_stats():
     stats = {}
     for t in data.get("standings", []):
         ab = t.get("teamAbbrev", {}).get("default", "")
-        gp = max(t.get("gamesPlayed", 1), 1)
+        gp = t.get("gamesPlayed", 0) or 0
         stats[ab] = {
-            "gf_per_game": round(t.get("goalFor", 0) / gp, 3),
-            "ga_per_game": round(t.get("goalAgainst", 0) / gp, 3),
+            "gf_per_game": round(shrink_team_rate(t.get("goalFor", 0), gp, Config.LEAGUE_AVG_GOALS), 3),
+            "ga_per_game": round(shrink_team_rate(t.get("goalAgainst", 0), gp, Config.LEAGUE_AVG_GOALS), 3),
         }
     return stats
 
@@ -192,10 +194,11 @@ def get_player_stats(player_id):
     po = api_get(f"https://api-web.nhle.com/v1/player/{player_id}/game-log/{season}/3")
     gl = (reg.get("gameLog", []) if reg else []) + \
          (po.get("gameLog", []) if po else [])
-    if not gl:
-        return None
     gl.sort(key=lambda g: g.get("gameDate", ""), reverse=True)
     prior = [g for g in gl if g.get("gameDate", "9999") < Config.TODAY]
+    if reg is not None:
+        # Early season: pad with last season's per-game rates (season_prior.py)
+        prior = pad_game_log(prior, player_id, season)
     gp = len(prior)
     if gp < Config.MIN_GAMES_PLAYED:
         return None
@@ -296,7 +299,11 @@ def score_player_shots(model, shots, feature_names, feat_mean, feat_std,
         [[float(s.get(f, 0) or 0) for f in feature_names] for s in shots],
         dtype=np.float32,
     )
-    X = (X - feat_mean) / np.where(feat_std > 0, feat_std, 1.0)
+    # Zero-variance training columns become exactly 0 (what every training
+    # row had). Otherwise a feature that was constant in training — e.g.
+    # seconds_since_last_event before the collector fix — passes raw values
+    # into never-trained weights and adds noise.
+    X = np.where(feat_std > 0, (X - feat_mean) / np.where(feat_std > 0, feat_std, 1.0), 0.0)
     x = torch.from_numpy(X.astype(np.float32)).to(device)
     p = torch.full((len(shots),), int(player_idx), dtype=torch.long, device=device)
     model.train(False)
