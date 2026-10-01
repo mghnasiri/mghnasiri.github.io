@@ -268,7 +268,7 @@
         <h1>Eight ways to guess who scores tonight</h1>
 
         <p class="deck">
-            Predicting goal scorers is a question almost every model gets partly right and none gets fully right. This site runs eight of them in parallel — a sportsbook baseline, a hand-tuned linear formula, a Monte Carlo simulation, a tree-based xG model, a lineup-aware variant, two neural networks, and a stacked meta-ensemble that ties them together. Here is what each one actually sees, what it computes, and where it tends to fail.
+            Predicting goal scorers is a question almost every model gets partly right and none gets fully right. This site runs seven of them in parallel — a sportsbook baseline, a hand-tuned linear formula, a Poisson Monte Carlo model, a tree-based xG model, a lineup-aware variant, a neural network, and a stacked meta-ensemble that ties them together. Here is what each one actually sees, what it computes, and where it tends to fail.
         </p>
 
         <h2>The problem, stated honestly</h2>
@@ -289,7 +289,7 @@
             <ol>
                 <li><a href="#market">Market Odds v1</a><span class="tag">market</span> — bookmaker-implied probabilities</li>
                 <li><a href="#linear">Weighted Linear v1</a><span class="tag">baseline</span> — hand-tuned linear formula</li>
-                <li><a href="#mc">Monte Carlo v2</a><span class="tag">simulation</span> — 10,000-sim Poisson assignment</li>
+                <li><a href="#mc">Monte Carlo v2</a><span class="tag">simulation</span> — Poisson goal assignment, computed exactly</li>
                 <li><a href="#xg">xG XGBoost v3</a><span class="tag">tree</span> — per-shot xG from real play-by-play</li>
                 <li><a href="#lineup">Lineup TOI v1</a><span class="tag">tree</span> — xG v3 scaled by recent ice time</li>
                 <li><a href="#neural1">Neural MLP v1</a><span class="tag">re-ranker</span> — sklearn MLP over MC features</li>
@@ -370,7 +370,7 @@ prob = clip(raw / max(raw_today) × 0.55, 0.02, 0.60)</div>
         <h2 id="mc">3. Monte Carlo v2 — simulating the game</h2>
 
         <p>
-            The Monte Carlo model treats each game as a stochastic process and simulates it 10,000 times. Two pieces fit together.
+            The Monte Carlo model treats each game as a stochastic process and computes exactly what simulating it many times converges to. Two pieces fit together.
         </p>
 
         <p>
@@ -406,7 +406,7 @@ home_factor = 1.026 if home else 0.974</div>
         </p>
 
         <p>
-            <strong>The simulation.</strong> For each of the 10,000 sims:
+            <strong>The game model.</strong> Until October 2026 the script sampled each game 10,000 times:
         </p>
 
         <ol>
@@ -416,7 +416,7 @@ home_factor = 1.026 if home else 0.974</div>
         </ol>
 
         <p>
-            A player's predicted probability is just the fraction of sims in which they scored at least once. The strength of this model is that it captures squad-level uncertainty: a high-weight star on a low-xG team gets penalized correctly, and a low-weight depth player on a high-xG night gets the lift they should get.
+            A player's predicted probability was the fraction of sims in which they scored at least once. The script now computes that limit directly: splitting a Poisson count at random gives each player <code>Poisson(team_xG × share)</code> goals, so <code>P(≥1) = 1 − e^(−team_xG × share)</code>. Same model, without the ±0.5-point sampling noise that could reorder close players between reruns. The strength of this model is that it captures squad-level uncertainty: a high-weight star on a low-xG team gets penalized correctly, and a low-weight depth player on a high-xG night gets the lift they should get.
         </p>
 
         <h2 id="xg">4. xG XGBoost v3 — a per-shot model</h2>
@@ -477,6 +477,8 @@ home_factor = 1.026 if home else 0.974</div>
         <div class="ad-slot">Advertisement</div>
 
         <h2 id="neural1">6. Neural MLP v1 — a re-ranker over Monte Carlo</h2>
+
+        <p><em>Retired in October 2026: it had the lowest top-10 hit rate of the 2025-26 season (18.4%), and no other model or the daily message used it. Kept here for the record.</em></p>
 
         <p>
             The first neural model on the site is intentionally modest. It is a scikit-learn <code>MLPClassifier</code> with a <code>StandardScaler</code> in front of it, trained on the same player-level rows the Monte Carlo model already produces, with the actual game outcome as the binary target.

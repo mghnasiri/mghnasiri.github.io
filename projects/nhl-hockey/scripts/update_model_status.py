@@ -53,6 +53,7 @@ DEPRECATED_MIN_DAYS = 10          # require enough evidence before red flag
 # day-to-day noise, so ties and gaps were both mostly luck.)
 BOOTSTRAP_RESAMPLES = 2000
 STALE_DAYS = 2                    # last graded this much before newest -> ineligible
+RETIRED = {"neural_v1"}           # no longer run; history stays in stats.json
 
 IN = "data/stats.json"
 OUT = "data/model_status.json"
@@ -157,7 +158,7 @@ def main():
     with open(IN, "r", encoding="utf-8") as f:
         stats = json.load(f)
 
-    models = stats.get("models", {})
+    models = {k: v for k, v in stats.get("models", {}).items() if k not in RETIRED}
     start = season_start()
     statuses = {name: classify_model(data, start) for name, data in models.items()}
 

@@ -388,7 +388,10 @@ for player in all_players:
     del player['goal_probability_raw']
 
 # Sort by probability
-all_players.sort(key=lambda x: x['goal_probability'], reverse=True)
+# Ties (equal odds, capped scores) go to more season goals, then a fixed
+# id order, not to roster fetch order: a tie decides a group pick.
+all_players.sort(key=lambda x: (x['goal_probability'], x.get('season_goals', 0),
+                               -x['player_id']), reverse=True)
 
 # Add rank and hot indicator
 for i, player in enumerate(all_players):

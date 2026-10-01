@@ -103,6 +103,11 @@ def load_json(path):
         return {"_load_error": str(e)}
 
 
+# Models no longer run; their files stay as history. Without this their
+# frozen latest.json fails freshness every day.
+RETIRED = {"neural_v1"}
+
+
 def discover_models():
     """Return list of model_name strings from data/predictions/* with a latest.json."""
     if not os.path.isdir(PRED_DIR):
@@ -110,7 +115,7 @@ def discover_models():
     out = []
     for name in sorted(os.listdir(PRED_DIR)):
         path = os.path.join(PRED_DIR, name, "latest.json")
-        if os.path.isfile(path):
+        if os.path.isfile(path) and name not in RETIRED:
             out.append(name)
     return out
 

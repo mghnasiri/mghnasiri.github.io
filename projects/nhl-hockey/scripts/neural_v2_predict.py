@@ -488,7 +488,10 @@ def main():
         for k in ("_avg_shot_xg", "_raw_shot_xg", "_xg_source", "_known_player"):
             del p[k]
 
-    all_players.sort(key=lambda q: q["goal_probability"], reverse=True)
+    # Ties (equal odds, capped scores) go to more season goals, then a fixed
+    # id order, not to roster fetch order: a tie decides a group pick.
+    all_players.sort(key=lambda q: (q["goal_probability"], q.get("season_goals", 0),
+                                   -q["player_id"]), reverse=True)
     for i, p in enumerate(all_players):
         p["rank"] = i + 1
 

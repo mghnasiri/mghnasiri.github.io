@@ -4,7 +4,8 @@ NHL Goal Predictor - Monte Carlo Simulation Engine (v2)
 Opponent-adjusted Poisson Monte Carlo model with Tim Hortons support.
 
 Key improvements over Neural Network v1:
-  1. Poisson-based Monte Carlo simulation (10,000 games per matchup)
+  1. Poisson team scoring split among players by weight; computed in closed
+     form, the exact limit of the original 10,000-game simulation
   2. Opponent-adjusted scoring (opposing team GA/game, goalie save%)
   3. Home/away advantage modeling (+3% home boost)
   4. Exponential-weighted recent form (last 10 games weighted 2x)
@@ -51,7 +52,6 @@ class Config:
     CURRENT_SEASON = current_season_id()
     PLAYOFFS = False              # set from today's schedule
 
-    NUM_SIMULATIONS = 10000
     LEAGUE_AVG_GOALS = 3.07       # 2024-25 NHL league average goals per team per game
     HOME_ADVANTAGE = 1.026        # Home teams score ~2.6% more
     MIN_GAMES_PLAYED = 3          # Minimum games for inclusion
@@ -65,7 +65,6 @@ os.makedirs(Config.TIMS_DIR, exist_ok=True)
 print("=" * 70)
 print(f"🏒 NHL GOAL PREDICTOR - {Config.MODEL_DISPLAY_NAME}")
 print(f"📅 Date: {Config.TODAY}")
-print(f"🎲 Simulations: {Config.NUM_SIMULATIONS:,}")
 print("=" * 70)
 
 # =============================================================================
@@ -356,14 +355,16 @@ def calculate_player_weights(players, team_stats):
     return np.array(weights)
 
 
-def run_monte_carlo(team_xg, player_weights, num_simulations):
+def scoring_probabilities(team_xg, player_weights):
     """
-    Monte Carlo simulation of goal scoring for one team in one game.
+    P(each player scores >= 1) for one team in one game.
 
-    For each simulation:
-      1. Draw total team goals from Poisson(team_xG)
-      2. For each goal, randomly assign to a player weighted by their goal share
-      3. Track which players scored at least once
+    The model: team goals ~ Poisson(team_xG), each goal assigned to a player
+    in proportion to their weight. That's what the 10,000-game simulation
+    used to sample; by Poisson thinning a player's goals are exactly
+    Poisson(team_xG * share), so P(>= 1) = 1 - exp(-team_xG * share). The
+    simulation only added +/-0.5pp noise, and its seed (hash() of the date)
+    changes per process, so reruns could reorder close players.
 
     Returns: array of probabilities (one per player)
     """
@@ -378,24 +379,7 @@ def run_monte_carlo(team_xg, player_weights, num_simulations):
     else:
         probs = player_weights / total_weight
 
-    # Track: how many simulations each player scored in
-    scored_count = np.zeros(n_players, dtype=np.int32)
-
-    # Draw all team goals at once for efficiency
-    team_goals_per_sim = np.random.poisson(team_xg, size=num_simulations)
-
-    for sim_idx in range(num_simulations):
-        n_goals = team_goals_per_sim[sim_idx]
-        if n_goals == 0:
-            continue
-
-        # Assign each goal to a player
-        scorers = np.random.choice(n_players, size=n_goals, p=probs)
-        unique_scorers = np.unique(scorers)
-        scored_count[unique_scorers] += 1
-
-    # Probability = fraction of simulations where player scored
-    return scored_count / num_simulations
+    return 1.0 - np.exp(-team_xg * probs)
 
 
 # =============================================================================
@@ -582,10 +566,8 @@ else:
     tims_player_ids = None
     print("   ℹ️ No Tim Hortons data — predicting all players")
 
-# Step 6: Run Monte Carlo simulation per game
-print(f"\n🎲 Running Monte Carlo simulations ({Config.NUM_SIMULATIONS:,} per game)...")
-
-np.random.seed(hash(Config.TODAY) % 2**31)  # Reproducible per day, varied across days
+# Step 6: Scoring probabilities per game
+print("\n🎲 Computing scoring probabilities per game...")
 
 # Group players by game
 games_players = {}
@@ -613,8 +595,7 @@ for (game_id, team), players in games_players.items():
     # Calculate player weights
     weights = calculate_player_weights(players, team_stats)
 
-    # Run simulation
-    probabilities = run_monte_carlo(team_xg, weights, Config.NUM_SIMULATIONS)
+    probabilities = scoring_probabilities(team_xg, weights)
 
     # Store results
     for i, p in enumerate(players):
@@ -645,7 +626,10 @@ for p in all_players:
         p['team_gf_per_game'] = Config.LEAGUE_AVG_GOALS
 
 # Sort by probability
-all_players.sort(key=lambda x: x['goal_probability'], reverse=True)
+# Ties (equal odds, capped scores) go to more season goals, then a fixed
+# id order, not to roster fetch order: a tie decides a group pick.
+all_players.sort(key=lambda x: (x['goal_probability'], x.get('season_goals', 0),
+                               -x['player_id']), reverse=True)
 
 # Add rank and hot indicator
 for i, p in enumerate(all_players):
@@ -694,7 +678,7 @@ output = {
     "tims_mode": tims_mode,
     "tims_group_rankings": tims_group_rankings if tims_mode else {},
     "simulation_params": {
-        "num_simulations": Config.NUM_SIMULATIONS,
+        "method": "exact Poisson thinning (no sampling)",
         "league_avg_goals": Config.LEAGUE_AVG_GOALS,
         "home_advantage": Config.HOME_ADVANTAGE,
         "recent_form_weight": Config.RECENT_FORM_WEIGHT,
@@ -736,5 +720,4 @@ else:
         print(f"{p['rank']:<4} {p['name']:<25} {p['team']:<5} {p['goal_probability']*100:>6.1f}% {p['season_goals']:>6} {p['last5_goals']:>4} {opp_ga:>5.1f} {hot}")
 
 print(f"\n✅ Total: {len(output_players)} players ranked")
-print(f"🎲 Simulations: {Config.NUM_SIMULATIONS:,} per game")
 print("\n🏒 Monte Carlo predictions complete!")

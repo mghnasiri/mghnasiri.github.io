@@ -539,7 +539,10 @@ def predict_today():
         }
         all_players.append(player)
 
-    all_players.sort(key=lambda x: x['goal_probability'], reverse=True)
+    # Ties (equal odds, capped scores) go to more season goals, then a fixed
+    # id order, not to roster fetch order: a tie decides a group pick.
+    all_players.sort(key=lambda x: (x['goal_probability'], x.get('season_goals', 0),
+                                   -x['player_id']), reverse=True)
     for i, p in enumerate(all_players):
         p['rank'] = i + 1
         p['is_hot'] = p.get('last5_goals', 0) >= 3 and last5_is_real(p)

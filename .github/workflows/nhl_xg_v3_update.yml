@@ -104,10 +104,8 @@ jobs:
         run: python scripts/xg_predict.py --lineup-adjusted
         continue-on-error: true
 
-      - name: Run Neural v1 predictions (MLP re-ranker on MC features)
-        working-directory: projects/nhl-hockey
-        run: python scripts/neural_predict.py
-        continue-on-error: true
+      # Neural v1 (scripts/neural_predict.py) was retired in 2026-10: lowest
+      # top-10 hit rate of 2025-26 (18.4%) and no model or message used it.
 
       - name: Run Neural v2 predictions (PyTorch MLP + player embeddings)
         working-directory: projects/nhl-hockey
@@ -190,11 +188,6 @@ jobs:
       - name: Train xG model
         working-directory: projects/nhl-hockey
         run: python scripts/train_xg_model.py
-
-      - name: Train Neural v1 model (MLP on prediction+results history)
-        working-directory: projects/nhl-hockey
-        run: python scripts/train_neural_model.py
-        continue-on-error: true
 
       - name: Regenerate per-player shot aggregations
         if: >-

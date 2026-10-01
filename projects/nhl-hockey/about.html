@@ -239,7 +239,7 @@
         </p>
 
         <p>
-            <strong>Monte Carlo v2</strong> simulates each game 10,000 times: Poisson-draw the team's goals, then assign each goal to a player weighted by season scoring rate raised to the 1.8 power. The exponent is the trick — it captures how much more disproportionately stars score than their averages alone suggest.
+            <strong>Monte Carlo v2</strong> models each game as a Poisson draw of the team's goals, each goal assigned to a player weighted by season scoring rate raised to the 1.8 power. The exponent is the trick — it captures how much more disproportionately stars score than their averages alone suggest.
         </p>
 
         <p>
@@ -251,7 +251,7 @@
         </p>
 
         <p>
-            <strong>Neural MLP v1</strong> is a small scikit-learn neural network that re-ranks the Monte Carlo output using player-level aggregate features. It learns where Monte Carlo is consistently too generous or too stingy.
+            <strong>Neural MLP v1</strong> is a small scikit-learn neural network that re-ranks the Monte Carlo output using player-level aggregate features. It learns where Monte Carlo is consistently too generous or too stingy. (Retired in October 2026 after the weakest record of the 2025-26 season.)
         </p>
 
         <p>

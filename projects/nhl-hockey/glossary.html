@@ -363,7 +363,7 @@
             <dd>The standard probabilistic loss function for binary classification: <code>−[y·log(p) + (1−y)·log(1−p)]</code> averaged over predictions. Heavily penalizes confident-but-wrong predictions (a 99% prediction that's wrong dominates the loss). Used as the LightGBM training objective in the Meta Ensemble.</dd>
 
             <dt>Monte Carlo simulation</dt>
-            <dd>Estimating a probability or distribution by running many random simulations and averaging the result. The Monte Carlo v2 model runs 10,000 simulated games per matchup; each simulation is a Poisson draw for total goals followed by weighted random assignment of each goal to a player. The probability output is just the fraction of sims in which the player scored.</dd>
+            <dd>Estimating a probability or distribution by running many random simulations and averaging the result. The Monte Carlo v2 model is built on this idea: a Poisson draw for total goals followed by weighted random assignment of each goal to a player. Since October 2026 it computes the exact limit of that simulation, <code>1 − e^(−λ · share)</code>, instead of sampling it.</dd>
 
             <dt>Poisson distribution</dt>
             <dd>The probability distribution of the count of independent rare events per fixed unit (e.g. goals per game). Parameterized by a single rate <code>λ</code>: <code>P(k events) = λ^k · e^(−λ) / k!</code>. The probability of zero events is <code>e^(−λ)</code>, so the probability of at least one is <code>1 − e^(−λ)</code> — the formula every xG-based model on this site uses to convert expected goals into a per-game probability.</dd>
