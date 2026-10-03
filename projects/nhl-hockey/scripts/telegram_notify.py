@@ -51,32 +51,84 @@ class Config:
 # =============================================================================
 # TELEGRAM API
 # =============================================================================
+RETIRED = {"neural_v1"}  # no longer run; kept out of the stats lines
+
+# Telegram rejects messages over 4096 characters ("message is too long");
+# the 2026-10-03 daily message, with 8 models graded, was refused outright.
+# Stay under it with room to spare (HTML tags count here, not there).
+MAX_MESSAGE_CHARS = 3800
+
+
+def _utf16_len(text):
+    return len(text.encode('utf-16-le')) // 2
+
+
+# On a line of its own between the message's sections (results / today's
+# picks): a message too long for one send is split there first.
+SECTION_BREAK = "\f"
+
+
+def split_message(text, limit=MAX_MESSAGE_CHARS):
+    """The whole message if it fits; else one part per section, and a
+    section still too long is split at blank lines, then at line breaks.
+    Every tag opens and closes on one line, so each part stays valid HTML."""
+    marker = f"\n{SECTION_BREAK}\n"
+    whole = text.replace(marker, "\n")
+    if _utf16_len(whole) <= limit:
+        return [whole]
+    parts = []
+    for section in text.split(marker):
+        parts.extend(_pack(section.strip("\n"), limit))
+    return parts
+
+
+def _pack(text, limit):
+    """Greedily pack blank-line blocks (or lines, for an oversize block)
+    into parts under `limit`."""
+    parts, current = [], ""
+    for block in text.split("\n\n"):
+        pieces = [block] if _utf16_len(block) <= limit else block.split("\n")
+        sep = "\n\n" if len(pieces) == 1 else "\n"
+        for piece in pieces:
+            candidate = f"{current}{sep}{piece}" if current else piece
+            if _utf16_len(candidate) <= limit:
+                current = candidate
+            else:
+                parts.append(current)
+                current = piece
+    if current:
+        parts.append(current)
+    return parts
+
+
 def send_message(text, parse_mode='HTML'):
-    """Send a message via Telegram Bot API"""
+    """Send a message via Telegram Bot API, split into several if too long.
+    True only if every part was sent."""
     if not Config.BOT_TOKEN or not Config.CHAT_ID:
         print("  Telegram credentials not set. Set TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID")
         print(f"Message preview:\n{text}")
         return False
 
     url = f"{Config.TELEGRAM_API}/sendMessage"
-    payload = {
-        'chat_id': Config.CHAT_ID,
-        'text': text,
-        'parse_mode': parse_mode,
-        'disable_web_page_preview': True,
-    }
-
-    try:
-        resp = requests.post(url, json=payload, timeout=10)
-        if resp.status_code == 200:
-            print("  Telegram message sent successfully")
-            return True
-        else:
-            print(f"  Telegram API error: {resp.status_code} - {resp.text}")
+    parts = split_message(text)
+    for i, part in enumerate(parts, 1):
+        payload = {
+            'chat_id': Config.CHAT_ID,
+            'text': part,
+            'parse_mode': parse_mode,
+            'disable_web_page_preview': True,
+        }
+        try:
+            resp = requests.post(url, json=payload, timeout=10)
+        except Exception as e:
+            print(f"  Failed to send Telegram message part {i}/{len(parts)}: {e}")
             return False
-    except Exception as e:
-        print(f"  Failed to send Telegram message: {e}")
-        return False
+        if resp.status_code != 200:
+            print(f"  Telegram API error on part {i}/{len(parts)}: "
+                  f"{resp.status_code} - {resp.text}")
+            return False
+    print(f"  Telegram message sent successfully ({len(parts)} part(s))")
+    return True
 
 
 def load_json(filepath):
@@ -108,6 +160,7 @@ def build_daily_message():
 
     # ── Section 1: Yesterday's Results (optional) ──
     results_added = add_results_section(lines)
+    lines.append(SECTION_BREAK)
 
     # ── Section 2: Today's Predictions ──
     predictions_added = add_predictions_section(lines)
@@ -187,6 +240,8 @@ def add_results_section(lines):
         lines.append("")
         lines.append("  📈  <b>Season Stats</b>")
         for model_name, model_data in stats['models'].items():
+            if model_name in RETIRED:
+                continue
             overall_rate = model_data.get('hit_rate', 0)
             total_days = model_data.get('total_days', 0)
             total_hits = model_data.get('total_hits', 0)
@@ -363,9 +418,11 @@ def main():
     print("=" * 50)
 
     if mode in ("daily", "predictions", "both"):
-        # Single combined message: results + predictions
+        # Single combined message: results + predictions. Fail the step when
+        # it doesn't go out, so the workflow's failure alert fires.
         msg = build_daily_message()
-        send_message(msg)
+        if not send_message(msg):
+            return 1
 
     elif mode == "test":
         # Send a test message to verify connection
@@ -393,4 +450,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

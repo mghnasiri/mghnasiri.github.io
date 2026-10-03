@@ -91,13 +91,14 @@ jobs:
           done
           [ "$pushed" = 1 ] || { echo "::error::Push failed after 3 attempts; today's output was not saved"; exit 1; }
 
+      # No continue-on-error: an unsent message (2026-10-03: "message is too
+      # long") must fail the run so the alert below fires.
       - name: Send Telegram daily message
         working-directory: projects/nhl-hockey
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python scripts/telegram_notify.py daily
-        continue-on-error: true
 
       # Alert within minutes instead of waiting for the daily health check.
       - name: Alert on failure
