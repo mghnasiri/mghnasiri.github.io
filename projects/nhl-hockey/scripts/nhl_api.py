@@ -5,8 +5,12 @@ api-web throttles bursts (429). Each script used to carry its own copy of
 api_get that retried a URL on its own clock and gave up after ~3s, so
 during a throttle window one player's fetch after another failed and those
 players silently left the slate (a 2026-09-30 test run kept 15 of PIT's
-24 skaters). Here a 429 holds back every later call until the server's
-Retry-After has passed, and connections are reused.
+24 skaters). Here a 429 holds back every later call until the block has
+passed, and connections are reused.
+
+Once a burst trips the limit, api-web blocks for about a minute (2026-10-03
+CI: 60-65s blocks after every ~50-170 calls), so a 429 backs off 15, 30,
+then 60s: ~105s in all, past one block.
 """
 
 import time
@@ -19,12 +23,13 @@ MAX_WAIT = 60     # cap on a single Retry-After / backoff sleep (seconds)
 
 
 def _retry_after(resp, attempt):
-    """Seconds to back off after a 429: the server's Retry-After when it
-    gives a number, else exponential (2, 4, 8, ...)."""
+    """Seconds to back off after a 429: 15, 30, 60, ..., or the server's
+    Retry-After if that is longer."""
+    wait = min(15 * 2 ** attempt, MAX_WAIT)
     try:
-        return min(float(resp.headers.get("Retry-After", "")), MAX_WAIT)
+        return max(wait, min(float(resp.headers.get("Retry-After", "")), MAX_WAIT))
     except ValueError:
-        return min(2 ** (attempt + 1), MAX_WAIT)
+        return wait
 
 
 def api_get(url, timeout=15, attempts=4):
