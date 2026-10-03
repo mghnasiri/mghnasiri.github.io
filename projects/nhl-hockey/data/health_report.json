@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-10-02T16:52:37.631329",
-  "today": "2026-10-02",
-  "real_games_today": 5,
+  "generated_at": "2026-10-03T15:20:26.556717",
+  "today": "2026-10-03",
+  "real_games_today": 13,
   "thresholds": {
     "min_team_coverage": 0.6,
     "min_predictions_if_games": 5,
@@ -11,19 +11,19 @@
   },
   "models": {
     "lineup_v1": {
-      "status": "ok",
+      "status": "fail",
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-10-02"
+          "date=2026-10-03"
         ],
         "team_coverage": [
-          "ok",
-          "100.0% team coverage (10 pred teams vs 10 game teams)"
+          "fail",
+          "only 53.8% of game teams covered (missing ['BUF', 'DAL', 'LAK', 'MIN', 'NJD', 'NSH', 'NYI', 'PHI', 'PIT', 'SEA', 'SJS', 'STL'])"
         ],
         "player_count": [
           "ok",
-          "44 predictions for 5 games"
+          "45 predictions for 13 games"
         ],
         "no_saturation": [
           "ok",
@@ -35,48 +35,7 @@
         ],
         "prob_max_sane": [
           "ok",
-          "top prob = 0.334"
-        ],
-        "no_flat_ties": [
-          "ok",
-          "max tie size = 1"
-        ],
-        "odds_credits": [
-          "ok",
-          "n/a"
-        ],
-        "scheduled_games": [
-          "ok",
-          "5 games scheduled, 44 predictions"
-        ]
-      }
-    },
-    "market_odds": {
-      "status": "ok",
-      "checks": {
-        "freshness": [
-          "ok",
-          "date=2026-10-02"
-        ],
-        "team_coverage": [
-          "ok",
-          "100.0% team coverage (8 pred teams vs 8 game teams)"
-        ],
-        "player_count": [
-          "ok",
-          "34 predictions for 4 games"
-        ],
-        "no_saturation": [
-          "ok",
-          "no saturated probabilities"
-        ],
-        "no_zero": [
-          "ok",
-          "no zero probabilities"
-        ],
-        "prob_max_sane": [
-          "ok",
-          "top prob = 0.352"
+          "top prob = 0.321"
         ],
         "no_flat_ties": [
           "ok",
@@ -84,28 +43,28 @@
         ],
         "odds_credits": [
           "ok",
-          "476 credits left"
+          "n/a"
         ],
         "scheduled_games": [
           "ok",
-          "5 games scheduled, 34 predictions"
+          "13 games scheduled, 45 predictions"
         ]
       }
     },
-    "meta_ensemble": {
-      "status": "ok",
+    "market_odds": {
+      "status": "fail",
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-10-02"
+          "date=2026-10-03"
         ],
         "team_coverage": [
-          "ok",
-          "100.0% team coverage (10 pred teams vs 10 game teams)"
+          "fail",
+          "only 54.2% of game teams covered (missing ['(11 teams short)'])"
         ],
         "player_count": [
           "ok",
-          "44 predictions for 5 games"
+          "44 predictions for 12 games"
         ],
         "no_saturation": [
           "ok",
@@ -117,11 +76,52 @@
         ],
         "prob_max_sane": [
           "ok",
-          "top prob = 0.333 (model exempt \u2014 A/B control)"
+          "top prob = 0.373"
         ],
         "no_flat_ties": [
           "ok",
-          "max tie size = 4"
+          "max tie size = 1"
+        ],
+        "odds_credits": [
+          "warn",
+          "452 credits left; ~672 needed for the rest of the month at today's slate size"
+        ],
+        "scheduled_games": [
+          "ok",
+          "13 games scheduled, 44 predictions"
+        ]
+      }
+    },
+    "meta_ensemble": {
+      "status": "fail",
+      "checks": {
+        "freshness": [
+          "ok",
+          "date=2026-10-03"
+        ],
+        "team_coverage": [
+          "fail",
+          "only 53.8% of game teams covered (missing ['BUF', 'DAL', 'LAK', 'MIN', 'NJD', 'NSH', 'NYI', 'PHI', 'PIT', 'SEA', 'SJS', 'STL'])"
+        ],
+        "player_count": [
+          "ok",
+          "45 predictions for 13 games"
+        ],
+        "no_saturation": [
+          "ok",
+          "no saturated probabilities"
+        ],
+        "no_zero": [
+          "ok",
+          "no zero probabilities"
+        ],
+        "prob_max_sane": [
+          "ok",
+          "top prob = 0.270 (model exempt \u2014 A/B control)"
+        ],
+        "no_flat_ties": [
+          "ok",
+          "max tie size = 2"
         ],
         "odds_credits": [
           "ok",
@@ -129,24 +129,24 @@
         ],
         "scheduled_games": [
           "ok",
-          "5 games scheduled, 44 predictions"
+          "13 games scheduled, 45 predictions"
         ]
       }
     },
     "monte_carlo": {
-      "status": "warn",
+      "status": "fail",
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-10-02"
+          "date=2026-10-03"
         ],
         "team_coverage": [
-          "ok",
-          "100.0% team coverage (10 pred teams vs 10 game teams)"
+          "fail",
+          "only 53.8% of game teams covered (missing ['BUF', 'DAL', 'LAK', 'MIN', 'NJD', 'NSH', 'NYI', 'PHI', 'PIT', 'SEA', 'SJS', 'STL'])"
         ],
         "player_count": [
           "ok",
-          "44 predictions for 5 games"
+          "45 predictions for 13 games"
         ],
         "no_saturation": [
           "ok",
@@ -158,11 +158,11 @@
         ],
         "prob_max_sane": [
           "warn",
-          "top prob = 0.611 (high but plausible)"
+          "top prob = 0.622 (high but plausible)"
         ],
         "no_flat_ties": [
           "ok",
-          "max tie size = 1"
+          "max tie size = 2"
         ],
         "odds_credits": [
           "ok",
@@ -170,24 +170,24 @@
         ],
         "scheduled_games": [
           "ok",
-          "5 games scheduled, 44 predictions"
+          "13 games scheduled, 45 predictions"
         ]
       }
     },
     "neural_network": {
-      "status": "ok",
+      "status": "fail",
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-10-02"
+          "date=2026-10-03"
         ],
         "team_coverage": [
-          "ok",
-          "100.0% team coverage (10 pred teams vs 10 game teams)"
+          "fail",
+          "only 53.8% of game teams covered (missing ['BUF', 'DAL', 'LAK', 'MIN', 'NJD', 'NSH', 'NYI', 'PHI', 'PIT', 'SEA', 'SJS', 'STL'])"
         ],
         "player_count": [
           "ok",
-          "44 predictions for 5 games"
+          "45 predictions for 13 games"
         ],
         "no_saturation": [
           "ok",
@@ -199,7 +199,7 @@
         ],
         "prob_max_sane": [
           "ok",
-          "top prob = 0.550"
+          "top prob = 0.439"
         ],
         "no_flat_ties": [
           "ok",
@@ -211,24 +211,24 @@
         ],
         "scheduled_games": [
           "ok",
-          "5 games scheduled, 44 predictions"
+          "13 games scheduled, 45 predictions"
         ]
       }
     },
     "neural_v2": {
-      "status": "ok",
+      "status": "fail",
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-10-02"
+          "date=2026-10-03"
         ],
         "team_coverage": [
-          "ok",
-          "100.0% team coverage (10 pred teams vs 10 game teams)"
+          "fail",
+          "only 53.8% of game teams covered (missing ['BUF', 'DAL', 'LAK', 'MIN', 'NJD', 'NSH', 'NYI', 'PHI', 'PIT', 'SEA', 'SJS', 'STL'])"
         ],
         "player_count": [
           "ok",
-          "44 predictions for 5 games"
+          "45 predictions for 13 games"
         ],
         "no_saturation": [
           "ok",
@@ -240,7 +240,89 @@
         ],
         "prob_max_sane": [
           "ok",
-          "top prob = 0.358"
+          "top prob = 0.387"
+        ],
+        "no_flat_ties": [
+          "ok",
+          "max tie size = 1"
+        ],
+        "odds_credits": [
+          "ok",
+          "n/a"
+        ],
+        "scheduled_games": [
+          "ok",
+          "13 games scheduled, 45 predictions"
+        ]
+      }
+    },
+    "xg_v3": {
+      "status": "fail",
+      "checks": {
+        "freshness": [
+          "ok",
+          "date=2026-10-03"
+        ],
+        "team_coverage": [
+          "fail",
+          "only 53.8% of game teams covered (missing ['BUF', 'DAL', 'LAK', 'MIN', 'NJD', 'NSH', 'NYI', 'PHI', 'PIT', 'SEA', 'SJS', 'STL'])"
+        ],
+        "player_count": [
+          "ok",
+          "45 predictions for 13 games"
+        ],
+        "no_saturation": [
+          "ok",
+          "no saturated probabilities"
+        ],
+        "no_zero": [
+          "ok",
+          "no zero probabilities"
+        ],
+        "prob_max_sane": [
+          "ok",
+          "top prob = 0.320"
+        ],
+        "no_flat_ties": [
+          "ok",
+          "max tie size = 1"
+        ],
+        "odds_credits": [
+          "ok",
+          "n/a"
+        ],
+        "scheduled_games": [
+          "ok",
+          "13 games scheduled, 45 predictions"
+        ]
+      }
+    },
+    "xg_v3_synthetic": {
+      "status": "fail",
+      "checks": {
+        "freshness": [
+          "ok",
+          "date=2026-10-03"
+        ],
+        "team_coverage": [
+          "fail",
+          "only 53.8% of game teams covered (missing ['BUF', 'DAL', 'LAK', 'MIN', 'NJD', 'NSH', 'NYI', 'PHI', 'PIT', 'SEA', 'SJS', 'STL'])"
+        ],
+        "player_count": [
+          "ok",
+          "45 predictions for 13 games"
+        ],
+        "no_saturation": [
+          "ok",
+          "no saturated probabilities"
+        ],
+        "no_zero": [
+          "ok",
+          "no zero probabilities"
+        ],
+        "prob_max_sane": [
+          "ok",
+          "top prob = 0.586 (model exempt \u2014 A/B control)"
         ],
         "no_flat_ties": [
           "ok",
@@ -252,89 +334,7 @@
         ],
         "scheduled_games": [
           "ok",
-          "5 games scheduled, 44 predictions"
-        ]
-      }
-    },
-    "xg_v3": {
-      "status": "ok",
-      "checks": {
-        "freshness": [
-          "ok",
-          "date=2026-10-02"
-        ],
-        "team_coverage": [
-          "ok",
-          "100.0% team coverage (10 pred teams vs 10 game teams)"
-        ],
-        "player_count": [
-          "ok",
-          "44 predictions for 5 games"
-        ],
-        "no_saturation": [
-          "ok",
-          "no saturated probabilities"
-        ],
-        "no_zero": [
-          "ok",
-          "no zero probabilities"
-        ],
-        "prob_max_sane": [
-          "ok",
-          "top prob = 0.334"
-        ],
-        "no_flat_ties": [
-          "ok",
-          "max tie size = 1"
-        ],
-        "odds_credits": [
-          "ok",
-          "n/a"
-        ],
-        "scheduled_games": [
-          "ok",
-          "5 games scheduled, 44 predictions"
-        ]
-      }
-    },
-    "xg_v3_synthetic": {
-      "status": "ok",
-      "checks": {
-        "freshness": [
-          "ok",
-          "date=2026-10-02"
-        ],
-        "team_coverage": [
-          "ok",
-          "100.0% team coverage (10 pred teams vs 10 game teams)"
-        ],
-        "player_count": [
-          "ok",
-          "44 predictions for 5 games"
-        ],
-        "no_saturation": [
-          "ok",
-          "no saturated probabilities"
-        ],
-        "no_zero": [
-          "ok",
-          "no zero probabilities"
-        ],
-        "prob_max_sane": [
-          "ok",
-          "top prob = 0.635 (model exempt \u2014 A/B control)"
-        ],
-        "no_flat_ties": [
-          "ok",
-          "max tie size = 1"
-        ],
-        "odds_credits": [
-          "ok",
-          "n/a"
-        ],
-        "scheduled_games": [
-          "ok",
-          "5 games scheduled, 44 predictions"
+          "13 games scheduled, 45 predictions"
         ]
       }
     }
