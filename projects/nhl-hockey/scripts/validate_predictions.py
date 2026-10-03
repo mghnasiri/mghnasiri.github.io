@@ -130,11 +130,30 @@ def check_freshness(data, today):
     return "fail", f"date={pred_date} (expected {today}) — workflow may have failed"
 
 
+def tims_pool_teams(date):
+    """Teams in that day's Tim Hortons player pool, or None if unknown."""
+    pool = load_json(f"data/tims_players/{date}.json") or {}
+    teams = {p.get("team") for players in (pool.get("groups") or {}).values()
+             for p in players if isinstance(p, dict) and p.get("team")}
+    return teams or None
+
+
 def check_team_coverage(data):
     games = data.get("games", [])
     preds = data.get("predictions", [])
     if not games:
         return "ok", "no games today"
+    # In Tims mode a model predicts only the app's player pool, which on a
+    # big slate spans about half the teams playing (2026-10-03: 14 of 26),
+    # so measure it against the pool's teams instead.
+    pool_teams = tims_pool_teams(data.get("date")) if data.get("tims_mode") else None
+    if pool_teams:
+        covered = {p.get("team") for p in preds} & pool_teams
+        pct = round(len(covered) / len(pool_teams) * 100, 1)
+        if len(covered) / len(pool_teams) >= MIN_TEAM_COVERAGE:
+            return "ok", f"{pct}% of the Tims pool's {len(pool_teams)} teams covered"
+        return "fail", (f"only {pct}% of the Tims pool's teams covered "
+                        f"(missing {sorted(pool_teams - covered)})")
     # Some models (market_odds) store full team names in games[] (from the
     # Odds API) while predictions[] uses NHL abbreviations. Compare via a
     # match if EITHER full names or abbreviations cover game teams.
