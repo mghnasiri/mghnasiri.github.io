@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-03T15:20:26.556717",
+  "generated_at": "2026-10-03T15:50:02.940638",
   "today": "2026-10-03",
   "real_games_today": 13,
   "thresholds": {
@@ -11,15 +11,15 @@
   },
   "models": {
     "lineup_v1": {
-      "status": "fail",
+      "status": "ok",
       "checks": {
         "freshness": [
           "ok",
           "date=2026-10-03"
         ],
         "team_coverage": [
-          "fail",
-          "only 53.8% of game teams covered (missing ['BUF', 'DAL', 'LAK', 'MIN', 'NJD', 'NSH', 'NYI', 'PHI', 'PIT', 'SEA', 'SJS', 'STL'])"
+          "ok",
+          "100.0% of the Tims pool's 14 teams covered"
         ],
         "player_count": [
           "ok",
@@ -52,15 +52,15 @@
       }
     },
     "market_odds": {
-      "status": "fail",
+      "status": "warn",
       "checks": {
         "freshness": [
           "ok",
           "date=2026-10-03"
         ],
         "team_coverage": [
-          "fail",
-          "only 54.2% of game teams covered (missing ['(11 teams short)'])"
+          "ok",
+          "92.9% of the Tims pool's 14 teams covered"
         ],
         "player_count": [
           "ok",
@@ -93,15 +93,15 @@
       }
     },
     "meta_ensemble": {
-      "status": "fail",
+      "status": "ok",
       "checks": {
         "freshness": [
           "ok",
           "date=2026-10-03"
         ],
         "team_coverage": [
-          "fail",
-          "only 53.8% of game teams covered (missing ['BUF', 'DAL', 'LAK', 'MIN', 'NJD', 'NSH', 'NYI', 'PHI', 'PIT', 'SEA', 'SJS', 'STL'])"
+          "ok",
+          "100.0% of the Tims pool's 14 teams covered"
         ],
         "player_count": [
           "ok",
@@ -134,15 +134,15 @@
       }
     },
     "monte_carlo": {
-      "status": "fail",
+      "status": "warn",
       "checks": {
         "freshness": [
           "ok",
           "date=2026-10-03"
         ],
         "team_coverage": [
-          "fail",
-          "only 53.8% of game teams covered (missing ['BUF', 'DAL', 'LAK', 'MIN', 'NJD', 'NSH', 'NYI', 'PHI', 'PIT', 'SEA', 'SJS', 'STL'])"
+          "ok",
+          "100.0% of the Tims pool's 14 teams covered"
         ],
         "player_count": [
           "ok",
@@ -175,15 +175,15 @@
       }
     },
     "neural_network": {
-      "status": "fail",
+      "status": "ok",
       "checks": {
         "freshness": [
           "ok",
           "date=2026-10-03"
         ],
         "team_coverage": [
-          "fail",
-          "only 53.8% of game teams covered (missing ['BUF', 'DAL', 'LAK', 'MIN', 'NJD', 'NSH', 'NYI', 'PHI', 'PIT', 'SEA', 'SJS', 'STL'])"
+          "ok",
+          "100.0% of the Tims pool's 14 teams covered"
         ],
         "player_count": [
           "ok",
@@ -216,15 +216,15 @@
       }
     },
     "neural_v2": {
-      "status": "fail",
+      "status": "ok",
       "checks": {
         "freshness": [
           "ok",
           "date=2026-10-03"
         ],
         "team_coverage": [
-          "fail",
-          "only 53.8% of game teams covered (missing ['BUF', 'DAL', 'LAK', 'MIN', 'NJD', 'NSH', 'NYI', 'PHI', 'PIT', 'SEA', 'SJS', 'STL'])"
+          "ok",
+          "100.0% of the Tims pool's 14 teams covered"
         ],
         "player_count": [
           "ok",
@@ -257,15 +257,15 @@
       }
     },
     "xg_v3": {
-      "status": "fail",
+      "status": "ok",
       "checks": {
         "freshness": [
           "ok",
           "date=2026-10-03"
         ],
         "team_coverage": [
-          "fail",
-          "only 53.8% of game teams covered (missing ['BUF', 'DAL', 'LAK', 'MIN', 'NJD', 'NSH', 'NYI', 'PHI', 'PIT', 'SEA', 'SJS', 'STL'])"
+          "ok",
+          "100.0% of the Tims pool's 14 teams covered"
         ],
         "player_count": [
           "ok",
@@ -298,15 +298,15 @@
       }
     },
     "xg_v3_synthetic": {
-      "status": "fail",
+      "status": "ok",
       "checks": {
         "freshness": [
           "ok",
           "date=2026-10-03"
         ],
         "team_coverage": [
-          "fail",
-          "only 53.8% of game teams covered (missing ['BUF', 'DAL', 'LAK', 'MIN', 'NJD', 'NSH', 'NYI', 'PHI', 'PIT', 'SEA', 'SJS', 'STL'])"
+          "ok",
+          "100.0% of the Tims pool's 14 teams covered"
         ],
         "player_count": [
           "ok",
