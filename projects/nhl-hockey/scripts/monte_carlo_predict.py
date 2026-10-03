@@ -58,6 +58,13 @@ class Config:
     RECENT_GAMES_WINDOW = 10      # Recent form window
     RECENT_FORM_WEIGHT = 0.40     # Weight of recent form vs season avg
     PP_BONUS_FACTOR = 0.08        # Power play bonus weight
+    # P(goal) = 1 - exp(-A * lambda^B), fitted on 3,937 graded 2026 player-
+    # games: the raw 1 - exp(-lambda) spreads too wide (its 42% picks scored
+    # 27%, its 0.4% picks 4.8%; rate^1.8 weights over-favour stars). Fit on
+    # the first half, the second half's log loss fell 0.426 -> 0.390 and its
+    # mean matched (14.1% vs 13.9% actual). Monotone, so no pick changes.
+    CALIBRATION_A = 0.41
+    CALIBRATION_B = 0.41
 
 os.makedirs(Config.PREDICTIONS_DIR, exist_ok=True)
 os.makedirs(Config.TIMS_DIR, exist_ok=True)
@@ -366,11 +373,12 @@ def scoring_probabilities(team_xg, player_weights):
     simulation only added +/-0.5pp noise, and its seed (hash() of the date)
     changes per process, so reruns could reorder close players.
 
-    Returns: array of probabilities (one per player)
+    Returns: (calibrated, raw) probability arrays, one entry per player;
+    raw is the pre-calibration scale Meta was trained on.
     """
     n_players = len(player_weights)
     if n_players == 0:
-        return np.array([])
+        return np.array([]), np.array([])
 
     # Normalize weights to probabilities
     total_weight = player_weights.sum()
@@ -379,7 +387,9 @@ def scoring_probabilities(team_xg, player_weights):
     else:
         probs = player_weights / total_weight
 
-    return 1.0 - np.exp(-team_xg * probs)
+    lam = team_xg * probs
+    calibrated = 1.0 - np.exp(-Config.CALIBRATION_A * lam ** Config.CALIBRATION_B)
+    return calibrated, 1.0 - np.exp(-lam)
 
 
 # =============================================================================
@@ -595,11 +605,12 @@ for (game_id, team), players in games_players.items():
     # Calculate player weights
     weights = calculate_player_weights(players, team_stats)
 
-    probabilities = scoring_probabilities(team_xg, weights)
+    probabilities, raw_probabilities = scoring_probabilities(team_xg, weights)
 
     # Store results
     for i, p in enumerate(players):
-        player_probabilities[p['player_id']] = round(float(probabilities[i]), 4)
+        player_probabilities[p['player_id']] = (round(float(probabilities[i]), 4),
+                                                round(float(raw_probabilities[i]), 4))
 
     matchup_str = f"{team} vs {opponent}" if is_home else f"{team} @ {opponent}"
     top_prob = max(probabilities) if len(probabilities) > 0 else 0
@@ -609,7 +620,9 @@ for (game_id, team), players in games_players.items():
 print("\n📊 Ranking players...")
 
 for p in all_players:
-    p['goal_probability'] = player_probabilities.get(p['player_id'], 0.0)
+    # raw_goal_probability: Meta's input scale (meta_predict.py)
+    p['goal_probability'], p['raw_goal_probability'] = \
+        player_probabilities.get(p['player_id'], (0.0, 0.0))
 
     # Add opponent context
     opp = p.get('opponent', '')
@@ -679,6 +692,7 @@ output = {
     "tims_group_rankings": tims_group_rankings if tims_mode else {},
     "simulation_params": {
         "method": "exact Poisson thinning (no sampling)",
+        "calibration": {"a": Config.CALIBRATION_A, "b": Config.CALIBRATION_B},
         "league_avg_goals": Config.LEAGUE_AVG_GOALS,
         "home_advantage": Config.HOME_ADVANTAGE,
         "recent_form_weight": Config.RECENT_FORM_WEIGHT,
