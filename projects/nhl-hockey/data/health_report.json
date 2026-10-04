@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-10-03T15:50:02.940638",
-  "today": "2026-10-03",
-  "real_games_today": 13,
+  "generated_at": "2026-10-04T15:45:36.687628",
+  "today": "2026-10-04",
+  "real_games_today": 5,
   "thresholds": {
     "min_team_coverage": 0.6,
     "min_predictions_if_games": 5,
@@ -15,15 +15,15 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-10-03"
+          "date=2026-10-04"
         ],
         "team_coverage": [
           "ok",
-          "100.0% of the Tims pool's 14 teams covered"
+          "100.0% of the Tims pool's 8 teams covered"
         ],
         "player_count": [
           "ok",
-          "45 predictions for 13 games"
+          "42 predictions for 5 games"
         ],
         "no_saturation": [
           "ok",
@@ -35,11 +35,11 @@
         ],
         "prob_max_sane": [
           "ok",
-          "top prob = 0.321"
+          "top prob = 0.392"
         ],
         "no_flat_ties": [
           "ok",
-          "max tie size = 2"
+          "max tie size = 1"
         ],
         "odds_credits": [
           "ok",
@@ -47,24 +47,24 @@
         ],
         "scheduled_games": [
           "ok",
-          "13 games scheduled, 45 predictions"
+          "5 games scheduled, 42 predictions"
         ]
       }
     },
     "market_odds": {
-      "status": "warn",
+      "status": "ok",
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-10-03"
+          "date=2026-10-04"
         ],
         "team_coverage": [
           "ok",
-          "92.9% of the Tims pool's 14 teams covered"
+          "100.0% of the Tims pool's 8 teams covered"
         ],
         "player_count": [
           "ok",
-          "44 predictions for 12 games"
+          "44 predictions for 5 games"
         ],
         "no_saturation": [
           "ok",
@@ -76,19 +76,19 @@
         ],
         "prob_max_sane": [
           "ok",
-          "top prob = 0.373"
+          "top prob = 0.388"
         ],
         "no_flat_ties": [
           "ok",
           "max tie size = 1"
         ],
         "odds_credits": [
-          "warn",
-          "452 credits left; ~672 needed for the rest of the month at today's slate size"
+          "ok",
+          "442 credits left"
         ],
         "scheduled_games": [
           "ok",
-          "13 games scheduled, 44 predictions"
+          "5 games scheduled, 44 predictions"
         ]
       }
     },
@@ -97,15 +97,15 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-10-03"
+          "date=2026-10-04"
         ],
         "team_coverage": [
           "ok",
-          "100.0% of the Tims pool's 14 teams covered"
+          "100.0% of the Tims pool's 8 teams covered"
         ],
         "player_count": [
           "ok",
-          "45 predictions for 13 games"
+          "42 predictions for 5 games"
         ],
         "no_saturation": [
           "ok",
@@ -117,7 +117,7 @@
         ],
         "prob_max_sane": [
           "ok",
-          "top prob = 0.270 (model exempt \u2014 A/B control)"
+          "top prob = 0.341 (model exempt \u2014 A/B control)"
         ],
         "no_flat_ties": [
           "ok",
@@ -129,24 +129,24 @@
         ],
         "scheduled_games": [
           "ok",
-          "13 games scheduled, 45 predictions"
+          "5 games scheduled, 42 predictions"
         ]
       }
     },
     "monte_carlo": {
-      "status": "warn",
+      "status": "ok",
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-10-03"
+          "date=2026-10-04"
         ],
         "team_coverage": [
           "ok",
-          "100.0% of the Tims pool's 14 teams covered"
+          "100.0% of the Tims pool's 8 teams covered"
         ],
         "player_count": [
           "ok",
-          "45 predictions for 13 games"
+          "42 predictions for 5 games"
         ],
         "no_saturation": [
           "ok",
@@ -157,12 +157,12 @@
           "no zero probabilities"
         ],
         "prob_max_sane": [
-          "warn",
-          "top prob = 0.622 (high but plausible)"
+          "ok",
+          "top prob = 0.324"
         ],
         "no_flat_ties": [
           "ok",
-          "max tie size = 2"
+          "max tie size = 1"
         ],
         "odds_credits": [
           "ok",
@@ -170,7 +170,7 @@
         ],
         "scheduled_games": [
           "ok",
-          "13 games scheduled, 45 predictions"
+          "5 games scheduled, 42 predictions"
         ]
       }
     },
@@ -179,15 +179,15 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-10-03"
+          "date=2026-10-04"
         ],
         "team_coverage": [
           "ok",
-          "100.0% of the Tims pool's 14 teams covered"
+          "100.0% of the Tims pool's 8 teams covered"
         ],
         "player_count": [
           "ok",
-          "45 predictions for 13 games"
+          "42 predictions for 5 games"
         ],
         "no_saturation": [
           "ok",
@@ -199,11 +199,11 @@
         ],
         "prob_max_sane": [
           "ok",
-          "top prob = 0.439"
+          "top prob = 0.550"
         ],
         "no_flat_ties": [
           "ok",
-          "max tie size = 2"
+          "max tie size = 1"
         ],
         "odds_credits": [
           "ok",
@@ -211,7 +211,7 @@
         ],
         "scheduled_games": [
           "ok",
-          "13 games scheduled, 45 predictions"
+          "5 games scheduled, 42 predictions"
         ]
       }
     },
@@ -220,15 +220,15 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-10-03"
+          "date=2026-10-04"
         ],
         "team_coverage": [
           "ok",
-          "100.0% of the Tims pool's 14 teams covered"
+          "100.0% of the Tims pool's 8 teams covered"
         ],
         "player_count": [
           "ok",
-          "45 predictions for 13 games"
+          "42 predictions for 5 games"
         ],
         "no_saturation": [
           "ok",
@@ -240,7 +240,7 @@
         ],
         "prob_max_sane": [
           "ok",
-          "top prob = 0.387"
+          "top prob = 0.428"
         ],
         "no_flat_ties": [
           "ok",
@@ -252,7 +252,7 @@
         ],
         "scheduled_games": [
           "ok",
-          "13 games scheduled, 45 predictions"
+          "5 games scheduled, 42 predictions"
         ]
       }
     },
@@ -261,15 +261,15 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-10-03"
+          "date=2026-10-04"
         ],
         "team_coverage": [
           "ok",
-          "100.0% of the Tims pool's 14 teams covered"
+          "100.0% of the Tims pool's 8 teams covered"
         ],
         "player_count": [
           "ok",
-          "45 predictions for 13 games"
+          "42 predictions for 5 games"
         ],
         "no_saturation": [
           "ok",
@@ -281,7 +281,7 @@
         ],
         "prob_max_sane": [
           "ok",
-          "top prob = 0.320"
+          "top prob = 0.394"
         ],
         "no_flat_ties": [
           "ok",
@@ -293,7 +293,7 @@
         ],
         "scheduled_games": [
           "ok",
-          "13 games scheduled, 45 predictions"
+          "5 games scheduled, 42 predictions"
         ]
       }
     },
@@ -302,15 +302,15 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-10-03"
+          "date=2026-10-04"
         ],
         "team_coverage": [
           "ok",
-          "100.0% of the Tims pool's 14 teams covered"
+          "100.0% of the Tims pool's 8 teams covered"
         ],
         "player_count": [
           "ok",
-          "45 predictions for 13 games"
+          "42 predictions for 5 games"
         ],
         "no_saturation": [
           "ok",
@@ -322,11 +322,11 @@
         ],
         "prob_max_sane": [
           "ok",
-          "top prob = 0.586 (model exempt \u2014 A/B control)"
+          "top prob = 0.612 (model exempt \u2014 A/B control)"
         ],
         "no_flat_ties": [
           "ok",
-          "max tie size = 2"
+          "max tie size = 1"
         ],
         "odds_credits": [
           "ok",
@@ -334,7 +334,7 @@
         ],
         "scheduled_games": [
           "ok",
-          "13 games scheduled, 45 predictions"
+          "5 games scheduled, 42 predictions"
         ]
       }
     }
