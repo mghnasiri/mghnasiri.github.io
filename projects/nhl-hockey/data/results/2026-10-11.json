@@ -1,0 +1,899 @@
+{
+  "date": "2026-10-11",
+  "games_count": 3,
+  "final_games": 3,
+  "partial": false,
+  "games": [
+    {
+      "game_id": 2026020084,
+      "home_team": "WSH",
+      "away_team": "SEA",
+      "game_state": "OFF",
+      "schedule_state": "OK"
+    },
+    {
+      "game_id": 2026020085,
+      "home_team": "NYR",
+      "away_team": "VAN",
+      "game_state": "OFF",
+      "schedule_state": "OK"
+    },
+    {
+      "game_id": 2026020086,
+      "home_team": "PHI",
+      "away_team": "CAR",
+      "game_state": "OFF",
+      "schedule_state": "OK"
+    }
+  ],
+  "all_scorers": [
+    {
+      "player_id": 8474586,
+      "player_name": "J. Eberle",
+      "team": "SEA",
+      "goals": 1,
+      "game_id": 2026020084,
+      "matchup": "SEA @ WSH"
+    },
+    {
+      "player_id": 8477955,
+      "player_name": "J. McCann",
+      "team": "SEA",
+      "goals": 1,
+      "game_id": 2026020084,
+      "matchup": "SEA @ WSH"
+    },
+    {
+      "player_id": 8482751,
+      "player_name": "R. Winterton",
+      "team": "SEA",
+      "goals": 1,
+      "game_id": 2026020084,
+      "matchup": "SEA @ WSH"
+    },
+    {
+      "player_id": 8481554,
+      "player_name": "K. Kakko",
+      "team": "SEA",
+      "goals": 1,
+      "game_id": 2026020084,
+      "matchup": "SEA @ WSH"
+    },
+    {
+      "player_id": 8477919,
+      "player_name": "F. Gaudreau",
+      "team": "SEA",
+      "goals": 1,
+      "game_id": 2026020084,
+      "matchup": "SEA @ WSH"
+    },
+    {
+      "player_id": 8471214,
+      "player_name": "A. Ovechkin",
+      "team": "WSH",
+      "goals": 1,
+      "game_id": 2026020084,
+      "matchup": "SEA @ WSH"
+    },
+    {
+      "player_id": 8476432,
+      "player_name": "B. Jenner",
+      "team": "WSH",
+      "goals": 1,
+      "game_id": 2026020084,
+      "matchup": "SEA @ WSH"
+    },
+    {
+      "player_id": 8479385,
+      "player_name": "J. Kyrou",
+      "team": "WSH",
+      "goals": 1,
+      "game_id": 2026020084,
+      "matchup": "SEA @ WSH"
+    },
+    {
+      "player_id": 8478498,
+      "player_name": "J. DeBrusk",
+      "team": "VAN",
+      "goals": 1,
+      "game_id": 2026020085,
+      "matchup": "VAN @ NYR"
+    },
+    {
+      "player_id": 8483678,
+      "player_name": "E. Pettersson",
+      "team": "VAN",
+      "goals": 1,
+      "game_id": 2026020085,
+      "matchup": "VAN @ NYR"
+    },
+    {
+      "player_id": 8482109,
+      "player_name": "A. Lafrenière",
+      "team": "NYR",
+      "goals": 1,
+      "game_id": 2026020085,
+      "matchup": "VAN @ NYR"
+    },
+    {
+      "player_id": 8481789,
+      "player_name": "T. Kartye",
+      "team": "NYR",
+      "goals": 2,
+      "game_id": 2026020085,
+      "matchup": "VAN @ NYR"
+    },
+    {
+      "player_id": 8482157,
+      "player_name": "W. Cuylle",
+      "team": "NYR",
+      "goals": 2,
+      "game_id": 2026020085,
+      "matchup": "VAN @ NYR"
+    },
+    {
+      "player_id": 8484210,
+      "player_name": "G. Perreault",
+      "team": "NYR",
+      "goals": 1,
+      "game_id": 2026020085,
+      "matchup": "VAN @ NYR"
+    },
+    {
+      "player_id": 8478427,
+      "player_name": "S. Aho",
+      "team": "CAR",
+      "goals": 1,
+      "game_id": 2026020086,
+      "matchup": "CAR @ PHI"
+    },
+    {
+      "player_id": 8480830,
+      "player_name": "A. Svechnikov",
+      "team": "CAR",
+      "goals": 1,
+      "game_id": 2026020086,
+      "matchup": "CAR @ PHI"
+    },
+    {
+      "player_id": 8476873,
+      "player_name": "M. Jankowski",
+      "team": "CAR",
+      "goals": 1,
+      "game_id": 2026020086,
+      "matchup": "CAR @ PHI"
+    },
+    {
+      "player_id": 8476906,
+      "player_name": "S. Gostisbehere",
+      "team": "CAR",
+      "goals": 1,
+      "game_id": 2026020086,
+      "matchup": "CAR @ PHI"
+    },
+    {
+      "player_id": 8477989,
+      "player_name": "C. Dvorak",
+      "team": "PHI",
+      "goals": 1,
+      "game_id": 2026020086,
+      "matchup": "CAR @ PHI"
+    }
+  ],
+  "scorers_count": 19,
+  "model_comparisons": [
+    {
+      "model": "lineup_v1",
+      "model_display_name": "Lineup TOI v1",
+      "top10_picks": [
+        {
+          "rank": 2,
+          "player_id": 8478427,
+          "name": "Sebastian Aho",
+          "team": "CAR",
+          "probability": 0.3505,
+          "scored": true
+        },
+        {
+          "rank": 3,
+          "player_id": 8482809,
+          "name": "Jackson Blake",
+          "team": "CAR",
+          "probability": 0.3251,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8482702,
+          "name": "Logan Stankoven",
+          "team": "CAR",
+          "probability": 0.3169,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8478498,
+          "name": "Jake DeBrusk",
+          "team": "VAN",
+          "probability": 0.2949,
+          "scored": true
+        },
+        {
+          "rank": 8,
+          "player_id": 8477949,
+          "name": "Alex Tuch",
+          "team": "WSH",
+          "probability": 0.291,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8482109,
+          "name": "Alexis Lafrenière",
+          "team": "NYR",
+          "probability": 0.2736,
+          "scored": true
+        },
+        {
+          "rank": 10,
+          "player_id": 8476468,
+          "name": "J.T. Miller",
+          "team": "NYR",
+          "probability": 0.2655,
+          "scored": false
+        },
+        {
+          "rank": 11,
+          "player_id": 8475791,
+          "name": "Taylor Hall",
+          "team": "CAR",
+          "probability": 0.2456,
+          "scored": false
+        },
+        {
+          "rank": 13,
+          "player_id": 8476459,
+          "name": "Mika Zibanejad",
+          "team": "NYR",
+          "probability": 0.2334,
+          "scored": false
+        },
+        {
+          "rank": 14,
+          "player_id": 8484210,
+          "name": "Gabe Perreault",
+          "team": "NYR",
+          "probability": 0.2307,
+          "scored": true
+        }
+      ],
+      "hits": 4,
+      "total_predictions": 10,
+      "hit_rate": 40.0
+    },
+    {
+      "model": "market_odds",
+      "model_display_name": "Market Odds v1",
+      "top10_picks": [
+        {
+          "rank": 2,
+          "player_id": 8476459,
+          "name": "Mika Zibanejad",
+          "team": "NYR",
+          "probability": 0.3605,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8482109,
+          "name": "Alexis Lafrenière",
+          "team": "NYR",
+          "probability": 0.3464,
+          "scored": true
+        },
+        {
+          "rank": 4,
+          "player_id": 8478427,
+          "name": "Sebastian Aho",
+          "team": "CAR",
+          "probability": 0.3411,
+          "scored": true
+        },
+        {
+          "rank": 6,
+          "player_id": 8477949,
+          "name": "Alex Tuch",
+          "team": "WSH",
+          "probability": 0.3329,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8476468,
+          "name": "J.T. Miller",
+          "team": "NYR",
+          "probability": 0.3078,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8476880,
+          "name": "Tom Wilson",
+          "team": "WSH",
+          "probability": 0.3036,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8482809,
+          "name": "Jackson Blake",
+          "team": "CAR",
+          "probability": 0.2875,
+          "scored": false
+        },
+        {
+          "rank": 11,
+          "player_id": 8478440,
+          "name": "Dylan Strome",
+          "team": "WSH",
+          "probability": 0.2838,
+          "scored": false
+        },
+        {
+          "rank": 13,
+          "player_id": 8478498,
+          "name": "Jake DeBrusk",
+          "team": "VAN",
+          "probability": 0.277,
+          "scored": true
+        },
+        {
+          "rank": 14,
+          "player_id": 8477940,
+          "name": "Nikolaj Ehlers",
+          "team": "CAR",
+          "probability": 0.2729,
+          "scored": false
+        }
+      ],
+      "hits": 3,
+      "total_predictions": 10,
+      "hit_rate": 30.0
+    },
+    {
+      "model": "meta_ensemble",
+      "model_display_name": "Meta Ensemble v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8477919,
+          "name": "Frederick Gaudreau",
+          "team": "SEA",
+          "probability": 0.3327,
+          "scored": true
+        },
+        {
+          "rank": 2,
+          "player_id": 8484210,
+          "name": "Gabe Perreault",
+          "team": "NYR",
+          "probability": 0.3128,
+          "scored": true
+        },
+        {
+          "rank": 3,
+          "player_id": 8475791,
+          "name": "Taylor Hall",
+          "team": "CAR",
+          "probability": 0.2893,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8476432,
+          "name": "Boone Jenner",
+          "team": "WSH",
+          "probability": 0.2792,
+          "scored": true
+        },
+        {
+          "rank": 5,
+          "player_id": 8482159,
+          "name": "Tyson Foerster",
+          "team": "PHI",
+          "probability": 0.258,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8480009,
+          "name": "Eeli Tolvanen",
+          "team": "NYR",
+          "probability": 0.2518,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8474586,
+          "name": "Jordan Eberle",
+          "team": "SEA",
+          "probability": 0.2447,
+          "scored": true
+        },
+        {
+          "rank": 8,
+          "player_id": 8476905,
+          "name": "Chandler Stephenson",
+          "team": "SEA",
+          "probability": 0.2193,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8476880,
+          "name": "Tom Wilson",
+          "team": "WSH",
+          "probability": 0.2131,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8482665,
+          "name": "Matty Beniers",
+          "team": "SEA",
+          "probability": 0.2087,
+          "scored": false
+        }
+      ],
+      "hits": 4,
+      "total_predictions": 10,
+      "hit_rate": 40.0
+    },
+    {
+      "model": "monte_carlo",
+      "model_display_name": "Monte Carlo v2",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8478427,
+          "name": "Sebastian Aho",
+          "team": "CAR",
+          "probability": 0.3571,
+          "scored": true
+        },
+        {
+          "rank": 2,
+          "player_id": 8482109,
+          "name": "Alexis Lafrenière",
+          "team": "NYR",
+          "probability": 0.3536,
+          "scored": true
+        },
+        {
+          "rank": 3,
+          "player_id": 8482702,
+          "name": "Logan Stankoven",
+          "team": "CAR",
+          "probability": 0.3064,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8477949,
+          "name": "Alex Tuch",
+          "team": "WSH",
+          "probability": 0.3063,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8480009,
+          "name": "Eeli Tolvanen",
+          "team": "NYR",
+          "probability": 0.2846,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8476880,
+          "name": "Tom Wilson",
+          "team": "WSH",
+          "probability": 0.2647,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8475791,
+          "name": "Taylor Hall",
+          "team": "CAR",
+          "probability": 0.2578,
+          "scored": false
+        },
+        {
+          "rank": 13,
+          "player_id": 8484210,
+          "name": "Gabe Perreault",
+          "team": "NYR",
+          "probability": 0.2446,
+          "scored": true
+        },
+        {
+          "rank": 14,
+          "player_id": 8477919,
+          "name": "Frederick Gaudreau",
+          "team": "SEA",
+          "probability": 0.2434,
+          "scored": true
+        },
+        {
+          "rank": 15,
+          "player_id": 8478498,
+          "name": "Jake DeBrusk",
+          "team": "VAN",
+          "probability": 0.2417,
+          "scored": true
+        }
+      ],
+      "hits": 5,
+      "total_predictions": 10,
+      "hit_rate": 50.0
+    },
+    {
+      "model": "neural_network",
+      "model_display_name": "Weighted Linear v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8478427,
+          "name": "Sebastian Aho",
+          "team": "CAR",
+          "probability": 0.55,
+          "scored": true
+        },
+        {
+          "rank": 2,
+          "player_id": 8477949,
+          "name": "Alex Tuch",
+          "team": "WSH",
+          "probability": 0.448,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8482702,
+          "name": "Logan Stankoven",
+          "team": "CAR",
+          "probability": 0.436,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8482109,
+          "name": "Alexis Lafrenière",
+          "team": "NYR",
+          "probability": 0.422,
+          "scored": true
+        },
+        {
+          "rank": 6,
+          "player_id": 8478498,
+          "name": "Jake DeBrusk",
+          "team": "VAN",
+          "probability": 0.369,
+          "scored": true
+        },
+        {
+          "rank": 9,
+          "player_id": 8475791,
+          "name": "Taylor Hall",
+          "team": "CAR",
+          "probability": 0.348,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8476880,
+          "name": "Tom Wilson",
+          "team": "WSH",
+          "probability": 0.344,
+          "scored": false
+        },
+        {
+          "rank": 12,
+          "player_id": 8480009,
+          "name": "Eeli Tolvanen",
+          "team": "NYR",
+          "probability": 0.315,
+          "scored": false
+        },
+        {
+          "rank": 15,
+          "player_id": 8477919,
+          "name": "Frederick Gaudreau",
+          "team": "SEA",
+          "probability": 0.3,
+          "scored": true
+        },
+        {
+          "rank": 17,
+          "player_id": 8474586,
+          "name": "Jordan Eberle",
+          "team": "SEA",
+          "probability": 0.294,
+          "scored": true
+        }
+      ],
+      "hits": 5,
+      "total_predictions": 10,
+      "hit_rate": 50.0
+    },
+    {
+      "model": "neural_v2",
+      "model_display_name": "Neural Embed v2",
+      "top10_picks": [
+        {
+          "rank": 2,
+          "player_id": 8478427,
+          "name": "Sebastian Aho",
+          "team": "CAR",
+          "probability": 0.3749,
+          "scored": true
+        },
+        {
+          "rank": 4,
+          "player_id": 8482809,
+          "name": "Jackson Blake",
+          "team": "CAR",
+          "probability": 0.3428,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8482702,
+          "name": "Logan Stankoven",
+          "team": "CAR",
+          "probability": 0.3143,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8476459,
+          "name": "Mika Zibanejad",
+          "team": "NYR",
+          "probability": 0.3039,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8476468,
+          "name": "J.T. Miller",
+          "team": "NYR",
+          "probability": 0.2965,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8477949,
+          "name": "Alex Tuch",
+          "team": "WSH",
+          "probability": 0.2844,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8482109,
+          "name": "Alexis Lafrenière",
+          "team": "NYR",
+          "probability": 0.2701,
+          "scored": true
+        },
+        {
+          "rank": 11,
+          "player_id": 8478498,
+          "name": "Jake DeBrusk",
+          "team": "VAN",
+          "probability": 0.2643,
+          "scored": true
+        },
+        {
+          "rank": 12,
+          "player_id": 8480015,
+          "name": "Owen Tippett",
+          "team": "PHI",
+          "probability": 0.2496,
+          "scored": false
+        },
+        {
+          "rank": 13,
+          "player_id": 8475791,
+          "name": "Taylor Hall",
+          "team": "CAR",
+          "probability": 0.2494,
+          "scored": false
+        }
+      ],
+      "hits": 3,
+      "total_predictions": 10,
+      "hit_rate": 30.0
+    },
+    {
+      "model": "xg_v3",
+      "model_display_name": "xG XGBoost v3",
+      "top10_picks": [
+        {
+          "rank": 2,
+          "player_id": 8478427,
+          "name": "Sebastian Aho",
+          "team": "CAR",
+          "probability": 0.3548,
+          "scored": true
+        },
+        {
+          "rank": 3,
+          "player_id": 8482809,
+          "name": "Jackson Blake",
+          "team": "CAR",
+          "probability": 0.3282,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8482702,
+          "name": "Logan Stankoven",
+          "team": "CAR",
+          "probability": 0.3093,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8477949,
+          "name": "Alex Tuch",
+          "team": "WSH",
+          "probability": 0.295,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8478498,
+          "name": "Jake DeBrusk",
+          "team": "VAN",
+          "probability": 0.2949,
+          "scored": true
+        },
+        {
+          "rank": 9,
+          "player_id": 8476468,
+          "name": "J.T. Miller",
+          "team": "NYR",
+          "probability": 0.2729,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8482109,
+          "name": "Alexis Lafrenière",
+          "team": "NYR",
+          "probability": 0.2651,
+          "scored": true
+        },
+        {
+          "rank": 11,
+          "player_id": 8475791,
+          "name": "Taylor Hall",
+          "team": "CAR",
+          "probability": 0.2533,
+          "scored": false
+        },
+        {
+          "rank": 13,
+          "player_id": 8484210,
+          "name": "Gabe Perreault",
+          "team": "NYR",
+          "probability": 0.2388,
+          "scored": true
+        },
+        {
+          "rank": 14,
+          "player_id": 8476459,
+          "name": "Mika Zibanejad",
+          "team": "NYR",
+          "probability": 0.2314,
+          "scored": false
+        }
+      ],
+      "hits": 4,
+      "total_predictions": 10,
+      "hit_rate": 40.0
+    },
+    {
+      "model": "xg_v3_synthetic",
+      "model_display_name": "xG XGBoost v3 (synthetic shadow)",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8482109,
+          "name": "Alexis Lafrenière",
+          "team": "NYR",
+          "probability": 0.7277,
+          "scored": true
+        },
+        {
+          "rank": 2,
+          "player_id": 8480009,
+          "name": "Eeli Tolvanen",
+          "team": "NYR",
+          "probability": 0.6042,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8478427,
+          "name": "Sebastian Aho",
+          "team": "CAR",
+          "probability": 0.5814,
+          "scored": true
+        },
+        {
+          "rank": 4,
+          "player_id": 8484210,
+          "name": "Gabe Perreault",
+          "team": "NYR",
+          "probability": 0.5618,
+          "scored": true
+        },
+        {
+          "rank": 6,
+          "player_id": 8476880,
+          "name": "Tom Wilson",
+          "team": "WSH",
+          "probability": 0.53,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8482702,
+          "name": "Logan Stankoven",
+          "team": "CAR",
+          "probability": 0.5266,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8477949,
+          "name": "Alex Tuch",
+          "team": "WSH",
+          "probability": 0.5092,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8475791,
+          "name": "Taylor Hall",
+          "team": "CAR",
+          "probability": 0.4666,
+          "scored": false
+        },
+        {
+          "rank": 13,
+          "player_id": 8476459,
+          "name": "Mika Zibanejad",
+          "team": "NYR",
+          "probability": 0.4119,
+          "scored": false
+        },
+        {
+          "rank": 14,
+          "player_id": 8477919,
+          "name": "Frederick Gaudreau",
+          "team": "SEA",
+          "probability": 0.407,
+          "scored": true
+        }
+      ],
+      "hits": 4,
+      "total_predictions": 10,
+      "hit_rate": 40.0
+    }
+  ],
+  "fetched_at": "2026-10-12T10:31:54.013552"
+}
