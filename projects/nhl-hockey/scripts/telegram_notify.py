@@ -23,6 +23,8 @@ import os
 import sys
 from datetime import datetime, timedelta
 
+from pick_policy import SOURCE_ORDER
+
 
 # =============================================================================
 # CONFIGURATION
@@ -33,7 +35,7 @@ class Config:
 
     DATA_DIR = "data"
     MARKET_PREDICTIONS_DIR = f"{DATA_DIR}/predictions/market_odds"
-    META_PREDICTIONS_DIR = f"{DATA_DIR}/predictions/meta_ensemble"
+    NV2_PREDICTIONS_DIR = f"{DATA_DIR}/predictions/neural_v2"
     XG_PREDICTIONS_DIR = f"{DATA_DIR}/predictions/xg_v3"
     MC_PREDICTIONS_DIR = f"{DATA_DIR}/predictions/monte_carlo"
     NN_PREDICTIONS_DIR = f"{DATA_DIR}/predictions/neural_network"
@@ -51,7 +53,7 @@ class Config:
 # =============================================================================
 # TELEGRAM API
 # =============================================================================
-RETIRED = {"neural_v1"}  # no longer run; kept out of the stats lines
+RETIRED = {"neural_v1", "meta_ensemble"}  # no longer run; kept out of the stats lines
 
 # Telegram rejects messages over 4096 characters ("message is too long");
 # the 2026-10-03 daily message, with 8 models graded, was refused outright.
@@ -174,7 +176,7 @@ def build_daily_message():
     lines.append("")
     lines.append("━━━━━━━━━━━━━━━━━━━━━━━━━━")
     lines.append(f"🔗  <a href='{Config.DASHBOARD_URL}'>Full Dashboard</a>")
-    lines.append("🧠  5 Models: Market Odds · Meta Ensemble · xG XGBoost · Monte Carlo · Weighted Linear")
+    lines.append("🧠  Picks: xG XGBoost → Market Odds → Monte Carlo → Weighted Linear")
     lines.append("━━━━━━━━━━━━━━━━━━━━━━━━━━")
 
     return "\n".join(lines)
@@ -251,16 +253,36 @@ def add_results_section(lines):
     return True
 
 
+def pool_rankings(source):
+    """{group: ranked players} over today's real Tims pool, scored by the
+    source's probabilities. A model ranks the pool it saw at its own run; a
+    later, better scrape can change the pool, and 43 published picks
+    (2026-03..05) were players no longer in the real group."""
+    pool = load_json(f"{Config.TIMS_DIR}/{Config.TODAY}.json") or {}
+    if pool.get('date', Config.TODAY) != Config.TODAY or not pool.get('groups'):
+        return {}
+    preds = {p.get('player_id'): p for p in source.get('predictions', []) if p.get('player_id')}
+    out = {}
+    for gid, members in pool['groups'].items():
+        ranked = [preds[m['player_id']] for m in members
+                  if isinstance(m, dict) and m.get('player_id') in preds]
+        ranked.sort(key=lambda p: (p.get('goal_probability', 0), p.get('season_goals', 0),
+                                   -p['player_id']), reverse=True)
+        if ranked:
+            out[gid] = ranked
+    return out
+
+
 def add_predictions_section(lines):
     """
     Add today's predictions to message.
-    Prefers xG v3 data, falls back to MC v2, then NN v1.
+    Prefers xG v3, then Market, MC v2, Linear v1.
     Returns True if predictions were found, False otherwise.
     Never raises errors — silently skips if data unavailable.
     """
     # Load predictions — prefer today's dated file, fall back to latest.json
     market_data = load_json(f"{Config.MARKET_PREDICTIONS_DIR}/{Config.TODAY}.json") or load_json(f"{Config.MARKET_PREDICTIONS_DIR}/latest.json")
-    meta_data = load_json(f"{Config.META_PREDICTIONS_DIR}/{Config.TODAY}.json") or load_json(f"{Config.META_PREDICTIONS_DIR}/latest.json")
+    nv2_data = load_json(f"{Config.NV2_PREDICTIONS_DIR}/{Config.TODAY}.json") or load_json(f"{Config.NV2_PREDICTIONS_DIR}/latest.json")
     xg_data = load_json(f"{Config.XG_PREDICTIONS_DIR}/{Config.TODAY}.json") or load_json(f"{Config.XG_PREDICTIONS_DIR}/latest.json")
     mc_data = load_json(f"{Config.MC_PREDICTIONS_DIR}/{Config.TODAY}.json") or load_json(f"{Config.MC_PREDICTIONS_DIR}/latest.json")
     nn_data = load_json(f"{Config.NN_PREDICTIONS_DIR}/{Config.TODAY}.json") or load_json(f"{Config.NN_PREDICTIONS_DIR}/latest.json")
@@ -269,9 +291,9 @@ def add_predictions_section(lines):
     if market_data and market_data.get('date') != Config.TODAY:
         print(f"  Warning: Market latest is {market_data.get('date')}, not today ({Config.TODAY}) — skipping")
         market_data = None
-    if meta_data and meta_data.get('date') != Config.TODAY:
-        print(f"  Warning: Meta latest is {meta_data.get('date')}, not today ({Config.TODAY}) — skipping")
-        meta_data = None
+    if nv2_data and nv2_data.get('date') != Config.TODAY:
+        print(f"  Warning: Neural v2 latest is {nv2_data.get('date')}, not today ({Config.TODAY}) — skipping")
+        nv2_data = None
     if xg_data and xg_data.get('date') != Config.TODAY:
         print(f"  Warning: xG v3 latest is {xg_data.get('date')}, not today ({Config.TODAY}) — skipping")
         xg_data = None
@@ -282,23 +304,27 @@ def add_predictions_section(lines):
         print(f"  Warning: Linear v1 latest is {nn_data.get('date')}, not today ({Config.TODAY}) — skipping")
         nn_data = None
 
-    # Primary source: Market first (best calibrated, best within-group AUC),
-    # then the base models; Meta last — it is the weakest ranker (within-group
-    # AUC ~0.52, near random) and not monotonic in its inputs. Prefer a source
-    # with real Tims groups (the game is one pick per group), and never pick a
-    # file with no predictions: that used to suppress the whole message.
-    sources = [("Market", market_data), ("xG v3", xg_data), ("MC v2", mc_data),
-               ("Linear v1", nn_data), ("Meta", meta_data)]
+    # Primary source: the first model in pick_policy.SOURCE_ORDER with picks
+    # today (xG v3, then Market, MC v2, Linear v1). Prefer a source with real
+    # Tims groups (the game is one pick per group), and never pick a file
+    # with no predictions: that used to suppress the whole message.
+    loaded = {"xg_v3": ("xG v3", xg_data), "market_odds": ("Market", market_data),
+              "monte_carlo": ("MC v2", mc_data), "neural_network": ("Linear v1", nn_data)}
+    sources = [loaded[m] for m in SOURCE_ORDER if m in loaded]
     with_picks = [(n, d) for n, d in sources if d and d.get('predictions')]
     if not with_picks:
         return False
+    # With today's pool, the first source that covers it wins (its stored
+    # rankings may be from an older pool); without one, prefer stored groups.
+    ranked = {n: pool_rankings(d) for n, d in with_picks}
     primary_name, primary = next(
-        ((n, d) for n, d in with_picks if d.get('tims_group_rankings')), with_picks[0])
+        ((n, d) for n, d in with_picks if ranked[n]),
+        next(((n, d) for n, d in with_picks if d.get('tims_group_rankings')), with_picks[0]))
 
     date = primary.get('date', Config.TODAY)
     games_count = primary.get('games_count', 0)
     predictions = primary.get('predictions', [])
-    tims_groups = primary.get('tims_group_rankings', {})
+    tims_groups = ranked[primary_name] or primary.get('tims_group_rankings', {})
     games = primary.get('games', [])
 
     lines.append("")
@@ -315,7 +341,8 @@ def add_predictions_section(lines):
         lines.append("")
 
     # Tim Hortons groups
-    tims_source = primary.get('tims_source')
+    tims_source = (load_json(f"{Config.TIMS_DIR}/{Config.TODAY}.json") or {}).get('source') \
+        or primary.get('tims_source')
     if tims_groups:
         lines.append("🍩  <b>TIM HORTONS PICKS</b>")
         if tims_source == 'cached_pool':
@@ -379,10 +406,10 @@ def add_predictions_section(lines):
     model_tops = []
     if market_data and market_data.get('predictions'):
         model_tops.append(("Mkt", market_data['predictions'][:3]))
-    if meta_data and meta_data.get('predictions'):
-        model_tops.append(("Meta", meta_data['predictions'][:3]))
     if xg_data and xg_data.get('predictions'):
         model_tops.append(("xG v3", xg_data['predictions'][:3]))
+    if nv2_data and nv2_data.get('predictions'):
+        model_tops.append(("NN v2", nv2_data['predictions'][:3]))
     if mc_data and mc_data.get('predictions'):
         model_tops.append(("MC v2", mc_data['predictions'][:3]))
     if nn_data and nn_data.get('predictions'):

@@ -105,7 +105,7 @@ def load_json(path):
 
 # Models no longer run; their files stay as history. Without this their
 # frozen latest.json fails freshness every day.
-RETIRED = {"neural_v1"}
+RETIRED = {"neural_v1", "meta_ensemble"}
 
 
 def discover_models():
