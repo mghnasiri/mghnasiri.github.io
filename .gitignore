@@ -213,5 +213,6 @@ projects/nhl-hockey/data/player_shots/
 # Per-day NHL roster + player-stats cache shared between xG-pipeline runs
 # in the same workflow. Regenerated automatically; daily file accumulation.
 projects/nhl-hockey/data/cache/
+projects/nhl-hockey/data/backtest/
 
 .claude/

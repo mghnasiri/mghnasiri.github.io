@@ -1,0 +1,62 @@
+# .github/workflows/nhl_backtest.yml
+# Offline backtest of a Direct LR change (scripts/backtest_direct.py), run by
+# hand from the Actions tab. Nothing is committed; the report is uploaded as
+# an artifact and printed in the log. Inputs reach the script only through
+# env and are validated there (unknown feature names stop the run).
+
+name: NHL Direct LR Backtest
+
+on:
+  workflow_dispatch:
+    inputs:
+      add:
+        description: 'Features to add (comma-separated names from direct_model.featurize)'
+        required: false
+        default: ''
+      drop:
+        description: 'Features to drop (comma-separated)'
+        required: false
+        default: ''
+      C:
+        description: 'Inverse regularization strength of the candidate'
+        required: false
+        default: '0.1'
+
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      TZ: America/Toronto
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install numpy pandas scikit-learn
+
+      - name: Restore per-game history cache
+        uses: actions/cache@v4
+        with:
+          path: projects/nhl-hockey/data/cache/history
+          key: nhl-history-v1-${{ github.run_id }}
+          restore-keys: nhl-history-v1-
+
+      - name: Run backtest
+        working-directory: projects/nhl-hockey
+        env:
+          ADD: ${{ inputs.add }}
+          DROP: ${{ inputs.drop }}
+          CAND_C: ${{ inputs.C }}
+        run: python scripts/backtest_direct.py --add "$ADD" --drop "$DROP" --C "$CAND_C"
+
+      - name: Upload report
+        uses: actions/upload-artifact@v4
+        with:
+          name: backtest-report
+          path: projects/nhl-hockey/data/backtest/
