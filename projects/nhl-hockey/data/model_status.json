@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-13T09:38:19.369684",
+  "generated_at": "2026-10-14T07:16:48.354680",
   "rules": {
     "metric": "season group top-1 lift over a random pick from the same group, 90% day-bootstrap CI",
     "grace_tims_days": 10,
@@ -9,230 +9,230 @@
     "champion_rule": "the Telegram pick source (pick_policy.SOURCE_ORDER[0])"
   },
   "models": {
-    "lineup_v1": {
-      "status": "active",
-      "total_days": 49,
-      "season_days": 12,
-      "last_graded": "2026-10-12",
-      "trailing_14_hit_rate": 29.2,
-      "trailing_14_sample_size": 12,
-      "trailing_30_hit_rate": 29.2,
-      "trailing_30_sample_size": 12,
-      "overall_hit_rate": 27.1,
-      "group_top1_rate": 19.3,
-      "group_top1_n": 135,
-      "group_top1_baseline": 14.6,
-      "group_top1_lift": 4.7,
-      "group_top1_lift_ci90": [
-        0.0,
-        9.4
-      ],
-      "season_tims_days": 12,
-      "season_lift": 4.9,
-      "season_lift_ci90": [
-        -2.0,
-        11.5
-      ]
-    },
-    "neural_network": {
-      "status": "active",
-      "total_days": 147,
-      "season_days": 12,
-      "last_graded": "2026-10-12",
-      "trailing_14_hit_rate": 28.3,
-      "trailing_14_sample_size": 12,
-      "trailing_30_hit_rate": 28.3,
-      "trailing_30_sample_size": 12,
-      "overall_hit_rate": 28.2,
-      "group_top1_rate": 18.7,
-      "group_top1_n": 150,
-      "group_top1_baseline": 14.1,
-      "group_top1_lift": 4.5,
-      "group_top1_lift_ci90": [
-        -0.6,
-        9.8
-      ],
-      "season_tims_days": 12,
-      "season_lift": -0.7,
-      "season_lift_ci90": [
-        -10.2,
-        9.3
-      ]
-    },
-    "monte_carlo": {
-      "status": "active",
-      "total_days": 95,
-      "season_days": 12,
-      "last_graded": "2026-10-12",
-      "trailing_14_hit_rate": 28.3,
-      "trailing_14_sample_size": 12,
-      "trailing_30_hit_rate": 28.3,
-      "trailing_30_sample_size": 12,
-      "overall_hit_rate": 25.0,
-      "group_top1_rate": 19.3,
-      "group_top1_n": 150,
-      "group_top1_baseline": 14.2,
-      "group_top1_lift": 5.2,
-      "group_top1_lift_ci90": [
-        0.5,
-        10.1
-      ],
-      "season_tims_days": 12,
-      "season_lift": 2.1,
-      "season_lift_ci90": [
-        -7.2,
-        11.7
-      ]
-    },
-    "xg_v3_synthetic": {
-      "status": "active",
-      "total_days": 47,
-      "season_days": 12,
-      "last_graded": "2026-10-12",
-      "trailing_14_hit_rate": 28.3,
-      "trailing_14_sample_size": 12,
-      "trailing_30_hit_rate": 28.3,
-      "trailing_30_sample_size": 12,
-      "overall_hit_rate": 26.4,
-      "group_top1_rate": 19.4,
-      "group_top1_n": 129,
-      "group_top1_baseline": 14.7,
-      "group_top1_lift": 4.6,
-      "group_top1_lift_ci90": [
-        -1.2,
-        10.9
-      ],
-      "season_tims_days": 12,
-      "season_lift": -0.7,
-      "season_lift_ci90": [
-        -10.8,
-        9.4
-      ]
-    },
     "xg_v3": {
       "status": "champion",
-      "total_days": 95,
-      "season_days": 12,
-      "last_graded": "2026-10-12",
-      "trailing_14_hit_rate": 29.2,
-      "trailing_14_sample_size": 12,
-      "trailing_30_hit_rate": 29.2,
-      "trailing_30_sample_size": 12,
-      "overall_hit_rate": 25.4,
-      "group_top1_rate": 20.7,
+      "total_days": 96,
+      "season_days": 13,
+      "last_graded": "2026-10-13",
+      "trailing_14_hit_rate": 30.0,
+      "trailing_14_sample_size": 13,
+      "trailing_30_hit_rate": 30.0,
+      "trailing_30_sample_size": 13,
+      "overall_hit_rate": 25.6,
+      "group_top1_rate": 21.3,
       "group_top1_n": 150,
-      "group_top1_baseline": 14.0,
-      "group_top1_lift": 6.7,
+      "group_top1_baseline": 14.3,
+      "group_top1_lift": 7.1,
       "group_top1_lift_ci90": [
-        2.1,
-        11.4
+        2.5,
+        11.6
       ],
-      "season_tims_days": 12,
-      "season_lift": 2.1,
+      "season_tims_days": 13,
+      "season_lift": 5.2,
       "season_lift_ci90": [
-        -5.4,
-        9.1
+        -3.3,
+        13.9
       ],
       "is_champion": true
     },
-    "neural_v2": {
+    "monte_carlo": {
       "status": "active",
-      "total_days": 49,
-      "season_days": 12,
-      "last_graded": "2026-10-12",
-      "trailing_14_hit_rate": 26.7,
-      "trailing_14_sample_size": 12,
-      "trailing_30_hit_rate": 26.7,
-      "trailing_30_sample_size": 12,
-      "overall_hit_rate": 25.5,
-      "group_top1_rate": 24.4,
-      "group_top1_n": 135,
-      "group_top1_baseline": 14.6,
-      "group_top1_lift": 9.9,
+      "total_days": 96,
+      "season_days": 13,
+      "last_graded": "2026-10-13",
+      "trailing_14_hit_rate": 28.5,
+      "trailing_14_sample_size": 13,
+      "trailing_30_hit_rate": 28.5,
+      "trailing_30_sample_size": 13,
+      "overall_hit_rate": 25.1,
+      "group_top1_rate": 18.7,
+      "group_top1_n": 150,
+      "group_top1_baseline": 14.3,
+      "group_top1_lift": 4.4,
       "group_top1_lift_ci90": [
-        4.5,
-        15.3
+        -0.2,
+        9.3
       ],
-      "season_tims_days": 12,
-      "season_lift": 7.7,
+      "season_tims_days": 13,
+      "season_lift": 0.0,
       "season_lift_ci90": [
-        -2.3,
-        17.6
+        -9.2,
+        10.1
       ]
     },
     "direct_lr": {
       "status": "new",
-      "total_days": 1,
-      "season_days": 1,
-      "last_graded": "2026-10-12",
-      "trailing_14_hit_rate": 20.0,
-      "trailing_14_sample_size": 1,
-      "trailing_30_hit_rate": 20.0,
-      "trailing_30_sample_size": 1,
-      "overall_hit_rate": 20.0,
-      "group_top1_rate": 0.0,
-      "group_top1_n": 3,
-      "group_top1_baseline": 12.1,
-      "group_top1_lift": -12.1,
+      "total_days": 2,
+      "season_days": 2,
+      "last_graded": "2026-10-13",
+      "trailing_14_hit_rate": 30.0,
+      "trailing_14_sample_size": 2,
+      "trailing_30_hit_rate": 30.0,
+      "trailing_30_sample_size": 2,
+      "overall_hit_rate": 30.0,
+      "group_top1_rate": 33.3,
+      "group_top1_n": 6,
+      "group_top1_baseline": 18.5,
+      "group_top1_lift": 14.8,
       "group_top1_lift_ci90": [
         -12.1,
-        -12.1
+        41.7
       ],
-      "season_tims_days": 1,
-      "season_lift": -12.1,
+      "season_tims_days": 2,
+      "season_lift": 14.8,
       "season_lift_ci90": [
         -12.1,
-        -12.1
+        41.7
       ]
     },
-    "market_odds": {
+    "neural_network": {
       "status": "active",
-      "total_days": 58,
-      "season_days": 14,
-      "last_graded": "2026-10-12",
-      "trailing_14_hit_rate": 27.9,
-      "trailing_14_sample_size": 14,
-      "trailing_30_hit_rate": 27.9,
-      "trailing_30_sample_size": 14,
-      "overall_hit_rate": 23.7,
-      "group_top1_rate": 15.3,
+      "total_days": 148,
+      "season_days": 13,
+      "last_graded": "2026-10-13",
+      "trailing_14_hit_rate": 28.5,
+      "trailing_14_sample_size": 13,
+      "trailing_30_hit_rate": 28.5,
+      "trailing_30_sample_size": 13,
+      "overall_hit_rate": 28.2,
+      "group_top1_rate": 19.3,
       "group_top1_n": 150,
-      "group_top1_baseline": 14.0,
-      "group_top1_lift": 1.3,
+      "group_top1_baseline": 14.4,
+      "group_top1_lift": 4.9,
       "group_top1_lift_ci90": [
-        -3.4,
-        6.6
+        -0.1,
+        10.1
       ],
-      "season_tims_days": 12,
-      "season_lift": -3.4,
+      "season_tims_days": 13,
+      "season_lift": 0.0,
       "season_lift_ci90": [
-        -13.9,
-        8.4
+        -8.8,
+        9.4
+      ]
+    },
+    "lineup_v1": {
+      "status": "active",
+      "total_days": 50,
+      "season_days": 13,
+      "last_graded": "2026-10-13",
+      "trailing_14_hit_rate": 29.2,
+      "trailing_14_sample_size": 13,
+      "trailing_30_hit_rate": 29.2,
+      "trailing_30_sample_size": 13,
+      "overall_hit_rate": 27.2,
+      "group_top1_rate": 20.3,
+      "group_top1_n": 138,
+      "group_top1_baseline": 14.8,
+      "group_top1_lift": 5.5,
+      "group_top1_lift_ci90": [
+        0.9,
+        10.2
+      ],
+      "season_tims_days": 13,
+      "season_lift": 7.7,
+      "season_lift_ci90": [
+        0.0,
+        15.6
+      ]
+    },
+    "neural_v2": {
+      "status": "active",
+      "total_days": 50,
+      "season_days": 13,
+      "last_graded": "2026-10-13",
+      "trailing_14_hit_rate": 27.7,
+      "trailing_14_sample_size": 13,
+      "trailing_30_hit_rate": 27.7,
+      "trailing_30_sample_size": 13,
+      "overall_hit_rate": 25.8,
+      "group_top1_rate": 25.4,
+      "group_top1_n": 138,
+      "group_top1_baseline": 14.8,
+      "group_top1_lift": 10.5,
+      "group_top1_lift_ci90": [
+        5.1,
+        15.9
+      ],
+      "season_tims_days": 13,
+      "season_lift": 10.3,
+      "season_lift_ci90": [
+        0.0,
+        20.3
+      ]
+    },
+    "xg_v3_synthetic": {
+      "status": "active",
+      "total_days": 48,
+      "season_days": 13,
+      "last_graded": "2026-10-13",
+      "trailing_14_hit_rate": 28.5,
+      "trailing_14_sample_size": 13,
+      "trailing_30_hit_rate": 28.5,
+      "trailing_30_sample_size": 13,
+      "overall_hit_rate": 26.5,
+      "group_top1_rate": 19.7,
+      "group_top1_n": 132,
+      "group_top1_baseline": 15.0,
+      "group_top1_lift": 4.7,
+      "group_top1_lift_ci90": [
+        -0.8,
+        10.8
+      ],
+      "season_tims_days": 13,
+      "season_lift": 0.0,
+      "season_lift_ci90": [
+        -9.4,
+        9.7
       ]
     },
     "blend": {
       "status": "new",
-      "total_days": 1,
-      "season_days": 1,
-      "last_graded": "2026-10-12",
-      "trailing_14_hit_rate": 10.0,
-      "trailing_14_sample_size": 1,
-      "trailing_30_hit_rate": 10.0,
-      "trailing_30_sample_size": 1,
-      "overall_hit_rate": 10.0,
-      "group_top1_rate": 0.0,
-      "group_top1_n": 3,
-      "group_top1_baseline": 12.1,
-      "group_top1_lift": -12.1,
+      "total_days": 2,
+      "season_days": 2,
+      "last_graded": "2026-10-13",
+      "trailing_14_hit_rate": 25.0,
+      "trailing_14_sample_size": 2,
+      "trailing_30_hit_rate": 25.0,
+      "trailing_30_sample_size": 2,
+      "overall_hit_rate": 25.0,
+      "group_top1_rate": 16.7,
+      "group_top1_n": 6,
+      "group_top1_baseline": 18.5,
+      "group_top1_lift": -1.9,
       "group_top1_lift_ci90": [
         -12.1,
-        -12.1
+        8.4
       ],
-      "season_tims_days": 1,
-      "season_lift": -12.1,
+      "season_tims_days": 2,
+      "season_lift": -1.9,
       "season_lift_ci90": [
         -12.1,
-        -12.1
+        8.4
+      ]
+    },
+    "market_odds": {
+      "status": "active",
+      "total_days": 59,
+      "season_days": 15,
+      "last_graded": "2026-10-13",
+      "trailing_14_hit_rate": 30.0,
+      "trailing_14_sample_size": 14,
+      "trailing_30_hit_rate": 29.3,
+      "trailing_30_sample_size": 15,
+      "overall_hit_rate": 24.1,
+      "group_top1_rate": 15.3,
+      "group_top1_n": 150,
+      "group_top1_baseline": 14.3,
+      "group_top1_lift": 1.1,
+      "group_top1_lift_ci90": [
+        -4.0,
+        6.1
+      ],
+      "season_tims_days": 13,
+      "season_lift": -2.5,
+      "season_lift_ci90": [
+        -12.2,
+        8.4
       ]
     }
   }
