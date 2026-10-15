@@ -1,0 +1,917 @@
+{
+  "date": "2026-10-14",
+  "games_count": 2,
+  "final_games": 2,
+  "partial": false,
+  "games": [
+    {
+      "game_id": 2026020106,
+      "home_team": "WSH",
+      "away_team": "MTL",
+      "game_state": "OFF",
+      "schedule_state": "OK"
+    },
+    {
+      "game_id": 2026020107,
+      "home_team": "COL",
+      "away_team": "DAL",
+      "game_state": "OFF",
+      "schedule_state": "OK"
+    }
+  ],
+  "all_scorers": [
+    {
+      "player_id": 8480018,
+      "player_name": "N. Suzuki",
+      "team": "MTL",
+      "goals": 1,
+      "game_id": 2026020106,
+      "matchup": "MTL @ WSH"
+    },
+    {
+      "player_id": 8476981,
+      "player_name": "J. Anderson",
+      "team": "MTL",
+      "goals": 2,
+      "game_id": 2026020106,
+      "matchup": "MTL @ WSH"
+    },
+    {
+      "player_id": 8483457,
+      "player_name": "L. Hutson",
+      "team": "MTL",
+      "goals": 1,
+      "game_id": 2026020106,
+      "matchup": "MTL @ WSH"
+    },
+    {
+      "player_id": 8479385,
+      "player_name": "J. Kyrou",
+      "team": "WSH",
+      "goals": 1,
+      "game_id": 2026020106,
+      "matchup": "MTL @ WSH"
+    },
+    {
+      "player_id": 8483491,
+      "player_name": "I. Miroshnichenko",
+      "team": "WSH",
+      "goals": 1,
+      "game_id": 2026020106,
+      "matchup": "MTL @ WSH"
+    },
+    {
+      "player_id": 8477949,
+      "player_name": "A. Tuch",
+      "team": "WSH",
+      "goals": 2,
+      "game_id": 2026020106,
+      "matchup": "MTL @ WSH"
+    },
+    {
+      "player_id": 8475718,
+      "player_name": "J. Holl",
+      "team": "WSH",
+      "goals": 1,
+      "game_id": 2026020106,
+      "matchup": "MTL @ WSH"
+    },
+    {
+      "player_id": 8484938,
+      "player_name": "A. Hyry",
+      "team": "DAL",
+      "goals": 1,
+      "game_id": 2026020107,
+      "matchup": "DAL @ COL"
+    },
+    {
+      "player_id": 8480036,
+      "player_name": "M. Heiskanen",
+      "team": "DAL",
+      "goals": 1,
+      "game_id": 2026020107,
+      "matchup": "DAL @ COL"
+    },
+    {
+      "player_id": 8475754,
+      "player_name": "B. Nelson",
+      "team": "COL",
+      "goals": 1,
+      "game_id": 2026020107,
+      "matchup": "DAL @ COL"
+    },
+    {
+      "player_id": 8476455,
+      "player_name": "G. Landeskog",
+      "team": "COL",
+      "goals": 1,
+      "game_id": 2026020107,
+      "matchup": "DAL @ COL"
+    }
+  ],
+  "scorers_count": 11,
+  "model_comparisons": [
+    {
+      "model": "blend",
+      "model_display_name": "Blend v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8481540,
+          "name": "Cole Caufield",
+          "team": "MTL",
+          "probability": 0.3532,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8480027,
+          "name": "Jason Robertson",
+          "team": "DAL",
+          "probability": 0.3365,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8477949,
+          "name": "Alex Tuch",
+          "team": "WSH",
+          "probability": 0.289,
+          "scored": true
+        },
+        {
+          "rank": 4,
+          "player_id": 8480018,
+          "name": "Nick Suzuki",
+          "team": "MTL",
+          "probability": 0.2858,
+          "scored": true
+        },
+        {
+          "rank": 5,
+          "player_id": 8483515,
+          "name": "Juraj Slafkovsky",
+          "team": "MTL",
+          "probability": 0.2657,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8478449,
+          "name": "Roope Hintz",
+          "team": "DAL",
+          "probability": 0.265,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8478420,
+          "name": "Mikko Rantanen",
+          "team": "DAL",
+          "probability": 0.257,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8476432,
+          "name": "Boone Jenner",
+          "team": "WSH",
+          "probability": 0.2534,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8476880,
+          "name": "Tom Wilson",
+          "team": "WSH",
+          "probability": 0.2533,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8471214,
+          "name": "Alex Ovechkin",
+          "team": "WSH",
+          "probability": 0.2517,
+          "scored": false
+        }
+      ],
+      "hits": 2,
+      "total_predictions": 10,
+      "hit_rate": 20.0
+    },
+    {
+      "model": "direct_lr",
+      "model_display_name": "Direct LR v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8481540,
+          "name": "Cole Caufield",
+          "team": "MTL",
+          "probability": 0.3648,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8480027,
+          "name": "Jason Robertson",
+          "team": "DAL",
+          "probability": 0.3321,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8480018,
+          "name": "Nick Suzuki",
+          "team": "MTL",
+          "probability": 0.3186,
+          "scored": true
+        },
+        {
+          "rank": 4,
+          "player_id": 8477949,
+          "name": "Alex Tuch",
+          "team": "WSH",
+          "probability": 0.3079,
+          "scored": true
+        },
+        {
+          "rank": 5,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.3055,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8478420,
+          "name": "Mikko Rantanen",
+          "team": "DAL",
+          "probability": 0.2962,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8471214,
+          "name": "Alex Ovechkin",
+          "team": "WSH",
+          "probability": 0.2947,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8483515,
+          "name": "Juraj Slafkovsky",
+          "team": "MTL",
+          "probability": 0.2869,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8476880,
+          "name": "Tom Wilson",
+          "team": "WSH",
+          "probability": 0.2719,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8475172,
+          "name": "Nazem Kadri",
+          "team": "COL",
+          "probability": 0.2624,
+          "scored": false
+        }
+      ],
+      "hits": 2,
+      "total_predictions": 10,
+      "hit_rate": 20.0
+    },
+    {
+      "model": "lineup_v1",
+      "model_display_name": "Lineup TOI v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8481540,
+          "name": "Cole Caufield",
+          "team": "MTL",
+          "probability": 0.324,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8476432,
+          "name": "Boone Jenner",
+          "team": "WSH",
+          "probability": 0.3181,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8480027,
+          "name": "Jason Robertson",
+          "team": "DAL",
+          "probability": 0.2951,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8478449,
+          "name": "Roope Hintz",
+          "team": "DAL",
+          "probability": 0.2652,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8480018,
+          "name": "Nick Suzuki",
+          "team": "MTL",
+          "probability": 0.2522,
+          "scored": true
+        },
+        {
+          "rank": 8,
+          "player_id": 8477949,
+          "name": "Alex Tuch",
+          "team": "WSH",
+          "probability": 0.2345,
+          "scored": true
+        },
+        {
+          "rank": 9,
+          "player_id": 8483515,
+          "name": "Juraj Slafkovský",
+          "team": "MTL",
+          "probability": 0.2307,
+          "scored": false
+        },
+        {
+          "rank": 12,
+          "player_id": 8475794,
+          "name": "Tyler Seguin",
+          "team": "DAL",
+          "probability": 0.215,
+          "scored": false
+        },
+        {
+          "rank": 13,
+          "player_id": 8476880,
+          "name": "Tom Wilson",
+          "team": "WSH",
+          "probability": 0.2105,
+          "scored": false
+        },
+        {
+          "rank": 14,
+          "player_id": 8478420,
+          "name": "Mikko Rantanen",
+          "team": "DAL",
+          "probability": 0.2064,
+          "scored": false
+        }
+      ],
+      "hits": 2,
+      "total_predictions": 10,
+      "hit_rate": 20.0
+    },
+    {
+      "model": "market_odds",
+      "model_display_name": "Market Odds v1",
+      "top10_picks": [
+        {
+          "rank": 2,
+          "player_id": 8481540,
+          "name": "Cole Caufield",
+          "team": "MTL",
+          "probability": 0.4137,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8480027,
+          "name": "Jason Robertson",
+          "team": "DAL",
+          "probability": 0.3701,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.3401,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8478420,
+          "name": "Mikko Rantanen",
+          "team": "DAL",
+          "probability": 0.3249,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8471214,
+          "name": "Alex Ovechkin",
+          "team": "WSH",
+          "probability": 0.3227,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8480018,
+          "name": "Nick Suzuki",
+          "team": "MTL",
+          "probability": 0.3122,
+          "scored": true
+        },
+        {
+          "rank": 8,
+          "player_id": 8477949,
+          "name": "Alex Tuch",
+          "team": "WSH",
+          "probability": 0.3115,
+          "scored": true
+        },
+        {
+          "rank": 9,
+          "player_id": 8476880,
+          "name": "Tom Wilson",
+          "team": "WSH",
+          "probability": 0.302,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8478449,
+          "name": "Roope Hintz",
+          "team": "DAL",
+          "probability": 0.3008,
+          "scored": false
+        },
+        {
+          "rank": 11,
+          "player_id": 8483515,
+          "name": "Juraj Slafkovský",
+          "team": "MTL",
+          "probability": 0.2919,
+          "scored": false
+        }
+      ],
+      "hits": 2,
+      "total_predictions": 10,
+      "hit_rate": 20.0
+    },
+    {
+      "model": "monte_carlo",
+      "model_display_name": "Monte Carlo v2",
+      "top10_picks": [
+        {
+          "rank": 2,
+          "player_id": 8481540,
+          "name": "Cole Caufield",
+          "team": "MTL",
+          "probability": 0.3078,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8477949,
+          "name": "Alex Tuch",
+          "team": "WSH",
+          "probability": 0.2978,
+          "scored": true
+        },
+        {
+          "rank": 4,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.2825,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8476432,
+          "name": "Boone Jenner",
+          "team": "WSH",
+          "probability": 0.2755,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8480018,
+          "name": "Nick Suzuki",
+          "team": "MTL",
+          "probability": 0.2735,
+          "scored": true
+        },
+        {
+          "rank": 7,
+          "player_id": 8480027,
+          "name": "Jason Robertson",
+          "team": "DAL",
+          "probability": 0.2637,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8476880,
+          "name": "Tom Wilson",
+          "team": "WSH",
+          "probability": 0.2574,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8477476,
+          "name": "Artturi Lehkonen",
+          "team": "COL",
+          "probability": 0.2502,
+          "scored": false
+        },
+        {
+          "rank": 11,
+          "player_id": 8478420,
+          "name": "Mikko Rantanen",
+          "team": "DAL",
+          "probability": 0.2321,
+          "scored": false
+        },
+        {
+          "rank": 14,
+          "player_id": 8478449,
+          "name": "Roope Hintz",
+          "team": "DAL",
+          "probability": 0.226,
+          "scored": false
+        }
+      ],
+      "hits": 2,
+      "total_predictions": 10,
+      "hit_rate": 20.0
+    },
+    {
+      "model": "neural_network",
+      "model_display_name": "Weighted Linear v1",
+      "top10_picks": [
+        {
+          "rank": 2,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.462,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8481540,
+          "name": "Cole Caufield",
+          "team": "MTL",
+          "probability": 0.459,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8480018,
+          "name": "Nick Suzuki",
+          "team": "MTL",
+          "probability": 0.374,
+          "scored": true
+        },
+        {
+          "rank": 6,
+          "player_id": 8480027,
+          "name": "Jason Robertson",
+          "team": "DAL",
+          "probability": 0.355,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8476432,
+          "name": "Boone Jenner",
+          "team": "WSH",
+          "probability": 0.354,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8477476,
+          "name": "Artturi Lehkonen",
+          "team": "COL",
+          "probability": 0.326,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8475768,
+          "name": "Jaden Schwartz",
+          "team": "COL",
+          "probability": 0.316,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8477949,
+          "name": "Alex Tuch",
+          "team": "WSH",
+          "probability": 0.315,
+          "scored": true
+        },
+        {
+          "rank": 11,
+          "player_id": 8478420,
+          "name": "Mikko Rantanen",
+          "team": "DAL",
+          "probability": 0.289,
+          "scored": false
+        },
+        {
+          "rank": 12,
+          "player_id": 8476880,
+          "name": "Tom Wilson",
+          "team": "WSH",
+          "probability": 0.284,
+          "scored": false
+        }
+      ],
+      "hits": 2,
+      "total_predictions": 10,
+      "hit_rate": 20.0
+    },
+    {
+      "model": "neural_v2",
+      "model_display_name": "Neural Embed v2",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8480027,
+          "name": "Jason Robertson",
+          "team": "DAL",
+          "probability": 0.3443,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8481540,
+          "name": "Cole Caufield",
+          "team": "MTL",
+          "probability": 0.3338,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8476432,
+          "name": "Boone Jenner",
+          "team": "WSH",
+          "probability": 0.3161,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8477949,
+          "name": "Alex Tuch",
+          "team": "WSH",
+          "probability": 0.3119,
+          "scored": true
+        },
+        {
+          "rank": 7,
+          "player_id": 8480018,
+          "name": "Nick Suzuki",
+          "team": "MTL",
+          "probability": 0.2771,
+          "scored": true
+        },
+        {
+          "rank": 8,
+          "player_id": 8478449,
+          "name": "Roope Hintz",
+          "team": "DAL",
+          "probability": 0.2639,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8483515,
+          "name": "Juraj Slafkovský",
+          "team": "MTL",
+          "probability": 0.2618,
+          "scored": false
+        },
+        {
+          "rank": 12,
+          "player_id": 8475794,
+          "name": "Tyler Seguin",
+          "team": "DAL",
+          "probability": 0.2413,
+          "scored": false
+        },
+        {
+          "rank": 13,
+          "player_id": 8476880,
+          "name": "Tom Wilson",
+          "team": "WSH",
+          "probability": 0.2403,
+          "scored": false
+        },
+        {
+          "rank": 15,
+          "player_id": 8471214,
+          "name": "Alex Ovechkin",
+          "team": "WSH",
+          "probability": 0.2259,
+          "scored": false
+        }
+      ],
+      "hits": 2,
+      "total_predictions": 10,
+      "hit_rate": 20.0
+    },
+    {
+      "model": "xg_v3",
+      "model_display_name": "xG XGBoost v3",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8476432,
+          "name": "Boone Jenner",
+          "team": "WSH",
+          "probability": 0.3231,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8481540,
+          "name": "Cole Caufield",
+          "team": "MTL",
+          "probability": 0.3045,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8480027,
+          "name": "Jason Robertson",
+          "team": "DAL",
+          "probability": 0.3015,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8478449,
+          "name": "Roope Hintz",
+          "team": "DAL",
+          "probability": 0.2693,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8480018,
+          "name": "Nick Suzuki",
+          "team": "MTL",
+          "probability": 0.2398,
+          "scored": true
+        },
+        {
+          "rank": 8,
+          "player_id": 8477949,
+          "name": "Alex Tuch",
+          "team": "WSH",
+          "probability": 0.2303,
+          "scored": true
+        },
+        {
+          "rank": 11,
+          "player_id": 8483515,
+          "name": "Juraj Slafkovský",
+          "team": "MTL",
+          "probability": 0.2255,
+          "scored": false
+        },
+        {
+          "rank": 12,
+          "player_id": 8475794,
+          "name": "Tyler Seguin",
+          "team": "DAL",
+          "probability": 0.2238,
+          "scored": false
+        },
+        {
+          "rank": 13,
+          "player_id": 8478420,
+          "name": "Mikko Rantanen",
+          "team": "DAL",
+          "probability": 0.2082,
+          "scored": false
+        },
+        {
+          "rank": 14,
+          "player_id": 8476880,
+          "name": "Tom Wilson",
+          "team": "WSH",
+          "probability": 0.2058,
+          "scored": false
+        }
+      ],
+      "hits": 2,
+      "total_predictions": 10,
+      "hit_rate": 20.0
+    },
+    {
+      "model": "xg_v3_synthetic",
+      "model_display_name": "xG XGBoost v3 (synthetic shadow)",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.5725,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8481540,
+          "name": "Cole Caufield",
+          "team": "MTL",
+          "probability": 0.5217,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8476432,
+          "name": "Boone Jenner",
+          "team": "WSH",
+          "probability": 0.5028,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8476880,
+          "name": "Tom Wilson",
+          "team": "WSH",
+          "probability": 0.4789,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8478449,
+          "name": "Roope Hintz",
+          "team": "DAL",
+          "probability": 0.4702,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8475794,
+          "name": "Tyler Seguin",
+          "team": "DAL",
+          "probability": 0.4573,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8475768,
+          "name": "Jaden Schwartz",
+          "team": "COL",
+          "probability": 0.4273,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8471214,
+          "name": "Alex Ovechkin",
+          "team": "WSH",
+          "probability": 0.4181,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8477949,
+          "name": "Alex Tuch",
+          "team": "WSH",
+          "probability": 0.3872,
+          "scored": true
+        },
+        {
+          "rank": 11,
+          "player_id": 8478420,
+          "name": "Mikko Rantanen",
+          "team": "DAL",
+          "probability": 0.3794,
+          "scored": false
+        }
+      ],
+      "hits": 1,
+      "total_predictions": 10,
+      "hit_rate": 10.0
+    }
+  ],
+  "fetched_at": "2026-10-15T06:54:50.188349"
+}
