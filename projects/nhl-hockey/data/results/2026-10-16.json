@@ -1,0 +1,925 @@
+{
+  "date": "2026-10-16",
+  "games_count": 2,
+  "final_games": 2,
+  "partial": false,
+  "games": [
+    {
+      "game_id": 2026020119,
+      "home_team": "COL",
+      "away_team": "PIT",
+      "game_state": "OFF",
+      "schedule_state": "OK"
+    },
+    {
+      "game_id": 2026020120,
+      "home_team": "ANA",
+      "away_team": "BOS",
+      "game_state": "OFF",
+      "schedule_state": "OK"
+    }
+  ],
+  "all_scorers": [
+    {
+      "player_id": 8475810,
+      "player_name": "B. Rust",
+      "team": "PIT",
+      "goals": 1,
+      "game_id": 2026020119,
+      "matchup": "PIT @ COL"
+    },
+    {
+      "player_id": 8471215,
+      "player_name": "E. Malkin",
+      "team": "PIT",
+      "goals": 1,
+      "game_id": 2026020119,
+      "matchup": "PIT @ COL"
+    },
+    {
+      "player_id": 8486171,
+      "player_name": "T. Hughes",
+      "team": "COL",
+      "goals": 1,
+      "game_id": 2026020119,
+      "matchup": "PIT @ COL"
+    },
+    {
+      "player_id": 8477492,
+      "player_name": "N. MacKinnon",
+      "team": "COL",
+      "goals": 1,
+      "game_id": 2026020119,
+      "matchup": "PIT @ COL"
+    },
+    {
+      "player_id": 8477476,
+      "player_name": "A. Lehkonen",
+      "team": "COL",
+      "goals": 2,
+      "game_id": 2026020119,
+      "matchup": "PIT @ COL"
+    },
+    {
+      "player_id": 8476455,
+      "player_name": "G. Landeskog",
+      "team": "COL",
+      "goals": 1,
+      "game_id": 2026020119,
+      "matchup": "PIT @ COL"
+    },
+    {
+      "player_id": 8477496,
+      "player_name": "E. Lindholm",
+      "team": "BOS",
+      "goals": 1,
+      "game_id": 2026020120,
+      "matchup": "BOS @ ANA"
+    },
+    {
+      "player_id": 8483505,
+      "player_name": "M. Poitras",
+      "team": "BOS",
+      "goals": 1,
+      "game_id": 2026020120,
+      "matchup": "BOS @ ANA"
+    },
+    {
+      "player_id": 8477956,
+      "player_name": "D. Pastrnak",
+      "team": "BOS",
+      "goals": 1,
+      "game_id": 2026020120,
+      "matchup": "BOS @ ANA"
+    },
+    {
+      "player_id": 8483017,
+      "player_name": "F. Brunet",
+      "team": "BOS",
+      "goals": 1,
+      "game_id": 2026020120,
+      "matchup": "BOS @ ANA"
+    },
+    {
+      "player_id": 8485512,
+      "player_name": "T. Washe",
+      "team": "ANA",
+      "goals": 1,
+      "game_id": 2026020120,
+      "matchup": "BOS @ ANA"
+    },
+    {
+      "player_id": 8484762,
+      "player_name": "B. Sennecke",
+      "team": "ANA",
+      "goals": 1,
+      "game_id": 2026020120,
+      "matchup": "BOS @ ANA"
+    }
+  ],
+  "scorers_count": 12,
+  "model_comparisons": [
+    {
+      "model": "blend",
+      "model_display_name": "Blend v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.3324,
+          "scored": true
+        },
+        {
+          "rank": 2,
+          "player_id": 8484762,
+          "name": "Beckett Sennecke",
+          "team": "ANA",
+          "probability": 0.2715,
+          "scored": true
+        },
+        {
+          "rank": 3,
+          "player_id": 8475172,
+          "name": "Nazem Kadri",
+          "team": "COL",
+          "probability": 0.271,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.269,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8475754,
+          "name": "Brock Nelson",
+          "team": "COL",
+          "probability": 0.2591,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8483445,
+          "name": "Cutter Gauthier",
+          "team": "ANA",
+          "probability": 0.2506,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8471675,
+          "name": "Sidney Crosby",
+          "team": "PIT",
+          "probability": 0.2485,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8475810,
+          "name": "Bryan Rust",
+          "team": "PIT",
+          "probability": 0.2347,
+          "scored": true
+        },
+        {
+          "rank": 9,
+          "player_id": 8476483,
+          "name": "Rickard Rakell",
+          "team": "PIT",
+          "probability": 0.2285,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8476455,
+          "name": "Gabriel Landeskog",
+          "team": "COL",
+          "probability": 0.2162,
+          "scored": true
+        }
+      ],
+      "hits": 4,
+      "total_predictions": 10,
+      "hit_rate": 40.0
+    },
+    {
+      "model": "direct_lr",
+      "model_display_name": "Direct LR v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.3836,
+          "scored": true
+        },
+        {
+          "rank": 2,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.3272,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8484762,
+          "name": "Beckett Sennecke",
+          "team": "ANA",
+          "probability": 0.321,
+          "scored": true
+        },
+        {
+          "rank": 4,
+          "player_id": 8475172,
+          "name": "Nazem Kadri",
+          "team": "COL",
+          "probability": 0.2975,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8471675,
+          "name": "Sidney Crosby",
+          "team": "PIT",
+          "probability": 0.2908,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8475754,
+          "name": "Brock Nelson",
+          "team": "COL",
+          "probability": 0.2783,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8483445,
+          "name": "Cutter Gauthier",
+          "team": "ANA",
+          "probability": 0.2661,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8484153,
+          "name": "Leo Carlsson",
+          "team": "ANA",
+          "probability": 0.2649,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8476455,
+          "name": "Gabriel Landeskog",
+          "team": "COL",
+          "probability": 0.2592,
+          "scored": true
+        },
+        {
+          "rank": 10,
+          "player_id": 8476483,
+          "name": "Rickard Rakell",
+          "team": "PIT",
+          "probability": 0.2575,
+          "scored": false
+        }
+      ],
+      "hits": 3,
+      "total_predictions": 10,
+      "hit_rate": 30.0
+    },
+    {
+      "model": "lineup_v1",
+      "model_display_name": "Lineup TOI v1",
+      "top10_picks": [
+        {
+          "rank": 2,
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.2573,
+          "scored": true
+        },
+        {
+          "rank": 3,
+          "player_id": 8475172,
+          "name": "Nazem Kadri",
+          "team": "COL",
+          "probability": 0.2557,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8484762,
+          "name": "Beckett Sennecke",
+          "team": "ANA",
+          "probability": 0.2334,
+          "scored": true
+        },
+        {
+          "rank": 5,
+          "player_id": 8475810,
+          "name": "Bryan Rust",
+          "team": "PIT",
+          "probability": 0.2187,
+          "scored": true
+        },
+        {
+          "rank": 6,
+          "player_id": 8475754,
+          "name": "Brock Nelson",
+          "team": "COL",
+          "probability": 0.2155,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8483489,
+          "name": "Fraser Minten",
+          "team": "BOS",
+          "probability": 0.2129,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8471675,
+          "name": "Sidney Crosby",
+          "team": "PIT",
+          "probability": 0.202,
+          "scored": false
+        },
+        {
+          "rank": 12,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.1852,
+          "scored": false
+        },
+        {
+          "rank": 14,
+          "player_id": 8483505,
+          "name": "Matthew Poitras",
+          "team": "BOS",
+          "probability": 0.1781,
+          "scored": true
+        },
+        {
+          "rank": 15,
+          "player_id": 8476483,
+          "name": "Rickard Rakell",
+          "team": "PIT",
+          "probability": 0.1772,
+          "scored": false
+        }
+      ],
+      "hits": 4,
+      "total_predictions": 10,
+      "hit_rate": 40.0
+    },
+    {
+      "model": "market_odds",
+      "model_display_name": "Market Odds v1",
+      "top10_picks": [
+        {
+          "rank": 2,
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.3948,
+          "scored": true
+        },
+        {
+          "rank": 3,
+          "player_id": 8483445,
+          "name": "Cutter Gauthier",
+          "team": "ANA",
+          "probability": 0.3815,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.3642,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8484153,
+          "name": "Leo Carlsson",
+          "team": "ANA",
+          "probability": 0.3414,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8479987,
+          "name": "Morgan Geekie",
+          "team": "BOS",
+          "probability": 0.3288,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8484762,
+          "name": "Beckett Sennecke",
+          "team": "ANA",
+          "probability": 0.3236,
+          "scored": true
+        },
+        {
+          "rank": 8,
+          "player_id": 8475754,
+          "name": "Brock Nelson",
+          "team": "COL",
+          "probability": 0.2851,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8471675,
+          "name": "Sidney Crosby",
+          "team": "PIT",
+          "probability": 0.2797,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8478401,
+          "name": "Pavel Zacha",
+          "team": "BOS",
+          "probability": 0.2737,
+          "scored": false
+        },
+        {
+          "rank": 11,
+          "player_id": 8476483,
+          "name": "Rickard Rakell",
+          "team": "PIT",
+          "probability": 0.2723,
+          "scored": false
+        }
+      ],
+      "hits": 2,
+      "total_predictions": 10,
+      "hit_rate": 20.0
+    },
+    {
+      "model": "monte_carlo",
+      "model_display_name": "Monte Carlo v2",
+      "top10_picks": [
+        {
+          "rank": 2,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.2918,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8484762,
+          "name": "Beckett Sennecke",
+          "team": "ANA",
+          "probability": 0.2912,
+          "scored": true
+        },
+        {
+          "rank": 4,
+          "player_id": 8483489,
+          "name": "Fraser Minten",
+          "team": "BOS",
+          "probability": 0.2816,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8481582,
+          "name": "Nick Robertson",
+          "team": "PIT",
+          "probability": 0.2753,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8483445,
+          "name": "Cutter Gauthier",
+          "team": "ANA",
+          "probability": 0.2744,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8477476,
+          "name": "Artturi Lehkonen",
+          "team": "COL",
+          "probability": 0.2726,
+          "scored": true
+        },
+        {
+          "rank": 8,
+          "player_id": 8475810,
+          "name": "Bryan Rust",
+          "team": "PIT",
+          "probability": 0.2721,
+          "scored": true
+        },
+        {
+          "rank": 9,
+          "player_id": 8483505,
+          "name": "Matthew Poitras",
+          "team": "BOS",
+          "probability": 0.2625,
+          "scored": true
+        },
+        {
+          "rank": 11,
+          "player_id": 8480069,
+          "name": "Cale Makar",
+          "team": "COL",
+          "probability": 0.2525,
+          "scored": false
+        },
+        {
+          "rank": 12,
+          "player_id": 8475754,
+          "name": "Brock Nelson",
+          "team": "COL",
+          "probability": 0.2482,
+          "scored": false
+        }
+      ],
+      "hits": 4,
+      "total_predictions": 10,
+      "hit_rate": 40.0
+    },
+    {
+      "model": "neural_network",
+      "model_display_name": "Weighted Linear v1",
+      "top10_picks": [
+        {
+          "rank": 2,
+          "player_id": 8484762,
+          "name": "Beckett Sennecke",
+          "team": "ANA",
+          "probability": 0.415,
+          "scored": true
+        },
+        {
+          "rank": 3,
+          "player_id": 8483445,
+          "name": "Cutter Gauthier",
+          "team": "ANA",
+          "probability": 0.413,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.383,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8483489,
+          "name": "Fraser Minten",
+          "team": "BOS",
+          "probability": 0.382,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8480069,
+          "name": "Cale Makar",
+          "team": "COL",
+          "probability": 0.376,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.372,
+          "scored": true
+        },
+        {
+          "rank": 8,
+          "player_id": 8475810,
+          "name": "Bryan Rust",
+          "team": "PIT",
+          "probability": 0.346,
+          "scored": true
+        },
+        {
+          "rank": 9,
+          "player_id": 8483505,
+          "name": "Matthew Poitras",
+          "team": "BOS",
+          "probability": 0.334,
+          "scored": true
+        },
+        {
+          "rank": 10,
+          "player_id": 8475768,
+          "name": "Jaden Schwartz",
+          "team": "COL",
+          "probability": 0.327,
+          "scored": false
+        },
+        {
+          "rank": 11,
+          "player_id": 8481582,
+          "name": "Nick Robertson",
+          "team": "PIT",
+          "probability": 0.324,
+          "scored": false
+        }
+      ],
+      "hits": 4,
+      "total_predictions": 10,
+      "hit_rate": 40.0
+    },
+    {
+      "model": "neural_v2",
+      "model_display_name": "Neural Embed v2",
+      "top10_picks": [
+        {
+          "rank": 2,
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.2977,
+          "scored": true
+        },
+        {
+          "rank": 3,
+          "player_id": 8475172,
+          "name": "Nazem Kadri",
+          "team": "COL",
+          "probability": 0.2719,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8475754,
+          "name": "Brock Nelson",
+          "team": "COL",
+          "probability": 0.2604,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8484762,
+          "name": "Beckett Sennecke",
+          "team": "ANA",
+          "probability": 0.2375,
+          "scored": true
+        },
+        {
+          "rank": 8,
+          "player_id": 8471675,
+          "name": "Sidney Crosby",
+          "team": "PIT",
+          "probability": 0.2347,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8475810,
+          "name": "Bryan Rust",
+          "team": "PIT",
+          "probability": 0.2321,
+          "scored": true
+        },
+        {
+          "rank": 10,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.2291,
+          "scored": false
+        },
+        {
+          "rank": 11,
+          "player_id": 8476483,
+          "name": "Rickard Rakell",
+          "team": "PIT",
+          "probability": 0.2243,
+          "scored": false
+        },
+        {
+          "rank": 13,
+          "player_id": 8483445,
+          "name": "Cutter Gauthier",
+          "team": "ANA",
+          "probability": 0.2157,
+          "scored": false
+        },
+        {
+          "rank": 14,
+          "player_id": 8483489,
+          "name": "Fraser Minten",
+          "team": "BOS",
+          "probability": 0.2116,
+          "scored": false
+        }
+      ],
+      "hits": 3,
+      "total_predictions": 10,
+      "hit_rate": 30.0
+    },
+    {
+      "model": "xg_v3",
+      "model_display_name": "xG XGBoost v3",
+      "top10_picks": [
+        {
+          "rank": 2,
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.263,
+          "scored": true
+        },
+        {
+          "rank": 3,
+          "player_id": 8475172,
+          "name": "Nazem Kadri",
+          "team": "COL",
+          "probability": 0.2461,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8475810,
+          "name": "Bryan Rust",
+          "team": "PIT",
+          "probability": 0.2238,
+          "scored": true
+        },
+        {
+          "rank": 5,
+          "player_id": 8475754,
+          "name": "Brock Nelson",
+          "team": "COL",
+          "probability": 0.2165,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8484762,
+          "name": "Beckett Sennecke",
+          "team": "ANA",
+          "probability": 0.2151,
+          "scored": true
+        },
+        {
+          "rank": 7,
+          "player_id": 8483489,
+          "name": "Fraser Minten",
+          "team": "BOS",
+          "probability": 0.2117,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8471675,
+          "name": "Sidney Crosby",
+          "team": "PIT",
+          "probability": 0.1966,
+          "scored": false
+        },
+        {
+          "rank": 13,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.1813,
+          "scored": false
+        },
+        {
+          "rank": 14,
+          "player_id": 8483505,
+          "name": "Matthew Poitras",
+          "team": "BOS",
+          "probability": 0.181,
+          "scored": true
+        },
+        {
+          "rank": 15,
+          "player_id": 8475768,
+          "name": "Jaden Schwartz",
+          "team": "COL",
+          "probability": 0.1763,
+          "scored": false
+        }
+      ],
+      "hits": 4,
+      "total_predictions": 10,
+      "hit_rate": 40.0
+    },
+    {
+      "model": "xg_v3_synthetic",
+      "model_display_name": "xG XGBoost v3 (synthetic shadow)",
+      "top10_picks": [
+        {
+          "rank": 2,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.6219,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8483505,
+          "name": "Matthew Poitras",
+          "team": "BOS",
+          "probability": 0.5814,
+          "scored": true
+        },
+        {
+          "rank": 4,
+          "player_id": 8475810,
+          "name": "Bryan Rust",
+          "team": "PIT",
+          "probability": 0.5658,
+          "scored": true
+        },
+        {
+          "rank": 5,
+          "player_id": 8484762,
+          "name": "Beckett Sennecke",
+          "team": "ANA",
+          "probability": 0.5577,
+          "scored": true
+        },
+        {
+          "rank": 6,
+          "player_id": 8481582,
+          "name": "Nick Robertson",
+          "team": "PIT",
+          "probability": 0.5389,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8475754,
+          "name": "Brock Nelson",
+          "team": "COL",
+          "probability": 0.5051,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8475768,
+          "name": "Jaden Schwartz",
+          "team": "COL",
+          "probability": 0.4982,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8483489,
+          "name": "Fraser Minten",
+          "team": "BOS",
+          "probability": 0.44,
+          "scored": false
+        },
+        {
+          "rank": 12,
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.3879,
+          "scored": true
+        },
+        {
+          "rank": 13,
+          "player_id": 8471675,
+          "name": "Sidney Crosby",
+          "team": "PIT",
+          "probability": 0.381,
+          "scored": false
+        }
+      ],
+      "hits": 4,
+      "total_predictions": 10,
+      "hit_rate": 40.0
+    }
+  ],
+  "fetched_at": "2026-10-17T06:12:21.581859"
+}

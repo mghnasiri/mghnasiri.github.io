@@ -1,538 +1,123 @@
 {
-  "date": "2026-10-15",
-  "games_count": 11,
-  "final_games": 11,
+  "date": "2026-10-16",
+  "games_count": 2,
+  "final_games": 2,
   "partial": false,
   "games": [
     {
-      "game_id": 2026020108,
-      "home_team": "TOR",
-      "away_team": "BUF",
+      "game_id": 2026020119,
+      "home_team": "COL",
+      "away_team": "PIT",
       "game_state": "OFF",
       "schedule_state": "OK"
     },
     {
-      "game_id": 2026020109,
-      "home_team": "OTT",
-      "away_team": "NYI",
-      "game_state": "OFF",
-      "schedule_state": "OK"
-    },
-    {
-      "game_id": 2026020111,
-      "home_team": "TBL",
-      "away_team": "SEA",
-      "game_state": "OFF",
-      "schedule_state": "OK"
-    },
-    {
-      "game_id": 2026020112,
-      "home_team": "FLA",
-      "away_team": "VAN",
-      "game_state": "OFF",
-      "schedule_state": "OK"
-    },
-    {
-      "game_id": 2026020113,
-      "home_team": "NJD",
-      "away_team": "NYR",
-      "game_state": "OFF",
-      "schedule_state": "OK"
-    },
-    {
-      "game_id": 2026020110,
-      "home_team": "DET",
-      "away_team": "PHI",
-      "game_state": "OFF",
-      "schedule_state": "OK"
-    },
-    {
-      "game_id": 2026020114,
-      "home_team": "CHI",
-      "away_team": "WPG",
-      "game_state": "OFF",
-      "schedule_state": "OK"
-    },
-    {
-      "game_id": 2026020115,
-      "home_team": "NSH",
-      "away_team": "SJS",
-      "game_state": "OFF",
-      "schedule_state": "OK"
-    },
-    {
-      "game_id": 2026020116,
-      "home_team": "MIN",
-      "away_team": "STL",
-      "game_state": "OFF",
-      "schedule_state": "OK"
-    },
-    {
-      "game_id": 2026020117,
-      "home_team": "EDM",
-      "away_team": "UTA",
-      "game_state": "OFF",
-      "schedule_state": "OK"
-    },
-    {
-      "game_id": 2026020118,
-      "home_team": "VGK",
-      "away_team": "CGY",
+      "game_id": 2026020120,
+      "home_team": "ANA",
+      "away_team": "BOS",
       "game_state": "OFF",
       "schedule_state": "OK"
     }
   ],
   "all_scorers": [
     {
-      "player_id": 8482097,
-      "player_name": "J. Quinn",
-      "team": "BUF",
+      "player_id": 8475810,
+      "player_name": "B. Rust",
+      "team": "PIT",
+      "goals": 1,
+      "game_id": 2026020119,
+      "matchup": "PIT @ COL"
+    },
+    {
+      "player_id": 8471215,
+      "player_name": "E. Malkin",
+      "team": "PIT",
+      "goals": 1,
+      "game_id": 2026020119,
+      "matchup": "PIT @ COL"
+    },
+    {
+      "player_id": 8486171,
+      "player_name": "T. Hughes",
+      "team": "COL",
+      "goals": 1,
+      "game_id": 2026020119,
+      "matchup": "PIT @ COL"
+    },
+    {
+      "player_id": 8477492,
+      "player_name": "N. MacKinnon",
+      "team": "COL",
+      "goals": 1,
+      "game_id": 2026020119,
+      "matchup": "PIT @ COL"
+    },
+    {
+      "player_id": 8477476,
+      "player_name": "A. Lehkonen",
+      "team": "COL",
       "goals": 2,
-      "game_id": 2026020108,
-      "matchup": "BUF @ TOR"
+      "game_id": 2026020119,
+      "matchup": "PIT @ COL"
     },
     {
-      "player_id": 8480807,
-      "player_name": "M. Samuelsson",
-      "team": "BUF",
+      "player_id": 8476455,
+      "player_name": "G. Landeskog",
+      "team": "COL",
       "goals": 1,
-      "game_id": 2026020108,
-      "matchup": "BUF @ TOR"
+      "game_id": 2026020119,
+      "matchup": "PIT @ COL"
     },
     {
-      "player_id": 8482671,
-      "player_name": "O. Power",
-      "team": "BUF",
+      "player_id": 8477496,
+      "player_name": "E. Lindholm",
+      "team": "BOS",
       "goals": 1,
-      "game_id": 2026020108,
-      "matchup": "BUF @ TOR"
+      "game_id": 2026020120,
+      "matchup": "BOS @ ANA"
     },
     {
-      "player_id": 8478502,
-      "player_name": "D. Gilbert",
-      "team": "BUF",
+      "player_id": 8483505,
+      "player_name": "M. Poitras",
+      "team": "BOS",
       "goals": 1,
-      "game_id": 2026020108,
-      "matchup": "BUF @ TOR"
+      "game_id": 2026020120,
+      "matchup": "BOS @ ANA"
     },
     {
-      "player_id": 8479318,
-      "player_name": "A. Matthews",
-      "team": "TOR",
+      "player_id": 8477956,
+      "player_name": "D. Pastrnak",
+      "team": "BOS",
       "goals": 1,
-      "game_id": 2026020108,
-      "matchup": "BUF @ TOR"
+      "game_id": 2026020120,
+      "matchup": "BOS @ ANA"
     },
     {
-      "player_id": 8480893,
-      "player_name": "K. Marchenko",
-      "team": "TOR",
-      "goals": 3,
-      "game_id": 2026020108,
-      "matchup": "BUF @ TOR"
-    },
-    {
-      "player_id": 8481711,
-      "player_name": "M. Maccelli",
-      "team": "NYI",
+      "player_id": 8483017,
+      "player_name": "F. Brunet",
+      "team": "BOS",
       "goals": 1,
-      "game_id": 2026020109,
-      "matchup": "NYI @ OTT"
+      "game_id": 2026020120,
+      "matchup": "BOS @ ANA"
     },
     {
-      "player_id": 8482092,
-      "player_name": "R. Greig",
-      "team": "OTT",
+      "player_id": 8485512,
+      "player_name": "T. Washe",
+      "team": "ANA",
       "goals": 1,
-      "game_id": 2026020109,
-      "matchup": "NYI @ OTT"
+      "game_id": 2026020120,
+      "matchup": "BOS @ ANA"
     },
     {
-      "player_id": 8482665,
-      "player_name": "M. Beniers",
-      "team": "SEA",
+      "player_id": 8484762,
+      "player_name": "B. Sennecke",
+      "team": "ANA",
       "goals": 1,
-      "game_id": 2026020111,
-      "matchup": "SEA @ TBL"
-    },
-    {
-      "player_id": 8477955,
-      "player_name": "J. McCann",
-      "team": "SEA",
-      "goals": 1,
-      "game_id": 2026020111,
-      "matchup": "SEA @ TBL"
-    },
-    {
-      "player_id": 8482751,
-      "player_name": "R. Winterton",
-      "team": "SEA",
-      "goals": 1,
-      "game_id": 2026020111,
-      "matchup": "SEA @ TBL"
-    },
-    {
-      "player_id": 8479542,
-      "player_name": "B. Hagel",
-      "team": "TBL",
-      "goals": 2,
-      "game_id": 2026020111,
-      "matchup": "SEA @ TBL"
-    },
-    {
-      "player_id": 8481624,
-      "player_name": "I. Mikheyev",
-      "team": "TBL",
-      "goals": 1,
-      "game_id": 2026020111,
-      "matchup": "SEA @ TBL"
-    },
-    {
-      "player_id": 8475167,
-      "player_name": "V. Hedman",
-      "team": "TBL",
-      "goals": 1,
-      "game_id": 2026020111,
-      "matchup": "SEA @ TBL"
-    },
-    {
-      "player_id": 8483499,
-      "player_name": "L. Ohgren",
-      "team": "VAN",
-      "goals": 1,
-      "game_id": 2026020112,
-      "matchup": "VAN @ FLA"
-    },
-    {
-      "player_id": 8483678,
-      "player_name": "E. Pettersson",
-      "team": "VAN",
-      "goals": 1,
-      "game_id": 2026020112,
-      "matchup": "VAN @ FLA"
-    },
-    {
-      "player_id": 8480801,
-      "player_name": "B. Tkachuk",
-      "team": "FLA",
-      "goals": 3,
-      "game_id": 2026020112,
-      "matchup": "VAN @ FLA"
-    },
-    {
-      "player_id": 8481604,
-      "player_name": "P. Dorofeyev",
-      "team": "NYR",
-      "goals": 1,
-      "game_id": 2026020113,
-      "matchup": "NYR @ NJD"
-    },
-    {
-      "player_id": 8476474,
-      "player_name": "S. Noesen",
-      "team": "NJD",
-      "goals": 1,
-      "game_id": 2026020113,
-      "matchup": "NYR @ NJD"
-    },
-    {
-      "player_id": 8479996,
-      "player_name": "C. Glass",
-      "team": "NJD",
-      "goals": 1,
-      "game_id": 2026020113,
-      "matchup": "NYR @ NJD"
-    },
-    {
-      "player_id": 8480002,
-      "player_name": "N. Hischier",
-      "team": "NJD",
-      "goals": 1,
-      "game_id": 2026020113,
-      "matchup": "NYR @ NJD"
-    },
-    {
-      "player_id": 8478542,
-      "player_name": "E. Rodrigues",
-      "team": "NJD",
-      "goals": 1,
-      "game_id": 2026020113,
-      "matchup": "NYR @ NJD"
-    },
-    {
-      "player_id": 8481721,
-      "player_name": "A. Gritsyuk",
-      "team": "NJD",
-      "goals": 1,
-      "game_id": 2026020113,
-      "matchup": "NYR @ NJD"
-    },
-    {
-      "player_id": 8482684,
-      "player_name": "L. Hughes",
-      "team": "NJD",
-      "goals": 2,
-      "game_id": 2026020113,
-      "matchup": "NYR @ NJD"
-    },
-    {
-      "player_id": 8484387,
-      "player_name": "M. Michkov",
-      "team": "PHI",
-      "goals": 1,
-      "game_id": 2026020110,
-      "matchup": "PHI @ DET"
-    },
-    {
-      "player_id": 8477429,
-      "player_name": "A. Copp",
-      "team": "DET",
-      "goals": 1,
-      "game_id": 2026020110,
-      "matchup": "PHI @ DET"
-    },
-    {
-      "player_id": 8483679,
-      "player_name": "A. Johansson",
-      "team": "DET",
-      "goals": 1,
-      "game_id": 2026020110,
-      "matchup": "PHI @ DET"
-    },
-    {
-      "player_id": 8480113,
-      "player_name": "A. Iafallo",
-      "team": "WPG",
-      "goals": 1,
-      "game_id": 2026020114,
-      "matchup": "WPG @ CHI"
-    },
-    {
-      "player_id": 8478398,
-      "player_name": "K. Connor",
-      "team": "WPG",
-      "goals": 1,
-      "game_id": 2026020114,
-      "matchup": "WPG @ CHI"
-    },
-    {
-      "player_id": 8480145,
-      "player_name": "N. Pionk",
-      "team": "WPG",
-      "goals": 1,
-      "game_id": 2026020114,
-      "matchup": "WPG @ CHI"
-    },
-    {
-      "player_id": 8477987,
-      "player_name": "R. Donato",
-      "team": "CHI",
-      "goals": 1,
-      "game_id": 2026020114,
-      "matchup": "WPG @ CHI"
-    },
-    {
-      "player_id": 8483493,
-      "player_name": "F. Nazar",
-      "team": "CHI",
-      "goals": 1,
-      "game_id": 2026020114,
-      "matchup": "WPG @ CHI"
-    },
-    {
-      "player_id": 8484144,
-      "player_name": "C. Bedard",
-      "team": "CHI",
-      "goals": 1,
-      "game_id": 2026020114,
-      "matchup": "WPG @ CHI"
-    },
-    {
-      "player_id": 8484783,
-      "player_name": "A. Levshunov",
-      "team": "CHI",
-      "goals": 1,
-      "game_id": 2026020114,
-      "matchup": "WPG @ CHI"
-    },
-    {
-      "player_id": 8484227,
-      "player_name": "W. Smith",
-      "team": "SJS",
-      "goals": 1,
-      "game_id": 2026020115,
-      "matchup": "SJS @ NSH"
-    },
-    {
-      "player_id": 8478975,
-      "player_name": "M. Marchment",
-      "team": "SJS",
-      "goals": 1,
-      "game_id": 2026020115,
-      "matchup": "SJS @ NSH"
-    },
-    {
-      "player_id": 8475158,
-      "player_name": "R. O'Reilly",
-      "team": "NSH",
-      "goals": 1,
-      "game_id": 2026020115,
-      "matchup": "SJS @ NSH"
-    },
-    {
-      "player_id": 8474564,
-      "player_name": "S. Stamkos",
-      "team": "NSH",
-      "goals": 1,
-      "game_id": 2026020115,
-      "matchup": "SJS @ NSH"
-    },
-    {
-      "player_id": 8480023,
-      "player_name": "R. Thomas",
-      "team": "STL",
-      "goals": 1,
-      "game_id": 2026020116,
-      "matchup": "STL @ MIN"
-    },
-    {
-      "player_id": 8481013,
-      "player_name": "J. Berggren",
-      "team": "STL",
-      "goals": 1,
-      "game_id": 2026020116,
-      "matchup": "STL @ MIN"
-    },
-    {
-      "player_id": 8482077,
-      "player_name": "D. Holloway",
-      "team": "STL",
-      "goals": 1,
-      "game_id": 2026020116,
-      "matchup": "STL @ MIN"
-    },
-    {
-      "player_id": 8482745,
-      "player_name": "M. McTavish",
-      "team": "STL",
-      "goals": 1,
-      "game_id": 2026020116,
-      "matchup": "STL @ MIN"
-    },
-    {
-      "player_id": 8481557,
-      "player_name": "M. Boldy",
-      "team": "MIN",
-      "goals": 3,
-      "game_id": 2026020116,
-      "matchup": "STL @ MIN"
-    },
-    {
-      "player_id": 8483525,
-      "player_name": "D. Yurov",
-      "team": "MIN",
-      "goals": 1,
-      "game_id": 2026020116,
-      "matchup": "STL @ MIN"
-    },
-    {
-      "player_id": 8478864,
-      "player_name": "K. Kaprizov",
-      "team": "MIN",
-      "goals": 1,
-      "game_id": 2026020116,
-      "matchup": "STL @ MIN"
-    },
-    {
-      "player_id": 8479343,
-      "player_name": "C. Keller",
-      "team": "UTA",
-      "goals": 2,
-      "game_id": 2026020117,
-      "matchup": "UTA @ EDM"
-    },
-    {
-      "player_id": 8480849,
-      "player_name": "B. Hayton",
-      "team": "UTA",
-      "goals": 1,
-      "game_id": 2026020117,
-      "matchup": "UTA @ EDM"
-    },
-    {
-      "player_id": 8483431,
-      "player_name": "L. Cooley",
-      "team": "UTA",
-      "goals": 1,
-      "game_id": 2026020117,
-      "matchup": "UTA @ EDM"
-    },
-    {
-      "player_id": 8477934,
-      "player_name": "L. Draisaitl",
-      "team": "EDM",
-      "goals": 1,
-      "game_id": 2026020117,
-      "matchup": "UTA @ EDM"
-    },
-    {
-      "player_id": 8482166,
-      "player_name": "S. Mukhamadullin",
-      "team": "EDM",
-      "goals": 1,
-      "game_id": 2026020117,
-      "matchup": "UTA @ EDM"
-    },
-    {
-      "player_id": 8482679,
-      "player_name": "M. Coronato",
-      "team": "CGY",
-      "goals": 1,
-      "game_id": 2026020118,
-      "matchup": "CGY @ VGK"
-    },
-    {
-      "player_id": 8478136,
-      "player_name": "J. Middleton",
-      "team": "CGY",
-      "goals": 1,
-      "game_id": 2026020118,
-      "matchup": "CGY @ VGK"
-    },
-    {
-      "player_id": 8478403,
-      "player_name": "J. Eichel",
-      "team": "VGK",
-      "goals": 1,
-      "game_id": 2026020118,
-      "matchup": "CGY @ VGK"
-    },
-    {
-      "player_id": 8479353,
-      "player_name": "B. Howden",
-      "team": "VGK",
-      "goals": 1,
-      "game_id": 2026020118,
-      "matchup": "CGY @ VGK"
-    },
-    {
-      "player_id": 8483890,
-      "player_name": "B. Bowman",
-      "team": "VGK",
-      "goals": 1,
-      "game_id": 2026020118,
-      "matchup": "CGY @ VGK"
-    },
-    {
-      "player_id": 8475913,
-      "player_name": "M. Stone",
-      "team": "VGK",
-      "goals": 3,
-      "game_id": 2026020118,
-      "matchup": "CGY @ VGK"
+      "game_id": 2026020120,
+      "matchup": "BOS @ ANA"
     }
   ],
-  "scorers_count": 56,
+  "scorers_count": 12,
   "model_comparisons": [
     {
       "model": "blend",
@@ -540,88 +125,88 @@
       "top10_picks": [
         {
           "rank": 1,
-          "player_id": 8478398,
-          "name": "Kyle Connor",
-          "team": "WPG",
-          "probability": 0.4555,
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.3324,
           "scored": true
         },
         {
           "rank": 2,
-          "player_id": 8477934,
-          "name": "Leon Draisaitl",
-          "team": "EDM",
-          "probability": 0.388,
+          "player_id": 8484762,
+          "name": "Beckett Sennecke",
+          "team": "ANA",
+          "probability": 0.2715,
           "scored": true
         },
         {
           "rank": 3,
-          "player_id": 8476881,
-          "name": "Tomas Hertl",
-          "team": "VGK",
-          "probability": 0.3671,
+          "player_id": 8475172,
+          "name": "Nazem Kadri",
+          "team": "COL",
+          "probability": 0.271,
           "scored": false
         },
         {
           "rank": 4,
-          "player_id": 8478403,
-          "name": "Jack Eichel",
-          "team": "VGK",
-          "probability": 0.3628,
-          "scored": true
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.269,
+          "scored": false
         },
         {
           "rank": 5,
-          "player_id": 8478402,
-          "name": "Connor McDavid",
-          "team": "EDM",
-          "probability": 0.3504,
+          "player_id": 8475754,
+          "name": "Brock Nelson",
+          "team": "COL",
+          "probability": 0.2591,
           "scored": false
         },
         {
           "rank": 6,
-          "player_id": 8475913,
-          "name": "Mark Stone",
-          "team": "VGK",
-          "probability": 0.3476,
-          "scored": true
+          "player_id": 8483445,
+          "name": "Cutter Gauthier",
+          "team": "ANA",
+          "probability": 0.2506,
+          "scored": false
         },
         {
           "rank": 7,
-          "player_id": 8477939,
-          "name": "William Nylander",
-          "team": "TOR",
-          "probability": 0.3436,
+          "player_id": 8471675,
+          "name": "Sidney Crosby",
+          "team": "PIT",
+          "probability": 0.2485,
           "scored": false
         },
         {
           "rank": 8,
-          "player_id": 8477946,
-          "name": "Dylan Larkin",
-          "team": "DET",
-          "probability": 0.3324,
-          "scored": false
+          "player_id": 8475810,
+          "name": "Bryan Rust",
+          "team": "PIT",
+          "probability": 0.2347,
+          "scored": true
         },
         {
           "rank": 9,
-          "player_id": 8481557,
-          "name": "Matt Boldy",
-          "team": "MIN",
-          "probability": 0.3316,
-          "scored": true
+          "player_id": 8476483,
+          "name": "Rickard Rakell",
+          "team": "PIT",
+          "probability": 0.2285,
+          "scored": false
         },
         {
           "rank": 10,
-          "player_id": 8478864,
-          "name": "Kirill Kaprizov",
-          "team": "MIN",
-          "probability": 0.3193,
+          "player_id": 8476455,
+          "name": "Gabriel Landeskog",
+          "team": "COL",
+          "probability": 0.2162,
           "scored": true
         }
       ],
-      "hits": 6,
+      "hits": 4,
       "total_predictions": 10,
-      "hit_rate": 60.0
+      "hit_rate": 40.0
     },
     {
       "model": "direct_lr",
@@ -629,88 +214,88 @@
       "top10_picks": [
         {
           "rank": 1,
-          "player_id": 8478398,
-          "name": "Kyle Connor",
-          "team": "WPG",
-          "probability": 0.415,
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.3836,
           "scored": true
         },
         {
           "rank": 2,
-          "player_id": 8477934,
-          "name": "Leon Draisaitl",
-          "team": "EDM",
-          "probability": 0.4098,
-          "scored": true
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.3272,
+          "scored": false
         },
         {
           "rank": 3,
-          "player_id": 8478864,
-          "name": "Kirill Kaprizov",
-          "team": "MIN",
-          "probability": 0.3938,
+          "player_id": 8484762,
+          "name": "Beckett Sennecke",
+          "team": "ANA",
+          "probability": 0.321,
           "scored": true
         },
         {
           "rank": 4,
-          "player_id": 8478402,
-          "name": "Connor McDavid",
-          "team": "EDM",
-          "probability": 0.387,
+          "player_id": 8475172,
+          "name": "Nazem Kadri",
+          "team": "COL",
+          "probability": 0.2975,
           "scored": false
         },
         {
           "rank": 5,
-          "player_id": 8477939,
-          "name": "William Nylander",
-          "team": "TOR",
-          "probability": 0.3801,
+          "player_id": 8471675,
+          "name": "Sidney Crosby",
+          "team": "PIT",
+          "probability": 0.2908,
           "scored": false
         },
         {
           "rank": 6,
-          "player_id": 8481557,
-          "name": "Matt Boldy",
-          "team": "MIN",
-          "probability": 0.3793,
-          "scored": true
+          "player_id": 8475754,
+          "name": "Brock Nelson",
+          "team": "COL",
+          "probability": 0.2783,
+          "scored": false
         },
         {
           "rank": 7,
-          "player_id": 8481559,
-          "name": "Jack Hughes",
-          "team": "NJD",
-          "probability": 0.3686,
+          "player_id": 8483445,
+          "name": "Cutter Gauthier",
+          "team": "ANA",
+          "probability": 0.2661,
           "scored": false
         },
         {
           "rank": 8,
-          "player_id": 8478403,
-          "name": "Jack Eichel",
-          "team": "VGK",
-          "probability": 0.3433,
-          "scored": true
+          "player_id": 8484153,
+          "name": "Leo Carlsson",
+          "team": "ANA",
+          "probability": 0.2649,
+          "scored": false
         },
         {
           "rank": 9,
-          "player_id": 8477946,
-          "name": "Dylan Larkin",
-          "team": "DET",
-          "probability": 0.3252,
-          "scored": false
+          "player_id": 8476455,
+          "name": "Gabriel Landeskog",
+          "team": "COL",
+          "probability": 0.2592,
+          "scored": true
         },
         {
           "rank": 10,
-          "player_id": 8477409,
-          "name": "Carter Verhaeghe",
-          "team": "FLA",
-          "probability": 0.3079,
+          "player_id": 8476483,
+          "name": "Rickard Rakell",
+          "team": "PIT",
+          "probability": 0.2575,
           "scored": false
         }
       ],
-      "hits": 5,
+      "hits": 3,
       "total_predictions": 10,
-      "hit_rate": 50.0
+      "hit_rate": 30.0
     },
     {
       "model": "lineup_v1",
@@ -718,171 +303,82 @@
       "top10_picks": [
         {
           "rank": 2,
-          "player_id": 8478398,
-          "name": "Kyle Connor",
-          "team": "WPG",
-          "probability": 0.4931,
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.2573,
+          "scored": true
+        },
+        {
+          "rank": 3,
+          "player_id": 8475172,
+          "name": "Nazem Kadri",
+          "team": "COL",
+          "probability": 0.2557,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8484762,
+          "name": "Beckett Sennecke",
+          "team": "ANA",
+          "probability": 0.2334,
           "scored": true
         },
         {
           "rank": 5,
-          "player_id": 8476881,
-          "name": "Tomas Hertl",
-          "team": "VGK",
-          "probability": 0.434,
+          "player_id": 8475810,
+          "name": "Bryan Rust",
+          "team": "PIT",
+          "probability": 0.2187,
+          "scored": true
+        },
+        {
+          "rank": 6,
+          "player_id": 8475754,
+          "name": "Brock Nelson",
+          "team": "COL",
+          "probability": 0.2155,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8483489,
+          "name": "Fraser Minten",
+          "team": "BOS",
+          "probability": 0.2129,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8471675,
+          "name": "Sidney Crosby",
+          "team": "PIT",
+          "probability": 0.202,
+          "scored": false
+        },
+        {
+          "rank": 12,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.1852,
           "scored": false
         },
         {
           "rank": 14,
-          "player_id": 8478403,
-          "name": "Jack Eichel",
-          "team": "VGK",
-          "probability": 0.3488,
+          "player_id": 8483505,
+          "name": "Matthew Poitras",
+          "team": "BOS",
+          "probability": 0.1781,
           "scored": true
         },
         {
           "rank": 15,
-          "player_id": 8477934,
-          "name": "Leon Draisaitl",
-          "team": "EDM",
-          "probability": 0.3437,
-          "scored": true
-        },
-        {
-          "rank": 17,
-          "player_id": 8475913,
-          "name": "Mark Stone",
-          "team": "VGK",
-          "probability": 0.3398,
-          "scored": true
-        },
-        {
-          "rank": 19,
-          "player_id": 8482149,
-          "name": "Cole Perfetti",
-          "team": "WPG",
-          "probability": 0.332,
-          "scored": false
-        },
-        {
-          "rank": 20,
-          "player_id": 8482113,
-          "name": "Anton Lundell",
-          "team": "FLA",
-          "probability": 0.3318,
-          "scored": false
-        },
-        {
-          "rank": 21,
-          "player_id": 8477939,
-          "name": "William Nylander",
-          "team": "TOR",
-          "probability": 0.3191,
-          "scored": false
-        },
-        {
-          "rank": 23,
-          "player_id": 8481557,
-          "name": "Matt Boldy",
-          "team": "MIN",
-          "probability": 0.307,
-          "scored": true
-        },
-        {
-          "rank": 24,
-          "player_id": 8477946,
-          "name": "Dylan Larkin",
-          "team": "DET",
-          "probability": 0.3059,
-          "scored": false
-        }
-      ],
-      "hits": 5,
-      "total_predictions": 10,
-      "hit_rate": 50.0
-    },
-    {
-      "model": "market_odds",
-      "model_display_name": "Market Odds v1",
-      "top10_picks": [
-        {
-          "rank": 1,
-          "player_id": 8477934,
-          "name": "Leon Draisaitl",
-          "team": "EDM",
-          "probability": 0.4611,
-          "scored": true
-        },
-        {
-          "rank": 2,
-          "player_id": 8478402,
-          "name": "Connor McDavid",
-          "team": "EDM",
-          "probability": 0.4375,
-          "scored": false
-        },
-        {
-          "rank": 3,
-          "player_id": 8478398,
-          "name": "Kyle Connor",
-          "team": "WPG",
-          "probability": 0.4308,
-          "scored": true
-        },
-        {
-          "rank": 7,
-          "player_id": 8481559,
-          "name": "Jack Hughes",
-          "team": "NJD",
-          "probability": 0.4043,
-          "scored": false
-        },
-        {
-          "rank": 11,
-          "player_id": 8478403,
-          "name": "Jack Eichel",
-          "team": "VGK",
-          "probability": 0.3948,
-          "scored": true
-        },
-        {
-          "rank": 15,
-          "player_id": 8475913,
-          "name": "Mark Stone",
-          "team": "VGK",
-          "probability": 0.3828,
-          "scored": true
-        },
-        {
-          "rank": 19,
-          "player_id": 8477939,
-          "name": "William Nylander",
-          "team": "TOR",
-          "probability": 0.3656,
-          "scored": false
-        },
-        {
-          "rank": 25,
-          "player_id": 8477946,
-          "name": "Dylan Larkin",
-          "team": "DET",
-          "probability": 0.3431,
-          "scored": false
-        },
-        {
-          "rank": 27,
-          "player_id": 8477409,
-          "name": "Carter Verhaeghe",
-          "team": "FLA",
-          "probability": 0.3406,
-          "scored": false
-        },
-        {
-          "rank": 32,
-          "player_id": 8476881,
-          "name": "Tomas Hertl",
-          "team": "VGK",
-          "probability": 0.328,
+          "player_id": 8476483,
+          "name": "Rickard Rakell",
+          "team": "PIT",
+          "probability": 0.1772,
           "scored": false
         }
       ],
@@ -891,271 +387,360 @@
       "hit_rate": 40.0
     },
     {
+      "model": "market_odds",
+      "model_display_name": "Market Odds v1",
+      "top10_picks": [
+        {
+          "rank": 2,
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.3948,
+          "scored": true
+        },
+        {
+          "rank": 3,
+          "player_id": 8483445,
+          "name": "Cutter Gauthier",
+          "team": "ANA",
+          "probability": 0.3815,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.3642,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8484153,
+          "name": "Leo Carlsson",
+          "team": "ANA",
+          "probability": 0.3414,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8479987,
+          "name": "Morgan Geekie",
+          "team": "BOS",
+          "probability": 0.3288,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8484762,
+          "name": "Beckett Sennecke",
+          "team": "ANA",
+          "probability": 0.3236,
+          "scored": true
+        },
+        {
+          "rank": 8,
+          "player_id": 8475754,
+          "name": "Brock Nelson",
+          "team": "COL",
+          "probability": 0.2851,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8471675,
+          "name": "Sidney Crosby",
+          "team": "PIT",
+          "probability": 0.2797,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8478401,
+          "name": "Pavel Zacha",
+          "team": "BOS",
+          "probability": 0.2737,
+          "scored": false
+        },
+        {
+          "rank": 11,
+          "player_id": 8476483,
+          "name": "Rickard Rakell",
+          "team": "PIT",
+          "probability": 0.2723,
+          "scored": false
+        }
+      ],
+      "hits": 2,
+      "total_predictions": 10,
+      "hit_rate": 20.0
+    },
+    {
       "model": "monte_carlo",
       "model_display_name": "Monte Carlo v2",
       "top10_picks": [
         {
-          "rank": 1,
-          "player_id": 8478398,
-          "name": "Kyle Connor",
-          "team": "WPG",
-          "probability": 0.4189,
+          "rank": 2,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.2918,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8484762,
+          "name": "Beckett Sennecke",
+          "team": "ANA",
+          "probability": 0.2912,
           "scored": true
         },
         {
-          "rank": 2,
-          "player_id": 8478864,
-          "name": "Kirill Kaprizov",
-          "team": "MIN",
-          "probability": 0.4013,
+          "rank": 4,
+          "player_id": 8483489,
+          "name": "Fraser Minten",
+          "team": "BOS",
+          "probability": 0.2816,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8481582,
+          "name": "Nick Robertson",
+          "team": "PIT",
+          "probability": 0.2753,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8483445,
+          "name": "Cutter Gauthier",
+          "team": "ANA",
+          "probability": 0.2744,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8477476,
+          "name": "Artturi Lehkonen",
+          "team": "COL",
+          "probability": 0.2726,
           "scored": true
+        },
+        {
+          "rank": 8,
+          "player_id": 8475810,
+          "name": "Bryan Rust",
+          "team": "PIT",
+          "probability": 0.2721,
+          "scored": true
+        },
+        {
+          "rank": 9,
+          "player_id": 8483505,
+          "name": "Matthew Poitras",
+          "team": "BOS",
+          "probability": 0.2625,
+          "scored": true
+        },
+        {
+          "rank": 11,
+          "player_id": 8480069,
+          "name": "Cale Makar",
+          "team": "COL",
+          "probability": 0.2525,
+          "scored": false
         },
         {
           "rank": 12,
-          "player_id": 8482149,
-          "name": "Cole Perfetti",
-          "team": "WPG",
-          "probability": 0.3312,
+          "player_id": 8475754,
+          "name": "Brock Nelson",
+          "team": "COL",
+          "probability": 0.2482,
           "scored": false
-        },
-        {
-          "rank": 14,
-          "player_id": 8477939,
-          "name": "William Nylander",
-          "team": "TOR",
-          "probability": 0.3296,
-          "scored": false
-        },
-        {
-          "rank": 17,
-          "player_id": 8476881,
-          "name": "Tomas Hertl",
-          "team": "VGK",
-          "probability": 0.3172,
-          "scored": false
-        },
-        {
-          "rank": 18,
-          "player_id": 8478403,
-          "name": "Jack Eichel",
-          "team": "VGK",
-          "probability": 0.3161,
-          "scored": true
-        },
-        {
-          "rank": 25,
-          "player_id": 8478402,
-          "name": "Connor McDavid",
-          "team": "EDM",
-          "probability": 0.2822,
-          "scored": false
-        },
-        {
-          "rank": 27,
-          "player_id": 8477934,
-          "name": "Leon Draisaitl",
-          "team": "EDM",
-          "probability": 0.2813,
-          "scored": true
-        },
-        {
-          "rank": 29,
-          "player_id": 8477409,
-          "name": "Carter Verhaeghe",
-          "team": "FLA",
-          "probability": 0.2789,
-          "scored": false
-        },
-        {
-          "rank": 33,
-          "player_id": 8475913,
-          "name": "Mark Stone",
-          "team": "VGK",
-          "probability": 0.2739,
-          "scored": true
         }
       ],
-      "hits": 5,
+      "hits": 4,
       "total_predictions": 10,
-      "hit_rate": 50.0
+      "hit_rate": 40.0
     },
     {
       "model": "neural_network",
       "model_display_name": "Weighted Linear v1",
       "top10_picks": [
         {
-          "rank": 1,
-          "player_id": 8478398,
-          "name": "Kyle Connor",
-          "team": "WPG",
-          "probability": 0.55,
-          "scored": true
-        },
-        {
           "rank": 2,
-          "player_id": 8478864,
-          "name": "Kirill Kaprizov",
-          "team": "MIN",
-          "probability": 0.495,
+          "player_id": 8484762,
+          "name": "Beckett Sennecke",
+          "team": "ANA",
+          "probability": 0.415,
           "scored": true
         },
         {
-          "rank": 8,
-          "player_id": 8477934,
-          "name": "Leon Draisaitl",
-          "team": "EDM",
-          "probability": 0.402,
-          "scored": true
+          "rank": 3,
+          "player_id": 8483445,
+          "name": "Cutter Gauthier",
+          "team": "ANA",
+          "probability": 0.413,
+          "scored": false
         },
         {
-          "rank": 11,
-          "player_id": 8478402,
-          "name": "Connor McDavid",
-          "team": "EDM",
+          "rank": 4,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.383,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8483489,
+          "name": "Fraser Minten",
+          "team": "BOS",
           "probability": 0.382,
           "scored": false
         },
         {
-          "rank": 13,
-          "player_id": 8482149,
-          "name": "Cole Perfetti",
-          "team": "WPG",
+          "rank": 6,
+          "player_id": 8480069,
+          "name": "Cale Makar",
+          "team": "COL",
           "probability": 0.376,
           "scored": false
         },
         {
-          "rank": 16,
-          "player_id": 8477939,
-          "name": "William Nylander",
-          "team": "TOR",
-          "probability": 0.357,
+          "rank": 7,
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.372,
+          "scored": true
+        },
+        {
+          "rank": 8,
+          "player_id": 8475810,
+          "name": "Bryan Rust",
+          "team": "PIT",
+          "probability": 0.346,
+          "scored": true
+        },
+        {
+          "rank": 9,
+          "player_id": 8483505,
+          "name": "Matthew Poitras",
+          "team": "BOS",
+          "probability": 0.334,
+          "scored": true
+        },
+        {
+          "rank": 10,
+          "player_id": 8475768,
+          "name": "Jaden Schwartz",
+          "team": "COL",
+          "probability": 0.327,
           "scored": false
         },
         {
-          "rank": 20,
-          "player_id": 8478403,
-          "name": "Jack Eichel",
-          "team": "VGK",
+          "rank": 11,
+          "player_id": 8481582,
+          "name": "Nick Robertson",
+          "team": "PIT",
           "probability": 0.324,
-          "scored": true
-        },
-        {
-          "rank": 29,
-          "player_id": 8481557,
-          "name": "Matt Boldy",
-          "team": "MIN",
-          "probability": 0.296,
-          "scored": true
-        },
-        {
-          "rank": 30,
-          "player_id": 8476881,
-          "name": "Tomas Hertl",
-          "team": "VGK",
-          "probability": 0.294,
-          "scored": false
-        },
-        {
-          "rank": 34,
-          "player_id": 8481559,
-          "name": "Jack Hughes",
-          "team": "NJD",
-          "probability": 0.285,
           "scored": false
         }
       ],
-      "hits": 5,
+      "hits": 4,
       "total_predictions": 10,
-      "hit_rate": 50.0
+      "hit_rate": 40.0
     },
     {
       "model": "neural_v2",
       "model_display_name": "Neural Embed v2",
       "top10_picks": [
         {
-          "rank": 1,
-          "player_id": 8478398,
-          "name": "Kyle Connor",
-          "team": "WPG",
-          "probability": 0.4789,
+          "rank": 2,
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.2977,
           "scored": true
         },
         {
           "rank": 3,
-          "player_id": 8476881,
-          "name": "Tomas Hertl",
-          "team": "VGK",
-          "probability": 0.4487,
+          "player_id": 8475172,
+          "name": "Nazem Kadri",
+          "team": "COL",
+          "probability": 0.2719,
           "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8475754,
+          "name": "Brock Nelson",
+          "team": "COL",
+          "probability": 0.2604,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8484762,
+          "name": "Beckett Sennecke",
+          "team": "ANA",
+          "probability": 0.2375,
+          "scored": true
+        },
+        {
+          "rank": 8,
+          "player_id": 8471675,
+          "name": "Sidney Crosby",
+          "team": "PIT",
+          "probability": 0.2347,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8475810,
+          "name": "Bryan Rust",
+          "team": "PIT",
+          "probability": 0.2321,
+          "scored": true
         },
         {
           "rank": 10,
-          "player_id": 8478403,
-          "name": "Jack Eichel",
-          "team": "VGK",
-          "probability": 0.3707,
-          "scored": true
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.2291,
+          "scored": false
         },
         {
           "rank": 11,
-          "player_id": 8482113,
-          "name": "Anton Lundell",
-          "team": "FLA",
-          "probability": 0.368,
+          "player_id": 8476483,
+          "name": "Rickard Rakell",
+          "team": "PIT",
+          "probability": 0.2243,
           "scored": false
-        },
-        {
-          "rank": 12,
-          "player_id": 8475913,
-          "name": "Mark Stone",
-          "team": "VGK",
-          "probability": 0.3633,
-          "scored": true
         },
         {
           "rank": 13,
-          "player_id": 8477946,
-          "name": "Dylan Larkin",
-          "team": "DET",
-          "probability": 0.3592,
+          "player_id": 8483445,
+          "name": "Cutter Gauthier",
+          "team": "ANA",
+          "probability": 0.2157,
           "scored": false
         },
         {
-          "rank": 17,
-          "player_id": 8477934,
-          "name": "Leon Draisaitl",
-          "team": "EDM",
-          "probability": 0.3391,
-          "scored": true
-        },
-        {
-          "rank": 21,
-          "player_id": 8477939,
-          "name": "William Nylander",
-          "team": "TOR",
-          "probability": 0.3269,
+          "rank": 14,
+          "player_id": 8483489,
+          "name": "Fraser Minten",
+          "team": "BOS",
+          "probability": 0.2116,
           "scored": false
-        },
-        {
-          "rank": 23,
-          "player_id": 8482149,
-          "name": "Cole Perfetti",
-          "team": "WPG",
-          "probability": 0.3249,
-          "scored": false
-        },
-        {
-          "rank": 25,
-          "player_id": 8480893,
-          "name": "Kirill Marchenko",
-          "team": "TOR",
-          "probability": 0.3215,
-          "scored": true
         }
       ],
-      "hits": 5,
+      "hits": 3,
       "total_predictions": 10,
-      "hit_rate": 50.0
+      "hit_rate": 30.0
     },
     {
       "model": "xg_v3",
@@ -1163,171 +748,171 @@
       "top10_picks": [
         {
           "rank": 2,
-          "player_id": 8478398,
-          "name": "Kyle Connor",
-          "team": "WPG",
-          "probability": 0.4981,
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.263,
           "scored": true
         },
         {
-          "rank": 4,
-          "player_id": 8476881,
-          "name": "Tomas Hertl",
-          "team": "VGK",
-          "probability": 0.4421,
+          "rank": 3,
+          "player_id": 8475172,
+          "name": "Nazem Kadri",
+          "team": "COL",
+          "probability": 0.2461,
           "scored": false
         },
         {
-          "rank": 12,
-          "player_id": 8477934,
-          "name": "Leon Draisaitl",
-          "team": "EDM",
-          "probability": 0.3463,
+          "rank": 4,
+          "player_id": 8475810,
+          "name": "Bryan Rust",
+          "team": "PIT",
+          "probability": 0.2238,
           "scored": true
         },
         {
+          "rank": 5,
+          "player_id": 8475754,
+          "name": "Brock Nelson",
+          "team": "COL",
+          "probability": 0.2165,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8484762,
+          "name": "Beckett Sennecke",
+          "team": "ANA",
+          "probability": 0.2151,
+          "scored": true
+        },
+        {
+          "rank": 7,
+          "player_id": 8483489,
+          "name": "Fraser Minten",
+          "team": "BOS",
+          "probability": 0.2117,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8471675,
+          "name": "Sidney Crosby",
+          "team": "PIT",
+          "probability": 0.1966,
+          "scored": false
+        },
+        {
           "rank": 13,
-          "player_id": 8482113,
-          "name": "Anton Lundell",
-          "team": "FLA",
-          "probability": 0.3438,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.1813,
           "scored": false
         },
         {
           "rank": 14,
-          "player_id": 8478403,
-          "name": "Jack Eichel",
-          "team": "VGK",
-          "probability": 0.3435,
+          "player_id": 8483505,
+          "name": "Matthew Poitras",
+          "team": "BOS",
+          "probability": 0.181,
           "scored": true
         },
         {
           "rank": 15,
-          "player_id": 8475913,
-          "name": "Mark Stone",
-          "team": "VGK",
-          "probability": 0.3398,
-          "scored": true
-        },
-        {
-          "rank": 19,
-          "player_id": 8482149,
-          "name": "Cole Perfetti",
-          "team": "WPG",
-          "probability": 0.3103,
+          "player_id": 8475768,
+          "name": "Jaden Schwartz",
+          "team": "COL",
+          "probability": 0.1763,
           "scored": false
-        },
-        {
-          "rank": 23,
-          "player_id": 8477939,
-          "name": "William Nylander",
-          "team": "TOR",
-          "probability": 0.3042,
-          "scored": false
-        },
-        {
-          "rank": 24,
-          "player_id": 8477946,
-          "name": "Dylan Larkin",
-          "team": "DET",
-          "probability": 0.3034,
-          "scored": false
-        },
-        {
-          "rank": 28,
-          "player_id": 8480893,
-          "name": "Kirill Marchenko",
-          "team": "TOR",
-          "probability": 0.3002,
-          "scored": true
         }
       ],
-      "hits": 5,
+      "hits": 4,
       "total_predictions": 10,
-      "hit_rate": 50.0
+      "hit_rate": 40.0
     },
     {
       "model": "xg_v3_synthetic",
       "model_display_name": "xG XGBoost v3 (synthetic shadow)",
       "top10_picks": [
         {
-          "rank": 1,
-          "player_id": 8478398,
-          "name": "Kyle Connor",
-          "team": "WPG",
-          "probability": 0.8501,
+          "rank": 2,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.6219,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8483505,
+          "name": "Matthew Poitras",
+          "team": "BOS",
+          "probability": 0.5814,
           "scored": true
         },
         {
           "rank": 4,
-          "player_id": 8482149,
-          "name": "Cole Perfetti",
-          "team": "WPG",
-          "probability": 0.7037,
-          "scored": false
+          "player_id": 8475810,
+          "name": "Bryan Rust",
+          "team": "PIT",
+          "probability": 0.5658,
+          "scored": true
         },
         {
           "rank": 5,
-          "player_id": 8477939,
-          "name": "William Nylander",
-          "team": "TOR",
-          "probability": 0.6989,
+          "player_id": 8484762,
+          "name": "Beckett Sennecke",
+          "team": "ANA",
+          "probability": 0.5577,
+          "scored": true
+        },
+        {
+          "rank": 6,
+          "player_id": 8481582,
+          "name": "Nick Robertson",
+          "team": "PIT",
+          "probability": 0.5389,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8475754,
+          "name": "Brock Nelson",
+          "team": "COL",
+          "probability": 0.5051,
           "scored": false
         },
         {
           "rank": 8,
-          "player_id": 8478864,
-          "name": "Kirill Kaprizov",
-          "team": "MIN",
-          "probability": 0.677,
-          "scored": true
+          "player_id": 8475768,
+          "name": "Jaden Schwartz",
+          "team": "COL",
+          "probability": 0.4982,
+          "scored": false
         },
         {
           "rank": 10,
-          "player_id": 8478403,
-          "name": "Jack Eichel",
-          "team": "VGK",
-          "probability": 0.6517,
+          "player_id": 8483489,
+          "name": "Fraser Minten",
+          "team": "BOS",
+          "probability": 0.44,
+          "scored": false
+        },
+        {
+          "rank": 12,
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.3879,
           "scored": true
         },
         {
-          "rank": 21,
-          "player_id": 8476881,
-          "name": "Tomas Hertl",
-          "team": "VGK",
-          "probability": 0.5439,
-          "scored": false
-        },
-        {
-          "rank": 24,
-          "player_id": 8477934,
-          "name": "Leon Draisaitl",
-          "team": "EDM",
-          "probability": 0.5215,
-          "scored": true
-        },
-        {
-          "rank": 25,
-          "player_id": 8477409,
-          "name": "Carter Verhaeghe",
-          "team": "FLA",
-          "probability": 0.5214,
-          "scored": false
-        },
-        {
-          "rank": 28,
-          "player_id": 8484210,
-          "name": "Gabe Perreault",
-          "team": "NYR",
-          "probability": 0.5166,
-          "scored": false
-        },
-        {
-          "rank": 31,
-          "player_id": 8478402,
-          "name": "Connor McDavid",
-          "team": "EDM",
-          "probability": 0.5051,
+          "rank": 13,
+          "player_id": 8471675,
+          "name": "Sidney Crosby",
+          "team": "PIT",
+          "probability": 0.381,
           "scored": false
         }
       ],
@@ -1336,5 +921,5 @@
       "hit_rate": 40.0
     }
   ],
-  "fetched_at": "2026-10-16T06:46:49.567164"
+  "fetched_at": "2026-10-17T06:12:21.581859"
 }
