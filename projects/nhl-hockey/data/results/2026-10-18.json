@@ -1,0 +1,893 @@
+{
+  "date": "2026-10-18",
+  "games_count": 2,
+  "final_games": 2,
+  "partial": false,
+  "games": [
+    {
+      "game_id": 2026020135,
+      "home_team": "MIN",
+      "away_team": "CBJ",
+      "game_state": "OFF",
+      "schedule_state": "OK"
+    },
+    {
+      "game_id": 2026020136,
+      "home_team": "CGY",
+      "away_team": "CAR",
+      "game_state": "OFF",
+      "schedule_state": "OK"
+    }
+  ],
+  "all_scorers": [
+    {
+      "player_id": 8484166,
+      "player_name": "A. Fantilli",
+      "team": "CBJ",
+      "goals": 1,
+      "game_id": 2026020135,
+      "matchup": "CBJ @ MIN"
+    },
+    {
+      "player_id": 8483525,
+      "player_name": "D. Yurov",
+      "team": "MIN",
+      "goals": 1,
+      "game_id": 2026020135,
+      "matchup": "CBJ @ MIN"
+    },
+    {
+      "player_id": 8478864,
+      "player_name": "K. Kaprizov",
+      "team": "MIN",
+      "goals": 1,
+      "game_id": 2026020135,
+      "matchup": "CBJ @ MIN"
+    },
+    {
+      "player_id": 8480829,
+      "player_name": "J. Kotkaniemi",
+      "team": "CAR",
+      "goals": 1,
+      "game_id": 2026020136,
+      "matchup": "CAR @ CGY"
+    },
+    {
+      "player_id": 8478970,
+      "player_name": "J. Chatfield",
+      "team": "CAR",
+      "goals": 1,
+      "game_id": 2026020136,
+      "matchup": "CAR @ CGY"
+    },
+    {
+      "player_id": 8480028,
+      "player_name": "M. Frost",
+      "team": "CGY",
+      "goals": 1,
+      "game_id": 2026020136,
+      "matchup": "CAR @ CGY"
+    },
+    {
+      "player_id": 8481068,
+      "player_name": "Y. Sharangovich",
+      "team": "CGY",
+      "goals": 1,
+      "game_id": 2026020136,
+      "matchup": "CAR @ CGY"
+    },
+    {
+      "player_id": 8484860,
+      "player_name": "M. Gridin",
+      "team": "CGY",
+      "goals": 1,
+      "game_id": 2026020136,
+      "matchup": "CAR @ CGY"
+    }
+  ],
+  "scorers_count": 8,
+  "model_comparisons": [
+    {
+      "model": "blend",
+      "model_display_name": "Blend v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8481557,
+          "name": "Matt Boldy",
+          "team": "MIN",
+          "probability": 0.3955,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8480830,
+          "name": "Andrei Svechnikov",
+          "team": "CAR",
+          "probability": 0.3906,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8482809,
+          "name": "Jackson Blake",
+          "team": "CAR",
+          "probability": 0.3758,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8478427,
+          "name": "Sebastian Aho",
+          "team": "CAR",
+          "probability": 0.3506,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8482702,
+          "name": "Logan Stankoven",
+          "team": "CAR",
+          "probability": 0.3259,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8478493,
+          "name": "Joel Eriksson Ek",
+          "team": "MIN",
+          "probability": 0.3178,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8484166,
+          "name": "Adam Fantilli",
+          "team": "CBJ",
+          "probability": 0.2471,
+          "scored": true
+        },
+        {
+          "rank": 8,
+          "player_id": 8477940,
+          "name": "Nikolaj Ehlers",
+          "team": "CAR",
+          "probability": 0.2298,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8476399,
+          "name": "Blake Coleman",
+          "team": "MIN",
+          "probability": 0.2271,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8482720,
+          "name": "Matthew Knies",
+          "team": "CBJ",
+          "probability": 0.2189,
+          "scored": false
+        }
+      ],
+      "hits": 1,
+      "total_predictions": 10,
+      "hit_rate": 10.0
+    },
+    {
+      "model": "direct_lr",
+      "model_display_name": "Direct LR v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8481557,
+          "name": "Matt Boldy",
+          "team": "MIN",
+          "probability": 0.439,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8478427,
+          "name": "Sebastian Aho",
+          "team": "CAR",
+          "probability": 0.3236,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8478493,
+          "name": "Joel Eriksson Ek",
+          "team": "MIN",
+          "probability": 0.3203,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8480830,
+          "name": "Andrei Svechnikov",
+          "team": "CAR",
+          "probability": 0.3127,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8482809,
+          "name": "Jackson Blake",
+          "team": "CAR",
+          "probability": 0.2899,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8484166,
+          "name": "Adam Fantilli",
+          "team": "CBJ",
+          "probability": 0.2776,
+          "scored": true
+        },
+        {
+          "rank": 7,
+          "player_id": 8477940,
+          "name": "Nikolaj Ehlers",
+          "team": "CAR",
+          "probability": 0.2465,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8482702,
+          "name": "Logan Stankoven",
+          "team": "CAR",
+          "probability": 0.2426,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8482720,
+          "name": "Matthew Knies",
+          "team": "CBJ",
+          "probability": 0.2272,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8476399,
+          "name": "Blake Coleman",
+          "team": "MIN",
+          "probability": 0.2228,
+          "scored": false
+        }
+      ],
+      "hits": 1,
+      "total_predictions": 10,
+      "hit_rate": 10.0
+    },
+    {
+      "model": "lineup_v1",
+      "model_display_name": "Lineup TOI v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8482809,
+          "name": "Jackson Blake",
+          "team": "CAR",
+          "probability": 0.479,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8480830,
+          "name": "Andrei Svechnikov",
+          "team": "CAR",
+          "probability": 0.4649,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8482702,
+          "name": "Logan Stankoven",
+          "team": "CAR",
+          "probability": 0.3789,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8481557,
+          "name": "Matt Boldy",
+          "team": "MIN",
+          "probability": 0.3755,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8478493,
+          "name": "Joel Eriksson Ek",
+          "team": "MIN",
+          "probability": 0.3054,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8478427,
+          "name": "Sebastian Aho",
+          "team": "CAR",
+          "probability": 0.3028,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8476873,
+          "name": "Mark Jankowski",
+          "team": "CAR",
+          "probability": 0.2679,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8480762,
+          "name": "Eric Robinson",
+          "team": "CAR",
+          "probability": 0.2158,
+          "scored": false
+        },
+        {
+          "rank": 12,
+          "player_id": 8484166,
+          "name": "Adam Fantilli",
+          "team": "CBJ",
+          "probability": 0.2091,
+          "scored": true
+        },
+        {
+          "rank": 13,
+          "player_id": 8477478,
+          "name": "William Carrier",
+          "team": "CAR",
+          "probability": 0.2055,
+          "scored": false
+        }
+      ],
+      "hits": 1,
+      "total_predictions": 10,
+      "hit_rate": 10.0
+    },
+    {
+      "model": "market_odds",
+      "model_display_name": "Market Odds v1",
+      "top10_picks": [
+        {
+          "rank": 2,
+          "player_id": 8481557,
+          "name": "Matt Boldy",
+          "team": "MIN",
+          "probability": 0.4056,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8480830,
+          "name": "Andrei Svechnikov",
+          "team": "CAR",
+          "probability": 0.3628,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8478427,
+          "name": "Sebastian Aho",
+          "team": "CAR",
+          "probability": 0.3574,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8478493,
+          "name": "Joel Eriksson Ek",
+          "team": "MIN",
+          "probability": 0.3198,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8477940,
+          "name": "Nikolaj Ehlers",
+          "team": "CAR",
+          "probability": 0.2983,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8482702,
+          "name": "Logan Stankoven",
+          "team": "CAR",
+          "probability": 0.2974,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8482809,
+          "name": "Jackson Blake",
+          "team": "CAR",
+          "probability": 0.2937,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8484166,
+          "name": "Adam Fantilli",
+          "team": "CBJ",
+          "probability": 0.2896,
+          "scored": true
+        },
+        {
+          "rank": 11,
+          "player_id": 8482720,
+          "name": "Matthew Knies",
+          "team": "CBJ",
+          "probability": 0.2691,
+          "scored": false
+        },
+        {
+          "rank": 12,
+          "player_id": 8480028,
+          "name": "Morgan Frost",
+          "team": "CGY",
+          "probability": 0.2532,
+          "scored": true
+        }
+      ],
+      "hits": 2,
+      "total_predictions": 10,
+      "hit_rate": 20.0
+    },
+    {
+      "model": "monte_carlo",
+      "model_display_name": "Monte Carlo v2",
+      "top10_picks": [
+        {
+          "rank": 2,
+          "player_id": 8480830,
+          "name": "Andrei Svechnikov",
+          "team": "CAR",
+          "probability": 0.3624,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8476873,
+          "name": "Mark Jankowski",
+          "team": "CAR",
+          "probability": 0.3493,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8478427,
+          "name": "Sebastian Aho",
+          "team": "CAR",
+          "probability": 0.3422,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8481557,
+          "name": "Matt Boldy",
+          "team": "MIN",
+          "probability": 0.3156,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8482660,
+          "name": "Kent Johnson",
+          "team": "CBJ",
+          "probability": 0.2976,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8482702,
+          "name": "Logan Stankoven",
+          "team": "CAR",
+          "probability": 0.2764,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8482705,
+          "name": "Cole Sillinger",
+          "team": "CBJ",
+          "probability": 0.238,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8480028,
+          "name": "Morgan Frost",
+          "team": "CGY",
+          "probability": 0.2313,
+          "scored": true
+        },
+        {
+          "rank": 11,
+          "player_id": 8482720,
+          "name": "Matthew Knies",
+          "team": "CBJ",
+          "probability": 0.2267,
+          "scored": false
+        },
+        {
+          "rank": 13,
+          "player_id": 8479671,
+          "name": "Mathieu Olivier",
+          "team": "CBJ",
+          "probability": 0.215,
+          "scored": false
+        }
+      ],
+      "hits": 1,
+      "total_predictions": 10,
+      "hit_rate": 10.0
+    },
+    {
+      "model": "neural_network",
+      "model_display_name": "Weighted Linear v1",
+      "top10_picks": [
+        {
+          "rank": 2,
+          "player_id": 8481557,
+          "name": "Matt Boldy",
+          "team": "MIN",
+          "probability": 0.46,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8480830,
+          "name": "Andrei Svechnikov",
+          "team": "CAR",
+          "probability": 0.427,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8476873,
+          "name": "Mark Jankowski",
+          "team": "CAR",
+          "probability": 0.369,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8478427,
+          "name": "Sebastian Aho",
+          "team": "CAR",
+          "probability": 0.337,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8482660,
+          "name": "Kent Johnson",
+          "team": "CBJ",
+          "probability": 0.322,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8482702,
+          "name": "Logan Stankoven",
+          "team": "CAR",
+          "probability": 0.299,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8482705,
+          "name": "Cole Sillinger",
+          "team": "CBJ",
+          "probability": 0.217,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8480028,
+          "name": "Morgan Frost",
+          "team": "CGY",
+          "probability": 0.21,
+          "scored": true
+        },
+        {
+          "rank": 11,
+          "player_id": 8480800,
+          "name": "Quinn Hughes",
+          "team": "MIN",
+          "probability": 0.207,
+          "scored": false
+        },
+        {
+          "rank": 14,
+          "player_id": 8474150,
+          "name": "Mikael Backlund",
+          "team": "CGY",
+          "probability": 0.192,
+          "scored": false
+        }
+      ],
+      "hits": 1,
+      "total_predictions": 10,
+      "hit_rate": 10.0
+    },
+    {
+      "model": "neural_v2",
+      "model_display_name": "Neural Embed v2",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8482809,
+          "name": "Jackson Blake",
+          "team": "CAR",
+          "probability": 0.4554,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8480830,
+          "name": "Andrei Svechnikov",
+          "team": "CAR",
+          "probability": 0.4267,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8478427,
+          "name": "Sebastian Aho",
+          "team": "CAR",
+          "probability": 0.4209,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8482702,
+          "name": "Logan Stankoven",
+          "team": "CAR",
+          "probability": 0.3816,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8481557,
+          "name": "Matt Boldy",
+          "team": "MIN",
+          "probability": 0.3715,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8478493,
+          "name": "Joel Eriksson Ek",
+          "team": "MIN",
+          "probability": 0.3336,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8476873,
+          "name": "Mark Jankowski",
+          "team": "CAR",
+          "probability": 0.267,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8476399,
+          "name": "Blake Coleman",
+          "team": "MIN",
+          "probability": 0.2483,
+          "scored": false
+        },
+        {
+          "rank": 12,
+          "player_id": 8484166,
+          "name": "Adam Fantilli",
+          "team": "CBJ",
+          "probability": 0.2303,
+          "scored": true
+        },
+        {
+          "rank": 13,
+          "player_id": 8476921,
+          "name": "Jordan Martinook",
+          "team": "CAR",
+          "probability": 0.2248,
+          "scored": false
+        }
+      ],
+      "hits": 1,
+      "total_predictions": 10,
+      "hit_rate": 10.0
+    },
+    {
+      "model": "xg_v3",
+      "model_display_name": "xG XGBoost v3",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8482809,
+          "name": "Jackson Blake",
+          "team": "CAR",
+          "probability": 0.4808,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8480830,
+          "name": "Andrei Svechnikov",
+          "team": "CAR",
+          "probability": 0.4668,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8482702,
+          "name": "Logan Stankoven",
+          "team": "CAR",
+          "probability": 0.395,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8481557,
+          "name": "Matt Boldy",
+          "team": "MIN",
+          "probability": 0.3674,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8478427,
+          "name": "Sebastian Aho",
+          "team": "CAR",
+          "probability": 0.3053,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8478493,
+          "name": "Joel Eriksson Ek",
+          "team": "MIN",
+          "probability": 0.2979,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8476873,
+          "name": "Mark Jankowski",
+          "team": "CAR",
+          "probability": 0.249,
+          "scored": false
+        },
+        {
+          "rank": 11,
+          "player_id": 8476921,
+          "name": "Jordan Martinook",
+          "team": "CAR",
+          "probability": 0.2015,
+          "scored": false
+        },
+        {
+          "rank": 12,
+          "player_id": 8480762,
+          "name": "Eric Robinson",
+          "team": "CAR",
+          "probability": 0.1988,
+          "scored": false
+        },
+        {
+          "rank": 13,
+          "player_id": 8484166,
+          "name": "Adam Fantilli",
+          "team": "CBJ",
+          "probability": 0.1984,
+          "scored": true
+        }
+      ],
+      "hits": 1,
+      "total_predictions": 10,
+      "hit_rate": 10.0
+    },
+    {
+      "model": "xg_v3_synthetic",
+      "model_display_name": "xG XGBoost v3 (synthetic shadow)",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8476873,
+          "name": "Mark Jankowski",
+          "team": "CAR",
+          "probability": 0.6929,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8478427,
+          "name": "Sebastian Aho",
+          "team": "CAR",
+          "probability": 0.6906,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8480830,
+          "name": "Andrei Svechnikov",
+          "team": "CAR",
+          "probability": 0.6678,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8481557,
+          "name": "Matt Boldy",
+          "team": "MIN",
+          "probability": 0.607,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8482702,
+          "name": "Logan Stankoven",
+          "team": "CAR",
+          "probability": 0.5463,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8482660,
+          "name": "Kent Johnson",
+          "team": "CBJ",
+          "probability": 0.4722,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8484203,
+          "name": "Bradly Nadeau",
+          "team": "CAR",
+          "probability": 0.4386,
+          "scored": false
+        },
+        {
+          "rank": 11,
+          "player_id": 8476399,
+          "name": "Blake Coleman",
+          "team": "MIN",
+          "probability": 0.3731,
+          "scored": false
+        },
+        {
+          "rank": 12,
+          "player_id": 8482809,
+          "name": "Jackson Blake",
+          "team": "CAR",
+          "probability": 0.3703,
+          "scored": false
+        },
+        {
+          "rank": 14,
+          "player_id": 8482720,
+          "name": "Matthew Knies",
+          "team": "CBJ",
+          "probability": 0.3205,
+          "scored": false
+        }
+      ],
+      "hits": 0,
+      "total_predictions": 10,
+      "hit_rate": 0.0
+    }
+  ],
+  "fetched_at": "2026-10-19T08:15:09.001779"
+}
