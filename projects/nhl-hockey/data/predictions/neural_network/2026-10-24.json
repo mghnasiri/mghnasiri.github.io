@@ -188,30 +188,6 @@
       "tims_rank": 4
     },
     {
-      "player_id": 8478550,
-      "name": "Artemi Panarin",
-      "position": "L",
-      "team": "LAK",
-      "games_played": 10,
-      "season_goals": 6.717948717948717,
-      "season_shots": 31.743589743589745,
-      "avg_goals": 0.672,
-      "avg_shots": 3.17,
-      "shooting_pct": 0.212,
-      "last5_goals": 4,
-      "last5_points": 6,
-      "prior_games": 2,
-      "opponent": "NJD",
-      "is_home": false,
-      "game_id": 2026020169,
-      "matchup": "LAK @ NJD",
-      "goal_probability": 0.384,
-      "rank": 6,
-      "is_hot": true,
-      "tims_group": "2",
-      "tims_rank": 5
-    },
-    {
       "player_id": 8475913,
       "name": "Mark Stone",
       "position": "R",
@@ -233,7 +209,7 @@
       "rank": 8,
       "is_hot": true,
       "tims_group": "1",
-      "tims_rank": 6
+      "tims_rank": 5
     },
     {
       "player_id": 8481557,
@@ -257,7 +233,7 @@
       "rank": 9,
       "is_hot": true,
       "tims_group": "1",
-      "tims_rank": 7
+      "tims_rank": 6
     },
     {
       "player_id": 8477956,
@@ -281,7 +257,7 @@
       "rank": 11,
       "is_hot": true,
       "tims_group": "1",
-      "tims_rank": 8
+      "tims_rank": 7
     },
     {
       "player_id": 8480893,
@@ -305,7 +281,7 @@
       "rank": 12,
       "is_hot": true,
       "tims_group": "2",
-      "tims_rank": 9
+      "tims_rank": 8
     },
     {
       "player_id": 8479318,
@@ -329,7 +305,7 @@
       "rank": 13,
       "is_hot": true,
       "tims_group": "1",
-      "tims_rank": 10
+      "tims_rank": 9
     },
     {
       "player_id": 8479420,
@@ -352,6 +328,30 @@
       "goal_probability": 0.345,
       "rank": 15,
       "is_hot": false,
+      "tims_group": "1",
+      "tims_rank": 10
+    },
+    {
+      "player_id": 8477404,
+      "name": "Jake Guentzel",
+      "position": "C",
+      "team": "TBL",
+      "games_played": 10,
+      "season_goals": 6,
+      "season_shots": 27,
+      "avg_goals": 0.6,
+      "avg_shots": 2.7,
+      "shooting_pct": 0.222,
+      "last5_goals": 3,
+      "last5_points": 5,
+      "prior_games": 0,
+      "opponent": "UTA",
+      "is_home": false,
+      "game_id": 2026020177,
+      "matchup": "TBL @ UTA",
+      "goal_probability": 0.326,
+      "rank": 17,
+      "is_hot": true,
       "tims_group": "1",
       "tims_rank": 11
     },
@@ -428,6 +428,30 @@
       "tims_rank": 14
     },
     {
+      "player_id": 8479343,
+      "name": "Clayton Keller",
+      "position": "R",
+      "team": "UTA",
+      "games_played": 11,
+      "season_goals": 4,
+      "season_shots": 25,
+      "avg_goals": 0.364,
+      "avg_shots": 2.27,
+      "shooting_pct": 0.16,
+      "last5_goals": 3,
+      "last5_points": 6,
+      "prior_games": 0,
+      "opponent": "TBL",
+      "is_home": true,
+      "game_id": 2026020177,
+      "matchup": "UTA vs TBL",
+      "goal_probability": 0.255,
+      "rank": 50,
+      "is_hot": true,
+      "tims_group": "1",
+      "tims_rank": 15
+    },
+    {
       "player_id": 8477496,
       "name": "Elias Lindholm",
       "position": "C",
@@ -449,30 +473,6 @@
       "rank": 59,
       "is_hot": true,
       "tims_group": "2",
-      "tims_rank": 15
-    },
-    {
-      "player_id": 8482699,
-      "name": "Dylan Guenther",
-      "position": "R",
-      "team": "UTA",
-      "games_played": 11,
-      "season_goals": 4,
-      "season_shots": 32,
-      "avg_goals": 0.364,
-      "avg_shots": 2.91,
-      "shooting_pct": 0.125,
-      "last5_goals": 1,
-      "last5_points": 3,
-      "prior_games": 0,
-      "opponent": "TBL",
-      "is_home": true,
-      "game_id": 2026020177,
-      "matchup": "UTA vs TBL",
-      "goal_probability": 0.228,
-      "rank": 61,
-      "is_hot": false,
-      "tims_group": "1",
       "tims_rank": 16
     },
     {
@@ -572,54 +572,6 @@
       "tims_rank": 20
     },
     {
-      "player_id": 8482705,
-      "name": "Cole Sillinger",
-      "position": "C",
-      "team": "CBJ",
-      "games_played": 10,
-      "season_goals": 3.197530864197531,
-      "season_shots": 15.358024691358025,
-      "avg_goals": 0.32,
-      "avg_shots": 1.54,
-      "shooting_pct": 0.208,
-      "last5_goals": 2,
-      "last5_points": 3,
-      "prior_games": 2,
-      "opponent": "VGK",
-      "is_home": true,
-      "game_id": 2026020174,
-      "matchup": "CBJ vs VGK",
-      "goal_probability": 0.195,
-      "rank": 93,
-      "is_hot": false,
-      "tims_group": "3",
-      "tims_rank": 21
-    },
-    {
-      "player_id": 8483445,
-      "name": "Cutter Gauthier",
-      "position": "L",
-      "team": "ANA",
-      "games_played": 10,
-      "season_goals": 2.5394736842105265,
-      "season_shots": 33.75,
-      "avg_goals": 0.254,
-      "avg_shots": 3.38,
-      "shooting_pct": 0.075,
-      "last5_goals": 0,
-      "last5_points": 1,
-      "prior_games": 1,
-      "opponent": "PHI",
-      "is_home": false,
-      "game_id": 2026020168,
-      "matchup": "ANA @ PHI",
-      "goal_probability": 0.195,
-      "rank": 94,
-      "is_hot": false,
-      "tims_group": "1",
-      "tims_rank": 22
-    },
-    {
       "player_id": 8481604,
       "name": "Pavel Dorofeyev",
       "position": "R",
@@ -641,7 +593,31 @@
       "rank": 101,
       "is_hot": false,
       "tims_group": "1",
-      "tims_rank": 23
+      "tims_rank": 21
+    },
+    {
+      "player_id": 8482809,
+      "name": "Jackson Blake",
+      "position": "R",
+      "team": "CAR",
+      "games_played": 12,
+      "season_goals": 2,
+      "season_shots": 37,
+      "avg_goals": 0.167,
+      "avg_shots": 3.08,
+      "shooting_pct": 0.054,
+      "last5_goals": 1,
+      "last5_points": 5,
+      "prior_games": 0,
+      "opponent": "STL",
+      "is_home": false,
+      "game_id": 2026020175,
+      "matchup": "CAR @ STL",
+      "goal_probability": 0.189,
+      "rank": 102,
+      "is_hot": false,
+      "tims_group": "2",
+      "tims_rank": 22
     },
     {
       "player_id": 8476459,
@@ -665,7 +641,7 @@
       "rank": 106,
       "is_hot": false,
       "tims_group": "2",
-      "tims_rank": 24
+      "tims_rank": 23
     },
     {
       "player_id": 8477402,
@@ -686,10 +662,10 @@
       "game_id": 2026020175,
       "matchup": "STL vs CAR",
       "goal_probability": 0.179,
-      "rank": 114,
+      "rank": 115,
       "is_hot": false,
       "tims_group": "3",
-      "tims_rank": 25
+      "tims_rank": 24
     },
     {
       "player_id": 8485395,
@@ -710,10 +686,10 @@
       "game_id": 2026020170,
       "matchup": "BOS vs SJS",
       "goal_probability": 0.17,
-      "rank": 126,
+      "rank": 127,
       "is_hot": false,
       "tims_group": "2",
-      "tims_rank": 26
+      "tims_rank": 25
     },
     {
       "player_id": 8480800,
@@ -734,9 +710,33 @@
       "game_id": 2026020179,
       "matchup": "MIN @ SEA",
       "goal_probability": 0.168,
-      "rank": 131,
+      "rank": 132,
       "is_hot": false,
       "tims_group": "3",
+      "tims_rank": 26
+    },
+    {
+      "player_id": 8477946,
+      "name": "Dylan Larkin",
+      "position": "C",
+      "team": "DET",
+      "games_played": 10,
+      "season_goals": 1.9189189189189189,
+      "season_shots": 28.189189189189193,
+      "avg_goals": 0.192,
+      "avg_shots": 2.82,
+      "shooting_pct": 0.068,
+      "last5_goals": 0,
+      "last5_points": 3,
+      "prior_games": 2,
+      "opponent": "CGY",
+      "is_home": false,
+      "game_id": 2026020178,
+      "matchup": "DET @ CGY",
+      "goal_probability": 0.159,
+      "rank": 145,
+      "is_hot": false,
+      "tims_group": "2",
       "tims_rank": 27
     },
     {
@@ -758,7 +758,7 @@
       "game_id": 2026020173,
       "matchup": "WSH vs BUF",
       "goal_probability": 0.144,
-      "rank": 163,
+      "rank": 164,
       "is_hot": false,
       "tims_group": "2",
       "tims_rank": 28
@@ -782,7 +782,7 @@
       "game_id": 2026020172,
       "matchup": "PIT vs NSH",
       "goal_probability": 0.143,
-      "rank": 166,
+      "rank": 167,
       "is_hot": false,
       "tims_group": "1",
       "tims_rank": 29
@@ -806,10 +806,34 @@
       "game_id": 2026020179,
       "matchup": "SEA vs MIN",
       "goal_probability": 0.138,
-      "rank": 182,
+      "rank": 183,
       "is_hot": false,
       "tims_group": "3",
       "tims_rank": 30
+    },
+    {
+      "player_id": 8482671,
+      "name": "Owen Power",
+      "position": "D",
+      "team": "BUF",
+      "games_played": 10,
+      "season_goals": 2,
+      "season_shots": 13,
+      "avg_goals": 0.2,
+      "avg_shots": 1.3,
+      "shooting_pct": 0.154,
+      "last5_goals": 1,
+      "last5_points": 3,
+      "prior_games": 0,
+      "opponent": "WSH",
+      "is_home": false,
+      "game_id": 2026020173,
+      "matchup": "BUF @ WSH",
+      "goal_probability": 0.131,
+      "rank": 197,
+      "is_hot": false,
+      "tims_group": "3",
+      "tims_rank": 31
     },
     {
       "player_id": 8484911,
@@ -830,10 +854,10 @@
       "game_id": 2026020170,
       "matchup": "SJS @ BOS",
       "goal_probability": 0.131,
-      "rank": 197,
+      "rank": 198,
       "is_hot": false,
       "tims_group": "3",
-      "tims_rank": 31
+      "tims_rank": 32
     },
     {
       "player_id": 8471214,
@@ -854,10 +878,10 @@
       "game_id": 2026020173,
       "matchup": "WSH vs BUF",
       "goal_probability": 0.126,
-      "rank": 206,
+      "rank": 207,
       "is_hot": false,
       "tims_group": "2",
-      "tims_rank": 32
+      "tims_rank": 33
     },
     {
       "player_id": 8474600,
@@ -878,16 +902,40 @@
       "game_id": 2026020172,
       "matchup": "NSH @ PIT",
       "goal_probability": 0.125,
-      "rank": 209,
+      "rank": 210,
       "is_hot": false,
       "tims_group": "3",
-      "tims_rank": 33
+      "tims_rank": 34
     },
     {
-      "player_id": 8477989,
-      "name": "Christian Dvorak",
-      "position": "C",
-      "team": "PHI",
+      "player_id": 8477015,
+      "name": "Connor Brown",
+      "position": "R",
+      "team": "NJD",
+      "games_played": 10,
+      "season_goals": 1.92,
+      "season_shots": 13.373333333333335,
+      "avg_goals": 0.192,
+      "avg_shots": 1.34,
+      "shooting_pct": 0.144,
+      "last5_goals": 0.72,
+      "last5_points": 2.7199999999999998,
+      "prior_games": 8,
+      "opponent": "LAK",
+      "is_home": true,
+      "game_id": 2026020169,
+      "matchup": "NJD vs LAK",
+      "goal_probability": 0.123,
+      "rank": 211,
+      "is_hot": false,
+      "tims_group": "3",
+      "tims_rank": 35
+    },
+    {
+      "player_id": 8483890,
+      "name": "Braeden Bowman",
+      "position": "R",
+      "team": "VGK",
       "games_played": 12,
       "season_goals": 2,
       "season_shots": 13,
@@ -897,15 +945,15 @@
       "last5_goals": 1,
       "last5_points": 2,
       "prior_games": 0,
-      "opponent": "ANA",
-      "is_home": true,
-      "game_id": 2026020168,
-      "matchup": "PHI vs ANA",
+      "opponent": "CBJ",
+      "is_home": false,
+      "game_id": 2026020174,
+      "matchup": "VGK @ CBJ",
       "goal_probability": 0.115,
-      "rank": 233,
+      "rank": 236,
       "is_hot": false,
-      "tims_group": "2",
-      "tims_rank": 34
+      "tims_group": "3",
+      "tims_rank": 36
     },
     {
       "player_id": 8474578,
@@ -926,10 +974,10 @@
       "game_id": 2026020172,
       "matchup": "PIT vs NSH",
       "goal_probability": 0.115,
-      "rank": 238,
+      "rank": 239,
       "is_hot": false,
       "tims_group": "3",
-      "tims_rank": 35
+      "tims_rank": 37
     },
     {
       "player_id": 8476458,
@@ -950,10 +998,10 @@
       "game_id": 2026020178,
       "matchup": "CGY vs DET",
       "goal_probability": 0.106,
-      "rank": 259,
+      "rank": 260,
       "is_hot": false,
       "tims_group": "3",
-      "tims_rank": 36
+      "tims_rank": 38
     },
     {
       "player_id": 8481580,
@@ -974,10 +1022,10 @@
       "game_id": 2026020175,
       "matchup": "STL vs CAR",
       "goal_probability": 0.102,
-      "rank": 267,
+      "rank": 269,
       "is_hot": false,
       "tims_group": "3",
-      "tims_rank": 37
+      "tims_rank": 39
     },
     {
       "player_id": 8477998,
@@ -998,10 +1046,10 @@
       "game_id": 2026020171,
       "matchup": "OTT vs NYR",
       "goal_probability": 0.098,
-      "rank": 277,
+      "rank": 279,
       "is_hot": false,
       "tims_group": "3",
-      "tims_rank": 38
+      "tims_rank": 40
     },
     {
       "player_id": 8485402,
@@ -1022,10 +1070,10 @@
       "game_id": 2026020170,
       "matchup": "SJS @ BOS",
       "goal_probability": 0.092,
-      "rank": 293,
+      "rank": 295,
       "is_hot": false,
       "tims_group": "3",
-      "tims_rank": 39
+      "tims_rank": 41
     },
     {
       "player_id": 8475692,
@@ -1046,34 +1094,10 @@
       "game_id": 2026020169,
       "matchup": "LAK @ NJD",
       "goal_probability": 0.091,
-      "rank": 294,
+      "rank": 296,
       "is_hot": false,
       "tims_group": "2",
-      "tims_rank": 40
-    },
-    {
-      "player_id": 8478463,
-      "name": "Anthony Beauvillier",
-      "position": "R",
-      "team": "WSH",
-      "games_played": 10,
-      "season_goals": 1.1829268292682926,
-      "season_shots": 10.890243902439025,
-      "avg_goals": 0.118,
-      "avg_shots": 1.09,
-      "shooting_pct": 0.109,
-      "last5_goals": 0,
-      "last5_points": 1,
-      "prior_games": 1,
-      "opponent": "BUF",
-      "is_home": true,
-      "game_id": 2026020173,
-      "matchup": "WSH vs BUF",
-      "goal_probability": 0.077,
-      "rank": 333,
-      "is_hot": false,
-      "tims_group": "3",
-      "tims_rank": 41
+      "tims_rank": 42
     },
     {
       "player_id": 8482758,
@@ -1094,10 +1118,10 @@
       "game_id": 2026020172,
       "matchup": "PIT vs NSH",
       "goal_probability": 0.067,
-      "rank": 364,
+      "rank": 366,
       "is_hot": false,
       "tims_group": "2",
-      "tims_rank": 42
+      "tims_rank": 43
     },
     {
       "player_id": 8476905,
@@ -1118,10 +1142,10 @@
       "game_id": 2026020179,
       "matchup": "SEA vs MIN",
       "goal_probability": 0.056,
-      "rank": 401,
+      "rank": 403,
       "is_hot": false,
       "tims_group": "3",
-      "tims_rank": 43
+      "tims_rank": 44
     },
     {
       "player_id": 8478856,
@@ -1142,31 +1166,7 @@
       "game_id": 2026020174,
       "matchup": "CBJ vs VGK",
       "goal_probability": 0.054,
-      "rank": 405,
-      "is_hot": false,
-      "tims_group": "3",
-      "tims_rank": 44
-    },
-    {
-      "player_id": 8476461,
-      "name": "Sean Couturier",
-      "position": "C",
-      "team": "PHI",
-      "games_played": 12,
-      "season_goals": 0,
-      "season_shots": 14,
-      "avg_goals": 0.0,
-      "avg_shots": 1.17,
-      "shooting_pct": 0.0,
-      "last5_goals": 0,
-      "last5_points": 1,
-      "prior_games": 0,
-      "opponent": "ANA",
-      "is_home": true,
-      "game_id": 2026020168,
-      "matchup": "PHI vs ANA",
-      "goal_probability": 0.048,
-      "rank": 429,
+      "rank": 407,
       "is_hot": false,
       "tims_group": "3",
       "tims_rank": 45
@@ -1250,6 +1250,14 @@
       },
       {
         "rank_in_group": 10,
+        "player_id": 8477404,
+        "name": "Jake Guentzel",
+        "team": "TBL",
+        "goal_probability": 0.326,
+        "matchup": "TBL @ UTA"
+      },
+      {
+        "rank_in_group": 11,
         "player_id": 8477960,
         "name": "Adrian Kempe",
         "team": "LAK",
@@ -1257,28 +1265,20 @@
         "matchup": "LAK @ NJD"
       },
       {
-        "rank_in_group": 11,
-        "player_id": 8482699,
-        "name": "Dylan Guenther",
+        "rank_in_group": 12,
+        "player_id": 8479343,
+        "name": "Clayton Keller",
         "team": "UTA",
-        "goal_probability": 0.228,
+        "goal_probability": 0.255,
         "matchup": "UTA vs TBL"
       },
       {
-        "rank_in_group": 12,
+        "rank_in_group": 13,
         "player_id": 8471675,
         "name": "Sidney Crosby",
         "team": "PIT",
         "goal_probability": 0.224,
         "matchup": "PIT vs NSH"
-      },
-      {
-        "rank_in_group": 13,
-        "player_id": 8483445,
-        "name": "Cutter Gauthier",
-        "team": "ANA",
-        "goal_probability": 0.195,
-        "matchup": "ANA @ PHI"
       },
       {
         "rank_in_group": 14,
@@ -1300,14 +1300,6 @@
     "2": [
       {
         "rank_in_group": 1,
-        "player_id": 8478550,
-        "name": "Artemi Panarin",
-        "team": "LAK",
-        "goal_probability": 0.384,
-        "matchup": "LAK @ NJD"
-      },
-      {
-        "rank_in_group": 2,
         "player_id": 8480893,
         "name": "Kirill Marchenko",
         "team": "TOR",
@@ -1315,7 +1307,7 @@
         "matchup": "TOR @ EDM"
       },
       {
-        "rank_in_group": 3,
+        "rank_in_group": 2,
         "player_id": 8477949,
         "name": "Alex Tuch",
         "team": "WSH",
@@ -1323,7 +1315,7 @@
         "matchup": "WSH vs BUF"
       },
       {
-        "rank_in_group": 4,
+        "rank_in_group": 3,
         "player_id": 8477939,
         "name": "William Nylander",
         "team": "TOR",
@@ -1331,7 +1323,7 @@
         "matchup": "TOR @ EDM"
       },
       {
-        "rank_in_group": 5,
+        "rank_in_group": 4,
         "player_id": 8477496,
         "name": "Elias Lindholm",
         "team": "BOS",
@@ -1339,7 +1331,7 @@
         "matchup": "BOS vs SJS"
       },
       {
-        "rank_in_group": 6,
+        "rank_in_group": 5,
         "player_id": 8482175,
         "name": "JJ Peterka",
         "team": "BOS",
@@ -1347,7 +1339,7 @@
         "matchup": "BOS vs SJS"
       },
       {
-        "rank_in_group": 7,
+        "rank_in_group": 6,
         "player_id": 8484166,
         "name": "Adam Fantilli",
         "team": "CBJ",
@@ -1355,12 +1347,20 @@
         "matchup": "CBJ vs VGK"
       },
       {
-        "rank_in_group": 8,
+        "rank_in_group": 7,
         "player_id": 8478493,
         "name": "Joel Eriksson Ek",
         "team": "MIN",
         "goal_probability": 0.204,
         "matchup": "MIN @ SEA"
+      },
+      {
+        "rank_in_group": 8,
+        "player_id": 8482809,
+        "name": "Jackson Blake",
+        "team": "CAR",
+        "goal_probability": 0.189,
+        "matchup": "CAR @ STL"
       },
       {
         "rank_in_group": 9,
@@ -1380,6 +1380,14 @@
       },
       {
         "rank_in_group": 11,
+        "player_id": 8477946,
+        "name": "Dylan Larkin",
+        "team": "DET",
+        "goal_probability": 0.159,
+        "matchup": "DET @ CGY"
+      },
+      {
+        "rank_in_group": 12,
         "player_id": 8476880,
         "name": "Tom Wilson",
         "team": "WSH",
@@ -1387,20 +1395,12 @@
         "matchup": "WSH vs BUF"
       },
       {
-        "rank_in_group": 12,
+        "rank_in_group": 13,
         "player_id": 8471214,
         "name": "Alex Ovechkin",
         "team": "WSH",
         "goal_probability": 0.126,
         "matchup": "WSH vs BUF"
-      },
-      {
-        "rank_in_group": 13,
-        "player_id": 8477989,
-        "name": "Christian Dvorak",
-        "team": "PHI",
-        "goal_probability": 0.115,
-        "matchup": "PHI vs ANA"
       },
       {
         "rank_in_group": 14,
@@ -1422,14 +1422,6 @@
     "3": [
       {
         "rank_in_group": 1,
-        "player_id": 8482705,
-        "name": "Cole Sillinger",
-        "team": "CBJ",
-        "goal_probability": 0.195,
-        "matchup": "CBJ vs VGK"
-      },
-      {
-        "rank_in_group": 2,
         "player_id": 8477402,
         "name": "Pavel Buchnevich",
         "team": "STL",
@@ -1437,7 +1429,7 @@
         "matchup": "STL vs CAR"
       },
       {
-        "rank_in_group": 3,
+        "rank_in_group": 2,
         "player_id": 8480800,
         "name": "Quinn Hughes",
         "team": "MIN",
@@ -1445,12 +1437,20 @@
         "matchup": "MIN @ SEA"
       },
       {
-        "rank_in_group": 4,
+        "rank_in_group": 3,
         "player_id": 8482751,
         "name": "Ryan Winterton",
         "team": "SEA",
         "goal_probability": 0.138,
         "matchup": "SEA vs MIN"
+      },
+      {
+        "rank_in_group": 4,
+        "player_id": 8482671,
+        "name": "Owen Power",
+        "team": "BUF",
+        "goal_probability": 0.131,
+        "matchup": "BUF @ WSH"
       },
       {
         "rank_in_group": 5,
@@ -1470,6 +1470,22 @@
       },
       {
         "rank_in_group": 7,
+        "player_id": 8477015,
+        "name": "Connor Brown",
+        "team": "NJD",
+        "goal_probability": 0.123,
+        "matchup": "NJD vs LAK"
+      },
+      {
+        "rank_in_group": 8,
+        "player_id": 8483890,
+        "name": "Braeden Bowman",
+        "team": "VGK",
+        "goal_probability": 0.115,
+        "matchup": "VGK @ CBJ"
+      },
+      {
+        "rank_in_group": 9,
         "player_id": 8474578,
         "name": "Erik Karlsson",
         "team": "PIT",
@@ -1477,7 +1493,7 @@
         "matchup": "PIT vs NSH"
       },
       {
-        "rank_in_group": 8,
+        "rank_in_group": 10,
         "player_id": 8476458,
         "name": "Ryan Strome",
         "team": "CGY",
@@ -1485,7 +1501,7 @@
         "matchup": "CGY vs DET"
       },
       {
-        "rank_in_group": 9,
+        "rank_in_group": 11,
         "player_id": 8481580,
         "name": "Connor McMichael",
         "team": "STL",
@@ -1493,7 +1509,7 @@
         "matchup": "STL vs CAR"
       },
       {
-        "rank_in_group": 10,
+        "rank_in_group": 12,
         "player_id": 8477998,
         "name": "Warren Foegele",
         "team": "OTT",
@@ -1501,7 +1517,7 @@
         "matchup": "OTT vs NYR"
       },
       {
-        "rank_in_group": 11,
+        "rank_in_group": 13,
         "player_id": 8485402,
         "name": "Michael Misa",
         "team": "SJS",
@@ -1509,15 +1525,7 @@
         "matchup": "SJS @ BOS"
       },
       {
-        "rank_in_group": 12,
-        "player_id": 8478463,
-        "name": "Anthony Beauvillier",
-        "team": "WSH",
-        "goal_probability": 0.077,
-        "matchup": "WSH vs BUF"
-      },
-      {
-        "rank_in_group": 13,
+        "rank_in_group": 14,
         "player_id": 8476905,
         "name": "Chandler Stephenson",
         "team": "SEA",
@@ -1525,22 +1533,14 @@
         "matchup": "SEA vs MIN"
       },
       {
-        "rank_in_group": 14,
+        "rank_in_group": 15,
         "player_id": 8478856,
         "name": "Conor Garland",
         "team": "CBJ",
         "goal_probability": 0.054,
         "matchup": "CBJ vs VGK"
-      },
-      {
-        "rank_in_group": 15,
-        "player_id": 8476461,
-        "name": "Sean Couturier",
-        "team": "PHI",
-        "goal_probability": 0.048,
-        "matchup": "PHI vs ANA"
       }
     ]
   },
-  "generated_at": "2026-10-24T10:08:50.461491"
+  "generated_at": "2026-10-24T14:03:14.866076"
 }
