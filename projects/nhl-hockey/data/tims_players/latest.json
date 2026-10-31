@@ -1,15 +1,9 @@
 {
   "date": "2026-10-31",
   "source": "timnhlassist.com",
-  "players_count": 45,
+  "players_count": 40,
   "groups": {
     "1": [
-      {
-        "name": "Leon Draisaitl",
-        "player_id": 8477934,
-        "team": "EDM",
-        "position": "Forward"
-      },
       {
         "name": "William Nylander",
         "player_id": 8477939,
@@ -17,9 +11,9 @@
         "position": "Forward"
       },
       {
-        "name": "Connor McDavid",
-        "player_id": 8478402,
-        "team": "EDM",
+        "name": "Nathan MacKinnon",
+        "player_id": 8477492,
+        "team": "COL",
         "position": "Forward"
       },
       {
@@ -29,27 +23,9 @@
         "position": "Forward"
       },
       {
-        "name": "Viktor Arvidsson",
-        "player_id": 8478042,
-        "team": "DET",
-        "position": "Forward"
-      },
-      {
-        "name": "David Pastrnak",
-        "player_id": 8477956,
-        "team": "BOS",
-        "position": "Forward"
-      },
-      {
-        "name": "Steven Stamkos",
-        "player_id": 8474564,
-        "team": "NSH",
-        "position": "Forward"
-      },
-      {
-        "name": "Jake Guentzel",
-        "player_id": 8477404,
-        "team": "TBL",
+        "name": "Martin Necas",
+        "player_id": 8480039,
+        "team": "COL",
         "position": "Forward"
       },
       {
@@ -77,21 +53,27 @@
         "position": "Forward"
       },
       {
+        "name": "Wyatt Johnston",
+        "player_id": 8482740,
+        "team": "DAL",
+        "position": "Forward"
+      },
+      {
         "name": "Jake DeBrusk",
         "player_id": 8478498,
         "team": "VAN",
         "position": "Forward"
       },
       {
-        "name": "Nazem Kadri",
-        "player_id": 8475172,
-        "team": "COL",
+        "name": "Adrian Kempe",
+        "player_id": 8477960,
+        "team": "LAK",
         "position": "Forward"
       },
       {
-        "name": "Morgan Geekie",
-        "player_id": 8479987,
-        "team": "BOS",
+        "name": "Nazem Kadri",
+        "player_id": 8475172,
+        "team": "COL",
         "position": "Forward"
       }
     ],
@@ -100,12 +82,6 @@
         "name": "Easton Cowan",
         "player_id": 8484158,
         "team": "TOR",
-        "position": "Forward"
-      },
-      {
-        "name": "Filip Forsberg",
-        "player_id": 8476887,
-        "team": "NSH",
         "position": "Forward"
       },
       {
@@ -133,12 +109,6 @@
         "position": "Forward"
       },
       {
-        "name": "JJ Peterka",
-        "player_id": 8482175,
-        "team": "BOS",
-        "position": "Forward"
-      },
-      {
         "name": "Mason Marchment",
         "player_id": 8478975,
         "team": "SJS",
@@ -148,12 +118,6 @@
         "name": "Linus Karlsson",
         "player_id": 8481024,
         "team": "VAN",
-        "position": "Forward"
-      },
-      {
-        "name": "Connor Bedard",
-        "player_id": 8484144,
-        "team": "CHI",
         "position": "Forward"
       },
       {
@@ -185,6 +149,12 @@
         "player_id": 8482092,
         "team": "OTT",
         "position": "Forward"
+      },
+      {
+        "name": "Zach Werenski",
+        "player_id": 8478460,
+        "team": "CBJ",
+        "position": "Defenseman"
       }
     ],
     "3": [
@@ -207,9 +177,21 @@
         "position": "Forward"
       },
       {
-        "name": "Teuvo Teravainen",
-        "player_id": 8476882,
-        "team": "CHI",
+        "name": "Parker Kelly",
+        "player_id": 8480448,
+        "team": "COL",
+        "position": "Forward"
+      },
+      {
+        "name": "Erik Haula",
+        "player_id": 8475287,
+        "team": "LAK",
+        "position": "Forward"
+      },
+      {
+        "name": "Nicolas Roy",
+        "player_id": 8478462,
+        "team": "COL",
         "position": "Forward"
       },
       {
@@ -225,15 +207,9 @@
         "position": "Defenseman"
       },
       {
-        "name": "Tony DeAngelo",
-        "player_id": 8477950,
-        "team": "NYI",
-        "position": "Defenseman"
-      },
-      {
-        "name": "Matthew Wood",
-        "player_id": 8484241,
-        "team": "NSH",
+        "name": "Valeri Nichushkin",
+        "player_id": 8477501,
+        "team": "CBJ",
         "position": "Forward"
       },
       {
@@ -261,12 +237,6 @@
         "position": "Defenseman"
       },
       {
-        "name": "Nate Danielson",
-        "player_id": 8484160,
-        "team": "DET",
-        "position": "Forward"
-      },
-      {
         "name": "Adam Gaudette",
         "player_id": 8478874,
         "team": "SJS",
@@ -282,14 +252,6 @@
   },
   "all_players": [
     {
-      "name": "Leon Draisaitl",
-      "player_id": 8477934,
-      "team": "EDM",
-      "position": "Forward",
-      "goals": 12,
-      "shots": 48
-    },
-    {
       "name": "William Nylander",
       "player_id": 8477939,
       "team": "TOR",
@@ -298,12 +260,12 @@
       "shots": 44
     },
     {
-      "name": "Connor McDavid",
-      "player_id": 8478402,
-      "team": "EDM",
+      "name": "Nathan MacKinnon",
+      "player_id": 8477492,
+      "team": "COL",
       "position": "Forward",
       "goals": 8,
-      "shots": 33
+      "shots": 52
     },
     {
       "name": "Tage Thompson",
@@ -314,36 +276,12 @@
       "shots": 55
     },
     {
-      "name": "Viktor Arvidsson",
-      "player_id": 8478042,
-      "team": "DET",
+      "name": "Martin Necas",
+      "player_id": 8480039,
+      "team": "COL",
       "position": "Forward",
-      "goals": 8,
-      "shots": 37
-    },
-    {
-      "name": "David Pastrnak",
-      "player_id": 8477956,
-      "team": "BOS",
-      "position": "Forward",
-      "goals": 7,
-      "shots": 46
-    },
-    {
-      "name": "Steven Stamkos",
-      "player_id": 8474564,
-      "team": "NSH",
-      "position": "Forward",
-      "goals": 7,
-      "shots": 27
-    },
-    {
-      "name": "Jake Guentzel",
-      "player_id": 8477404,
-      "team": "TBL",
-      "position": "Forward",
-      "goals": 7,
-      "shots": 35
+      "goals": 6,
+      "shots": 28
     },
     {
       "name": "Macklin Celebrini",
@@ -378,12 +316,28 @@
       "shots": 23
     },
     {
+      "name": "Wyatt Johnston",
+      "player_id": 8482740,
+      "team": "DAL",
+      "position": "Forward",
+      "goals": 3,
+      "shots": 29
+    },
+    {
       "name": "Jake DeBrusk",
       "player_id": 8478498,
       "team": "VAN",
       "position": "Forward",
       "goals": 3,
       "shots": 28
+    },
+    {
+      "name": "Adrian Kempe",
+      "player_id": 8477960,
+      "team": "LAK",
+      "position": "Forward",
+      "goals": 3,
+      "shots": 41
     },
     {
       "name": "Nazem Kadri",
@@ -394,28 +348,12 @@
       "shots": 33
     },
     {
-      "name": "Morgan Geekie",
-      "player_id": 8479987,
-      "team": "BOS",
-      "position": "Forward",
-      "goals": 1,
-      "shots": 17
-    },
-    {
       "name": "Easton Cowan",
       "player_id": 8484158,
       "team": "TOR",
       "position": "Forward",
       "goals": 6,
       "shots": 32
-    },
-    {
-      "name": "Filip Forsberg",
-      "player_id": 8476887,
-      "team": "NSH",
-      "position": "Forward",
-      "goals": 5,
-      "shots": 35
     },
     {
       "name": "Matvei Gridin",
@@ -450,14 +388,6 @@
       "shots": 28
     },
     {
-      "name": "JJ Peterka",
-      "player_id": 8482175,
-      "team": "BOS",
-      "position": "Forward",
-      "goals": 4,
-      "shots": 26
-    },
-    {
       "name": "Mason Marchment",
       "player_id": 8478975,
       "team": "SJS",
@@ -472,14 +402,6 @@
       "position": "Forward",
       "goals": 3,
       "shots": 28
-    },
-    {
-      "name": "Connor Bedard",
-      "player_id": 8484144,
-      "team": "CHI",
-      "position": "Forward",
-      "goals": 3,
-      "shots": 18
     },
     {
       "name": "Sidney Crosby",
@@ -522,6 +444,14 @@
       "shots": 16
     },
     {
+      "name": "Zach Werenski",
+      "player_id": 8478460,
+      "team": "CBJ",
+      "position": "Defenseman",
+      "goals": 0,
+      "shots": 30
+    },
+    {
       "name": "Liam Ohgren",
       "player_id": 8483499,
       "team": "VAN",
@@ -546,9 +476,25 @@
       "shots": 15
     },
     {
-      "name": "Teuvo Teravainen",
-      "player_id": 8476882,
-      "team": "CHI",
+      "name": "Parker Kelly",
+      "player_id": 8480448,
+      "team": "COL",
+      "position": "Forward",
+      "goals": 2,
+      "shots": 15
+    },
+    {
+      "name": "Erik Haula",
+      "player_id": 8475287,
+      "team": "LAK",
+      "position": "Forward",
+      "goals": 2,
+      "shots": 22
+    },
+    {
+      "name": "Nicolas Roy",
+      "player_id": 8478462,
+      "team": "COL",
       "position": "Forward",
       "goals": 2,
       "shots": 10
@@ -570,20 +516,12 @@
       "shots": 13
     },
     {
-      "name": "Tony DeAngelo",
-      "player_id": 8477950,
-      "team": "NYI",
-      "position": "Defenseman",
-      "goals": 1,
-      "shots": 14
-    },
-    {
-      "name": "Matthew Wood",
-      "player_id": 8484241,
-      "team": "NSH",
+      "name": "Valeri Nichushkin",
+      "player_id": 8477501,
+      "team": "CBJ",
       "position": "Forward",
       "goals": 1,
-      "shots": 19
+      "shots": 14
     },
     {
       "name": "Joel Kiviranta",
@@ -618,14 +556,6 @@
       "shots": 30
     },
     {
-      "name": "Nate Danielson",
-      "player_id": 8484160,
-      "team": "DET",
-      "position": "Forward",
-      "goals": 0,
-      "shots": 6
-    },
-    {
       "name": "Adam Gaudette",
       "player_id": 8478874,
       "team": "SJS",
@@ -642,5 +572,5 @@
       "shots": 0
     }
   ],
-  "scraped_at": "2026-10-31T11:41:31.172920"
+  "scraped_at": "2026-10-31T14:09:49.021112"
 }
