@@ -1,0 +1,980 @@
+{
+  "date": "2026-10-30",
+  "games_count": 3,
+  "final_games": 3,
+  "partial": false,
+  "games": [
+    {
+      "game_id": 2026020214,
+      "home_team": "VGK",
+      "away_team": "NJD",
+      "game_state": "OFF",
+      "schedule_state": "OK"
+    },
+    {
+      "game_id": 2026020215,
+      "home_team": "FLA",
+      "away_team": "WPG",
+      "game_state": "OFF",
+      "schedule_state": "OK"
+    },
+    {
+      "game_id": 2026020216,
+      "home_team": "CGY",
+      "away_team": "SEA",
+      "game_state": "OFF",
+      "schedule_state": "OK"
+    }
+  ],
+  "all_scorers": [
+    {
+      "player_id": 8481721,
+      "player_name": "A. Gritsyuk",
+      "team": "NJD",
+      "goals": 2,
+      "game_id": 2026020214,
+      "matchup": "NJD @ VGK"
+    },
+    {
+      "player_id": 8481559,
+      "player_name": "J. Hughes",
+      "team": "NJD",
+      "goals": 2,
+      "game_id": 2026020214,
+      "matchup": "NJD @ VGK"
+    },
+    {
+      "player_id": 8482684,
+      "player_name": "L. Hughes",
+      "team": "NJD",
+      "goals": 1,
+      "game_id": 2026020214,
+      "matchup": "NJD @ VGK"
+    },
+    {
+      "player_id": 8477964,
+      "player_name": "I. Barbashev",
+      "team": "VGK",
+      "goals": 1,
+      "game_id": 2026020214,
+      "matchup": "NJD @ VGK"
+    },
+    {
+      "player_id": 8475913,
+      "player_name": "M. Stone",
+      "team": "VGK",
+      "goals": 1,
+      "game_id": 2026020214,
+      "matchup": "NJD @ VGK"
+    },
+    {
+      "player_id": 8480289,
+      "player_name": "M. Barron",
+      "team": "WPG",
+      "goals": 1,
+      "game_id": 2026020215,
+      "matchup": "WPG @ FLA"
+    },
+    {
+      "player_id": 8478398,
+      "player_name": "K. Connor",
+      "team": "WPG",
+      "goals": 1,
+      "game_id": 2026020215,
+      "matchup": "WPG @ FLA"
+    },
+    {
+      "player_id": 8477933,
+      "player_name": "S. Reinhart",
+      "team": "FLA",
+      "goals": 1,
+      "game_id": 2026020215,
+      "matchup": "WPG @ FLA"
+    },
+    {
+      "player_id": 8482113,
+      "player_name": "A. Lundell",
+      "team": "FLA",
+      "goals": 3,
+      "game_id": 2026020215,
+      "matchup": "WPG @ FLA"
+    },
+    {
+      "player_id": 8477495,
+      "player_name": "S. Jones",
+      "team": "FLA",
+      "goals": 1,
+      "game_id": 2026020215,
+      "matchup": "WPG @ FLA"
+    },
+    {
+      "player_id": 8482713,
+      "player_name": "M. Samoskevich",
+      "team": "SEA",
+      "goals": 1,
+      "game_id": 2026020216,
+      "matchup": "SEA @ CGY"
+    },
+    {
+      "player_id": 8477919,
+      "player_name": "F. Gaudreau",
+      "team": "SEA",
+      "goals": 1,
+      "game_id": 2026020216,
+      "matchup": "SEA @ CGY"
+    },
+    {
+      "player_id": 8480028,
+      "player_name": "M. Frost",
+      "team": "CGY",
+      "goals": 1,
+      "game_id": 2026020216,
+      "matchup": "SEA @ CGY"
+    },
+    {
+      "player_id": 8476458,
+      "player_name": "R. Strome",
+      "team": "CGY",
+      "goals": 1,
+      "game_id": 2026020216,
+      "matchup": "SEA @ CGY"
+    },
+    {
+      "player_id": 8482679,
+      "player_name": "M. Coronato",
+      "team": "CGY",
+      "goals": 1,
+      "game_id": 2026020216,
+      "matchup": "SEA @ CGY"
+    },
+    {
+      "player_id": 8484234,
+      "player_name": "A. Suniev",
+      "team": "CGY",
+      "goals": 1,
+      "game_id": 2026020216,
+      "matchup": "SEA @ CGY"
+    },
+    {
+      "player_id": 8480797,
+      "player_name": "J. Farabee",
+      "team": "CGY",
+      "goals": 1,
+      "game_id": 2026020216,
+      "matchup": "SEA @ CGY"
+    },
+    {
+      "player_id": 8484860,
+      "player_name": "M. Gridin",
+      "team": "CGY",
+      "goals": 1,
+      "game_id": 2026020216,
+      "matchup": "SEA @ CGY"
+    }
+  ],
+  "scorers_count": 18,
+  "model_comparisons": [
+    {
+      "model": "blend",
+      "model_display_name": "Blend v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8477933,
+          "name": "Sam Reinhart",
+          "team": "FLA",
+          "probability": 0.3593,
+          "scored": true
+        },
+        {
+          "rank": 2,
+          "player_id": 8478398,
+          "name": "Kyle Connor",
+          "team": "WPG",
+          "probability": 0.3446,
+          "scored": true
+        },
+        {
+          "rank": 3,
+          "player_id": 8481559,
+          "name": "Jack Hughes",
+          "team": "NJD",
+          "probability": 0.331,
+          "scored": true
+        },
+        {
+          "rank": 4,
+          "player_id": 8480801,
+          "name": "Brady Tkachuk",
+          "team": "FLA",
+          "probability": 0.3289,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8480002,
+          "name": "Nico Hischier",
+          "team": "NJD",
+          "probability": 0.2919,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8480797,
+          "name": "Joel Farabee",
+          "team": "CGY",
+          "probability": 0.2881,
+          "scored": true
+        },
+        {
+          "rank": 7,
+          "player_id": 8478403,
+          "name": "Jack Eichel",
+          "team": "VGK",
+          "probability": 0.2813,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8474586,
+          "name": "Jordan Eberle",
+          "team": "SEA",
+          "probability": 0.2791,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8477935,
+          "name": "Sam Bennett",
+          "team": "FLA",
+          "probability": 0.2786,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8475913,
+          "name": "Mark Stone",
+          "team": "VGK",
+          "probability": 0.2765,
+          "scored": true
+        }
+      ],
+      "hits": 5,
+      "total_predictions": 10,
+      "hit_rate": 50.0
+    },
+    {
+      "model": "direct_lr",
+      "model_display_name": "Direct LR v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8477933,
+          "name": "Sam Reinhart",
+          "team": "FLA",
+          "probability": 0.3789,
+          "scored": true
+        },
+        {
+          "rank": 2,
+          "player_id": 8478398,
+          "name": "Kyle Connor",
+          "team": "WPG",
+          "probability": 0.3561,
+          "scored": true
+        },
+        {
+          "rank": 3,
+          "player_id": 8481559,
+          "name": "Jack Hughes",
+          "team": "NJD",
+          "probability": 0.328,
+          "scored": true
+        },
+        {
+          "rank": 4,
+          "player_id": 8480801,
+          "name": "Brady Tkachuk",
+          "team": "FLA",
+          "probability": 0.3218,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8479314,
+          "name": "Matthew Tkachuk",
+          "team": "FLA",
+          "probability": 0.3179,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8478403,
+          "name": "Jack Eichel",
+          "team": "VGK",
+          "probability": 0.3127,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8477409,
+          "name": "Carter Verhaeghe",
+          "team": "FLA",
+          "probability": 0.3033,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8478483,
+          "name": "Mitchell Marner",
+          "team": "VGK",
+          "probability": 0.3013,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8475913,
+          "name": "Mark Stone",
+          "team": "VGK",
+          "probability": 0.2984,
+          "scored": true
+        },
+        {
+          "rank": 10,
+          "player_id": 8480797,
+          "name": "Joel Farabee",
+          "team": "CGY",
+          "probability": 0.2919,
+          "scored": true
+        }
+      ],
+      "hits": 5,
+      "total_predictions": 10,
+      "hit_rate": 50.0
+    },
+    {
+      "model": "lineup_v1",
+      "model_display_name": "Lineup TOI v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8481559,
+          "name": "Jack Hughes",
+          "team": "NJD",
+          "probability": 0.3076,
+          "scored": true
+        },
+        {
+          "rank": 2,
+          "player_id": 8478398,
+          "name": "Kyle Connor",
+          "team": "WPG",
+          "probability": 0.3074,
+          "scored": true
+        },
+        {
+          "rank": 3,
+          "player_id": 8477933,
+          "name": "Sam Reinhart",
+          "team": "FLA",
+          "probability": 0.2925,
+          "scored": true
+        },
+        {
+          "rank": 4,
+          "player_id": 8480002,
+          "name": "Nico Hischier",
+          "team": "NJD",
+          "probability": 0.289,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8480797,
+          "name": "Joel Farabee",
+          "team": "CGY",
+          "probability": 0.2663,
+          "scored": true
+        },
+        {
+          "rank": 7,
+          "player_id": 8474586,
+          "name": "Jordan Eberle",
+          "team": "SEA",
+          "probability": 0.2564,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8480801,
+          "name": "Brady Tkachuk",
+          "team": "FLA",
+          "probability": 0.2424,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8477935,
+          "name": "Sam Bennett",
+          "team": "FLA",
+          "probability": 0.2396,
+          "scored": false
+        },
+        {
+          "rank": 13,
+          "player_id": 8474150,
+          "name": "Mikael Backlund",
+          "team": "CGY",
+          "probability": 0.234,
+          "scored": false
+        },
+        {
+          "rank": 14,
+          "player_id": 8476881,
+          "name": "Tomas Hertl",
+          "team": "VGK",
+          "probability": 0.2308,
+          "scored": false
+        }
+      ],
+      "hits": 4,
+      "total_predictions": 10,
+      "hit_rate": 40.0
+    },
+    {
+      "model": "market_odds",
+      "model_display_name": "Market Odds v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8480801,
+          "name": "Brady Tkachuk",
+          "team": "FLA",
+          "probability": 0.4262,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8477933,
+          "name": "Sam Reinhart",
+          "team": "FLA",
+          "probability": 0.387,
+          "scored": true
+        },
+        {
+          "rank": 3,
+          "player_id": 8479314,
+          "name": "Matthew Tkachuk",
+          "team": "FLA",
+          "probability": 0.3569,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8478398,
+          "name": "Kyle Connor",
+          "team": "WPG",
+          "probability": 0.3465,
+          "scored": true
+        },
+        {
+          "rank": 5,
+          "player_id": 8481559,
+          "name": "Jack Hughes",
+          "team": "NJD",
+          "probability": 0.3453,
+          "scored": true
+        },
+        {
+          "rank": 6,
+          "player_id": 8482259,
+          "name": "Bobby McMann",
+          "team": "SEA",
+          "probability": 0.3386,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8477409,
+          "name": "Carter Verhaeghe",
+          "team": "FLA",
+          "probability": 0.337,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8478403,
+          "name": "Jack Eichel",
+          "team": "VGK",
+          "probability": 0.3316,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8475913,
+          "name": "Mark Stone",
+          "team": "VGK",
+          "probability": 0.329,
+          "scored": true
+        },
+        {
+          "rank": 10,
+          "player_id": 8480797,
+          "name": "Joel Farabee",
+          "team": "CGY",
+          "probability": 0.3164,
+          "scored": true
+        }
+      ],
+      "hits": 5,
+      "total_predictions": 10,
+      "hit_rate": 50.0
+    },
+    {
+      "model": "monte_carlo",
+      "model_display_name": "Monte Carlo v2",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8478398,
+          "name": "Kyle Connor",
+          "team": "WPG",
+          "probability": 0.3552,
+          "scored": true
+        },
+        {
+          "rank": 2,
+          "player_id": 8477409,
+          "name": "Carter Verhaeghe",
+          "team": "FLA",
+          "probability": 0.3189,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8475913,
+          "name": "Mark Stone",
+          "team": "VGK",
+          "probability": 0.3055,
+          "scored": true
+        },
+        {
+          "rank": 5,
+          "player_id": 8480801,
+          "name": "Brady Tkachuk",
+          "team": "FLA",
+          "probability": 0.3019,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8480002,
+          "name": "Nico Hischier",
+          "team": "NJD",
+          "probability": 0.2948,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8484860,
+          "name": "Matvei Gridin",
+          "team": "CGY",
+          "probability": 0.287,
+          "scored": true
+        },
+        {
+          "rank": 10,
+          "player_id": 8478403,
+          "name": "Jack Eichel",
+          "team": "VGK",
+          "probability": 0.2802,
+          "scored": false
+        },
+        {
+          "rank": 13,
+          "player_id": 8482149,
+          "name": "Cole Perfetti",
+          "team": "WPG",
+          "probability": 0.257,
+          "scored": false
+        },
+        {
+          "rank": 14,
+          "player_id": 8477933,
+          "name": "Sam Reinhart",
+          "team": "FLA",
+          "probability": 0.256,
+          "scored": true
+        },
+        {
+          "rank": 16,
+          "player_id": 8474586,
+          "name": "Jordan Eberle",
+          "team": "SEA",
+          "probability": 0.241,
+          "scored": false
+        }
+      ],
+      "hits": 4,
+      "total_predictions": 10,
+      "hit_rate": 40.0
+    },
+    {
+      "model": "neural_network",
+      "model_display_name": "Weighted Linear v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8478398,
+          "name": "Kyle Connor",
+          "team": "WPG",
+          "probability": 0.55,
+          "scored": true
+        },
+        {
+          "rank": 2,
+          "player_id": 8477409,
+          "name": "Carter Verhaeghe",
+          "team": "FLA",
+          "probability": 0.492,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8480801,
+          "name": "Brady Tkachuk",
+          "team": "FLA",
+          "probability": 0.439,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8480002,
+          "name": "Nico Hischier",
+          "team": "NJD",
+          "probability": 0.42,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8477933,
+          "name": "Sam Reinhart",
+          "team": "FLA",
+          "probability": 0.387,
+          "scored": true
+        },
+        {
+          "rank": 8,
+          "player_id": 8478403,
+          "name": "Jack Eichel",
+          "team": "VGK",
+          "probability": 0.384,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8475913,
+          "name": "Mark Stone",
+          "team": "VGK",
+          "probability": 0.378,
+          "scored": true
+        },
+        {
+          "rank": 11,
+          "player_id": 8484860,
+          "name": "Matvei Gridin",
+          "team": "CGY",
+          "probability": 0.374,
+          "scored": true
+        },
+        {
+          "rank": 12,
+          "player_id": 8481559,
+          "name": "Jack Hughes",
+          "team": "NJD",
+          "probability": 0.371,
+          "scored": true
+        },
+        {
+          "rank": 13,
+          "player_id": 8482149,
+          "name": "Cole Perfetti",
+          "team": "WPG",
+          "probability": 0.347,
+          "scored": false
+        }
+      ],
+      "hits": 5,
+      "total_predictions": 10,
+      "hit_rate": 50.0
+    },
+    {
+      "model": "neural_v2",
+      "model_display_name": "Neural Embed v2",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8478398,
+          "name": "Kyle Connor",
+          "team": "WPG",
+          "probability": 0.3804,
+          "scored": true
+        },
+        {
+          "rank": 2,
+          "player_id": 8477933,
+          "name": "Sam Reinhart",
+          "team": "FLA",
+          "probability": 0.3585,
+          "scored": true
+        },
+        {
+          "rank": 3,
+          "player_id": 8481559,
+          "name": "Jack Hughes",
+          "team": "NJD",
+          "probability": 0.3263,
+          "scored": true
+        },
+        {
+          "rank": 4,
+          "player_id": 8476881,
+          "name": "Tomas Hertl",
+          "team": "VGK",
+          "probability": 0.3211,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8480801,
+          "name": "Brady Tkachuk",
+          "team": "FLA",
+          "probability": 0.3142,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8474586,
+          "name": "Jordan Eberle",
+          "team": "SEA",
+          "probability": 0.3088,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8482149,
+          "name": "Cole Perfetti",
+          "team": "WPG",
+          "probability": 0.2965,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8480002,
+          "name": "Nico Hischier",
+          "team": "NJD",
+          "probability": 0.2953,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8474150,
+          "name": "Mikael Backlund",
+          "team": "CGY",
+          "probability": 0.2942,
+          "scored": false
+        },
+        {
+          "rank": 11,
+          "player_id": 8480797,
+          "name": "Joel Farabee",
+          "team": "CGY",
+          "probability": 0.2902,
+          "scored": true
+        }
+      ],
+      "hits": 4,
+      "total_predictions": 10,
+      "hit_rate": 40.0
+    },
+    {
+      "model": "xg_v3",
+      "model_display_name": "xG XGBoost v3",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8481559,
+          "name": "Jack Hughes",
+          "team": "NJD",
+          "probability": 0.3247,
+          "scored": true
+        },
+        {
+          "rank": 2,
+          "player_id": 8477933,
+          "name": "Sam Reinhart",
+          "team": "FLA",
+          "probability": 0.3147,
+          "scored": true
+        },
+        {
+          "rank": 3,
+          "player_id": 8480002,
+          "name": "Nico Hischier",
+          "team": "NJD",
+          "probability": 0.2988,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8478398,
+          "name": "Kyle Connor",
+          "team": "WPG",
+          "probability": 0.2981,
+          "scored": true
+        },
+        {
+          "rank": 5,
+          "player_id": 8477935,
+          "name": "Sam Bennett",
+          "team": "FLA",
+          "probability": 0.2638,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8480801,
+          "name": "Brady Tkachuk",
+          "team": "FLA",
+          "probability": 0.2631,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8480797,
+          "name": "Joel Farabee",
+          "team": "CGY",
+          "probability": 0.2559,
+          "scored": true
+        },
+        {
+          "rank": 10,
+          "player_id": 8474586,
+          "name": "Jordan Eberle",
+          "team": "SEA",
+          "probability": 0.2525,
+          "scored": false
+        },
+        {
+          "rank": 11,
+          "player_id": 8476881,
+          "name": "Tomas Hertl",
+          "team": "VGK",
+          "probability": 0.246,
+          "scored": false
+        },
+        {
+          "rank": 12,
+          "player_id": 8474150,
+          "name": "Mikael Backlund",
+          "team": "CGY",
+          "probability": 0.2317,
+          "scored": false
+        }
+      ],
+      "hits": 4,
+      "total_predictions": 10,
+      "hit_rate": 40.0
+    },
+    {
+      "model": "xg_v3_synthetic",
+      "model_display_name": "xG XGBoost v3 (synthetic shadow)",
+      "top10_picks": [
+        {
+          "rank": 3,
+          "player_id": 8478403,
+          "name": "Jack Eichel",
+          "team": "VGK",
+          "probability": 0.5885,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8478398,
+          "name": "Kyle Connor",
+          "team": "WPG",
+          "probability": 0.55,
+          "scored": true
+        },
+        {
+          "rank": 7,
+          "player_id": 8480002,
+          "name": "Nico Hischier",
+          "team": "NJD",
+          "probability": 0.5374,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8477933,
+          "name": "Sam Reinhart",
+          "team": "FLA",
+          "probability": 0.5068,
+          "scored": true
+        },
+        {
+          "rank": 9,
+          "player_id": 8480801,
+          "name": "Brady Tkachuk",
+          "team": "FLA",
+          "probability": 0.4918,
+          "scored": false
+        },
+        {
+          "rank": 11,
+          "player_id": 8476881,
+          "name": "Tomas Hertl",
+          "team": "VGK",
+          "probability": 0.4523,
+          "scored": false
+        },
+        {
+          "rank": 13,
+          "player_id": 8482259,
+          "name": "Bobby McMann",
+          "team": "SEA",
+          "probability": 0.4327,
+          "scored": false
+        },
+        {
+          "rank": 15,
+          "player_id": 8475913,
+          "name": "Mark Stone",
+          "team": "VGK",
+          "probability": 0.4104,
+          "scored": true
+        },
+        {
+          "rank": 16,
+          "player_id": 8480797,
+          "name": "Joel Farabee",
+          "team": "CGY",
+          "probability": 0.4083,
+          "scored": true
+        },
+        {
+          "rank": 17,
+          "player_id": 8484860,
+          "name": "Matvei Gridin",
+          "team": "CGY",
+          "probability": 0.4082,
+          "scored": true
+        }
+      ],
+      "hits": 5,
+      "total_predictions": 10,
+      "hit_rate": 50.0
+    }
+  ],
+  "fetched_at": "2026-10-31T07:44:43.931415"
+}
