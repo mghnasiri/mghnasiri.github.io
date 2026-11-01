@@ -1,19 +1,19 @@
 {
   "date": "2026-11-01",
   "source": "timnhlassist.com",
-  "players_count": 45,
+  "players_count": 40,
   "groups": {
     "1": [
+      {
+        "name": "Kirill Kaprizov",
+        "player_id": 8478864,
+        "team": "MIN",
+        "position": "Forward"
+      },
       {
         "name": "Leon Draisaitl",
         "player_id": 8477934,
         "team": "EDM",
-        "position": "Forward"
-      },
-      {
-        "name": "Kyle Connor",
-        "player_id": 8478398,
-        "team": "WPG",
         "position": "Forward"
       },
       {
@@ -23,15 +23,15 @@
         "position": "Forward"
       },
       {
-        "name": "Connor McDavid",
-        "player_id": 8478402,
-        "team": "EDM",
+        "name": "Alexis Lafrenière",
+        "player_id": 8482109,
+        "team": "NYR",
         "position": "Forward"
       },
       {
-        "name": "Sebastian Aho",
-        "player_id": 8478427,
-        "team": "CAR",
+        "name": "Connor McDavid",
+        "player_id": 8478402,
+        "team": "EDM",
         "position": "Forward"
       },
       {
@@ -50,12 +50,6 @@
         "name": "Matt Boldy",
         "player_id": 8481557,
         "team": "MIN",
-        "position": "Forward"
-      },
-      {
-        "name": "Andrei Svechnikov",
-        "player_id": 8480830,
-        "team": "CAR",
         "position": "Forward"
       },
       {
@@ -87,19 +81,19 @@
         "player_id": 8481604,
         "team": "NYR",
         "position": "Forward"
-      },
-      {
-        "name": "Seth Jarvis",
-        "player_id": 8482093,
-        "team": "CAR",
-        "position": "Forward"
       }
     ],
     "2": [
       {
-        "name": "Logan Stankoven",
-        "player_id": 8482702,
-        "team": "CAR",
+        "name": "Alex Tuch",
+        "player_id": 8477949,
+        "team": "WSH",
+        "position": "Forward"
+      },
+      {
+        "name": "Matvei Michkov",
+        "player_id": 8484387,
+        "team": "PHI",
         "position": "Forward"
       },
       {
@@ -109,27 +103,27 @@
         "position": "Defenseman"
       },
       {
+        "name": "Joel Eriksson Ek",
+        "player_id": 8478493,
+        "team": "MIN",
+        "position": "Forward"
+      },
+      {
         "name": "Shane Pinto",
         "player_id": 8481596,
         "team": "OTT",
         "position": "Forward"
       },
       {
-        "name": "Trevor Zegras",
-        "player_id": 8481533,
-        "team": "PHI",
-        "position": "Forward"
-      },
-      {
-        "name": "Nikolaj Ehlers",
-        "player_id": 8477940,
-        "team": "CAR",
-        "position": "Forward"
-      },
-      {
         "name": "Jordan Kyrou",
         "player_id": 8479385,
         "team": "WSH",
+        "position": "Forward"
+      },
+      {
+        "name": "J.T. Miller",
+        "player_id": 8476468,
+        "team": "NYR",
         "position": "Forward"
       },
       {
@@ -179,21 +173,9 @@
         "player_id": 8479345,
         "team": "WSH",
         "position": "Defenseman"
-      },
-      {
-        "name": "Gabriel Vilardi",
-        "player_id": 8480014,
-        "team": "WPG",
-        "position": "Forward"
       }
     ],
     "3": [
-      {
-        "name": "Quinn Hughes",
-        "player_id": 8480800,
-        "team": "MIN",
-        "position": "Defenseman"
-      },
       {
         "name": "Kasperi Kapanen",
         "player_id": 8477953,
@@ -207,21 +189,9 @@
         "position": "Defensemen"
       },
       {
-        "name": "Jesperi Kotkaniemi",
-        "player_id": 8480829,
-        "team": "CAR",
-        "position": "Forward"
-      },
-      {
         "name": "Tim Washe",
         "player_id": 8485512,
         "team": "ANA",
-        "position": "Forward"
-      },
-      {
-        "name": "Jordan Martinook",
-        "player_id": 8476921,
-        "team": "CAR",
         "position": "Forward"
       },
       {
@@ -234,12 +204,6 @@
         "name": "Ridly Greig",
         "player_id": 8482092,
         "team": "OTT",
-        "position": "Forward"
-      },
-      {
-        "name": "Nicolas Deslauriers",
-        "player_id": 8475235,
-        "team": "CAR",
         "position": "Forward"
       },
       {
@@ -261,15 +225,21 @@
         "position": "Defenseman"
       },
       {
+        "name": "Jordan Spence",
+        "player_id": 8481606,
+        "team": "OTT",
+        "position": "Defenseman"
+      },
+      {
         "name": "Justin Sourdif",
         "player_id": 8482088,
         "team": "WSH",
         "position": "Forward"
       },
       {
-        "name": "Isak Rosen",
-        "player_id": 8482765,
-        "team": "WPG",
+        "name": "Nick Cousins",
+        "player_id": 8476393,
+        "team": "OTT",
         "position": "Forward"
       },
       {
@@ -282,20 +252,20 @@
   },
   "all_players": [
     {
+      "name": "Kirill Kaprizov",
+      "player_id": 8478864,
+      "team": "MIN",
+      "position": "Forward",
+      "goals": 14,
+      "shots": 51
+    },
+    {
       "name": "Leon Draisaitl",
       "player_id": 8477934,
       "team": "EDM",
       "position": "Forward",
       "goals": 12,
       "shots": 50
-    },
-    {
-      "name": "Kyle Connor",
-      "player_id": 8478398,
-      "team": "WPG",
-      "position": "Forward",
-      "goals": 11,
-      "shots": 58
     },
     {
       "name": "Drake Batherson",
@@ -306,20 +276,20 @@
       "shots": 36
     },
     {
+      "name": "Alexis Lafrenière",
+      "player_id": 8482109,
+      "team": "NYR",
+      "position": "Forward",
+      "goals": 9,
+      "shots": 32
+    },
+    {
       "name": "Connor McDavid",
       "player_id": 8478402,
       "team": "EDM",
       "position": "Forward",
       "goals": 8,
       "shots": 36
-    },
-    {
-      "name": "Sebastian Aho",
-      "player_id": 8478427,
-      "team": "CAR",
-      "position": "Forward",
-      "goals": 8,
-      "shots": 44
     },
     {
       "name": "Beckett Sennecke",
@@ -344,14 +314,6 @@
       "position": "Forward",
       "goals": 6,
       "shots": 65
-    },
-    {
-      "name": "Andrei Svechnikov",
-      "player_id": 8480830,
-      "team": "CAR",
-      "position": "Forward",
-      "goals": 6,
-      "shots": 41
     },
     {
       "name": "Dylan Guenther",
@@ -394,20 +356,20 @@
       "shots": 42
     },
     {
-      "name": "Seth Jarvis",
-      "player_id": 8482093,
-      "team": "CAR",
+      "name": "Alex Tuch",
+      "player_id": 8477949,
+      "team": "WSH",
       "position": "Forward",
-      "goals": 1,
-      "shots": 9
+      "goals": 10,
+      "shots": 33
     },
     {
-      "name": "Logan Stankoven",
-      "player_id": 8482702,
-      "team": "CAR",
+      "name": "Matvei Michkov",
+      "player_id": 8484387,
+      "team": "PHI",
       "position": "Forward",
       "goals": 9,
-      "shots": 46
+      "shots": 21
     },
     {
       "name": "Evan Bouchard",
@@ -418,6 +380,14 @@
       "shots": 42
     },
     {
+      "name": "Joel Eriksson Ek",
+      "player_id": 8478493,
+      "team": "MIN",
+      "position": "Forward",
+      "goals": 5,
+      "shots": 51
+    },
+    {
       "name": "Shane Pinto",
       "player_id": 8481596,
       "team": "OTT",
@@ -426,25 +396,17 @@
       "shots": 29
     },
     {
-      "name": "Trevor Zegras",
-      "player_id": 8481533,
-      "team": "PHI",
-      "position": "Forward",
-      "goals": 4,
-      "shots": 34
-    },
-    {
-      "name": "Nikolaj Ehlers",
-      "player_id": 8477940,
-      "team": "CAR",
-      "position": "Forward",
-      "goals": 4,
-      "shots": 30
-    },
-    {
       "name": "Jordan Kyrou",
       "player_id": 8479385,
       "team": "WSH",
+      "position": "Forward",
+      "goals": 4,
+      "shots": 22
+    },
+    {
+      "name": "J.T. Miller",
+      "player_id": 8476468,
+      "team": "NYR",
       "position": "Forward",
       "goals": 4,
       "shots": 22
@@ -514,22 +476,6 @@
       "shots": 37
     },
     {
-      "name": "Gabriel Vilardi",
-      "player_id": 8480014,
-      "team": "WPG",
-      "position": "Forward",
-      "goals": 1,
-      "shots": 24
-    },
-    {
-      "name": "Quinn Hughes",
-      "player_id": 8480800,
-      "team": "MIN",
-      "position": "Defenseman",
-      "goals": 4,
-      "shots": 44
-    },
-    {
       "name": "Kasperi Kapanen",
       "player_id": 8477953,
       "team": "EDM",
@@ -546,28 +492,12 @@
       "shots": 25
     },
     {
-      "name": "Jesperi Kotkaniemi",
-      "player_id": 8480829,
-      "team": "CAR",
-      "position": "Forward",
-      "goals": 3,
-      "shots": 13
-    },
-    {
       "name": "Tim Washe",
       "player_id": 8485512,
       "team": "ANA",
       "position": "Forward",
       "goals": 3,
       "shots": 15
-    },
-    {
-      "name": "Jordan Martinook",
-      "player_id": 8476921,
-      "team": "CAR",
-      "position": "Forward",
-      "goals": 2,
-      "shots": 23
     },
     {
       "name": "Christian Dvorak",
@@ -584,14 +514,6 @@
       "position": "Forward",
       "goals": 2,
       "shots": 19
-    },
-    {
-      "name": "Nicolas Deslauriers",
-      "player_id": 8475235,
-      "team": "CAR",
-      "position": "Forward",
-      "goals": 2,
-      "shots": 6
     },
     {
       "name": "Adam Fox",
@@ -618,6 +540,14 @@
       "shots": 23
     },
     {
+      "name": "Jordan Spence",
+      "player_id": 8481606,
+      "team": "OTT",
+      "position": "Defenseman",
+      "goals": 1,
+      "shots": 14
+    },
+    {
       "name": "Justin Sourdif",
       "player_id": 8482088,
       "team": "WSH",
@@ -626,12 +556,12 @@
       "shots": 9
     },
     {
-      "name": "Isak Rosen",
-      "player_id": 8482765,
-      "team": "WPG",
+      "name": "Nick Cousins",
+      "player_id": 8476393,
+      "team": "OTT",
       "position": "Forward",
       "goals": 1,
-      "shots": 16
+      "shots": 10
     },
     {
       "name": "Trent Frederic",
@@ -642,5 +572,5 @@
       "shots": 11
     }
   ],
-  "scraped_at": "2026-11-01T11:44:46.303167"
+  "scraped_at": "2026-11-01T13:44:30.090804"
 }
