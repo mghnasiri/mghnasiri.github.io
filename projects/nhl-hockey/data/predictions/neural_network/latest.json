@@ -40,7 +40,7 @@
       "game_type": 2
     }
   ],
-  "players_count": 45,
+  "players_count": 40,
   "predictions": [
     {
       "player_id": 8477934,
@@ -67,51 +67,51 @@
       "tims_rank": 1
     },
     {
-      "player_id": 8478398,
-      "name": "Kyle Connor",
-      "position": "L",
-      "team": "WPG",
-      "games_played": 14,
-      "season_goals": 11,
-      "season_shots": 58,
-      "avg_goals": 0.786,
-      "avg_shots": 4.14,
-      "shooting_pct": 0.19,
-      "last5_goals": 3,
-      "last5_points": 4,
-      "prior_games": 0,
-      "opponent": "CAR",
-      "is_home": false,
-      "game_id": 2026020227,
-      "matchup": "WPG @ CAR",
-      "goal_probability": 0.524,
-      "rank": 4,
-      "is_hot": true,
-      "tims_group": "1",
-      "tims_rank": 2
-    },
-    {
-      "player_id": 8482702,
-      "name": "Logan Stankoven",
-      "position": "C",
-      "team": "CAR",
-      "games_played": 15,
-      "season_goals": 9,
-      "season_shots": 46,
-      "avg_goals": 0.6,
-      "avg_shots": 3.07,
-      "shooting_pct": 0.196,
+      "player_id": 8477949,
+      "name": "Alex Tuch",
+      "position": "R",
+      "team": "WSH",
+      "games_played": 12,
+      "season_goals": 10,
+      "season_shots": 33,
+      "avg_goals": 0.833,
+      "avg_shots": 2.75,
+      "shooting_pct": 0.303,
       "last5_goals": 5,
       "last5_points": 6,
       "prior_games": 0,
-      "opponent": "WPG",
+      "opponent": "MIN",
       "is_home": true,
-      "game_id": 2026020227,
-      "matchup": "CAR vs WPG",
-      "goal_probability": 0.487,
-      "rank": 5,
+      "game_id": 2026020228,
+      "matchup": "WSH vs MIN",
+      "goal_probability": 0.54,
+      "rank": 2,
       "is_hot": true,
       "tims_group": "2",
+      "tims_rank": 2
+    },
+    {
+      "player_id": 8478864,
+      "name": "Kirill Kaprizov",
+      "position": "L",
+      "team": "MIN",
+      "games_played": 15,
+      "season_goals": 14,
+      "season_shots": 51,
+      "avg_goals": 0.933,
+      "avg_shots": 3.4,
+      "shooting_pct": 0.275,
+      "last5_goals": 3,
+      "last5_points": 7,
+      "prior_games": 0,
+      "opponent": "WSH",
+      "is_home": false,
+      "game_id": 2026020228,
+      "matchup": "MIN @ WSH",
+      "goal_probability": 0.532,
+      "rank": 3,
+      "is_hot": true,
+      "tims_group": "1",
       "tims_rank": 3
     },
     {
@@ -139,6 +139,30 @@
       "tims_rank": 4
     },
     {
+      "player_id": 8484387,
+      "name": "Matvei Michkov",
+      "position": "R",
+      "team": "PHI",
+      "games_played": 15,
+      "season_goals": 9,
+      "season_shots": 21,
+      "avg_goals": 0.6,
+      "avg_shots": 1.4,
+      "shooting_pct": 0.429,
+      "last5_goals": 5,
+      "last5_points": 6,
+      "prior_games": 0,
+      "opponent": "UTA",
+      "is_home": true,
+      "game_id": 2026020229,
+      "matchup": "PHI vs UTA",
+      "goal_probability": 0.424,
+      "rank": 8,
+      "is_hot": true,
+      "tims_group": "2",
+      "tims_rank": 5
+    },
+    {
       "player_id": 8484762,
       "name": "Beckett Sennecke",
       "position": "R",
@@ -160,31 +184,31 @@
       "rank": 10,
       "is_hot": true,
       "tims_group": "1",
-      "tims_rank": 5
+      "tims_rank": 6
     },
     {
-      "player_id": 8478427,
-      "name": "Sebastian Aho",
-      "position": "C",
-      "team": "CAR",
-      "games_played": 15,
-      "season_goals": 8,
-      "season_shots": 44,
-      "avg_goals": 0.533,
-      "avg_shots": 2.93,
-      "shooting_pct": 0.182,
+      "player_id": 8482109,
+      "name": "Alexis Lafrenière",
+      "position": "L",
+      "team": "NYR",
+      "games_played": 14,
+      "season_goals": 9,
+      "season_shots": 32,
+      "avg_goals": 0.643,
+      "avg_shots": 2.29,
+      "shooting_pct": 0.281,
       "last5_goals": 2,
       "last5_points": 5,
       "prior_games": 0,
-      "opponent": "WPG",
+      "opponent": "EDM",
       "is_home": true,
-      "game_id": 2026020227,
-      "matchup": "CAR vs WPG",
-      "goal_probability": 0.366,
-      "rank": 14,
+      "game_id": 2026020230,
+      "matchup": "NYR vs EDM",
+      "goal_probability": 0.371,
+      "rank": 12,
       "is_hot": false,
       "tims_group": "1",
-      "tims_rank": 6
+      "tims_rank": 7
     },
     {
       "player_id": 8481557,
@@ -208,7 +232,31 @@
       "rank": 15,
       "is_hot": false,
       "tims_group": "1",
-      "tims_rank": 7
+      "tims_rank": 8
+    },
+    {
+      "player_id": 8478493,
+      "name": "Joel Eriksson Ek",
+      "position": "C",
+      "team": "MIN",
+      "games_played": 15,
+      "season_goals": 5,
+      "season_shots": 51,
+      "avg_goals": 0.333,
+      "avg_shots": 3.4,
+      "shooting_pct": 0.098,
+      "last5_goals": 3,
+      "last5_points": 5,
+      "prior_games": 0,
+      "opponent": "WSH",
+      "is_home": false,
+      "game_id": 2026020228,
+      "matchup": "MIN @ WSH",
+      "goal_probability": 0.363,
+      "rank": 16,
+      "is_hot": true,
+      "tims_group": "2",
+      "tims_rank": 9
     },
     {
       "player_id": 8478402,
@@ -232,7 +280,7 @@
       "rank": 17,
       "is_hot": false,
       "tims_group": "1",
-      "tims_rank": 8
+      "tims_rank": 10
     },
     {
       "player_id": 8483445,
@@ -256,7 +304,7 @@
       "rank": 18,
       "is_hot": false,
       "tims_group": "1",
-      "tims_rank": 9
+      "tims_rank": 11
     },
     {
       "player_id": 8476454,
@@ -280,7 +328,7 @@
       "rank": 19,
       "is_hot": true,
       "tims_group": "2",
-      "tims_rank": 10
+      "tims_rank": 12
     },
     {
       "player_id": 8481528,
@@ -304,7 +352,7 @@
       "rank": 20,
       "is_hot": true,
       "tims_group": "2",
-      "tims_rank": 11
+      "tims_rank": 13
     },
     {
       "player_id": 8477951,
@@ -328,7 +376,7 @@
       "rank": 21,
       "is_hot": false,
       "tims_group": "1",
-      "tims_rank": 12
+      "tims_rank": 14
     },
     {
       "player_id": 8484873,
@@ -352,7 +400,7 @@
       "rank": 23,
       "is_hot": true,
       "tims_group": "3",
-      "tims_rank": 13
+      "tims_rank": 15
     },
     {
       "player_id": 8480803,
@@ -376,7 +424,7 @@
       "rank": 25,
       "is_hot": false,
       "tims_group": "2",
-      "tims_rank": 14
+      "tims_rank": 16
     },
     {
       "player_id": 8484186,
@@ -400,7 +448,7 @@
       "rank": 26,
       "is_hot": false,
       "tims_group": "2",
-      "tims_rank": 15
+      "tims_rank": 17
     },
     {
       "player_id": 8481596,
@@ -424,79 +472,7 @@
       "rank": 27,
       "is_hot": true,
       "tims_group": "2",
-      "tims_rank": 16
-    },
-    {
-      "player_id": 8482093,
-      "name": "Seth Jarvis",
-      "position": "R",
-      "team": "CAR",
-      "games_played": 10,
-      "season_goals": 3.7042253521126756,
-      "season_shots": 27.92957746478873,
-      "avg_goals": 0.37,
-      "avg_shots": 2.79,
-      "shooting_pct": 0.133,
-      "last5_goals": 1.4507042253521127,
-      "last5_points": 5.929577464788732,
-      "prior_games": 6,
-      "opponent": "WPG",
-      "is_home": true,
-      "game_id": 2026020227,
-      "matchup": "CAR vs WPG",
-      "goal_probability": 0.295,
-      "rank": 28,
-      "is_hot": false,
-      "tims_group": "1",
-      "tims_rank": 17
-    },
-    {
-      "player_id": 8480800,
-      "name": "Quinn Hughes",
-      "position": "D",
-      "team": "MIN",
-      "games_played": 15,
-      "season_goals": 4,
-      "season_shots": 44,
-      "avg_goals": 0.267,
-      "avg_shots": 2.93,
-      "shooting_pct": 0.091,
-      "last5_goals": 2,
-      "last5_points": 7,
-      "prior_games": 0,
-      "opponent": "WSH",
-      "is_home": false,
-      "game_id": 2026020228,
-      "matchup": "MIN @ WSH",
-      "goal_probability": 0.289,
-      "rank": 30,
-      "is_hot": false,
-      "tims_group": "3",
       "tims_rank": 18
-    },
-    {
-      "player_id": 8477940,
-      "name": "Nikolaj Ehlers",
-      "position": "L",
-      "team": "CAR",
-      "games_played": 15,
-      "season_goals": 4,
-      "season_shots": 30,
-      "avg_goals": 0.267,
-      "avg_shots": 2.0,
-      "shooting_pct": 0.133,
-      "last5_goals": 3,
-      "last5_points": 7,
-      "prior_games": 0,
-      "opponent": "WPG",
-      "is_home": true,
-      "game_id": 2026020227,
-      "matchup": "CAR vs WPG",
-      "goal_probability": 0.278,
-      "rank": 34,
-      "is_hot": true,
-      "tims_group": "2",
-      "tims_rank": 19
     },
     {
       "player_id": 8482699,
@@ -520,6 +496,30 @@
       "rank": 35,
       "is_hot": false,
       "tims_group": "1",
+      "tims_rank": 19
+    },
+    {
+      "player_id": 8476468,
+      "name": "J.T. Miller",
+      "position": "C",
+      "team": "NYR",
+      "games_played": 14,
+      "season_goals": 4,
+      "season_shots": 22,
+      "avg_goals": 0.286,
+      "avg_shots": 1.57,
+      "shooting_pct": 0.182,
+      "last5_goals": 3,
+      "last5_points": 4,
+      "prior_games": 0,
+      "opponent": "EDM",
+      "is_home": true,
+      "game_id": 2026020230,
+      "matchup": "NYR vs EDM",
+      "goal_probability": 0.266,
+      "rank": 40,
+      "is_hot": true,
+      "tims_group": "2",
       "tims_rank": 20
     },
     {
@@ -571,54 +571,6 @@
       "tims_rank": 22
     },
     {
-      "player_id": 8481533,
-      "name": "Trevor Zegras",
-      "position": "C",
-      "team": "PHI",
-      "games_played": 15,
-      "season_goals": 4,
-      "season_shots": 34,
-      "avg_goals": 0.267,
-      "avg_shots": 2.27,
-      "shooting_pct": 0.118,
-      "last5_goals": 2,
-      "last5_points": 9,
-      "prior_games": 0,
-      "opponent": "UTA",
-      "is_home": true,
-      "game_id": 2026020229,
-      "matchup": "PHI vs UTA",
-      "goal_probability": 0.258,
-      "rank": 43,
-      "is_hot": false,
-      "tims_group": "2",
-      "tims_rank": 23
-    },
-    {
-      "player_id": 8480830,
-      "name": "Andrei Svechnikov",
-      "position": "R",
-      "team": "CAR",
-      "games_played": 15,
-      "season_goals": 6,
-      "season_shots": 41,
-      "avg_goals": 0.4,
-      "avg_shots": 2.73,
-      "shooting_pct": 0.146,
-      "last5_goals": 0,
-      "last5_points": 2,
-      "prior_games": 0,
-      "opponent": "WPG",
-      "is_home": true,
-      "game_id": 2026020227,
-      "matchup": "CAR vs WPG",
-      "goal_probability": 0.255,
-      "rank": 44,
-      "is_hot": false,
-      "tims_group": "1",
-      "tims_rank": 24
-    },
-    {
       "player_id": 8481604,
       "name": "Pavel Dorofeyev",
       "position": "R",
@@ -640,7 +592,7 @@
       "rank": 45,
       "is_hot": false,
       "tims_group": "1",
-      "tims_rank": 25
+      "tims_rank": 23
     },
     {
       "player_id": 8484153,
@@ -664,7 +616,7 @@
       "rank": 49,
       "is_hot": false,
       "tims_group": "1",
-      "tims_rank": 26
+      "tims_rank": 24
     },
     {
       "player_id": 8479343,
@@ -688,7 +640,7 @@
       "rank": 51,
       "is_hot": false,
       "tims_group": "1",
-      "tims_rank": 27
+      "tims_rank": 25
     },
     {
       "player_id": 8481789,
@@ -712,7 +664,7 @@
       "rank": 52,
       "is_hot": false,
       "tims_group": "2",
-      "tims_rank": 28
+      "tims_rank": 26
     },
     {
       "player_id": 8477953,
@@ -736,7 +688,7 @@
       "rank": 58,
       "is_hot": false,
       "tims_group": "3",
-      "tims_rank": 29
+      "tims_rank": 27
     },
     {
       "player_id": 8475798,
@@ -760,7 +712,7 @@
       "rank": 59,
       "is_hot": false,
       "tims_group": "2",
-      "tims_rank": 30
+      "tims_rank": 28
     },
     {
       "player_id": 8479345,
@@ -784,31 +736,7 @@
       "rank": 68,
       "is_hot": false,
       "tims_group": "2",
-      "tims_rank": 31
-    },
-    {
-      "player_id": 8475235,
-      "name": "Nicolas Deslauriers",
-      "position": "L",
-      "team": "CAR",
-      "games_played": 10,
-      "season_goals": 2,
-      "season_shots": 6,
-      "avg_goals": 0.2,
-      "avg_shots": 0.6,
-      "shooting_pct": 0.333,
-      "last5_goals": 2,
-      "last5_points": 2,
-      "prior_games": 0,
-      "opponent": "WPG",
-      "is_home": true,
-      "game_id": 2026020227,
-      "matchup": "CAR vs WPG",
-      "goal_probability": 0.177,
-      "rank": 69,
-      "is_hot": false,
-      "tims_group": "3",
-      "tims_rank": 32
+      "tims_rank": 29
     },
     {
       "player_id": 8485512,
@@ -832,31 +760,7 @@
       "rank": 71,
       "is_hot": false,
       "tims_group": "3",
-      "tims_rank": 33
-    },
-    {
-      "player_id": 8480829,
-      "name": "Jesperi Kotkaniemi",
-      "position": "C",
-      "team": "CAR",
-      "games_played": 13,
-      "season_goals": 3,
-      "season_shots": 13,
-      "avg_goals": 0.231,
-      "avg_shots": 1.0,
-      "shooting_pct": 0.231,
-      "last5_goals": 1,
-      "last5_points": 2,
-      "prior_games": 0,
-      "opponent": "WPG",
-      "is_home": true,
-      "game_id": 2026020227,
-      "matchup": "CAR vs WPG",
-      "goal_probability": 0.164,
-      "rank": 74,
-      "is_hot": false,
-      "tims_group": "3",
-      "tims_rank": 34
+      "tims_rank": 30
     },
     {
       "player_id": 8479400,
@@ -880,7 +784,7 @@
       "rank": 83,
       "is_hot": false,
       "tims_group": "3",
-      "tims_rank": 35
+      "tims_rank": 31
     },
     {
       "player_id": 8482092,
@@ -904,55 +808,7 @@
       "rank": 85,
       "is_hot": false,
       "tims_group": "3",
-      "tims_rank": 36
-    },
-    {
-      "player_id": 8476921,
-      "name": "Jordan Martinook",
-      "position": "L",
-      "team": "CAR",
-      "games_played": 15,
-      "season_goals": 2,
-      "season_shots": 23,
-      "avg_goals": 0.133,
-      "avg_shots": 1.53,
-      "shooting_pct": 0.087,
-      "last5_goals": 1,
-      "last5_points": 4,
-      "prior_games": 0,
-      "opponent": "WPG",
-      "is_home": true,
-      "game_id": 2026020227,
-      "matchup": "CAR vs WPG",
-      "goal_probability": 0.152,
-      "rank": 89,
-      "is_hot": false,
-      "tims_group": "3",
-      "tims_rank": 37
-    },
-    {
-      "player_id": 8480014,
-      "name": "Gabriel Vilardi",
-      "position": "C",
-      "team": "WPG",
-      "games_played": 14,
-      "season_goals": 1,
-      "season_shots": 24,
-      "avg_goals": 0.071,
-      "avg_shots": 1.71,
-      "shooting_pct": 0.042,
-      "last5_goals": 1,
-      "last5_points": 2,
-      "prior_games": 0,
-      "opponent": "CAR",
-      "is_home": false,
-      "game_id": 2026020227,
-      "matchup": "WPG @ CAR",
-      "goal_probability": 0.141,
-      "rank": 102,
-      "is_hot": false,
-      "tims_group": "2",
-      "tims_rank": 38
+      "tims_rank": 32
     },
     {
       "player_id": 8478469,
@@ -976,7 +832,7 @@
       "rank": 109,
       "is_hot": false,
       "tims_group": "3",
-      "tims_rank": 39
+      "tims_rank": 33
     },
     {
       "player_id": 8480009,
@@ -1000,7 +856,7 @@
       "rank": 111,
       "is_hot": false,
       "tims_group": "2",
-      "tims_rank": 40
+      "tims_rank": 34
     },
     {
       "player_id": 8479323,
@@ -1024,31 +880,7 @@
       "rank": 124,
       "is_hot": false,
       "tims_group": "3",
-      "tims_rank": 41
-    },
-    {
-      "player_id": 8482765,
-      "name": "Isak Rosen",
-      "position": "R",
-      "team": "WPG",
-      "games_played": 14,
-      "season_goals": 1,
-      "season_shots": 16,
-      "avg_goals": 0.071,
-      "avg_shots": 1.14,
-      "shooting_pct": 0.062,
-      "last5_goals": 1,
-      "last5_points": 1,
-      "prior_games": 0,
-      "opponent": "CAR",
-      "is_home": false,
-      "game_id": 2026020227,
-      "matchup": "WPG @ CAR",
-      "goal_probability": 0.114,
-      "rank": 126,
-      "is_hot": false,
-      "tims_group": "3",
-      "tims_rank": 42
+      "tims_rank": 35
     },
     {
       "player_id": 8477989,
@@ -1072,7 +904,31 @@
       "rank": 129,
       "is_hot": false,
       "tims_group": "3",
-      "tims_rank": 43
+      "tims_rank": 36
+    },
+    {
+      "player_id": 8481606,
+      "name": "Jordan Spence",
+      "position": "D",
+      "team": "OTT",
+      "games_played": 15,
+      "season_goals": 1,
+      "season_shots": 14,
+      "avg_goals": 0.067,
+      "avg_shots": 0.93,
+      "shooting_pct": 0.071,
+      "last5_goals": 1,
+      "last5_points": 2,
+      "prior_games": 0,
+      "opponent": "ANA",
+      "is_home": false,
+      "game_id": 2026020231,
+      "matchup": "OTT @ ANA",
+      "goal_probability": 0.103,
+      "rank": 139,
+      "is_hot": false,
+      "tims_group": "3",
+      "tims_rank": 37
     },
     {
       "player_id": 8482088,
@@ -1096,7 +952,7 @@
       "rank": 161,
       "is_hot": false,
       "tims_group": "3",
-      "tims_rank": 44
+      "tims_rank": 38
     },
     {
       "player_id": 8479365,
@@ -1120,7 +976,31 @@
       "rank": 169,
       "is_hot": false,
       "tims_group": "3",
-      "tims_rank": 45
+      "tims_rank": 39
+    },
+    {
+      "player_id": 8476393,
+      "name": "Nick Cousins",
+      "position": "C",
+      "team": "OTT",
+      "games_played": 15,
+      "season_goals": 1,
+      "season_shots": 10,
+      "avg_goals": 0.067,
+      "avg_shots": 0.67,
+      "shooting_pct": 0.1,
+      "last5_goals": 0,
+      "last5_points": 0,
+      "prior_games": 0,
+      "opponent": "ANA",
+      "is_home": false,
+      "game_id": 2026020231,
+      "matchup": "OTT @ ANA",
+      "goal_probability": 0.061,
+      "rank": 184,
+      "is_hot": false,
+      "tims_group": "3",
+      "tims_rank": 40
     }
   ],
   "tims_mode": true,
@@ -1137,11 +1017,11 @@
       },
       {
         "rank_in_group": 2,
-        "player_id": 8478398,
-        "name": "Kyle Connor",
-        "team": "WPG",
-        "goal_probability": 0.524,
-        "matchup": "WPG @ CAR"
+        "player_id": 8478864,
+        "name": "Kirill Kaprizov",
+        "team": "MIN",
+        "goal_probability": 0.532,
+        "matchup": "MIN @ WSH"
       },
       {
         "rank_in_group": 3,
@@ -1161,11 +1041,11 @@
       },
       {
         "rank_in_group": 5,
-        "player_id": 8478427,
-        "name": "Sebastian Aho",
-        "team": "CAR",
-        "goal_probability": 0.366,
-        "matchup": "CAR vs WPG"
+        "player_id": 8482109,
+        "name": "Alexis Lafrenière",
+        "team": "NYR",
+        "goal_probability": 0.371,
+        "matchup": "NYR vs EDM"
       },
       {
         "rank_in_group": 6,
@@ -1201,14 +1081,6 @@
       },
       {
         "rank_in_group": 10,
-        "player_id": 8482093,
-        "name": "Seth Jarvis",
-        "team": "CAR",
-        "goal_probability": 0.295,
-        "matchup": "CAR vs WPG"
-      },
-      {
-        "rank_in_group": 11,
         "player_id": 8482699,
         "name": "Dylan Guenther",
         "team": "UTA",
@@ -1216,15 +1088,7 @@
         "matchup": "UTA @ PHI"
       },
       {
-        "rank_in_group": 12,
-        "player_id": 8480830,
-        "name": "Andrei Svechnikov",
-        "team": "CAR",
-        "goal_probability": 0.255,
-        "matchup": "CAR vs WPG"
-      },
-      {
-        "rank_in_group": 13,
+        "rank_in_group": 11,
         "player_id": 8481604,
         "name": "Pavel Dorofeyev",
         "team": "NYR",
@@ -1232,7 +1096,7 @@
         "matchup": "NYR vs EDM"
       },
       {
-        "rank_in_group": 14,
+        "rank_in_group": 12,
         "player_id": 8484153,
         "name": "Leo Carlsson",
         "team": "ANA",
@@ -1240,7 +1104,7 @@
         "matchup": "ANA vs OTT"
       },
       {
-        "rank_in_group": 15,
+        "rank_in_group": 13,
         "player_id": 8479343,
         "name": "Clayton Keller",
         "team": "UTA",
@@ -1251,14 +1115,30 @@
     "2": [
       {
         "rank_in_group": 1,
-        "player_id": 8482702,
-        "name": "Logan Stankoven",
-        "team": "CAR",
-        "goal_probability": 0.487,
-        "matchup": "CAR vs WPG"
+        "player_id": 8477949,
+        "name": "Alex Tuch",
+        "team": "WSH",
+        "goal_probability": 0.54,
+        "matchup": "WSH vs MIN"
       },
       {
         "rank_in_group": 2,
+        "player_id": 8484387,
+        "name": "Matvei Michkov",
+        "team": "PHI",
+        "goal_probability": 0.424,
+        "matchup": "PHI vs UTA"
+      },
+      {
+        "rank_in_group": 3,
+        "player_id": 8478493,
+        "name": "Joel Eriksson Ek",
+        "team": "MIN",
+        "goal_probability": 0.363,
+        "matchup": "MIN @ WSH"
+      },
+      {
+        "rank_in_group": 4,
         "player_id": 8476454,
         "name": "Ryan Nugent-Hopkins",
         "team": "EDM",
@@ -1266,7 +1146,7 @@
         "matchup": "EDM @ NYR"
       },
       {
-        "rank_in_group": 3,
+        "rank_in_group": 5,
         "player_id": 8481528,
         "name": "Dylan Cozens",
         "team": "OTT",
@@ -1274,7 +1154,7 @@
         "matchup": "OTT @ ANA"
       },
       {
-        "rank_in_group": 4,
+        "rank_in_group": 6,
         "player_id": 8480803,
         "name": "Evan Bouchard",
         "team": "EDM",
@@ -1282,7 +1162,7 @@
         "matchup": "EDM @ NYR"
       },
       {
-        "rank_in_group": 5,
+        "rank_in_group": 7,
         "player_id": 8484186,
         "name": "Ryan Leonard",
         "team": "WSH",
@@ -1290,7 +1170,7 @@
         "matchup": "WSH vs MIN"
       },
       {
-        "rank_in_group": 6,
+        "rank_in_group": 8,
         "player_id": 8481596,
         "name": "Shane Pinto",
         "team": "OTT",
@@ -1298,15 +1178,15 @@
         "matchup": "OTT @ ANA"
       },
       {
-        "rank_in_group": 7,
-        "player_id": 8477940,
-        "name": "Nikolaj Ehlers",
-        "team": "CAR",
-        "goal_probability": 0.278,
-        "matchup": "CAR vs WPG"
+        "rank_in_group": 9,
+        "player_id": 8476468,
+        "name": "J.T. Miller",
+        "team": "NYR",
+        "goal_probability": 0.266,
+        "matchup": "NYR vs EDM"
       },
       {
-        "rank_in_group": 8,
+        "rank_in_group": 10,
         "player_id": 8479385,
         "name": "Jordan Kyrou",
         "team": "WSH",
@@ -1314,7 +1194,7 @@
         "matchup": "WSH vs MIN"
       },
       {
-        "rank_in_group": 9,
+        "rank_in_group": 11,
         "player_id": 8476399,
         "name": "Blake Coleman",
         "team": "MIN",
@@ -1322,15 +1202,7 @@
         "matchup": "MIN @ WSH"
       },
       {
-        "rank_in_group": 10,
-        "player_id": 8481533,
-        "name": "Trevor Zegras",
-        "team": "PHI",
-        "goal_probability": 0.258,
-        "matchup": "PHI vs UTA"
-      },
-      {
-        "rank_in_group": 11,
+        "rank_in_group": 12,
         "player_id": 8481789,
         "name": "Tye Kartye",
         "team": "NYR",
@@ -1338,7 +1210,7 @@
         "matchup": "NYR vs EDM"
       },
       {
-        "rank_in_group": 12,
+        "rank_in_group": 13,
         "player_id": 8475798,
         "name": "Mikael Granlund",
         "team": "ANA",
@@ -1346,20 +1218,12 @@
         "matchup": "ANA vs OTT"
       },
       {
-        "rank_in_group": 13,
+        "rank_in_group": 14,
         "player_id": 8479345,
         "name": "Jakob Chychrun",
         "team": "WSH",
         "goal_probability": 0.18,
         "matchup": "WSH vs MIN"
-      },
-      {
-        "rank_in_group": 14,
-        "player_id": 8480014,
-        "name": "Gabriel Vilardi",
-        "team": "WPG",
-        "goal_probability": 0.141,
-        "matchup": "WPG @ CAR"
       },
       {
         "rank_in_group": 15,
@@ -1381,14 +1245,6 @@
       },
       {
         "rank_in_group": 2,
-        "player_id": 8480800,
-        "name": "Quinn Hughes",
-        "team": "MIN",
-        "goal_probability": 0.289,
-        "matchup": "MIN @ WSH"
-      },
-      {
-        "rank_in_group": 3,
         "player_id": 8477953,
         "name": "Kasperi Kapanen",
         "team": "EDM",
@@ -1396,15 +1252,7 @@
         "matchup": "EDM @ NYR"
       },
       {
-        "rank_in_group": 4,
-        "player_id": 8475235,
-        "name": "Nicolas Deslauriers",
-        "team": "CAR",
-        "goal_probability": 0.177,
-        "matchup": "CAR vs WPG"
-      },
-      {
-        "rank_in_group": 5,
+        "rank_in_group": 3,
         "player_id": 8485512,
         "name": "Tim Washe",
         "team": "ANA",
@@ -1412,15 +1260,7 @@
         "matchup": "ANA vs OTT"
       },
       {
-        "rank_in_group": 6,
-        "player_id": 8480829,
-        "name": "Jesperi Kotkaniemi",
-        "team": "CAR",
-        "goal_probability": 0.164,
-        "matchup": "CAR vs WPG"
-      },
-      {
-        "rank_in_group": 7,
+        "rank_in_group": 4,
         "player_id": 8479400,
         "name": "Pierre-Luc Dubois",
         "team": "WSH",
@@ -1428,7 +1268,7 @@
         "matchup": "WSH vs MIN"
       },
       {
-        "rank_in_group": 8,
+        "rank_in_group": 5,
         "player_id": 8482092,
         "name": "Ridly Greig",
         "team": "OTT",
@@ -1436,15 +1276,7 @@
         "matchup": "OTT @ ANA"
       },
       {
-        "rank_in_group": 9,
-        "player_id": 8476921,
-        "name": "Jordan Martinook",
-        "team": "CAR",
-        "goal_probability": 0.152,
-        "matchup": "CAR vs WPG"
-      },
-      {
-        "rank_in_group": 10,
+        "rank_in_group": 6,
         "player_id": 8478469,
         "name": "Thomas Chabot",
         "team": "OTT",
@@ -1452,7 +1284,7 @@
         "matchup": "OTT @ ANA"
       },
       {
-        "rank_in_group": 11,
+        "rank_in_group": 7,
         "player_id": 8479323,
         "name": "Adam Fox",
         "team": "NYR",
@@ -1460,15 +1292,7 @@
         "matchup": "NYR vs EDM"
       },
       {
-        "rank_in_group": 12,
-        "player_id": 8482765,
-        "name": "Isak Rosen",
-        "team": "WPG",
-        "goal_probability": 0.114,
-        "matchup": "WPG @ CAR"
-      },
-      {
-        "rank_in_group": 13,
+        "rank_in_group": 8,
         "player_id": 8477989,
         "name": "Christian Dvorak",
         "team": "PHI",
@@ -1476,7 +1300,15 @@
         "matchup": "PHI vs UTA"
       },
       {
-        "rank_in_group": 14,
+        "rank_in_group": 9,
+        "player_id": 8481606,
+        "name": "Jordan Spence",
+        "team": "OTT",
+        "goal_probability": 0.103,
+        "matchup": "OTT @ ANA"
+      },
+      {
+        "rank_in_group": 10,
         "player_id": 8482088,
         "name": "Justin Sourdif",
         "team": "WSH",
@@ -1484,14 +1316,22 @@
         "matchup": "WSH vs MIN"
       },
       {
-        "rank_in_group": 15,
+        "rank_in_group": 11,
         "player_id": 8479365,
         "name": "Trent Frederic",
         "team": "EDM",
         "goal_probability": 0.072,
         "matchup": "EDM @ NYR"
+      },
+      {
+        "rank_in_group": 12,
+        "player_id": 8476393,
+        "name": "Nick Cousins",
+        "team": "OTT",
+        "goal_probability": 0.061,
+        "matchup": "OTT @ ANA"
       }
     ]
   },
-  "generated_at": "2026-11-01T11:48:27.471257"
+  "generated_at": "2026-11-01T14:27:34.922410"
 }
