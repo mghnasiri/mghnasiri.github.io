@@ -1,296 +1,201 @@
 {
-  "date": "2026-11-01",
-  "games_count": 5,
-  "final_games": 5,
+  "date": "2026-11-02",
+  "games_count": 4,
+  "final_games": 4,
   "partial": false,
   "games": [
     {
-      "game_id": 2026020227,
-      "home_team": "CAR",
-      "away_team": "WPG",
+      "game_id": 2026020232,
+      "home_team": "BOS",
+      "away_team": "VGK",
       "game_state": "OFF",
       "schedule_state": "OK"
     },
     {
-      "game_id": 2026020228,
-      "home_team": "WSH",
-      "away_team": "MIN",
+      "game_id": 2026020233,
+      "home_team": "FLA",
+      "away_team": "DET",
       "game_state": "OFF",
       "schedule_state": "OK"
     },
     {
-      "game_id": 2026020229,
-      "home_team": "PHI",
-      "away_team": "UTA",
+      "game_id": 2026020234,
+      "home_team": "CHI",
+      "away_team": "COL",
       "game_state": "OFF",
       "schedule_state": "OK"
     },
     {
-      "game_id": 2026020230,
-      "home_team": "NYR",
-      "away_team": "EDM",
-      "game_state": "OFF",
-      "schedule_state": "OK"
-    },
-    {
-      "game_id": 2026020231,
-      "home_team": "ANA",
-      "away_team": "OTT",
+      "game_id": 2026020235,
+      "home_team": "SJS",
+      "away_team": "CGY",
       "game_state": "OFF",
       "schedule_state": "OK"
     }
   ],
   "all_scorers": [
     {
-      "player_id": 8478427,
-      "player_name": "S. Aho",
-      "team": "CAR",
+      "player_id": 8484803,
+      "player_name": "T. Connelly",
+      "team": "VGK",
       "goals": 1,
-      "game_id": 2026020227,
-      "matchup": "WPG @ CAR"
+      "game_id": 2026020232,
+      "matchup": "VGK @ BOS"
     },
     {
-      "player_id": 8482702,
-      "player_name": "L. Stankoven",
-      "team": "CAR",
+      "player_id": 8475913,
+      "player_name": "M. Stone",
+      "team": "VGK",
       "goals": 1,
-      "game_id": 2026020227,
-      "matchup": "WPG @ CAR"
+      "game_id": 2026020232,
+      "matchup": "VGK @ BOS"
     },
     {
-      "player_id": 8476873,
-      "player_name": "M. Jankowski",
-      "team": "CAR",
+      "player_id": 8479987,
+      "player_name": "M. Geekie",
+      "team": "BOS",
       "goals": 1,
-      "game_id": 2026020227,
-      "matchup": "WPG @ CAR"
+      "game_id": 2026020232,
+      "matchup": "VGK @ BOS"
     },
     {
-      "player_id": 8480829,
-      "player_name": "J. Kotkaniemi",
-      "team": "CAR",
+      "player_id": 8485395,
+      "player_name": "J. Hagens",
+      "team": "BOS",
       "goals": 1,
-      "game_id": 2026020227,
-      "matchup": "WPG @ CAR"
+      "game_id": 2026020232,
+      "matchup": "VGK @ BOS"
     },
     {
-      "player_id": 8479976,
-      "player_name": "J. Välimäki",
-      "team": "CAR",
+      "player_id": 8484794,
+      "player_name": "M. Brandsegg-Nygård",
+      "team": "DET",
       "goals": 1,
-      "game_id": 2026020227,
-      "matchup": "WPG @ CAR"
+      "game_id": 2026020233,
+      "matchup": "DET @ FLA"
     },
     {
-      "player_id": 8480336,
-      "player_name": "S. Walker",
-      "team": "CAR",
+      "player_id": 8482802,
+      "player_name": "C. Mazur",
+      "team": "DET",
+      "goals": 1,
+      "game_id": 2026020233,
+      "matchup": "DET @ FLA"
+    },
+    {
+      "player_id": 8484471,
+      "player_name": "E. Finnie",
+      "team": "DET",
+      "goals": 1,
+      "game_id": 2026020233,
+      "matchup": "DET @ FLA"
+    },
+    {
+      "player_id": 8479337,
+      "player_name": "A. DeBrincat",
+      "team": "DET",
+      "goals": 1,
+      "game_id": 2026020233,
+      "matchup": "DET @ FLA"
+    },
+    {
+      "player_id": 8475753,
+      "player_name": "J. Faulk",
+      "team": "DET",
+      "goals": 1,
+      "game_id": 2026020233,
+      "matchup": "DET @ FLA"
+    },
+    {
+      "player_id": 8477935,
+      "player_name": "S. Bennett",
+      "team": "FLA",
+      "goals": 1,
+      "game_id": 2026020233,
+      "matchup": "DET @ FLA"
+    },
+    {
+      "player_id": 8477933,
+      "player_name": "S. Reinhart",
+      "team": "FLA",
+      "goals": 1,
+      "game_id": 2026020233,
+      "matchup": "DET @ FLA"
+    },
+    {
+      "player_id": 8477932,
+      "player_name": "A. Ekblad",
+      "team": "FLA",
+      "goals": 1,
+      "game_id": 2026020233,
+      "matchup": "DET @ FLA"
+    },
+    {
+      "player_id": 8475768,
+      "player_name": "J. Schwartz",
+      "team": "COL",
       "goals": 2,
-      "game_id": 2026020227,
-      "matchup": "WPG @ CAR"
+      "game_id": 2026020234,
+      "matchup": "COL @ CHI"
     },
     {
-      "player_id": 8483525,
-      "player_name": "D. Yurov",
-      "team": "MIN",
-      "goals": 1,
-      "game_id": 2026020228,
-      "matchup": "MIN @ WSH"
-    },
-    {
-      "player_id": 8477446,
-      "player_name": "M. McCarron",
-      "team": "MIN",
-      "goals": 1,
-      "game_id": 2026020228,
-      "matchup": "MIN @ WSH"
-    },
-    {
-      "player_id": 8485702,
-      "player_name": "M. Shabanov",
-      "team": "MIN",
-      "goals": 1,
-      "game_id": 2026020228,
-      "matchup": "MIN @ WSH"
-    },
-    {
-      "player_id": 8478864,
-      "player_name": "K. Kaprizov",
-      "team": "MIN",
-      "goals": 1,
-      "game_id": 2026020228,
-      "matchup": "MIN @ WSH"
-    },
-    {
-      "player_id": 8480800,
-      "player_name": "Q. Hughes",
-      "team": "MIN",
-      "goals": 1,
-      "game_id": 2026020228,
-      "matchup": "MIN @ WSH"
-    },
-    {
-      "player_id": 8482088,
-      "player_name": "J. Sourdif",
-      "team": "WSH",
-      "goals": 1,
-      "game_id": 2026020228,
-      "matchup": "MIN @ WSH"
-    },
-    {
-      "player_id": 8483431,
-      "player_name": "L. Cooley",
-      "team": "UTA",
-      "goals": 1,
-      "game_id": 2026020229,
-      "matchup": "UTA @ PHI"
-    },
-    {
-      "player_id": 8484386,
-      "player_name": "D. Simashev",
-      "team": "UTA",
-      "goals": 1,
-      "game_id": 2026020229,
-      "matchup": "UTA @ PHI"
-    },
-    {
-      "player_id": 8479410,
-      "player_name": "M. Sergachev",
-      "team": "UTA",
-      "goals": 1,
-      "game_id": 2026020229,
-      "matchup": "UTA @ PHI"
-    },
-    {
-      "player_id": 8478439,
-      "player_name": "T. Konecny",
-      "team": "PHI",
-      "goals": 1,
-      "game_id": 2026020229,
-      "matchup": "UTA @ PHI"
-    },
-    {
-      "player_id": 8477989,
-      "player_name": "C. Dvorak",
-      "team": "PHI",
-      "goals": 1,
-      "game_id": 2026020229,
-      "matchup": "UTA @ PHI"
-    },
-    {
-      "player_id": 8480220,
-      "player_name": "N. Cates",
-      "team": "PHI",
-      "goals": 1,
-      "game_id": 2026020229,
-      "matchup": "UTA @ PHI"
-    },
-    {
-      "player_id": 8484387,
-      "player_name": "M. Michkov",
-      "team": "PHI",
-      "goals": 1,
-      "game_id": 2026020229,
-      "matchup": "UTA @ PHI"
-    },
-    {
-      "player_id": 8483787,
-      "player_name": "C. Knuble",
-      "team": "PHI",
-      "goals": 1,
-      "game_id": 2026020229,
-      "matchup": "UTA @ PHI"
-    },
-    {
-      "player_id": 8484148,
-      "player_name": "O. Bonk",
-      "team": "PHI",
-      "goals": 1,
-      "game_id": 2026020229,
-      "matchup": "UTA @ PHI"
-    },
-    {
-      "player_id": 8482703,
-      "player_name": "C. Dach",
-      "team": "EDM",
+      "player_id": 8475172,
+      "player_name": "N. Kadri",
+      "team": "COL",
       "goals": 2,
-      "game_id": 2026020230,
-      "matchup": "EDM @ NYR"
+      "game_id": 2026020234,
+      "matchup": "COL @ CHI"
     },
     {
-      "player_id": 8478402,
-      "player_name": "C. McDavid",
-      "team": "EDM",
+      "player_id": 8478038,
+      "player_name": "D. Toews",
+      "team": "COL",
       "goals": 1,
-      "game_id": 2026020230,
-      "matchup": "EDM @ NYR"
+      "game_id": 2026020234,
+      "matchup": "COL @ CHI"
     },
     {
-      "player_id": 8480803,
-      "player_name": "E. Bouchard",
-      "team": "EDM",
+      "player_id": 8484390,
+      "player_name": "R. Kantserov",
+      "team": "CHI",
       "goals": 1,
-      "game_id": 2026020230,
-      "matchup": "EDM @ NYR"
+      "game_id": 2026020234,
+      "matchup": "COL @ CHI"
     },
     {
-      "player_id": 8481604,
-      "player_name": "P. Dorofeyev",
-      "team": "NYR",
+      "player_id": 8482176,
+      "player_name": "W. Kaiser",
+      "team": "CHI",
       "goals": 1,
-      "game_id": 2026020230,
-      "matchup": "EDM @ NYR"
+      "game_id": 2026020234,
+      "matchup": "COL @ CHI"
     },
     {
-      "player_id": 8478020,
-      "player_name": "M. Amadio",
-      "team": "OTT",
+      "player_id": 8483609,
+      "player_name": "A. Klapka",
+      "team": "CGY",
       "goals": 1,
-      "game_id": 2026020231,
-      "matchup": "OTT @ ANA"
+      "game_id": 2026020235,
+      "matchup": "CGY @ SJS"
     },
     {
-      "player_id": 8473512,
-      "player_name": "C. Giroux",
-      "team": "OTT",
+      "player_id": 8482766,
+      "player_name": "W. Stromgren",
+      "team": "CGY",
       "goals": 1,
-      "game_id": 2026020231,
-      "matchup": "OTT @ ANA"
+      "game_id": 2026020235,
+      "matchup": "CGY @ SJS"
     },
     {
-      "player_id": 8481577,
-      "player_name": "P. Tomasino",
-      "team": "OTT",
+      "player_id": 8484806,
+      "player_name": "S. Dickinson",
+      "team": "SJS",
       "goals": 1,
-      "game_id": 2026020231,
-      "matchup": "OTT @ ANA"
-    },
-    {
-      "player_id": 8481538,
-      "player_name": "J. Caulfield",
-      "team": "ANA",
-      "goals": 2,
-      "game_id": 2026020231,
-      "matchup": "OTT @ ANA"
-    },
-    {
-      "player_id": 8483445,
-      "player_name": "C. Gauthier",
-      "team": "ANA",
-      "goals": 3,
-      "game_id": 2026020231,
-      "matchup": "OTT @ ANA"
-    },
-    {
-      "player_id": 8485400,
-      "player_name": "R. McQueen",
-      "team": "ANA",
-      "goals": 1,
-      "game_id": 2026020231,
-      "matchup": "OTT @ ANA"
+      "game_id": 2026020235,
+      "matchup": "CGY @ SJS"
     }
   ],
-  "scorers_count": 31,
+  "scorers_count": 20,
   "model_comparisons": [
     {
       "model": "blend",
@@ -298,88 +203,88 @@
       "top10_picks": [
         {
           "rank": 1,
-          "player_id": 8477934,
-          "name": "Leon Draisaitl",
-          "team": "EDM",
-          "probability": 0.4032,
+          "player_id": 8477492,
+          "name": "Nathan MacKinnon",
+          "team": "COL",
+          "probability": 0.4344,
           "scored": false
         },
         {
           "rank": 2,
-          "player_id": 8478864,
-          "name": "Kirill Kaprizov",
-          "team": "MIN",
-          "probability": 0.3805,
-          "scored": true
-        },
-        {
-          "rank": 3,
-          "player_id": 8478493,
-          "name": "Joel Eriksson Ek",
-          "team": "MIN",
-          "probability": 0.3587,
+          "player_id": 8484801,
+          "name": "Macklin Celebrini",
+          "team": "SJS",
+          "probability": 0.4313,
           "scored": false
         },
         {
+          "rank": 3,
+          "player_id": 8477933,
+          "name": "Sam Reinhart",
+          "team": "FLA",
+          "probability": 0.3527,
+          "scored": true
+        },
+        {
           "rank": 4,
-          "player_id": 8481557,
-          "name": "Matt Boldy",
-          "team": "MIN",
-          "probability": 0.3554,
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.3453,
           "scored": false
         },
         {
           "rank": 5,
-          "player_id": 8481604,
-          "name": "Pavel Dorofeyev",
-          "team": "NYR",
-          "probability": 0.3548,
+          "player_id": 8479337,
+          "name": "Alex DeBrincat",
+          "team": "DET",
+          "probability": 0.3179,
           "scored": true
         },
         {
           "rank": 6,
-          "player_id": 8483445,
-          "name": "Cutter Gauthier",
-          "team": "ANA",
-          "probability": 0.3536,
-          "scored": true
+          "player_id": 8477476,
+          "name": "Artturi Lehkonen",
+          "team": "COL",
+          "probability": 0.3144,
+          "scored": false
         },
         {
           "rank": 7,
-          "player_id": 8480208,
-          "name": "Drake Batherson",
-          "team": "OTT",
-          "probability": 0.3305,
+          "player_id": 8480801,
+          "name": "Brady Tkachuk",
+          "team": "FLA",
+          "probability": 0.3141,
           "scored": false
         },
         {
           "rank": 8,
-          "player_id": 8478402,
-          "name": "Connor McDavid",
-          "team": "EDM",
-          "probability": 0.322,
-          "scored": true
+          "player_id": 8484144,
+          "name": "Connor Bedard",
+          "team": "CHI",
+          "probability": 0.3091,
+          "scored": false
         },
         {
           "rank": 9,
-          "player_id": 8481528,
-          "name": "Dylan Cozens",
-          "team": "OTT",
-          "probability": 0.3086,
+          "player_id": 8478042,
+          "name": "Viktor Arvidsson",
+          "team": "DET",
+          "probability": 0.3088,
           "scored": false
         },
         {
           "rank": 10,
-          "player_id": 8482699,
-          "name": "Dylan Guenther",
-          "team": "UTA",
-          "probability": 0.2981,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.2951,
           "scored": false
         }
       ],
-      "hits": 4,
+      "hits": 2,
       "total_predictions": 10,
-      "hit_rate": 40.0
+      "hit_rate": 20.0
     },
     {
       "model": "direct_lr",
@@ -387,88 +292,88 @@
       "top10_picks": [
         {
           "rank": 1,
-          "player_id": 8478864,
-          "name": "Kirill Kaprizov",
-          "team": "MIN",
-          "probability": 0.4108,
-          "scored": true
+          "player_id": 8477492,
+          "name": "Nathan MacKinnon",
+          "team": "COL",
+          "probability": 0.42,
+          "scored": false
         },
         {
           "rank": 2,
-          "player_id": 8481557,
-          "name": "Matt Boldy",
-          "team": "MIN",
-          "probability": 0.3889,
+          "player_id": 8484801,
+          "name": "Macklin Celebrini",
+          "team": "SJS",
+          "probability": 0.4162,
           "scored": false
         },
         {
           "rank": 3,
-          "player_id": 8477934,
-          "name": "Leon Draisaitl",
-          "team": "EDM",
-          "probability": 0.3842,
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.3996,
           "scored": false
         },
         {
           "rank": 4,
-          "player_id": 8483445,
-          "name": "Cutter Gauthier",
-          "team": "ANA",
-          "probability": 0.3814,
+          "player_id": 8477933,
+          "name": "Sam Reinhart",
+          "team": "FLA",
+          "probability": 0.3635,
           "scored": true
         },
         {
           "rank": 5,
-          "player_id": 8478402,
-          "name": "Connor McDavid",
-          "team": "EDM",
-          "probability": 0.3687,
+          "player_id": 8479337,
+          "name": "Alex DeBrincat",
+          "team": "DET",
+          "probability": 0.3552,
           "scored": true
         },
         {
           "rank": 6,
-          "player_id": 8481604,
-          "name": "Pavel Dorofeyev",
-          "team": "NYR",
-          "probability": 0.3402,
-          "scored": true
+          "player_id": 8484144,
+          "name": "Connor Bedard",
+          "team": "CHI",
+          "probability": 0.3132,
+          "scored": false
         },
         {
           "rank": 7,
-          "player_id": 8484762,
-          "name": "Beckett Sennecke",
-          "team": "ANA",
-          "probability": 0.3209,
+          "player_id": 8482078,
+          "name": "Lucas Raymond",
+          "team": "DET",
+          "probability": 0.309,
           "scored": false
         },
         {
           "rank": 8,
-          "player_id": 8477949,
-          "name": "Alex Tuch",
-          "team": "WSH",
-          "probability": 0.316,
+          "player_id": 8480801,
+          "name": "Brady Tkachuk",
+          "team": "FLA",
+          "probability": 0.3052,
           "scored": false
         },
         {
           "rank": 9,
-          "player_id": 8482109,
-          "name": "Alexis Lafrenière",
-          "team": "NYR",
-          "probability": 0.3091,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.3051,
           "scored": false
         },
         {
           "rank": 10,
-          "player_id": 8482699,
-          "name": "Dylan Guenther",
-          "team": "UTA",
-          "probability": 0.3081,
+          "player_id": 8478042,
+          "name": "Viktor Arvidsson",
+          "team": "DET",
+          "probability": 0.2983,
           "scored": false
         }
       ],
-      "hits": 4,
+      "hits": 2,
       "total_predictions": 10,
-      "hit_rate": 40.0
+      "hit_rate": 20.0
     },
     {
       "model": "lineup_v1",
@@ -476,88 +381,88 @@
       "top10_picks": [
         {
           "rank": 1,
-          "player_id": 8478493,
-          "name": "Joel Eriksson Ek",
-          "team": "MIN",
-          "probability": 0.3954,
+          "player_id": 8484801,
+          "name": "Macklin Celebrini",
+          "team": "SJS",
+          "probability": 0.3816,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8477492,
+          "name": "Nathan MacKinnon",
+          "team": "COL",
+          "probability": 0.3521,
           "scored": false
         },
         {
           "rank": 4,
-          "player_id": 8477934,
-          "name": "Leon Draisaitl",
-          "team": "EDM",
-          "probability": 0.3262,
+          "player_id": 8478042,
+          "name": "Viktor Arvidsson",
+          "team": "DET",
+          "probability": 0.3213,
           "scored": false
         },
         {
           "rank": 5,
-          "player_id": 8481604,
-          "name": "Pavel Dorofeyev",
-          "team": "NYR",
-          "probability": 0.3223,
-          "scored": true
+          "player_id": 8477476,
+          "name": "Artturi Lehkonen",
+          "team": "COL",
+          "probability": 0.3176,
+          "scored": false
         },
         {
           "rank": 6,
-          "player_id": 8481528,
-          "name": "Dylan Cozens",
-          "team": "OTT",
-          "probability": 0.3187,
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.3089,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8484144,
+          "name": "Connor Bedard",
+          "team": "CHI",
+          "probability": 0.2962,
           "scored": false
         },
         {
           "rank": 9,
-          "player_id": 8480208,
-          "name": "Drake Batherson",
-          "team": "OTT",
-          "probability": 0.3058,
-          "scored": false
+          "player_id": 8477933,
+          "name": "Sam Reinhart",
+          "team": "FLA",
+          "probability": 0.2945,
+          "scored": true
         },
         {
           "rank": 12,
-          "player_id": 8483445,
-          "name": "Cutter Gauthier",
-          "team": "ANA",
-          "probability": 0.2944,
-          "scored": true
+          "player_id": 8480801,
+          "name": "Brady Tkachuk",
+          "team": "FLA",
+          "probability": 0.2631,
+          "scored": false
         },
         {
           "rank": 13,
-          "player_id": 8481557,
-          "name": "Matt Boldy",
-          "team": "MIN",
-          "probability": 0.2907,
-          "scored": false
-        },
-        {
-          "rank": 15,
-          "player_id": 8481596,
-          "name": "Shane Pinto",
-          "team": "OTT",
-          "probability": 0.2863,
-          "scored": false
-        },
-        {
-          "rank": 17,
-          "player_id": 8476454,
-          "name": "Ryan Nugent-Hopkins",
-          "team": "EDM",
-          "probability": 0.2777,
-          "scored": false
-        },
-        {
-          "rank": 20,
-          "player_id": 8478864,
-          "name": "Kirill Kaprizov",
-          "team": "MIN",
-          "probability": 0.268,
+          "player_id": 8479337,
+          "name": "Alex DeBrincat",
+          "team": "DET",
+          "probability": 0.2555,
           "scored": true
+        },
+        {
+          "rank": 16,
+          "player_id": 8482078,
+          "name": "Lucas Raymond",
+          "team": "DET",
+          "probability": 0.2319,
+          "scored": false
         }
       ],
-      "hits": 3,
+      "hits": 2,
       "total_predictions": 10,
-      "hit_rate": 30.0
+      "hit_rate": 20.0
     },
     {
       "model": "market_odds",
@@ -565,88 +470,88 @@
       "top10_picks": [
         {
           "rank": 1,
-          "player_id": 8477934,
-          "name": "Leon Draisaitl",
-          "team": "EDM",
-          "probability": 0.4691,
+          "player_id": 8477492,
+          "name": "Nathan MacKinnon",
+          "team": "COL",
+          "probability": 0.4447,
           "scored": false
         },
         {
           "rank": 2,
-          "player_id": 8478864,
-          "name": "Kirill Kaprizov",
-          "team": "MIN",
-          "probability": 0.4585,
-          "scored": true
+          "player_id": 8484801,
+          "name": "Macklin Celebrini",
+          "team": "SJS",
+          "probability": 0.4221,
+          "scored": false
         },
         {
           "rank": 3,
-          "player_id": 8478402,
-          "name": "Connor McDavid",
-          "team": "EDM",
-          "probability": 0.415,
-          "scored": true
+          "player_id": 8480801,
+          "name": "Brady Tkachuk",
+          "team": "FLA",
+          "probability": 0.3946,
+          "scored": false
         },
         {
           "rank": 4,
-          "player_id": 8482699,
-          "name": "Dylan Guenther",
-          "team": "UTA",
-          "probability": 0.3745,
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.3862,
           "scored": false
         },
         {
           "rank": 5,
-          "player_id": 8483445,
-          "name": "Cutter Gauthier",
-          "team": "ANA",
-          "probability": 0.3721,
+          "player_id": 8477933,
+          "name": "Sam Reinhart",
+          "team": "FLA",
+          "probability": 0.3575,
           "scored": true
         },
         {
-          "rank": 7,
-          "player_id": 8480208,
-          "name": "Drake Batherson",
-          "team": "OTT",
-          "probability": 0.3703,
+          "rank": 6,
+          "player_id": 8477476,
+          "name": "Artturi Lehkonen",
+          "team": "COL",
+          "probability": 0.3567,
           "scored": false
         },
         {
+          "rank": 7,
+          "player_id": 8479337,
+          "name": "Alex DeBrincat",
+          "team": "DET",
+          "probability": 0.3465,
+          "scored": true
+        },
+        {
           "rank": 8,
-          "player_id": 8481557,
-          "name": "Matt Boldy",
-          "team": "MIN",
-          "probability": 0.3636,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.3432,
           "scored": false
         },
         {
           "rank": 9,
-          "player_id": 8484762,
-          "name": "Beckett Sennecke",
-          "team": "ANA",
-          "probability": 0.3595,
+          "player_id": 8478403,
+          "name": "Jack Eichel",
+          "team": "VGK",
+          "probability": 0.3379,
           "scored": false
         },
         {
-          "rank": 11,
-          "player_id": 8482109,
-          "name": "Alexis Lafrenière",
-          "team": "NYR",
-          "probability": 0.3565,
-          "scored": false
-        },
-        {
-          "rank": 12,
-          "player_id": 8481604,
-          "name": "Pavel Dorofeyev",
-          "team": "NYR",
-          "probability": 0.3521,
+          "rank": 10,
+          "player_id": 8475913,
+          "name": "Mark Stone",
+          "team": "VGK",
+          "probability": 0.3329,
           "scored": true
         }
       ],
-      "hits": 4,
+      "hits": 3,
       "total_predictions": 10,
-      "hit_rate": 40.0
+      "hit_rate": 30.0
     },
     {
       "model": "monte_carlo",
@@ -654,88 +559,88 @@
       "top10_picks": [
         {
           "rank": 1,
-          "player_id": 8478864,
-          "name": "Kirill Kaprizov",
-          "team": "MIN",
-          "probability": 0.3825,
-          "scored": true
+          "player_id": 8477476,
+          "name": "Artturi Lehkonen",
+          "team": "COL",
+          "probability": 0.4055,
+          "scored": false
         },
         {
           "rank": 2,
-          "player_id": 8480208,
-          "name": "Drake Batherson",
-          "team": "OTT",
-          "probability": 0.3589,
+          "player_id": 8477492,
+          "name": "Nathan MacKinnon",
+          "team": "COL",
+          "probability": 0.3358,
           "scored": false
         },
         {
           "rank": 3,
-          "player_id": 8477934,
-          "name": "Leon Draisaitl",
-          "team": "EDM",
-          "probability": 0.3549,
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.3246,
           "scored": false
         },
         {
           "rank": 4,
-          "player_id": 8477949,
-          "name": "Alex Tuch",
-          "team": "WSH",
-          "probability": 0.3533,
+          "player_id": 8484144,
+          "name": "Connor Bedard",
+          "team": "CHI",
+          "probability": 0.3112,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8478042,
+          "name": "Viktor Arvidsson",
+          "team": "DET",
+          "probability": 0.3091,
           "scored": false
         },
         {
           "rank": 7,
-          "player_id": 8482109,
-          "name": "Alexis Lafrenière",
-          "team": "NYR",
-          "probability": 0.3367,
+          "player_id": 8480801,
+          "name": "Brady Tkachuk",
+          "team": "FLA",
+          "probability": 0.2924,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8477409,
+          "name": "Carter Verhaeghe",
+          "team": "FLA",
+          "probability": 0.2912,
           "scored": false
         },
         {
           "rank": 9,
-          "player_id": 8484387,
-          "name": "Matvei Michkov",
-          "team": "PHI",
-          "probability": 0.3318,
+          "player_id": 8475913,
+          "name": "Mark Stone",
+          "team": "VGK",
+          "probability": 0.2908,
           "scored": true
         },
         {
           "rank": 10,
-          "player_id": 8484762,
-          "name": "Beckett Sennecke",
-          "team": "ANA",
-          "probability": 0.3247,
+          "player_id": 8484801,
+          "name": "Macklin Celebrini",
+          "team": "SJS",
+          "probability": 0.2866,
           "scored": false
         },
         {
-          "rank": 13,
-          "player_id": 8477951,
-          "name": "Nick Schmaltz",
-          "team": "UTA",
-          "probability": 0.3039,
-          "scored": false
-        },
-        {
-          "rank": 16,
-          "player_id": 8478402,
-          "name": "Connor McDavid",
-          "team": "EDM",
-          "probability": 0.271,
-          "scored": true
-        },
-        {
-          "rank": 17,
-          "player_id": 8481596,
-          "name": "Shane Pinto",
-          "team": "OTT",
-          "probability": 0.2532,
+          "rank": 11,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.285,
           "scored": false
         }
       ],
-      "hits": 3,
+      "hits": 1,
       "total_predictions": 10,
-      "hit_rate": 30.0
+      "hit_rate": 10.0
     },
     {
       "model": "neural_network",
@@ -743,88 +648,88 @@
       "top10_picks": [
         {
           "rank": 1,
-          "player_id": 8477934,
-          "name": "Leon Draisaitl",
-          "team": "EDM",
+          "player_id": 8477476,
+          "name": "Artturi Lehkonen",
+          "team": "COL",
           "probability": 0.55,
           "scored": false
         },
         {
           "rank": 2,
-          "player_id": 8477949,
-          "name": "Alex Tuch",
-          "team": "WSH",
-          "probability": 0.54,
+          "player_id": 8477492,
+          "name": "Nathan MacKinnon",
+          "team": "COL",
+          "probability": 0.483,
           "scored": false
         },
         {
           "rank": 3,
-          "player_id": 8478864,
-          "name": "Kirill Kaprizov",
-          "team": "MIN",
-          "probability": 0.532,
-          "scored": true
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.446,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8478042,
+          "name": "Viktor Arvidsson",
+          "team": "DET",
+          "probability": 0.429,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8480801,
+          "name": "Brady Tkachuk",
+          "team": "FLA",
+          "probability": 0.392,
+          "scored": false
         },
         {
           "rank": 6,
-          "player_id": 8480208,
-          "name": "Drake Batherson",
-          "team": "OTT",
-          "probability": 0.458,
+          "player_id": 8484144,
+          "name": "Connor Bedard",
+          "team": "CHI",
+          "probability": 0.389,
           "scored": false
         },
         {
           "rank": 8,
-          "player_id": 8484387,
-          "name": "Matvei Michkov",
-          "team": "PHI",
-          "probability": 0.424,
-          "scored": true
+          "player_id": 8482078,
+          "name": "Lucas Raymond",
+          "team": "DET",
+          "probability": 0.384,
+          "scored": false
         },
         {
           "rank": 10,
-          "player_id": 8484762,
-          "name": "Beckett Sennecke",
-          "team": "ANA",
-          "probability": 0.398,
-          "scored": false
+          "player_id": 8477933,
+          "name": "Sam Reinhart",
+          "team": "FLA",
+          "probability": 0.362,
+          "scored": true
         },
         {
           "rank": 12,
-          "player_id": 8482109,
-          "name": "Alexis Lafrenière",
-          "team": "NYR",
-          "probability": 0.371,
+          "player_id": 8484860,
+          "name": "Matvei Gridin",
+          "team": "CGY",
+          "probability": 0.352,
           "scored": false
         },
         {
-          "rank": 15,
-          "player_id": 8481557,
-          "name": "Matt Boldy",
-          "team": "MIN",
-          "probability": 0.363,
-          "scored": false
-        },
-        {
-          "rank": 16,
-          "player_id": 8478493,
-          "name": "Joel Eriksson Ek",
-          "team": "MIN",
-          "probability": 0.363,
-          "scored": false
-        },
-        {
-          "rank": 17,
-          "player_id": 8478402,
-          "name": "Connor McDavid",
-          "team": "EDM",
-          "probability": 0.361,
+          "rank": 14,
+          "player_id": 8475913,
+          "name": "Mark Stone",
+          "team": "VGK",
+          "probability": 0.346,
           "scored": true
         }
       ],
-      "hits": 3,
+      "hits": 2,
       "total_predictions": 10,
-      "hit_rate": 30.0
+      "hit_rate": 20.0
     },
     {
       "model": "neural_v2",
@@ -832,88 +737,88 @@
       "top10_picks": [
         {
           "rank": 1,
-          "player_id": 8478493,
-          "name": "Joel Eriksson Ek",
-          "team": "MIN",
-          "probability": 0.4445,
+          "player_id": 8477492,
+          "name": "Nathan MacKinnon",
+          "team": "COL",
+          "probability": 0.5079,
           "scored": false
         },
         {
           "rank": 2,
-          "player_id": 8477934,
-          "name": "Leon Draisaitl",
-          "team": "EDM",
-          "probability": 0.4424,
+          "player_id": 8484801,
+          "name": "Macklin Celebrini",
+          "team": "SJS",
+          "probability": 0.5043,
           "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8477933,
+          "name": "Sam Reinhart",
+          "team": "FLA",
+          "probability": 0.3817,
+          "scored": true
         },
         {
           "rank": 4,
-          "player_id": 8481604,
-          "name": "Pavel Dorofeyev",
-          "team": "NYR",
-          "probability": 0.4153,
-          "scored": true
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.3318,
+          "scored": false
         },
         {
           "rank": 6,
-          "player_id": 8478864,
-          "name": "Kirill Kaprizov",
-          "team": "MIN",
-          "probability": 0.4035,
-          "scored": true
-        },
-        {
-          "rank": 7,
-          "player_id": 8483445,
-          "name": "Cutter Gauthier",
-          "team": "ANA",
-          "probability": 0.3836,
-          "scored": true
+          "player_id": 8478042,
+          "name": "Viktor Arvidsson",
+          "team": "DET",
+          "probability": 0.3196,
+          "scored": false
         },
         {
           "rank": 8,
-          "player_id": 8481557,
-          "name": "Matt Boldy",
-          "team": "MIN",
-          "probability": 0.3814,
+          "player_id": 8484144,
+          "name": "Connor Bedard",
+          "team": "CHI",
+          "probability": 0.3097,
           "scored": false
         },
         {
-          "rank": 9,
-          "player_id": 8481528,
-          "name": "Dylan Cozens",
-          "team": "OTT",
-          "probability": 0.3694,
+          "rank": 10,
+          "player_id": 8479337,
+          "name": "Alex DeBrincat",
+          "team": "DET",
+          "probability": 0.3045,
+          "scored": true
+        },
+        {
+          "rank": 11,
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.3033,
           "scored": false
         },
         {
-          "rank": 12,
-          "player_id": 8480208,
-          "name": "Drake Batherson",
-          "team": "OTT",
-          "probability": 0.3529,
+          "rank": 15,
+          "player_id": 8477476,
+          "name": "Artturi Lehkonen",
+          "team": "COL",
+          "probability": 0.2986,
           "scored": false
         },
         {
-          "rank": 13,
-          "player_id": 8477951,
-          "name": "Nick Schmaltz",
-          "team": "UTA",
-          "probability": 0.3496,
-          "scored": false
-        },
-        {
-          "rank": 18,
-          "player_id": 8482699,
-          "name": "Dylan Guenther",
-          "team": "UTA",
-          "probability": 0.3292,
+          "rank": 17,
+          "player_id": 8480801,
+          "name": "Brady Tkachuk",
+          "team": "FLA",
+          "probability": 0.284,
           "scored": false
         }
       ],
-      "hits": 3,
+      "hits": 2,
       "total_predictions": 10,
-      "hit_rate": 30.0
+      "hit_rate": 20.0
     },
     {
       "model": "xg_v3",
@@ -921,88 +826,88 @@
       "top10_picks": [
         {
           "rank": 1,
-          "player_id": 8478493,
-          "name": "Joel Eriksson Ek",
-          "team": "MIN",
-          "probability": 0.4063,
+          "player_id": 8484801,
+          "name": "Macklin Celebrini",
+          "team": "SJS",
+          "probability": 0.3843,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8477492,
+          "name": "Nathan MacKinnon",
+          "team": "COL",
+          "probability": 0.3678,
           "scored": false
         },
         {
           "rank": 4,
-          "player_id": 8481528,
-          "name": "Dylan Cozens",
-          "team": "OTT",
-          "probability": 0.3262,
+          "player_id": 8478042,
+          "name": "Viktor Arvidsson",
+          "team": "DET",
+          "probability": 0.3344,
           "scored": false
         },
         {
           "rank": 5,
-          "player_id": 8477934,
-          "name": "Leon Draisaitl",
-          "team": "EDM",
-          "probability": 0.3225,
+          "player_id": 8477476,
+          "name": "Artturi Lehkonen",
+          "team": "COL",
+          "probability": 0.3321,
           "scored": false
         },
         {
           "rank": 6,
-          "player_id": 8481604,
-          "name": "Pavel Dorofeyev",
-          "team": "NYR",
-          "probability": 0.3149,
+          "player_id": 8477933,
+          "name": "Sam Reinhart",
+          "team": "FLA",
+          "probability": 0.3099,
           "scored": true
         },
         {
-          "rank": 7,
-          "player_id": 8480208,
-          "name": "Drake Batherson",
-          "team": "OTT",
-          "probability": 0.3131,
+          "rank": 9,
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.298,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8484144,
+          "name": "Connor Bedard",
+          "team": "CHI",
+          "probability": 0.2962,
+          "scored": false
+        },
+        {
+          "rank": 12,
+          "player_id": 8480801,
+          "name": "Brady Tkachuk",
+          "team": "FLA",
+          "probability": 0.2791,
           "scored": false
         },
         {
           "rank": 13,
-          "player_id": 8481557,
-          "name": "Matt Boldy",
-          "team": "MIN",
-          "probability": 0.2919,
-          "scored": false
-        },
-        {
-          "rank": 16,
-          "player_id": 8483445,
-          "name": "Cutter Gauthier",
-          "team": "ANA",
-          "probability": 0.2826,
+          "player_id": 8479337,
+          "name": "Alex DeBrincat",
+          "team": "DET",
+          "probability": 0.2694,
           "scored": true
         },
         {
-          "rank": 17,
-          "player_id": 8481596,
-          "name": "Shane Pinto",
-          "team": "OTT",
-          "probability": 0.2781,
+          "rank": 14,
+          "player_id": 8482078,
+          "name": "Lucas Raymond",
+          "team": "DET",
+          "probability": 0.2401,
           "scored": false
-        },
-        {
-          "rank": 18,
-          "player_id": 8476454,
-          "name": "Ryan Nugent-Hopkins",
-          "team": "EDM",
-          "probability": 0.2729,
-          "scored": false
-        },
-        {
-          "rank": 20,
-          "player_id": 8478864,
-          "name": "Kirill Kaprizov",
-          "team": "MIN",
-          "probability": 0.2629,
-          "scored": true
         }
       ],
-      "hits": 3,
+      "hits": 2,
       "total_predictions": 10,
-      "hit_rate": 30.0
+      "hit_rate": 20.0
     },
     {
       "model": "xg_v3_synthetic",
@@ -1010,89 +915,89 @@
       "top10_picks": [
         {
           "rank": 1,
-          "player_id": 8478864,
-          "name": "Kirill Kaprizov",
-          "team": "MIN",
-          "probability": 0.7635,
-          "scored": true
+          "player_id": 8477492,
+          "name": "Nathan MacKinnon",
+          "team": "COL",
+          "probability": 0.6807,
+          "scored": false
         },
         {
           "rank": 2,
-          "player_id": 8480208,
-          "name": "Drake Batherson",
-          "team": "OTT",
-          "probability": 0.701,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.6738,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8480801,
+          "name": "Brady Tkachuk",
+          "team": "FLA",
+          "probability": 0.607,
           "scored": false
         },
         {
           "rank": 5,
-          "player_id": 8477949,
-          "name": "Alex Tuch",
-          "team": "WSH",
-          "probability": 0.6308,
+          "player_id": 8477476,
+          "name": "Artturi Lehkonen",
+          "team": "COL",
+          "probability": 0.5849,
           "scored": false
         },
         {
           "rank": 6,
-          "player_id": 8477934,
-          "name": "Leon Draisaitl",
-          "team": "EDM",
-          "probability": 0.5895,
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.5794,
           "scored": false
         },
         {
           "rank": 7,
-          "player_id": 8478402,
-          "name": "Connor McDavid",
-          "team": "EDM",
-          "probability": 0.5472,
+          "player_id": 8479337,
+          "name": "Alex DeBrincat",
+          "team": "DET",
+          "probability": 0.5489,
           "scored": true
         },
         {
           "rank": 8,
-          "player_id": 8484762,
-          "name": "Beckett Sennecke",
-          "team": "ANA",
-          "probability": 0.5401,
+          "player_id": 8476455,
+          "name": "Gabriel Landeskog",
+          "team": "COL",
+          "probability": 0.5203,
           "scored": false
         },
         {
           "rank": 9,
-          "player_id": 8482109,
-          "name": "Alexis Lafrenière",
-          "team": "NYR",
-          "probability": 0.526,
+          "player_id": 8484144,
+          "name": "Connor Bedard",
+          "team": "CHI",
+          "probability": 0.5186,
           "scored": false
         },
         {
-          "rank": 13,
-          "player_id": 8484387,
-          "name": "Matvei Michkov",
-          "team": "PHI",
-          "probability": 0.4791,
-          "scored": true
-        },
-        {
-          "rank": 14,
-          "player_id": 8481596,
-          "name": "Shane Pinto",
-          "team": "OTT",
-          "probability": 0.4745,
+          "rank": 10,
+          "player_id": 8484801,
+          "name": "Macklin Celebrini",
+          "team": "SJS",
+          "probability": 0.513,
           "scored": false
         },
         {
-          "rank": 17,
-          "player_id": 8483445,
-          "name": "Cutter Gauthier",
-          "team": "ANA",
-          "probability": 0.4609,
+          "rank": 11,
+          "player_id": 8477933,
+          "name": "Sam Reinhart",
+          "team": "FLA",
+          "probability": 0.4957,
           "scored": true
         }
       ],
-      "hits": 4,
+      "hits": 2,
       "total_predictions": 10,
-      "hit_rate": 40.0
+      "hit_rate": 20.0
     }
   ],
-  "fetched_at": "2026-11-02T09:51:26.787785"
+  "fetched_at": "2026-11-03T08:41:08.594296"
 }
