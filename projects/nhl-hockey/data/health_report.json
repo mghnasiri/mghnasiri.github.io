@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-11-04T17:04:04.901662",
-  "today": "2026-11-04",
-  "real_games_today": 4,
+  "generated_at": "2026-11-05T17:11:15.017817",
+  "today": "2026-11-05",
+  "real_games_today": 11,
   "thresholds": {
     "min_team_coverage": 0.6,
     "min_predictions_if_games": 5,
@@ -15,15 +15,15 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-11-04"
+          "date=2026-11-05"
         ],
         "team_coverage": [
           "ok",
-          "100.0% of the Tims pool's 8 teams covered"
+          "100.0% of the Tims pool's 15 teams covered"
         ],
         "player_count": [
           "ok",
-          "40 predictions for 4 games"
+          "36 predictions for 11 games"
         ],
         "no_saturation": [
           "ok",
@@ -35,7 +35,7 @@
         ],
         "prob_max_sane": [
           "ok",
-          "top prob = 0.435"
+          "top prob = 0.468"
         ],
         "no_flat_ties": [
           "ok",
@@ -47,7 +47,7 @@
         ],
         "scheduled_games": [
           "ok",
-          "4 games scheduled, 40 predictions"
+          "11 games scheduled, 36 predictions"
         ]
       }
     },
@@ -56,15 +56,15 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-11-04"
+          "date=2026-11-05"
         ],
         "team_coverage": [
           "ok",
-          "100.0% of the Tims pool's 8 teams covered"
+          "100.0% of the Tims pool's 15 teams covered"
         ],
         "player_count": [
           "ok",
-          "40 predictions for 4 games"
+          "36 predictions for 11 games"
         ],
         "no_saturation": [
           "ok",
@@ -76,7 +76,7 @@
         ],
         "prob_max_sane": [
           "ok",
-          "top prob = 0.408"
+          "top prob = 0.490"
         ],
         "no_flat_ties": [
           "ok",
@@ -88,16 +88,16 @@
         ],
         "scheduled_games": [
           "ok",
-          "4 games scheduled, 40 predictions"
+          "11 games scheduled, 36 predictions"
         ]
       }
     },
     "lineup_v1": {
-      "status": "ok",
+      "status": "fail",
       "checks": {
         "freshness": [
-          "ok",
-          "date=2026-11-04"
+          "fail",
+          "date=2026-11-04 (expected 2026-11-05) \u2014 workflow may have failed"
         ],
         "team_coverage": [
           "ok",
@@ -129,24 +129,24 @@
         ],
         "scheduled_games": [
           "ok",
-          "4 games scheduled, 40 predictions"
+          "11 games scheduled, 40 predictions"
         ]
       }
     },
     "market_odds": {
-      "status": "ok",
+      "status": "warn",
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-11-04"
+          "date=2026-11-05"
         ],
         "team_coverage": [
           "ok",
-          "100.0% of the Tims pool's 8 teams covered"
+          "93.3% of the Tims pool's 15 teams covered"
         ],
         "player_count": [
           "ok",
-          "40 predictions for 4 games"
+          "33 predictions for 10 games"
         ],
         "no_saturation": [
           "ok",
@@ -158,19 +158,19 @@
         ],
         "prob_max_sane": [
           "ok",
-          "top prob = 0.419"
+          "top prob = 0.488"
         ],
         "no_flat_ties": [
           "ok",
           "max tie size = 1"
         ],
         "odds_credits": [
-          "ok",
-          "454 credits left"
+          "warn",
+          "434 credits left; ~500 needed for the rest of the month at today's slate size"
         ],
         "scheduled_games": [
           "ok",
-          "4 games scheduled, 40 predictions"
+          "11 games scheduled, 33 predictions"
         ]
       }
     },
@@ -179,15 +179,15 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-11-04"
+          "date=2026-11-05"
         ],
         "team_coverage": [
           "ok",
-          "100.0% of the Tims pool's 8 teams covered"
+          "100.0% of the Tims pool's 15 teams covered"
         ],
         "player_count": [
           "ok",
-          "40 predictions for 4 games"
+          "36 predictions for 11 games"
         ],
         "no_saturation": [
           "ok",
@@ -199,11 +199,11 @@
         ],
         "prob_max_sane": [
           "ok",
-          "top prob = 0.366"
+          "top prob = 0.433"
         ],
         "no_flat_ties": [
           "ok",
-          "max tie size = 2"
+          "max tie size = 1"
         ],
         "odds_credits": [
           "ok",
@@ -211,7 +211,7 @@
         ],
         "scheduled_games": [
           "ok",
-          "4 games scheduled, 40 predictions"
+          "11 games scheduled, 36 predictions"
         ]
       }
     },
@@ -220,15 +220,15 @@
       "checks": {
         "freshness": [
           "ok",
-          "date=2026-11-04"
+          "date=2026-11-05"
         ],
         "team_coverage": [
           "ok",
-          "100.0% of the Tims pool's 8 teams covered"
+          "100.0% of the Tims pool's 15 teams covered"
         ],
         "player_count": [
           "ok",
-          "40 predictions for 4 games"
+          "36 predictions for 11 games"
         ],
         "no_saturation": [
           "ok",
@@ -240,7 +240,7 @@
         ],
         "prob_max_sane": [
           "ok",
-          "top prob = 0.550"
+          "top prob = 0.469"
         ],
         "no_flat_ties": [
           "ok",
@@ -252,16 +252,16 @@
         ],
         "scheduled_games": [
           "ok",
-          "4 games scheduled, 40 predictions"
+          "11 games scheduled, 36 predictions"
         ]
       }
     },
     "neural_v2": {
-      "status": "ok",
+      "status": "fail",
       "checks": {
         "freshness": [
-          "ok",
-          "date=2026-11-04"
+          "fail",
+          "date=2026-11-04 (expected 2026-11-05) \u2014 workflow may have failed"
         ],
         "team_coverage": [
           "ok",
@@ -293,16 +293,16 @@
         ],
         "scheduled_games": [
           "ok",
-          "4 games scheduled, 40 predictions"
+          "11 games scheduled, 40 predictions"
         ]
       }
     },
     "xg_v3": {
-      "status": "ok",
+      "status": "fail",
       "checks": {
         "freshness": [
-          "ok",
-          "date=2026-11-04"
+          "fail",
+          "date=2026-11-04 (expected 2026-11-05) \u2014 workflow may have failed"
         ],
         "team_coverage": [
           "ok",
@@ -334,16 +334,16 @@
         ],
         "scheduled_games": [
           "ok",
-          "4 games scheduled, 40 predictions"
+          "11 games scheduled, 40 predictions"
         ]
       }
     },
     "xg_v3_synthetic": {
-      "status": "ok",
+      "status": "fail",
       "checks": {
         "freshness": [
-          "ok",
-          "date=2026-11-04"
+          "fail",
+          "date=2026-11-04 (expected 2026-11-05) \u2014 workflow may have failed"
         ],
         "team_coverage": [
           "ok",
@@ -375,7 +375,7 @@
         ],
         "scheduled_games": [
           "ok",
-          "4 games scheduled, 40 predictions"
+          "11 games scheduled, 40 predictions"
         ]
       }
     }
