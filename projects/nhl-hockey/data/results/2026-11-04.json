@@ -1,0 +1,987 @@
+{
+  "date": "2026-11-04",
+  "games_count": 4,
+  "final_games": 4,
+  "partial": false,
+  "games": [
+    {
+      "game_id": 2026020247,
+      "home_team": "BUF",
+      "away_team": "OTT",
+      "game_state": "OFF",
+      "schedule_state": "OK"
+    },
+    {
+      "game_id": 2026020248,
+      "home_team": "FLA",
+      "away_team": "CHI",
+      "game_state": "OFF",
+      "schedule_state": "OK"
+    },
+    {
+      "game_id": 2026020249,
+      "home_team": "LAK",
+      "away_team": "SJS",
+      "game_state": "OFF",
+      "schedule_state": "OK"
+    },
+    {
+      "game_id": 2026020250,
+      "home_team": "SEA",
+      "away_team": "CGY",
+      "game_state": "OFF",
+      "schedule_state": "OK"
+    }
+  ],
+  "all_scorers": [
+    {
+      "player_id": 8481596,
+      "player_name": "S. Pinto",
+      "team": "OTT",
+      "goals": 1,
+      "game_id": 2026020247,
+      "matchup": "OTT @ BUF"
+    },
+    {
+      "player_id": 8478020,
+      "player_name": "M. Amadio",
+      "team": "OTT",
+      "goals": 1,
+      "game_id": 2026020247,
+      "matchup": "OTT @ BUF"
+    },
+    {
+      "player_id": 8481522,
+      "player_name": "P. Krebs",
+      "team": "BUF",
+      "goals": 1,
+      "game_id": 2026020247,
+      "matchup": "OTT @ BUF"
+    },
+    {
+      "player_id": 8484390,
+      "player_name": "R. Kantserov",
+      "team": "CHI",
+      "goals": 1,
+      "game_id": 2026020248,
+      "matchup": "CHI @ FLA"
+    },
+    {
+      "player_id": 8483493,
+      "player_name": "F. Nazar",
+      "team": "CHI",
+      "goals": 2,
+      "game_id": 2026020248,
+      "matchup": "CHI @ FLA"
+    },
+    {
+      "player_id": 8477933,
+      "player_name": "S. Reinhart",
+      "team": "FLA",
+      "goals": 1,
+      "game_id": 2026020248,
+      "matchup": "CHI @ FLA"
+    },
+    {
+      "player_id": 8477409,
+      "player_name": "C. Verhaeghe",
+      "team": "FLA",
+      "goals": 1,
+      "game_id": 2026020248,
+      "matchup": "CHI @ FLA"
+    },
+    {
+      "player_id": 8483771,
+      "player_name": "S. Vilmanis",
+      "team": "FLA",
+      "goals": 2,
+      "game_id": 2026020248,
+      "matchup": "CHI @ FLA"
+    },
+    {
+      "player_id": 8477495,
+      "player_name": "S. Jones",
+      "team": "FLA",
+      "goals": 1,
+      "game_id": 2026020248,
+      "matchup": "CHI @ FLA"
+    },
+    {
+      "player_id": 8486103,
+      "player_name": "I. Stenberg",
+      "team": "SJS",
+      "goals": 1,
+      "game_id": 2026020249,
+      "matchup": "SJS @ LAK"
+    },
+    {
+      "player_id": 8484801,
+      "player_name": "M. Celebrini",
+      "team": "SJS",
+      "goals": 1,
+      "game_id": 2026020249,
+      "matchup": "SJS @ LAK"
+    },
+    {
+      "player_id": 8477960,
+      "player_name": "A. Kempe",
+      "team": "LAK",
+      "goals": 3,
+      "game_id": 2026020249,
+      "matchup": "SJS @ LAK"
+    },
+    {
+      "player_id": 8476469,
+      "player_name": "J. Armia",
+      "team": "LAK",
+      "goals": 1,
+      "game_id": 2026020249,
+      "matchup": "SJS @ LAK"
+    },
+    {
+      "player_id": 8482124,
+      "player_name": "Q. Byfield",
+      "team": "LAK",
+      "goals": 2,
+      "game_id": 2026020249,
+      "matchup": "SJS @ LAK"
+    },
+    {
+      "player_id": 8475287,
+      "player_name": "E. Haula",
+      "team": "LAK",
+      "goals": 1,
+      "game_id": 2026020249,
+      "matchup": "SJS @ LAK"
+    },
+    {
+      "player_id": 8481068,
+      "player_name": "Y. Sharangovich",
+      "team": "CGY",
+      "goals": 1,
+      "game_id": 2026020250,
+      "matchup": "CGY @ SEA"
+    },
+    {
+      "player_id": 8482665,
+      "player_name": "M. Beniers",
+      "team": "SEA",
+      "goals": 1,
+      "game_id": 2026020250,
+      "matchup": "CGY @ SEA"
+    },
+    {
+      "player_id": 8484800,
+      "player_name": "B. Catton",
+      "team": "SEA",
+      "goals": 1,
+      "game_id": 2026020250,
+      "matchup": "CGY @ SEA"
+    }
+  ],
+  "scorers_count": 18,
+  "model_comparisons": [
+    {
+      "model": "blend",
+      "model_display_name": "Blend v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8479420,
+          "name": "Tage Thompson",
+          "team": "BUF",
+          "probability": 0.435,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8477933,
+          "name": "Sam Reinhart",
+          "team": "FLA",
+          "probability": 0.4204,
+          "scored": true
+        },
+        {
+          "rank": 3,
+          "player_id": 8477960,
+          "name": "Adrian Kempe",
+          "team": "LAK",
+          "probability": 0.3887,
+          "scored": true
+        },
+        {
+          "rank": 4,
+          "player_id": 8484801,
+          "name": "Macklin Celebrini",
+          "team": "SJS",
+          "probability": 0.384,
+          "scored": true
+        },
+        {
+          "rank": 5,
+          "player_id": 8478550,
+          "name": "Artemi Panarin",
+          "team": "LAK",
+          "probability": 0.3449,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8480801,
+          "name": "Brady Tkachuk",
+          "team": "FLA",
+          "probability": 0.344,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8477935,
+          "name": "Sam Bennett",
+          "team": "FLA",
+          "probability": 0.3171,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8482097,
+          "name": "Jack Quinn",
+          "team": "BUF",
+          "probability": 0.3152,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8480208,
+          "name": "Drake Batherson",
+          "team": "OTT",
+          "probability": 0.3063,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8482155,
+          "name": "Alex Laferriere",
+          "team": "LAK",
+          "probability": 0.2921,
+          "scored": false
+        }
+      ],
+      "hits": 3,
+      "total_predictions": 10,
+      "hit_rate": 30.0
+    },
+    {
+      "model": "direct_lr",
+      "model_display_name": "Direct LR v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8478550,
+          "name": "Artemi Panarin",
+          "team": "LAK",
+          "probability": 0.4081,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8477933,
+          "name": "Sam Reinhart",
+          "team": "FLA",
+          "probability": 0.3946,
+          "scored": true
+        },
+        {
+          "rank": 3,
+          "player_id": 8479420,
+          "name": "Tage Thompson",
+          "team": "BUF",
+          "probability": 0.3927,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8484801,
+          "name": "Macklin Celebrini",
+          "team": "SJS",
+          "probability": 0.3919,
+          "scored": true
+        },
+        {
+          "rank": 5,
+          "player_id": 8477960,
+          "name": "Adrian Kempe",
+          "team": "LAK",
+          "probability": 0.3798,
+          "scored": true
+        },
+        {
+          "rank": 6,
+          "player_id": 8480801,
+          "name": "Brady Tkachuk",
+          "team": "FLA",
+          "probability": 0.3437,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8479314,
+          "name": "Matthew Tkachuk",
+          "team": "FLA",
+          "probability": 0.3305,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8477409,
+          "name": "Carter Verhaeghe",
+          "team": "FLA",
+          "probability": 0.3148,
+          "scored": true
+        },
+        {
+          "rank": 9,
+          "player_id": 8484144,
+          "name": "Connor Bedard",
+          "team": "CHI",
+          "probability": 0.3143,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8482155,
+          "name": "Alex Laferriere",
+          "team": "LAK",
+          "probability": 0.2985,
+          "scored": false
+        }
+      ],
+      "hits": 4,
+      "total_predictions": 10,
+      "hit_rate": 40.0
+    },
+    {
+      "model": "lineup_v1",
+      "model_display_name": "Lineup TOI v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8479420,
+          "name": "Tage Thompson",
+          "team": "BUF",
+          "probability": 0.4336,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8477933,
+          "name": "Sam Reinhart",
+          "team": "FLA",
+          "probability": 0.4185,
+          "scored": true
+        },
+        {
+          "rank": 3,
+          "player_id": 8477960,
+          "name": "Adrian Kempe",
+          "team": "LAK",
+          "probability": 0.3681,
+          "scored": true
+        },
+        {
+          "rank": 4,
+          "player_id": 8484801,
+          "name": "Macklin Celebrini",
+          "team": "SJS",
+          "probability": 0.3238,
+          "scored": true
+        },
+        {
+          "rank": 6,
+          "player_id": 8482097,
+          "name": "Jack Quinn",
+          "team": "BUF",
+          "probability": 0.2922,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8480801,
+          "name": "Brady Tkachuk",
+          "team": "FLA",
+          "probability": 0.285,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8482155,
+          "name": "Alex Laferriere",
+          "team": "LAK",
+          "probability": 0.2846,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8481528,
+          "name": "Dylan Cozens",
+          "team": "OTT",
+          "probability": 0.2798,
+          "scored": false
+        },
+        {
+          "rank": 13,
+          "player_id": 8477935,
+          "name": "Sam Bennett",
+          "team": "FLA",
+          "probability": 0.276,
+          "scored": false
+        },
+        {
+          "rank": 15,
+          "player_id": 8480208,
+          "name": "Drake Batherson",
+          "team": "OTT",
+          "probability": 0.2713,
+          "scored": false
+        }
+      ],
+      "hits": 3,
+      "total_predictions": 10,
+      "hit_rate": 30.0
+    },
+    {
+      "model": "market_odds",
+      "model_display_name": "Market Odds v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8480801,
+          "name": "Brady Tkachuk",
+          "team": "FLA",
+          "probability": 0.4194,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8479420,
+          "name": "Tage Thompson",
+          "team": "BUF",
+          "probability": 0.4141,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8477933,
+          "name": "Sam Reinhart",
+          "team": "FLA",
+          "probability": 0.4022,
+          "scored": true
+        },
+        {
+          "rank": 4,
+          "player_id": 8484801,
+          "name": "Macklin Celebrini",
+          "team": "SJS",
+          "probability": 0.3766,
+          "scored": true
+        },
+        {
+          "rank": 5,
+          "player_id": 8477960,
+          "name": "Adrian Kempe",
+          "team": "LAK",
+          "probability": 0.3704,
+          "scored": true
+        },
+        {
+          "rank": 6,
+          "player_id": 8478550,
+          "name": "Artemi Panarin",
+          "team": "LAK",
+          "probability": 0.3591,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8479314,
+          "name": "Matthew Tkachuk",
+          "team": "FLA",
+          "probability": 0.3578,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8480208,
+          "name": "Drake Batherson",
+          "team": "OTT",
+          "probability": 0.3469,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8474586,
+          "name": "Jordan Eberle",
+          "team": "SEA",
+          "probability": 0.3408,
+          "scored": false
+        },
+        {
+          "rank": 11,
+          "player_id": 8477409,
+          "name": "Carter Verhaeghe",
+          "team": "FLA",
+          "probability": 0.3325,
+          "scored": true
+        }
+      ],
+      "hits": 4,
+      "total_predictions": 10,
+      "hit_rate": 40.0
+    },
+    {
+      "model": "monte_carlo",
+      "model_display_name": "Monte Carlo v2",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8479420,
+          "name": "Tage Thompson",
+          "team": "BUF",
+          "probability": 0.3657,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8478550,
+          "name": "Artemi Panarin",
+          "team": "LAK",
+          "probability": 0.3574,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8480208,
+          "name": "Drake Batherson",
+          "team": "OTT",
+          "probability": 0.3431,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8477919,
+          "name": "Frederick Gaudreau",
+          "team": "SEA",
+          "probability": 0.3207,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8477933,
+          "name": "Sam Reinhart",
+          "team": "FLA",
+          "probability": 0.3123,
+          "scored": true
+        },
+        {
+          "rank": 8,
+          "player_id": 8482097,
+          "name": "Jack Quinn",
+          "team": "BUF",
+          "probability": 0.3071,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8480801,
+          "name": "Brady Tkachuk",
+          "team": "FLA",
+          "probability": 0.305,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8477409,
+          "name": "Carter Verhaeghe",
+          "team": "FLA",
+          "probability": 0.3039,
+          "scored": true
+        },
+        {
+          "rank": 13,
+          "player_id": 8484144,
+          "name": "Connor Bedard",
+          "team": "CHI",
+          "probability": 0.2778,
+          "scored": false
+        },
+        {
+          "rank": 14,
+          "player_id": 8484390,
+          "name": "Roman Kantserov",
+          "team": "CHI",
+          "probability": 0.2714,
+          "scored": true
+        }
+      ],
+      "hits": 3,
+      "total_predictions": 10,
+      "hit_rate": 30.0
+    },
+    {
+      "model": "neural_network",
+      "model_display_name": "Weighted Linear v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8479420,
+          "name": "Tage Thompson",
+          "team": "BUF",
+          "probability": 0.55,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8480208,
+          "name": "Drake Batherson",
+          "team": "OTT",
+          "probability": 0.416,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8482097,
+          "name": "Jack Quinn",
+          "team": "BUF",
+          "probability": 0.381,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8477933,
+          "name": "Sam Reinhart",
+          "team": "FLA",
+          "probability": 0.38,
+          "scored": true
+        },
+        {
+          "rank": 5,
+          "player_id": 8478550,
+          "name": "Artemi Panarin",
+          "team": "LAK",
+          "probability": 0.379,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8484144,
+          "name": "Connor Bedard",
+          "team": "CHI",
+          "probability": 0.328,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8480801,
+          "name": "Brady Tkachuk",
+          "team": "FLA",
+          "probability": 0.326,
+          "scored": false
+        },
+        {
+          "rank": 12,
+          "player_id": 8477409,
+          "name": "Carter Verhaeghe",
+          "team": "FLA",
+          "probability": 0.307,
+          "scored": true
+        },
+        {
+          "rank": 14,
+          "player_id": 8481528,
+          "name": "Dylan Cozens",
+          "team": "OTT",
+          "probability": 0.294,
+          "scored": false
+        },
+        {
+          "rank": 15,
+          "player_id": 8480797,
+          "name": "Joel Farabee",
+          "team": "CGY",
+          "probability": 0.291,
+          "scored": false
+        }
+      ],
+      "hits": 2,
+      "total_predictions": 10,
+      "hit_rate": 20.0
+    },
+    {
+      "model": "neural_v2",
+      "model_display_name": "Neural Embed v2",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8479420,
+          "name": "Tage Thompson",
+          "team": "BUF",
+          "probability": 0.4835,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8477933,
+          "name": "Sam Reinhart",
+          "team": "FLA",
+          "probability": 0.4608,
+          "scored": true
+        },
+        {
+          "rank": 3,
+          "player_id": 8484801,
+          "name": "Macklin Celebrini",
+          "team": "SJS",
+          "probability": 0.4437,
+          "scored": true
+        },
+        {
+          "rank": 4,
+          "player_id": 8477960,
+          "name": "Adrian Kempe",
+          "team": "LAK",
+          "probability": 0.438,
+          "scored": true
+        },
+        {
+          "rank": 5,
+          "player_id": 8478550,
+          "name": "Artemi Panarin",
+          "team": "LAK",
+          "probability": 0.3847,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8477935,
+          "name": "Sam Bennett",
+          "team": "FLA",
+          "probability": 0.3722,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8482097,
+          "name": "Jack Quinn",
+          "team": "BUF",
+          "probability": 0.3579,
+          "scored": false
+        },
+        {
+          "rank": 11,
+          "player_id": 8480801,
+          "name": "Brady Tkachuk",
+          "team": "FLA",
+          "probability": 0.334,
+          "scored": false
+        },
+        {
+          "rank": 13,
+          "player_id": 8481528,
+          "name": "Dylan Cozens",
+          "team": "OTT",
+          "probability": 0.3259,
+          "scored": false
+        },
+        {
+          "rank": 14,
+          "player_id": 8480208,
+          "name": "Drake Batherson",
+          "team": "OTT",
+          "probability": 0.3219,
+          "scored": false
+        }
+      ],
+      "hits": 3,
+      "total_predictions": 10,
+      "hit_rate": 30.0
+    },
+    {
+      "model": "xg_v3",
+      "model_display_name": "xG XGBoost v3",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8479420,
+          "name": "Tage Thompson",
+          "team": "BUF",
+          "probability": 0.4509,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8477933,
+          "name": "Sam Reinhart",
+          "team": "FLA",
+          "probability": 0.4249,
+          "scored": true
+        },
+        {
+          "rank": 3,
+          "player_id": 8477960,
+          "name": "Adrian Kempe",
+          "team": "LAK",
+          "probability": 0.3681,
+          "scored": true
+        },
+        {
+          "rank": 4,
+          "player_id": 8484801,
+          "name": "Macklin Celebrini",
+          "team": "SJS",
+          "probability": 0.3273,
+          "scored": true
+        },
+        {
+          "rank": 6,
+          "player_id": 8482097,
+          "name": "Jack Quinn",
+          "team": "BUF",
+          "probability": 0.3,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8477935,
+          "name": "Sam Bennett",
+          "team": "FLA",
+          "probability": 0.2884,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8481528,
+          "name": "Dylan Cozens",
+          "team": "OTT",
+          "probability": 0.2866,
+          "scored": false
+        },
+        {
+          "rank": 11,
+          "player_id": 8480801,
+          "name": "Brady Tkachuk",
+          "team": "FLA",
+          "probability": 0.285,
+          "scored": false
+        },
+        {
+          "rank": 13,
+          "player_id": 8480208,
+          "name": "Drake Batherson",
+          "team": "OTT",
+          "probability": 0.2822,
+          "scored": false
+        },
+        {
+          "rank": 17,
+          "player_id": 8482155,
+          "name": "Alex Laferriere",
+          "team": "LAK",
+          "probability": 0.2674,
+          "scored": false
+        }
+      ],
+      "hits": 3,
+      "total_predictions": 10,
+      "hit_rate": 30.0
+    },
+    {
+      "model": "xg_v3_synthetic",
+      "model_display_name": "xG XGBoost v3 (synthetic shadow)",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8477409,
+          "name": "Carter Verhaeghe",
+          "team": "FLA",
+          "probability": 0.6777,
+          "scored": true
+        },
+        {
+          "rank": 2,
+          "player_id": 8480208,
+          "name": "Drake Batherson",
+          "team": "OTT",
+          "probability": 0.6606,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8479420,
+          "name": "Tage Thompson",
+          "team": "BUF",
+          "probability": 0.6572,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8477933,
+          "name": "Sam Reinhart",
+          "team": "FLA",
+          "probability": 0.6565,
+          "scored": true
+        },
+        {
+          "rank": 5,
+          "player_id": 8478550,
+          "name": "Artemi Panarin",
+          "team": "LAK",
+          "probability": 0.584,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8484390,
+          "name": "Roman Kantserov",
+          "team": "CHI",
+          "probability": 0.5153,
+          "scored": true
+        },
+        {
+          "rank": 8,
+          "player_id": 8480797,
+          "name": "Joel Farabee",
+          "team": "CGY",
+          "probability": 0.4932,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8480801,
+          "name": "Brady Tkachuk",
+          "team": "FLA",
+          "probability": 0.4768,
+          "scored": false
+        },
+        {
+          "rank": 12,
+          "player_id": 8482097,
+          "name": "Jack Quinn",
+          "team": "BUF",
+          "probability": 0.4604,
+          "scored": false
+        },
+        {
+          "rank": 15,
+          "player_id": 8484801,
+          "name": "Macklin Celebrini",
+          "team": "SJS",
+          "probability": 0.4191,
+          "scored": true
+        }
+      ],
+      "hits": 4,
+      "total_predictions": 10,
+      "hit_rate": 40.0
+    }
+  ],
+  "fetched_at": "2026-11-05T09:02:51.803043"
+}
