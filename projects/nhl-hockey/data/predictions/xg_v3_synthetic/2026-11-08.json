@@ -47,7 +47,7 @@
       "game_type": 2
     }
   ],
-  "players_count": 45,
+  "players_count": 44,
   "predictions": [
     {
       "player_id": 8478398,
@@ -89,6 +89,45 @@
       "tims_rank": 1
     },
     {
+      "player_id": 8483445,
+      "name": "Cutter Gauthier",
+      "position": "L",
+      "team": "ANA",
+      "games_played": 16,
+      "season_goals": 12,
+      "season_shots": 66,
+      "season_assists": 6,
+      "season_points": 18,
+      "pp_goals": 9,
+      "pp_points": 12,
+      "avg_toi_minutes": 18.3,
+      "recent_toi_minutes": 20.0,
+      "avg_goals": 0.75,
+      "avg_shots": 4.12,
+      "shooting_pct": 0.1818,
+      "last5_goals": 10,
+      "last5_shots": 28,
+      "last5_games": 5,
+      "recent_gpg": 2.0,
+      "prior_games": 0,
+      "opponent": "PIT",
+      "is_home": true,
+      "game_id": 2026020282,
+      "matchup": "ANA vs PIT",
+      "tims_group": "1",
+      "goal_probability": 0.7232,
+      "raw_goal_probability": 0.9664,
+      "player_xg": 1.2845,
+      "expected_shots": 5.35,
+      "avg_shot_xg": 0.1716,
+      "xg_source": "synthetic",
+      "opp_ga_per_game": 3.529,
+      "team_gf_per_game": 3.765,
+      "rank": 2,
+      "is_hot": true,
+      "tims_rank": 2
+    },
+    {
       "player_id": 8484762,
       "name": "Beckett Sennecke",
       "position": "R",
@@ -125,7 +164,7 @@
       "team_gf_per_game": 3.765,
       "rank": 3,
       "is_hot": true,
-      "tims_rank": 2
+      "tims_rank": 3
     },
     {
       "player_id": 8478109,
@@ -164,7 +203,7 @@
       "team_gf_per_game": 3.333,
       "rank": 4,
       "is_hot": true,
-      "tims_rank": 3
+      "tims_rank": 4
     },
     {
       "player_id": 8479318,
@@ -203,7 +242,7 @@
       "team_gf_per_game": 3.556,
       "rank": 5,
       "is_hot": false,
-      "tims_rank": 4
+      "tims_rank": 5
     },
     {
       "player_id": 8477404,
@@ -242,7 +281,7 @@
       "team_gf_per_game": 3.75,
       "rank": 6,
       "is_hot": true,
-      "tims_rank": 5
+      "tims_rank": 6
     },
     {
       "player_id": 8471675,
@@ -281,7 +320,7 @@
       "team_gf_per_game": 3.294,
       "rank": 8,
       "is_hot": true,
-      "tims_rank": 6
+      "tims_rank": 7
     },
     {
       "player_id": 8481559,
@@ -320,7 +359,7 @@
       "team_gf_per_game": 3.647,
       "rank": 11,
       "is_hot": true,
-      "tims_rank": 7
+      "tims_rank": 8
     },
     {
       "player_id": 8477939,
@@ -359,85 +398,7 @@
       "team_gf_per_game": 3.556,
       "rank": 14,
       "is_hot": true,
-      "tims_rank": 8
-    },
-    {
-      "player_id": 8477409,
-      "name": "Carter Verhaeghe",
-      "position": "C",
-      "team": "FLA",
-      "games_played": 17,
-      "season_goals": 9,
-      "season_shots": 36,
-      "season_assists": 6,
-      "season_points": 15,
-      "pp_goals": 5,
-      "pp_points": 6,
-      "avg_toi_minutes": 18.4,
-      "recent_toi_minutes": 19.2,
-      "avg_goals": 0.5294,
-      "avg_shots": 2.12,
-      "shooting_pct": 0.25,
-      "last5_goals": 3,
-      "last5_shots": 14,
-      "last5_games": 5,
-      "recent_gpg": 0.6,
-      "prior_games": 0,
-      "opponent": "BOS",
-      "is_home": false,
-      "game_id": 2026020277,
-      "matchup": "FLA @ BOS",
-      "tims_group": "2",
-      "goal_probability": 0.5045,
-      "raw_goal_probability": 0.7376,
-      "player_xg": 0.7023,
-      "expected_shots": 1.67,
-      "avg_shot_xg": 0.3009,
-      "xg_source": "synthetic",
-      "opp_ga_per_game": 2.353,
-      "team_gf_per_game": 3.235,
-      "rank": 16,
-      "is_hot": true,
       "tims_rank": 9
-    },
-    {
-      "player_id": 8484387,
-      "name": "Matvei Michkov",
-      "position": "R",
-      "team": "PHI",
-      "games_played": 18,
-      "season_goals": 10,
-      "season_shots": 27,
-      "season_assists": 3,
-      "season_points": 13,
-      "pp_goals": 5,
-      "pp_points": 6,
-      "avg_toi_minutes": 15.9,
-      "recent_toi_minutes": 17.3,
-      "avg_goals": 0.5556,
-      "avg_shots": 1.5,
-      "shooting_pct": 0.3704,
-      "last5_goals": 2,
-      "last5_shots": 8,
-      "last5_games": 5,
-      "recent_gpg": 0.4,
-      "prior_games": 0,
-      "opponent": "CGY",
-      "is_home": false,
-      "game_id": 2026020281,
-      "matchup": "PHI @ CGY",
-      "tims_group": "1",
-      "goal_probability": 0.4939,
-      "raw_goal_probability": 0.6967,
-      "player_xg": 0.6809,
-      "expected_shots": 1.49,
-      "avg_shot_xg": 0.3261,
-      "xg_source": "synthetic",
-      "opp_ga_per_game": 3.529,
-      "team_gf_per_game": 2.167,
-      "rank": 17,
-      "is_hot": false,
-      "tims_rank": 10
     },
     {
       "player_id": 8486067,
@@ -476,7 +437,7 @@
       "team_gf_per_game": 3.556,
       "rank": 23,
       "is_hot": true,
-      "tims_rank": 11
+      "tims_rank": 10
     },
     {
       "player_id": 8478458,
@@ -515,7 +476,7 @@
       "team_gf_per_game": 3.556,
       "rank": 28,
       "is_hot": true,
-      "tims_rank": 12
+      "tims_rank": 11
     },
     {
       "player_id": 8481582,
@@ -554,45 +515,84 @@
       "team_gf_per_game": 3.294,
       "rank": 29,
       "is_hot": false,
+      "tims_rank": 12
+    },
+    {
+      "player_id": 8484153,
+      "name": "Leo Carlsson",
+      "position": "C",
+      "team": "ANA",
+      "games_played": 17,
+      "season_goals": 6,
+      "season_shots": 28,
+      "season_assists": 20,
+      "season_points": 26,
+      "pp_goals": 2,
+      "pp_points": 17,
+      "avg_toi_minutes": 20.2,
+      "recent_toi_minutes": 22.0,
+      "avg_goals": 0.3529,
+      "avg_shots": 1.65,
+      "shooting_pct": 0.2143,
+      "last5_goals": 2,
+      "last5_shots": 13,
+      "last5_games": 5,
+      "recent_gpg": 0.4,
+      "prior_games": 0,
+      "opponent": "PIT",
+      "is_home": true,
+      "game_id": 2026020282,
+      "matchup": "ANA vs PIT",
+      "tims_group": "1",
+      "goal_probability": 0.4352,
+      "raw_goal_probability": 0.7473,
+      "player_xg": 0.5713,
+      "expected_shots": 2.05,
+      "avg_shot_xg": 0.1991,
+      "xg_source": "synthetic",
+      "opp_ga_per_game": 3.529,
+      "team_gf_per_game": 3.765,
+      "rank": 30,
+      "is_hot": false,
       "tims_rank": 13
     },
     {
-      "player_id": 8480801,
-      "name": "Brady Tkachuk",
-      "position": "L",
-      "team": "FLA",
+      "player_id": 8480002,
+      "name": "Nico Hischier",
+      "position": "C",
+      "team": "NJD",
       "games_played": 17,
-      "season_goals": 10,
-      "season_shots": 58,
-      "season_assists": 9,
-      "season_points": 19,
+      "season_goals": 7,
+      "season_shots": 41,
+      "season_assists": 4,
+      "season_points": 11,
       "pp_goals": 4,
-      "pp_points": 11,
-      "avg_toi_minutes": 16.9,
-      "recent_toi_minutes": 17.8,
-      "avg_goals": 0.5882,
-      "avg_shots": 3.41,
-      "shooting_pct": 0.1724,
-      "last5_goals": 3,
-      "last5_shots": 19,
+      "pp_points": 6,
+      "avg_toi_minutes": 18.1,
+      "recent_toi_minutes": 18.2,
+      "avg_goals": 0.4118,
+      "avg_shots": 2.41,
+      "shooting_pct": 0.1707,
+      "last5_goals": 0,
+      "last5_shots": 12,
       "last5_games": 5,
-      "recent_gpg": 0.6,
+      "recent_gpg": 0.0,
       "prior_games": 0,
-      "opponent": "BOS",
+      "opponent": "TOR",
       "is_home": false,
-      "game_id": 2026020277,
-      "matchup": "FLA @ BOS",
+      "game_id": 2026020279,
+      "matchup": "NJD @ TOR",
       "tims_group": "1",
-      "goal_probability": 0.4308,
-      "raw_goal_probability": 0.8138,
-      "player_xg": 0.5635,
-      "expected_shots": 2.57,
-      "avg_shot_xg": 0.1568,
+      "goal_probability": 0.4306,
+      "raw_goal_probability": 0.8171,
+      "player_xg": 0.5632,
+      "expected_shots": 2.55,
+      "avg_shot_xg": 0.1579,
       "xg_source": "synthetic",
-      "opp_ga_per_game": 2.353,
-      "team_gf_per_game": 3.235,
-      "rank": 31,
-      "is_hot": true,
+      "opp_ga_per_game": 3.333,
+      "team_gf_per_game": 3.647,
+      "rank": 32,
+      "is_hot": false,
       "tims_rank": 14
     },
     {
@@ -635,84 +635,6 @@
       "tims_rank": 15
     },
     {
-      "player_id": 8478401,
-      "name": "Pavel Zacha",
-      "position": "C",
-      "team": "BOS",
-      "games_played": 16,
-      "season_goals": 5,
-      "season_shots": 27,
-      "season_assists": 7,
-      "season_points": 12,
-      "pp_goals": 1,
-      "pp_points": 6,
-      "avg_toi_minutes": 19.2,
-      "recent_toi_minutes": 20.9,
-      "avg_goals": 0.3125,
-      "avg_shots": 1.69,
-      "shooting_pct": 0.1852,
-      "last5_goals": 3,
-      "last5_shots": 9,
-      "last5_games": 5,
-      "recent_gpg": 0.6,
-      "prior_games": 0,
-      "opponent": "FLA",
-      "is_home": true,
-      "game_id": 2026020277,
-      "matchup": "BOS vs FLA",
-      "tims_group": "2",
-      "goal_probability": 0.3948,
-      "raw_goal_probability": 0.7361,
-      "player_xg": 0.5023,
-      "expected_shots": 1.86,
-      "avg_shot_xg": 0.1925,
-      "xg_source": "synthetic",
-      "opp_ga_per_game": 3.0,
-      "team_gf_per_game": 3.765,
-      "rank": 37,
-      "is_hot": true,
-      "tims_rank": 16
-    },
-    {
-      "player_id": 8477933,
-      "name": "Sam Reinhart",
-      "position": "C",
-      "team": "FLA",
-      "games_played": 17,
-      "season_goals": 9,
-      "season_shots": 54,
-      "season_assists": 8,
-      "season_points": 17,
-      "pp_goals": 6,
-      "pp_points": 8,
-      "avg_toi_minutes": 20.3,
-      "recent_toi_minutes": 20.3,
-      "avg_goals": 0.5294,
-      "avg_shots": 3.18,
-      "shooting_pct": 0.1667,
-      "last5_goals": 4,
-      "last5_shots": 17,
-      "last5_games": 5,
-      "recent_gpg": 0.8,
-      "prior_games": 0,
-      "opponent": "BOS",
-      "is_home": false,
-      "game_id": 2026020277,
-      "matchup": "FLA @ BOS",
-      "tims_group": "1",
-      "goal_probability": 0.3886,
-      "raw_goal_probability": 0.7978,
-      "player_xg": 0.492,
-      "expected_shots": 2.61,
-      "avg_shot_xg": 0.1346,
-      "xg_source": "synthetic",
-      "opp_ga_per_game": 2.353,
-      "team_gf_per_game": 3.235,
-      "rank": 39,
-      "is_hot": true,
-      "tims_rank": 17
-    },
-    {
       "player_id": 8478010,
       "name": "Brayden Point",
       "position": "C",
@@ -749,7 +671,7 @@
       "team_gf_per_game": 3.75,
       "rank": 43,
       "is_hot": true,
-      "tims_rank": 18
+      "tims_rank": 16
     },
     {
       "player_id": 8480064,
@@ -788,7 +710,7 @@
       "team_gf_per_game": 3.062,
       "rank": 47,
       "is_hot": false,
-      "tims_rank": 19
+      "tims_rank": 17
     },
     {
       "player_id": 8480797,
@@ -827,7 +749,7 @@
       "team_gf_per_game": 2.471,
       "rank": 50,
       "is_hot": true,
-      "tims_rank": 20
+      "tims_rank": 18
     },
     {
       "player_id": 8478403,
@@ -866,46 +788,7 @@
       "team_gf_per_game": 3.333,
       "rank": 54,
       "is_hot": false,
-      "tims_rank": 21
-    },
-    {
-      "player_id": 8479999,
-      "name": "Casey Mittelstadt",
-      "position": "C",
-      "team": "BOS",
-      "games_played": 17,
-      "season_goals": 5,
-      "season_shots": 24,
-      "season_assists": 4,
-      "season_points": 9,
-      "pp_goals": 0,
-      "pp_points": 1,
-      "avg_toi_minutes": 14.2,
-      "recent_toi_minutes": 15.0,
-      "avg_goals": 0.2941,
-      "avg_shots": 1.41,
-      "shooting_pct": 0.2083,
-      "last5_goals": 1,
-      "last5_shots": 6,
-      "last5_games": 5,
-      "recent_gpg": 0.2,
-      "prior_games": 0,
-      "opponent": "FLA",
-      "is_home": true,
-      "game_id": 2026020277,
-      "matchup": "BOS vs FLA",
-      "tims_group": "3",
-      "goal_probability": 0.3428,
-      "raw_goal_probability": 0.6062,
-      "player_xg": 0.4197,
-      "expected_shots": 1.23,
-      "avg_shot_xg": 0.2432,
-      "xg_source": "synthetic",
-      "opp_ga_per_game": 3.0,
-      "team_gf_per_game": 3.765,
-      "rank": 55,
-      "is_hot": false,
-      "tims_rank": 22
+      "tims_rank": 19
     },
     {
       "player_id": 8484234,
@@ -944,85 +827,46 @@
       "team_gf_per_game": 2.471,
       "rank": 56,
       "is_hot": false,
-      "tims_rank": 23
+      "tims_rank": 20
     },
     {
-      "player_id": 8482408,
-      "name": "Jeff Malott",
-      "position": "L",
+      "player_id": 8481538,
+      "name": "Judd Caulfield",
+      "position": "R",
       "team": "ANA",
-      "games_played": 16,
-      "season_goals": 3,
-      "season_shots": 23,
-      "season_assists": 3,
-      "season_points": 6,
-      "pp_goals": 0,
-      "pp_points": 0,
-      "avg_toi_minutes": 10.0,
-      "recent_toi_minutes": 9.8,
-      "avg_goals": 0.1875,
-      "avg_shots": 1.44,
-      "shooting_pct": 0.1304,
-      "last5_goals": 1,
-      "last5_shots": 12,
+      "games_played": 15,
+      "season_goals": 4,
+      "season_shots": 20,
+      "season_assists": 5,
+      "season_points": 9,
+      "pp_goals": 1,
+      "pp_points": 3,
+      "avg_toi_minutes": 13.4,
+      "recent_toi_minutes": 14.7,
+      "avg_goals": 0.2667,
+      "avg_shots": 1.33,
+      "shooting_pct": 0.2,
+      "last5_goals": 2,
+      "last5_shots": 9,
       "last5_games": 5,
-      "recent_gpg": 0.2,
+      "recent_gpg": 0.4,
       "prior_games": 0,
       "opponent": "PIT",
       "is_home": true,
       "game_id": 2026020282,
       "matchup": "ANA vs PIT",
-      "tims_group": "3",
-      "goal_probability": 0.3268,
-      "raw_goal_probability": 0.643,
-      "player_xg": 0.3957,
-      "expected_shots": 1.74,
-      "avg_shot_xg": 0.1621,
+      "tims_group": "2",
+      "goal_probability": 0.3306,
+      "raw_goal_probability": 0.7092,
+      "player_xg": 0.4014,
+      "expected_shots": 1.88,
+      "avg_shot_xg": 0.1523,
       "xg_source": "synthetic",
       "opp_ga_per_game": 3.529,
       "team_gf_per_game": 3.765,
-      "rank": 61,
+      "rank": 60,
       "is_hot": false,
-      "tims_rank": 24
-    },
-    {
-      "player_id": 8477956,
-      "name": "David Pastrnak",
-      "position": "R",
-      "team": "BOS",
-      "games_played": 17,
-      "season_goals": 8,
-      "season_shots": 61,
-      "season_assists": 14,
-      "season_points": 22,
-      "pp_goals": 3,
-      "pp_points": 7,
-      "avg_toi_minutes": 20.4,
-      "recent_toi_minutes": 22.2,
-      "avg_goals": 0.4706,
-      "avg_shots": 3.59,
-      "shooting_pct": 0.1311,
-      "last5_goals": 1,
-      "last5_shots": 19,
-      "last5_games": 5,
-      "recent_gpg": 0.2,
-      "prior_games": 0,
-      "opponent": "FLA",
-      "is_home": true,
-      "game_id": 2026020277,
-      "matchup": "BOS vs FLA",
-      "tims_group": "1",
-      "goal_probability": 0.3262,
-      "raw_goal_probability": 0.7738,
-      "player_xg": 0.3949,
-      "expected_shots": 2.77,
-      "avg_shot_xg": 0.1018,
-      "xg_source": "synthetic",
-      "opp_ga_per_game": 3.0,
-      "team_gf_per_game": 3.765,
-      "rank": 62,
-      "is_hot": false,
-      "tims_rank": 25
+      "tims_rank": 21
     },
     {
       "player_id": 8484860,
@@ -1061,7 +905,7 @@
       "team_gf_per_game": 2.471,
       "rank": 63,
       "is_hot": false,
-      "tims_rank": 26
+      "tims_rank": 22
     },
     {
       "player_id": 8474150,
@@ -1100,7 +944,7 @@
       "team_gf_per_game": 2.471,
       "rank": 66,
       "is_hot": false,
-      "tims_rank": 27
+      "tims_rank": 23
     },
     {
       "player_id": 8475798,
@@ -1139,7 +983,85 @@
       "team_gf_per_game": 3.765,
       "rank": 69,
       "is_hot": false,
-      "tims_rank": 28
+      "tims_rank": 24
+    },
+    {
+      "player_id": 8485406,
+      "name": "Porter Martone",
+      "position": "R",
+      "team": "PHI",
+      "games_played": 18,
+      "season_goals": 3,
+      "season_shots": 23,
+      "season_assists": 5,
+      "season_points": 8,
+      "pp_goals": 2,
+      "pp_points": 4,
+      "avg_toi_minutes": 13.9,
+      "recent_toi_minutes": 13.9,
+      "avg_goals": 0.1667,
+      "avg_shots": 1.28,
+      "shooting_pct": 0.1304,
+      "last5_goals": 0,
+      "last5_shots": 8,
+      "last5_games": 5,
+      "recent_gpg": 0.0,
+      "prior_games": 0,
+      "opponent": "CGY",
+      "is_home": false,
+      "game_id": 2026020281,
+      "matchup": "PHI @ CGY",
+      "tims_group": "2",
+      "goal_probability": 0.2868,
+      "raw_goal_probability": 0.5799,
+      "player_xg": 0.3379,
+      "expected_shots": 1.43,
+      "avg_shot_xg": 0.1684,
+      "xg_source": "synthetic",
+      "opp_ga_per_game": 3.529,
+      "team_gf_per_game": 2.167,
+      "rank": 70,
+      "is_hot": false,
+      "tims_rank": 25
+    },
+    {
+      "player_id": 8476483,
+      "name": "Rickard Rakell",
+      "position": "R",
+      "team": "PIT",
+      "games_played": 17,
+      "season_goals": 5,
+      "season_shots": 40,
+      "season_assists": 4,
+      "season_points": 9,
+      "pp_goals": 1,
+      "pp_points": 2,
+      "avg_toi_minutes": 19.7,
+      "recent_toi_minutes": 19.8,
+      "avg_goals": 0.2941,
+      "avg_shots": 2.35,
+      "shooting_pct": 0.125,
+      "last5_goals": 3,
+      "last5_shots": 10,
+      "last5_games": 5,
+      "recent_gpg": 0.6,
+      "prior_games": 0,
+      "opponent": "ANA",
+      "is_home": false,
+      "game_id": 2026020282,
+      "matchup": "PIT @ ANA",
+      "tims_group": "1",
+      "goal_probability": 0.2831,
+      "raw_goal_probability": 0.7526,
+      "player_xg": 0.3328,
+      "expected_shots": 3.09,
+      "avg_shot_xg": 0.077,
+      "xg_source": "synthetic",
+      "opp_ga_per_game": 3.765,
+      "team_gf_per_game": 3.294,
+      "rank": 72,
+      "is_hot": true,
+      "tims_rank": 26
     },
     {
       "player_id": 8474590,
@@ -1178,7 +1100,7 @@
       "team_gf_per_game": 3.75,
       "rank": 74,
       "is_hot": false,
-      "tims_rank": 29
+      "tims_rank": 27
     },
     {
       "player_id": 8476458,
@@ -1217,7 +1139,7 @@
       "team_gf_per_game": 2.471,
       "rank": 82,
       "is_hot": false,
-      "tims_rank": 30
+      "tims_rank": 28
     },
     {
       "player_id": 8483890,
@@ -1256,46 +1178,7 @@
       "team_gf_per_game": 3.333,
       "rank": 84,
       "is_hot": false,
-      "tims_rank": 31
-    },
-    {
-      "player_id": 8479314,
-      "name": "Matthew Tkachuk",
-      "position": "L",
-      "team": "FLA",
-      "games_played": 17,
-      "season_goals": 4,
-      "season_shots": 36,
-      "season_assists": 21,
-      "season_points": 25,
-      "pp_goals": 1,
-      "pp_points": 13,
-      "avg_toi_minutes": 19.0,
-      "recent_toi_minutes": 18.7,
-      "avg_goals": 0.2353,
-      "avg_shots": 2.12,
-      "shooting_pct": 0.1111,
-      "last5_goals": 0,
-      "last5_shots": 10,
-      "last5_games": 5,
-      "recent_gpg": 0.0,
-      "prior_games": 0,
-      "opponent": "BOS",
-      "is_home": false,
-      "game_id": 2026020277,
-      "matchup": "FLA @ BOS",
-      "tims_group": "2",
-      "goal_probability": 0.2371,
-      "raw_goal_probability": 0.6252,
-      "player_xg": 0.2707,
-      "expected_shots": 1.58,
-      "avg_shot_xg": 0.1222,
-      "xg_source": "synthetic",
-      "opp_ga_per_game": 2.353,
-      "team_gf_per_game": 3.235,
-      "rank": 91,
-      "is_hot": false,
-      "tims_rank": 32
+      "tims_rank": 29
     },
     {
       "player_id": 8478483,
@@ -1334,46 +1217,85 @@
       "team_gf_per_game": 3.333,
       "rank": 98,
       "is_hot": false,
-      "tims_rank": 33
+      "tims_rank": 30
     },
     {
-      "player_id": 8480355,
-      "name": "Mark Kastelic",
-      "position": "C",
-      "team": "BOS",
-      "games_played": 17,
-      "season_goals": 3,
-      "season_shots": 20,
+      "player_id": 8482758,
+      "name": "Ville Koivunen",
+      "position": "R",
+      "team": "PIT",
+      "games_played": 15,
+      "season_goals": 2,
+      "season_shots": 12,
       "season_assists": 4,
-      "season_points": 7,
+      "season_points": 6,
       "pp_goals": 0,
-      "pp_points": 0,
-      "avg_toi_minutes": 11.0,
-      "recent_toi_minutes": 10.2,
-      "avg_goals": 0.1765,
-      "avg_shots": 1.18,
-      "shooting_pct": 0.15,
-      "last5_goals": 1,
-      "last5_shots": 5,
+      "pp_points": 1,
+      "avg_toi_minutes": 13.9,
+      "recent_toi_minutes": 14.1,
+      "avg_goals": 0.1333,
+      "avg_shots": 0.8,
+      "shooting_pct": 0.1667,
+      "last5_goals": 0,
+      "last5_shots": 1,
       "last5_games": 5,
-      "recent_gpg": 0.2,
+      "recent_gpg": 0.0,
       "prior_games": 0,
-      "opponent": "FLA",
-      "is_home": true,
-      "game_id": 2026020277,
-      "matchup": "BOS vs FLA",
+      "opponent": "ANA",
+      "is_home": false,
+      "game_id": 2026020282,
+      "matchup": "PIT @ ANA",
       "tims_group": "3",
-      "goal_probability": 0.2044,
-      "raw_goal_probability": 0.515,
-      "player_xg": 0.2286,
-      "expected_shots": 1.25,
-      "avg_shot_xg": 0.1311,
+      "goal_probability": 0.2162,
+      "raw_goal_probability": 0.4702,
+      "player_xg": 0.2436,
+      "expected_shots": 0.96,
+      "avg_shot_xg": 0.1821,
       "xg_source": "synthetic",
-      "opp_ga_per_game": 3.0,
-      "team_gf_per_game": 3.765,
-      "rank": 105,
+      "opp_ga_per_game": 3.765,
+      "team_gf_per_game": 3.294,
+      "rank": 101,
       "is_hot": false,
-      "tims_rank": 34
+      "tims_rank": 31
+    },
+    {
+      "player_id": 8483468,
+      "name": "Jiri Kulich",
+      "position": "C",
+      "team": "BUF",
+      "games_played": 10,
+      "season_goals": 1.25,
+      "season_shots": 14.666666666666666,
+      "season_assists": 2.1666666666666665,
+      "season_points": 3.4166666666666665,
+      "pp_goals": 0.0,
+      "pp_points": 0.0,
+      "avg_toi_minutes": 13.5,
+      "recent_toi_minutes": 14.1,
+      "avg_goals": 0.125,
+      "avg_shots": 1.47,
+      "shooting_pct": 0.0852,
+      "last5_goals": 0,
+      "last5_shots": 9,
+      "last5_games": 5,
+      "recent_gpg": 0.0,
+      "prior_games": 1,
+      "opponent": "VGK",
+      "is_home": true,
+      "game_id": 2026020278,
+      "matchup": "BUF vs VGK",
+      "tims_group": "3",
+      "goal_probability": 0.2025,
+      "raw_goal_probability": 0.5183,
+      "player_xg": 0.2262,
+      "expected_shots": 1.36,
+      "avg_shot_xg": 0.1184,
+      "xg_source": "synthetic",
+      "opp_ga_per_game": 2.778,
+      "team_gf_per_game": 3.062,
+      "rank": 106,
+      "is_hot": false,
+      "tims_rank": 32
     },
     {
       "player_id": 8482684,
@@ -1412,7 +1334,7 @@
       "team_gf_per_game": 3.647,
       "rank": 107,
       "is_hot": false,
-      "tims_rank": 35
+      "tims_rank": 33
     },
     {
       "player_id": 8484145,
@@ -1451,7 +1373,7 @@
       "team_gf_per_game": 3.062,
       "rank": 109,
       "is_hot": false,
-      "tims_rank": 36
+      "tims_rank": 34
     },
     {
       "player_id": 8476448,
@@ -1490,7 +1412,7 @@
       "team_gf_per_game": 3.333,
       "rank": 116,
       "is_hot": false,
-      "tims_rank": 37
+      "tims_rank": 35
     },
     {
       "player_id": 8477964,
@@ -1529,7 +1451,7 @@
       "team_gf_per_game": 3.333,
       "rank": 120,
       "is_hot": false,
-      "tims_rank": 38
+      "tims_rank": 36
     },
     {
       "player_id": 8474578,
@@ -1568,7 +1490,7 @@
       "team_gf_per_game": 3.294,
       "rank": 121,
       "is_hot": false,
-      "tims_rank": 39
+      "tims_rank": 37
     },
     {
       "player_id": 8476392,
@@ -1607,7 +1529,7 @@
       "team_gf_per_game": 2.647,
       "rank": 130,
       "is_hot": false,
-      "tims_rank": 40
+      "tims_rank": 38
     },
     {
       "player_id": 8481481,
@@ -1646,7 +1568,7 @@
       "team_gf_per_game": 3.294,
       "rank": 136,
       "is_hot": false,
-      "tims_rank": 41
+      "tims_rank": 39
     },
     {
       "player_id": 8482110,
@@ -1685,7 +1607,7 @@
       "team_gf_per_game": 2.647,
       "rank": 141,
       "is_hot": false,
-      "tims_rank": 42
+      "tims_rank": 40
     },
     {
       "player_id": 8480220,
@@ -1724,46 +1646,7 @@
       "team_gf_per_game": 2.167,
       "rank": 142,
       "is_hot": false,
-      "tims_rank": 43
-    },
-    {
-      "player_id": 8480185,
-      "name": "Eetu Luostarinen",
-      "position": "C",
-      "team": "FLA",
-      "games_played": 17,
-      "season_goals": 2,
-      "season_shots": 20,
-      "season_assists": 2,
-      "season_points": 4,
-      "pp_goals": 1,
-      "pp_points": 1,
-      "avg_toi_minutes": 16.3,
-      "recent_toi_minutes": 16.8,
-      "avg_goals": 0.1176,
-      "avg_shots": 1.18,
-      "shooting_pct": 0.1,
-      "last5_goals": 0,
-      "last5_shots": 4,
-      "last5_games": 5,
-      "recent_gpg": 0.0,
-      "prior_games": 0,
-      "opponent": "BOS",
-      "is_home": false,
-      "game_id": 2026020277,
-      "matchup": "FLA @ BOS",
-      "tims_group": "3",
-      "goal_probability": 0.1329,
-      "raw_goal_probability": 0.3927,
-      "player_xg": 0.1426,
-      "expected_shots": 0.88,
-      "avg_shot_xg": 0.1157,
-      "xg_source": "synthetic",
-      "opp_ga_per_game": 2.353,
-      "team_gf_per_game": 3.235,
-      "rank": 149,
-      "is_hot": false,
-      "tims_rank": 44
+      "tims_rank": 41
     },
     {
       "player_id": 8484142,
@@ -1802,7 +1685,85 @@
       "team_gf_per_game": 2.167,
       "rank": 173,
       "is_hot": false,
-      "tims_rank": 45
+      "tims_rank": 42
+    },
+    {
+      "player_id": 8476461,
+      "name": "Sean Couturier",
+      "position": "C",
+      "team": "PHI",
+      "games_played": 18,
+      "season_goals": 1,
+      "season_shots": 19,
+      "season_assists": 4,
+      "season_points": 5,
+      "pp_goals": 0,
+      "pp_points": 0,
+      "avg_toi_minutes": 16.5,
+      "recent_toi_minutes": 15.4,
+      "avg_goals": 0.0556,
+      "avg_shots": 1.06,
+      "shooting_pct": 0.0526,
+      "last5_goals": 1,
+      "last5_shots": 4,
+      "last5_games": 5,
+      "recent_gpg": 0.2,
+      "prior_games": 0,
+      "opponent": "CGY",
+      "is_home": false,
+      "game_id": 2026020281,
+      "matchup": "PHI @ CGY",
+      "tims_group": "3",
+      "goal_probability": 0.0682,
+      "raw_goal_probability": 0.3235,
+      "player_xg": 0.0706,
+      "expected_shots": 1.31,
+      "avg_shot_xg": 0.0387,
+      "xg_source": "synthetic",
+      "opp_ga_per_game": 3.529,
+      "team_gf_per_game": 2.167,
+      "rank": 206,
+      "is_hot": false,
+      "tims_rank": 43
+    },
+    {
+      "player_id": 8477447,
+      "name": "Shea Theodore",
+      "position": "D",
+      "team": "VGK",
+      "games_played": 18,
+      "season_goals": 2,
+      "season_shots": 37,
+      "season_assists": 3,
+      "season_points": 5,
+      "pp_goals": 0,
+      "pp_points": 2,
+      "avg_toi_minutes": 21.9,
+      "recent_toi_minutes": 22.3,
+      "avg_goals": 0.1111,
+      "avg_shots": 2.06,
+      "shooting_pct": 0.0541,
+      "last5_goals": 0,
+      "last5_shots": 7,
+      "last5_games": 5,
+      "recent_gpg": 0.0,
+      "prior_games": 0,
+      "opponent": "BUF",
+      "is_home": false,
+      "game_id": 2026020278,
+      "matchup": "VGK @ BUF",
+      "tims_group": "3",
+      "goal_probability": 0.0611,
+      "raw_goal_probability": 0.3266,
+      "player_xg": 0.063,
+      "expected_shots": 2.16,
+      "avg_shot_xg": 0.0208,
+      "xg_source": "synthetic",
+      "opp_ga_per_game": 3.312,
+      "team_gf_per_game": 3.333,
+      "rank": 215,
+      "is_hot": false,
+      "tims_rank": 44
     }
   ],
   "tims_mode": true,
@@ -1819,6 +1780,14 @@
       },
       {
         "rank_in_group": 2,
+        "player_id": 8483445,
+        "name": "Cutter Gauthier",
+        "team": "ANA",
+        "goal_probability": 0.7232,
+        "matchup": "ANA vs PIT"
+      },
+      {
+        "rank_in_group": 3,
         "player_id": 8484762,
         "name": "Beckett Sennecke",
         "team": "ANA",
@@ -1826,7 +1795,7 @@
         "matchup": "ANA vs PIT"
       },
       {
-        "rank_in_group": 3,
+        "rank_in_group": 4,
         "player_id": 8479318,
         "name": "Auston Matthews",
         "team": "TOR",
@@ -1834,7 +1803,7 @@
         "matchup": "TOR vs NJD"
       },
       {
-        "rank_in_group": 4,
+        "rank_in_group": 5,
         "player_id": 8477404,
         "name": "Jake Guentzel",
         "team": "TBL",
@@ -1842,7 +1811,7 @@
         "matchup": "TBL @ WPG"
       },
       {
-        "rank_in_group": 5,
+        "rank_in_group": 6,
         "player_id": 8471675,
         "name": "Sidney Crosby",
         "team": "PIT",
@@ -1850,7 +1819,7 @@
         "matchup": "PIT @ ANA"
       },
       {
-        "rank_in_group": 6,
+        "rank_in_group": 7,
         "player_id": 8481559,
         "name": "Jack Hughes",
         "team": "NJD",
@@ -1858,7 +1827,7 @@
         "matchup": "NJD @ TOR"
       },
       {
-        "rank_in_group": 7,
+        "rank_in_group": 8,
         "player_id": 8477939,
         "name": "William Nylander",
         "team": "TOR",
@@ -1866,36 +1835,28 @@
         "matchup": "TOR vs NJD"
       },
       {
-        "rank_in_group": 8,
-        "player_id": 8484387,
-        "name": "Matvei Michkov",
-        "team": "PHI",
-        "goal_probability": 0.4939,
-        "matchup": "PHI @ CGY"
-      },
-      {
         "rank_in_group": 9,
-        "player_id": 8480801,
-        "name": "Brady Tkachuk",
-        "team": "FLA",
-        "goal_probability": 0.4308,
-        "matchup": "FLA @ BOS"
+        "player_id": 8484153,
+        "name": "Leo Carlsson",
+        "team": "ANA",
+        "goal_probability": 0.4352,
+        "matchup": "ANA vs PIT"
       },
       {
         "rank_in_group": 10,
+        "player_id": 8480002,
+        "name": "Nico Hischier",
+        "team": "NJD",
+        "goal_probability": 0.4306,
+        "matchup": "NJD @ TOR"
+      },
+      {
+        "rank_in_group": 11,
         "player_id": 8479542,
         "name": "Brandon Hagel",
         "team": "TBL",
         "goal_probability": 0.4116,
         "matchup": "TBL @ WPG"
-      },
-      {
-        "rank_in_group": 11,
-        "player_id": 8477933,
-        "name": "Sam Reinhart",
-        "team": "FLA",
-        "goal_probability": 0.3886,
-        "matchup": "FLA @ BOS"
       },
       {
         "rank_in_group": 12,
@@ -1923,11 +1884,11 @@
       },
       {
         "rank_in_group": 15,
-        "player_id": 8477956,
-        "name": "David Pastrnak",
-        "team": "BOS",
-        "goal_probability": 0.3262,
-        "matchup": "BOS vs FLA"
+        "player_id": 8476483,
+        "name": "Rickard Rakell",
+        "team": "PIT",
+        "goal_probability": 0.2831,
+        "matchup": "PIT @ ANA"
       }
     ],
     "2": [
@@ -1941,14 +1902,6 @@
       },
       {
         "rank_in_group": 2,
-        "player_id": 8477409,
-        "name": "Carter Verhaeghe",
-        "team": "FLA",
-        "goal_probability": 0.5045,
-        "matchup": "FLA @ BOS"
-      },
-      {
-        "rank_in_group": 3,
         "player_id": 8486067,
         "name": "Gavin McKenna",
         "team": "TOR",
@@ -1956,7 +1909,7 @@
         "matchup": "TOR vs NJD"
       },
       {
-        "rank_in_group": 4,
+        "rank_in_group": 3,
         "player_id": 8478458,
         "name": "Jack Roslovic",
         "team": "TOR",
@@ -1964,7 +1917,7 @@
         "matchup": "TOR vs NJD"
       },
       {
-        "rank_in_group": 5,
+        "rank_in_group": 4,
         "player_id": 8481582,
         "name": "Nick Robertson",
         "team": "PIT",
@@ -1972,15 +1925,7 @@
         "matchup": "PIT @ ANA"
       },
       {
-        "rank_in_group": 6,
-        "player_id": 8478401,
-        "name": "Pavel Zacha",
-        "team": "BOS",
-        "goal_probability": 0.3948,
-        "matchup": "BOS vs FLA"
-      },
-      {
-        "rank_in_group": 7,
+        "rank_in_group": 5,
         "player_id": 8480064,
         "name": "Josh Norris",
         "team": "BUF",
@@ -1988,7 +1933,7 @@
         "matchup": "BUF vs VGK"
       },
       {
-        "rank_in_group": 8,
+        "rank_in_group": 6,
         "player_id": 8484234,
         "name": "Aydar Suniev",
         "team": "CGY",
@@ -1996,7 +1941,15 @@
         "matchup": "CGY vs PHI"
       },
       {
-        "rank_in_group": 9,
+        "rank_in_group": 7,
+        "player_id": 8481538,
+        "name": "Judd Caulfield",
+        "team": "ANA",
+        "goal_probability": 0.3306,
+        "matchup": "ANA vs PIT"
+      },
+      {
+        "rank_in_group": 8,
         "player_id": 8484860,
         "name": "Matvei Gridin",
         "team": "CGY",
@@ -2004,7 +1957,7 @@
         "matchup": "CGY vs PHI"
       },
       {
-        "rank_in_group": 10,
+        "rank_in_group": 9,
         "player_id": 8475798,
         "name": "Mikael Granlund",
         "team": "ANA",
@@ -2012,15 +1965,15 @@
         "matchup": "ANA vs PIT"
       },
       {
-        "rank_in_group": 11,
-        "player_id": 8479314,
-        "name": "Matthew Tkachuk",
-        "team": "FLA",
-        "goal_probability": 0.2371,
-        "matchup": "FLA @ BOS"
+        "rank_in_group": 10,
+        "player_id": 8485406,
+        "name": "Porter Martone",
+        "team": "PHI",
+        "goal_probability": 0.2868,
+        "matchup": "PHI @ CGY"
       },
       {
-        "rank_in_group": 12,
+        "rank_in_group": 11,
         "player_id": 8478483,
         "name": "Mitch Marner",
         "team": "VGK",
@@ -2028,7 +1981,7 @@
         "matchup": "VGK @ BUF"
       },
       {
-        "rank_in_group": 13,
+        "rank_in_group": 12,
         "player_id": 8484145,
         "name": "Zach Benson",
         "team": "BUF",
@@ -2036,7 +1989,7 @@
         "matchup": "BUF vs VGK"
       },
       {
-        "rank_in_group": 14,
+        "rank_in_group": 13,
         "player_id": 8476448,
         "name": "William Karlsson",
         "team": "VGK",
@@ -2044,7 +1997,7 @@
         "matchup": "VGK @ BUF"
       },
       {
-        "rank_in_group": 15,
+        "rank_in_group": 14,
         "player_id": 8474578,
         "name": "Erik Karlsson",
         "team": "PIT",
@@ -2055,22 +2008,6 @@
     "3": [
       {
         "rank_in_group": 1,
-        "player_id": 8479999,
-        "name": "Casey Mittelstadt",
-        "team": "BOS",
-        "goal_probability": 0.3428,
-        "matchup": "BOS vs FLA"
-      },
-      {
-        "rank_in_group": 2,
-        "player_id": 8482408,
-        "name": "Jeff Malott",
-        "team": "ANA",
-        "goal_probability": 0.3268,
-        "matchup": "ANA vs PIT"
-      },
-      {
-        "rank_in_group": 3,
         "player_id": 8474150,
         "name": "Mikael Backlund",
         "team": "CGY",
@@ -2078,7 +2015,7 @@
         "matchup": "CGY vs PHI"
       },
       {
-        "rank_in_group": 4,
+        "rank_in_group": 2,
         "player_id": 8474590,
         "name": "John Carlson",
         "team": "TBL",
@@ -2086,7 +2023,7 @@
         "matchup": "TBL @ WPG"
       },
       {
-        "rank_in_group": 5,
+        "rank_in_group": 3,
         "player_id": 8476458,
         "name": "Ryan Strome",
         "team": "CGY",
@@ -2094,7 +2031,7 @@
         "matchup": "CGY vs PHI"
       },
       {
-        "rank_in_group": 6,
+        "rank_in_group": 4,
         "player_id": 8483890,
         "name": "Braeden Bowman",
         "team": "VGK",
@@ -2102,15 +2039,23 @@
         "matchup": "VGK @ BUF"
       },
       {
-        "rank_in_group": 7,
-        "player_id": 8480355,
-        "name": "Mark Kastelic",
-        "team": "BOS",
-        "goal_probability": 0.2044,
-        "matchup": "BOS vs FLA"
+        "rank_in_group": 5,
+        "player_id": 8482758,
+        "name": "Ville Koivunen",
+        "team": "PIT",
+        "goal_probability": 0.2162,
+        "matchup": "PIT @ ANA"
       },
       {
-        "rank_in_group": 8,
+        "rank_in_group": 6,
+        "player_id": 8483468,
+        "name": "Jiri Kulich",
+        "team": "BUF",
+        "goal_probability": 0.2025,
+        "matchup": "BUF vs VGK"
+      },
+      {
+        "rank_in_group": 7,
         "player_id": 8482684,
         "name": "Luke Hughes",
         "team": "NJD",
@@ -2118,7 +2063,7 @@
         "matchup": "NJD @ TOR"
       },
       {
-        "rank_in_group": 9,
+        "rank_in_group": 8,
         "player_id": 8477964,
         "name": "Ivan Barbashev",
         "team": "VGK",
@@ -2126,7 +2071,7 @@
         "matchup": "VGK @ BUF"
       },
       {
-        "rank_in_group": 10,
+        "rank_in_group": 9,
         "player_id": 8476392,
         "name": "Adam Lowry",
         "team": "WPG",
@@ -2134,7 +2079,7 @@
         "matchup": "WPG vs TBL"
       },
       {
-        "rank_in_group": 11,
+        "rank_in_group": 10,
         "player_id": 8481481,
         "name": "Blake Lizotte",
         "team": "PIT",
@@ -2142,7 +2087,7 @@
         "matchup": "PIT @ ANA"
       },
       {
-        "rank_in_group": 12,
+        "rank_in_group": 11,
         "player_id": 8482110,
         "name": "Dawson Mercer",
         "team": "WPG",
@@ -2150,7 +2095,7 @@
         "matchup": "WPG vs TBL"
       },
       {
-        "rank_in_group": 13,
+        "rank_in_group": 12,
         "player_id": 8480220,
         "name": "Noah Cates",
         "team": "PHI",
@@ -2158,20 +2103,28 @@
         "matchup": "PHI @ CGY"
       },
       {
-        "rank_in_group": 14,
-        "player_id": 8480185,
-        "name": "Eetu Luostarinen",
-        "team": "FLA",
-        "goal_probability": 0.1329,
-        "matchup": "FLA @ BOS"
-      },
-      {
-        "rank_in_group": 15,
+        "rank_in_group": 13,
         "player_id": 8484142,
         "name": "Denver Barkey",
         "team": "PHI",
         "goal_probability": 0.1018,
         "matchup": "PHI @ CGY"
+      },
+      {
+        "rank_in_group": 14,
+        "player_id": 8476461,
+        "name": "Sean Couturier",
+        "team": "PHI",
+        "goal_probability": 0.0682,
+        "matchup": "PHI @ CGY"
+      },
+      {
+        "rank_in_group": 15,
+        "player_id": 8477447,
+        "name": "Shea Theodore",
+        "team": "VGK",
+        "goal_probability": 0.0611,
+        "matchup": "VGK @ BUF"
       }
     ]
   },
@@ -2185,5 +2138,5 @@
     "scale_pos_weight_undone": 13.7396269,
     "attempts_per_sog": 1.4
   },
-  "generated_at": "2026-11-08T11:04:15.891498"
+  "generated_at": "2026-11-08T13:51:28.597298"
 }
