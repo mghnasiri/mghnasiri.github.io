@@ -1,0 +1,924 @@
+{
+  "date": "2026-11-09",
+  "games_count": 3,
+  "final_games": 3,
+  "partial": false,
+  "games": [
+    {
+      "game_id": 2026020283,
+      "home_team": "EDM",
+      "away_team": "NYR",
+      "game_state": "OFF",
+      "schedule_state": "OK"
+    },
+    {
+      "game_id": 2026020284,
+      "home_team": "VAN",
+      "away_team": "PHI",
+      "game_state": "OFF",
+      "schedule_state": "OK"
+    },
+    {
+      "game_id": 2026020285,
+      "home_team": "SJS",
+      "away_team": "NYI",
+      "game_state": "OFF",
+      "schedule_state": "OK"
+    }
+  ],
+  "all_scorers": [
+    {
+      "player_id": 8482877,
+      "player_name": "J. Chmelar",
+      "team": "NYR",
+      "goals": 1,
+      "game_id": 2026020283,
+      "matchup": "NYR @ EDM"
+    },
+    {
+      "player_id": 8477934,
+      "player_name": "L. Draisaitl",
+      "team": "EDM",
+      "goals": 2,
+      "game_id": 2026020283,
+      "matchup": "NYR @ EDM"
+    },
+    {
+      "player_id": 8478402,
+      "player_name": "C. McDavid",
+      "team": "EDM",
+      "goals": 1,
+      "game_id": 2026020283,
+      "matchup": "NYR @ EDM"
+    },
+    {
+      "player_id": 8478439,
+      "player_name": "T. Konecny",
+      "team": "PHI",
+      "goals": 1,
+      "game_id": 2026020284,
+      "matchup": "PHI @ VAN"
+    },
+    {
+      "player_id": 8478047,
+      "player_name": "M. Bunting",
+      "team": "PHI",
+      "goals": 1,
+      "game_id": 2026020284,
+      "matchup": "PHI @ VAN"
+    },
+    {
+      "player_id": 8477948,
+      "player_name": "T. Sanheim",
+      "team": "PHI",
+      "goals": 1,
+      "game_id": 2026020284,
+      "matchup": "PHI @ VAN"
+    },
+    {
+      "player_id": 8483476,
+      "player_name": "J. Lekkerimäki",
+      "team": "VAN",
+      "goals": 1,
+      "game_id": 2026020284,
+      "matchup": "PHI @ VAN"
+    },
+    {
+      "player_id": 8485388,
+      "player_name": "V. Eklund",
+      "team": "NYI",
+      "goals": 1,
+      "game_id": 2026020285,
+      "matchup": "NYI @ SJS"
+    },
+    {
+      "player_id": 8477018,
+      "player_name": "B. Hutton",
+      "team": "NYI",
+      "goals": 1,
+      "game_id": 2026020285,
+      "matchup": "NYI @ SJS"
+    },
+    {
+      "player_id": 8486103,
+      "player_name": "I. Stenberg",
+      "team": "SJS",
+      "goals": 1,
+      "game_id": 2026020285,
+      "matchup": "NYI @ SJS"
+    },
+    {
+      "player_id": 8475726,
+      "player_name": "T. Toffoli",
+      "team": "SJS",
+      "goals": 1,
+      "game_id": 2026020285,
+      "matchup": "NYI @ SJS"
+    }
+  ],
+  "scorers_count": 11,
+  "model_comparisons": [
+    {
+      "model": "blend",
+      "model_display_name": "Blend v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8484801,
+          "name": "Macklin Celebrini",
+          "team": "SJS",
+          "probability": 0.4151,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8477500,
+          "name": "Bo Horvat",
+          "team": "NYI",
+          "probability": 0.3796,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8478402,
+          "name": "Connor McDavid",
+          "team": "EDM",
+          "probability": 0.3535,
+          "scored": true
+        },
+        {
+          "rank": 4,
+          "player_id": 8481604,
+          "name": "Pavel Dorofeyev",
+          "team": "NYR",
+          "probability": 0.3285,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8481533,
+          "name": "Trevor Zegras",
+          "team": "PHI",
+          "probability": 0.3075,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8475786,
+          "name": "Zach Hyman",
+          "team": "EDM",
+          "probability": 0.3007,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8485366,
+          "name": "Matthew Schaefer",
+          "team": "NYI",
+          "probability": 0.2776,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8480015,
+          "name": "Owen Tippett",
+          "team": "PHI",
+          "probability": 0.2773,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8475170,
+          "name": "Brayden Schenn",
+          "team": "NYI",
+          "probability": 0.2713,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8482109,
+          "name": "Alexis Lafrenière",
+          "team": "NYR",
+          "probability": 0.2701,
+          "scored": false
+        }
+      ],
+      "hits": 1,
+      "total_predictions": 10,
+      "hit_rate": 10.0
+    },
+    {
+      "model": "direct_lr",
+      "model_display_name": "Direct LR v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8484801,
+          "name": "Macklin Celebrini",
+          "team": "SJS",
+          "probability": 0.4445,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8478402,
+          "name": "Connor McDavid",
+          "team": "EDM",
+          "probability": 0.4141,
+          "scored": true
+        },
+        {
+          "rank": 3,
+          "player_id": 8477500,
+          "name": "Bo Horvat",
+          "team": "NYI",
+          "probability": 0.3554,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8475786,
+          "name": "Zach Hyman",
+          "team": "EDM",
+          "probability": 0.3188,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8478444,
+          "name": "Brock Boeser",
+          "team": "VAN",
+          "probability": 0.3096,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8481604,
+          "name": "Pavel Dorofeyev",
+          "team": "NYR",
+          "probability": 0.2866,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8481533,
+          "name": "Trevor Zegras",
+          "team": "PHI",
+          "probability": 0.2648,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8480012,
+          "name": "Elias Pettersson",
+          "team": "VAN",
+          "probability": 0.2645,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8484387,
+          "name": "Matvei Michkov",
+          "team": "PHI",
+          "probability": 0.2613,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8480015,
+          "name": "Owen Tippett",
+          "team": "PHI",
+          "probability": 0.2609,
+          "scored": false
+        }
+      ],
+      "hits": 1,
+      "total_predictions": 10,
+      "hit_rate": 10.0
+    },
+    {
+      "model": "lineup_v1",
+      "model_display_name": "Lineup TOI v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8477500,
+          "name": "Bo Horvat",
+          "team": "NYI",
+          "probability": 0.356,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8484801,
+          "name": "Macklin Celebrini",
+          "team": "SJS",
+          "probability": 0.3463,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8475170,
+          "name": "Brayden Schenn",
+          "team": "NYI",
+          "probability": 0.3244,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8481533,
+          "name": "Trevor Zegras",
+          "team": "PHI",
+          "probability": 0.3071,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8481604,
+          "name": "Pavel Dorofeyev",
+          "team": "NYR",
+          "probability": 0.2959,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8485366,
+          "name": "Matthew Schaefer",
+          "team": "NYI",
+          "probability": 0.2715,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8480015,
+          "name": "Owen Tippett",
+          "team": "PHI",
+          "probability": 0.2615,
+          "scored": false
+        },
+        {
+          "rank": 11,
+          "player_id": 8475151,
+          "name": "Kyle Palmieri",
+          "team": "NYI",
+          "probability": 0.2552,
+          "scored": false
+        },
+        {
+          "rank": 13,
+          "player_id": 8475786,
+          "name": "Zach Hyman",
+          "team": "EDM",
+          "probability": 0.2521,
+          "scored": false
+        },
+        {
+          "rank": 14,
+          "player_id": 8478402,
+          "name": "Connor McDavid",
+          "team": "EDM",
+          "probability": 0.2424,
+          "scored": true
+        }
+      ],
+      "hits": 1,
+      "total_predictions": 10,
+      "hit_rate": 10.0
+    },
+    {
+      "model": "market_odds",
+      "model_display_name": "Market Odds v1",
+      "top10_picks": [
+        {
+          "rank": 2,
+          "player_id": 8478402,
+          "name": "Connor McDavid",
+          "team": "EDM",
+          "probability": 0.4488,
+          "scored": true
+        },
+        {
+          "rank": 3,
+          "player_id": 8484801,
+          "name": "Macklin Celebrini",
+          "team": "SJS",
+          "probability": 0.4163,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8477500,
+          "name": "Bo Horvat",
+          "team": "NYI",
+          "probability": 0.3888,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8484387,
+          "name": "Matvei Michkov",
+          "team": "PHI",
+          "probability": 0.3324,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8478444,
+          "name": "Brock Boeser",
+          "team": "VAN",
+          "probability": 0.332,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8481604,
+          "name": "Pavel Dorofeyev",
+          "team": "NYR",
+          "probability": 0.3292,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8475786,
+          "name": "Zach Hyman",
+          "team": "EDM",
+          "probability": 0.3152,
+          "scored": false
+        },
+        {
+          "rank": 11,
+          "player_id": 8482109,
+          "name": "Alexis Lafrenière",
+          "team": "NYR",
+          "probability": 0.2982,
+          "scored": false
+        },
+        {
+          "rank": 13,
+          "player_id": 8481533,
+          "name": "Trevor Zegras",
+          "team": "PHI",
+          "probability": 0.2846,
+          "scored": false
+        },
+        {
+          "rank": 14,
+          "player_id": 8485406,
+          "name": "Porter Martone",
+          "team": "PHI",
+          "probability": 0.284,
+          "scored": false
+        }
+      ],
+      "hits": 1,
+      "total_predictions": 10,
+      "hit_rate": 10.0
+    },
+    {
+      "model": "monte_carlo",
+      "model_display_name": "Monte Carlo v2",
+      "top10_picks": [
+        {
+          "rank": 2,
+          "player_id": 8484387,
+          "name": "Matvei Michkov",
+          "team": "PHI",
+          "probability": 0.3529,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8477500,
+          "name": "Bo Horvat",
+          "team": "NYI",
+          "probability": 0.298,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8482109,
+          "name": "Alexis Lafrenière",
+          "team": "NYR",
+          "probability": 0.2886,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8484801,
+          "name": "Macklin Celebrini",
+          "team": "SJS",
+          "probability": 0.2861,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8478444,
+          "name": "Brock Boeser",
+          "team": "VAN",
+          "probability": 0.2844,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8478402,
+          "name": "Connor McDavid",
+          "team": "EDM",
+          "probability": 0.2676,
+          "scored": true
+        },
+        {
+          "rank": 12,
+          "player_id": 8485366,
+          "name": "Matthew Schaefer",
+          "team": "NYI",
+          "probability": 0.2587,
+          "scored": false
+        },
+        {
+          "rank": 14,
+          "player_id": 8475170,
+          "name": "Brayden Schenn",
+          "team": "NYI",
+          "probability": 0.243,
+          "scored": false
+        },
+        {
+          "rank": 15,
+          "player_id": 8481604,
+          "name": "Pavel Dorofeyev",
+          "team": "NYR",
+          "probability": 0.2428,
+          "scored": false
+        },
+        {
+          "rank": 19,
+          "player_id": 8476454,
+          "name": "Ryan Nugent-Hopkins",
+          "team": "EDM",
+          "probability": 0.2406,
+          "scored": false
+        }
+      ],
+      "hits": 1,
+      "total_predictions": 10,
+      "hit_rate": 10.0
+    },
+    {
+      "model": "neural_network",
+      "model_display_name": "Weighted Linear v1",
+      "top10_picks": [
+        {
+          "rank": 3,
+          "player_id": 8484801,
+          "name": "Macklin Celebrini",
+          "team": "SJS",
+          "probability": 0.375,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8485366,
+          "name": "Matthew Schaefer",
+          "team": "NYI",
+          "probability": 0.35,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8478402,
+          "name": "Connor McDavid",
+          "team": "EDM",
+          "probability": 0.348,
+          "scored": true
+        },
+        {
+          "rank": 6,
+          "player_id": 8477500,
+          "name": "Bo Horvat",
+          "team": "NYI",
+          "probability": 0.33,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8481604,
+          "name": "Pavel Dorofeyev",
+          "team": "NYR",
+          "probability": 0.322,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8476454,
+          "name": "Ryan Nugent-Hopkins",
+          "team": "EDM",
+          "probability": 0.309,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8484387,
+          "name": "Matvei Michkov",
+          "team": "PHI",
+          "probability": 0.293,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8478444,
+          "name": "Brock Boeser",
+          "team": "VAN",
+          "probability": 0.283,
+          "scored": false
+        },
+        {
+          "rank": 12,
+          "player_id": 8481789,
+          "name": "Tye Kartye",
+          "team": "NYR",
+          "probability": 0.269,
+          "scored": false
+        },
+        {
+          "rank": 16,
+          "player_id": 8482109,
+          "name": "Alexis Lafrenière",
+          "team": "NYR",
+          "probability": 0.254,
+          "scored": false
+        }
+      ],
+      "hits": 1,
+      "total_predictions": 10,
+      "hit_rate": 10.0
+    },
+    {
+      "model": "neural_v2",
+      "model_display_name": "Neural Embed v2",
+      "top10_picks": [
+        {
+          "rank": 2,
+          "player_id": 8484801,
+          "name": "Macklin Celebrini",
+          "team": "SJS",
+          "probability": 0.4642,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8477500,
+          "name": "Bo Horvat",
+          "team": "NYI",
+          "probability": 0.4309,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8481604,
+          "name": "Pavel Dorofeyev",
+          "team": "NYR",
+          "probability": 0.3822,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8481533,
+          "name": "Trevor Zegras",
+          "team": "PHI",
+          "probability": 0.3781,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8485366,
+          "name": "Matthew Schaefer",
+          "team": "NYI",
+          "probability": 0.3531,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8478402,
+          "name": "Connor McDavid",
+          "team": "EDM",
+          "probability": 0.3311,
+          "scored": true
+        },
+        {
+          "rank": 9,
+          "player_id": 8475786,
+          "name": "Zach Hyman",
+          "team": "EDM",
+          "probability": 0.3135,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8480015,
+          "name": "Owen Tippett",
+          "team": "PHI",
+          "probability": 0.3081,
+          "scored": false
+        },
+        {
+          "rank": 11,
+          "player_id": 8475170,
+          "name": "Brayden Schenn",
+          "team": "NYI",
+          "probability": 0.2948,
+          "scored": false
+        },
+        {
+          "rank": 13,
+          "player_id": 8475151,
+          "name": "Kyle Palmieri",
+          "team": "NYI",
+          "probability": 0.2802,
+          "scored": false
+        }
+      ],
+      "hits": 1,
+      "total_predictions": 10,
+      "hit_rate": 10.0
+    },
+    {
+      "model": "xg_v3",
+      "model_display_name": "xG XGBoost v3",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8477500,
+          "name": "Bo Horvat",
+          "team": "NYI",
+          "probability": 0.3455,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8484801,
+          "name": "Macklin Celebrini",
+          "team": "SJS",
+          "probability": 0.3392,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8475170,
+          "name": "Brayden Schenn",
+          "team": "NYI",
+          "probability": 0.3196,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8481604,
+          "name": "Pavel Dorofeyev",
+          "team": "NYR",
+          "probability": 0.3195,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8481533,
+          "name": "Trevor Zegras",
+          "team": "PHI",
+          "probability": 0.3084,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8480015,
+          "name": "Owen Tippett",
+          "team": "PHI",
+          "probability": 0.2833,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8485366,
+          "name": "Matthew Schaefer",
+          "team": "NYI",
+          "probability": 0.2607,
+          "scored": false
+        },
+        {
+          "rank": 11,
+          "player_id": 8475786,
+          "name": "Zach Hyman",
+          "team": "EDM",
+          "probability": 0.258,
+          "scored": false
+        },
+        {
+          "rank": 12,
+          "player_id": 8482109,
+          "name": "Alexis Lafrenière",
+          "team": "NYR",
+          "probability": 0.2526,
+          "scored": false
+        },
+        {
+          "rank": 14,
+          "player_id": 8475151,
+          "name": "Kyle Palmieri",
+          "team": "NYI",
+          "probability": 0.2427,
+          "scored": false
+        }
+      ],
+      "hits": 0,
+      "total_predictions": 10,
+      "hit_rate": 0.0
+    },
+    {
+      "model": "xg_v3_synthetic",
+      "model_display_name": "xG XGBoost v3 (synthetic shadow)",
+      "top10_picks": [
+        {
+          "rank": 2,
+          "player_id": 8476454,
+          "name": "Ryan Nugent-Hopkins",
+          "team": "EDM",
+          "probability": 0.5689,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8482109,
+          "name": "Alexis Lafrenière",
+          "team": "NYR",
+          "probability": 0.5535,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8478444,
+          "name": "Brock Boeser",
+          "team": "VAN",
+          "probability": 0.5052,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8477500,
+          "name": "Bo Horvat",
+          "team": "NYI",
+          "probability": 0.5007,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8475170,
+          "name": "Brayden Schenn",
+          "team": "NYI",
+          "probability": 0.4623,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8484387,
+          "name": "Matvei Michkov",
+          "team": "PHI",
+          "probability": 0.4417,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8481789,
+          "name": "Tye Kartye",
+          "team": "NYR",
+          "probability": 0.4382,
+          "scored": false
+        },
+        {
+          "rank": 12,
+          "player_id": 8478402,
+          "name": "Connor McDavid",
+          "team": "EDM",
+          "probability": 0.432,
+          "scored": true
+        },
+        {
+          "rank": 14,
+          "player_id": 8484801,
+          "name": "Macklin Celebrini",
+          "team": "SJS",
+          "probability": 0.4138,
+          "scored": false
+        },
+        {
+          "rank": 15,
+          "player_id": 8481601,
+          "name": "Simon Holmstrom",
+          "team": "NYI",
+          "probability": 0.4039,
+          "scored": false
+        }
+      ],
+      "hits": 1,
+      "total_predictions": 10,
+      "hit_rate": 10.0
+    }
+  ],
+  "fetched_at": "2026-11-10T09:24:19.179984"
+}
