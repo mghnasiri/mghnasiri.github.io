@@ -1,0 +1,2029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T1.1 — Data, variables, and the map of this course</title>
+<meta name="description" content="Label or amount? An interactive first lesson in statistics with Lina's bubble tea stand: tables, categorical and quantitative variables, levels of measurement, photo or film data, the jar and the spoon, and the map of the course.">
+<style>
+:root{
+  /* Taro Milk Tea. One light world the colour of taro milk; deep taro for actions and the counter.
+     Thai tea orange belongs to Tag (labels) and butterfly-pea blue to Ruler (amounts), nothing else.
+     Chapters are told apart by a thin stripe in a bubble tea flavour at the top of each scene. */
+  color-scheme: light;
+  --milk:#F2EDF9; --paper:#FFFFFF; --wash:#F7F3FC;
+  --ink:#2A1C19; --ink-2:#5B4B66; --ink-3:#85799A; --line:#D9CFEA; --line-2:#E8E1F3;
+  --deep:#4B2D86; --deep-2:#6243A0;
+  --tag:#EE7F1B; --tag-soft:#FFE3CC; --tag-ink:#A04A00;
+  --ruler:#2F55D4; --ruler-soft:#DEE5FB; --ruler-ink:#1F3BA3;
+  --sun:#F7B32B; --sun-soft:#FDEFD2;
+  --mint:#6E9F2E; --berry:#D93A62; --taro:#8E6CC9; --taro-soft:#E7DEF5; --sugar:#B07A4A;
+  --ok:#4E8A1E; --ok-soft:#E3F1D0; --ok-ink:#365F14; --no:#D3375E; --no-soft:#FBE0E7; --no-ink:#A1203F;
+  --font-display:"Times New Roman",Times,"Liberation Serif",serif;
+  --font-body:"Times New Roman",Times,"Liberation Serif",serif;
+  --font-hand:var(--font-body);
+  --r:18px;
+  --bg:var(--milk); --fg:var(--ink); --fg2:var(--ink-2); --stripe:transparent; --focus:var(--deep); --now:var(--deep);
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%; margin:0}
+body{display:flex; flex-direction:column; overflow:hidden; background:var(--milk); color:var(--ink); font-family:var(--font-body); font-size:17px; font-size-adjust:.48; line-height:1.55; -webkit-font-smoothing:antialiased; font-variant-numeric:tabular-nums}
+button{font:inherit; color:inherit}
+:focus-visible{outline:3px solid var(--focus); outline-offset:3px}
+.visually-hidden{position:absolute!important; width:1px; height:1px; overflow:hidden; clip:rect(1px,1px,1px,1px); white-space:nowrap}
+@media (prefers-reduced-motion: reduce){ *,*::before,*::after{animation:none!important; transition:none!important} }
+
+/* ---------- top bar ---------- */
+.bar{flex:none; position:relative; z-index:5; display:flex; align-items:center; gap:16px; height:54px; padding:0 24px; background:var(--milk); border-bottom:1px solid var(--line)}
+.ep{font-family:var(--font-display); font-weight:800; font-size:18px; color:var(--deep)}
+.bar .t{font-size:15px; color:var(--ink-2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0}
+.chapnm{display:inline-flex; align-items:center; gap:8px; font-size:14px; font-weight:700; color:var(--ink); white-space:nowrap}
+.chapnm::before{content:""; width:10px; height:10px; border-radius:50%; background:var(--now); flex:none; transition:background .3s}
+.prog{flex:1; min-width:70px; max-width:300px; height:6px; margin-left:auto; border-radius:999px; background:var(--line); overflow:hidden}
+.prog i{display:block; height:100%; width:0; background:var(--deep); border-radius:999px; transition:width .35s}
+.xp{font-weight:700; font-size:15px; color:var(--deep); white-space:nowrap}
+.xp.pulse{animation:pulse .6s}
+@keyframes pulse{40%{transform:scale(1.3)}}
+@media (max-width:820px){ .bar .t{display:none} }
+@media (max-width:480px){ .chapnm{display:none} .bar{padding:0 14px} }
+
+/* ---------- bottom controls: the pearls ---------- */
+.ctrl{flex:none; z-index:5; display:flex; align-items:center; justify-content:space-between; gap:12px; height:64px; padding:0 24px; background:var(--milk); border-top:1px solid var(--line)}
+.dots{display:flex; gap:8px; align-items:center; flex-wrap:wrap; justify-content:center}
+.dots button{width:11px; height:11px; padding:0; border-radius:50%; border:2px solid var(--ink-3); background:transparent; cursor:pointer; transition:width .2s, height .2s, background .2s, border-color .2s}
+.dots button.seen{background:var(--ink-3)}
+.dots button.on{width:17px; height:17px; background:var(--ink); border-color:var(--ink)}
+.dots button:hover{border-color:var(--deep)}
+.pos{display:none; font-weight:700}
+@media (max-width:760px){ .dots{display:none} .pos{display:block} .ctrl{padding:0 14px} }
+
+/* ---------- buttons ---------- */
+.btn{font-weight:700; font-size:16px; color:var(--ink); background:var(--paper); border:2px solid var(--ink); border-radius:999px; padding:8px 18px; cursor:pointer; transition:background .15s, border-color .15s, color .15s, transform .08s; line-height:1.2}
+.btn:hover{border-color:var(--deep); background:var(--wash)}
+.btn:active{transform:translateY(1px)}
+.btn.sun{background:var(--deep); border-color:var(--deep); color:#fff}
+.btn.sun:hover{background:var(--deep-2); border-color:var(--deep-2)}
+.btn.big{font-size:18px; padding:12px 26px}
+.btn.sm{font-size:15px; padding:6px 14px}
+.btn[aria-pressed="true"]{background:var(--deep); border-color:var(--deep); color:#fff}
+.btn:disabled{opacity:.45; cursor:default; transform:none}
+.btn.right{background:var(--ok-soft); border-color:var(--ok); color:var(--ok-ink); opacity:1}
+.btn.wrong{background:var(--no-soft); border-color:var(--no); color:var(--no-ink); opacity:1}
+.row{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+
+/* ---------- deck & scenes ---------- */
+#deck{flex:1; min-height:0; position:relative}
+.scene{position:absolute; inset:0; overflow-y:auto; display:none; padding:clamp(20px,3vw,46px) clamp(16px,3.4vw,52px); color:var(--fg); background-color:var(--bg); background-image:linear-gradient(var(--stripe),var(--stripe)); background-size:100% 6px; background-repeat:no-repeat}
+.scene.on{display:flex}
+.scene-in{margin:auto; width:100%; max-width:1240px; display:grid; grid-template-columns:minmax(0,5fr) minmax(0,7fr); gap:clamp(22px,3.6vw,60px); align-items:center}
+.scene-in.wide{grid-template-columns:minmax(0,1fr); gap:16px}
+.scene-in.picwide{grid-template-columns:minmax(0,4fr) minmax(0,8fr)}
+@media (max-width:900px){ .scene-in.picwide{grid-template-columns:minmax(0,1fr)} }
+@media (max-width:900px){ .scene-in{grid-template-columns:minmax(0,1fr)} }
+@media (min-width:1600px) and (min-height:960px){ .scene-in{zoom:1.32} }
+@media (max-height:760px) and (min-width:901px){ .scene{padding-top:16px; padding-bottom:14px} .txt{gap:10px} .pic{gap:12px} .recap{gap:10px} .rc{padding:9px 12px} .rc span{font-size:13.5px} .scene-in.wide{gap:12px} .nextline{font-size:15.5px} }
+.scene.on .scene-in{animation:enter .4s cubic-bezier(.2,.7,.3,1)}
+@keyframes enter{from{opacity:.3; transform:translateY(10px)} to{opacity:1; transform:none}}
+
+/* Light scenes share the taro milk; the stripe names the chapter. */
+.th-plum{--stripe:transparent; --chip:var(--deep)}
+.th-sun{--stripe:var(--sun); --chip:var(--sun)}
+.th-lilac{--stripe:var(--taro); --chip:var(--taro)}
+.th-sky{--stripe:var(--sugar); --chip:var(--sugar)}
+.th-mint{--stripe:var(--mint); --chip:var(--mint)}
+.th-pink{--stripe:var(--berry); --chip:var(--berry)}
+/* Dark scenes: deep taro for the map and the arcade, tapioca for the trap. */
+.th-night,.th-indigo{--chip:var(--deep); --bg:var(--deep); --fg:#fff; --fg2:rgba(255,255,255,.86); --stripe:transparent; --focus:var(--sun)}
+.th-trap{--chip:var(--berry); --bg:var(--ink); --fg:#fff; --fg2:rgba(255,255,255,.84); --stripe:transparent; --focus:var(--sun)}
+
+/* ---------- text column ---------- */
+.txt{display:flex; flex-direction:column; align-items:flex-start; gap:14px; min-width:0}
+.kick{display:inline-flex; align-items:center; gap:10px; font-weight:600; font-size:15px; color:var(--fg2)}
+.kick b{display:grid; place-items:center; min-width:28px; height:28px; padding:0 8px; border-radius:999px; background:var(--paper); color:var(--ink); box-shadow:inset 0 0 0 2.5px var(--stripe); font-family:var(--font-display); font-weight:800; font-size:14px; line-height:1}
+.th-plum .kick b{box-shadow:inset 0 0 0 2px var(--line)}
+.th-night .kick b,.th-indigo .kick b,.th-trap .kick b{box-shadow:none}
+h1,h2,h3{font-family:var(--font-display); font-weight:700; margin:0; letter-spacing:-.01em; text-wrap:balance}
+h1{font-size:clamp(46px,6.2vw,88px); line-height:.94}
+h2{font-size:clamp(30px,3.5vw,50px); line-height:1.02}
+.sub{margin:0; font-size:clamp(17px,1.45vw,20px); line-height:1.5; color:var(--fg2); max-width:38ch}
+.take{display:block; border-left:4px solid var(--stripe); padding:2px 0 2px 14px; font-weight:700; font-size:16.5px; line-height:1.45; color:var(--fg); max-width:44ch}
+.th-plum .take,.th-night .take,.th-indigo .take,.th-trap .take{border-left-color:var(--sun)}
+.take svg{display:none}
+.fr{font-size:14px; color:var(--fg2)}
+.meta{display:flex; flex-wrap:wrap; gap:4px 22px}
+.pill{font-size:14px; color:var(--fg2)}
+.pic{min-width:0; display:flex; flex-direction:column; gap:16px}
+.card{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:var(--r); padding:16px 18px}
+.th-night .card,.th-indigo .card,.th-trap .card{border-color:transparent}
+.hint{font-size:14.5px; color:var(--ink-2)}
+
+/* Lina speaks in plain text, name in deep taro */
+.lina{display:flex; gap:12px; align-items:flex-start; max-width:44ch}
+.lina .av{flex:none; width:50px; height:50px}
+.lina .av svg{width:100%; height:100%; display:block}
+.bubble{color:var(--fg); font-size:16.5px; line-height:1.45}
+.bubble b{display:block; font-family:var(--font-display); font-weight:800; font-size:14.5px; line-height:1.3; color:var(--deep)}
+.th-night .bubble b,.th-indigo .bubble b,.th-trap .bubble b{color:var(--sun)}
+.card .bubble b{color:var(--deep)}
+
+/* old hero stand (kept for reuse) */
+.stand{width:100%; height:auto; max-height:calc(100dvh - 215px); display:block}
+.stand .cupbob{animation:bob 3s ease-in-out infinite; transform-box:fill-box; transform-origin:center bottom}
+.stand .cupbob:nth-of-type(2n){animation-delay:-1.4s}
+@keyframes bob{50%{transform:translateY(-6px) rotate(-1.5deg)}}
+
+/* ---------- hero: six cups on the counter ---------- */
+#s0 .guesscard{background:none; border:0; border-radius:0; padding:0; gap:12px}
+#s0 .ghead{display:none}
+.cupstand{display:block; width:100%; height:auto; max-height:46vh}
+.cupstand .pearl{transform-box:fill-box; transform-origin:center; animation:pdrop .55s cubic-bezier(.3,.6,.4,1.25) backwards}
+@keyframes pdrop{from{transform:translateY(-150px); opacity:0} 30%{opacity:1}}
+.cupstand .liq{transform-box:fill-box; transform-origin:center bottom; animation:pour .7s cubic-bezier(.3,.7,.3,1) backwards}
+@keyframes pour{from{transform:scaleY(0)}}
+.cupstand text{font-family:var(--font-body)}
+.cupnote{margin:0; font-size:14px; color:var(--ink-2)}
+.hero2{display:grid; grid-template-columns:minmax(0,1.55fr) minmax(0,1fr); gap:18px; align-items:end}
+.hero2 .cupstand{max-height:42vh}
+.sheet{width:100%; border-collapse:separate; border-spacing:0; background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:4px 8px 8px; font-size:16px; line-height:1.25; font-variant-numeric:tabular-nums}
+.sheet th{font-size:13px; font-weight:700; color:var(--ink-2); padding:7px 6px 6px; border-bottom:1px solid var(--line); text-align:center; white-space:nowrap}
+.sheet td{padding:3px 6px; text-align:center; font-weight:700; border-bottom:1px solid #EEE8F6}
+.sheet td:first-child{font-weight:400; color:var(--ink-2)}
+.sheet tbody tr:nth-last-child(2) td{border-bottom:2px solid var(--ink)}
+.sheet tr.avg td{background:var(--sun-soft); border-bottom:0; font-weight:800; font-size:18px; padding:6px}
+.sheet tr.avg td:first-child{font-weight:700; color:var(--ink); font-size:14px; border-radius:0 0 0 9px}
+.sheet tr.avg td:last-child{border-radius:0 0 9px 0}
+@media (max-width:560px){ .hero2{grid-template-columns:minmax(0,1fr)} }
+@media (max-height:760px) and (min-width:901px){ .sheet td{padding:2px 6px} .sheet th{padding:5px 6px 4px} }
+
+/* ---------- notebook ---------- */
+.nb{position:relative; background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:16px; padding:28px 12px 12px 46px; overflow-x:auto}
+.nb::before{content:""; position:absolute; left:36px; top:0; bottom:0; width:2px; background:#F49BB3}
+.nb::after{content:""; position:absolute; left:22px; right:22px; top:9px; height:10px; background:radial-gradient(circle, var(--milk) 3px, var(--line) 3.6px, transparent 4.3px) 0 0/30px 10px repeat-x}
+.nb table{border-collapse:collapse; width:100%; font-family:var(--font-body); font-size:clamp(17px,1.45vw,21px); line-height:1; font-variant-numeric:tabular-nums}
+.nb th{font-weight:700; text-align:left; font-size:.76em; color:var(--ink-2); padding:4px 10px 6px; border-bottom:2px solid #C5D0F0; white-space:nowrap}
+.nb td{padding:2px 10px; height:41px; border-bottom:1px solid #DCE3F7; white-space:nowrap; font-weight:600; transition:background .2s}
+.nb .cc{width:42px; padding:2px 4px}
+.nb td.cc svg{display:block; margin:auto}
+.nb tr.gone{display:none}
+#nb2{padding-top:24px}
+#nb2 td{height:36px}
+.nb tr.new td{animation:write .8s ease-out}
+@keyframes write{from{clip-path:inset(0 100% 0 0)} to{clip-path:inset(0 0 0 0)}}
+.nb .hl{background:var(--sun-soft)}
+.nb th.hl{background:var(--sun); color:var(--ink)}
+.nb .hl2{background:var(--sun); box-shadow:inset 0 0 0 2px var(--ink)}
+.counter{font-size:16px; color:var(--fg)}
+.counter b{font-family:var(--font-display); font-size:24px}
+
+/* words */
+.words{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; width:100%; max-width:440px}
+.word{display:flex; align-items:center; gap:10px; font-weight:700; font-size:17px; color:var(--ink); background:var(--paper); border:2px solid var(--ink); border-radius:12px; padding:8px 12px; cursor:pointer; text-align:left; transition:background .15s, border-color .15s}
+.word:hover{border-color:var(--deep); background:var(--wash)}
+.word[aria-pressed="true"]{background:var(--deep); border-color:var(--deep); color:#fff}
+.word .wi{width:28px; height:28px; flex:none; display:grid; place-items:center}
+.word .wi svg{width:100%; height:100%}
+.defcard{font-size:16px; max-width:44ch; padding:12px 16px}
+.compact .qrow{grid-template-columns:minmax(0,1fr) auto; align-items:center; column-gap:12px; row-gap:4px; padding:8px 0}
+.compact .qrow:first-child{padding-top:0}
+.compact .qf{grid-column:1/-1; min-height:0}
+.compact .qf:empty{display:none}
+.compact .qq{font-size:15.5px; line-height:1.35}
+.qrow{display:grid; gap:8px; padding:10px 0; border-top:1px solid var(--line-2)}
+.qrow:first-child{border-top:0; padding-top:0}
+.qq{font-weight:700}
+.qo{display:flex; flex-wrap:wrap; gap:8px}
+.qf{font-size:15px; color:var(--ink-2); min-height:1.4em}
+
+/* ---------- mascots & machine ---------- */
+.mi svg{width:100%; height:auto; display:block}
+.duo{display:grid; grid-template-columns:1fr 1fr; gap:12px; width:100%; max-width:500px}
+.mas{display:flex; gap:10px; align-items:center; background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:16px; padding:10px; transition:transform .25s, opacity .25s}
+.mas .mi{flex:none; width:66px}
+.mas b{display:block; font-family:var(--font-display); font-size:20px; line-height:1}
+.mas .role{display:block; font-size:14px; line-height:1.3; margin-top:3px; color:var(--ink-2)}
+.mas.dim{opacity:.4}
+.mas.act{transform:translateY(-5px)}
+@media (max-width:520px){ .duo{grid-template-columns:1fr} }
+.machine{background:var(--ink); color:#fff; border-radius:24px; padding:18px; display:grid; gap:16px; --focus:var(--sun)}
+.mtabs{display:flex; flex-wrap:wrap; gap:8px}
+.mtabs .btn{border-color:rgba(255,255,255,.55); background:transparent; color:#fff}
+.mtabs .btn:hover{border-color:#fff; background:rgba(255,255,255,.08)}
+.mtabs .btn[aria-pressed="true"]{background:var(--sun); color:var(--ink); border-color:var(--sun)}
+.slots{display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1.3fr); align-items:center; gap:10px}
+.slot{background:var(--paper); color:var(--ink); border:2px solid var(--paper); border-radius:14px; min-height:80px; display:grid; place-items:center; align-content:center; text-align:center; font-family:var(--font-display); font-weight:700; font-size:clamp(22px,2.2vw,30px); line-height:1.05; padding:8px}
+.slot.out{background:var(--taro-soft); border-color:var(--taro-soft)}
+.slot.out.good{background:var(--ok-soft); border-color:#9BC255}
+.slot.out.bad{background:var(--no-soft); border-color:#F07C98; animation:shake .45s}
+.slot small{display:block; font-family:var(--font-body); font-size:12.5px; font-weight:700; margin-top:5px; color:var(--no-ink)}
+.op{font-family:var(--font-display); font-weight:800; font-size:40px; color:var(--sun)}
+@media (max-width:520px){ .slot{font-size:18px; padding:6px 3px; min-height:64px} .op{font-size:28px} .slots{gap:6px} }
+.mfoot{display:flex; align-items:center; justify-content:space-between; gap:12px}
+.lamps{display:flex; gap:8px; align-items:center; font-size:13px; color:rgba(255,255,255,.78)}
+.lamp{width:24px; height:24px; border-radius:50%; background:#5B4B66; border:2px solid rgba(255,255,255,.8)}
+.lamp.good{background:#9BC255; box-shadow:0 0 16px #9BC255}
+.lamp.bad{background:#F07C98; box-shadow:0 0 16px #F07C98}
+@keyframes shake{20%{transform:translateX(-6px) rotate(-2deg)}40%{transform:translateX(6px) rotate(2deg)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.speech{display:flex; gap:14px; align-items:center; min-height:104px; font-size:16.5px; line-height:1.4}
+.speech .mi{flex:none; width:100px}
+.speech b{display:block; font-family:var(--font-display); font-size:19px}
+
+/* ---------- sort ---------- */
+.sortgrid{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px}
+@media (max-width:1150px){ .sortgrid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+.scard{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:14px; padding:10px 11px; display:flex; flex-direction:column; gap:6px}
+.scard .nm{font-weight:700; font-size:15px; line-height:1.2}
+.scard .ex{font-family:var(--font-display); font-weight:700; font-size:24px; line-height:1; color:var(--ink-2)}
+.scard .bb{display:flex; gap:6px; margin-top:auto}
+.scard .bb button{flex:1; font-weight:700; font-size:14px; border:2px solid var(--ink); border-radius:10px; padding:6px 4px; cursor:pointer; color:var(--ink); transition:background .15s}
+.scard .bb .bt{background:var(--tag-soft)}
+.scard .bb .br{background:var(--ruler-soft)}
+.scard .bb .bt:hover{background:var(--tag)}
+.scard .bb .br:hover{background:var(--ruler); color:#fff}
+.scard.ok{border-color:var(--ok); box-shadow:inset 0 0 0 1px var(--ok)}
+.scard.bad{border-color:var(--no); box-shadow:inset 0 0 0 1px var(--no)}
+.scard .why{font-size:13.5px; line-height:1.35}
+.scard .why b{display:block; font-size:14px}
+.scard.ok .why b{color:var(--ok-ink)} .scard.bad .why b{color:var(--no-ink)}
+.bins{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.bin{border:2px dashed var(--ink-3); border-radius:18px; padding:10px 12px; min-height:104px; color:var(--ink)}
+.bin.tag{background:var(--tag-soft); border-color:#E9A86A}
+.bin.ruler{background:var(--ruler-soft); border-color:#8EA3E6}
+.bh{display:flex; align-items:center; gap:8px; font-weight:700; font-size:15.5px}
+.mi.s{width:50px; flex:none}
+.bin .chips{display:flex; flex-wrap:wrap; gap:6px; margin-top:8px}
+.bin .chips span{font-size:13.5px; font-weight:700; padding:3px 11px; border-radius:999px; animation:drop .35s}
+.bin.tag .chips span{background:var(--tag); color:var(--ink)}
+.bin.ruler .chips span{background:var(--ruler); color:#fff}
+@keyframes drop{from{transform:translateY(-16px) scale(.8); opacity:.3}}
+.score{font-family:var(--font-display); font-weight:800; font-size:26px}
+
+/* ---------- jump / glide ---------- */
+.lane{display:grid; gap:6px}
+.lh{display:flex; align-items:center; gap:10px; flex-wrap:wrap; font-size:17px}
+.fampill{font-size:13px; font-weight:700; padding:2px 10px; border-radius:999px}
+.fampill.ruler{background:var(--ruler); color:#fff}
+.fampill.tag{background:var(--tag); color:var(--ink)}
+.lane svg{width:100%; height:auto; max-height:100px; display:block}
+.lane svg text{font-family:var(--font-body); font-size:14px; fill:var(--ink-2); font-weight:700}
+.lread{font-family:var(--font-display); font-weight:800; font-size:30px; line-height:1.1}
+.lread small{font-family:var(--font-body); font-weight:400; font-size:14.5px; color:var(--ink-2); margin-left:10px}
+#hopper{transition:transform .32s ease-in-out}
+.hopin.hop{animation:hop .38s ease-out}
+@keyframes hop{45%{transform:translateY(-34px)}}
+input[type=range]{width:100%; accent-color:var(--ruler); height:30px; cursor:pointer; margin:0}
+
+/* ---------- staircase ---------- */
+.stairs{width:100%; height:auto; max-height:38vh; display:block}
+.stairs .stp{cursor:pointer}
+.stairs .stp:focus{outline:none}
+.stairs .stp:focus-visible rect{stroke:var(--deep); stroke-width:5}
+.stairs .snm{font-family:var(--font-display); font-weight:800; font-size:21px}
+.stairs .spw{font-family:var(--font-display); font-weight:800; font-size:23px; fill:var(--ink)}
+.stairs .bl{font-family:var(--font-body); font-weight:700; font-size:15px}
+#hop2{transition:transform .45s cubic-bezier(.3,1.5,.5,1)}
+.pch{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:10px}
+.pch b{font-family:var(--font-display); font-size:26px; line-height:1}
+.pws{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px}
+.pw{display:flex; flex-direction:column; align-items:center; gap:5px; text-align:center; font-size:13px; font-weight:600; color:var(--ink-3); line-height:1.2}
+.pwc{width:38px; height:38px; border-radius:50%; display:grid; place-items:center; border:2px solid var(--line); font-family:var(--font-display); font-weight:800; font-size:24px; background:var(--wash); color:var(--ink-3)}
+.pwc svg{width:20px; height:20px}
+.pw.on{color:var(--ink)}
+.pw.on .pwc{border-color:var(--ink); color:var(--ink)}
+.pw.on.tag .pwc{background:var(--tag)}
+.pw.on.ruler .pwc{background:var(--ruler); color:#fff}
+.pex{display:grid; gap:2px; margin-top:10px; font-size:16px}
+.pex i{font-family:var(--font-display); font-style:normal; font-weight:700; font-size:22px}
+.pex .nope{color:var(--no-ink)}
+.pex s{text-decoration-thickness:2px}
+.pcols{font-size:14px; color:var(--ink-2); margin-left:auto}
+
+/* ---------- thermometers ---------- */
+.thermo svg{width:100%; height:auto; display:block; max-height:48vh}
+.thermo .tn{font-family:var(--font-display); font-weight:800; font-size:19px; fill:var(--ink)}
+.thermo .tv{font-family:var(--font-display); font-weight:700; font-size:24px; fill:var(--ink)}
+.thermo .zl{font-weight:700; font-size:14px; fill:var(--no-ink); font-family:var(--font-body)}
+.ratio{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap}
+.ratio .big{font-family:var(--font-display); font-weight:800; font-size:clamp(42px,4.6vw,62px); line-height:1}
+.ratio .lab{font-size:15px; color:var(--ink-2)}
+.tsay{font-size:16px; min-height:3em; margin:0}
+.seg{display:inline-flex; border:2px solid var(--ink); border-radius:12px; overflow:hidden; background:var(--paper)}
+.seg button{font-weight:700; font-size:16px; border:0; background:var(--paper); color:var(--ink); padding:8px 16px; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:background .15s}
+.seg button:hover{background:var(--wash)}
+.seg button + button{border-left:2px solid var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--deep); color:#fff}
+.seg button svg{width:22px; height:22px}
+
+/* ---------- photo / film ---------- */
+.pfwrap{display:grid; grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr); gap:14px; align-items:center}
+@media (max-width:620px){ .pfwrap{grid-template-columns:1fr} }
+.pf svg{width:100%; height:auto; display:block}
+.pf svg text{font-family:var(--font-body); font-size:15px; fill:var(--ink-2); font-weight:600}
+.pf svg .ann{fill:var(--ink); font-weight:700; font-size:16px}
+.pf svg .ttl{fill:var(--ink); font-family:var(--font-display); font-weight:800; font-size:20px}
+.pfcap{font-size:16px; margin:0; min-height:2.9em}
+.drawline{stroke-dasharray:1400; stroke-dashoffset:1400; animation:draw 1.2s ease-out forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.growbar{transform-box:fill-box; transform-origin:left center; animation:grow .6s ease-out}
+@keyframes grow{from{transform:scaleX(0)}}
+.popin{transform-box:fill-box; transform-origin:center; animation:popin .35s ease-out}
+@keyframes popin{from{transform:scale(0)}}
+
+/* ---------- jar & spoon ---------- */
+.jarwrap{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.95fr); gap:16px; align-items:center}
+@media (max-width:620px){ .jarwrap{grid-template-columns:1fr} }
+.jarwrap svg{width:100%; height:auto; display:block}
+#jarsvg{max-height:30vh}
+#spoonsvg{max-height:18vh}
+.jl{text-align:center; font-weight:700; font-size:14.5px; margin-top:4px}
+.jread{text-align:center; font-size:16px}
+.jread .big{display:block; font-family:var(--font-display); font-weight:800; font-size:clamp(36px,3.8vw,50px); line-height:1.05}
+.frostq{font-family:var(--font-display); font-weight:800; font-size:48px; fill:var(--ink)}
+.frost{transition:opacity .6s}
+.strip svg{width:100%; height:auto; max-height:17vh; display:block}
+.strip text{font-size:13px; fill:var(--ink-2); font-weight:600; font-family:var(--font-body)}
+.strip .ann{fill:var(--ink); font-weight:700}
+.pairs{display:grid; gap:10px; max-width:48ch}
+.pairc{display:flex; gap:12px; align-items:center; background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:14px; padding:10px 14px; font-size:15.5px; line-height:1.4}
+.pairc svg{flex:none; width:44px; height:44px}
+.sym{font-family:"Times New Roman",Georgia,serif; font-style:italic; font-size:1.12em; white-space:nowrap}
+
+/* ---------- see / guess ---------- */
+.sg2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+@media (max-width:560px){ .sg2{grid-template-columns:1fr} }
+.sgc{border-radius:16px; padding:10px 14px; border:1px solid var(--line); color:var(--ink); background:var(--paper)}
+.sgc.guess{background:var(--taro-soft); border-color:var(--taro-soft)}
+.sgc h3{font-size:22px; margin:0 0 4px; display:flex; align-items:center; gap:10px}
+.sgc p{margin:0; font-size:15px; line-height:1.4}
+.sgc svg{width:36px; height:36px; display:block; flex:none}
+
+/* ---------- trap ---------- */
+.hazard{position:absolute; left:0; right:0; top:0; height:12px; background:repeating-linear-gradient(-45deg,var(--berry) 0 16px,var(--ink) 16px 32px)}
+.trapcups{display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:8px}
+.tc{display:flex; flex-direction:column; align-items:center; gap:6px}
+.code{font-family:var(--font-display); font-weight:800; font-size:24px; width:48px; height:48px; display:grid; place-items:center; border-radius:12px; border:2px solid var(--ink); background:var(--paper); transition:background .2s}
+.code.here{background:var(--sun)}
+.tc small{font-size:12.5px; font-weight:600; color:var(--ink-2); text-align:center; line-height:1.2}
+.tout{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+.to{border:1px solid var(--line); border-radius:14px; padding:10px 12px}
+.to .k{font-size:14px; font-weight:600; color:var(--ink-2)}
+.to .v{font-family:var(--font-display); font-weight:800; font-size:40px; line-height:1.05}
+.to.bad{background:var(--no-soft); border-color:var(--no-soft)} .to.bad .v{color:var(--no-ink)}
+.to.good{background:var(--ok-soft); border-color:var(--ok-soft)} .to.good .v{color:var(--ok-ink)}
+.tmsg{font-size:16px; min-height:3em; margin:0}
+.jersey{display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap; font-family:var(--font-display); font-weight:800; font-size:32px; border-top:1px solid var(--line-2); padding-top:12px}
+.jersey svg{width:70px; height:70px}
+.jersey .x{color:var(--no)}
+.fact{font-size:14px; color:var(--fg2); max-width:46ch; margin:0}
+
+/* ---------- map ---------- */
+.map{width:100%; max-width:880px; height:auto; display:block; margin:0 auto}
+.map .ph{font-family:var(--font-display); font-weight:700; font-size:17px; fill:rgba(255,255,255,.8)}
+.map .st{cursor:pointer}
+.map .st:focus{outline:none}
+.map .st:focus-visible .cap,.map .st.on .cap{stroke:var(--sun); stroke-width:6}
+.map .code{font-family:var(--font-display); font-weight:800; font-size:19px; fill:#fff}
+.map .snm{font-family:var(--font-body); font-size:13.5px; fill:rgba(255,255,255,.84); font-weight:400}
+.map .here{font-family:var(--font-body); font-weight:700; font-size:14px; fill:var(--ink)}
+.legend{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+.legend .tapnote{font-style:normal; color:var(--fg2); font-size:15px}
+.legend > span{display:inline-flex; align-items:center; gap:8px; font-weight:600; font-size:15px; padding:5px 13px; border-radius:999px; background:var(--paper); color:var(--ink)}
+.mapwrap{overflow-x:auto}
+@media (max-width:700px){ .map{min-width:700px} }
+.legend i{width:28px; height:7px; border-radius:4px; display:inline-block; flex:none}
+.stcard{display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr); gap:12px; align-items:start; padding:10px 16px; width:100%; max-width:1000px; margin:0 auto}
+.stcard h3{font-size:21px}
+.stcard p{margin:4px 0 0; font-size:15px; line-height:1.4}
+@media (max-width:620px){ .stcard{grid-template-columns:1fr} }
+.rl{border-radius:12px; padding:9px 12px; font-size:15px; line-height:1.35}
+.rl.tag{background:var(--tag-soft)} .rl.ruler{background:var(--ruler-soft)}
+.rl b{display:block}
+
+/* ---------- arcade ---------- */
+.tiles{display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:14px}
+.tile{text-align:left; color:var(--ink); border:0; border-radius:18px; padding:14px; cursor:pointer; display:flex; flex-direction:column; gap:4px; min-height:136px; transition:transform .15s}
+.tile:hover{transform:translateY(-3px)}
+.tile .ln{font-size:13px; font-weight:700; opacity:.8}
+.tile .tn{font-family:var(--font-display); font-weight:800; font-size:23px; line-height:1.05}
+.tile .td{font-size:14px; line-height:1.3}
+.tile .ts{font-size:22px; letter-spacing:3px; margin-top:auto; color:var(--ink)}
+.tile .ts .off{opacity:.28}
+.qpanel{width:100%; max-width:780px; margin:0 auto}
+.qhead{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; font-weight:600}
+.qhead .lvl{font-family:var(--font-display); font-weight:800; font-size:20px}
+.qbar{height:8px; border-radius:999px; background:var(--line-2); overflow:hidden; margin:10px 0 16px}
+.qbar i{display:block; height:100%; background:var(--mint); width:0; border-radius:999px; transition:width .3s}
+.qtext{font-family:var(--font-display); font-weight:700; font-size:clamp(25px,2.7vw,36px); line-height:1.15; margin:4px 0 18px}
+.opts{display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:10px}
+.opt{font-weight:700; font-size:18px; color:var(--ink); background:var(--paper); border:2px solid var(--ink); border-radius:12px; padding:14px; cursor:pointer; transition:background .15s, border-color .15s, transform .08s}
+.opt:hover{background:var(--wash); border-color:var(--deep)}
+.opt:active{transform:translateY(1px)}
+.opt:disabled{cursor:default}
+.opt.right{background:var(--ok-soft); border-color:var(--ok); color:var(--ok-ink)}
+.opt.wrong{background:var(--no-soft); border-color:var(--no); color:var(--no-ink)}
+.fb{margin-top:14px; font-size:16.5px; min-height:2.8em}
+.fb b{font-family:var(--font-display); font-size:19px}
+.qnav{display:flex; justify-content:space-between; gap:10px; margin-top:12px; flex-wrap:wrap}
+.streak{display:inline-flex; align-items:center; gap:6px; padding:3px 12px; border-radius:999px; background:var(--sun-soft); font-size:14.5px}
+.streak svg{width:16px; height:16px}
+.donebox{text-align:center; display:grid; gap:10px; justify-items:center}
+.bigstars{font-size:58px; letter-spacing:8px; color:#E39A0E; line-height:1}
+.bigstars .off{color:var(--line)}
+.det{display:grid; gap:10px}
+.det .qrow2{display:flex; gap:12px; align-items:center; flex-wrap:wrap; justify-content:space-between; padding:7px 12px; border:1px solid var(--line); border-radius:12px}
+.det .qrow2.dim{opacity:.4}
+.det input[type=text]{font:inherit; font-size:16px; padding:8px 12px; border:2px solid var(--ink); border-radius:12px; width:min(100%,360px)}
+.det .res{padding:12px 14px; border-radius:14px; border:1px solid var(--line); font-size:16.5px; display:flex; gap:12px; align-items:center}
+.det .res.tag{background:var(--tag-soft); border-color:var(--tag-soft)} .det .res.ruler{background:var(--ruler-soft); border-color:var(--ruler-soft)}
+.det .res .mi{width:70px; flex:none}
+
+/* ---------- recap ---------- */
+.recap{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px}
+.recap .rc.trap{grid-column:auto}
+@media (max-width:980px){ .recap{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:560px){ .recap .rc.trap{grid-column:auto} }
+@media (max-width:560px){ .recap{grid-template-columns:1fr} }
+.rc{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:16px; padding:12px 14px; display:flex; gap:12px; align-items:flex-start}
+.rc .ri{flex:none; width:44px; height:44px; display:grid; place-items:center}
+.rc .ri svg{width:100%; height:100%}
+.rc b{display:block; font-family:var(--font-display); font-size:18px; line-height:1.15; margin-bottom:3px}
+.rc span{font-size:14px; line-height:1.4}
+.rc.trap{background:var(--ink); color:#fff; border-color:var(--ink)}
+.rc.next{background:var(--sun-soft); border-color:var(--sun)}
+details.src{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:16px; padding:12px 16px}
+details.src summary{cursor:pointer; font-weight:700}
+details.src p,details.src ol{font-size:14.5px; line-height:1.5}
+details.src ol{padding-left:1.3em; margin:8px 0 0}
+details.src li{margin-bottom:6px}
+details.src a{color:var(--ruler-ink)}
+.scene.playing .txt .sub, .scene.playing .txt .kick{display:none}
+
+/* ---------- population on-ramp ---------- */
+.zoomcard svg{width:100%; height:auto; max-height:46vh; display:block; margin-top:12px}
+.zcap{margin:10px 0 0; font-size:16px; line-height:1.45; min-height:2.9em}
+.popq{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+@media (max-width:620px){ .popq{grid-template-columns:1fr} }
+.pq{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:16px; padding:12px; display:flex; flex-direction:column; gap:10px}
+.pq.ok{border-color:var(--ok); box-shadow:inset 0 0 0 1px var(--ok)}
+.pq.bad{border-color:var(--no); box-shadow:inset 0 0 0 1px var(--no)}
+.pqh{display:flex; gap:10px; align-items:flex-start}
+.pqi{flex:none; width:40px; height:40px}
+.pqi svg{width:100%; height:100%}
+.pqh b{font-size:15.5px; line-height:1.3}
+.pqo{display:grid; gap:6px}
+.pqo .btn{text-align:left; padding:6px 12px; font-size:14.5px; border-radius:12px; border-width:1.5px}
+.pqa{display:grid; gap:6px; font-size:14.5px; line-height:1.35}
+.pqans{justify-self:start; font-weight:700; padding:4px 10px; border-radius:10px; background:var(--ok-soft); color:var(--ok-ink)}
+.whynot{display:flex; flex-wrap:wrap; gap:8px; max-width:48ch}
+.whynot span{display:inline-flex; align-items:center; gap:6px; font-size:14px; font-weight:600; padding:4px 12px 4px 6px; border-radius:999px; background:var(--paper); color:var(--ink); border:1px solid var(--line)}
+.whynot svg{width:22px; height:22px; flex:none}
+.soupcard{display:grid; gap:12px}
+.soupcard svg{width:100%; height:auto; max-height:40vh; display:block}
+#steam{transition:opacity .8s}
+.souprs{border-radius:14px; border:1px solid var(--line); padding:10px 14px; font-size:15.5px; line-height:1.4; background:var(--wash); min-height:4.6em}
+.souprs b{display:block; font-family:var(--font-display); font-size:19px}
+.souprs.good{background:var(--ok-soft); border-color:var(--ok-soft)} .souprs.bad{background:var(--no-soft); border-color:var(--no-soft)} .souprs.census{background:var(--sun-soft); border-color:var(--sun-soft)}
+.mnemo{font-family:var(--font-display); font-weight:800; font-size:clamp(22px,2.1vw,29px); line-height:1.25; display:grid; gap:2px; padding:10px 18px}
+.mnemo b{color:var(--berry); font-size:1.2em}
+.pscard{display:grid; gap:14px}
+.psgrid{display:grid; grid-template-columns:minmax(0,1fr) 74px minmax(0,1fr); gap:8px; align-items:center}
+.pbox,.sbox{border:1px solid var(--line); border-radius:16px; padding:12px; display:grid; gap:6px; min-height:220px; align-content:start}
+.pbox{background:#EFE9F8; border-color:#E2D8F2} .sbox{background:#FDF3DC; border-color:#F6E2B4}
+.nm2{display:inline-flex; align-items:center; gap:8px; font-family:var(--font-display); font-weight:800; font-size:21px}
+.nm2 svg{width:34px; height:34px}
+.who{font-size:15px; line-height:1.3}
+.who span{display:block; font-size:12.5px; font-weight:700; color:var(--ink-2)}
+.what{font-size:14px; color:var(--ink-2); font-weight:600}
+.val{font-family:var(--font-display); font-weight:800; font-size:clamp(26px,2.5vw,36px); line-height:1.05; display:flex; align-items:center; gap:8px}
+.val svg{width:26px; height:26px; flex:none}
+.val.bump{animation:bump .45s}
+@keyframes bump{40%{transform:scale(1.15)}}
+.note{font-size:13px; color:var(--ink-2)}
+.psarrow{display:grid; justify-items:center; gap:4px; font-size:12.5px; font-weight:700; text-align:center}
+.psarrow svg{width:56px}
+.pshist{font-size:14px; display:flex; flex-wrap:wrap; gap:6px; align-items:center}
+.pshist span{padding:2px 8px; border-radius:8px; background:#FDF3DC; border:1px solid #F6E2B4; font-weight:600}
+@media (max-width:620px){ .psgrid{grid-template-columns:1fr} .psarrow svg{transform:rotate(90deg)} }
+.symcard{display:grid; gap:10px}
+.symgrid{display:grid; gap:6px}
+.symhead,.symrow{display:grid; grid-template-columns:minmax(78px,.8fr) 1fr 1fr; gap:8px; align-items:center}
+.sgh{display:grid; text-align:center; font-size:13px; color:var(--ink-2)}
+.sgh b{font-family:var(--font-display); font-size:18px; color:var(--ink)}
+.symrow{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:12px; padding:3px 5px; cursor:pointer; text-align:left; transition:border-color .15s, background .15s}
+.symrow:hover{border-color:var(--deep)}
+.symrow[aria-pressed="true"]{background:var(--sun-soft); border-color:var(--berry); box-shadow:inset 0 0 0 1px var(--berry)}
+.sl{font-weight:700; font-size:16px; padding-left:6px}
+.sc{display:grid; justify-items:center; border-radius:10px; padding:2px 4px}
+.sc.par{background:#EFE9F8} .sc.st{background:#FDF3DC}
+.sc .sym{font-size:28px; line-height:1.05}
+.sc small{font-size:12.5px; color:var(--ink-2)}
+.symex{font-size:15px; line-height:1.5; background:var(--wash); border-radius:12px; padding:8px 12px; border:1px solid var(--line); min-height:4.6em}
+#salt{transition:opacity .9s}
+#confetti{position:fixed; inset:0; pointer-events:none; z-index:50}
+
+/* ---------- guess first, doors, threads, inverse boss ---------- */
+.guesscard{display:grid; gap:10px; align-content:start}
+.ghead{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap}
+.gtag{font-family:var(--font-display); font-weight:800; font-size:15px; color:var(--deep)}
+.gnote{font-size:13px; color:var(--ink-2)}
+.gq{margin:0; font-family:var(--font-display); font-weight:800; font-size:clamp(19px,1.7vw,24px); line-height:1.22; color:var(--fg)}
+.gopts{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px}
+.gopt{font:inherit; font-weight:700; font-size:16.5px; text-align:left; padding:9px 16px; border:2px solid var(--ink); border-radius:12px; background:var(--paper); color:var(--ink); cursor:pointer; transition:background .15s, border-color .15s}
+.gopt:hover{background:var(--wash); border-color:var(--deep)}
+.gopt[aria-pressed="true"]{background:var(--deep); border-color:var(--deep); color:#fff}
+.gsaved{margin:0; font-size:14px; color:var(--ink-2)}
+.gtab{border-collapse:collapse; width:100%; font-variant-numeric:tabular-nums; font-size:15.5px}
+.gtab th,.gtab td{padding:4px 10px; border-bottom:1px solid var(--line-2); text-align:center}
+.gtab th{font-size:13px; color:var(--ink-2)}
+.gtab th:first-child,.gtab td:first-child{text-align:left}
+.gtab tr.avg td{border-top:2px solid var(--ink); border-bottom:0; font-weight:800; background:var(--sun-soft)}
+.gback{border-left:3px solid var(--sun); padding:4px 0 4px 12px; font-size:14.5px; line-height:1.45; max-width:52ch}
+.guessbar{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-left:4px solid var(--sun); border-radius:12px; padding:9px 14px; font-size:14.5px; line-height:1.45}
+.guessbar:empty,.gback:empty{display:none}
+.thread{font-size:13.5px; line-height:1.4; padding:2px 0 2px 12px; border-left:2px solid currentColor; color:var(--fg2); max-width:52ch}
+.doors3{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px}
+.door{display:grid; gap:10px; align-content:start}
+.door h4{margin:0; font-family:var(--font-display); font-weight:800; font-size:18px; color:var(--fg)}
+.inv .picks{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:14px}
+.inv .ph{margin:0 0 6px; font-weight:700; font-size:14px; color:var(--ink-2)}
+.inv .plist{display:grid; gap:5px}
+.inv .pk{font:inherit; font-size:14.5px; font-weight:600; text-align:left; padding:4px 11px; border:1.5px solid var(--ink); border-radius:10px; background:var(--paper); color:var(--ink); cursor:pointer}
+.inv .pk:hover{background:var(--wash); border-color:var(--deep)}
+.inv .pk[aria-pressed="true"]{background:var(--deep); border-color:var(--deep); color:#fff; font-weight:700}
+.inv .qtext{font-size:clamp(19px,1.8vw,25px)}
+.th-night .btn.sun,.th-indigo .btn.sun,.th-trap .btn.sun{background:var(--sun); border-color:var(--sun); color:var(--ink)}
+.th-night .card .btn.sun,.th-indigo .card .btn.sun,.th-trap .card .btn.sun{background:var(--deep); border-color:var(--deep); color:#fff}
+@media (max-width:760px){ .doors3,.inv .picks{grid-template-columns:1fr} .gopts{grid-template-columns:1fr} }
+@media (max-height:760px) and (min-width:901px){ .gtab th,.gtab td{padding:3px 9px} .gopt{padding:7px 12px; font-size:15px} .inv .pk{padding:3px 10px; font-size:13.5px} .inv .plist{gap:3px} .inv .qtext{font-size:18px} .thread{font-size:12.5px; padding:2px 0 2px 10px} .gback{font-size:13.5px; padding:4px 0 4px 10px} .guessbar{padding:5px 12px; font-size:13px; line-height:1.3} .recap{gap:8px} }
+</style>
+</head>
+<body>
+<header class="bar">
+  <span class="ep">T1.1</span>
+  <span class="t">Data, variables, and the map of this course</span>
+  <span class="chapnm" id="chapnm">Start</span>
+  <div class="prog" aria-hidden="true"><i id="progfill"></i></div>
+  <span class="xp" id="xp" title="Stars earned on this page">★ 0</span>
+</header>
+
+<main id="deck">
+
+<!-- 0 ============================================================ HOOK -->
+<section class="scene th-plum" id="s0" data-chap="Start" aria-label="Label or amount?">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>T1.1</b>Playlist 1, episode 1</div>
+      <h1>Label or amount?</h1>
+      <p class="sub">The first question in statistics. You ask it about every column of data, before any chart or formula. Make a guess first: you will see it again at the end.</p>
+      <div class="lina" data-say="I just opened a bubble tea stand. Six cups sold, and my notebook is already full of stuff. What do I do with it?"></div>
+      <div class="row"><button class="btn sun big" type="button" data-go="next">Find out</button></div>
+      <div class="meta"><span class="pill">Builds on: nothing, start here</span><span class="pill">Leads to: T1.2 and T5.1</span></div>
+    </div>
+    <div class="pic"><div class="card guesscard" id="guess"></div></div>
+  </div>
+</section>
+
+<!-- 1 ============================================================ NOTEBOOK -->
+<section class="scene th-sun" id="s1" data-chap="Lina’s notebook" aria-label="One cup, one line">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>1</b>Lina’s notebook</div>
+      <h2>One cup, one line</h2>
+      <p class="sub">Each time Lina sells a cup, she writes one line. Every line answers the same five questions.</p>
+      <div class="lina" data-say="Flavor, size, toppings, wait, price. Same five questions for every single cup."></div>
+      <div class="take">A dataset is a table: one row for each thing, one column for each question.</div>
+      <div class="fr">In French: un jeu de données</div>
+    </div>
+    <div class="pic">
+      <div class="nb" id="nb1"></div>
+      <div class="row"><button class="btn big" type="button" id="sellbtn">Sell the next cup</button><span class="counter" id="nbcount" aria-live="polite"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 ============================================================ FOUR WORDS -->
+<section class="scene th-sun" id="s2" data-chap="Lina’s notebook" aria-label="Four words, one table">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>1</b>Lina’s notebook</div>
+      <h2>Four words, one table</h2>
+      <p class="sub">Statisticians give each part of the table a name. Tap a word and watch the notebook.</p>
+      <div class="words" id="words" role="group" aria-label="Parts of a table"></div>
+      <div class="card defcard" id="anatdef" aria-live="polite"></div>
+      <div class="fr">In French: élément, observation, variable, valeur</div>
+    </div>
+    <div class="pic">
+      <div class="nb" id="nb2"></div>
+      <div class="card compact" id="anatcheck"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 ============================================================ ADDING MACHINE -->
+<section class="scene th-lilac" id="s3" data-chap="Labels and amounts" aria-label="Same digits, two jobs">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>2</b>Labels and amounts</div>
+      <h2>Same digits, two jobs</h2>
+      <p class="sub">Numbers you meet every day. Some name a thing, some say how much. Tap Name or Amount on each card.</p>
+      <div class="lina" data-say="So the digits alone don’t tell me. I have to ask what the number does."></div>
+      <div class="score" id="doorscore" aria-live="polite">0 of 6</div>
+      <div class="take">The same digits can name a thing or measure an amount. Ask what the number does, not what it looks like.</div>
+    </div>
+    <div class="pic"><div class="doors3" id="doors3"></div></div>
+  </div>
+</section>
+
+<!-- 3b ============================================================ ADDING MACHINE -->
+<section class="scene th-lilac" id="s4" data-chap="Labels and amounts" aria-label="Can you do math with it?">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>2</b>Labels and amounts</div>
+      <h2>Can you do math with it?</h2>
+      <p class="sub">Meet Tag and Ruler. Pick a column, and the machine adds the answers from cup 1 and cup 2.</p>
+      <div class="duo">
+        <div class="mas" id="mas-tag"><span class="mi" data-mascot="tag"></span><div><b>Tag</b><span class="role">Labels. Answers “which one?” Categorical.</span></div></div>
+        <div class="mas" id="mas-ruler"><span class="mi" data-mascot="ruler"></span><div><b>Ruler</b><span class="role">Amounts. Answers “how much?” or “how many?” Quantitative.</span></div></div>
+      </div>
+      <div class="take">If the math means something, it is an amount: quantitative. If it is nonsense, it is a label: categorical.</div>
+      <div class="fr">In French: variable qualitative, variable quantitative</div>
+    </div>
+    <div class="pic">
+      <div class="machine">
+        <div class="mtabs" id="mtabs" role="group" aria-label="Choose a column"></div>
+        <div class="slots" aria-live="polite">
+          <div class="slot" id="mA"></div><div class="op" aria-hidden="true">+</div><div class="slot" id="mB"></div><div class="op" aria-hidden="true">=</div><div class="slot out" id="mOut">?</div>
+        </div>
+        <div class="mfoot"><span class="lamps"><span class="lamp" id="mLamp"></span>makes sense?</span><button class="btn sun big" type="button" id="mGo">Add them</button></div>
+      </div>
+      <div class="card speech" id="mSay" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 ============================================================ SORT -->
+<!-- 5 ============================================================ JUMP / GLIDE -->
+<section class="scene th-lilac" id="s5" data-chap="Labels and amounts" aria-label="Count or measure?">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>2</b>Labels and amounts</div>
+      <h2>Count or measure?</h2>
+      <p class="sub">Ruler’s numbers come in two kinds. Drag both sliders and watch how each one moves.</p>
+      <div class="lina" data-say="Nobody ever ordered two and a half toppings. But a wait of 3.47 minutes? Happens all the time."></div>
+      <div class="take">Counting jumps from value to value: discrete. Measuring glides anywhere: continuous.</div>
+      <div class="fr">In French: variable discrète, variable continue</div>
+    </div>
+    <div class="pic">
+      <div class="card lane">
+        <div class="lh"><b>Toppings</b> are counted <span class="fampill ruler">discrete</span></div>
+        <svg id="jumpsvg" viewBox="0 0 460 126" aria-hidden="true"></svg>
+        <input type="range" id="jumpr" min="0" max="6" step="1" value="2" aria-label="Number of toppings">
+        <div class="lread" id="jumpread"></div>
+      </div>
+      <div class="card lane">
+        <div class="lh"><b>Wait time</b> is measured <span class="fampill ruler">continuous</span></div>
+        <svg id="glidesvg" viewBox="0 0 460 126" aria-hidden="true"></svg>
+        <input type="range" id="glider" min="0" max="6" step="0.01" value="3.47" aria-label="Wait time in minutes">
+        <div class="lread" id="glideread"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 ============================================================ STAIRCASE -->
+<section class="scene th-sky" id="s6" data-chap="Four levels" aria-label="Four levels, four powers">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>3</b>Four levels of measurement</div>
+      <h2>Four levels, four powers</h2>
+      <p class="sub">Climb the stairs. Each step unlocks one more thing you are allowed to say about two values.</p>
+      <div class="take">Nominal and ordinal are Tag’s levels. Interval and ratio are Ruler’s.</div>
+      <div class="fr">In French: échelle nominale, ordinale, d’intervalle, de rapport</div>
+    </div>
+    <div class="pic">
+      <svg class="stairs" id="stairs" viewBox="0 44 640 374" aria-label="Staircase with four steps: nominal, ordinal, interval, ratio"></svg>
+      <div class="card" id="powercard" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 ============================================================ THERMOMETERS -->
+<section class="scene th-sky" id="s7" data-chap="Four levels" aria-label="Is 20 degrees twice as warm as 10 degrees?">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>3</b>Four levels of measurement</div>
+      <h2>Is 20° twice as warm as 10°?</h2>
+      <p class="sub">Today it is 20°, yesterday it was 10°. Switch the unit and watch “twice” fall apart.</p>
+      <div class="lina" data-say="So which is it? Twice as warm, or not?"></div>
+      <div class="take">No real zero, no “twice”. Degrees Celsius are an interval scale. Kelvin starts at “no heat at all”, so it is a ratio scale.</div>
+    </div>
+    <div class="pic">
+      <div class="card thermo">
+        <div class="row" style="justify-content:space-between">
+          <div class="seg" id="units" role="group" aria-label="Temperature unit"><button type="button" data-u="C" aria-pressed="true">°C</button><button type="button" data-u="F" aria-pressed="false">°F</button><button type="button" data-u="K" aria-pressed="false">kelvin</button></div>
+          <div class="ratio"><span class="lab">today ÷ yesterday</span><span class="big" id="tratio">2.00×</span></div>
+        </div>
+        <svg id="thermosvg" viewBox="0 0 420 326" aria-label="Two thermometers, measured from the zero of the chosen unit"></svg>
+        <p class="tsay" id="tsay" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 ============================================================ PHOTO / FILM -->
+<section class="scene th-mint" id="s8" data-chap="Photo or film" aria-label="Photo or film?">
+  <div class="scene-in picwide">
+    <div class="txt">
+      <div class="kick"><b>4</b>Photo or film</div>
+      <h2>Photo or film?</h2>
+      <p class="sub">Five stands sell at the Saturday market, week after week. Look across all stands on one day, or follow one stand over time.</p>
+      <div class="take">Photo: many things, one moment. That is cross-sectional data. Film: one thing, many moments. That is a time series.</div>
+      <div class="fr">In French: données transversales, série chronologique</div>
+    </div>
+    <div class="pic">
+      <div class="card pf">
+        <div class="seg" id="pfseg" role="group" aria-label="Photo or film">
+          <button type="button" data-m="photo" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M3 8h4l2-3h6l2 3h4v11H3z"/><circle cx="12" cy="13" r="3.5"/></svg>Photo: one Saturday</button>
+          <button type="button" data-m="film" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 5v14M17 5v14M3 9h4M3 15h4M17 9h4M17 15h4"/></svg>Film: Lina’s stand</button>
+        </div>
+        <div class="pfwrap" style="margin-top:12px">
+          <svg id="pfgrid" viewBox="0 0 330 196" aria-hidden="true"></svg>
+          <svg id="pfchart" viewBox="0 0 460 284" aria-label="Chart of the highlighted data"></svg>
+        </div>
+        <p class="pfcap" id="pfcap" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- P1 ============================================================ ZOOM OUT -->
+<section class="scene th-pink" id="s9" data-chap="Population and sample" aria-label="From my cups to everyone">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>5</b>Population and sample</div>
+      <h2>From my cups to everyone</h2>
+      <p class="sub">Until now, Lina described her own six cups. Now she wants to know about people she has never met.</p>
+      <div class="lina" data-say="Should taro stay on my menu? I need to know what fans all over Québec like, not just my six customers."></div>
+      <div class="take">The population is everyone (or everything) your question is about.</div>
+      <div class="fr">In French: la population</div>
+    </div>
+    <div class="pic">
+      <div class="card zoomcard">
+        <div class="seg" id="zoomseg" role="group" aria-label="How far to zoom out"><button type="button" data-z="0" aria-pressed="true">Lina’s 6 customers</button><button type="button" data-z="1" aria-pressed="false">Her street</button><button type="button" data-z="2" aria-pressed="false">All of Québec</button></div>
+        <svg id="zoomsvg" viewBox="0 0 560 340" aria-label="A crowd of people; Lina's six customers are in the middle"></svg>
+        <p class="zcap" id="zcap" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- P2 ============================================================ WHO IS THE POPULATION -->
+<section class="scene th-pink" id="s10" data-chap="Population and sample" aria-label="Who is the population?">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>5</b>Population and sample</div>
+      <h2>Who is the population?</h2>
+      <p class="sub">Every question is about some group. Find the group for these four questions.</p>
+      <div class="lina" data-say="For my taro question, it’s every bubble tea fan in Québec."></div>
+      <div class="take">A population can be people, batteries, apples, even soup: all the elements your question is about.</div>
+    </div>
+    <div class="pic">
+      <div class="popq" id="popq"></div>
+    </div>
+  </div>
+</section>
+
+<!-- P3 ============================================================ SOUP -->
+<section class="scene th-pink" id="s11" data-chap="Population and sample" aria-label="You don’t eat the whole pot">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>5</b>Population and sample</div>
+      <h2>You don’t eat the whole pot</h2>
+      <p class="sub">A cook checks the salt with one spoonful. Try the three ways to check this pot.</p>
+      <div class="take">Checking everyone is a census. Checking a few is a sample. Stirring first means picking the sample at random, so the spoon looks like the pot.</div>
+      <div class="whynot">
+        <span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="7" cy="8" r="3" fill="#8E6CC9"/><circle cx="17" cy="8" r="3" fill="#D93A62"/><circle cx="12" cy="6" r="3" fill="#6E9F2E"/><path d="M2 20c0-5 10-5 10 0M12 20c0-5 10-5 10 0" fill="none" stroke="#2A1C19" stroke-width="2"/></svg>Too many: millions of people</span>
+        <span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#F7B32B" stroke="#2A1C19" stroke-width="2"/><path d="M12 7v5l3 2" stroke="#2A1C19" stroke-width="2" fill="none" stroke-linecap="round"/></svg>Too slow and too costly</span>
+        <span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="10" width="14" height="7" rx="2" fill="#2F55D4" stroke="#2A1C19" stroke-width="2"/><path d="M19 7v13M21 9l-2 2-2-2" stroke="#D3375E" stroke-width="2" fill="none"/></svg>Some tests destroy what they test</span>
+      </div>
+      <div class="fr">In French: recensement, échantillon</div>
+    </div>
+    <div class="pic">
+      <div class="card soupcard">
+        <svg id="soupsvg" viewBox="0 0 420 300" aria-label="A pot of soup with salt grains"></svg>
+        <div class="row" role="group" aria-label="How to check the salt">
+          <button class="btn sm" type="button" data-soup="whole">Eat the whole pot</button>
+          <button class="btn sm" type="button" data-soup="top">Taste from the top</button>
+          <button class="btn sm sun" type="button" data-soup="stir">Stir, then taste one spoon</button>
+        </div>
+        <div class="souprs" id="souprs" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- P4 ============================================================ PARAMETER / STATISTIC -->
+<section class="scene th-pink" id="s12" data-chap="Population and sample" aria-label="Two numbers, two names">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>5</b>Population and sample</div>
+      <h2>Two numbers, two names</h2>
+      <p class="sub">Each question has a number for the whole population and a number from the sample. They get different names.</p>
+      <div class="mnemo card"><div><b>P</b>opulation <span aria-hidden="true">→</span> <b>P</b>arameter</div><div><b>S</b>ample <span aria-hidden="true">→</span> <b>S</b>tatistic</div></div>
+      <div class="take">The parameter stays fixed, but nobody knows it. The statistic is known, but it changes with every new sample.</div>
+      <div class="fr">In French: paramètre, statistique</div>
+    </div>
+    <div class="pic">
+      <div class="card pscard">
+        <div class="seg" id="psseg" role="group" aria-label="Choose an example"></div>
+        <div class="psgrid">
+          <div class="pbox" id="pbox"></div>
+          <div class="psarrow" aria-hidden="true"><svg viewBox="0 0 60 30"><path d="M56 15 H8 M18 5 L6 15 L18 25" fill="none" stroke="#2A1C19" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>best guess</span></div>
+          <div class="sbox" id="sbox"></div>
+        </div>
+        <div class="row" style="justify-content:space-between"><button class="btn sun" type="button" id="psnew">Take a new sample</button><span class="pshist" id="pshist" aria-live="polite"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- P5 ============================================================ SYMBOLS -->
+<section class="scene th-pink" id="s13" data-chap="Population and sample" aria-label="Short names for the numbers">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>5</b>Population and sample</div>
+      <h2>Short names for the numbers</h2>
+      <p class="sub">Statisticians write these numbers as symbols. Tap a row to see Lina’s version. No calculating today, just names.</p>
+      <div class="take">Population: <span class="sym">μ</span>, <span class="sym">σ</span>, <span class="sym">p</span>. Sample: <span class="sym">x̄</span>, <span class="sym">s</span>, <span class="sym">p̄</span>. The bar on <span class="sym">x̄</span> and <span class="sym">p̄</span> means “from the sample”.</div>
+    </div>
+    <div class="pic">
+      <div class="card symcard">
+        <div class="symgrid" id="symgrid" role="group" aria-label="Symbols"></div>
+        <div class="symex" id="symex" aria-live="polite"></div>
+      </div>
+      <div class="card compact" id="symcheck"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 ============================================================ JAR & SPOON -->
+<section class="scene th-pink" id="s14" data-chap="Population and sample" aria-label="One jar, many spoons">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>5</b>Population and sample</div>
+      <h2>One jar, many spoons</h2>
+      <p class="sub">Back to Lina’s taro question. All Québec fans are a jar. Each time Lina asks 20 new fans, she takes a new spoon from the same jar.</p>
+      <div class="lina" data-say="Every spoon gives me a different number. So which one is right?"></div>
+      <div class="take">The jar’s number (the parameter) never moves. The spoon’s number (the statistic) jumps from scoop to scoop.</div>
+      <div class="thread"><b>Instrument: Jar and spoons.</b> Back in T1.5, T3.3 and Themes 5 to 8.</div>
+      <div class="fr">In French: fluctuation d’échantillonnage</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="jarwrap">
+          <div><svg id="jarsvg" viewBox="0 0 380 360" aria-label="Jar of 300 fans; their preferences are hidden until the jar is opened"></svg><div class="jl">All fans: the population</div></div>
+          <div><svg id="spoonsvg" viewBox="0 0 320 170" aria-label="Spoon with the 20 fans in the latest sample"></svg><div class="jl">20 asked: the sample</div><div class="jread" id="jread" aria-live="polite"></div></div>
+        </div>
+        <div class="strip"><svg id="stripsvg" viewBox="0 0 460 124" aria-label="Share of taro fans in each spoon so far"></svg></div>
+        <div class="row"><button class="btn sun" type="button" id="scoop1">Scoop 20 fans</button><button class="btn" type="button" id="scoop10">Scoop 10 times</button><button class="btn" type="button" id="openjar">Open the jar</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 ============================================================ SEE / GUESS -->
+<section class="scene th-pink" id="s15" data-chap="Population and sample" aria-label="See it, or guess it?">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>5</b>Population and sample</div>
+      <h2>See it, or guess it?</h2>
+      <p class="sub">Describing tells what is in your hands. Inferring makes a careful guess about the whole jar, and says how sure it is.</p>
+      <div class="take">Themes 1 to 4 teach you to see. Themes 5 to 8 teach you to guess well.</div>
+      <div class="fr">In French: statistique descriptive, statistique inférentielle</div>
+    </div>
+    <div class="pic">
+      <div class="sg2">
+        <div class="sgc"><h3><svg viewBox="0 0 52 52" aria-hidden="true"><path d="M4 26 C12 12 40 12 48 26 C40 40 12 40 4 26 Z" fill="#fff" stroke="#2A1C19" stroke-width="3"/><circle cx="26" cy="26" r="9" fill="#2F55D4" stroke="#2A1C19" stroke-width="3"/><circle cx="23" cy="23" r="3" fill="#fff"/></svg>See it</h3><p>Describe the data in your hands. “6 of my 20 fans chose taro.”</p></div>
+        <div class="sgc guess"><h3><svg viewBox="0 0 52 52" aria-hidden="true"><path d="M8 34 L34 12 L42 20 L16 42 Z" fill="#8E6CC9" stroke="#2A1C19" stroke-width="3" stroke-linejoin="round"/><path d="M34 12 L40 6 L48 14 L42 20" fill="#F7B32B" stroke="#2A1C19" stroke-width="3" stroke-linejoin="round"/><path d="M14 40 L10 48 M18 40 L22 48" stroke="#2A1C19" stroke-width="3" stroke-linecap="round"/></svg>Guess it</h3><p>Infer something about the whole jar. “About 30% of all fans, give or take.”</p></div>
+      </div>
+      <div class="card compact" id="seeguess"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 ============================================================ TRAP -->
+<section class="scene th-trap" id="s16" data-chap="The trap" aria-label="Digits in disguise">
+  <div class="hazard" aria-hidden="true"></div>
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>6</b>The trap</div>
+      <h2>Digits in disguise</h2>
+      <p class="sub">Lina writes 1 for “drink here” and 2 for “to go”. Her spreadsheet happily averages them.</p>
+      <div class="lina" data-say="My average is 1.33. So my customers are... one third of a to-go?"></div>
+      <div class="gback" data-guessback></div>
+      <div class="take">Before you average, ask: is this number an amount, or a name tag?</div>
+      <p class="fact">Statisticians have argued about this for a long time. A famous 1953 article by Frederic Lord, about the numbers on football jerseys, started a debate that is still going.</p>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="trapcups" id="trapcups"></div>
+        <div class="row" style="margin:14px 0" role="group" aria-label="How Lina codes the answers">
+          <button class="btn sm" type="button" data-code="12" aria-pressed="true">1 = here, 2 = to go</button>
+          <button class="btn sm" type="button" data-code="21" aria-pressed="false">Swap them</button>
+          <button class="btn sm" type="button" data-code="01" aria-pressed="false">1 = here, 0 = to go</button>
+        </div>
+        <div class="tout">
+          <div class="to bad" id="tavgbox"><div class="k">Average of the codes</div><div class="v" id="tavg">1.33</div></div>
+          <div class="to good"><div class="k">Share of cups drunk here</div><div class="v" id="tshare">67%</div></div>
+        </div>
+        <p class="tmsg" id="tmsg" aria-live="polite" style="margin-top:12px"></p>
+        <div class="jersey" id="jersey" aria-label="Jersey 7 plus jersey 9 is not jersey 16"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 ============================================================ MAP -->
+<section class="scene th-night" id="s17" data-chap="The map" aria-label="Your map of the course">
+  <div class="scene-in wide">
+    <div class="txt">
+      <div class="kick"><b>7</b>The map</div>
+      <h2>Your map of the whole course</h2>
+      <div class="legend"><span><i style="background:var(--tag)"></i><span>Tag’s line: labels, counts, proportions <span class="sym">p̄</span></span></span><span><i style="background:var(--ruler)"></i><span>Ruler’s line: amounts, averages <span class="sym">x̄</span>, regression</span></span><em class="tapnote">Two lines, every theme. Tap any stop.</em></div>
+    </div>
+    <div class="pic">
+      <div class="mapwrap"><svg class="map" id="map" viewBox="0 6 1000 274" aria-label="Metro map of the eight themes"></svg></div>
+      <div class="card stcard" id="stcard" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 13 ============================================================ ARCADE -->
+<section class="scene th-indigo" id="s18" data-chap="Practice" aria-label="Practice arcade">
+  <div class="scene-in wide">
+    <div class="txt">
+      <div class="kick"><b>8</b>Practice</div>
+      <h2>Practice arcade</h2>
+      <p class="sub" style="max-width:62ch">Seven short levels, a boss where you build the answer, and a detective tool. Your stars stay in this browser.</p>
+    </div>
+    <div id="arcade"></div>
+  </div>
+</section>
+
+<!-- 14 ============================================================ RECAP -->
+<section class="scene th-lilac" id="s19" data-chap="Remember" aria-label="Six things to remember">
+  <div class="scene-in wide">
+    <div class="txt">
+      <div class="kick"><b>9</b>Remember</div>
+      <h2>Six things to remember, and one trap</h2>
+    </div>
+    <div class="guessbar" data-guessback="short"></div>
+    <div class="recap" id="recap"></div>
+        <details class="src">
+      <summary>Sources and textbook links</summary>
+      <p>The definitions on this page follow chapter 1 of the course textbook: elements, variables and observations; categorical and quantitative data; the four scales of measurement; cross-sectional and time series data; population, sample, descriptive and inferential statistics. The discrete/continuous distinction follows OpenIntro Statistics, chapter 1. The four levels come from Stevens (1946); Lord (1953) and Velleman and Wilkinson (1993) are the classic critiques. “In French” labels give common French statistical vocabulary, not quotations from the book. All data on this page are invented for teaching.</p>
+      <ol>
+        <li>Anderson, D. R., Sweeney, D. J., Williams, T. A., Camm, J. D., &amp; Cochran, J. J. (2015). <em>Statistiques pour l’économie et la gestion</em> (5<sup>e</sup> éd., traduction de la 7<sup>e</sup> édition américaine d’<em>Essentials of Statistics for Business and Economics</em> par C. Borsenberger). De Boeck Supérieur. Chapitre 1.</li>
+        <li>Stevens, S. S. (1946). On the theory of scales of measurement. <em>Science, 103</em>(2684), 677–680. <a href="https://doi.org/10.1126/science.103.2684.677">https://doi.org/10.1126/science.103.2684.677</a></li>
+        <li>Lord, F. M. (1953). On the statistical treatment of football numbers. <em>American Psychologist, 8</em>(12), 750–751.</li>
+        <li>Velleman, P. F., &amp; Wilkinson, L. (1993). Nominal, ordinal, interval, and ratio typologies are misleading. <em>The American Statistician, 47</em>(1), 65–72. <a href="https://doi.org/10.1080/00031305.1993.10475938">https://doi.org/10.1080/00031305.1993.10475938</a></li>
+        <li>Diez, D. M., Çetinkaya-Rundel, M., &amp; Barr, C. D. (2019). <em>OpenIntro Statistics</em> (4th ed.). OpenIntro. Chapter 1. <a href="https://www.openintro.org/book/os/">https://www.openintro.org/book/os/</a></li>
+      </ol>
+      <p><button class="btn sm" type="button" id="resetall">Reset my stars</button></p>
+    </details>
+  </div>
+</section>
+
+</main>
+
+<nav class="ctrl" aria-label="Scenes">
+  <button class="btn" type="button" id="prev">Back</button>
+  <div class="dots" id="dots"></div>
+  <span class="pos" id="pos"></span>
+  <button class="btn sun" type="button" id="next">Next</button>
+</nav>
+<div class="visually-hidden" aria-live="polite" id="announce"></div>
+<canvas id="confetti" aria-hidden="true"></canvas>
+<script>
+(function(){
+'use strict';
+/* =========================================================== helpers */
+const $  = (s, r) => (r || document).querySelector(s);
+const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+const INK = '#2A1C19';
+const reduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+function sget(k, f){ try{ const v = localStorage.getItem(k); return v == null ? f : JSON.parse(v); }catch(e){ return f; } }
+function sset(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+function shuffle(a, rnd){ rnd = rnd || Math.random; for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function rng(seed){ return function(){ seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function el(tag, cls, html){ const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
+
+/* =========================================================== art */
+const FL = {Mango:'#F9B233', Taro:'#B79BE0', Matcha:'#9BC255', Strawberry:'#F49BB3'};
+const SZ = {S:0.8, M:0.9, L:1};
+function cupInner(fl){
+  const c = FL[fl] || '#ccc';
+  return '<rect x="31" y="0" width="7" height="28" rx="2.5" fill="#D93A62" stroke="'+INK+'" stroke-width="2.5" transform="rotate(14 34 24)"/>'
+   + '<path d="M9 30 H51 L45.6 87 Q45.2 91 41.5 91 H18.5 Q14.8 91 14.4 87 Z" fill="#fff" stroke="'+INK+'" stroke-width="2.5" stroke-linejoin="round"/>'
+   + '<path d="M12.4 38 H47.6 L43.2 86 H16.8 Z" fill="'+c+'"/>'
+   + '<g fill="#3B2416"><circle cx="20.5" cy="81.5" r="3.4"/><circle cx="27.5" cy="83" r="3.4"/><circle cx="34.5" cy="82" r="3.4"/><circle cx="40.5" cy="80.5" r="3.2"/><circle cx="24" cy="75.5" r="3.2"/><circle cx="31.5" cy="76.5" r="3.2"/><circle cx="38" cy="74.5" r="3"/></g>'
+   + '<rect x="5" y="25" width="50" height="7" rx="3.5" fill="#fff" stroke="'+INK+'" stroke-width="2.5"/>'
+   + '<path d="M8 26 Q30 6 52 26 Z" fill="#fff" stroke="'+INK+'" stroke-width="2.5" stroke-linejoin="round"/>';
+}
+function cupG(fl, sz, x, yb, k){ const kk = (k || 1) * (SZ[sz] || 1); return '<g transform="translate('+(x - 30*kk)+' '+(yb - 92*kk)+') scale('+kk+')">'+cupInner(fl)+'</g>'; }
+function cupSVG(fl, sz, w){ return '<svg viewBox="0 0 60 92" width="'+w+'" height="'+Math.round(w*92/60)+'" aria-hidden="true">'+cupG(fl, sz, 30, 92, 1)+'</svg>'; }
+
+let uid = 0;
+function linaSVG(){
+  const id = 'lc' + (++uid);
+  return '<svg viewBox="0 0 64 64" aria-hidden="true"><defs><clipPath id="'+id+'"><circle cx="32" cy="32" r="29.6"/></clipPath></defs>'
+   + '<circle cx="32" cy="32" r="31" fill="#F7B32B" stroke="'+INK+'" stroke-width="2.5"/>'
+   + '<g clip-path="url(#'+id+')"><path d="M8 66 Q10 47 32 47 Q54 47 56 66 Z" fill="#EE7F1B" stroke="'+INK+'" stroke-width="2.5"/>'
+   + '<rect x="28" y="40" width="8" height="9" fill="#F1BE96"/><circle cx="32" cy="12.5" r="7" fill="#2B1A12"/>'
+   + '<circle cx="32" cy="31" r="14" fill="#F1BE96" stroke="'+INK+'" stroke-width="2.5"/>'
+   + '<path d="M17.5 31 Q17 16 32 16 Q47 16 46.5 31 Q41 22.5 32 23.5 Q23 22.5 17.5 31 Z" fill="#2B1A12"/>'
+   + '<circle cx="26.5" cy="32" r="1.9" fill="'+INK+'"/><circle cx="37.5" cy="32" r="1.9" fill="'+INK+'"/>'
+   + '<path d="M28 37 Q32 40.5 36 37" stroke="'+INK+'" stroke-width="2" fill="none" stroke-linecap="round"/>'
+   + '<circle cx="23" cy="36" r="2.3" fill="#F49BB3" opacity=".75"/><circle cx="41" cy="36" r="2.3" fill="#F49BB3" opacity=".75"/></g></svg>';
+}
+function eyes(x1, x2, y){ return '<circle cx="'+x1+'" cy="'+y+'" r="8.5" fill="#fff" stroke="'+INK+'" stroke-width="2.5"/><circle cx="'+(x1+1.5)+'" cy="'+(y+1)+'" r="3.8" fill="'+INK+'"/><circle cx="'+x2+'" cy="'+y+'" r="8.5" fill="#fff" stroke="'+INK+'" stroke-width="2.5"/><circle cx="'+(x2+1.5)+'" cy="'+(y+1)+'" r="3.8" fill="'+INK+'"/>'; }
+function mouth(m, cx, cy){
+  if (m === 'puzzled') return '<path d="M'+(cx-11)+' '+(cy+2)+' q5.5 -6 11 0 t11 0" fill="none" stroke="'+INK+'" stroke-width="3" stroke-linecap="round"/>';
+  if (m === 'wow') return '<ellipse cx="'+cx+'" cy="'+(cy+2)+'" rx="5.5" ry="6.5" fill="'+INK+'"/>';
+  return '<path d="M'+(cx-11)+' '+(cy-2)+' q11 11 22 0" fill="none" stroke="'+INK+'" stroke-width="3" stroke-linecap="round"/>';
+}
+function tagSVG(m){ return '<svg viewBox="0 0 130 96" aria-hidden="true"><path d="M26 44 C14 30 6 28 3 18" fill="none" stroke="'+INK+'" stroke-width="3" stroke-linecap="round"/><path d="M36 10 H112 Q122 10 122 20 V76 Q122 86 112 86 H36 L10 48 Z" fill="#EE7F1B" stroke="'+INK+'" stroke-width="3" stroke-linejoin="round"/><circle cx="31" cy="48" r="7" fill="#fff" stroke="'+INK+'" stroke-width="3"/>'+eyes(70, 94, 42)+mouth(m || 'happy', 82, 64)+'</svg>'; }
+function rulerSVG(m){ let t = ''; for (let i = 0; i < 14; i++){ const x = 14 + i*9.4; t += '<line x1="'+x+'" y1="12" x2="'+x+'" y2="'+(12 + (i % 5 === 0 ? 16 : 9))+'" stroke="#fff" stroke-width="2.5"/>'; } return '<svg viewBox="0 0 150 80" aria-hidden="true"><rect x="4" y="10" width="142" height="62" rx="10" fill="#2F55D4" stroke="'+INK+'" stroke-width="3"/>'+t+eyes(62, 90, 46)+mouth(m || 'happy', 76, 62)+'</svg>'; }
+const BULB = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5a6.5 6.5 0 0 0-3.8 11.8c.8.6 1.3 1.4 1.3 2.3V17h5v-.4c0-.9.5-1.7 1.3-2.3A6.5 6.5 0 0 0 12 2.5z" fill="#fff" stroke="'+INK+'" stroke-width="2"/><path d="M9.5 20h5M10.5 22.5h3" stroke="'+INK+'" stroke-width="2" stroke-linecap="round"/></svg>';
+const LOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+const FLAME = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c1 4 6 6 6 12a6 6 0 0 1-12 0c0-3 2-5 3-6 0 2 1 3 2 3 0-3-1-6 1-9z" fill="#EE7F1B" stroke="'+INK+'" stroke-width="1.8" stroke-linejoin="round"/></svg>';
+function pearlChar(){ return '<circle r="15" fill="#3B2416" stroke="'+INK+'" stroke-width="2.5"/><circle cx="-5" cy="-3" r="3.6" fill="#fff"/><circle cx="5" cy="-3" r="3.6" fill="#fff"/><circle cx="-4.2" cy="-2.5" r="1.7" fill="'+INK+'"/><circle cx="5.8" cy="-2.5" r="1.7" fill="'+INK+'"/><path d="M-4 5 q4 4 8 0" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round"/>'; }
+function shirt(n, col){ return '<svg viewBox="0 0 70 70" aria-hidden="true"><path d="M18 8 L28 4 Q35 11 42 4 L52 8 L66 20 L57 31 L52 27 V66 H18 V27 L13 31 L4 20 Z" fill="'+col+'" stroke="'+INK+'" stroke-width="3" stroke-linejoin="round"/><text x="35" y="52" text-anchor="middle" font-family="Times New Roman, Times, Liberation Serif, serif" font-weight="800" font-size="24" fill="#fff" stroke="'+INK+'" stroke-width="1" paint-order="stroke">'+n+'</text></svg>'; }
+
+function standSVG(){
+  let s = '<svg class="stand" viewBox="0 0 520 440" role="img" aria-label="Lina’s bubble tea stand with four cups and a notebook on the counter">';
+  s += '<rect x="46" y="110" width="16" height="190" rx="4" fill="#fff" stroke="'+INK+'" stroke-width="3"/><rect x="458" y="110" width="16" height="190" rx="4" fill="#fff" stroke="'+INK+'" stroke-width="3"/>';
+  s += '<rect x="62" y="130" width="396" height="160" fill="#FDEFD2" stroke="'+INK+'" stroke-width="3"/>';
+  const x0 = 24, w = 59;
+  for (let i = 0; i < 8; i++) s += '<rect x="'+(x0 + i*w)+'" y="74" width="'+w+'" height="62" fill="'+(i % 2 ? '#fff' : '#EE7F1B')+'"/>';
+  for (let i = 0; i < 8; i++) s += '<path d="M'+(x0 + i*w)+' 136 a'+(w/2)+' 18 0 0 0 '+w+' 0" fill="'+(i % 2 ? '#fff' : '#EE7F1B')+'" stroke="'+INK+'" stroke-width="3"/>';
+  s += '<rect x="24" y="74" width="472" height="62" fill="none" stroke="'+INK+'" stroke-width="3"/>';
+  s += '<rect x="140" y="12" width="240" height="62" rx="16" fill="#F7B32B" stroke="'+INK+'" stroke-width="3"/>';
+  s += '<text x="260" y="54" text-anchor="middle" font-family="Times New Roman, Times, Liberation Serif, serif" font-size="30" font-weight="700" fill="'+INK+'">Lina’s Bubble Tea</text>';
+  [['Mango','L',112],['Taro','M',192],['Matcha','S',262],['Strawberry','L',336]].forEach(([f, z, x]) => { s += '<g class="cupbob">'+cupG(f, z, x, 284, 1.3)+'</g>'; });
+  s += '<g transform="translate(392 218) rotate(-8)"><rect width="86" height="62" rx="6" fill="#FFFFFF" stroke="'+INK+'" stroke-width="3"/><line x1="14" y1="0" x2="14" y2="62" stroke="#F49BB3" stroke-width="2"/>';
+  for (let k = 0; k < 4; k++) s += '<line x1="20" y1="'+(16 + k*12)+'" x2="'+(74 - (k % 2) * 14)+'" y2="'+(16 + k*12)+'" stroke="#C5D0F0" stroke-width="2.5" stroke-linecap="round"/>';
+  s += '</g>';
+  s += '<rect x="12" y="282" width="496" height="22" rx="8" fill="#fff" stroke="'+INK+'" stroke-width="3"/>';
+  s += '<rect x="24" y="302" width="472" height="108" rx="10" fill="#8E6CC9" stroke="'+INK+'" stroke-width="3"/>';
+  for (let k = 0; k < 15; k++) s += '<circle cx="'+(52 + k*30)+'" cy="322" r="6" fill="#3B2416"/>';
+  s += '<rect x="170" y="340" width="180" height="50" rx="12" fill="#fff" stroke="'+INK+'" stroke-width="3"/><text x="260" y="374" text-anchor="middle" font-family="Times New Roman, Times, Liberation Serif, serif" font-size="24" font-weight="700" fill="'+INK+'">fresh every day</text>';
+  s += '</svg>';
+  return s;
+}
+
+/* fill in shared bits */
+$$('.lina[data-say]').forEach(e => { e.innerHTML = '<span class="av">'+linaSVG()+'</span><div class="bubble"><b>Lina</b>'+e.dataset.say+'</div>'; });
+$$('[data-mascot]').forEach(e => { e.innerHTML = e.dataset.mascot === 'tag' ? tagSVG(e.dataset.mood) : rulerSVG(e.dataset.mood); });
+$$('.take').forEach(t => { t.innerHTML = BULB + '<span>' + t.innerHTML + '</span>'; });
+{ const hp = $('#heropic'); if (hp) hp.innerHTML = standSVG(); }
+
+/* =========================================================== stars (XP) */
+const XPK = 't11v2-xp';
+let XP = sget(XPK, {});
+function renderXP(p){ const x = $('#xp'); x.textContent = '★ ' + Object.keys(XP).length; if (p){ x.classList.remove('pulse'); void x.offsetWidth; x.classList.add('pulse'); } }
+function addXP(k){ if (XP[k]) return; XP[k] = 1; sset(XPK, XP); renderXP(true); }
+renderXP(false);
+
+/* =========================================================== navigation */
+const scenes = $$('.scene'), N = scenes.length, ENTER = {};
+let cur = -1;
+const seen = new Set();
+const dotsHost = $('#dots');
+scenes.forEach((s, i) => { const b = el('button'); b.type = 'button'; b.setAttribute('aria-label', 'Scene ' + (i + 1) + ': ' + s.getAttribute('aria-label')); b.addEventListener('click', () => go(i)); dotsHost.appendChild(b); });
+function go(i){
+  i = Math.max(0, Math.min(N - 1, i));
+  if (i === cur) return;
+  cur = i; seen.add(i);
+  scenes.forEach((s, j) => s.classList.toggle('on', j === i));
+  scenes[i].scrollTop = 0;
+  $$('button', dotsHost).forEach((b, j) => { b.classList.toggle('on', j === i); b.classList.toggle('seen', seen.has(j) && j !== i); });
+  $('#chapnm').textContent = scenes[i].dataset.chap;
+  document.documentElement.style.setProperty('--now', getComputedStyle(scenes[i]).getPropertyValue('--chip').trim() || '#4B2D86');
+  $('#progfill').style.width = (100 * i / (N - 1)) + '%';
+  $('#pos').textContent = (i + 1) + ' / ' + N;
+  $('#prev').disabled = i === 0;
+  $('#next').textContent = i === N - 1 ? 'Start again' : 'Next';
+  $('#announce').textContent = scenes[i].getAttribute('aria-label');
+  if (location.hash !== '#s' + i) location.hash = 's' + i;
+  const f = ENTER[scenes[i].id]; if (f) f();
+}
+$('#prev').addEventListener('click', () => go(cur - 1));
+$('#next').addEventListener('click', () => go(cur === N - 1 ? 0 : cur + 1));
+$$('[data-go]').forEach(b => b.addEventListener('click', () => { const v = b.dataset.go; go(v === 'next' ? cur + 1 : +v); }));
+window.addEventListener('hashchange', () => { const m = /^#s(\d+)$/.exec(location.hash); if (m) go(+m[1]); });
+document.addEventListener('keydown', e => {
+  if (e.altKey || e.ctrlKey || e.metaKey) return;
+  const t = e.target; if (t && (t.matches('input, textarea, select') || t.isContentEditable)) return;
+  if (e.key === 'ArrowRight' || e.key === 'PageDown'){ e.preventDefault(); go(cur + 1); }
+  else if (e.key === 'ArrowLeft' || e.key === 'PageUp'){ e.preventDefault(); go(cur - 1); }
+});
+
+/* small quiz helper: one row per question, big buttons, one reason */
+function miniQuiz(host, items, key){
+  items.forEach((it, i) => {
+    const d = el('div', 'qrow', '<div class="qq">'+it.q+'</div><div class="qo">'+it.o.map((o, j) => '<button class="btn sm" type="button" data-j="'+j+'">'+o+'</button>').join('')+'</div><div class="qf" aria-live="polite"></div>');
+    host.appendChild(d);
+    const bs = $$('button', d);
+    bs.forEach(b => b.addEventListener('click', () => {
+      const j = +b.dataset.j, ok = j === it.a;
+      bs.forEach((x, k) => { x.disabled = true; if (k === it.a) x.classList.add('right'); if (k === j && !ok) x.classList.add('wrong'); });
+      $('.qf', d).innerHTML = (ok ? '<b>Yes!</b> ' : '<b>Not quite.</b> ') + it.why;
+      if (ok) addXP(key + i);
+    }));
+  });
+}
+
+/* =========================================================== 1. notebook */
+const CUPS = [
+  {fl:'Mango', sz:'M', top:2, wait:3.5, price:6.5},
+  {fl:'Taro', sz:'L', top:3, wait:5.2, price:7.75},
+  {fl:'Matcha', sz:'S', top:0, wait:1.8, price:4.75},
+  {fl:'Strawberry', sz:'M', top:1, wait:2.9, price:6},
+  {fl:'Mango', sz:'L', top:2, wait:4.4, price:7.5},
+  {fl:'Taro', sz:'S', top:1, wait:2.2, price:5.25},
+];
+const NBCOLS = [['fl','flavor'],['sz','size'],['top','toppings'],['wait','wait'],['price','price']];
+function fmt(k, v){ if (k === 'wait') return v.toFixed(1) + ' min'; if (k === 'price') return '$' + v.toFixed(2); return String(v); }
+function buildNB(host){
+  let s = '<table><thead><tr><th class="cc"><span class="visually-hidden">Cup</span></th>' + NBCOLS.map(([k, l]) => '<th data-c="'+k+'">'+l+'</th>').join('') + '</tr></thead><tbody>';
+  CUPS.forEach((c, i) => { s += '<tr data-r="'+i+'"><td class="cc">'+cupSVG(c.fl, c.sz, 26)+'</td>' + NBCOLS.map(([k]) => '<td data-c="'+k+'">'+fmt(k, c[k])+'</td>').join('') + '</tr>'; });
+  host.innerHTML = s + '</tbody></table>';
+}
+(function notebook1(){
+  buildNB($('#nb1'));
+  let shown = 2;
+  const rows = $$('#nb1 tbody tr'), btn = $('#sellbtn');
+  function render(){
+    rows.forEach((r, i) => r.classList.toggle('gone', i >= shown));
+    $('#nbcount').innerHTML = '<b>'+shown+'</b> cup'+(shown > 1 ? 's' : '')+' × <b>5</b> questions = <b>'+(shown*5)+'</b> answers';
+    if (shown >= 6){ btn.disabled = true; btn.textContent = 'Notebook full'; }
+  }
+  btn.addEventListener('click', () => { if (shown >= 6) return; const r = rows[shown]; shown++; render(); r.classList.add('new'); });
+  render();
+})();
+
+/* =========================================================== 2. four words */
+(function fourWords(){
+  buildNB($('#nb2'));
+  const tbl = $('#nb2 table');
+  const ROW = '<svg viewBox="0 0 28 28" aria-hidden="true"><rect x="2" y="3" width="24" height="22" rx="4" fill="#fff" stroke="currentColor" stroke-width="2.2"/><rect x="2" y="11" width="24" height="7" fill="#F7B32B" stroke="currentColor" stroke-width="2.2"/></svg>';
+  const COL = '<svg viewBox="0 0 28 28" aria-hidden="true"><rect x="2" y="3" width="24" height="22" rx="4" fill="#fff" stroke="currentColor" stroke-width="2.2"/><rect x="11" y="3" width="7" height="22" fill="#F7B32B" stroke="currentColor" stroke-width="2.2"/></svg>';
+  const CELL = '<svg viewBox="0 0 28 28" aria-hidden="true"><rect x="2" y="3" width="24" height="22" rx="4" fill="#fff" stroke="currentColor" stroke-width="2.2"/><path d="M2 11h24M2 18h24M10 3v22M18 3v22" stroke="currentColor" stroke-width="1.5"/><rect x="10" y="11" width="8" height="7" fill="#F7B32B" stroke="currentColor" stroke-width="2.2"/></svg>';
+  const W = [
+    {k:'element', lab:'Element', icon:cupSVG('Taro','M',20), d:'<b>Element</b>: a thing we collect data on. Each cup is an element, so this notebook has 6 elements.', f:() => $$('td.cc', tbl).forEach(x => x.classList.add('hl'))},
+    {k:'observation', lab:'Observation', icon:ROW, d:'<b>Observation</b>: everything written about one element. One whole row, like the row of cup 3.', f:() => $$('tr[data-r="2"] td', tbl).forEach(x => x.classList.add('hl'))},
+    {k:'variable', lab:'Variable', icon:COL, d:'<b>Variable</b>: one question asked about every element. One whole column, like “size”.', f:() => $$('[data-c="sz"]', tbl).forEach(x => x.classList.add('hl'))},
+    {k:'value', lab:'Value', icon:CELL, d:'<b>Value</b>: one single answer. One cell: cup 3 was size S.', f:() => $('tr[data-r="2"] td[data-c="sz"]', tbl).classList.add('hl2')},
+  ];
+  const host = $('#words');
+  W.forEach(w => { const b = el('button', 'word', '<span class="wi">'+w.icon+'</span>'+w.lab); b.type = 'button'; b.dataset.w = w.k; b.addEventListener('click', () => show(w.k)); host.appendChild(b); });
+  function show(k){
+    $$('.hl, .hl2', tbl).forEach(x => x.classList.remove('hl', 'hl2'));
+    const w = W.find(x => x.k === k); w.f();
+    $('#anatdef').innerHTML = w.d;
+    $$('.word', host).forEach(b => b.setAttribute('aria-pressed', b.dataset.w === k ? 'true' : 'false'));
+  }
+  show('observation');
+  miniQuiz($('#anatcheck'), [
+    {q:'How many observations are in the full notebook?', o:['5','6','30'], a:1, why:'One observation per cup: 6.'},
+    {q:'How many variables?', o:['5','6','30'], a:0, why:'One per question: flavor, size, toppings, wait, price.'},
+  ], 'anat');
+})();
+
+/* =========================================================== 3. adding machine */
+(function machine(){
+  const M = [
+    {lab:'Flavor', a:'Mango', b:'Taro', ok:false, out:'???', who:'tag', say:'Mango plus Taro? That is not a thing. Flavors are labels: I sort them, I don’t add them.'},
+    {lab:'Size', a:'M', b:'L', ok:false, out:'???', who:'tag', say:'M plus L is not a size. Sizes come in order, but they are still labels.'},
+    {lab:'Toppings', a:'2', b:'3', ok:true, out:'5 toppings', who:'ruler', say:'2 toppings and 3 toppings make 5 toppings. Counts add up!'},
+    {lab:'Wait time', a:'3.5 min', b:'5.2 min', ok:true, out:'8.7 min', who:'ruler', say:'8.7 minutes of waiting in total. Amounts add up.'},
+    {lab:'Price', a:'$6.50', b:'$7.75', ok:true, out:'$14.25', who:'ruler', say:'$14.25 in Lina’s cash box. Money adds up.'},
+  ];
+  let sel = 0;
+  const seenFam = new Set();
+  const tabs = $('#mtabs');
+  M.forEach((c, i) => { const b = el('button', 'btn sm', c.lab); b.type = 'button'; b.addEventListener('click', () => { sel = i; render(false); }); tabs.appendChild(b); });
+  function mascots(who){ $('#mas-tag').classList.toggle('act', who === 'tag'); $('#mas-tag').classList.toggle('dim', who === 'ruler'); $('#mas-ruler').classList.toggle('act', who === 'ruler'); $('#mas-ruler').classList.toggle('dim', who === 'tag'); }
+  function render(fire){
+    const c = M[sel];
+    $$('button', tabs).forEach((b, i) => b.setAttribute('aria-pressed', i === sel ? 'true' : 'false'));
+    $('#mA').textContent = c.a; $('#mB').textContent = c.b;
+    const out = $('#mOut'); out.className = 'slot out'; $('#mLamp').className = 'lamp';
+    if (!fire){
+      out.textContent = '?';
+      $('#mSay').innerHTML = '<div>Press <b style="display:inline">Add them</b>. Will the machine know what '+c.a+' plus '+c.b+' is?</div>';
+      mascots(null); return;
+    }
+    out.innerHTML = c.ok ? c.out : '???<small>does not compute</small>';
+    out.classList.add(c.ok ? 'good' : 'bad');
+    $('#mLamp').classList.add(c.ok ? 'good' : 'bad');
+    $('#mSay').innerHTML = '<span class="mi">'+(c.who === 'tag' ? tagSVG('puzzled') : rulerSVG('happy'))+'</span><div><b>'+(c.who === 'tag' ? 'Tag' : 'Ruler')+'</b>'+c.say+'</div>';
+    mascots(c.who);
+    seenFam.add(c.who); if (seenFam.size === 2) addXP('machine');
+  }
+  $('#mGo').addEventListener('click', () => render(true));
+  render(false);
+})();
+
+
+/* =========================================================== 0. hero: six cups on the counter */
+function heroCups(){
+  const TOP = [2, 3, 0, 1, 2, 1], CODE = [1, 2, 3, 4, 1, 2];
+  const FILL = {1:'#F9B233', 2:'#B79BE0', 3:'#9BC255', 4:'#F49BB3'};
+  const DEEP = '#4B2D86', DEEP2 = '#6243A0', PEARL = '#3B2416', STRAW = '#85799A';
+  const X = i => 36 + i * 65, base = 258;
+  const T = (x, y, txt, st, anc) => '<text x="'+x+'" y="'+y+'" text-anchor="'+(anc || 'middle')+'" style="'+st+'">'+txt+'</text>';
+  let g = '<svg class="cupstand" viewBox="0 34 410 258" aria-hidden="true">';
+  /* the stand: six cups on the counter, numbered on the counter front */
+  TOP.forEach((t, i) => {
+    const cx = X(i), top = 92, w1 = 52, w2 = 40;
+    g += '<rect x="'+(cx + 5)+'" y="44" width="7" height="60" rx="3.5" transform="rotate(12 '+(cx + 8)+' 80)" fill="'+STRAW+'" opacity=".6"/>';
+    g += '<path class="liq" style="animation-delay:'+(0.08 * i).toFixed(2)+'s" d="M'+(cx - w1 / 2 + 3.5)+' 122 L'+(cx + w1 / 2 - 3.5)+' 122 L'+(cx + w2 / 2 - 1)+' '+(base - 3)+' Q'+cx+' '+(base + 2)+' '+(cx - w2 / 2 + 1)+' '+(base - 3)+' Z" fill="'+FILL[CODE[i]]+'"/>';
+    for (let k = 0; k < t; k++) g += '<circle class="pearl" style="animation-delay:'+(0.55 + 0.1 * i + 0.07 * k).toFixed(2)+'s" cx="'+(cx - (t - 1) * 6 + k * 12)+'" cy="'+(base - 10)+'" r="5.2" fill="'+PEARL+'"/>';
+    g += '<path d="M'+(cx - w1 / 2)+' '+top+' L'+(cx + w1 / 2)+' '+top+' L'+(cx + w2 / 2)+' '+base+' L'+(cx - w2 / 2)+' '+base+' Z" fill="none" stroke="'+INK+'" stroke-width="2.2" stroke-linejoin="round"/>';
+    g += '<line x1="'+(cx - w1 / 2 - 3)+'" x2="'+(cx + w1 / 2 + 3)+'" y1="'+top+'" y2="'+top+'" stroke="'+INK+'" stroke-width="3.6" stroke-linecap="round"/>';
+    g += '<circle cx="'+cx+'" cy="168" r="13" fill="#fff" stroke="'+INK+'" stroke-width="1.8"/>' + T(cx, 173.5, CODE[i], 'font-weight:700;font-size:15px;fill:'+INK);
+  });
+  g += '<rect x="0" y="'+base+'" width="410" height="24" rx="4" fill="'+DEEP+'"/><rect x="6" y="'+(base + 24)+'" width="398" height="5" rx="2.5" fill="'+DEEP2+'"/>';
+  TOP.forEach((t, i) => { g += T(X(i), base + 17, 'cup '+(i + 1), 'font-weight:700;font-size:12.5px;fill:#fff'); });
+  g += '</svg>';
+  /* Lina's spreadsheet: one row per cup, one column per question, the average at the bottom */
+  g += '<table class="sheet"><caption class="visually-hidden">Lina’s spreadsheet: six cups</caption><thead><tr><th scope="col">Cup</th><th scope="col">Toppings</th><th scope="col">Flavor code</th></tr></thead><tbody>'
+    + TOP.map((t, i) => '<tr><td>'+(i + 1)+'</td><td>'+t+'</td><td>'+CODE[i]+'</td></tr>').join('')
+    + '<tr class="avg"><td>Average</td><td>1.5</td><td>2.17</td></tr></tbody></table>';
+  g = '<div class="hero2">' + g + '</div>';
+  g += '<p class="cupnote">Pearls are toppings; the sticker is the flavor code. Lina’s own code, invented: 1 = mango, 2 = taro, 3 = matcha, 4 = strawberry.</p>';
+  return g;
+}
+/* =========================================================== 0. guess first */
+function guessFirst(G){
+  const host = $('#guess'), KEY = G.key;
+  host.innerHTML = '<div class="ghead"><span class="gtag">Guess first</span>'+(G.note ? '<span class="gnote">'+G.note+'</span>' : '')+'</div>' + (G.visual || '') + '<p class="gq">'+G.q+'</p><div class="gopts">' + G.opts.map((o, j) => '<button type="button" class="gopt" data-j="'+j+'" aria-pressed="false">'+o+'</button>').join('') + '</div><p class="gsaved" aria-live="polite"></p>';
+  function mark(){
+    const j = sget(KEY, null);
+    $$('.gopt', host).forEach(b => b.setAttribute('aria-pressed', +b.dataset.j === j ? 'true' : 'false'));
+    $('.gsaved', host).textContent = j == null ? 'Pick one. Nothing is explained yet, so any answer is fine.' : 'Saved. You will see your guess again later on this page.';
+    $$('[data-guessback]').forEach(el => { const w = el.dataset.guessback === 'short' ? G.short : G.why; el.innerHTML = j == null ? '<b>You skipped the guess at the start.</b> The answer: “'+G.opts[G.a]+'”. ' + w : '<b>Your guess at the start:</b> “'+G.opts[j]+'”. ' + (j === G.a ? '<b>Right!</b> ' : '<b>The answer:</b> “'+G.opts[G.a]+'”. ') + w; });
+  }
+  $$('.gopt', host).forEach(b => b.addEventListener('click', () => { sset(KEY, +b.dataset.j); mark(); addXP('guess'); }));
+  mark();
+}
+guessFirst({
+  key:'t11-guess', note:'',
+  visual:heroCups(),
+  q:'Lina’s spreadsheet averages both columns. Which average means something?',
+  opts:['Toppings only', 'Flavor code only', 'Both', 'Neither'], a:0,
+  short:'A flavor code is a name tag written in digits.',
+  why:'1.5 toppings per cup is a real amount. An “average flavor” of 2.17, somewhere between taro and matcha, means nothing: the flavor code is a name tag written in digits.',
+});
+
+/* =========================================================== 3. three doors: same digits */
+(function doors(){
+  const D = [
+    {t:'On the bus', c:[{n:'Bus line', ex:'80', a:'name', why:'It names a route. Line 80 plus line 12 is not line 92.'}, {n:'Minutes on the bus', ex:'80', a:'amount', why:'80 minutes plus 12 minutes is 92 minutes. It adds up.'}]},
+    {t:'At school', c:[{n:'Books in my locker', ex:'12', a:'amount', why:'12 books plus 3 books is 15 books.'}, {n:'Locker number', ex:'12', a:'name', why:'It tells you which locker. Locker 12 is not “twice” locker 6.'}]},
+    {t:'At the cinema', c:[{n:'Seat number', ex:'15', a:'name', why:'It names a seat. Seat 15 is not “bigger” than seat 14 in any useful way.'}, {n:'Ticket price', ex:'$15', a:'amount', why:'$15 plus $15 is $30 for two tickets.'}]},
+  ];
+  const host = $('#doors3'); let done = 0, right = 0;
+  function score(){ $('#doorscore').textContent = done < 6 ? done + ' of 6' : right + ' of 6 right' + (right === 6 ? '. Perfect!' : ''); }
+  D.forEach((d, di) => {
+    const col = el('div', 'door', '<h4>'+d.t+'</h4>');
+    d.c.forEach((it, ci) => {
+      const c = el('div', 'scard', '<span class="nm">'+it.n+'</span><span class="ex">'+it.ex+'</span><div class="bb"><button type="button" class="bt">Name</button><button type="button" class="br">Amount</button></div>');
+      col.appendChild(c);
+      $$('.bb button', c).forEach(b => b.addEventListener('click', () => {
+        const pick = b.classList.contains('bt') ? 'name' : 'amount', ok = pick === it.a;
+        $('.bb', c).outerHTML = '<div class="why"><b>'+(ok ? 'Yes!' : 'Not quite: it’s '+(it.a === 'name' ? 'a name' : 'an amount')+'.')+'</b>'+it.why+'</div>';
+        c.classList.add(ok ? 'ok' : 'bad');
+        done++; if (ok){ right++; addXP('door' + di + ci); }
+        score();
+        if (done === 6 && right === 6) confetti();
+      }));
+    });
+    host.appendChild(col);
+  });
+  score();
+})();
+
+/* =========================================================== 5. jump / glide */
+(function lanes(){
+  const js = $('#jumpsvg');
+  let g = '<rect x="6" y="26" width="448" height="76" rx="18" fill="#DEE5FB"/>';
+  for (let i = 0; i <= 6; i++){ const x = 44 + i*62; g += '<ellipse cx="'+x+'" cy="88" rx="21" ry="8" fill="#fff" stroke="'+INK+'" stroke-width="2.5"/><text x="'+x+'" y="122" text-anchor="middle">'+i+'</text>'; }
+  g += '<g id="hopper"><g class="hopin">'+pearlChar()+'</g></g>';
+  js.innerHTML = g;
+  const hopper = $('#hopper'), hopin = $('.hopin', js), jr = $('#jumpr');
+  function jump(anim){
+    const v = +jr.value;
+    hopper.style.transform = 'translate('+(44 + v*62)+'px, 65px)';
+    if (anim){ hopin.classList.remove('hop'); void hopin.getBBox(); hopin.classList.add('hop'); }
+    $('#jumpread').innerHTML = v + ' topping' + (v === 1 ? '' : 's') + '<small>only whole numbers, never 2.5</small>';
+  }
+  jr.addEventListener('input', () => jump(true));
+  jump(false);
+
+  const gs = $('#glidesvg');
+  let h = '<defs><linearGradient id="glg" x1="0" x2="1"><stop offset="0" stop-color="#DEE5FB"/><stop offset="1" stop-color="#2F55D4"/></linearGradient></defs>';
+  h += '<rect x="30" y="80" width="400" height="14" rx="7" fill="url(#glg)" stroke="'+INK+'" stroke-width="2.5"/>';
+  for (let m = 0; m <= 6; m++){ const x = 30 + m/6*400; h += '<line x1="'+x+'" y1="98" x2="'+x+'" y2="106" stroke="'+INK+'" stroke-width="2"/><text x="'+x+'" y="122" text-anchor="middle">'+m+'</text>'; }
+  h += '<g id="gl">'+cupG('Taro','M',0,80,0.62)+'</g>';
+  gs.innerHTML = h;
+  const gl = $('#gl'), gr = $('#glider');
+  function glide(){ const t = +gr.value; gl.style.transform = 'translate('+(30 + t/6*400)+'px, 0px)'; $('#glideread').innerHTML = t.toFixed(2) + ' min<small>any value, as precise as your stopwatch</small>'; }
+  gr.addEventListener('input', glide);
+  glide();
+})();
+
+/* =========================================================== 6. staircase */
+(function stairs(){
+  const LV = [
+    {nm:'Nominal', fam:'tag', sym:'=', cap:'same or different', ex:'Mango ≠ Taro', no:'Taro is more than Mango', cols:'flavor, payment, loyalty card number'},
+    {nm:'Ordinal', fam:'tag', sym:'<', cap:'order', ex:'S < M < L', no:'From M to L is the same jump as from S to M', cols:'size, star rating, medals'},
+    {nm:'Interval', fam:'ruler', sym:'−', cap:'how much more', ex:'20° − 10° = 10°', no:'20° is twice as warm as 10°', cols:'temperature in °C, calendar year'},
+    {nm:'Ratio', fam:'ruler', sym:'÷', cap:'how many times', ex:'$8 = 2 × $4', no:null, cols:'price, wait time, number of toppings'},
+  ];
+  const s = $('#stairs'); let lv = 0;
+  s.innerHTML = '<g id="stepsg"></g>'
+    + '<path d="M14 368 v8 h298 v-8" fill="none" stroke="'+INK+'" stroke-width="2.5"/><path d="M328 368 v8 h298 v-8" fill="none" stroke="'+INK+'" stroke-width="2.5"/>'
+    + '<text x="163" y="402" text-anchor="middle" class="bl" fill="#A04A00">Tag’s levels: categorical</text><text x="477" y="402" text-anchor="middle" class="bl" fill="#1F3BA3">Ruler’s levels: quantitative</text>'
+    + '<g id="hop2"><g>'+pearlChar()+'</g></g>';
+  const geo = i => ({x:14 + i*156, w:150, top:300 - i*68});
+  function draw(){
+    let g = '';
+    LV.forEach((L, i) => {
+      const {x, w, top} = geo(i), on = i <= lv, curStep = i === lv;
+      const fill = L.fam === 'tag' ? (on ? '#EE7F1B' : '#FFE3CC') : (on ? '#2F55D4' : '#DEE5FB');
+      const tc = on && L.fam === 'ruler' ? '#fff' : INK;
+      g += '<g class="stp" data-i="'+i+'" tabindex="0" role="button" aria-label="'+L.nm+' level'+(curStep ? ', selected' : '')+'">'
+        + '<rect x="'+x+'" y="'+top+'" width="'+w+'" height="'+(358 - top)+'" rx="8" fill="'+fill+'" stroke="'+INK+'" stroke-width="'+(curStep ? 4 : 2.5)+'"/>'
+        + '<text x="'+(x + 12)+'" y="'+(top + 32)+'" class="snm" fill="'+tc+'">'+L.nm+'</text>'
+        + '<circle cx="'+(x + w - 26)+'" cy="'+(top + 25)+'" r="18" fill="#fff" stroke="'+INK+'" stroke-width="2.5"/>'
+        + '<text x="'+(x + w - 26)+'" y="'+(top + 33)+'" text-anchor="middle" class="spw">'+L.sym+'</text></g>';
+    });
+    $('#stepsg', s).innerHTML = g;
+    $$('.stp', s).forEach(st => { const i = +st.dataset.i; st.addEventListener('click', () => pick(i)); st.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); pick(i); } }); });
+    const {x, w, top} = geo(lv);
+    $('#hop2').style.transform = 'translate('+(x + w/2 - 12)+'px, '+(top - 17)+'px)';
+    const L = LV[lv];
+    $('#powercard').innerHTML = '<div class="pch"><span class="fampill '+L.fam+'">'+(L.fam === 'tag' ? 'Tag’s level' : 'Ruler’s level')+'</span><b>'+L.nm+'</b><span class="pcols">e.g. '+L.cols+'</span></div>'
+      + '<div class="pws">'+LV.map((P, i) => '<div class="pw '+(i <= lv ? 'on ' : '')+P.fam+'"><span class="pwc">'+(i <= lv ? P.sym : LOCK)+'</span>'+P.cap+'</div>').join('')+'</div>'
+      + '<div class="pex"><span>You can say: <i>'+L.ex+'</i></span><span class="nope">'+(L.no ? 'Not yet: <s>'+L.no+'</s>' : 'Every power is unlocked. You can say it all.')+'</span></div>'
+
+  }
+  function pick(i){ lv = i; draw(); if (i === 3) addXP('stairs'); const st = $('.stp[data-i="'+i+'"]', s); if (st) st.focus({preventScroll:true}); }
+  draw();
+})();
+
+/* =========================================================== 7. thermometers */
+(function thermo(){
+  const U = {
+    C:{f:c => c, lab:'°C', zc:0, dec:0, say:'In °C the numbers say twice: 20 ÷ 10 = 2. But 0 °C is only where water freezes. It is not “no heat”.'},
+    F:{f:c => c*9/5 + 32, lab:'°F', zc:-17.78, dec:0, say:'Same two days in °F: 68 ÷ 50 = 1.36. A real “twice” would not change just because you changed the unit.'},
+    K:{f:c => c + 273.15, lab:'K', zc:null, dec:2, say:'Kelvin starts at absolute zero: truly no heat. 293 ÷ 283 = 1.04. Honest answer: today is only a little warmer.'},
+  };
+  const y = c => 250 - (c + 25) * (200/55);
+  function draw(u){
+    const Uu = U[u], s = $('#thermosvg'); let g = '';
+    const zy = Uu.zc === null ? 302 : y(Uu.zc);
+    [[20,'Today',90],[10,'Yesterday',270]].forEach(([c, nm, cx]) => {
+      g += '<text x="'+cx+'" y="24" text-anchor="middle" class="tn">'+nm+'</text>';
+      g += '<rect x="'+(cx - 15)+'" y="40" width="30" height="236" rx="15" fill="#fff" stroke="'+INK+'" stroke-width="3"/>';
+      g += '<rect x="'+(cx - 7)+'" y="'+y(c)+'" width="14" height="'+(276 - y(c))+'" fill="#D93A62"/>';
+      g += '<circle cx="'+cx+'" cy="276" r="22" fill="#D93A62" stroke="'+INK+'" stroke-width="3"/>';
+      const bx = cx + 36, top = y(c);
+      g += '<path d="M'+(bx - 8)+' '+top+' H'+bx+' V'+zy+' H'+(bx - 8)+'" fill="none" stroke="'+INK+'" stroke-width="2.5"/>';
+      if (Uu.zc === null) g += '<path d="M'+(bx - 7)+' 268 l14 -6 M'+(bx - 7)+' 276 l14 -6" stroke="'+INK+'" stroke-width="2.5"/>';
+      g += '<text x="'+(bx + 8)+'" y="'+((top + Math.min(zy, 262))/2 + 8)+'" class="tv">'+Uu.f(c).toFixed(Uu.dec)+' '+Uu.lab+'</text>';
+    });
+    g += '<line x1="34" y1="'+zy+'" x2="414" y2="'+zy+'" stroke="#D3375E" stroke-width="3" stroke-dasharray="8 6"/>';
+    g += '<text x="414" y="'+(Uu.zc === null ? 318 : zy - 8)+'" text-anchor="end" class="zl">'+(Uu.zc === null ? '0 K: far, far below' : '0 '+Uu.lab)+'</text>';
+    s.innerHTML = g;
+    $('#tratio').textContent = (Uu.f(20) / Uu.f(10)).toFixed(2) + '×';
+    $('#tsay').textContent = Uu.say;
+    $$('#units button').forEach(b => b.setAttribute('aria-pressed', b.dataset.u === u ? 'true' : 'false'));
+    if (u === 'K') addXP('kelvin');
+  }
+  $$('#units button').forEach(b => b.addEventListener('click', () => draw(b.dataset.u)));
+  draw('C');
+})();
+
+/* =========================================================== 8. photo / film */
+(function photoFilm(){
+  const ST = ['Lina','Bao Bar','Kiwi Cup','Momo','Yuzu'];
+  const SALES = [[18,24,27,9,31,36,40,46],[40,44,47,20,52,55,58,62],[22,25,30,11,29,33,36,38],[35,38,41,15,45,49,52,55],[15,18,20,7,22,24,27,29]];
+  const grid = $('#pfgrid'), chart = $('#pfchart');
+  const gx = j => 96 + j*30, gy = i => 30 + i*32;
+  function drawGrid(mode){
+    let g = '';
+    if (mode === 'photo') g += '<rect x="'+(gx(7) - 13)+'" y="14" width="26" height="160" rx="13" fill="#E7DEF5" stroke="#8E6CC9" stroke-width="2.5"/>';
+    else g += '<rect x="80" y="'+(gy(0) - 13)+'" width="'+(gx(7) - 80 + 14)+'" height="26" rx="13" fill="#E7DEF5" stroke="#8E6CC9" stroke-width="2.5"/>';
+    ST.forEach((n, i) => { g += '<text x="74" y="'+(gy(i) + 5)+'" text-anchor="end"'+(i === 0 ? ' class="ann"' : '')+'>'+n+'</text>'; });
+    for (let i = 0; i < 5; i++) for (let j = 0; j < 8; j++){
+      const on = mode === 'photo' ? j === 7 : i === 0;
+      g += '<circle cx="'+gx(j)+'" cy="'+gy(i)+'" r="'+(on ? 8 : 6.5)+'" fill="'+(on ? '#8E6CC9' : '#D3C9E4')+'"'+(on ? ' stroke="'+INK+'" stroke-width="2"' : '')+'/>';
+    }
+    for (let j = 0; j < 8; j++) g += '<text x="'+gx(j)+'" y="190" text-anchor="middle">'+(j + 1)+'</text>';
+    g += '<text x="74" y="190" text-anchor="end">Sat.</text>';
+    grid.innerHTML = g;
+  }
+  function drawChart(mode){
+    let g = '';
+    if (mode === 'photo'){
+      g += '<text x="10" y="24" class="ttl">Saturday 8: five stands</text>';
+      g += '<line x1="104" y1="40" x2="104" y2="252" stroke="'+INK+'" stroke-width="2"/>';
+      ST.forEach((n, i) => {
+        const v = SALES[i][7], yy = 48 + i*41, w = v/70*300;
+        g += '<text x="96" y="'+(yy + 19)+'" text-anchor="end"'+(i === 0 ? ' class="ann"' : '')+'>'+n+'</text>';
+        g += '<rect class="growbar" x="104" y="'+yy+'" width="'+w+'" height="28" rx="6" fill="#8E6CC9" stroke="'+INK+'" stroke-width="2"/>';
+        g += '<text x="'+(112 + w)+'" y="'+(yy + 20)+'" class="ann">'+v+' cups</text>';
+      });
+      $('#pfcap').textContent = 'Photo: five stands on one Saturday. You compare stands side by side, so a bar chart fits. Lina sits in the middle of the pack.';
+    } else {
+      const X = j => 64 + j*52, Y = v => 232 - v/50*176;
+      g += '<text x="10" y="24" class="ttl">Lina’s stand: 8 Saturdays</text>';
+      [0, 25, 50].forEach(v => { g += '<line x1="56" y1="'+Y(v)+'" x2="440" y2="'+Y(v)+'" stroke="#E6DFF1" stroke-width="1.5"/><text x="48" y="'+(Y(v) + 5)+'" text-anchor="end">'+v+'</text>'; });
+      const pts = SALES[0].map((v, j) => X(j)+' '+Y(v));
+      g += '<path class="drawline" d="M'+pts.join(' L')+'" fill="none" stroke="#8E6CC9" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>';
+      SALES[0].forEach((v, j) => { g += '<circle class="popin" style="animation-delay:'+(j*0.12)+'s" cx="'+X(j)+'" cy="'+Y(v)+'" r="6" fill="#fff" stroke="#8E6CC9" stroke-width="3"/>'; g += '<text x="'+X(j)+'" y="256" text-anchor="middle">'+(j + 1)+'</text>'; });
+      const rx = X(3), ry = Y(SALES[0][3]);
+      g += '<g transform="translate('+(rx - 18)+' '+(ry - 58)+')"><path d="M10 26 a8 8 0 0 1 2-15.5 a11 11 0 0 1 21-1 a8 8 0 0 1 3 16.5 z" fill="#fff" stroke="'+INK+'" stroke-width="2.2"/><path d="M12 31 l-3 6 M20 31 l-3 6 M28 31 l-3 6" stroke="#2F55D4" stroke-width="2.5" stroke-linecap="round"/></g>';
+      g += '<text x="'+(rx + 24)+'" y="'+(ry + 4)+'" class="ann">rainy day</text>';
+      g += '<text x="'+(X(7) - 4)+'" y="'+(Y(46) - 14)+'" text-anchor="end" class="ann">46 cups</text>';
+      g += '<text x="252" y="276" text-anchor="middle">Saturday</text>';
+      $('#pfcap').textContent = 'Film: one stand over eight Saturdays. You follow it through time, so a line fits. Can you spot the rainy Saturday?';
+    }
+    chart.innerHTML = g;
+  }
+  function setMode(m){ drawGrid(m); drawChart(m); $$('#pfseg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.m === m ? 'true' : 'false')); if (m === 'film') addXP('film'); }
+  $$('#pfseg button').forEach(b => b.addEventListener('click', () => setMode(b.dataset.m)));
+  setMode('photo');
+})();
+
+
+/* =========================================================== P1. zoom out to the population */
+(function zoomOut(){
+  const s = $('#zoomsvg'), R = rng(21), CX = 280, CY = 170;
+  const P = [];
+  [[-21,-8],[0,-13],[21,-8],[-13,10],[6,12],[24,10]].forEach(([dx, dy]) => P.push({x:CX + dx, y:CY + dy, g:0}));
+  function place(n, rmin, rmax, g, ry){
+    let tries = 0;
+    while (n > 0 && tries < 30000){
+      tries++;
+      const a = R()*Math.PI*2, r = rmin + (rmax - rmin)*Math.sqrt(R());
+      const x = CX + Math.cos(a)*r, y = CY + Math.sin(a)*r*ry;
+      if (x < 12 || x > 548 || y < 14 || y > 328) continue;
+      if (P.some(p => (p.x - x)**2 + (p.y - y)**2 < 72)) continue;
+      P.push({x, y, g}); n--;
+    }
+  }
+  place(44, 36, 95, 1, .75); place(470, 95, 320, 2, .62);
+  const COLS = ['#B79BE0','#9BC255','#F9B233','#A9BCF2','#F49BB3','#C8BDDA'];
+  let g = '<defs><clipPath id="zclip"><rect x="0" y="0" width="560" height="340" rx="16"/></clipPath></defs><rect x="0" y="0" width="560" height="340" rx="16" fill="#FCEFF3"/>';
+  g += '<g clip-path="url(#zclip)"><g id="crowd" style="transform-origin:'+CX+'px '+CY+'px; transition:transform 1s cubic-bezier(.3,.8,.3,1)">';
+  P.forEach(p => {
+    const c = p.g === 0 ? '#D93A62' : COLS[Math.floor(R()*COLS.length)];
+    g += '<g transform="translate('+p.x.toFixed(1)+' '+p.y.toFixed(1)+')" fill="'+c+'"'+(p.g === 0 ? ' stroke="'+INK+'" stroke-width=".55"' : '')+'><circle cy="-3.3" r="2.4"/><rect x="-2.9" y="-.4" width="5.8" height="4.6" rx="2.3"/></g>';
+  });
+  g += '</g></g>';
+  g += '<ellipse id="popring" cx="'+CX+'" cy="'+CY+'" rx="266" ry="156" fill="none" stroke="#D93A62" stroke-width="4" opacity="0" style="transition:opacity .6s .5s"/>';
+  g += '<g id="poplab" opacity="0" style="transition:opacity .6s .6s"><rect x="200" y="2" width="160" height="30" rx="15" fill="#D93A62" stroke="'+INK+'" stroke-width="2.5"/><text x="280" y="22" text-anchor="middle" font-family="Times New Roman, Times, Liberation Serif, serif" font-weight="700" font-size="15" fill="#fff">The population</text></g>';
+  s.innerHTML = g;
+  const crowd = $('#crowd', s);
+  const K = [5.5, 1.9, 1];
+  const CAP = [
+    'Lina’s 6 customers today. She knows everything about them: it’s all in her notebook.',
+    'Her street. A few dozen people walk by, and most of them never stopped at her stand.',
+    'Every bubble tea fan in Québec: far too many to count. This whole crowd is the population. Lina’s 6 customers are the pink dots in the middle.',
+  ];
+  function setZ(z){
+    crowd.style.transform = 'scale(' + K[z] + ')';
+    $('#popring', s).setAttribute('opacity', z === 2 ? 1 : 0);
+    $('#poplab', s).setAttribute('opacity', z === 2 ? 1 : 0);
+    $('#zcap').textContent = CAP[z];
+    $$('#zoomseg button').forEach(b => b.setAttribute('aria-pressed', +b.dataset.z === z ? 'true' : 'false'));
+    if (z === 2) addXP('zoom');
+  }
+  $$('#zoomseg button').forEach(b => b.addEventListener('click', () => setZ(+b.dataset.z)));
+  setZ(0);
+})();
+
+/* =========================================================== P2. who is the population */
+(function whoPop(){
+  const IC = {
+    school:'<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M4 18 L20 7 L36 18" fill="none" stroke="'+INK+'" stroke-width="2.5" stroke-linejoin="round"/><rect x="8" y="17" width="24" height="18" fill="#F7B32B" stroke="'+INK+'" stroke-width="2.5"/><rect x="17" y="25" width="6" height="10" fill="#fff" stroke="'+INK+'" stroke-width="2"/><rect x="11" y="21" width="4" height="4" fill="#fff" stroke="'+INK+'" stroke-width="1.5"/><rect x="25" y="21" width="4" height="4" fill="#fff" stroke="'+INK+'" stroke-width="1.5"/></svg>',
+    battery:'<svg viewBox="0 0 40 40" aria-hidden="true"><rect x="5" y="12" width="28" height="16" rx="3" fill="#fff" stroke="'+INK+'" stroke-width="2.5"/><rect x="33" y="17" width="3.5" height="6" rx="1" fill="'+INK+'"/><rect x="8.5" y="15.5" width="16" height="9" rx="1.5" fill="#6E9F2E"/></svg>',
+    moon:'<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M25 5 a15 15 0 1 0 10 24 a12 12 0 1 1 -10 -24 z" fill="#F7B32B" stroke="'+INK+'" stroke-width="2.5" stroke-linejoin="round"/><text x="30" y="14" font-family="Times New Roman, Times, Liberation Serif, serif" font-weight="700" font-size="9" fill="'+INK+'">z</text></svg>',
+    pot:'<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M15 10 q2 -3 0 -6 M21 10 q2 -3 0 -6 M27 10 q2 -3 0 -6" stroke="#9A8FAE" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M6 16 H34 V30 Q34 35 29 35 H11 Q6 35 6 30 Z" fill="#F9B233" stroke="'+INK+'" stroke-width="2.5"/><rect x="3" y="13" width="34" height="5" rx="2.5" fill="#fff" stroke="'+INK+'" stroke-width="2.2"/></svg>',
+  };
+  const Q = [
+    {i:'school', q:'Do students at my school like the new cafeteria menu?', o:['My 5 best friends','All students at my school','All students in Canada'], a:1, why:'Every student at your school. Your friends would only be a sample.'},
+    {i:'battery', q:'How long do this factory’s batteries last?', o:['The 10 batteries I tested','All batteries the factory makes','All batteries in the world'], a:1, why:'Every battery from this factory. A population can be things, not just people.'},
+    {i:'moon', q:'Do teenagers in Québec sleep 8 hours a night?', o:['All teenagers in Québec','All people in Québec','The teens in my class'], a:0, why:'Teenagers, and all of them in Québec. Not adults, and not just one class.'},
+    {i:'pot', q:'Is this pot of soup too salty?', o:['One spoonful','The whole pot','Every soup ever made'], a:1, why:'Every drop in this pot. Keep this pot in mind: it’s on the next screen.'},
+  ];
+  const host = $('#popq');
+  Q.forEach((it, n) => {
+    const c = el('div', 'pq', '<div class="pqh"><span class="pqi">'+IC[it.i]+'</span><b>'+it.q+'</b></div><div class="pqo">'+it.o.map((o, j) => '<button class="btn sm" type="button" data-j="'+j+'">'+o+'</button>').join('')+'</div>');
+    host.appendChild(c);
+    $$('.pqo button', c).forEach(b => b.addEventListener('click', () => {
+      const j = +b.dataset.j, ok = j === it.a;
+      $('.pqo', c).outerHTML = '<div class="pqa"><span class="pqans">'+it.o[it.a]+'</span><span><b>'+(ok ? 'Yes!' : 'Not quite.')+'</b> '+it.why+'</span></div>';
+      c.classList.add(ok ? 'ok' : 'bad');
+      if (ok) addXP('pop' + n);
+    }));
+  });
+})();
+
+/* =========================================================== P3. the soup pot */
+(function soup(){
+  const s = $('#soupsvg'), R = rng(5), NS = 34;
+  const settled = [], mixed = [];
+  for (let i = 0; i < NS; i++){
+    settled.push({x: 92 + R()*232, y: 252 + R()*16});
+    mixed.push({x: 92 + R()*232, y: 124 + R()*142});
+  }
+  let g = '';
+  g += '<g id="steam" fill="none" stroke="#9A8FAE" stroke-width="4" stroke-linecap="round"><path d="M150 60 q12 -16 0 -32 q-12 -16 0 -28"/><path d="M210 60 q12 -16 0 -32 q-12 -16 0 -28"/><path d="M270 60 q12 -16 0 -32 q-12 -16 0 -28"/></g>';
+  g += '<rect x="44" y="120" width="30" height="16" rx="8" fill="#CDC4DC" stroke="'+INK+'" stroke-width="3"/><rect x="346" y="120" width="30" height="16" rx="8" fill="#CDC4DC" stroke="'+INK+'" stroke-width="3"/>';
+  g += '<path d="M70 92 H350 V240 Q350 282 308 282 H112 Q70 282 70 240 Z" fill="#CDC4DC" stroke="'+INK+'" stroke-width="3"/>';
+  g += '<defs><clipPath id="soupclip"><path d="M80 102 H340 V238 Q340 272 306 272 H114 Q80 272 80 238 Z"/></clipPath></defs>';
+  g += '<g clip-path="url(#soupclip)"><rect id="soupfill" x="80" y="112" width="260" height="162" fill="#F9B233" style="transform-box:fill-box; transform-origin:center bottom; transition:transform 1.1s ease-in"/>';
+  g += '<g id="salt">' + settled.map((p, i) => '<rect width="7" height="7" rx="1.5" fill="#fff" stroke="'+INK+'" stroke-width="1.2" data-i="'+i+'" style="transform:translate('+p.x.toFixed(1)+'px,'+p.y.toFixed(1)+'px) rotate(20deg); transition:transform 1s ease"/>').join('') + '</g></g>';
+  g += '<rect x="58" y="84" width="304" height="16" rx="8" fill="#E4DEEE" stroke="'+INK+'" stroke-width="3"/>';
+  g += '<g id="ladle" opacity="0" style="transform:translate(330px,40px); transition:transform .9s cubic-bezier(.3,.8,.3,1), opacity .4s"><path d="M0 0 L60 -110" stroke="'+INK+'" stroke-width="9" stroke-linecap="round"/><path d="M0 0 L60 -110" stroke="#E4DEEE" stroke-width="4" stroke-linecap="round"/><ellipse cx="-4" cy="6" rx="26" ry="14" fill="#E4DEEE" stroke="'+INK+'" stroke-width="3"/><ellipse id="ladlesoup" cx="-4" cy="4" rx="20" ry="8" fill="#F9B233" opacity="0"/><g id="ladlesalt"></g></g>';
+  s.innerHTML = g;
+  const grains = $$('#salt rect', s);
+  function salt(pos){ grains.forEach((r, i) => { r.style.transform = 'translate('+pos[i].x.toFixed(1)+'px,'+pos[i].y.toFixed(1)+'px) rotate('+(20 + i*37 % 90)+'deg)'; }); }
+  const MSG = {
+    whole:{t:'That’s a census', c:'census', m:'You know exactly how salty it is. But now there is no soup left for anyone. Checking everyone is perfect, but often too slow, too costly, or impossible.'},
+    top:{t:'A misleading spoon', c:'bad', m:'Tastes like no salt at all. Wrong! The salt sank to the bottom, so this spoon was not like the pot.'},
+    stir:{t:'A good sample', c:'good', m:'Just right, and it matches the whole pot. After stirring, one spoon looks like the pot. In statistics, “stirring” means picking the sample at random.'},
+  };
+  function run(k){
+    const lad = $('#ladle', s), fill = $('#soupfill', s);
+    fill.style.transform = k === 'whole' ? 'scaleY(0)' : 'scaleY(1)';
+    salt(k === 'stir' ? mixed : settled);
+    $('#salt', s).style.opacity = k === 'whole' ? 0 : 1;
+    if (k === 'whole'){ lad.setAttribute('opacity', 0); $('#steam', s).style.opacity = .2; }
+    else {
+      $('#steam', s).style.opacity = 1; lad.setAttribute('opacity', 1);
+      lad.style.transform = k === 'top' ? 'translate(210px,118px)' : 'translate(210px,190px)';
+      $('#ladlesoup', s).setAttribute('opacity', 1);
+      $('#ladlesalt', s).innerHTML = k === 'stir' ? '<rect x="-12" y="0" width="5" height="5" fill="#fff" stroke="'+INK+'" stroke-width="1"/><rect x="2" y="2" width="5" height="5" fill="#fff" stroke="'+INK+'" stroke-width="1"/>' : '';
+    }
+    const M = MSG[k];
+    $('#souprs').className = 'souprs ' + M.c;
+    $('#souprs').innerHTML = '<b>'+M.t+'</b>'+M.m;
+    $$('[data-soup]').forEach(b => b.setAttribute('aria-pressed', b.dataset.soup === k ? 'true' : 'false'));
+    if (k === 'stir') addXP('soup');
+  }
+  $$('[data-soup]').forEach(b => b.addEventListener('click', () => run(b.dataset.soup)));
+  $('#souprs').innerHTML = '<b>Pick a way to check the salt</b>Look closely first: where is the salt right now?';
+})();
+
+/* =========================================================== P4. parameter and statistic */
+(function paramStat(){
+  const JARI = '<svg viewBox="0 0 44 44" aria-hidden="true"><rect x="13" y="3" width="18" height="6" rx="2" fill="#F7B32B" stroke="'+INK+'" stroke-width="2.2"/><rect x="6" y="9" width="32" height="32" rx="8" fill="#fff" stroke="'+INK+'" stroke-width="2.2"/><circle cx="15" cy="20" r="3" fill="#8E6CC9"/><circle cx="24" cy="27" r="3" fill="#C8BDDA"/><circle cx="30" cy="18" r="3" fill="#C8BDDA"/><circle cx="16" cy="32" r="3" fill="#C8BDDA"/><circle cx="29" cy="33" r="3" fill="#8E6CC9"/></svg>';
+  const SPI = '<svg viewBox="0 0 44 44" aria-hidden="true"><ellipse cx="16" cy="22" rx="13" ry="10" fill="#fff" stroke="'+INK+'" stroke-width="2.2"/><path d="M28 21 L42 17 L42 23 L28 25" fill="#fff" stroke="'+INK+'" stroke-width="2.2" stroke-linejoin="round"/><circle cx="12" cy="21" r="3" fill="#8E6CC9"/><circle cx="19" cy="24" r="3" fill="#C8BDDA"/></svg>';
+  const PS = [
+    {lab:'Lina’s wait times', pop:'All of Lina’s customers this summer', samp:'The 20 customers she timed', what:'Average wait', stats:['3.3 min','3.7 min','2.9 min','3.4 min','3.1 min','3.6 min']},
+    {lab:'School menu', pop:'All 900 students at the school', samp:'The 30 students I asked', what:'Share who like the menu', stats:['12 of 30 = 40%','15 of 30 = 50%','11 of 30 = 37%','13 of 30 = 43%','14 of 30 = 47%']},
+    {lab:'Batteries', pop:'All batteries from the factory', samp:'The 10 batteries I tested', what:'Average battery life', stats:['11.2 hours','10.6 hours','11.8 hours','10.9 hours','11.4 hours']},
+  ];
+  let cur = 0, k = 0, hist = [];
+  const seg = $('#psseg');
+  PS.forEach((p, i) => { const b = el('button', '', p.lab); b.type = 'button'; b.addEventListener('click', () => { cur = i; k = 0; hist = [0]; render(true); }); seg.appendChild(b); });
+  function render(fresh){
+    const p = PS[cur];
+    $$('button', seg).forEach((b, i) => b.setAttribute('aria-pressed', i === cur ? 'true' : 'false'));
+    $('#pbox').innerHTML = '<div class="bh2"><span class="nm2">'+JARI+'Parameter</span></div><div class="who"><span>Population</span>'+p.pop+'</div><div class="what">'+p.what+'</div><div class="val">'+LOCK+'?</div><div class="note">fixed, but unknown</div>';
+    $('#sbox').innerHTML = '<div class="bh2"><span class="nm2">'+SPI+'Statistic</span></div><div class="who"><span>Sample</span>'+p.samp+'</div><div class="what">'+p.what+'</div><div class="val'+(fresh ? '' : ' bump')+'">'+p.stats[k]+'</div><div class="note">known, from this sample</div>';
+    $('#pshist').innerHTML = hist.length > 1 ? 'Samples so far: ' + hist.map(i => '<span>'+p.stats[i]+'</span>').join('') : 'One sample so far.';
+  }
+  $('#psnew').addEventListener('click', () => { const p = PS[cur]; k = (k + 1) % p.stats.length; hist.push(k); if (hist.length > 5) hist.shift(); render(false); if (hist.length >= 3) addXP('paramstat'); });
+  hist = [0]; render(true);
+})();
+
+/* =========================================================== P5. symbols */
+(function symbols(){
+  const ROWS = [
+    {k:'avg', lab:'Average', par:['μ','“mu”'], st:['x̄','“x-bar”'], ex:'<b><span class="sym">μ</span></b> = the average wait of <b>all</b> of Lina’s customers this summer: unknown.<br><b><span class="sym">x̄</span></b> = the average wait of the <b>20 she timed</b>: 3.3 min.'},
+    {k:'share', lab:'Share', par:['p','“p”'], st:['p̄','“p-bar”'], ex:'<b><span class="sym">p</span></b> = the share of <b>all</b> Québec fans who prefer taro: unknown.<br><b><span class="sym">p̄</span></b> = the share among the <b>20 she asked</b>: 6 of 20 = 30%.'},
+    {k:'spread', lab:'Spread', par:['σ','“sigma”'], st:['s','“s”'], ex:'<b><span class="sym">σ</span></b> and <b><span class="sym">s</span></b> tell how far the waits wander from the average. You will meet them properly in T1.5. Today, just learn their names.'},
+  ];
+  const host = $('#symgrid');
+  let h = '<div class="symhead"><span></span><span class="sgh"><b>Population</b>parameter</span><span class="sgh"><b>Sample</b>statistic</span></div>';
+  ROWS.forEach(r => { h += '<button type="button" class="symrow" data-k="'+r.k+'"><span class="sl">'+r.lab+'</span><span class="sc par"><span class="sym">'+r.par[0]+'</span><small>'+r.par[1]+'</small></span><span class="sc st"><span class="sym">'+r.st[0]+'</span><small>'+r.st[1]+'</small></span></button>'; });
+  host.innerHTML = h;
+  function show(k){ const r = ROWS.find(x => x.k === k); $$('.symrow', host).forEach(b => b.setAttribute('aria-pressed', b.dataset.k === k ? 'true' : 'false')); $('#symex').innerHTML = r.ex; }
+  $$('.symrow', host).forEach(b => b.addEventListener('click', () => show(b.dataset.k)));
+  show('share');
+  miniQuiz($('#symcheck'), [
+    {q:'The 20 customers Lina timed waited 3.3 minutes on average. Which symbol?', o:['<span class="sym">μ</span>','<span class="sym">x̄</span>','<span class="sym">p̄</span>'], a:1, why:'An average from a sample: <span class="sym">x̄</span>.'},
+    {q:'The share of all Québec fans who prefer taro. Which symbol?', o:['<span class="sym">p</span>','<span class="sym">p̄</span>','<span class="sym">s</span>'], a:0, why:'A share for the whole population: <span class="sym">p</span>, with no bar.'},
+  ], 'sym');
+})();
+
+/* =========================================================== 9. jar and spoon */
+(function jar(){
+  const JN = 300, JT = 90, R = rng(7);
+  const isTaro = new Array(JN).fill(false);
+  shuffle([...Array(JN).keys()], R).slice(0, JT).forEach(i => { isTaro[i] = true; });
+  const pos = [...Array(JN).keys()].map(i => ({x: 63 + (i % 20)*13.6 + (R() - .5)*4, y: 86 + Math.floor(i/20)*16.6 + (R() - .5)*4}));
+  const js = $('#jarsvg');
+  let g = '<rect x="118" y="8" width="144" height="28" rx="9" fill="#F7B32B" stroke="'+INK+'" stroke-width="3"/>'
+    + '<rect x="130" y="34" width="120" height="24" fill="#fff" stroke="'+INK+'" stroke-width="3"/>'
+    + '<path d="M72 56 H308 Q348 56 348 96 V312 Q348 350 310 350 H70 Q32 350 32 312 V96 Q32 56 72 56 Z" fill="#F7F3FC" stroke="'+INK+'" stroke-width="3"/>'
+    + '<g id="jdots">' + pos.map((p, i) => '<circle cx="'+p.x.toFixed(1)+'" cy="'+p.y.toFixed(1)+'" r="5.4" data-i="'+i+'"/>').join('') + '</g>'
+    + '<g class="frost" id="frost"><rect x="44" y="68" width="292" height="272" rx="28" fill="#fff" opacity=".55"/></g>'
+    + '<rect x="108" y="176" width="164" height="56" rx="16" fill="#fff" stroke="'+INK+'" stroke-width="3"/>'
+    + '<text x="190" y="216" text-anchor="middle" class="frostq" id="jarq" style="paint-order:stroke; stroke:#fff; stroke-width:8px">p = ?</text>'
+    + '<path d="M52 92 Q48 200 56 300" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round" opacity=".9"/>';
+  js.innerHTML = g;
+  const dots = $$('#jdots circle', js);
+  const sp = $('#spoonsvg');
+  sp.innerHTML = '<path d="M196 74 L312 58 Q318 58 318 64 L318 76 Q318 82 312 82 L196 100 Z" fill="#fff" stroke="'+INK+'" stroke-width="3" stroke-linejoin="round"/>'
+    + '<ellipse cx="112" cy="86" rx="102" ry="72" fill="#fff" stroke="'+INK+'" stroke-width="3"/><ellipse cx="112" cy="86" rx="88" ry="60" fill="#F7F3FC"/><g id="sdots"></g>';
+  const strip = $('#stripsvg');
+  const SX = v => 34 + v/70*400;
+  let open = false, last = [];
+  const hist = [];
+  function paintJar(){
+    const lastSet = new Set(last);
+    dots.forEach((d, i) => {
+      const known = open || lastSet.has(i);
+      d.setAttribute('fill', known ? (isTaro[i] ? '#8E6CC9' : '#fff') : '#C8BDDA');
+      d.setAttribute('stroke', lastSet.has(i) ? INK : (known ? '#9A8FAE' : 'none'));
+      d.setAttribute('stroke-width', lastSet.has(i) ? 2.6 : 1.2);
+    });
+    $('#frost').style.opacity = open ? 0 : 1;
+    $('#jarq').textContent = open ? 'p = 30%' : 'p = ?';
+    $('#openjar').textContent = open ? 'Close the jar' : 'Open the jar';
+  }
+  function paintStrip(){
+    let g = '<text x="34" y="16" class="ann">Taro share in each spoon so far</text>';
+    g += '<line x1="34" y1="98" x2="434" y2="98" stroke="'+INK+'" stroke-width="2"/>';
+    for (let v = 0; v <= 70; v += 10) g += '<line x1="'+SX(v)+'" y1="98" x2="'+SX(v)+'" y2="104" stroke="'+INK+'" stroke-width="2"/><text x="'+SX(v)+'" y="120" text-anchor="middle">'+v+'%</text>';
+    const counts = {}; hist.forEach(v => { counts[v] = (counts[v] || 0) + 1; });
+    const maxC = Math.max(1, ...Object.values(counts)), gap = Math.min(10, 70/maxC);
+    const placed = {};
+    hist.forEach((v, k) => { placed[v] = (placed[v] || 0) + 1; const last = k === hist.length - 1; g += '<circle cx="'+SX(v)+'" cy="'+(92 - (placed[v] - 1)*gap)+'" r="5" fill="'+(last ? '#F7B32B' : '#8E6CC9')+'" stroke="'+INK+'" stroke-width="'+(last ? 2.5 : 1.2)+'"/>'; });
+    if (open) g += '<line x1="'+SX(30)+'" y1="24" x2="'+SX(30)+'" y2="98" stroke="'+INK+'" stroke-width="3"/><text x="'+(SX(30) + 6)+'" y="34" class="ann">jar: p = 30%</text>';
+    strip.innerHTML = g;
+  }
+  function scoop(rnd){
+    const idx = shuffle([...Array(JN).keys()], rnd).slice(0, 20);
+    last = idx;
+    const k = idx.filter(i => isTaro[i]).length;
+    hist.push(k*5);
+    let s = '';
+    idx.slice().sort((a, b) => isTaro[b] - isTaro[a]).forEach((i, n) => { const x = 52 + (n % 5)*30, y = 46 + Math.floor(n/5)*26; s += '<circle class="popin" style="animation-delay:'+(n*0.02)+'s" cx="'+x+'" cy="'+y+'" r="9" fill="'+(isTaro[i] ? '#8E6CC9' : '#fff')+'" stroke="'+INK+'" stroke-width="2"/>'; });
+    $('#sdots', sp).innerHTML = s;
+    $('#jread').innerHTML = '<span class="big"><span class="sym">p̄</span> = '+(k*5)+'%</span><b>'+k+'</b> of 20 prefer taro';
+  }
+  $('#scoop1').addEventListener('click', () => { scoop(); paintJar(); paintStrip(); if (hist.length >= 5) addXP('scoops'); });
+  $('#scoop10').addEventListener('click', () => { for (let t = 0; t < 10; t++) scoop(); paintJar(); paintStrip(); addXP('scoops'); });
+  $('#openjar').addEventListener('click', () => { open = !open; paintJar(); paintStrip(); if (open) addXP('jar'); });
+  scoop(rng(3)); paintJar(); paintStrip();
+})();
+
+/* =========================================================== 10. see or guess */
+miniQuiz($('#seeguess'), [
+  {q:'“Lina sold 46 cups last Saturday.”', o:['See it','Guess it'], a:0, why:'She counted her own sales. Nothing beyond them.'},
+  {q:'“About 30% of all fans in Québec prefer taro, give or take.”', o:['See it','Guess it'], a:1, why:'A claim about the whole jar, made from a spoon of 20.'},
+  {q:'“A chart of the six cups in Lina’s notebook, by flavor.”', o:['See it','Guess it'], a:0, why:'A picture of the data in her hands.'},
+  {q:'“Her 20 customers waited 3.3 minutes on average, so all her customers this summer will wait about that long.”', o:['See it','Guess it'], a:1, why:'From a sample to everyone: that is inference.'},
+], 'sg');
+
+/* =========================================================== 11. the trap */
+(function trap(){
+  const HERE = [1, 0, 1, 1, 0, 1];
+  const SCH = {
+    '12':{h:1, g:2, bad:true, msg:'Average 1.33. A third of a to-go? That number describes the codes, not the cups.'},
+    '21':{h:2, g:1, bad:true, msg:'Swap the codes and the average jumps to 1.67. Not one cup changed. A real summary of the cups would not move.'},
+    '01':{h:1, g:0, bad:false, msg:'With 1 = here and 0 = to go, the average 0.67 is exactly the share drunk here. Adding ones and zeros just counts the ones. This trick comes back in T5.'},
+  };
+  function show(code){
+    const sc = SCH[code];
+    $('#trapcups').innerHTML = CUPS.map((c, i) => '<div class="tc">'+cupSVG(c.fl, c.sz, 40)+'<span class="code'+(HERE[i] ? ' here' : '')+'">'+(HERE[i] ? sc.h : sc.g)+'</span><small>'+(HERE[i] ? 'here' : 'to go')+'</small></div>').join('');
+    const avg = HERE.reduce((s, h) => s + (h ? sc.h : sc.g), 0) / HERE.length;
+    $('#tavg').textContent = avg.toFixed(2);
+    $('#tavgbox').className = 'to ' + (sc.bad ? 'bad' : 'good');
+    $('#tshare').textContent = Math.round(100 * HERE.filter(h => h).length / HERE.length) + '%';
+    $('#tmsg').textContent = sc.msg;
+    $$('[data-code]').forEach(b => b.setAttribute('aria-pressed', b.dataset.code === code ? 'true' : 'false'));
+    if (code === '21') addXP('trap');
+  }
+  $$('[data-code]').forEach(b => b.addEventListener('click', () => show(b.dataset.code)));
+  $('#jersey').innerHTML = shirt(7, '#D93A62') + '<span>+</span>' + shirt(9, '#6E9F2E') + '<span class="x">≠</span>' + shirt(16, '#8E6CC9');
+  show('12');
+})();
+
+/* =========================================================== 12. the map */
+(function map(){
+  const STN = [
+    {c:'T1', n:['Describing','data'], full:'Describing data', p:'You are here. Label or amount? Then turn each column into pictures and numbers.', tag:'counts, percentages, bar charts', ruler:'averages, spread, histograms'},
+    {c:'T2', n:['Probability',''], full:'Introduction to probability', p:'The language of chance: how likely is it?', tag:'the chance of a category, like picking a taro fan', ruler:'the same rules, ready for numbers'},
+    {c:'T3', n:['Discrete','variables'], full:'Discrete random variables', p:'Chance for counts.', tag:'how many taro fans in a spoon of 20?', ruler:'how many customers in one hour?'},
+    {c:'T4', n:['Continuous','variables'], full:'Continuous random variables', p:'Chance for measurements: the bell curve.', tag:'the bell curve will help with proportions later', ruler:'how wait times spread out'},
+    {c:'T5', n:['Sampling',''], full:'Sampling distributions', p:'The jar and the spoon come back: how much does the spoon’s number jump around?', tag:'p̄ from one scoop to the next', ruler:'x̄ from one scoop to the next'},
+    {c:'T6', n:['Confidence','intervals'], full:'Confidence intervals', p:'Guess the jar’s number with a range, and say how sure you are.', tag:'a range for p', ruler:'a range for μ'},
+    {c:'T7', n:['Hypothesis','tests'], full:'Hypothesis tests', p:'Is a claim about the jar believable, given what the spoon shows?', tag:'a test about p', ruler:'a test about μ'},
+    {c:'T8', n:['Linear','regression'], full:'Linear regression', p:'Does one amount move with another? Bigger cup, longer wait?', tag:'this line stops at T7 in this course', ruler:'a line through two quantitative variables'},
+  ];
+  const xs = STN.map((_, i) => 70 + i*122);
+  const s = $('#map'); let g = '';
+  [['Describe',0,0],['Model chance',1,3],['Infer',4,6],['Relate',7,7]].forEach(([n, a, b]) => { const x0 = xs[a] - 56, w = xs[b] - xs[a] + 112; g += '<rect x="'+x0+'" y="10" width="'+w+'" height="282" rx="16" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.2)" stroke-width="2"/><text x="'+(x0 + w/2)+'" y="36" text-anchor="middle" class="ph">'+n+'</text>'; });
+  g += '<path d="M'+xs[0]+' 120 H'+xs[6]+'" stroke="#EE7F1B" stroke-width="12" stroke-linecap="round"/>';
+  g += '<path d="M'+xs[0]+' 176 H'+(xs[7] + 34)+'" stroke="#2F55D4" stroke-width="12" stroke-linecap="round"/>';
+  STN.forEach((st, i) => {
+    g += '<g class="st" data-i="'+i+'" tabindex="0" role="button" aria-label="'+st.c+' '+st.full+'">';
+    if (i < 7) g += '<rect class="cap" x="'+(xs[i] - 21)+'" y="99" width="42" height="98" rx="21" fill="'+(i === 0 ? '#F7B32B' : '#fff')+'" stroke="'+INK+'" stroke-width="4"/>';
+    else g += '<circle class="cap" cx="'+xs[i]+'" cy="176" r="21" fill="#fff" stroke="'+INK+'" stroke-width="4"/>';
+    g += '<text x="'+xs[i]+'" y="228" text-anchor="middle" class="code">'+st.c+'</text><text x="'+xs[i]+'" y="250" text-anchor="middle" class="snm">'+st.n[0]+'</text><text x="'+xs[i]+'" y="267" text-anchor="middle" class="snm">'+st.n[1]+'</text></g>';
+  });
+  g += '<g transform="translate('+xs[0]+' 0)"><rect x="-54" y="50" width="108" height="30" rx="15" fill="#F7B32B" stroke="'+INK+'" stroke-width="2.5"/><text x="0" y="70" text-anchor="middle" class="here">You are here</text><path d="M-7 80 L0 92 L7 80" fill="#F7B32B" stroke="'+INK+'" stroke-width="2.5" stroke-linejoin="round"/></g>';
+  s.innerHTML = g;
+  function show(i){
+    const st = STN[i];
+    $$('.st', s).forEach(e => e.classList.toggle('on', +e.dataset.i === i));
+    $('#stcard').innerHTML = '<div><h3>'+st.c+': '+st.full+'</h3><p>'+st.p+'</p></div><div class="rl tag"><b>Tag’s line</b>'+st.tag+'</div><div class="rl ruler"><b>Ruler’s line</b>'+st.ruler+'</div>';
+    if (i === 4) addXP('map');
+  }
+  $$('.st', s).forEach(e => { const i = +e.dataset.i; e.addEventListener('click', () => show(i)); e.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' '){ ev.preventDefault(); show(i); } }); });
+  show(0);
+})();
+
+/* =========================================================== 13. arcade */
+const LEVELS = [
+  {id:'l1', n:'Tag or Ruler?', d:'Label or amount?', bg:'#F9B233', opts:['Tag: a label','Ruler: an amount'], items:[
+    {q:'Your favourite sport', a:0, why:'A name: soccer, hockey, basketball.'},
+    {q:'Number of goals in a game', a:1, why:'A count. Goals add up.'},
+    {q:'Your height in centimetres', a:1, why:'An amount you measure.'},
+    {q:'The colour of your phone', a:0, why:'A name.'},
+    {q:'Your student ID number', a:0, why:'Digits, but a name tag. Adding two IDs means nothing.'},
+    {q:'Minutes spent on homework', a:1, why:'An amount of time.'},
+    {q:'T-shirt size: S, M, L, XL', a:0, why:'Labels with an order, but still labels.'},
+    {q:'Price of a video game', a:1, why:'An amount of money.'},
+  ]},
+  {id:'l2', n:'Jump or Glide?', d:'Counted or measured?', bg:'#A9BCF2', opts:['Jump: counted','Glide: measured'], items:[
+    {q:'Number of brothers and sisters', a:0, why:'You count them: 0, 1, 2, 3.'},
+    {q:'Time to run 100 metres', a:1, why:'Measured: 13.42 seconds, or 13.418 with a better watch.'},
+    {q:'Text messages sent today', a:0, why:'A count. Never 3.5 messages.'},
+    {q:'Weight of your backpack', a:1, why:'Measured on a scale: any value is possible.'},
+    {q:'Pearls in a cup of bubble tea', a:0, why:'You can count them, one by one.'},
+    {q:'Temperature outside', a:1, why:'Measured with a thermometer.'},
+    {q:'Distance from home to school', a:1, why:'Measured in kilometres, as precisely as you like.'},
+    {q:'Followers on an account', a:0, why:'A count of people.'},
+  ]},
+  {id:'l3', n:'Which step?', d:'Nominal, ordinal, interval or ratio?', bg:'#D9B38C', opts:['Nominal','Ordinal','Interval','Ratio'], items:[
+    {q:'Favourite flavor', a:0, why:'Names only: you can say same or different.'},
+    {q:'Cup size: S, M, L', a:1, why:'An order, but no fixed gap between sizes.'},
+    {q:'Temperature in °C', a:2, why:'Fixed gaps, but 0 °C is not “no heat”, so no “twice”.'},
+    {q:'Price in dollars', a:3, why:'$0 means free, and $8 really is twice $4.'},
+    {q:'Medal: gold, silver, bronze', a:1, why:'Ordered labels.'},
+    {q:'The year you were born', a:2, why:'Differences work (2010 is 2 years after 2008), but year 0 is not the start of time.'},
+    {q:'Number of toppings', a:3, why:'Zero toppings means none, so ratios work.'},
+    {q:'The number on a hockey jersey', a:0, why:'A name printed with digits.'},
+  ]},
+  {id:'l4', n:'Photo or Film?', d:'One moment, or over time?', bg:'#9BC255', opts:['Photo: one moment','Film: over time'], items:[
+    {q:'The heights of everyone in your class, measured today', a:0, why:'Many people, one moment: cross-sectional.'},
+    {q:'Your height on every birthday since you were 5', a:1, why:'One person over many years: a time series.'},
+    {q:'The price of bubble tea at 10 shops this week', a:0, why:'Many shops, one week.'},
+    {q:'The price of one bubble tea, every year from 2015 to 2025', a:1, why:'One price followed over time.'},
+    {q:'Daily views of one YouTube channel for a month', a:1, why:'One channel, 30 days.'},
+    {q:'Views of 30 different channels on one day', a:0, why:'Many channels, one day.'},
+  ]},
+  {id:'lp', n:'Find the population', d:'Who is the question about?', bg:'#F7C4D2', opts:null, items:[
+    {q:'Is a new song popular with listeners in Canada?', opts:['The 50 people in my survey','All listeners in Canada','All people in the world'], a:1, why:'Listeners, all of them, in Canada. The 50 are a sample.'},
+    {q:'Are the apples in this crate ripe?', opts:['The 3 apples I bit','All apples in the crate','All apples in the store'], a:1, why:'Every apple in this crate. A population can be things.'},
+    {q:'How many hours a week do Université Laval students study?', opts:['All Université Laval students','My study group','All students in Québec'], a:0, why:'The question names one university, so all of its students.'},
+    {q:'Does this brand’s cereal box really hold 500 g?', opts:['All boxes of this cereal','The box on my table','All cereal boxes in the store'], a:0, why:'Every box of this brand. Your box is a sample of one.'},
+    {q:'Do Lina’s customers like taro?', opts:['All of Lina’s customers','Everyone in Québec','The 6 cups in her notebook'], a:0, why:'All her customers. The 6 in the notebook are a sample of them.'},
+    {q:'How long do the light bulbs from this factory last?', opts:['Every bulb the factory makes','The 20 bulbs tested','Every bulb in Canada'], a:0, why:'Every bulb from this factory.'},
+  ]},
+  {id:'l5', n:'Parameter or statistic?', d:'Whole population, or a sample?', bg:'#F49BB3', opts:['Parameter: whole population','Statistic: from a sample'], items:[
+    {q:'The average age of all students in your school, from the school’s records', a:0, why:'Every student is included: the whole population.'},
+    {q:'30 students asked at lunch: 40% prefer pizza', a:1, why:'A sample of 30 students.'},
+    {q:'<span class="sym">μ</span>: the average wait of every customer this year', a:0, why:'A Greek letter for the whole population.'},
+    {q:'<span class="sym">x̄</span>: the average wait of the 20 customers Lina timed', a:1, why:'Computed from a sample of 20.'},
+    {q:'<span class="sym">p̄</span> = 25%, from a poll of 400 people', a:1, why:'A poll is a sample, even a big one.'},
+    {q:'The share of all 900 students at the school who like the menu', a:0, why:'About every student: a parameter, even if nobody knows it yet.'},
+    {q:'Average life of the 10 batteries I tested: 11.2 hours', a:1, why:'Computed from 10 batteries: a statistic.'},
+    {q:'<span class="sym">p</span>: the true share of all Canadians who drink bubble tea', a:0, why:'It describes everyone, even if nobody knows its value.'},
+  ]},
+  {id:'l6', n:'See or Guess?', d:'Describe or infer?', bg:'#B79BE0', opts:['See it: describe','Guess it: infer'], items:[
+    {q:'“Our class average on the quiz was 78”, counting every student', a:0, why:'It only summarises the students who were counted.'},
+    {q:'“From 500 voters, about 52% will vote yes, give or take 4 points”', a:1, why:'A claim about all voters, with a margin.'},
+    {q:'A bar chart of Lina’s six cups by flavor', a:0, why:'A picture of the data in hand.'},
+    {q:'“We tested 30 batteries, so the factory’s batteries probably last over 10 hours”', a:1, why:'From 30 batteries to all of them.'},
+    {q:'“Lina sold 46 cups last Saturday”', a:0, why:'A count of what happened.'},
+    {q:'“About 30% of all fans prefer taro”, based on 20 asked', a:1, why:'From the spoon to the jar.'},
+  ]},
+  {id:'l7', n:'Trap or OK?', d:'Does this summary mean anything?', bg:'#F7B32B', opts:['Trap: meaningless','OK: meaningful'], items:[
+    {q:'The average of the codes 1 = here, 2 = to go', a:0, why:'An average of name tags.'},
+    {q:'The share of cups drunk here: 67%', a:1, why:'Counting labels is always fine.'},
+    {q:'The team’s average jersey number: 14.5', a:0, why:'Jersey numbers are names.'},
+    {q:'The average wait time: 3.3 minutes', a:1, why:'Wait time is an amount.'},
+    {q:'The most common flavor: mango', a:1, why:'The mode works for labels.'},
+    {q:'The average postal code of the customers', a:0, why:'Postal codes are labels.'},
+    {q:'“20 °C today is twice as warm as 10 °C yesterday”', a:0, why:'Celsius has no real zero, so no “twice”.'},
+    {q:'“An $8 cup costs twice as much as a $4 cup”', a:1, why:'Money has a real zero.'},
+  ]},
+  {id:'boss', n:'Boss: build the column', d:'Six targets. You build the column that hits each one.', bg:'#E9718F', boss:true, inv:true},
+  {id:'det', n:'Detective', d:'Classify a variable of your own in three questions', bg:'#FFFFFF', tool:true},
+];
+(function arcade(){
+  const host = $('#arcade');
+  const SK = 't11v2-stars';
+  let best = sget(SK, {});
+  let play = null;
+  function starsHTML(n){ let s = ''; for (let k = 0; k < 3; k++) s += k < n ? '★' : '<span class="off">★</span>'; return s; }
+  const scn = $('#arcade').closest('.scene');
+  function tiles(){
+    play = null; scn.classList.remove('playing');
+    host.innerHTML = '<div class="tiles">' + LEVELS.map((L, i) => '<button class="tile" type="button" data-i="'+i+'" style="background:'+L.bg+'"><span class="ln">'+(L.boss ? 'Final level' : L.tool ? 'Tool' : 'Level '+(i + 1))+'</span><span class="tn">'+L.n+'</span><span class="td">'+L.d+'</span>'+(L.tool ? '<span class="ts">'+'<span class="mi" style="display:inline-block;width:44px">'+tagSVG()+'</span> <span class="mi" style="display:inline-block;width:52px">'+rulerSVG()+'</span></span>' : '<span class="ts" aria-label="'+(best[L.id] || 0)+' of 3 stars">'+starsHTML(best[L.id] || 0)+'</span>')+'</button>').join('') + '</div>';
+    $$('.tile', host).forEach(t => t.addEventListener('click', () => { const L = LEVELS[+t.dataset.i]; if (L.tool) detective(); else if (L.inv) inverse(L); else start(L); }));
+  }
+  function start(L){
+    let qs;
+    if (L.boss){ qs = []; LEVELS.filter(x => x.items).forEach(x => x.items.forEach(it => qs.push(Object.assign({}, it, {opts: it.opts || x.opts, own: !!it.opts})))); qs = shuffle(qs).slice(0, 10); }
+    else qs = shuffle(L.items.map(it => Object.assign({}, it, {opts: it.opts || L.opts, own: !!it.opts})));
+    qs = qs.map(q => { if (!q.own) return q; const order = shuffle(q.opts.map((_, j) => j)); return Object.assign({}, q, {opts: order.map(j => q.opts[j]), a: order.indexOf(q.a)}); });
+    play = {L, qs, i:0, miss:0, streak:0}; scn.classList.add('playing');
+    question();
+  }
+  function question(){
+    const p = play, q = p.qs[p.i];
+    host.innerHTML = '<div class="card qpanel"><div class="qhead"><span class="lvl">'+p.L.n+'</span><span>Question '+(p.i + 1)+' of '+p.qs.length+'</span><span class="streak">'+FLAME+'Streak '+p.streak+'</span></div>'
+      + '<div class="qbar"><i style="width:'+(100*p.i/p.qs.length)+'%"></i></div>'
+      + '<div class="qtext">'+q.q+'</div>'
+      + '<div class="opts">'+q.opts.map((o, j) => '<button class="opt" type="button" data-j="'+j+'">'+o+'</button>').join('')+'</div>'
+      + '<div class="fb" aria-live="polite"></div>'
+      + '<div class="qnav"><button class="btn" type="button" data-act="quit">Back to levels</button><button class="btn sun" type="button" data-act="next" disabled>'+(p.i === p.qs.length - 1 ? 'See my stars' : 'Next question')+'</button></div></div>';
+    $$('.opt', host).forEach(b => b.addEventListener('click', () => answer(+b.dataset.j)));
+    $('[data-act="quit"]', host).addEventListener('click', tiles);
+    $('[data-act="next"]', host).addEventListener('click', () => { p.i++; if (p.i < p.qs.length) question(); else finish(); });
+    const first = $('.opt', host); if (first) first.focus({preventScroll:true});
+  }
+  function answer(j){
+    const p = play, q = p.qs[p.i], ok = j === q.a;
+    $$('.opt', host).forEach((b, k) => { b.disabled = true; if (k === q.a) b.classList.add('right'); if (k === j && !ok) b.classList.add('wrong'); });
+    if (ok){ p.streak++; addXP('aq:' + q.q.replace(/<[^>]+>/g, '').slice(0, 48)); } else { p.streak = 0; p.miss++; }
+    $('.streak', host).innerHTML = FLAME + 'Streak ' + p.streak;
+    $('.fb', host).innerHTML = (ok ? '<b>Right!</b> ' : '<b>Not quite.</b> It’s “'+q.opts[q.a]+'”. ') + q.why;
+    const nx = $('[data-act="next"]', host); nx.disabled = false; nx.focus({preventScroll:true});
+  }
+  function finish(){
+    const p = play, n = p.qs.length, right = n - p.miss;
+    const stars = p.miss === 0 ? 3 : p.miss <= 2 ? 2 : 1;
+    if (stars > (best[p.L.id] || 0)){ best[p.L.id] = stars; sset(SK, best); }
+    host.innerHTML = '<div class="card qpanel donebox"><span class="lvl" style="font-family:var(--font-display);font-weight:800;font-size:22px">'+p.L.n+'</span><div class="bigstars" aria-label="'+stars+' of 3 stars">'+starsHTML(stars)+'</div><div style="font-size:18px">You got <b>'+right+' of '+n+'</b> right.'+(stars === 3 ? ' Not a single slip!' : stars === 2 ? ' Almost perfect.' : ' Try once more: the reasons will stick.')+'</div><div class="row" style="justify-content:center"><button class="btn sun big" type="button" data-act="again">Play again</button><button class="btn big" type="button" data-act="back">Back to levels</button></div></div>';
+    $('[data-act="again"]', host).addEventListener('click', () => start(p.L));
+    $('[data-act="back"]', host).addEventListener('click', tiles);
+    if (stars >= 2) confetti();
+  }
+  const IQ = ['Which flavor did you pick?', 'How many toppings did you add?', 'How long did you wait?', 'How much did you like it?', 'How warm was your tea?'];
+  const IF = ['a word: mango, taro…', 'a code: 1 = mango, 2 = taro…', 'a whole number: 0, 1, 2…', 'minutes, with decimals: 3.47', 'stars, from 1 to 5', 'degrees Celsius: 4.5, 21…'];
+  const IDESC = {'0,0':'a flavor written as a word: a label with no order (nominal)', '0,1':'a flavor written as a code: still a label, only dressed in digits (nominal)', '1,2':'a count of toppings: an amount you count (discrete), where 0 means none (ratio)', '2,3':'a wait in minutes: an amount you measure (continuous), where 0 means no wait (ratio)', '3,4':'a star rating: labels in a fixed order (ordinal)', '4,5':'a temperature in °C: measured, but 0 °C is not “no heat” (interval)'};
+  const ITG = [
+    {t:'A label written in digits', ok:'0,1'},
+    {t:'An amount you get by counting', ok:'1,2'},
+    {t:'Labels that come in an order', ok:'3,4'},
+    {t:'An amount where “twice as much” fails, because zero is not “none”', ok:'4,5'},
+    {t:'An amount you measure, where zero means “none at all”', ok:'2,3'},
+    {t:'A label written in words', ok:'0,0'},
+  ];
+  function inverse(L){
+    const ts = shuffle(ITG.slice()); let i = 0, miss = 0, q = null, f = null, solved = false;
+    scn.classList.add('playing');
+    function draw(){
+      const T = ts[i]; q = null; f = null; solved = false;
+      host.innerHTML = '<div class="card qpanel inv"><div class="qhead"><span class="lvl">'+L.n+'</span><span>Target '+(i + 1)+' of '+ts.length+'</span><span class="streak">Misses: '+miss+'</span></div>'
+        + '<div class="qbar"><i style="width:'+(100 * i / ts.length)+'%"></i></div>'
+        + '<div class="qtext">Target: <b>'+T.t+'</b>. Build that column for Lina’s notebook.</div>'
+        + '<div class="picks"><div><p class="ph">Lina asks each customer…</p><div class="plist" data-k="q">'+IQ.map((x, j) => '<button type="button" class="pk" data-j="'+j+'" aria-pressed="false">'+x+'</button>').join('')+'</div></div>'
+        + '<div><p class="ph">…and writes the answer as</p><div class="plist" data-k="f">'+IF.map((x, j) => '<button type="button" class="pk" data-j="'+j+'" aria-pressed="false">'+x+'</button>').join('')+'</div></div></div>'
+        + '<div class="fb" aria-live="polite"></div>'
+        + '<div class="qnav"><button class="btn" type="button" data-act="quit">Back to levels</button><span class="row" style="gap:8px"><button class="btn" type="button" data-act="check">Check my column</button><button class="btn sun" type="button" data-act="next" disabled>'+(i === ts.length - 1 ? 'See my stars' : 'Next target')+'</button></span></div></div>';
+      $$('.plist', host).forEach(pl => $$('.pk', pl).forEach(b => b.addEventListener('click', () => {
+        if (solved) return;
+        if (pl.dataset.k === 'q') q = +b.dataset.j; else f = +b.dataset.j;
+        $$('.pk', pl).forEach(x => x.setAttribute('aria-pressed', x === b ? 'true' : 'false'));
+      })));
+      $('[data-act="quit"]', host).addEventListener('click', tiles);
+      $('[data-act="check"]', host).addEventListener('click', check);
+      $('[data-act="next"]', host).addEventListener('click', () => { i++; if (i < ts.length) draw(); else done(); });
+    }
+    function check(){
+      if (solved) return;
+      const fb = $('.fb', host);
+      if (q == null || f == null){ fb.innerHTML = 'Pick one question and one way to write the answer.'; return; }
+      const k = q + ',' + f, T = ts[i];
+      if (k === T.ok){ solved = true; fb.innerHTML = '<b>Right!</b> You built '+IDESC[k]+'.'; addXP('inv' + T.ok); const nx = $('[data-act="next"]', host); nx.disabled = false; nx.focus({preventScroll:true}); }
+      else { miss++; $('.streak', host).textContent = 'Misses: ' + miss; fb.innerHTML = '<b>Not this one.</b> ' + (IDESC[k] ? 'You built '+IDESC[k]+'. ' : 'That pair is not one of Lina’s columns. ') + 'Try again.'; }
+    }
+    function done(){
+      const stars = miss === 0 ? 3 : miss <= 2 ? 2 : 1;
+      if (stars > (best[L.id] || 0)){ best[L.id] = stars; sset(SK, best); }
+      host.innerHTML = '<div class="card qpanel donebox"><span class="lvl" style="font-family:var(--font-display);font-weight:800;font-size:22px">'+L.n+'</span><div class="bigstars" aria-label="'+stars+' of 3 stars">'+starsHTML(stars)+'</div><div style="font-size:18px">Six columns built with <b>'+miss+'</b> miss'+(miss === 1 ? '' : 'es')+'.</div><div class="row" style="justify-content:center"><button class="btn sun big" type="button" data-act="again">Play again</button><button class="btn big" type="button" data-act="back">Back to levels</button></div></div>';
+      $('[data-act="again"]', host).addEventListener('click', () => inverse(L));
+      $('[data-act="back"]', host).addEventListener('click', tiles);
+      if (stars >= 2) confetti();
+    }
+    draw();
+  }
+  function detective(){
+    scn.classList.add('playing');
+    host.innerHTML = '<div class="card qpanel det">'
+      + '<div class="qhead"><span class="lvl">Detective</span><button class="btn sm" type="button" data-act="quit">Back to levels</button></div>'
+      + '<div class="row"><label for="detname" style="font-weight:600">Name a variable</label><input type="text" id="detname" placeholder="e.g. number of returns per day"></div>'
+      + '<div class="qrow2" id="dq1"><span>1. Can you do math with it and get something that makes sense?</span><span class="seg"><button type="button" data-q="1" data-v="y">Yes</button><button type="button" data-q="1" data-v="n">No</button></span></div>'
+      + '<div class="qrow2 dim" id="dq2a"><span>2. Do the labels have a natural order?</span><span class="seg"><button type="button" data-q="2a" data-v="y">Yes</button><button type="button" data-q="2a" data-v="n">No</button></span></div>'
+      + '<div class="qrow2 dim" id="dq2b"><span>2. Does zero mean “none at all”?</span><span class="seg"><button type="button" data-q="2b" data-v="y">Yes</button><button type="button" data-q="2b" data-v="n">No</button></span></div>'
+      + '<div class="qrow2 dim" id="dq3"><span>3. Do you get it by counting (rather than measuring)?</span><span class="seg"><button type="button" data-q="3" data-v="y">Yes</button><button type="button" data-q="3" data-v="n">No</button></span></div>'
+      + '<div class="res" id="detres"></div></div>';
+    $('[data-act="quit"]', host).addEventListener('click', tiles);
+    const A = {};
+    function render(){
+      const nm = ($('#detname').value.trim() || 'Your variable').replace(/</g, '&lt;');
+      $('#dq2a').classList.toggle('dim', A[1] !== 'n');
+      $('#dq2b').classList.toggle('dim', A[1] !== 'y');
+      $('#dq3').classList.toggle('dim', A[1] !== 'y');
+      $$('.seg button', host).forEach(b => b.setAttribute('aria-pressed', A[b.dataset.q] === b.dataset.v ? 'true' : 'false'));
+      const r = $('#detres'); r.className = 'res';
+      if (!A[1]){ r.innerHTML = '<span>Answer question 1 to start the investigation.</span>'; return; }
+      if (A[1] === 'n'){
+        r.classList.add('tag');
+        r.innerHTML = '<span class="mi">'+tagSVG()+'</span><span><b>'+nm+'</b> is Tag’s: <b>categorical</b>'+(A['2a'] ? ', on '+(A['2a'] === 'y' ? 'an <b>ordinal</b> scale. Count it, find the mode and the median, draw bars in order.' : 'a <b>nominal</b> scale. Count it, find the mode, draw bars in any order.') : '. Question 2 decides nominal or ordinal.')+'</span>';
+      } else {
+        r.classList.add('ruler');
+        r.innerHTML = '<span class="mi">'+rulerSVG()+'</span><span><b>'+nm+'</b> is Ruler’s: <b>quantitative</b>'+(A['2b'] ? ', on '+(A['2b'] === 'y' ? 'a <b>ratio</b> scale' : 'an <b>interval</b> scale') : '')+(A[3] ? ', and <b>'+(A[3] === 'y' ? 'discrete' : 'continuous')+'</b>' : '')+'.'+(A['2b'] && A[3] ? '' : ' Answer the other questions to finish.')+'</span>';
+        if (A['2b'] && A[3]) addXP('detective');
+      }
+    }
+    $$('.seg button', host).forEach(b => b.addEventListener('click', () => { A[b.dataset.q] = b.dataset.v; if (b.dataset.q === '1'){ delete A['2a']; delete A['2b']; delete A[3]; } render(); }));
+    $('#detname').addEventListener('input', render);
+    render();
+  }
+  tiles();
+  $('#resetall').addEventListener('click', () => { XP = {}; sset(XPK, XP); best = {}; sset(SK, best); renderXP(false); tiles(); });
+})();
+
+/* =========================================================== 14. recap */
+(function recap(){
+  const I = {
+    table:'<svg viewBox="0 0 54 54"><rect x="6" y="8" width="42" height="40" rx="6" fill="#FFFFFF" stroke="'+INK+'" stroke-width="2.5"/><path d="M6 20h42M6 30h42M6 40h42" stroke="#C5D0F0" stroke-width="2.5"/><path d="M16 8v40" stroke="#F49BB3" stroke-width="2.5"/><rect x="6" y="20" width="42" height="10" fill="#F7B32B" opacity=".7"/></svg>',
+    pair:'<svg viewBox="0 0 54 54"><g transform="translate(0 2) scale(.4)">'+tagSVG().replace(/<\/?svg[^>]*>/g, '')+'</g><g transform="translate(4 28) scale(.33)">'+rulerSVG().replace(/<\/?svg[^>]*>/g, '')+'</g></svg>',
+    stones:'<svg viewBox="0 0 54 54"><ellipse cx="10" cy="42" rx="7" ry="3" fill="#fff" stroke="'+INK+'" stroke-width="2"/><ellipse cx="27" cy="42" rx="7" ry="3" fill="#fff" stroke="'+INK+'" stroke-width="2"/><ellipse cx="44" cy="42" rx="7" ry="3" fill="#fff" stroke="'+INK+'" stroke-width="2"/><path d="M10 34 Q18 14 27 34" fill="none" stroke="#2F55D4" stroke-width="2.5" stroke-dasharray="3 3"/><circle cx="27" cy="31" r="6" fill="#3B2416" stroke="'+INK+'" stroke-width="2"/><rect x="4" y="12" width="46" height="6" rx="3" fill="#2F55D4" opacity=".35"/></svg>',
+    powers:'<svg viewBox="0 0 54 54"><rect x="3" y="36" width="11" height="14" fill="#EE7F1B" stroke="'+INK+'" stroke-width="2"/><rect x="15" y="27" width="11" height="23" fill="#EE7F1B" stroke="'+INK+'" stroke-width="2"/><rect x="27" y="18" width="11" height="32" fill="#2F55D4" stroke="'+INK+'" stroke-width="2"/><rect x="39" y="9" width="11" height="41" fill="#2F55D4" stroke="'+INK+'" stroke-width="2"/><circle cx="44.5" cy="4.5" r="4" fill="#3B2416"/></svg>',
+    camera:'<svg viewBox="0 0 54 54"><path d="M6 18h9l4-6h16l4 6h9v26H6z" fill="#fff" stroke="'+INK+'" stroke-width="2.5" stroke-linejoin="round"/><circle cx="27" cy="30" r="8" fill="#8E6CC9" stroke="'+INK+'" stroke-width="2.5"/></svg>',
+    jar:'<svg viewBox="0 0 44 44"><rect x="13" y="3" width="18" height="6" rx="2" fill="#F7B32B" stroke="'+INK+'" stroke-width="2.2"/><rect x="6" y="9" width="32" height="32" rx="8" fill="#fff" stroke="'+INK+'" stroke-width="2.2"/><circle cx="15" cy="20" r="3" fill="#8E6CC9"/><circle cx="24" cy="27" r="3" fill="#C8BDDA"/><circle cx="30" cy="18" r="3" fill="#C8BDDA"/><circle cx="16" cy="32" r="3" fill="#C8BDDA"/><circle cx="29" cy="33" r="3" fill="#8E6CC9"/></svg>',
+    warn:'<svg viewBox="0 0 54 54"><path d="M27 5 L51 47 H3 Z" fill="#F7B32B" stroke="#fff" stroke-width="3" stroke-linejoin="round"/><path d="M27 20v13" stroke="'+INK+'" stroke-width="4" stroke-linecap="round"/><circle cx="27" cy="40" r="2.6" fill="'+INK+'"/></svg>',
+  };
+  const C = [
+    ['table','A dataset is a table','One row for each element (its observation), one column for each question (a variable).'],
+    ['pair','Label or amount?','If the math means something, the variable is quantitative. If not, it is categorical.'],
+    ['stones','Count or measure?','Counts jump from value to value: discrete. Measurements glide: continuous.'],
+    ['powers','Four levels','Nominal (=), ordinal (<), interval (−), ratio (÷). Each level adds one power.'],
+    ['camera','Photo or film?','Many things at one moment: cross-sectional. One thing over time: a time series.'],
+    ['jar','Population and sample','Population: everyone the question is about. Sample: the few you check. Parameter (<span class="sym">μ</span>) versus statistic (<span class="sym">x̄</span>).'],
+  ];
+  $('#recap').innerHTML = C.map(([i, t, d]) => '<div class="rc"><span class="ri">'+I[i]+'</span><div><b>'+t+'</b><span>'+d+'</span></div></div>').join('')
+    + '<div class="rc trap"><span class="ri">'+I.warn+'</span><div><b>The trap</b><span>Digits can be name tags. Never average codes, except 0 and 1, whose average is a share.</span></div></div>'
+    + '<div class="rc next"><div><b>The door to T1.2</b><span>Saturday: 40 cups, 40 flavors in one column. How can one picture show them all?</span><button class="btn sm" type="button" id="again" style="margin-top:8px;display:block">Watch T1.1 again</button></div></div>';
+  $('#again').addEventListener('click', () => go(0));
+})();
+
+/* =========================================================== confetti */
+function confetti(){
+  if (reduced) return;
+  const c = $('#confetti'), x = c.getContext('2d');
+  c.width = innerWidth; c.height = innerHeight;
+  const cols = ['#EE7F1B','#2F55D4','#F7B32B','#6E9F2E','#D93A62','#8E6CC9'];
+  const P = Array.from({length:150}, () => ({x:innerWidth/2 + (Math.random() - .5)*240, y:innerHeight*.4, vx:(Math.random() - .5)*15, vy:-Math.random()*15 - 4, r:Math.random()*7 + 5, c:cols[Math.floor(Math.random()*cols.length)], a:Math.random()*6, va:(Math.random() - .5)*.4}));
+  let t = 0;
+  (function f(){
+    x.clearRect(0, 0, c.width, c.height);
+    P.forEach(p => { p.vy += .42; p.x += p.vx; p.y += p.vy; p.a += p.va; x.save(); x.translate(p.x, p.y); x.rotate(p.a); x.fillStyle = p.c; x.fillRect(-p.r/2, -p.r/3, p.r, p.r*.66); x.restore(); });
+    if (++t < 120) requestAnimationFrame(f); else x.clearRect(0, 0, c.width, c.height);
+  })();
+}
+
+/* =========================================================== start */
+const m0 = /^#s(\d+)$/.exec(location.hash);
+go(m0 ? +m0[1] : 0);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tangible Stats with Mohammad Ghafourian-Nasiri: interactive pages</title>
+<meta name="description" content="Statistics you can see, touch and play with. Free interactive pages that go with each Tangible Stats video on YouTube.">
+<style>
+  :root{--milk:#F2EDF9;--paper:#FFFFFF;--ink:#2A1C19;--ink2:#5B4B66;--line:#D9CFEA;--taro:#4B2D86;--taroh:#6243A0;--tag:#EE7F1B;--ruler:#2F55D4;--mango:#F7B32B}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--milk);color:var(--ink);font-family:"Times New Roman",Times,"Liberation Serif",serif;font-size-adjust:.48;line-height:1.55}
+  .wrap{max-width:860px;margin:0 auto;padding:48px 20px 64px}
+  .kicker{font-weight:700;letter-spacing:.08em;font-size:14px;color:var(--taro);text-transform:uppercase}
+  h1{font-size:44px;line-height:1.1;margin:8px 0 10px;letter-spacing:-.01em}
+  h1 em{color:var(--taro)}
+  .lead{font-size:20px;color:var(--ink2);margin:0 0 8px}
+  .by{font-size:17px;margin:0 0 28px}
+  .yt{display:inline-block;background:var(--taro);color:#fff;text-decoration:none;font-weight:700;padding:10px 18px;border-radius:999px}
+  .yt:hover{background:var(--taroh)}
+  h2{font-size:26px;margin:44px 0 14px}
+  .grid{display:grid;gap:14px}
+  .card{display:block;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 20px;text-decoration:none;color:inherit;border-left:6px solid var(--taro)}
+  .card:hover{border-color:var(--taro)}
+  .card .n{font-weight:700;color:var(--taro);font-size:15px}
+  .card .t{font-weight:700;font-size:22px;margin:2px 0 4px}
+  .card .q{color:var(--ink2);font-size:17px}
+  .soon{opacity:.6;border-left-color:var(--line)}
+  footer{margin-top:48px;padding-top:18px;border-top:1px solid var(--line);font-size:15px;color:var(--ink2)}
+  footer a{color:var(--taro)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kicker">Tangible Stats</div>
+  <h1>Statistics you can <em>see, touch</em> and play with</h1>
+  <p class="lead">Every video comes with a free interactive page where you try the idea yourself. One question per page, in course order.</p>
+  <p class="by">By Mohammad Ghafourian-Nasiri, doctoral student in Operations and Decision Systems, Université Laval.</p>
+  <a class="yt" href="https://www.youtube.com/@TangibleStats">Watch the videos on YouTube</a>
+
+  <h2>Theme 1 · Describing data</h2>
+  <div class="grid">
+    <a class="card" href="t1-1-label-or-amount.html">
+      <div class="n">Episode 1.1</div>
+      <div class="t">Label or amount?</div>
+      <div class="q">Is my variable categorical or quantitative, and why does that one decision control everything that follows?</div>
+    </a>
+    <a class="card" href="t1-2-one-variable.html">
+      <div class="n">Episode 1.2</div>
+      <div class="t">What shape are the bills?</div>
+      <div class="q">Which graph fits my variable, and how do I read the shape of a histogram?</div>
+    </a>
+    <a class="card" href="t1-3-two-variables.html">
+      <div class="n">Episode 1.3</div>
+      <div class="t">Same tables, two percents</div>
+      <div class="q">How do I see whether two variables move together?</div>
+    </a>
+    <a class="card" href="t1-4-mean-median-mode.html">
+      <div class="n">Episode 1.4</div>
+      <div class="t">Mean, median, mode</div>
+      <div class="q">When the mean and the median disagree, which one is "the average"?</div>
+    </a>
+    <div class="card soon">
+      <div class="n">Coming next</div>
+      <div class="t">Spread, z-scores and correlation</div>
+      <div class="q">New pages are added as their videos come out.</div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Course order follows Anderson, Sweeney, Williams, Camm &amp; Cochran (2015). <em>Statistiques pour l'économie et la gestion</em> (5e éd.). De Boeck Supérieur. Each page lists its own sources.</p>
+    <p>Independent, non-commercial project. Not an official course of any university and not affiliated with the authors, the publisher or Université Laval.</p>
+    <p><a href="/">mghnasiri.github.io</a></p>
+  </footer>
+</div>
+</body>
+</html>

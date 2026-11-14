@@ -1,0 +1,2155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T1.3 — Two variables: crosstabs and scatter diagrams</title>
+<meta name="description" content="How do I see whether two variables move together? Crosstabs, row and column percentages, Simpson’s paradox, scatter diagrams and trendlines, reading direction, form, strength and outliers, and why association is not causation. Interactive lesson, T1.3.">
+<style>
+:root{color-scheme: light;
+  --milk:#F2EDF9; --paper:#FFFFFF; --wash:#F7F3FC;
+  --ink:#2A1C19; --ink-2:#5B4B66; --ink-3:#85799A; --line:#D9CFEA; --line-2:#E8E1F3;
+  --deep:#4B2D86; --deep-2:#6243A0;
+  --tag:#EE7F1B; --tag-soft:#FFE3CC; --tag-ink:#A04A00;
+  --ruler:#2F55D4; --ruler-soft:#DEE5FB; --ruler-ink:#1F3BA3;
+  --sun:#F7B32B; --sun-soft:#FDEFD2;
+  --mint:#6E9F2E; --berry:#D93A62; --taro:#8E6CC9; --taro-soft:#E7DEF5; --sugar:#B07A4A;
+  --ok:#4E8A1E; --ok-soft:#E3F1D0; --ok-ink:#365F14; --no:#D3375E; --no-soft:#FBE0E7; --no-ink:#A1203F;
+  --font-display:"Times New Roman",Times,"Liberation Serif",serif;
+  --font-body:"Times New Roman",Times,"Liberation Serif",serif;
+  --font-hand:var(--font-body);
+  --r:18px; --bw:2px; --shc:transparent; --dot:transparent;
+  --bg:var(--milk); --fg:var(--ink); --fg2:var(--ink-2); --stripe:transparent; --focus:var(--deep); --now:var(--deep);}
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%; margin:0}
+body{display:flex; flex-direction:column; overflow:hidden; background:var(--milk); color:var(--ink); font-family:var(--font-body); font-size:17px; font-size-adjust:.48; line-height:1.55; -webkit-font-smoothing:antialiased; font-variant-numeric:tabular-nums}
+button{font:inherit; color:inherit}
+:focus-visible{outline:3px solid var(--focus); outline-offset:3px}
+.visually-hidden{position:absolute!important; width:1px; height:1px; overflow:hidden; clip:rect(1px,1px,1px,1px); white-space:nowrap}
+@media (prefers-reduced-motion: reduce){
+*,*::before,*::after{animation:none!important; transition:none!important}
+}
+.bar{flex:none; position:relative; z-index:5; display:flex; align-items:center; gap:16px; height:54px; padding:0 24px; background:var(--milk); border-bottom:1px solid var(--line)}
+.ep{font-family:var(--font-display); font-weight:800; font-size:18px; color:var(--deep)}
+.bar .t{font-size:15px; color:var(--ink-2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0}
+.chapnm{display:inline-flex; align-items:center; gap:8px; font-size:14px; font-weight:700; color:var(--ink); white-space:nowrap}
+.chapnm::before{content:""; width:10px; height:10px; border-radius:50%; background:var(--now); flex:none; transition:background .3s}
+.prog{flex:1; min-width:70px; max-width:300px; height:6px; margin-left:auto; border-radius:999px; background:var(--line); overflow:hidden}
+.prog i{display:block; height:100%; width:0; background:var(--deep); border-radius:999px; transition:width .35s}
+.xp{font-weight:700; font-size:15px; color:var(--deep); white-space:nowrap}
+.xp.pulse{animation:pulse .6s}
+@keyframes pulse{40%{transform:scale(1.3)}}
+@media (max-width:820px){
+.bar .t{display:none}
+}
+@media (max-width:480px){
+.chapnm{display:none}
+.bar{padding:0 14px}
+}
+.ctrl{flex:none; z-index:5; display:flex; align-items:center; justify-content:space-between; gap:12px; height:64px; padding:0 24px; background:var(--milk); border-top:1px solid var(--line)}
+.dots{display:flex; gap:8px; align-items:center; flex-wrap:wrap; justify-content:center}
+.dots button{width:11px; height:11px; padding:0; border-radius:50%; border:2px solid var(--ink-3); background:transparent; cursor:pointer; transition:width .2s, height .2s, background .2s, border-color .2s}
+.dots button.seen{background:var(--ink-3)}
+.dots button.on{width:17px; height:17px; background:var(--ink); border-color:var(--ink)}
+.dots button:hover{border-color:var(--deep)}
+.pos{display:none; font-weight:700}
+@media (max-width:760px){
+.dots{display:none}
+.pos{display:block}
+.ctrl{padding:0 14px}
+}
+.btn{font-weight:700; font-size:16px; color:var(--ink); background:var(--paper); border:2px solid var(--ink); border-radius:999px; padding:8px 18px; cursor:pointer; transition:background .15s, border-color .15s, color .15s, transform .08s; line-height:1.2}
+.btn:hover{border-color:var(--deep); background:var(--wash)}
+.btn:active{transform:translateY(1px)}
+.btn.sun{background:var(--deep); border-color:var(--deep); color:#fff}
+.btn.sun:hover{background:var(--deep-2); border-color:var(--deep-2)}
+.btn.big{font-size:18px; padding:12px 26px}
+.btn.sm{font-size:15px; padding:6px 14px}
+.btn[aria-pressed="true"]{background:var(--deep); border-color:var(--deep); color:#fff}
+.btn:disabled{opacity:.45; cursor:default; transform:none}
+.btn.right{background:var(--ok-soft); border-color:var(--ok); color:var(--ok-ink); opacity:1}
+.btn.wrong{background:var(--no-soft); border-color:var(--no); color:var(--no-ink); opacity:1}
+.row{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+#deck{flex:1; min-height:0; position:relative}
+.scene{position:absolute; inset:0; overflow-y:auto; display:none; padding:clamp(20px,3vw,46px) clamp(16px,3.4vw,52px); color:var(--fg); background-color:var(--bg); background-image:linear-gradient(var(--stripe),var(--stripe)); background-size:100% 6px; background-repeat:no-repeat}
+.scene.on{display:flex}
+.scene-in{margin:auto; width:100%; max-width:1240px; display:grid; grid-template-columns:minmax(0,5fr) minmax(0,7fr); gap:clamp(22px,3.6vw,60px); align-items:center}
+.scene-in.wide{grid-template-columns:minmax(0,1fr); gap:16px}
+.scene-in.picwide{grid-template-columns:minmax(0,4fr) minmax(0,8fr)}
+@media (max-width:900px){
+.scene-in.picwide{grid-template-columns:minmax(0,1fr)}
+.scene-in{grid-template-columns:minmax(0,1fr)}
+}
+@media (min-width:1600px) and (min-height:960px){
+.scene-in{zoom:1.32}
+}
+@media (max-height:760px) and (min-width:901px){
+.scene{padding-top:16px; padding-bottom:14px}
+.txt{gap:10px}
+.pic{gap:12px}
+.recap{gap:10px}
+.rc{padding:9px 12px}
+.rc span{font-size:13.5px}
+.scene-in.wide{gap:12px}
+.nextline{font-size:15.5px}
+}
+.scene.on .scene-in{animation:enter .4s cubic-bezier(.2,.7,.3,1)}
+@keyframes enter{from{opacity:.3; transform:translateY(10px)} to{opacity:1; transform:none}}
+.th-plum{--stripe:transparent; --chip:var(--deep)}
+.th-sun{--stripe:var(--sun); --chip:var(--sun)}
+.th-lilac{--stripe:var(--taro); --chip:var(--taro)}
+.th-sky{--stripe:var(--sugar); --chip:var(--sugar)}
+.th-mint{--stripe:var(--mint); --chip:var(--mint)}
+.th-pink{--stripe:var(--berry); --chip:var(--berry)}
+.th-night,.th-indigo{--chip:var(--deep); --bg:var(--deep); --fg:#fff; --fg2:rgba(255,255,255,.86); --stripe:transparent; --focus:var(--sun)}
+.th-trap{--chip:var(--berry); --bg:var(--ink); --fg:#fff; --fg2:rgba(255,255,255,.84); --stripe:transparent; --focus:var(--sun)}
+.txt{display:flex; flex-direction:column; align-items:flex-start; gap:14px; min-width:0}
+.kick{display:inline-flex; align-items:center; gap:10px; font-weight:600; font-size:15px; color:var(--fg2)}
+.kick b{display:grid; place-items:center; min-width:28px; height:28px; padding:0 8px; border-radius:999px; background:var(--paper); color:var(--ink); box-shadow:inset 0 0 0 2.5px var(--stripe); font-family:var(--font-display); font-weight:800; font-size:14px; line-height:1}
+.th-plum .kick b{box-shadow:inset 0 0 0 2px var(--line)}
+.th-night .kick b,.th-indigo .kick b,.th-trap .kick b{box-shadow:none}
+h1,h2,h3{font-family:var(--font-display); font-weight:700; margin:0; letter-spacing:-.01em; text-wrap:balance}
+h1{font-size:clamp(46px,6.2vw,88px); line-height:.94}
+h2{font-size:clamp(30px,3.5vw,50px); line-height:1.02}
+.sub{margin:0; font-size:clamp(17px,1.45vw,20px); line-height:1.5; color:var(--fg2); max-width:38ch}
+.take{display:block; border-left:4px solid var(--stripe); padding:2px 0 2px 14px; font-weight:700; font-size:16.5px; line-height:1.45; color:var(--fg); max-width:44ch}
+.th-plum .take,.th-night .take,.th-indigo .take,.th-trap .take{border-left-color:var(--sun)}
+.take svg{display:none}
+.fr{font-size:14px; color:var(--fg2)}
+.meta{display:flex; flex-wrap:wrap; gap:4px 22px}
+.pill{font-size:14px; color:var(--fg2)}
+.pic{min-width:0; display:flex; flex-direction:column; gap:16px}
+.card{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:var(--r); padding:16px 18px}
+.th-night .card,.th-indigo .card,.th-trap .card{border-color:transparent}
+.hint{font-size:14.5px; color:var(--ink-2)}
+.lina{display:flex; gap:12px; align-items:flex-start; max-width:44ch}
+.lina .av{flex:none; width:50px; height:50px}
+.lina .av svg{width:100%; height:100%; display:block}
+.bubble{color:var(--fg); font-size:16.5px; line-height:1.45}
+.bubble b{display:block; font-family:var(--font-display); font-weight:800; font-size:14.5px; line-height:1.3; color:var(--deep)}
+.th-night .bubble b,.th-indigo .bubble b,.th-trap .bubble b{color:var(--sun)}
+.card .bubble b{color:var(--deep)}
+.stand{width:100%; height:auto; max-height:calc(100dvh - 215px); display:block}
+.stand .cupbob{animation:bob 3s ease-in-out infinite; transform-box:fill-box; transform-origin:center bottom}
+.stand .cupbob:nth-of-type(2n){animation-delay:-1.4s}
+@keyframes bob{50%{transform:translateY(-6px) rotate(-1.5deg)}}
+.nb{position:relative; background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:16px; padding:28px 12px 12px 46px; overflow-x:auto}
+.nb::before{content:""; position:absolute; left:36px; top:0; bottom:0; width:2px; background:#F49BB3}
+.nb::after{content:""; position:absolute; left:22px; right:22px; top:9px; height:10px; background:radial-gradient(circle, var(--milk) 3px, var(--line) 3.6px, transparent 4.3px) 0 0/30px 10px repeat-x}
+.nb table{border-collapse:collapse; width:100%; font-family:var(--font-body); font-size:clamp(17px,1.45vw,21px); line-height:1; font-variant-numeric:tabular-nums}
+.nb th{font-weight:700; text-align:left; font-size:.76em; color:var(--ink-2); padding:4px 10px 6px; border-bottom:2px solid #C5D0F0; white-space:nowrap}
+.nb td{padding:2px 10px; height:41px; border-bottom:1px solid #DCE3F7; white-space:nowrap; font-weight:600; transition:background .2s}
+.nb .cc{width:42px; padding:2px 4px}
+.nb td.cc svg{display:block; margin:auto}
+.nb tr.gone{display:none}
+#nb2{padding-top:24px}
+#nb2 td{height:36px}
+.nb tr.new td{animation:write .8s ease-out}
+@keyframes write{from{clip-path:inset(0 100% 0 0)} to{clip-path:inset(0 0 0 0)}}
+.nb .hl{background:var(--sun-soft)}
+.nb th.hl{background:var(--sun); color:var(--ink)}
+.nb .hl2{background:var(--sun); box-shadow:inset 0 0 0 2px var(--ink)}
+.counter{font-size:16px; color:var(--fg)}
+.counter b{font-family:var(--font-display); font-size:24px}
+.words{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; width:100%; max-width:440px}
+.word{display:flex; align-items:center; gap:10px; font-weight:700; font-size:17px; color:var(--ink); background:var(--paper); border:2px solid var(--ink); border-radius:12px; padding:8px 12px; cursor:pointer; text-align:left; transition:background .15s, border-color .15s}
+.word:hover{border-color:var(--deep); background:var(--wash)}
+.word[aria-pressed="true"]{background:var(--deep); border-color:var(--deep); color:#fff}
+.word .wi{width:28px; height:28px; flex:none; display:grid; place-items:center}
+.word .wi svg{width:100%; height:100%}
+.defcard{font-size:16px; max-width:44ch; padding:12px 16px}
+.compact .qrow{grid-template-columns:minmax(0,1fr) auto; align-items:center; column-gap:12px; row-gap:4px; padding:8px 0}
+.compact .qrow:first-child{padding-top:0}
+.compact .qf{grid-column:1/-1; min-height:0}
+.compact .qf:empty{display:none}
+.compact .qq{font-size:15.5px; line-height:1.35}
+.qrow{display:grid; gap:8px; padding:10px 0; border-top:1px solid var(--line-2)}
+.qrow:first-child{border-top:0; padding-top:0}
+.qq{font-weight:700}
+.qo{display:flex; flex-wrap:wrap; gap:8px}
+.qf{font-size:15px; color:var(--ink-2); min-height:1.4em}
+.mi svg{width:100%; height:auto; display:block}
+.duo{display:grid; grid-template-columns:1fr 1fr; gap:12px; width:100%; max-width:500px}
+.mas{display:flex; gap:10px; align-items:center; background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:16px; padding:10px; transition:transform .25s, opacity .25s}
+.mas .mi{flex:none; width:66px}
+.mas b{display:block; font-family:var(--font-display); font-size:20px; line-height:1}
+.mas .role{display:block; font-size:14px; line-height:1.3; margin-top:3px; color:var(--ink-2)}
+.mas.dim{opacity:.4}
+.mas.act{transform:translateY(-5px)}
+@media (max-width:520px){
+.duo{grid-template-columns:1fr}
+}
+.machine{background:var(--ink); color:#fff; border-radius:24px; padding:18px; display:grid; gap:16px; --focus:var(--sun)}
+.mtabs{display:flex; flex-wrap:wrap; gap:8px}
+.mtabs .btn{border-color:rgba(255,255,255,.55); background:transparent; color:#fff}
+.mtabs .btn:hover{border-color:#fff; background:rgba(255,255,255,.08)}
+.mtabs .btn[aria-pressed="true"]{background:var(--sun); color:var(--ink); border-color:var(--sun)}
+.slots{display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1.3fr); align-items:center; gap:10px}
+.slot{background:var(--paper); color:var(--ink); border:2px solid var(--paper); border-radius:14px; min-height:80px; display:grid; place-items:center; align-content:center; text-align:center; font-family:var(--font-display); font-weight:700; font-size:clamp(22px,2.2vw,30px); line-height:1.05; padding:8px}
+.slot.out{background:var(--taro-soft); border-color:var(--taro-soft)}
+.slot.out.good{background:var(--ok-soft); border-color:#9BC255}
+.slot.out.bad{background:var(--no-soft); border-color:#F07C98; animation:shake .45s}
+.slot small{display:block; font-family:var(--font-body); font-size:12.5px; font-weight:700; margin-top:5px; color:var(--no-ink)}
+.op{font-family:var(--font-display); font-weight:800; font-size:40px; color:var(--sun)}
+@media (max-width:520px){
+.slot{font-size:18px; padding:6px 3px; min-height:64px}
+.op{font-size:28px}
+.slots{gap:6px}
+}
+.mfoot{display:flex; align-items:center; justify-content:space-between; gap:12px}
+.lamps{display:flex; gap:8px; align-items:center; font-size:13px; color:rgba(255,255,255,.78)}
+.lamp{width:24px; height:24px; border-radius:50%; background:#5B4B66; border:2px solid rgba(255,255,255,.8)}
+.lamp.good{background:#9BC255; box-shadow:0 0 16px #9BC255}
+.lamp.bad{background:#F07C98; box-shadow:0 0 16px #F07C98}
+@keyframes shake{20%{transform:translateX(-6px) rotate(-2deg)}40%{transform:translateX(6px) rotate(2deg)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.speech{display:flex; gap:14px; align-items:center; min-height:104px; font-size:16.5px; line-height:1.4}
+.speech .mi{flex:none; width:100px}
+.speech b{display:block; font-family:var(--font-display); font-size:19px}
+.sortgrid{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px}
+@media (max-width:1150px){
+.sortgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+.scard{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:14px; padding:10px 11px; display:flex; flex-direction:column; gap:6px}
+.scard .nm{font-weight:700; font-size:15px; line-height:1.2}
+.scard .ex{font-family:var(--font-display); font-weight:700; font-size:24px; line-height:1; color:var(--ink-2)}
+.scard .bb{display:flex; gap:6px; margin-top:auto}
+.scard .bb button{flex:1; font-weight:700; font-size:14px; border:2px solid var(--ink); border-radius:10px; padding:6px 4px; cursor:pointer; color:var(--ink); transition:background .15s}
+.scard .bb .bt{background:var(--tag-soft)}
+.scard .bb .br{background:var(--ruler-soft)}
+.scard .bb .bt:hover{background:var(--tag)}
+.scard .bb .br:hover{background:var(--ruler); color:#fff}
+.scard.ok{border-color:var(--ok); box-shadow:inset 0 0 0 1px var(--ok)}
+.scard.bad{border-color:var(--no); box-shadow:inset 0 0 0 1px var(--no)}
+.scard .why{font-size:13.5px; line-height:1.35}
+.scard .why b{display:block; font-size:14px}
+.scard.ok .why b{color:var(--ok-ink)}
+.scard.bad .why b{color:var(--no-ink)}
+.bins{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.bin{border:2px dashed var(--ink-3); border-radius:18px; padding:10px 12px; min-height:104px; color:var(--ink)}
+.bin.tag{background:var(--tag-soft); border-color:#E9A86A}
+.bin.ruler{background:var(--ruler-soft); border-color:#8EA3E6}
+.bh{display:flex; align-items:center; gap:8px; font-weight:700; font-size:15.5px}
+.mi.s{width:50px; flex:none}
+.bin .chips{display:flex; flex-wrap:wrap; gap:6px; margin-top:8px}
+.bin .chips span{font-size:13.5px; font-weight:700; padding:3px 11px; border-radius:999px; animation:drop .35s}
+.bin.tag .chips span{background:var(--tag); color:var(--ink)}
+.bin.ruler .chips span{background:var(--ruler); color:#fff}
+@keyframes drop{from{transform:translateY(-16px) scale(.8); opacity:.3}}
+.score{font-family:var(--font-display); font-weight:800; font-size:26px}
+.lane{display:grid; gap:6px}
+.lh{display:flex; align-items:center; gap:10px; flex-wrap:wrap; font-size:17px}
+.fampill{font-size:13px; font-weight:700; padding:2px 10px; border-radius:999px}
+.fampill.ruler{background:var(--ruler); color:#fff}
+.fampill.tag{background:var(--tag); color:var(--ink)}
+.lane svg{width:100%; height:auto; max-height:100px; display:block}
+.lane svg text{font-family:var(--font-body); font-size:14px; fill:var(--ink-2); font-weight:700}
+.lread{font-family:var(--font-display); font-weight:800; font-size:30px; line-height:1.1}
+.lread small{font-family:var(--font-body); font-weight:400; font-size:14.5px; color:var(--ink-2); margin-left:10px}
+#hopper{transition:transform .32s ease-in-out}
+.hopin.hop{animation:hop .38s ease-out}
+@keyframes hop{45%{transform:translateY(-34px)}}
+input[type=range]{width:100%; accent-color:var(--ruler); height:30px; cursor:pointer; margin:0}
+.stairs{width:100%; height:auto; max-height:38vh; display:block}
+.stairs .stp{cursor:pointer}
+.stairs .stp:focus{outline:none}
+.stairs .stp:focus-visible rect{stroke:var(--deep); stroke-width:5}
+.stairs .snm{font-family:var(--font-display); font-weight:800; font-size:21px}
+.stairs .spw{font-family:var(--font-display); font-weight:800; font-size:23px; fill:var(--ink)}
+.stairs .bl{font-family:var(--font-body); font-weight:700; font-size:15px}
+#hop2{transition:transform .45s cubic-bezier(.3,1.5,.5,1)}
+.pch{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:10px}
+.pch b{font-family:var(--font-display); font-size:26px; line-height:1}
+.pws{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px}
+.pw{display:flex; flex-direction:column; align-items:center; gap:5px; text-align:center; font-size:13px; font-weight:600; color:var(--ink-3); line-height:1.2}
+.pwc{width:38px; height:38px; border-radius:50%; display:grid; place-items:center; border:2px solid var(--line); font-family:var(--font-display); font-weight:800; font-size:24px; background:var(--wash); color:var(--ink-3)}
+.pwc svg{width:20px; height:20px}
+.pw.on{color:var(--ink)}
+.pw.on .pwc{border-color:var(--ink); color:var(--ink)}
+.pw.on.tag .pwc{background:var(--tag)}
+.pw.on.ruler .pwc{background:var(--ruler); color:#fff}
+.pex{display:grid; gap:2px; margin-top:10px; font-size:16px}
+.pex i{font-family:var(--font-display); font-style:normal; font-weight:700; font-size:22px}
+.pex .nope{color:var(--no-ink)}
+.pex s{text-decoration-thickness:2px}
+.pcols{font-size:14px; color:var(--ink-2); margin-left:auto}
+.thermo svg{width:100%; height:auto; display:block; max-height:48vh}
+.thermo .tn{font-family:var(--font-display); font-weight:800; font-size:19px; fill:var(--ink)}
+.thermo .tv{font-family:var(--font-display); font-weight:700; font-size:24px; fill:var(--ink)}
+.thermo .zl{font-weight:700; font-size:14px; fill:var(--no-ink); font-family:var(--font-body)}
+.ratio{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap}
+.ratio .big{font-family:var(--font-display); font-weight:800; font-size:clamp(42px,4.6vw,62px); line-height:1}
+.ratio .lab{font-size:15px; color:var(--ink-2)}
+.tsay{font-size:16px; min-height:3em; margin:0}
+.seg{display:inline-flex; border:2px solid var(--ink); border-radius:12px; overflow:hidden; background:var(--paper)}
+.seg button{font-weight:700; font-size:16px; border:0; background:var(--paper); color:var(--ink); padding:8px 16px; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:background .15s}
+.seg button:hover{background:var(--wash)}
+.seg button + button{border-left:2px solid var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--deep); color:#fff}
+.seg button svg{width:22px; height:22px}
+.pfwrap{display:grid; grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr); gap:14px; align-items:center}
+@media (max-width:620px){
+.pfwrap{grid-template-columns:1fr}
+}
+.pf svg{width:100%; height:auto; display:block}
+.pf svg text{font-family:var(--font-body); font-size:15px; fill:var(--ink-2); font-weight:600}
+.pf svg .ann{fill:var(--ink); font-weight:700; font-size:16px}
+.pf svg .ttl{fill:var(--ink); font-family:var(--font-display); font-weight:800; font-size:20px}
+.pfcap{font-size:16px; margin:0; min-height:2.9em}
+.drawline{stroke-dasharray:1400; stroke-dashoffset:1400; animation:draw 1.2s ease-out forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.growbar{transform-box:fill-box; transform-origin:left center; animation:grow .6s ease-out}
+@keyframes grow{from{transform:scaleX(0)}}
+.popin{transform-box:fill-box; transform-origin:center; animation:popin .35s ease-out}
+@keyframes popin{from{transform:scale(0)}}
+.jarwrap{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.95fr); gap:16px; align-items:center}
+@media (max-width:620px){
+.jarwrap{grid-template-columns:1fr}
+}
+.jarwrap svg{width:100%; height:auto; display:block}
+#jarsvg{max-height:30vh}
+#spoonsvg{max-height:18vh}
+.jl{text-align:center; font-weight:700; font-size:14.5px; margin-top:4px}
+.jread{text-align:center; font-size:16px}
+.jread .big{display:block; font-family:var(--font-display); font-weight:800; font-size:clamp(36px,3.8vw,50px); line-height:1.05}
+.frostq{font-family:var(--font-display); font-weight:800; font-size:48px; fill:var(--ink)}
+.frost{transition:opacity .6s}
+.strip svg{width:100%; height:auto; max-height:17vh; display:block}
+.strip text{font-size:13px; fill:var(--ink-2); font-weight:600; font-family:var(--font-body)}
+.strip .ann{fill:var(--ink); font-weight:700}
+.pairs{display:grid; gap:10px; max-width:48ch}
+.pairc{display:flex; gap:12px; align-items:center; background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:14px; padding:10px 14px; font-size:15.5px; line-height:1.4}
+.pairc svg{flex:none; width:44px; height:44px}
+.sym{font-family:"Times New Roman",Georgia,serif; font-style:italic; font-size:1.12em; white-space:nowrap}
+.sg2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+@media (max-width:560px){
+.sg2{grid-template-columns:1fr}
+}
+.sgc{border-radius:16px; padding:10px 14px; border:1px solid var(--line); color:var(--ink); background:var(--paper)}
+.sgc.guess{background:var(--taro-soft); border-color:var(--taro-soft)}
+.sgc h3{font-size:22px; margin:0 0 4px; display:flex; align-items:center; gap:10px}
+.sgc p{margin:0; font-size:15px; line-height:1.4}
+.sgc svg{width:36px; height:36px; display:block; flex:none}
+.hazard{position:absolute; left:0; right:0; top:0; height:12px; background:repeating-linear-gradient(-45deg,var(--berry) 0 16px,var(--ink) 16px 32px)}
+.trapcups{display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:8px}
+.tc{display:flex; flex-direction:column; align-items:center; gap:6px}
+.code{font-family:var(--font-display); font-weight:800; font-size:24px; width:48px; height:48px; display:grid; place-items:center; border-radius:12px; border:2px solid var(--ink); background:var(--paper); transition:background .2s}
+.code.here{background:var(--sun)}
+.tc small{font-size:12.5px; font-weight:600; color:var(--ink-2); text-align:center; line-height:1.2}
+.tout{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+.to{border:1px solid var(--line); border-radius:14px; padding:10px 12px}
+.to .k{font-size:14px; font-weight:600; color:var(--ink-2)}
+.to .v{font-family:var(--font-display); font-weight:800; font-size:40px; line-height:1.05}
+.to.bad{background:var(--no-soft); border-color:var(--no-soft)}
+.to.bad .v{color:var(--no-ink)}
+.to.good{background:var(--ok-soft); border-color:var(--ok-soft)}
+.to.good .v{color:var(--ok-ink)}
+.tmsg{font-size:16px; min-height:3em; margin:0}
+.jersey{display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap; font-family:var(--font-display); font-weight:800; font-size:32px; border-top:1px solid var(--line-2); padding-top:12px}
+.jersey svg{width:70px; height:70px}
+.jersey .x{color:var(--no)}
+.fact{font-size:14px; color:var(--fg2); max-width:46ch; margin:0}
+.map{width:100%; max-width:880px; height:auto; display:block; margin:0 auto}
+.map .ph{font-family:var(--font-display); font-weight:700; font-size:17px; fill:rgba(255,255,255,.8)}
+.map .st{cursor:pointer}
+.map .st:focus{outline:none}
+.map .st:focus-visible .cap,.map .st.on .cap{stroke:var(--sun); stroke-width:6}
+.map .code{font-family:var(--font-display); font-weight:800; font-size:19px; fill:#fff}
+.map .snm{font-family:var(--font-body); font-size:13.5px; fill:rgba(255,255,255,.84); font-weight:400}
+.map .here{font-family:var(--font-body); font-weight:700; font-size:14px; fill:var(--ink)}
+.legend{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+.legend .tapnote{font-style:normal; color:var(--fg2); font-size:15px}
+.legend > span{display:inline-flex; align-items:center; gap:8px; font-weight:600; font-size:15px; padding:5px 13px; border-radius:999px; background:var(--paper); color:var(--ink)}
+.mapwrap{overflow-x:auto}
+@media (max-width:700px){
+.map{min-width:700px}
+}
+.legend i{width:28px; height:7px; border-radius:4px; display:inline-block; flex:none}
+.stcard{display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr); gap:12px; align-items:start; padding:10px 16px; width:100%; max-width:1000px; margin:0 auto}
+.stcard h3{font-size:21px}
+.stcard p{margin:4px 0 0; font-size:15px; line-height:1.4}
+@media (max-width:620px){
+.stcard{grid-template-columns:1fr}
+}
+.rl{border-radius:12px; padding:9px 12px; font-size:15px; line-height:1.35}
+.rl.tag{background:var(--tag-soft)}
+.rl.ruler{background:var(--ruler-soft)}
+.rl b{display:block}
+.tiles{display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:14px}
+.tile{text-align:left; color:var(--ink); border:0; border-radius:18px; padding:14px; cursor:pointer; display:flex; flex-direction:column; gap:4px; min-height:136px; transition:transform .15s}
+.tile:hover{transform:translateY(-3px)}
+.tile .ln{font-size:13px; font-weight:700; opacity:.8}
+.tile .tn{font-family:var(--font-display); font-weight:800; font-size:23px; line-height:1.05}
+.tile .td{font-size:14px; line-height:1.3}
+.tile .ts{font-size:22px; letter-spacing:3px; margin-top:auto; color:var(--ink)}
+.tile .ts .off{opacity:.28}
+.qpanel{width:100%; max-width:780px; margin:0 auto}
+.qhead{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; font-weight:600}
+.qhead .lvl{font-family:var(--font-display); font-weight:800; font-size:20px}
+.qbar{height:8px; border-radius:999px; background:var(--line-2); overflow:hidden; margin:10px 0 16px}
+.qbar i{display:block; height:100%; background:var(--mint); width:0; border-radius:999px; transition:width .3s}
+.qtext{font-family:var(--font-display); font-weight:700; font-size:clamp(25px,2.7vw,36px); line-height:1.15; margin:4px 0 18px}
+.opts{display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:10px}
+.opt{font-weight:700; font-size:18px; color:var(--ink); background:var(--paper); border:2px solid var(--ink); border-radius:12px; padding:14px; cursor:pointer; transition:background .15s, border-color .15s, transform .08s}
+.opt:hover{background:var(--wash); border-color:var(--deep)}
+.opt:active{transform:translateY(1px)}
+.opt:disabled{cursor:default}
+.opt.right{background:var(--ok-soft); border-color:var(--ok); color:var(--ok-ink)}
+.opt.wrong{background:var(--no-soft); border-color:var(--no); color:var(--no-ink)}
+.fb{margin-top:14px; font-size:16.5px; min-height:2.8em}
+.fb b{font-family:var(--font-display); font-size:19px}
+.qnav{display:flex; justify-content:space-between; gap:10px; margin-top:12px; flex-wrap:wrap}
+.streak{display:inline-flex; align-items:center; gap:6px; padding:3px 12px; border-radius:999px; background:var(--sun-soft); font-size:14.5px}
+.streak svg{width:16px; height:16px}
+.donebox{text-align:center; display:grid; gap:10px; justify-items:center}
+.bigstars{font-size:58px; letter-spacing:8px; color:#E39A0E; line-height:1}
+.bigstars .off{color:var(--line)}
+.det{display:grid; gap:10px}
+.det .qrow2{display:flex; gap:12px; align-items:center; flex-wrap:wrap; justify-content:space-between; padding:7px 12px; border:1px solid var(--line); border-radius:12px}
+.det .qrow2.dim{opacity:.4}
+.det input[type=text]{font:inherit; font-size:16px; padding:8px 12px; border:2px solid var(--ink); border-radius:12px; width:min(100%,360px)}
+.det .res{padding:12px 14px; border-radius:14px; border:1px solid var(--line); font-size:16.5px; display:flex; gap:12px; align-items:center}
+.det .res.tag{background:var(--tag-soft); border-color:var(--tag-soft)}
+.det .res.ruler{background:var(--ruler-soft); border-color:var(--ruler-soft)}
+.det .res .mi{width:70px; flex:none}
+.recap{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px}
+.recap .rc.trap{grid-column:auto}
+@media (max-width:980px){
+.recap{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+.recap .rc.trap{grid-column:auto}
+.recap{grid-template-columns:1fr}
+}
+.rc{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:16px; padding:12px 14px; display:flex; gap:12px; align-items:flex-start}
+.rc .ri{flex:none; width:44px; height:44px; display:grid; place-items:center}
+.rc .ri svg{width:100%; height:100%}
+.rc b{display:block; font-family:var(--font-display); font-size:18px; line-height:1.15; margin-bottom:3px}
+.rc span{font-size:14px; line-height:1.4}
+.rc.trap{background:var(--ink); color:#fff; border-color:var(--ink)}
+.rc.next{background:var(--sun-soft); border-color:var(--sun)}
+details.src{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:16px; padding:12px 16px}
+details.src summary{cursor:pointer; font-weight:700}
+details.src p,details.src ol{font-size:14.5px; line-height:1.5}
+details.src ol{padding-left:1.3em; margin:8px 0 0}
+details.src li{margin-bottom:6px}
+details.src a{color:var(--ruler-ink)}
+.scene.playing .txt .sub, .scene.playing .txt .kick{display:none}
+.zoomcard svg{width:100%; height:auto; max-height:46vh; display:block; margin-top:12px}
+.zcap{margin:10px 0 0; font-size:16px; line-height:1.45; min-height:2.9em}
+.popq{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+@media (max-width:620px){
+.popq{grid-template-columns:1fr}
+}
+.pq{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:16px; padding:12px; display:flex; flex-direction:column; gap:10px}
+.pq.ok{border-color:var(--ok); box-shadow:inset 0 0 0 1px var(--ok)}
+.pq.bad{border-color:var(--no); box-shadow:inset 0 0 0 1px var(--no)}
+.pqh{display:flex; gap:10px; align-items:flex-start}
+.pqi{flex:none; width:40px; height:40px}
+.pqi svg{width:100%; height:100%}
+.pqh b{font-size:15.5px; line-height:1.3}
+.pqo{display:grid; gap:6px}
+.pqo .btn{text-align:left; padding:6px 12px; font-size:14.5px; border-radius:12px; border-width:1.5px}
+.pqa{display:grid; gap:6px; font-size:14.5px; line-height:1.35}
+.pqans{justify-self:start; font-weight:700; padding:4px 10px; border-radius:10px; background:var(--ok-soft); color:var(--ok-ink)}
+.whynot{display:flex; flex-wrap:wrap; gap:8px; max-width:48ch}
+.whynot span{display:inline-flex; align-items:center; gap:6px; font-size:14px; font-weight:600; padding:4px 12px 4px 6px; border-radius:999px; background:var(--paper); color:var(--ink); border:1px solid var(--line)}
+.whynot svg{width:22px; height:22px; flex:none}
+.soupcard{display:grid; gap:12px}
+.soupcard svg{width:100%; height:auto; max-height:40vh; display:block}
+#steam{transition:opacity .8s}
+.souprs{border-radius:14px; border:1px solid var(--line); padding:10px 14px; font-size:15.5px; line-height:1.4; background:var(--wash); min-height:4.6em}
+.souprs b{display:block; font-family:var(--font-display); font-size:19px}
+.souprs.good{background:var(--ok-soft); border-color:var(--ok-soft)}
+.souprs.bad{background:var(--no-soft); border-color:var(--no-soft)}
+.souprs.census{background:var(--sun-soft); border-color:var(--sun-soft)}
+.mnemo{font-family:var(--font-display); font-weight:800; font-size:clamp(22px,2.1vw,29px); line-height:1.25; display:grid; gap:2px; padding:10px 18px}
+.mnemo b{color:var(--berry); font-size:1.2em}
+.pscard{display:grid; gap:14px}
+.psgrid{display:grid; grid-template-columns:minmax(0,1fr) 74px minmax(0,1fr); gap:8px; align-items:center}
+.pbox,.sbox{border:1px solid var(--line); border-radius:16px; padding:12px; display:grid; gap:6px; min-height:220px; align-content:start}
+.pbox{background:#EFE9F8; border-color:#E2D8F2}
+.sbox{background:#FDF3DC; border-color:#F6E2B4}
+.nm2{display:inline-flex; align-items:center; gap:8px; font-family:var(--font-display); font-weight:800; font-size:21px}
+.nm2 svg{width:34px; height:34px}
+.who{font-size:15px; line-height:1.3}
+.who span{display:block; font-size:12.5px; font-weight:700; color:var(--ink-2)}
+.what{font-size:14px; color:var(--ink-2); font-weight:600}
+.val{font-family:var(--font-display); font-weight:800; font-size:clamp(26px,2.5vw,36px); line-height:1.05; display:flex; align-items:center; gap:8px}
+.val svg{width:26px; height:26px; flex:none}
+.val.bump{animation:bump .45s}
+@keyframes bump{40%{transform:scale(1.15)}}
+.note{font-size:13px; color:var(--ink-2)}
+.psarrow{display:grid; justify-items:center; gap:4px; font-size:12.5px; font-weight:700; text-align:center}
+.psarrow svg{width:56px}
+.pshist{font-size:14px; display:flex; flex-wrap:wrap; gap:6px; align-items:center}
+.pshist span{padding:2px 8px; border-radius:8px; background:#FDF3DC; border:1px solid #F6E2B4; font-weight:600}
+@media (max-width:620px){
+.psgrid{grid-template-columns:1fr}
+.psarrow svg{transform:rotate(90deg)}
+}
+.symcard{display:grid; gap:10px}
+.symgrid{display:grid; gap:6px}
+.symhead,.symrow{display:grid; grid-template-columns:minmax(78px,.8fr) 1fr 1fr; gap:8px; align-items:center}
+.sgh{display:grid; text-align:center; font-size:13px; color:var(--ink-2)}
+.sgh b{font-family:var(--font-display); font-size:18px; color:var(--ink)}
+.symrow{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:12px; padding:3px 5px; cursor:pointer; text-align:left; transition:border-color .15s, background .15s}
+.symrow:hover{border-color:var(--deep)}
+.symrow[aria-pressed="true"]{background:var(--sun-soft); border-color:var(--berry); box-shadow:inset 0 0 0 1px var(--berry)}
+.sl{font-weight:700; font-size:16px; padding-left:6px}
+.sc{display:grid; justify-items:center; border-radius:10px; padding:2px 4px}
+.sc.par{background:#EFE9F8}
+.sc.st{background:#FDF3DC}
+.sc .sym{font-size:28px; line-height:1.05}
+.sc small{font-size:12.5px; color:var(--ink-2)}
+.symex{font-size:15px; line-height:1.5; background:var(--wash); border-radius:12px; padding:8px 12px; border:1px solid var(--line); min-height:4.6em}
+#salt{transition:opacity .9s}
+#confetti{position:fixed; inset:0; pointer-events:none; z-index:50}
+.guesscard{display:grid; gap:10px; align-content:start}
+.ghead{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap}
+.gtag{font-family:var(--font-display); font-weight:800; font-size:15px; color:var(--deep)}
+.gnote{font-size:13px; color:var(--ink-2)}
+.gq{margin:0; font-family:var(--font-display); font-weight:800; font-size:clamp(19px,1.7vw,24px); line-height:1.22; color:var(--fg)}
+.gopts{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px}
+.gopt{font:inherit; font-weight:700; font-size:16.5px; text-align:left; padding:9px 16px; border:2px solid var(--ink); border-radius:12px; background:var(--paper); color:var(--ink); cursor:pointer; transition:background .15s, border-color .15s}
+.gopt:hover{background:var(--wash); border-color:var(--deep)}
+.gopt[aria-pressed="true"]{background:var(--deep); border-color:var(--deep); color:#fff}
+.gsaved{margin:0; font-size:14px; color:var(--ink-2)}
+.gtab{border-collapse:collapse; width:100%; font-variant-numeric:tabular-nums; font-size:15.5px}
+.gtab th,.gtab td{padding:4px 10px; border-bottom:1px solid var(--line-2); text-align:center}
+.gtab th{font-size:13px; color:var(--ink-2)}
+.gtab th:first-child,.gtab td:first-child{text-align:left}
+.gtab tr.avg td{border-top:2px solid var(--ink); border-bottom:0; font-weight:800; background:var(--sun-soft)}
+.gback{border-left:3px solid var(--sun); padding:4px 0 4px 12px; font-size:14.5px; line-height:1.45; max-width:52ch}
+.guessbar{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-left:4px solid var(--sun); border-radius:12px; padding:9px 14px; font-size:14.5px; line-height:1.45}
+.guessbar:empty,.gback:empty{display:none}
+.thread{font-size:13.5px; line-height:1.4; padding:2px 0 2px 12px; border-left:2px solid currentColor; color:var(--fg2); max-width:52ch}
+.doors3{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px}
+.door{display:grid; gap:10px; align-content:start}
+.door h4{margin:0; font-family:var(--font-display); font-weight:800; font-size:18px; color:var(--fg)}
+.inv .picks{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:14px}
+.inv .ph{margin:0 0 6px; font-weight:700; font-size:14px; color:var(--ink-2)}
+.inv .plist{display:grid; gap:5px}
+.inv .pk{font:inherit; font-size:14.5px; font-weight:600; text-align:left; padding:4px 11px; border:1.5px solid var(--ink); border-radius:10px; background:var(--paper); color:var(--ink); cursor:pointer}
+.inv .pk:hover{background:var(--wash); border-color:var(--deep)}
+.inv .pk[aria-pressed="true"]{background:var(--deep); border-color:var(--deep); color:#fff; font-weight:700}
+.inv .qtext{font-size:clamp(19px,1.8vw,25px)}
+.th-night .btn.sun,.th-indigo .btn.sun,.th-trap .btn.sun{background:var(--sun); border-color:var(--sun); color:var(--ink)}
+.th-night .card .btn.sun,.th-indigo .card .btn.sun,.th-trap .card .btn.sun{background:var(--deep); border-color:var(--deep); color:#fff}
+@media (max-width:760px){
+.doors3,.inv .picks{grid-template-columns:1fr}
+.gopts{grid-template-columns:1fr}
+}
+@media (max-height:760px) and (min-width:901px){
+.gtab th,.gtab td{padding:3px 9px}
+.gopt{padding:7px 12px; font-size:15px}
+.inv .pk{padding:3px 10px; font-size:13.5px}
+.inv .plist{gap:3px}
+.inv .qtext{font-size:18px}
+.thread{font-size:12.5px; padding:2px 0 2px 10px}
+.gback{font-size:13.5px; padding:4px 0 4px 10px}
+.guessbar{padding:5px 12px; font-size:13px; line-height:1.3}
+.recap{gap:8px}
+}
+/* ---------- this page ---------- */
+.th-peach{--stripe:#4E9C91; --chip:#4E9C91}
+.chart{width:100%;height:auto;display:block}
+.chart text{font-family:var(--font-body);font-size:13px;fill:var(--ink-2);font-weight:600}
+.chart .val{fill:var(--ink);font-weight:700;font-size:13px}
+.chart .ttl{fill:var(--ink);font-family:var(--font-display);font-weight:800;font-size:16px}
+.chart .grid{stroke:#E6DFF1;stroke-width:1.2}
+.chart .axis{stroke:var(--ink);stroke-width:2}
+.chart rect.hb{transition:y .5s ease, height .5s ease, x .5s ease, width .5s ease, opacity .3s}
+.chart rect.gb{transform-box:fill-box;transform-origin:50% 100%;transition:transform .5s cubic-bezier(.3,.8,.3,1)}
+.chart text.val{transition:opacity .3s}
+.chart .dot{fill:#2F55D4;opacity:.55}
+.hero2{display:grid;gap:14px}
+.hrow{display:grid;grid-template-columns:76px minmax(0,1fr) 40px minmax(0,1.25fr);gap:10px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:18px;padding:10px 14px;color:var(--ink)}
+.hrow .raw{font-family:var(--font-hand);font-weight:700;font-size:22px;line-height:1.15;color:var(--ink-2)}
+.hrow .arr{font-family:var(--font-display);font-weight:800;font-size:30px;text-align:center}
+.cupfield{width:100%;height:auto;display:block}
+.cupfield .cg{transition:transform .9s cubic-bezier(.3,.8,.3,1)}
+.cupfield .rl2{transition:opacity .5s .5s;font-family:var(--font-body);font-weight:700;font-size:15px;fill:var(--ink)}
+.ftab{border-collapse:collapse;font-size:16px;width:100%}
+.ftab th,.ftab td{padding:6px 10px;border-bottom:2px solid #EEE8F6;text-align:left}
+.ftab th{font-size:13px;color:var(--ink-2)}
+.ftab td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.ftab tr.sel td{background:var(--sun-soft)}
+.ftab tr.tot td{border-top:2px solid var(--ink);font-weight:700}
+.ftab tbody tr{cursor:pointer}
+.ftab .sw{display:inline-block;width:12px;height:12px;border-radius:3px;border:1.5px solid var(--ink);margin-right:8px;vertical-align:-1px}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:center}
+@media (max-width:620px){
+.two{grid-template-columns:1fr}
+}
+.formula{font-size:17px;font-weight:600;padding:8px 12px;border-radius:12px;background:#F7F3FC;border:1px dashed #C8BDDA;min-height:2.6em}
+.formula .big{font-family:var(--font-display);font-weight:800;font-size:22px}
+.minihead{font-weight:700;font-size:15px;margin:0 0 4px}
+.smallnote{font-size:13.5px;color:var(--ink-2);margin:0}
+.ctrlrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.bigread{font-family:var(--font-display);font-weight:800;font-size:clamp(22px,2.2vw,30px);line-height:1.1}
+.bigread small{display:block;font-family:var(--font-body);font-weight:500;font-size:14px;color:var(--ink-2)}
+.chips2{display:flex;flex-wrap:wrap;gap:6px}
+.chips2 span{font-size:13.5px;font-weight:700;padding:3px 10px;border-radius:999px;border:1px solid var(--line);background:var(--ruler-soft)}
+.rules{display:flex;flex-wrap:wrap;gap:8px}
+.rules span{display:inline-flex;gap:6px;align-items:center;font-size:14px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--ok-soft);border:1px solid var(--ok)}
+.thumbs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:620px){
+.thumbs{grid-template-columns:1fr}
+}
+.thumb{background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:16px;padding:10px;cursor:pointer;text-align:left;display:grid;gap:6px}
+.thumb b{font-size:15px}
+.thumb.ok{border-color:var(--ok);border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.thumb.bad{border-color:var(--no);border-color:var(--no);box-shadow:inset 0 0 0 1px var(--no)}
+.fb2{font-size:15.5px;line-height:1.4;min-height:2.8em;margin:0}
+.examples{display:grid;gap:6px}
+.examples div{font-size:14.5px;padding:6px 10px;border-radius:10px;border:1px solid #E6DFF1;color:var(--ink-2);transition:all .25s}
+.examples div.on{border-color:var(--ink);background:var(--sun-soft);color:var(--ink);font-weight:600}
+.shape-lab{font-family:var(--font-display);font-weight:800;font-size:26px}
+.stemwrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:14px;align-items:start}
+@media (max-width:620px){
+.stemwrap{grid-template-columns:1fr}
+}
+.billchips{display:flex;flex-wrap:wrap;gap:6px}
+.billchips span{font-family:var(--font-hand);font-weight:700;font-size:22px;padding:0 8px;border-radius:8px;background:#FDF3DC;border:1.5px solid var(--ink);transition:opacity .4s}
+.billchips span.used{opacity:.25}
+.stem{font-family:var(--font-hand);font-weight:700;font-size:30px;line-height:1.25;transition:transform .7s}
+.stem.rot{display:flex;align-items:flex-end;gap:8px;font-size:23px;line-height:1}
+.stem.rot .srow{display:flex;flex-direction:column-reverse;align-items:center;width:36px}
+.stem.rot .sk{text-align:center;padding-top:4px}
+.stem.rot .sb{border-left:0;border-top:2px solid var(--ink);width:100%;height:0}
+.stem.rot .lv{display:flex;flex-direction:column-reverse;align-items:center;padding-bottom:3px}
+.stem.rot .lv span{margin:0;line-height:.98}
+.stem .srow{display:grid;grid-template-columns:34px 14px 1fr;align-items:center}
+.stem .sk{text-align:right;color:var(--ruler-ink)}
+.stem .sb{border-left:2px solid var(--ink);height:1.2em}
+.stem .lv span{display:inline-block;margin-right:8px;animation:popl .35s ease-out both}
+@keyframes popl{from{transform:scale(0)}}
+.flow{display:grid;gap:10px}
+.flow .node{border:1px solid var(--line);border-radius:14px;padding:8px 12px;background:#fff;color:var(--ink);font-weight:600;font-size:15px;transition:all .3s;opacity:.45}
+.flow .node.on{opacity:1}
+.flow .node.tag.on{background:var(--tag-soft)}
+.flow .node.ruler.on{background:var(--ruler-soft)}
+.flow .lvl2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.flow .lvl3{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px}
+.flow .node b{display:block;font-family:var(--font-display);font-size:17px}
+.flow .node small{font-weight:500;font-size:13px}
+.varbtns{display:flex;flex-wrap:wrap;gap:8px}
+.lab-ta{width:100%;min-height:70px;font:inherit;font-size:14px;padding:8px 10px;border:2px solid var(--ink);border-radius:12px;resize:vertical}
+.cups2{grid-template-columns:minmax(0,1.45fr) minmax(0,1fr)}
+.cupfield .rl2{font-size:17px}
+#flowchart{max-height:27vh}
+@media (max-width:620px){
+.cups2{grid-template-columns:1fr}
+}
+#barflav{max-height:33vh}
+#barsize{max-height:16vh}
+@media (max-height:760px) and (min-width:901px){
+.ftab th,.ftab td{padding:3px 9px}
+.ftab{font-size:15px}
+.formula{padding:5px 12px;min-height:0;font-size:16px}
+.formula .big{font-size:19px}
+.compact .qrow{padding:5px 0}
+.flow{gap:7px}
+.flow .node{padding:5px 10px;font-size:14px}
+.flow .node b{font-size:15.5px}
+.flow .node small{font-size:12px}
+.lab-ta{min-height:46px}
+}
+.qtext .xtab{font-family:var(--font-body);font-size:14px;line-height:1.25}
+.qtext .xtab th{font-size:12.5px}
+.hero2 .hrow{grid-template-columns:100px minmax(0,1fr) 34px minmax(0,1.2fr)}
+.hrow .mi2{display:flex;align-items:center}
+.hrow .mi2 svg{width:50px;height:auto}
+.hrow .mi2 svg + svg{margin-left:-6px}
+.xgrid{width:100%;height:auto;display:block;max-height:50vh}
+.xgrid .cg{transition:transform .9s cubic-bezier(.3,.8,.3,1)}
+.xgrid .lab{font-family:var(--font-body);font-weight:700;font-size:15px;fill:var(--ink)}
+.xgrid .cnt{font-family:var(--font-display);font-weight:800;font-size:24px;fill:var(--ink);transition:opacity .4s .7s}
+.xgrid .cell{transition:opacity .6s}
+.xtab{border-collapse:collapse;width:100%;font-size:15.5px;font-variant-numeric:tabular-nums}
+.xtab th,.xtab td{padding:6px 8px;text-align:right;border-bottom:2px solid #EEE8F6}
+.xtab th{font-size:13px;color:var(--ink-2);font-weight:700;vertical-align:bottom}
+.xtab th:first-child,.xtab td:first-child{text-align:left}
+.xtab td.c{cursor:pointer;font-weight:700}
+.xtab td.c:hover{box-shadow:inset 0 0 0 2px var(--ink-3)}
+.xtab td.m,.xtab tr.tot td{color:var(--ink-2);background:#F7F3FC}
+.xtab tr.tot td{border-top:2px solid var(--ink);border-bottom:0}
+.xtab td.hl{background:var(--sun-soft)}
+.xtab td.sel{background:var(--sun);box-shadow:inset 0 0 0 2.5px var(--ink)}
+.xtab td.whole{background:var(--taro-soft);color:var(--ink);font-weight:800}
+.xtab.mini{font-size:14px}
+.xtab.mini th,.xtab.mini td{padding:3px 7px}
+.xtab tr.todo td{color:#B4A9C6}
+.xtab tr.cur td{background:var(--sun-soft);color:var(--ink);font-weight:700}
+.xtab .sw{display:inline-block;width:11px;height:11px;border-radius:3px;border:1.5px solid var(--ink);margin-right:6px;vertical-align:-1px}
+.xread{margin:10px 0 0;font-size:16px;line-height:1.4;min-height:2.9em}
+.xread .big{font-family:var(--font-display);font-weight:800;font-size:20px;line-height:1.2}
+.xread small{display:block;color:var(--ink-2);font-size:14px;margin-top:3px}
+.pctwrap{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start;margin-top:10px}
+.realcase{background:#fff;color:var(--ink);border:1.5px dashed var(--ink-3);border-radius:14px;padding:9px 13px;font-size:14.5px;line-height:1.42}
+.realcase.dark{background:rgba(255,255,255,.06);color:var(--fg2);border-color:rgba(255,255,255,.45)}
+.realcase.dark b{color:var(--sun)}
+.placewrap{display:grid;grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr);gap:14px;align-items:center}
+.dragsvg{touch-action:none;max-height:44vh}
+.dragsvg .dd{cursor:grab}
+.dragsvg .dd:active{cursor:grabbing}
+.dragsvg .dd:focus{outline:none}
+.dragsvg .dd .ring{fill:transparent;stroke:transparent}
+.dragsvg .dd:focus-visible .ring{stroke:var(--ink);stroke-width:2.5;stroke-dasharray:4 3}
+.chart .tl{stroke:var(--berry);stroke-width:3.5;stroke-linecap:round;transition:all .25s}
+.chart .lnk{stroke:var(--ink-3);stroke-width:1.6;stroke-dasharray:4 4}
+#cloudchart circle{transition:cx .45s ease, cy .45s ease}
+#cloudchart{max-height:33vh}
+#formchart{max-height:38vh}
+#tipchart{max-height:25vh}
+#simchart{max-height:30vh}
+#mixchart{max-height:29vh}
+#placechart{max-height:46vh}
+#pairchart{max-height:27vh}
+#pbars{max-height:34vh}
+#trapchart{max-height:34vh}
+.trapwrap{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:12px;align-items:center;margin-top:6px}
+.cause{opacity:.08;transition:opacity .6s}
+.cause.on{opacity:1}
+.cause svg{width:100%;height:auto;display:block}
+.legend2{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13.5px;font-weight:600;color:var(--ink-2)}
+.legend2 i{display:inline-block;width:12px;height:12px;border-radius:3px;border:1.5px solid var(--ink);margin-right:5px;vertical-align:-1px}
+.pflow3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.pflow3 .col{display:grid;gap:6px;align-content:start}
+.scatlab{touch-action:manipulation;cursor:crosshair}
+@media (max-width:620px){
+.pctwrap,.placewrap,.trapwrap{grid-template-columns:1fr}
+.pflow3{grid-template-columns:1fr}
+.xtab{font-size:13.5px}
+.xtab th,.xtab td{padding:4px 4px}
+.xtab th .sw{display:none}
+}
+.xscroll{overflow-x:auto;max-width:100%}
+.qtext:has(.xtab){font-size:clamp(18px,1.9vw,24px)}
+@media (max-width:620px){
+#dpre{display:grid;grid-template-columns:1fr 1fr}
+#dpre button+button{border-left:0}
+#dpre button:nth-child(2n){border-left:2px solid var(--ink)}
+#dpre button:nth-child(n+3){border-top:2px solid var(--ink)}
+#dpre button{justify-content:center}
+}
+@media (min-width:1600px) and (min-height:960px){
+#tipchart{max-height:20vh}
+.labbox #labchart{max-height:30vh !important}
+}
+@media (max-height:760px) and (min-width:901px){
+.xtab th,.xtab td{padding:4px 7px}
+.xtab{font-size:14.5px}
+.xread{font-size:15px;margin-top:6px}
+.xread .big{font-size:18px}
+.realcase{font-size:13.5px;padding:7px 11px}
+.compact .qrow{padding:5px 0}
+.compact .qq{font-size:14.5px}
+.flow .node{padding:5px 10px;font-size:14px}
+.flow .node b{font-size:15.5px}
+.flow .node small{font-size:12px}
+}
+.gopt .gshape{display:block;width:100%;height:38px;margin-bottom:4px}
+.pcard{background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:16px;padding:10px 12px;display:grid;gap:6px;align-content:start}
+.pcard .ph2{display:flex;align-items:center;gap:8px;font-weight:800;font-family:var(--font-display);font-size:17px;line-height:1.1}
+.pcard .ph2 svg{width:32px;height:auto;flex:none}
+.pcard .ph2 small{display:block;font-family:var(--font-body);font-weight:500;font-size:12.5px;color:var(--ink-2)}
+.pcard .raw2{font-family:var(--font-hand);font-size:20px;font-weight:700;color:var(--ink-2);line-height:1.1;min-height:2.2em}
+.pcard .pnote{font-size:13.5px;line-height:1.35;min-height:2.7em;margin:0}
+.pcard .chart{width:100%;height:auto;max-height:21vh}
+.pcard .btn{justify-self:start}
+.ibox svg{width:100%;height:auto;max-height:34vh;touch-action:none;display:block}
+.ibox .dd{cursor:grab}
+.ibox .dd .ring{fill:transparent}
+.ibox .dd:focus{outline:none}
+.ibox .dd:focus-visible .ring{stroke:var(--ink);stroke-width:2.5;stroke-dasharray:4 3}
+.ibox .hint{font-size:13.5px;color:var(--ink-2);margin:2px 0 0}
+@media (max-height:760px) and (min-width:901px){
+.pcard{padding:8px 10px;gap:4px}
+.pcard .raw2{font-size:18px}
+.pcard .pnote{font-size:13px}
+.ibox svg{max-height:27vh}
+}
+@media (min-width:1600px) and (min-height:960px){
+.ibox svg{max-height:21vh}
+}
+.gback.wait{display:none}
+.gopts.one{grid-template-columns:1fr}
+.nameit{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:12px;align-items:start}
+.nameit .col{display:grid;gap:7px}
+.nact{font:inherit;font-size:14px;line-height:1.3;text-align:left;padding:7px 11px;border:2px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);cursor:pointer}
+.nact[aria-pressed="true"]{background:var(--deep);border-color:var(--deep);color:#fff}
+.nact.done{background:#E3F1D0;border-color:#4E8A1E;cursor:default}
+.nact.done b{display:block;font-family:var(--font-display);font-size:15px}
+.nact.done i{font-style:normal;font-size:12.5px;color:var(--ink-2)}
+.nname{font:inherit;font-weight:700;font-size:15px;text-align:left;padding:8px 12px;border:2px solid var(--ink);border-radius:999px;background:#fff;color:var(--ink);cursor:pointer}
+.nname:disabled{opacity:.35;box-shadow:none;cursor:default}
+.nname.nope{animation:nope .4s}
+@keyframes nope{0%,100%{transform:none} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)}}
+@media (prefers-reduced-motion:reduce){
+.nname.nope{animation:none;background:#FBE0E7}
+}
+@media (max-width:760px){
+.nameit{grid-template-columns:1fr}
+}
+@media (max-height:760px) and (min-width:901px){
+.nact{padding:5px 10px;font-size:13.5px}
+.nname{padding:6px 11px;font-size:14px}
+.nameit .col{gap:5px}
+}
+.gback.wait{display:none}
+.scene.playing .txt h2{display:none}
+#ichart{max-height:38vh}
+@media (max-height:760px) and (min-width:901px){
+#ichart{max-height:31vh}
+}
+@media (min-width:1600px) and (min-height:960px){
+#ichart{max-height:28vh}
+}
+</style>
+</head>
+<body>
+<header class="bar">
+  <span class="ep">T1.3</span>
+  <span class="t">Two variables: crosstabs and scatter diagrams</span>
+  <span class="chapnm" id="chapnm">Start</span>
+  <div class="prog" aria-hidden="true"><i id="progfill"></i></div>
+  <span class="xp" id="xp" title="Stars earned on this page">★ 0</span>
+</header>
+
+<main id="deck">
+
+<!-- 0 GUESS FIRST -->
+<section class="scene th-plum" id="s0" data-chap="Start" aria-label="Same tables, two percents">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>T1.3</b>Playlist 1, episode 3</div>
+      <h1>Same tables, two percents</h1>
+      <p class="sub">Two columns side by side raise a new question: do they move together? Guess first: you will see your answer again later.</p>
+      <div class="lina" data-say="Two numbers about the same tables can sound alike and still be very different. Let’s see if you can spot it."></div>
+      <div class="row"><button class="btn sun big" type="button" data-go="next">Find out</button></div>
+      <div class="meta"><span class="pill">Builds on: T1.1, T1.2</span><span class="pill">Leads to: T1.7, T2.2, T8.1</span></div>
+    </div>
+    <div class="pic"><div class="card guesscard" id="guess"></div></div>
+  </div>
+</section>
+
+<!-- 0b DOORS -->
+<section class="scene th-sky" id="s1" data-chap="Start" aria-label="Do they move together?">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>0</b>Tag, Ruler and the dot crowd</div>
+      <h2>Do they move together?</h2>
+      <p class="sub">Three everyday pairs. Labels with labels go into a grid. Amounts with amounts become dots, the dot crowd of T1.2 with a second number. Press each button.</p>
+      <div class="lina" data-say="If one changes, does the other change too? That is today’s question."></div>
+      <div class="take">Two columns about the same people or days can be read together. Look for a pattern: more of one, more (or less) of the other.</div>
+    </div>
+    <div class="pic"><div class="doors3 piles" id="pairs3"></div></div>
+  </div>
+</section>
+
+<!-- 1 TWO QUESTIONS PER CUP -->
+<section class="scene th-sun" id="s2" data-chap="Two labels" aria-label="One cup, two questions">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>1</b>Two labels</div>
+      <h2>One cup, two questions</h2>
+      <p class="sub">For each of her 40 Saturday cups, Lina wrote two labels: the flavor, and who bought it.</p>
+      <div class="lina" data-say="Do students and workers pick the same flavors? Let me sort the cups into a grid."></div>
+      <div class="take">A crosstab counts every pair of labels: one variable in the rows, the other in the columns.</div>
+      <div class="fr">In French: tableau croisé (tableau de contingence)</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <svg class="xgrid" id="xgrid" viewBox="0 0 560 290" aria-label="Forty cups sorted by customer type and flavor"></svg>
+        <div class="row" style="margin-top:8px"><button class="btn sun" type="button" id="sortx">Sort into the grid</button><span class="smallnote" id="sortnote">Invented data: Lina’s Saturday from T1.2, with one more label.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 READ THE CROSSTAB -->
+<section class="scene th-sun" id="s3" data-chap="Two labels" aria-label="Read the crosstab">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>1</b>Two labels</div>
+      <h2>Read the crosstab</h2>
+      <p class="sub">Tap any number inside the table. Its row and its column light up.</p>
+      <div class="take">The totals on the edges are the one-variable tables from T1.2. The inside shows how the two variables go together.</div>
+      <div class="fr">In French: totaux marginaux</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="xscroll"><table class="xtab" id="xtab"></table></div>
+        <p class="xread" id="xread" aria-live="polite"></p>
+      </div>
+      <div class="card compact" id="xcheck"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 ROW % VS COLUMN % -->
+<section class="scene th-lilac" id="s4" data-chap="Row or column %" aria-label="Row percent or column percent">
+  <div class="scene-in picwide">
+    <div class="txt">
+      <div class="kick"><b>2</b>Row or column %</div>
+      <h2>Which 100%?</h2>
+      <p class="sub">Real data: the 244 restaurant tables from T1.2. Rows: the day. Columns: was there a smoker at the table?</p>
+      <div class="lina" data-say="79% or 16%? Both are true for Friday smokers. They answer different questions."></div>
+      <div class="take">Row %: each row is 100%. Column %: each column is 100%.</div>
+      <div class="fr">In French: pourcentages en ligne, pourcentages en colonne</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="ctrlrow">
+          <div class="seg" id="pctseg" role="group" aria-label="What to show"><button type="button" data-m="n" aria-pressed="true">Counts</button><button type="button" data-m="r" aria-pressed="false">Row %</button><button type="button" data-m="c" aria-pressed="false">Column %</button></div>
+          <span class="smallnote">Tap a cell to read it.</span>
+        </div>
+        <div class="two pctwrap">
+          <div class="xscroll"><table class="xtab" id="ptab"></table></div>
+          <svg class="chart" id="pbars" viewBox="0 0 300 200" aria-label="Stacked bar chart of the same table"></svg>
+        </div>
+        <p class="xread" id="pread" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 OF WHOM? -->
+<section class="scene th-sky" id="s5" data-chap="Row or column %" aria-label="Of whom?">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>2</b>Row or column %</div>
+      <h2>“Of whom?” finds the 100%</h2>
+      <p class="sub">Read the question and find the group after “of” or “among”. That group is your whole, your 100%.</p>
+      <div class="gback wait" data-guessback></div>
+      <div class="take">“Of Friday tables…”: each day is 100%, so row %. “Of smokers’ tables…”: each smoker group is 100%, so column %.</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <p class="minihead">Tables by day and smoker (counts)</p>
+        <table class="xtab mini" id="oftab"></table>
+      </div>
+      <div class="card compact" id="ofq"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 SIMPSON -->
+<section class="scene th-pink" id="s6" data-chap="Simpson’s paradox" aria-label="Better in every group, worse overall">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>3</b>Simpson’s paradox</div>
+      <h2>Better in every group, worse overall?</h2>
+      <p class="sub">Lina’s two delivery helpers, Sam and Kai, made 120 deliveries each last month (invented numbers). Who is on time more often?</p>
+      <div class="lina" data-say="Sam wins overall. Then I split the deliveries by weather…"></div>
+      <div class="take">Simpson’s paradox: a comparison that holds in every group can flip when the groups are added together.</div>
+      <div class="fr">In French: paradoxe de Simpson</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="seg" id="simseg" role="group" aria-label="View"><button type="button" data-m="all" aria-pressed="true">All deliveries</button><button type="button" data-m="split" aria-pressed="false">Split by weather</button></div>
+        <svg class="chart" id="simchart" viewBox="0 0 560 230" aria-label="On-time rates of Sam and Kai" style="margin-top:8px"></svg>
+        <table class="xtab mini" id="simtab"></table>
+        <p class="fb2" id="simfb" aria-live="polite" style="margin-top:8px"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 WHY IT FLIPS -->
+<section class="scene th-mint" id="s7" data-chap="Simpson’s paradox" aria-label="Why it flips">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>3</b>Simpson’s paradox</div>
+      <h2>Why it flips</h2>
+      <p class="sub">Rain makes every delivery harder, and Kai did most of the rainy ones. Move the slider to change how many of Kai’s 120 deliveries were in the rain.</p>
+      <div class="take">An overall % is a mix of the group %s. A different mix can flip the comparison. Ask: is a hidden variable mixed in differently?</div>
+      <div class="fr">In French: variable cachée, facteur de confusion</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="ctrlrow"><label for="mix" class="minihead" style="margin:0">Kai’s rainy deliveries</label><span class="bigread" id="mixnum"></span></div>
+        <input type="range" id="mix" min="0" max="120" step="5" value="100" aria-label="Number of Kai's deliveries made in the rain">
+        <svg class="chart" id="mixchart" viewBox="0 0 560 230" aria-label="Each overall rate sits between the rainy rate and the sunny rate"></svg>
+        <p class="fb2" id="mixread" aria-live="polite"></p>
+        <div class="row"><button class="btn sm" type="button" id="mixsame">Give Kai the same weather as Sam</button><button class="btn sm" type="button" id="mixreal">Back to the real month</button></div>
+      </div>
+      <div class="realcase"><b>Real case.</b> In a 1986 study of kidney-stone treatments, open surgery did better for small stones (93% vs 87%) and for large stones (73% vs 69%), yet worse overall (78% vs 83%). It had mostly been used on the large, harder stones (Charig et al., 1986).</div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 PLACE THE DOTS -->
+<section class="scene th-sun" id="s8" data-chap="Two amounts" aria-label="One dot per day">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>4</b>Two amounts</div>
+      <h2>One dot per day</h2>
+      <p class="sub">For 10 summer days Lina wrote the top temperature and the cups she sold (invented). Each day becomes one dot: across for temperature, up for cups.</p>
+      <div class="take">A scatter diagram puts one variable on each axis and draws one dot per element, here one per day.</div>
+      <div class="fr">In French: diagramme de dispersion (nuage de points)</div>
+      <div class="thread"><b>Instrument: Dot crowd.</b> From T1.2, now with two numbers per dot. Back in T1.4 to T1.6 and T8.5.</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="placewrap">
+          <table class="xtab mini" id="daytab"></table>
+          <svg class="chart" id="placechart" viewBox="0 0 380 300" aria-label="Scatter diagram of temperature and cups"></svg>
+        </div>
+        <div class="row" style="margin-top:8px"><button class="btn sun" type="button" id="placenext">Place the next day</button><button class="btn" type="button" id="placeall">Place them all</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 DRAG -->
+<section class="scene th-mint" id="s9" data-chap="Two amounts" aria-label="Drag the points">
+  <div class="scene-in picwide">
+    <div class="txt">
+      <div class="kick"><b>4</b>Two amounts</div>
+      <h2>Drag the dots</h2>
+      <p class="sub">Grab any dot and move it, with a finger, a mouse, or the arrow keys. The trendline is redrawn each time.</p>
+      <div class="lina" data-say="Drag one hot day down to 5 cups. One strange day tilts the whole line!"></div>
+      <div class="take">A trendline shows the general direction of the cloud. One far-away dot can pull it.</div>
+      <div class="fr">In French: droite de tendance</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="ctrlrow">
+          <div class="seg" id="dpre" role="group" aria-label="Start from"><button type="button" data-p="lina" aria-pressed="true">Lina’s days</button><button type="button" data-p="up" aria-pressed="false">Going up</button><button type="button" data-p="down" aria-pressed="false">Going down</button><button type="button" data-p="none" aria-pressed="false">No pattern</button></div>
+          <span class="bigread" id="dread"></span>
+        </div>
+        <svg class="chart dragsvg" id="dragchart" viewBox="0 0 600 320" aria-label="Scatter diagram with draggable dots"></svg>
+        <p class="smallnote" style="margin:4px 0 0">The line is fitted by least squares. You will build it yourself in T8.1.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 DIRECTION AND STRENGTH -->
+<section class="scene th-lilac" id="s10" data-chap="Reading a scatter" aria-label="Direction and strength">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>5</b>Reading a scatter</div>
+      <h2>Which way, and how tight?</h2>
+      <p class="sub">Slide from one end to the other. Watch the cloud tilt, then tighten.</p>
+      <div class="take">Direction: up (positive), down (negative) or neither. Strength: how closely the dots hug a line.</div>
+      <div class="fr">In French: relation positive, négative ; intensité de la relation</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="ctrlrow"><span class="bigread" id="cloudlab"></span><span class="smallnote">down ◂ slide ▸ up</span></div>
+        <input type="range" id="cloud" min="0" max="8" step="1" value="6" aria-label="Direction and strength of the cloud">
+        <svg class="chart" id="cloudchart" viewBox="0 0 540 250" aria-label="A cloud of 70 dots"></svg>
+        <div class="examples" id="cloudex"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 FORM -->
+<section class="scene th-peach" id="s11" data-chap="Reading a scatter" aria-label="Straight or curved?">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>5</b>Reading a scatter</div>
+      <h2>Straight or curved?</h2>
+      <p class="sub">Direction is not the whole story. Some clouds bend. Pick a cloud, then lay a straight line on it.</p>
+      <div class="take">Form: the dots may follow a straight line or a curve. A straight trendline can miss a curve completely.</div>
+      <div class="fr">In French: relation linéaire, non linéaire</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="ctrlrow">
+          <div class="seg" id="formseg" role="group" aria-label="Cloud"><button type="button" data-f="lin" aria-pressed="true">Straight</button><button type="button" data-f="flat" aria-pressed="false">Levels off</button><button type="button" data-f="u" aria-pressed="false">U-shape</button></div>
+          <button class="btn sm" type="button" id="formline" aria-pressed="false">Lay a straight line</button>
+        </div>
+        <svg class="chart" id="formchart" viewBox="0 0 540 260" aria-label="Scatter diagram with a chosen form"></svg>
+        <p class="fb2" id="formfb" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 READ A REAL SCATTER -->
+<section class="scene th-sky" id="s12" data-chap="Reading a scatter" aria-label="Read a real scatter">
+  <div class="scene-in picwide">
+    <div class="txt">
+      <div class="kick"><b>5</b>Reading a scatter</div>
+      <h2>Read a real scatter</h2>
+      <p class="sub">The 244 restaurant tables again: total bill across, tip up. Read it in four steps.</p>
+      <div class="take">Read every scatter in the same order: direction, form, strength, then outliers.</div>
+      <div class="fr">In French: valeur aberrante</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <svg class="chart" id="tipchart" viewBox="0 0 600 210" aria-label="Scatter diagram of tip against total bill for 244 tables"></svg>
+      </div>
+      <div class="card compact" id="tipq"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 TRAP -->
+<section class="scene th-trap" id="s13" data-chap="The trap" aria-label="Together is not because">
+  <div class="hazard" aria-hidden="true"></div>
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>!</b>The trap</div>
+      <h2>Together is not because</h2>
+      <p class="sub">On 12 summer days, Lina’s cups and the sunburn cases at the beach clinic rose together (invented). Does bubble tea cause sunburn?</p>
+      <div class="take">A pattern in a scatter diagram shows association, not causation. A hidden variable can drive both. This trap returns in T1.7 and T8.3.</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="ctrlrow"><p class="minihead" style="margin:0">Cups sold and sunburn cases, one dot per day</p><button class="btn sm sun" type="button" id="hiddenbtn">Show the hidden variable</button></div>
+        <div class="trapwrap">
+          <svg class="chart" id="trapchart" viewBox="0 0 420 250" aria-label="Scatter diagram of cups and sunburn cases"></svg>
+          <div class="cause" id="cause" aria-hidden="true"></div>
+        </div>
+        <div id="trapq" style="margin-top:6px"></div>
+      </div>
+      <div class="realcase dark"><b>Real case.</b> Across 23 countries, those eating more chocolate per person had more Nobel laureates per person (Messerli, 2012). The scatter cannot say why. A third factor, such as a country’s wealth, could push both up.</div>
+    </div>
+  </div>
+</section>
+
+<!-- NAME IT -->
+<section class="scene th-mint" id="s14" data-chap="Name it" aria-label="Name what you did">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>6</b>Name it</div>
+      <h2>Name what you did</h2>
+      <p class="sub">Each card is something your hand already did on this page. Tap a card, then tap its name.</p>
+      <div class="score" id="namescore" aria-live="polite">0 of 6</div>
+      <div class="take">The names come last, as labels on what you already know how to do.</div>
+    </div>
+    <div class="pic"><div class="card nameit" id="nameit"></div></div>
+  </div>
+</section>
+
+<!-- 13 WHICH PICTURE -->
+<section class="scene th-sky" id="s15" data-chap="Which picture?" aria-label="Which picture for two variables?">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>7</b>Which picture?</div>
+      <h2>Which picture for two variables?</h2>
+      <p class="sub">Pick two columns. Follow the path to their picture.</p>
+      <div class="varbtns" id="pairbtns"></div>
+      <div class="take">Two labels: crosstab. Two amounts: scatter diagram. One of each: make classes for the amount, then a crosstab.</div>
+    </div>
+    <div class="pic">
+      <div class="card flow" id="pflow"></div>
+      <div class="card"><svg class="chart" id="pairchart" viewBox="0 0 520 210" aria-label="The chosen picture"></svg></div>
+    </div>
+  </div>
+</section>
+
+<!-- 14 ARCADE -->
+<section class="scene th-indigo" id="s16" data-chap="Practice" aria-label="Practice arcade">
+  <div class="scene-in wide">
+    <div class="txt">
+      <div class="kick"><b>8</b>Practice</div>
+      <h2>Practice arcade</h2>
+      <p class="sub" style="max-width:62ch">Six levels, a boss where you build the cloud, and a scatter lab.</p>
+    </div>
+    <div id="arcade"></div>
+  </div>
+</section>
+
+<!-- 15 RECAP -->
+<section class="scene th-lilac" id="s17" data-chap="Remember" aria-label="Six things to remember">
+  <div class="scene-in wide">
+    <div class="txt">
+      <div class="kick"><b>9</b>Remember</div>
+      <h2>Six things to remember, and one trap</h2>
+    </div>
+    <div class="guessbar" data-guessback="short"></div>
+    <div class="recap" id="recap"></div>
+    <details class="src">
+      <summary>Sources and textbook links</summary>
+      <p>Crosstabulation, row and column percentages, Simpson’s paradox, and the scatter diagram with a trendline follow chapter 2 of the course textbook. Reading a scatter by direction, form, strength and outliers follows Moore, Notz and Fligner, chapter 4. The 244 restaurant tables are real data. Lina’s cups, delivery helpers, summer days and sunburn figures, the practice clouds (typing speed, home energy use) and the generated dot clouds are invented for teaching. The kidney-stone and chocolate figures are real and come from the cited papers. “In French” labels give common French statistical vocabulary, not quotations from the book.</p>
+      <ol>
+        <li>Anderson, D. R., Sweeney, D. J., Williams, T. A., Camm, J. D., &amp; Cochran, J. J. (2015). <em>Statistiques pour l’économie et la gestion</em> (5<sup>e</sup> éd., traduction de la 7<sup>e</sup> édition américaine d’<em>Essentials of Statistics for Business and Economics</em> par C. Borsenberger). De Boeck Supérieur. Chapitre 2.</li>
+        <li>Bryant, P. G., &amp; Smith, M. (1995). <em>Practical data analysis: Case studies in business statistics</em>. Irwin. Dataset “tips” (244 tables), as distributed with the R package reshape2 and the seaborn-data repository: <a href="https://github.com/mwaskom/seaborn-data">https://github.com/mwaskom/seaborn-data</a></li>
+        <li>Charig, C. R., Webb, D. R., Payne, S. R., &amp; Wickham, J. E. (1986). Comparison of treatment of renal calculi by open surgery, percutaneous nephrolithotomy, and extracorporeal shockwave lithotripsy. <em>British Medical Journal (Clinical Research Ed.), 292</em>(6524), 879–882. <a href="https://doi.org/10.1136/bmj.292.6524.879">https://doi.org/10.1136/bmj.292.6524.879</a></li>
+        <li>Julious, S. A., &amp; Mullee, M. A. (1994). Confounding and Simpson’s paradox. <em>BMJ, 309</em>(6967), 1480–1481. <a href="https://doi.org/10.1136/bmj.309.6967.1480">https://doi.org/10.1136/bmj.309.6967.1480</a></li>
+        <li>Messerli, F. H. (2012). Chocolate consumption, cognitive function, and Nobel laureates. <em>New England Journal of Medicine, 367</em>(16), 1562–1564. <a href="https://doi.org/10.1056/NEJMon1211064">https://doi.org/10.1056/NEJMon1211064</a></li>
+        <li>Moore, D. S., Notz, W. I., &amp; Fligner, M. A. (2013). <em>The basic practice of statistics</em> (6th ed.). W. H. Freeman. Chapter 4, Scatterplots and correlation.</li>
+        <li>Simpson, E. H. (1951). The interpretation of interaction in contingency tables. <em>Journal of the Royal Statistical Society, Series B, 13</em>(2), 238–241.</li>
+      </ol>
+      <p><button class="btn sm" type="button" id="resetall">Reset my stars</button></p>
+    </details>
+  </div>
+</section>
+
+</main>
+
+<nav class="ctrl" aria-label="Scenes">
+  <button class="btn" type="button" id="prev">Back</button>
+  <div class="dots" id="dots"></div>
+  <span class="pos" id="pos"></span>
+  <button class="btn sun" type="button" id="next">Next</button>
+</nav>
+<div class="visually-hidden" aria-live="polite" id="announce"></div>
+<canvas id="confetti" aria-hidden="true"></canvas>
+<script>
+(function(){
+'use strict';
+/* =========================================================== helpers */
+const $  = (s, r) => (r || document).querySelector(s);
+const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+const INK = '#2A1C19';
+const reduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+function sget(k, f){ try{ const v = localStorage.getItem(k); return v == null ? f : JSON.parse(v); }catch(e){ return f; } }
+function sset(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+function shuffle(a, rnd){ rnd = rnd || Math.random; for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function rng(seed){ return function(){ seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function el(tag, cls, html){ const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
+
+/* =========================================================== art */
+const FL = {Mango:'#F9B233', Taro:'#B79BE0', Matcha:'#9BC255', Strawberry:'#F49BB3', Lychee:'#F4E4C4'};
+const SZ = {S:0.8, M:0.9, L:1};
+function cupInner(fl){
+  const c = FL[fl] || '#ccc';
+  return '<rect x="31" y="0" width="7" height="28" rx="2.5" fill="#D93A62" stroke="'+INK+'" stroke-width="2.5" transform="rotate(14 34 24)"/>'
+   + '<path d="M9 30 H51 L45.6 87 Q45.2 91 41.5 91 H18.5 Q14.8 91 14.4 87 Z" fill="#fff" stroke="'+INK+'" stroke-width="2.5" stroke-linejoin="round"/>'
+   + '<path d="M12.4 38 H47.6 L43.2 86 H16.8 Z" fill="'+c+'"/>'
+   + '<g fill="#3B2416"><circle cx="20.5" cy="81.5" r="3.4"/><circle cx="27.5" cy="83" r="3.4"/><circle cx="34.5" cy="82" r="3.4"/><circle cx="40.5" cy="80.5" r="3.2"/><circle cx="24" cy="75.5" r="3.2"/><circle cx="31.5" cy="76.5" r="3.2"/><circle cx="38" cy="74.5" r="3"/></g>'
+   + '<rect x="5" y="25" width="50" height="7" rx="3.5" fill="#fff" stroke="'+INK+'" stroke-width="2.5"/>'
+   + '<path d="M8 26 Q30 6 52 26 Z" fill="#fff" stroke="'+INK+'" stroke-width="2.5" stroke-linejoin="round"/>';
+}
+function cupG(fl, sz, x, yb, k){ const kk = (k || 1) * (SZ[sz] || 1); return '<g transform="translate('+(x - 30*kk)+' '+(yb - 92*kk)+') scale('+kk+')">'+cupInner(fl)+'</g>'; }
+function cupSVG(fl, sz, w){ return '<svg viewBox="0 0 60 92" width="'+w+'" height="'+Math.round(w*92/60)+'" aria-hidden="true">'+cupG(fl, sz, 30, 92, 1)+'</svg>'; }
+
+let uid = 0;
+function linaSVG(){
+  const id = 'lc' + (++uid);
+  return '<svg viewBox="0 0 64 64" aria-hidden="true"><defs><clipPath id="'+id+'"><circle cx="32" cy="32" r="29.6"/></clipPath></defs>'
+   + '<circle cx="32" cy="32" r="31" fill="#F7B32B" stroke="'+INK+'" stroke-width="2.5"/>'
+   + '<g clip-path="url(#'+id+')"><path d="M8 66 Q10 47 32 47 Q54 47 56 66 Z" fill="#EE7F1B" stroke="'+INK+'" stroke-width="2.5"/>'
+   + '<rect x="28" y="40" width="8" height="9" fill="#F1BE96"/><circle cx="32" cy="12.5" r="7" fill="#2B1A12"/>'
+   + '<circle cx="32" cy="31" r="14" fill="#F1BE96" stroke="'+INK+'" stroke-width="2.5"/>'
+   + '<path d="M17.5 31 Q17 16 32 16 Q47 16 46.5 31 Q41 22.5 32 23.5 Q23 22.5 17.5 31 Z" fill="#2B1A12"/>'
+   + '<circle cx="26.5" cy="32" r="1.9" fill="'+INK+'"/><circle cx="37.5" cy="32" r="1.9" fill="'+INK+'"/>'
+   + '<path d="M28 37 Q32 40.5 36 37" stroke="'+INK+'" stroke-width="2" fill="none" stroke-linecap="round"/>'
+   + '<circle cx="23" cy="36" r="2.3" fill="#F49BB3" opacity=".75"/><circle cx="41" cy="36" r="2.3" fill="#F49BB3" opacity=".75"/></g></svg>';
+}
+function eyes(x1, x2, y){ return '<circle cx="'+x1+'" cy="'+y+'" r="8.5" fill="#fff" stroke="'+INK+'" stroke-width="2.5"/><circle cx="'+(x1+1.5)+'" cy="'+(y+1)+'" r="3.8" fill="'+INK+'"/><circle cx="'+x2+'" cy="'+y+'" r="8.5" fill="#fff" stroke="'+INK+'" stroke-width="2.5"/><circle cx="'+(x2+1.5)+'" cy="'+(y+1)+'" r="3.8" fill="'+INK+'"/>'; }
+function mouth(m, cx, cy){
+  if (m === 'puzzled') return '<path d="M'+(cx-11)+' '+(cy+2)+' q5.5 -6 11 0 t11 0" fill="none" stroke="'+INK+'" stroke-width="3" stroke-linecap="round"/>';
+  if (m === 'wow') return '<ellipse cx="'+cx+'" cy="'+(cy+2)+'" rx="5.5" ry="6.5" fill="'+INK+'"/>';
+  return '<path d="M'+(cx-11)+' '+(cy-2)+' q11 11 22 0" fill="none" stroke="'+INK+'" stroke-width="3" stroke-linecap="round"/>';
+}
+function tagSVG(m){ return '<svg viewBox="0 0 130 96" aria-hidden="true"><path d="M26 44 C14 30 6 28 3 18" fill="none" stroke="'+INK+'" stroke-width="3" stroke-linecap="round"/><path d="M36 10 H112 Q122 10 122 20 V76 Q122 86 112 86 H36 L10 48 Z" fill="#EE7F1B" stroke="'+INK+'" stroke-width="3" stroke-linejoin="round"/><circle cx="31" cy="48" r="7" fill="#fff" stroke="'+INK+'" stroke-width="3"/>'+eyes(70, 94, 42)+mouth(m || 'happy', 82, 64)+'</svg>'; }
+function rulerSVG(m){ let t = ''; for (let i = 0; i < 14; i++){ const x = 14 + i*9.4; t += '<line x1="'+x+'" y1="12" x2="'+x+'" y2="'+(12 + (i % 5 === 0 ? 16 : 9))+'" stroke="#fff" stroke-width="2.5"/>'; } return '<svg viewBox="0 0 150 80" aria-hidden="true"><rect x="4" y="10" width="142" height="62" rx="10" fill="#2F55D4" stroke="'+INK+'" stroke-width="3"/>'+t+eyes(62, 90, 46)+mouth(m || 'happy', 76, 62)+'</svg>'; }
+const BULB = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5a6.5 6.5 0 0 0-3.8 11.8c.8.6 1.3 1.4 1.3 2.3V17h5v-.4c0-.9.5-1.7 1.3-2.3A6.5 6.5 0 0 0 12 2.5z" fill="#fff" stroke="'+INK+'" stroke-width="2"/><path d="M9.5 20h5M10.5 22.5h3" stroke="'+INK+'" stroke-width="2" stroke-linecap="round"/></svg>';
+const LOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+const FLAME = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c1 4 6 6 6 12a6 6 0 0 1-12 0c0-3 2-5 3-6 0 2 1 3 2 3 0-3-1-6 1-9z" fill="#EE7F1B" stroke="'+INK+'" stroke-width="1.8" stroke-linejoin="round"/></svg>';
+function pearlChar(){ return '<circle r="15" fill="#3B2416" stroke="'+INK+'" stroke-width="2.5"/><circle cx="-5" cy="-3" r="3.6" fill="#fff"/><circle cx="5" cy="-3" r="3.6" fill="#fff"/><circle cx="-4.2" cy="-2.5" r="1.7" fill="'+INK+'"/><circle cx="5.8" cy="-2.5" r="1.7" fill="'+INK+'"/><path d="M-4 5 q4 4 8 0" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round"/>'; }
+function shirt(n, col){ return '<svg viewBox="0 0 70 70" aria-hidden="true"><path d="M18 8 L28 4 Q35 11 42 4 L52 8 L66 20 L57 31 L52 27 V66 H18 V27 L13 31 L4 20 Z" fill="'+col+'" stroke="'+INK+'" stroke-width="3" stroke-linejoin="round"/><text x="35" y="52" text-anchor="middle" font-family="Times New Roman, Times, Liberation Serif, serif" font-weight="800" font-size="24" fill="#fff" stroke="'+INK+'" stroke-width="1" paint-order="stroke">'+n+'</text></svg>'; }
+
+function standSVG(){
+  let s = '<svg class="stand" viewBox="0 0 520 440" role="img" aria-label="Lina’s bubble tea stand with four cups and a notebook on the counter">';
+  s += '<rect x="46" y="110" width="16" height="190" rx="4" fill="#fff" stroke="'+INK+'" stroke-width="3"/><rect x="458" y="110" width="16" height="190" rx="4" fill="#fff" stroke="'+INK+'" stroke-width="3"/>';
+  s += '<rect x="62" y="130" width="396" height="160" fill="#FDEFD2" stroke="'+INK+'" stroke-width="3"/>';
+  const x0 = 24, w = 59;
+  for (let i = 0; i < 8; i++) s += '<rect x="'+(x0 + i*w)+'" y="74" width="'+w+'" height="62" fill="'+(i % 2 ? '#fff' : '#EE7F1B')+'"/>';
+  for (let i = 0; i < 8; i++) s += '<path d="M'+(x0 + i*w)+' 136 a'+(w/2)+' 18 0 0 0 '+w+' 0" fill="'+(i % 2 ? '#fff' : '#EE7F1B')+'" stroke="'+INK+'" stroke-width="3"/>';
+  s += '<rect x="24" y="74" width="472" height="62" fill="none" stroke="'+INK+'" stroke-width="3"/>';
+  s += '<rect x="140" y="12" width="240" height="62" rx="16" fill="#F7B32B" stroke="'+INK+'" stroke-width="3"/>';
+  s += '<text x="260" y="54" text-anchor="middle" font-family="Times New Roman, Times, Liberation Serif, serif" font-size="38" font-weight="700" fill="'+INK+'">Lina’s Bubble Tea</text>';
+  [['Mango','L',112],['Taro','M',192],['Matcha','S',262],['Strawberry','L',336]].forEach(([f, z, x]) => { s += '<g class="cupbob">'+cupG(f, z, x, 284, 1.3)+'</g>'; });
+  s += '<g transform="translate(392 218) rotate(-8)"><rect width="86" height="62" rx="6" fill="#FFFFFF" stroke="'+INK+'" stroke-width="3"/><line x1="14" y1="0" x2="14" y2="62" stroke="#F49BB3" stroke-width="2"/>';
+  for (let k = 0; k < 4; k++) s += '<line x1="20" y1="'+(16 + k*12)+'" x2="'+(74 - (k % 2) * 14)+'" y2="'+(16 + k*12)+'" stroke="#C5D0F0" stroke-width="2.5" stroke-linecap="round"/>';
+  s += '</g>';
+  s += '<rect x="12" y="282" width="496" height="22" rx="8" fill="#fff" stroke="'+INK+'" stroke-width="3"/>';
+  s += '<rect x="24" y="302" width="472" height="108" rx="10" fill="#8E6CC9" stroke="'+INK+'" stroke-width="3"/>';
+  for (let k = 0; k < 15; k++) s += '<circle cx="'+(52 + k*30)+'" cy="322" r="6" fill="#3B2416"/>';
+  s += '<rect x="170" y="340" width="180" height="50" rx="12" fill="#fff" stroke="'+INK+'" stroke-width="3"/><text x="260" y="374" text-anchor="middle" font-family="Times New Roman, Times, Liberation Serif, serif" font-size="30" font-weight="700" fill="'+INK+'">fresh every day</text>';
+  s += '</svg>';
+  return s;
+}
+
+/* fill in shared bits */
+$$('.lina[data-say]').forEach(e => { e.innerHTML = '<span class="av">'+linaSVG()+'</span><div class="bubble"><b>Lina</b>'+e.dataset.say+'</div>'; });
+$$('[data-mascot]').forEach(e => { e.innerHTML = e.dataset.mascot === 'tag' ? tagSVG(e.dataset.mood) : rulerSVG(e.dataset.mood); });
+$$('.take').forEach(t => { t.innerHTML = BULB + '<span>' + t.innerHTML + '</span>'; });
+
+/* =========================================================== stars (XP) */
+const XPK = 't13-xp';
+let XP = sget(XPK, {});
+function renderXP(p){ const x = $('#xp'); x.textContent = '★ ' + Object.keys(XP).length; if (p){ x.classList.remove('pulse'); void x.offsetWidth; x.classList.add('pulse'); } }
+function addXP(k){ if (XP[k]) return; XP[k] = 1; sset(XPK, XP); renderXP(true); }
+renderXP(false);
+
+/* =========================================================== navigation */
+const scenes = $$('.scene'), N = scenes.length, ENTER = {};
+let cur = -1;
+const seen = new Set();
+const dotsHost = $('#dots');
+scenes.forEach((s, i) => { const b = el('button'); b.type = 'button'; b.setAttribute('aria-label', 'Scene ' + (i + 1) + ': ' + s.getAttribute('aria-label')); b.addEventListener('click', () => go(i)); dotsHost.appendChild(b); });
+function go(i){
+  i = Math.max(0, Math.min(N - 1, i));
+  if (i === cur) return;
+  cur = i; seen.add(i);
+  scenes.forEach((s, j) => s.classList.toggle('on', j === i));
+  scenes[i].scrollTop = 0;
+  $$('button', dotsHost).forEach((b, j) => { b.classList.toggle('on', j === i); b.classList.toggle('seen', seen.has(j) && j !== i); });
+  $('#chapnm').textContent = scenes[i].dataset.chap;
+  document.documentElement.style.setProperty('--now', getComputedStyle(scenes[i]).getPropertyValue('--chip').trim() || '#4B2D86');
+  $('#progfill').style.width = (100 * i / (N - 1)) + '%';
+  $('#pos').textContent = (i + 1) + ' / ' + N;
+  $('#prev').disabled = i === 0;
+  $('#next').textContent = i === N - 1 ? 'Start again' : 'Next';
+  $('#announce').textContent = scenes[i].getAttribute('aria-label');
+  if (location.hash !== '#s' + i) location.hash = 's' + i;
+  const f = ENTER[scenes[i].id]; if (f) f();
+}
+$('#prev').addEventListener('click', () => go(cur - 1));
+$('#next').addEventListener('click', () => go(cur === N - 1 ? 0 : cur + 1));
+$$('[data-go]').forEach(b => b.addEventListener('click', () => { const v = b.dataset.go; go(v === 'next' ? cur + 1 : +v); }));
+window.addEventListener('hashchange', () => { const m = /^#s(\d+)$/.exec(location.hash); if (m) go(+m[1]); });
+document.addEventListener('keydown', e => {
+  if (e.altKey || e.ctrlKey || e.metaKey) return;
+  const t = e.target; if (t && (t.matches('input, textarea, select') || t.isContentEditable)) return;
+  if (e.key === 'ArrowRight' || e.key === 'PageDown'){ e.preventDefault(); go(cur + 1); }
+  else if (e.key === 'ArrowLeft' || e.key === 'PageUp'){ e.preventDefault(); go(cur - 1); }
+});
+
+/* small quiz helper: one row per question, big buttons, one reason */
+function miniQuiz(host, items, key){
+  items.forEach((it, i) => {
+    const d = el('div', 'qrow', '<div class="qq">'+it.q+'</div><div class="qo">'+it.o.map((o, j) => '<button class="btn sm" type="button" data-j="'+j+'">'+o+'</button>').join('')+'</div><div class="qf" aria-live="polite"></div>');
+    host.appendChild(d);
+    const bs = $$('button', d);
+    bs.forEach(b => b.addEventListener('click', () => {
+      const j = +b.dataset.j, ok = j === it.a;
+      bs.forEach((x, k) => { x.disabled = true; if (k === it.a) x.classList.add('right'); if (k === j && !ok) x.classList.add('wrong'); });
+      $('.qf', d).innerHTML = (ok ? '<b>Yes!</b> ' : '<b>Not quite.</b> ') + it.why;
+      if (ok) addXP(key + i);
+    }));
+  });
+}
+
+
+/* =========================================================== T1.3 data */
+const BILLS=[16.99, 10.34, 21.01, 23.68, 24.59, 25.29, 8.77, 26.88, 15.04, 14.78, 10.27, 35.26, 15.42, 18.43, 14.83, 21.58, 10.33, 16.29, 16.97, 20.65, 17.92, 20.29, 15.77, 39.42, 19.82, 17.81, 13.37, 12.69, 21.7, 19.65, 9.55, 18.35, 15.06, 20.69, 17.78, 24.06, 16.31, 16.93, 18.69, 31.27, 16.04, 17.46, 13.94, 9.68, 30.4, 18.29, 22.23, 32.4, 28.55, 18.04, 12.54, 10.29, 34.81, 9.94, 25.56, 19.49, 38.01, 26.41, 11.24, 48.27, 20.29, 13.81, 11.02, 18.29, 17.59, 20.08, 16.45, 3.07, 20.23, 15.01, 12.02, 17.07, 26.86, 25.28, 14.73, 10.51, 17.92, 27.2, 22.76, 17.29, 19.44, 16.66, 10.07, 32.68, 15.98, 34.83, 13.03, 18.28, 24.71, 21.16, 28.97, 22.49, 5.75, 16.32, 22.75, 40.17, 27.28, 12.03, 21.01, 12.46, 11.35, 15.38, 44.3, 22.42, 20.92, 15.36, 20.49, 25.21, 18.24, 14.31, 14.0, 7.25, 38.07, 23.95, 25.71, 17.31, 29.93, 10.65, 12.43, 24.08, 11.69, 13.42, 14.26, 15.95, 12.48, 29.8, 8.52, 14.52, 11.38, 22.82, 19.08, 20.27, 11.17, 12.26, 18.26, 8.51, 10.33, 14.15, 16.0, 13.16, 17.47, 34.3, 41.19, 27.05, 16.43, 8.35, 18.64, 11.87, 9.78, 7.51, 14.07, 13.13, 17.26, 24.55, 19.77, 29.85, 48.17, 25.0, 13.39, 16.49, 21.5, 12.66, 16.21, 13.81, 17.51, 24.52, 20.76, 31.71, 10.59, 10.63, 50.81, 15.81, 7.25, 31.85, 16.82, 32.9, 17.89, 14.48, 9.6, 34.63, 34.65, 23.33, 45.35, 23.17, 40.55, 20.69, 20.9, 30.46, 18.15, 23.1, 15.69, 19.81, 28.44, 15.48, 16.58, 7.56, 10.34, 43.11, 13.0, 13.51, 18.71, 12.74, 13.0, 16.4, 20.53, 16.47, 26.59, 38.73, 24.27, 12.76, 30.06, 25.89, 48.33, 13.27, 28.17, 12.9, 28.15, 11.59, 7.74, 30.14, 12.16, 13.42, 8.58, 15.98, 13.42, 16.27, 10.09, 20.45, 13.28, 22.12, 24.01, 15.69, 11.61, 10.77, 15.53, 10.07, 12.6, 32.83, 35.83, 29.03, 27.18, 22.67, 17.82, 18.78]; const TIPS=[1.01, 1.66, 3.5, 3.31, 3.61, 4.71, 2.0, 3.12, 1.96, 3.23, 1.71, 5.0, 1.57, 3.0, 3.02, 3.92, 1.67, 3.71, 3.5, 3.35, 4.08, 2.75, 2.23, 7.58, 3.18, 2.34, 2.0, 2.0, 4.3, 3.0, 1.45, 2.5, 3.0, 2.45, 3.27, 3.6, 2.0, 3.07, 2.31, 5.0, 2.24, 2.54, 3.06, 1.32, 5.6, 3.0, 5.0, 6.0, 2.05, 3.0, 2.5, 2.6, 5.2, 1.56, 4.34, 3.51, 3.0, 1.5, 1.76, 6.73, 3.21, 2.0, 1.98, 3.76, 2.64, 3.15, 2.47, 1.0, 2.01, 2.09, 1.97, 3.0, 3.14, 5.0, 2.2, 1.25, 3.08, 4.0, 3.0, 2.71, 3.0, 3.4, 1.83, 5.0, 2.03, 5.17, 2.0, 4.0, 5.85, 3.0, 3.0, 3.5, 1.0, 4.3, 3.25, 4.73, 4.0, 1.5, 3.0, 1.5, 2.5, 3.0, 2.5, 3.48, 4.08, 1.64, 4.06, 4.29, 3.76, 4.0, 3.0, 1.0, 4.0, 2.55, 4.0, 3.5, 5.07, 1.5, 1.8, 2.92, 2.31, 1.68, 2.5, 2.0, 2.52, 4.2, 1.48, 2.0, 2.0, 2.18, 1.5, 2.83, 1.5, 2.0, 3.25, 1.25, 2.0, 2.0, 2.0, 2.75, 3.5, 6.7, 5.0, 5.0, 2.3, 1.5, 1.36, 1.63, 1.73, 2.0, 2.5, 2.0, 2.74, 2.0, 2.0, 5.14, 5.0, 3.75, 2.61, 2.0, 3.5, 2.5, 2.0, 2.0, 3.0, 3.48, 2.24, 4.5, 1.61, 2.0, 10.0, 3.16, 5.15, 3.18, 4.0, 3.11, 2.0, 2.0, 4.0, 3.55, 3.68, 5.65, 3.5, 6.5, 3.0, 5.0, 3.5, 2.0, 3.5, 4.0, 1.5, 4.19, 2.56, 2.02, 4.0, 1.44, 2.0, 5.0, 2.0, 2.0, 4.0, 2.01, 2.0, 2.5, 4.0, 3.23, 3.41, 3.0, 2.03, 2.23, 2.0, 5.16, 9.0, 2.5, 6.5, 1.1, 3.0, 1.5, 1.44, 3.09, 2.2, 3.48, 1.92, 3.0, 1.58, 2.5, 2.0, 3.0, 2.72, 2.88, 2.0, 3.0, 3.39, 1.47, 3.0, 1.25, 1.0, 1.17, 4.67, 5.92, 2.0, 2.0, 1.75, 3.0]; const DAYS=['Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Fri','Fri','Fri','Fri','Fri','Fri','Fri','Fri','Fri','Fri','Fri','Fri','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sun','Sun','Sun','Sun','Sun','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sat','Sat','Sat','Sat','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Sun','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Thur','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Fri','Fri','Fri','Fri','Fri','Fri','Fri','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Sat','Thur']; const SMOK=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0]; const TIMES="DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDLLLLLLLLLLLLLDDDDDDDDDDDDDDDDDDDDDDDDDDDLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDLLLLLLLLLLLLLLLDDDDDDDDDDDDDDLLLLLLLDDDDDDDDDDDDDDDDD".split("");
+const FLAV = ['Mango','Taro','Strawberry','Matcha','Lychee'];
+const WHO = ['Students','Workers'];
+const XT = [[6, 8, 5, 1, 1], [8, 2, 3, 5, 1]];            // Lina's Saturday cups by customer type (invented)
+const BLUE = '#2F55D4', SUN_C = '#F7B32B', BERRY = '#D93A62', TARO = '#8E6CC9', MINT = '#6E9F2E';
+const D4 = ['Thur','Fri','Sat','Sun'], DNM = {Thur:'Thursday', Fri:'Friday', Sat:'Saturday', Sun:'Sunday'};
+const DS = D4.map(d => [0, 1].map(s => DAYS.reduce((a, x, i) => a + (x === d && SMOK[i] === s ? 1 : 0), 0)));
+const DCOL = ['#F7B32B', '#EE7F1B', '#8E6CC9', '#6E9F2E'];
+const SCOL = ['#DDD3EC', '#D93A62'], SNAME = ['No smoker', 'Smoker'];
+const ROWT = DS.map(r => r[0] + r[1]), COLT = [0, 1].map(s => DS.reduce((a, r) => a + r[s], 0)), GT = 244;
+const LT = [18, 21, 22, 24, 25, 27, 28, 30, 32, 33], LC = [24, 27, 35, 33, 41, 39, 50, 47, 56, 60];   // Lina's 10 days (invented)
+const pc = (a, b) => Math.round(a / b * 100) + '%';
+const sum = a => a.reduce((x, y) => x + y, 0);
+
+/* =========================================================== helpers */
+function niceTicks(min, max, target){
+  target = target || 4;
+  const span = Math.max(max - min, 1e-9), raw = span / target, p = Math.pow(10, Math.floor(Math.log10(raw)));
+  const c = [1, 2, 2.5, 5, 10].map(m => m * p);
+  const step = c.find(s => span / s <= target) || c[c.length - 1];
+  const lo = Math.ceil(min / step - 1e-9) * step, t = [];
+  for (let v = lo; v <= max + step * 1e-6; v += step) t.push(+v.toFixed(6));
+  return t;
+}
+function fit(xs, ys){
+  const n = xs.length, mx = sum(xs) / n, my = sum(ys) / n; let sxy = 0, sxx = 0, syy = 0;
+  for (let i = 0; i < n; i++){ const dx = xs[i] - mx, dy = ys[i] - my; sxy += dx * dy; sxx += dx * dx; syy += dy * dy; }
+  const b1 = sxx ? sxy / sxx : 0;
+  return {b1, b0: my - b1 * mx, r: sxx && syy ? sxy / Math.sqrt(sxx * syy) : 0};
+}
+function frame(o){
+  const W = o.W, H = o.H, L = o.L || 52, R = o.R || 14, T = o.T || 12, B = o.B || (o.xlab ? 44 : 26);
+  const X = v => L + (v - o.xMin) / (o.xMax - o.xMin) * (W - L - R);
+  const Y = v => H - B - (v - o.yMin) / (o.yMax - o.yMin) * (H - B - T);
+  let g = '';
+  if (!o.bare){
+    (o.yTicks || niceTicks(o.yMin, o.yMax, o.yn || 4)).forEach(t => { g += '<line class="grid" x1="'+L+'" x2="'+(W - R)+'" y1="'+Y(t).toFixed(1)+'" y2="'+Y(t).toFixed(1)+'"/><text x="'+(L - 7)+'" y="'+(Y(t) + 4).toFixed(1)+'" text-anchor="end">'+(o.yFmt ? o.yFmt(t) : t)+'</text>'; });
+    (o.xTicks || niceTicks(o.xMin, o.xMax, o.xn || 6)).forEach(t => { g += '<text x="'+X(t).toFixed(1)+'" y="'+(H - B + 17)+'" text-anchor="middle">'+(o.xFmt ? o.xFmt(t) : t)+'</text>'; });
+  }
+  g += '<line class="axis" x1="'+L+'" x2="'+(W - R)+'" y1="'+(H - B)+'" y2="'+(H - B)+'"/><line class="axis" x1="'+L+'" x2="'+L+'" y1="'+T+'" y2="'+(H - B)+'"/>';
+  if (o.xlab) g += '<text x="'+((L + W - R) / 2)+'" y="'+(H - 6)+'" text-anchor="middle" style="fill:'+INK+';font-weight:700">'+o.xlab+'</text>';
+  if (o.ylab) g += '<text transform="translate(14 '+((T + H - B) / 2)+') rotate(-90)" text-anchor="middle" style="fill:'+INK+';font-weight:700">'+o.ylab+'</text>';
+  return {g, X, Y, L, R, T, B, W, H, o};
+}
+function lineSVG(f, fr, xa, xb, cls){
+  const o = fr.o; let lo = xa, hi = xb;
+  if (Math.abs(f.b1) > 1e-12){
+    const x1 = (o.yMin - f.b0) / f.b1, x2 = (o.yMax - f.b0) / f.b1;
+    lo = Math.max(lo, Math.min(x1, x2)); hi = Math.min(hi, Math.max(x1, x2));
+  } else if (f.b0 < o.yMin || f.b0 > o.yMax) return '';
+  if (lo >= hi) return '';
+  return '<line class="'+(cls || 'tl')+'" x1="'+fr.X(lo).toFixed(1)+'" y1="'+fr.Y(f.b0 + f.b1 * lo).toFixed(1)+'" x2="'+fr.X(hi).toFixed(1)+'" y2="'+fr.Y(f.b0 + f.b1 * hi).toFixed(1)+'"/>';
+}
+function dotsSVG(xs, ys, fr, r, fill, op){
+  return xs.map((x, i) => '<circle cx="'+fr.X(x).toFixed(1)+'" cy="'+fr.Y(ys[i]).toFixed(1)+'" r="'+r+'" fill="'+(fill || BLUE)+'" fill-opacity="'+(op == null ? .85 : op)+'" stroke="'+INK+'" stroke-width="1.3"/>').join('');
+}
+function baseZ(n, seed){
+  const R = rng(seed);
+  const nz = () => { let u = 0; while (!u) u = R(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * R()); };
+  let a = [], b = [];
+  for (let i = 0; i < n; i++){ a.push(nz()); b.push(nz()); }
+  const st = v => { const m = sum(v) / v.length, s = Math.sqrt(sum(v.map(x => (x - m) * (x - m))) / v.length); return v.map(x => (x - m) / s); };
+  a = st(a); b = st(b);
+  const k = sum(a.map((x, i) => x * b[i])) / a.length;
+  b = st(b.map((x, i) => x - k * a[i]));
+  return [a, b];
+}
+const cloudY = (z, r) => z[0].map((a, i) => r * a + Math.sqrt(1 - r * r) * z[1][i]);
+function cloudSVG(r, seed, w){
+  const z = baseZ(40, seed), ys = cloudY(z, r), W = 220, H = 120;
+  const fr = frame({W, H, L:12, R:10, T:10, B:12, xMin:-3, xMax:3, yMin:-3.2, yMax:3.2, bare:true});
+  return '<svg class="chart" viewBox="0 0 '+W+' '+H+'" style="width:'+(w || 220)+'px;display:block;margin:6px 0" aria-hidden="true">'+fr.g+dotsSVG(z[0], ys, fr, 3.4, BLUE, .8)+'</svg>';
+}
+function lum(hex){ const n = parseInt(hex.slice(1), 16), c = [n >> 16, (n >> 8) & 255, n & 255].map(v => { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }); return .2126 * c[0] + .7152 * c[1] + .0722 * c[2]; }
+function stackSVG(o){
+  const W = o.W, L = o.L || 78, R = o.R || 10, top = o.top || 30, bh = o.bh || 28, pitch = o.pitch || 40;
+  let g = '', lx = o.lx == null ? L : o.lx;
+  o.names.forEach((nm, j) => { g += '<rect x="'+lx+'" y="4" width="12" height="12" rx="3" fill="'+o.cols[j]+'" stroke="'+INK+'" stroke-width="1.5"/><text x="'+(lx + 17)+'" y="15">'+nm+'</text>'; lx += 28 + nm.length * 7.3; });
+  o.rows.forEach((row, i) => {
+    const y = top + i * pitch, tot = sum(row.vals), full = W - L - R, sc = o.scaleMax ? full / o.scaleMax : full / tot;
+    g += '<text x="'+(L - 7)+'" y="'+(y + bh / 2 + 5)+'" text-anchor="end" style="fill:'+INK+';font-weight:700">'+row.lab+'</text>';
+    let x = L;
+    row.vals.forEach((v, j) => {
+      const w = v * sc, on = o.sel && o.sel[0] === i && o.sel[1] === j;
+      g += '<rect class="seg2" data-i="'+i+'" data-j="'+j+'" x="'+x.toFixed(1)+'" y="'+y+'" width="'+w.toFixed(1)+'" height="'+bh+'" fill="'+o.cols[j]+'" stroke="'+INK+'" stroke-width="'+(on ? 4 : 1.5)+'"'+(o.click ? ' style="cursor:pointer"' : '')+'><title>'+row.lab+', '+o.names[j]+': '+v+' of '+tot+'</title></rect>';
+      const lab = o.scaleMax ? String(v) : Math.round(v / tot * 100) + '%';
+      if (w > lab.length * 8 + 6) g += '<text x="'+(x + w / 2).toFixed(1)+'" y="'+(y + bh / 2 + 5)+'" text-anchor="middle" style="fill:'+(lum(o.cols[j]) > .3 ? INK : '#fff')+';font-weight:700;pointer-events:none">'+lab+'</text>';
+      x += w;
+    });
+  });
+  const yb = top + (o.rows.length - 1) * pitch + bh + 17;
+  g += '<text x="'+L+'" y="'+yb+'" text-anchor="middle">0'+(o.scaleMax ? '' : '%')+'</text><text x="'+(W - R)+'" y="'+yb+'" text-anchor="end">'+(o.scaleMax ? o.scaleMax + ' tables' : '100%')+'</text>';
+  return g;
+}
+
+/* =========================================================== 0. guess first */
+function guessFirst(G){
+  const host = $('#guess'), KEY = G.key, LAB = G.olab || G.opts;
+  host.innerHTML = '<div class="ghead"><span class="gtag">Guess first</span>'+(G.note ? '<span class="gnote">'+G.note+'</span>' : '')+'</div>' + (G.visual || '') + '<p class="gq">'+G.q+'</p><div class="gopts'+(G.one ? ' one' : '')+'">' + G.opts.map((o, j) => '<button type="button" class="gopt" data-j="'+j+'" aria-pressed="false">'+o+'</button>').join('') + '</div><p class="gsaved" aria-live="polite"></p>';
+  function mark(){
+    const j = sget(KEY, null);
+    $$('.gopt', host).forEach(b => b.setAttribute('aria-pressed', +b.dataset.j === j ? 'true' : 'false'));
+    $('.gsaved', host).textContent = j == null ? 'Pick one. Nothing is explained yet, so any answer is fine.' : 'Saved. You will see your guess again later on this page.';
+    $$('[data-guessback]').forEach(el => { const w = el.dataset.guessback === 'short' ? G.short : G.why; el.innerHTML = j == null ? '<b>You skipped the guess at the start.</b> The answer: “'+LAB[G.a]+'”. ' + w : '<b>Your guess at the start:</b> “'+LAB[j]+'”. ' + (j === G.a ? '<b>Right!</b> ' : '<b>The answer:</b> “'+LAB[G.a]+'”. ') + w; });
+  }
+  $$('.gopt', host).forEach(b => b.addEventListener('click', () => { sset(KEY, +b.dataset.j); mark(); addXP('guess'); }));
+  mark();
+}
+guessFirst({
+  key:'t13-guess', note:'Real data: 244 restaurant tables', one:true,
+  q:'In a restaurant, 79% of the Friday tables had a smoker. Of all the tables with a smoker, what share came on a Friday?',
+  opts:['Also about 79%', 'About half', 'Much less: about 1 in 6'], a:2,
+  short:'Same 15 tables: 15 of 19 Friday tables (79%), but only 15 of 93 smoker tables (16%).',
+  why:'Only 19 tables came on Friday, and 15 of them had a smoker: 79%. But there were 93 smoker tables in all, and only 15 of them came on Friday: 16%. Same 15 tables, two different wholes.',
+});
+
+/* =========================================================== 1. three doors: pairs */
+(function pairs(){
+  const AG = [4, 5, 6, 7, 8, 9, 10, 11, 12], HT = [103, 111, 115, 123, 127, 134, 138, 145, 149];
+  const TC = [-10, -5, 0, 3, 6, 10, 14, 18, 20], CC = [62, 57, 47, 43, 36, 31, 21, 18, 12];
+  const D = [
+    {m:'tag', t:'Pet and home', n:'20 classmates', raw:'dog + house, cat + apartment, dog + house…', b:'Sort into a grid', note:'Dogs live mostly in houses (7 of 10), cats mostly in apartments (6 of 10). The two labels go together.', draw:() => {
+      let g = '<text x="104" y="16" text-anchor="middle" style="fill:'+INK+';font-weight:700">Cat</text><text x="174" y="16" text-anchor="middle" style="fill:'+INK+';font-weight:700">Dog</text>';
+      [['House', [3, 7]], ['Apartment', [6, 4]]].forEach(([r, v], i) => { g += '<text x="66" y="'+(52 + i * 50)+'" text-anchor="end" style="fill:'+INK+';font-weight:700;font-size:12px">'+r+'</text>'; v.forEach((n, j) => { g += '<rect x="'+(72 + j * 70)+'" y="'+(24 + i * 50)+'" width="64" height="44" rx="8" fill="#EE7F1B" fill-opacity="'+(.15 + n / 7 * .7).toFixed(2)+'" stroke="'+INK+'" stroke-width="1.8"/><text x="'+(104 + j * 70)+'" y="'+(54 + i * 50)+'" text-anchor="middle" style="fill:'+INK+';font-weight:800;font-size:18px">'+n+'</text>'; }); });
+      return g; }},
+    {m:'ruler', t:'Age and height', n:'9 children', raw:'4 yrs 103 cm, 7 yrs 123 cm…', b:'Place the dots', note:'Older, taller: as one goes up, the other goes up too.', draw:() => { const fr = frame({W:220, H:130, L:34, R:8, T:8, B:30, xMin:3, xMax:13, yMin:95, yMax:155, xlab:'age', xTicks:[4, 8, 12], yTicks:[100, 150]}); return fr.g + dotsSVG(AG, HT, fr, 5); }},
+    {m:'ruler', t:'Cold and cocoa', n:'9 days at a café', raw:'−10 °C 62 cups, 14 °C 21 cups…', b:'Place the dots', note:'Colder days, more cocoa: as one goes up, the other goes down.', draw:() => { const fr = frame({W:220, H:130, L:34, R:8, T:8, B:30, xMin:-12, xMax:22, yMin:0, yMax:70, xlab:'°C', xTicks:[-10, 0, 10, 20], yTicks:[0, 30, 60]}); return fr.g + dotsSVG(TC, CC, fr, 5); }},
+  ];
+  const host = $('#pairs3');
+  D.forEach((d, di) => {
+    const c = el('div', 'pcard', '<div class="ph2">'+(d.m === 'tag' ? tagSVG() : rulerSVG())+'<span>'+d.t+'<small>'+(d.m === 'tag' ? 'two labels' : 'two amounts')+' · '+d.n+', invented</small></span></div><div class="raw2">'+d.raw+'</div><svg class="chart" viewBox="0 0 220 130" aria-label="'+d.t+'"><text x="110" y="70" text-anchor="middle">?</text></svg><p class="pnote" aria-live="polite"></p><button class="btn sm" type="button">'+d.b+'</button>');
+    const btn = $('button', c);
+    btn.addEventListener('click', () => { $('svg.chart', c).innerHTML = d.draw(); $('.pnote', c).textContent = d.note; btn.disabled = true; btn.textContent = 'Done'; addXP('pair' + di); });
+    host.appendChild(c);
+  });
+})();
+
+/* =========================================================== 1. sort into grid */
+(function sortGrid(){
+  const s = $('#xgrid'), R = rng(21), CW = 92, X0 = 98, RY = [32, 160];
+  const cups = [];
+  XT.forEach((row, r) => row.forEach((n, f) => { for (let k = 0; k < n; k++) cups.push({r, f, k}); }));
+  const slots = shuffle([...Array(54).keys()], R);
+  cups.forEach((c, j) => { const p = slots[j], col = p % 9, row = Math.floor(p / 9); c.mx = 12 + col * 59 + (R() - .5) * 18; c.my = 14 + row * 44 + (R() - .5) * 10; c.sx = X0 + c.f * CW + 9 + (c.k % 4) * 19.5; c.sy = RY[c.r] + 8 + Math.floor(c.k / 4) * 34; });
+  let g = '<g class="cell" id="xgridlines">';
+  FLAV.forEach((f, j) => { g += '<text class="lab" x="'+(X0 + j * CW + CW / 2)+'" y="22" text-anchor="middle" style="font-size:14px">'+f+'</text>'; });
+  WHO.forEach((w, i) => { g += '<text class="lab" x="90" y="'+(RY[i] + 66)+'" text-anchor="end">'+w+'</text>'; });
+  WHO.forEach((w, i) => FLAV.forEach((f, j) => { g += '<rect x="'+(X0 + j * CW + 2)+'" y="'+RY[i]+'" width="'+(CW - 4)+'" height="122" rx="10" fill="'+(i ? '#EFE9F8' : '#FDF3DC')+'" stroke="'+INK+'" stroke-width="1.6"/>'; }));
+  g += '</g>';
+  WHO.forEach((w, i) => FLAV.forEach((f, j) => { g += '<text class="cnt" x="'+(X0 + j * CW + CW - 10)+'" y="'+(RY[i] + 112)+'" text-anchor="end">'+XT[i][j]+'</text>'; }));
+  cups.forEach(c => { g += '<g class="cg" style="transform:translate('+c.mx.toFixed(1)+'px,'+c.my.toFixed(1)+'px)"><g transform="scale(.3)">'+cupInner(FLAV[c.f])+'</g></g>'; });
+  s.innerHTML = g;
+  let sorted = false;
+  function run(){
+    $$('.cg', s).forEach((el, j) => { const c = cups[j]; el.style.transform = 'translate('+(sorted ? c.sx : c.mx).toFixed(1)+'px,'+(sorted ? c.sy : c.my).toFixed(1)+'px)'; });
+    $('#xgridlines').style.opacity = sorted ? 1 : .25;
+    $$('.cnt', s).forEach(t => t.style.opacity = sorted ? 1 : 0);
+    $('#sortx').textContent = sorted ? 'Mix them up again' : 'Sort into the grid';
+    if (sorted) addXP('sortx');
+  }
+  $('#sortx').addEventListener('click', () => { sorted = !sorted; run(); });
+  run();
+})();
+
+/* =========================================================== 2. read the crosstab */
+(function readXT(){
+  const rowT = XT.map(sum), colT = FLAV.map((_, j) => XT[0][j] + XT[1][j]);
+  let sel = [0, 1];
+  function render(){
+    const [si, sj] = sel;
+    let h = '<thead><tr><th></th>' + FLAV.map(f => '<th><span class="sw" style="background:'+FL[f]+'"></span>'+(f === 'Strawberry' ? 'Straw.' : f)+'</th>').join('') + '<th>Total</th></tr></thead><tbody>';
+    WHO.forEach((w, i) => {
+      h += '<tr><td><b>'+w+'</b></td>';
+      XT[i].forEach((v, j) => { const cls = (i === si && j === sj) ? 'c sel' : (i === si || j === sj) && si < 2 && sj < 5 ? 'c hl' : 'c'; h += '<td class="'+cls+'" data-i="'+i+'" data-j="'+j+'">'+v+'</td>'; });
+      h += '<td class="c m'+(si === i && sj === 5 ? ' sel' : '')+'" data-i="'+i+'" data-j="5">'+rowT[i]+'</td></tr>';
+    });
+    h += '<tr class="tot"><td>Total</td>' + colT.map((v, j) => '<td class="c'+(si === 2 && sj === j ? ' sel' : '')+'" data-i="2" data-j="'+j+'">'+v+'</td>').join('') + '<td class="c'+(si === 2 && sj === 5 ? ' sel' : '')+'" data-i="2" data-j="5">40</td></tr></tbody>';
+    $('#xtab').innerHTML = h;
+    $$('#xtab td.c').forEach(td => td.addEventListener('click', () => { sel = [+td.dataset.i, +td.dataset.j]; render(); addXP('xcell'); }));
+    let t;
+    if (si < 2 && sj < 5) t = '<span class="big">'+XT[si][sj]+' cups: '+FLAV[sj].toLowerCase()+', bought by '+WHO[si].toLowerCase()+'.</span><small>Its row: '+WHO[si].toLowerCase()+' bought '+rowT[si]+' cups in all. Its column: '+colT[sj]+' '+FLAV[sj].toLowerCase()+' cups in all.</small>';
+    else if (si < 2) t = '<span class="big">'+WHO[si]+' bought '+rowT[si]+' of the 40 cups.</span><small>The right column (row totals) is the one-variable table of customer type.</small>';
+    else if (sj < 5) t = '<span class="big">'+colT[sj]+' '+FLAV[sj].toLowerCase()+' cups in all.</span><small>The bottom row (column totals) is the flavor table from T1.2.</small>';
+    else t = '<span class="big">40 cups in all.</span><small>The grand total: every cup is counted once.</small>';
+    $('#xread').innerHTML = t;
+  }
+  render();
+  miniQuiz($('#xcheck'), [
+    {q:'How many cups did workers buy?', o:['19','21','8'], a:0, why:'Workers’ row total: 8 + 2 + 3 + 5 + 1 = 19.'},
+    {q:'Which flavor do students buy most?', o:['Mango','Taro','Strawberry'], a:1, why:'Taro: 8 of the students’ 21 cups. Workers prefer mango.'},
+    {q:'Where is the T1.2 flavor table hiding?', o:['Bottom row','Right column'], a:0, why:'The column totals 14, 10, 8, 6, 2 are Saturday’s flavor counts from T1.2.'},
+  ], 'xq');
+})();
+
+/* =========================================================== 3. row % vs column % */
+(function rowCol(){
+  let mode = 'n', sel = [1, 1];
+  const cnt = (i, s) => i < 4 ? (s < 2 ? DS[i][s] : ROWT[i]) : (s < 2 ? COLT[s] : GT);
+  const show = (i, s) => { const n = cnt(i, s); if (mode === 'n') return String(n); if (mode === 'r') return pc(n, i < 4 ? ROWT[i] : GT); return pc(n, s < 2 ? COLT[s] : GT); };
+  const whole = (i, s) => (mode === 'r' && s === 2) || (mode === 'c' && i === 4);
+  function render(){
+    const [si, ss] = sel;
+    let h = '<thead><tr><th>Day</th><th><span class="sw" style="background:'+SCOL[0]+'"></span>No smoker</th><th><span class="sw" style="background:'+SCOL[1]+'"></span>Smoker</th><th>Total</th></tr></thead><tbody>';
+    [0, 1, 2, 3, 4].forEach(i => {
+      h += '<tr'+(i === 4 ? ' class="tot"' : '')+'><td>'+(i < 4 ? DNM[D4[i]] : 'Total')+'</td>';
+      [0, 1, 2].forEach(s => {
+        let cls = [];
+        if (i < 4 && s < 2) cls.push('c');
+        if (i < 4 && s === 2) cls.push('m');
+        if (i === si && s === ss) cls.push('sel');
+        else if (whole(i, s)) cls.push('whole');
+        else if ((mode !== 'c' && i === si) || (mode !== 'r' && s === ss)) cls.push('hl');
+        h += '<td class="'+cls.join(' ')+'" data-i="'+i+'" data-s="'+s+'">'+show(i, s)+'</td>';
+      });
+      h += '</tr>';
+    });
+    $('#ptab').innerHTML = h + '</tbody>';
+    $$('#ptab td.c').forEach(td => td.addEventListener('click', () => { sel = [+td.dataset.i, +td.dataset.s]; render(); }));
+    let g;
+    if (mode === 'c') g = stackSVG({W:300, L:76, lx:4, names:D4, cols:DCOL, rows:[0, 1].map(s => ({lab:SNAME[s], vals:DS.map(r => r[s])})), sel:[ss, si], click:true, top:40, pitch:56, bh:34});
+    else g = stackSVG({W:300, L:48, lx:4, names:SNAME, cols:SCOL, rows:DS.map((r, i) => ({lab:D4[i], vals:r})), sel:[si, ss], scaleMax: mode === 'n' ? 87 : 0, click:true});
+    $('#pbars').innerHTML = g;
+    $$('#pbars .seg2').forEach(r => r.addEventListener('click', () => { const i = +r.dataset.i, j = +r.dataset.j; sel = mode === 'c' ? [j, i] : [i, j]; render(); }));
+    const n = DS[si][ss], d = DNM[D4[si]], who = ss ? 'had a smoker' : 'had no smoker', grp = ss ? 'tables with a smoker' : 'tables with no smoker';
+    let t;
+    if (mode === 'n') t = '<span class="big">'+n+' tables: '+d+', '+(ss ? 'with a smoker' : 'no smoker')+'.</span><small>A count alone can’t compare days of different sizes. Switch to Row % or Column %.</small>';
+    else if (mode === 'r') t = '<span class="big">Of the '+ROWT[si]+' '+d+' tables, '+n+' '+who+': '+pc(n, ROWT[si])+'.</span><small>Each row is 100%. It answers: on '+d+'s, how common is '+(ss ? 'a smoker' : 'a table without smokers')+'? Percents are rounded.</small>';
+    else t = '<span class="big">Of the '+COLT[ss]+' '+grp+', '+n+' came on '+d+': '+pc(n, COLT[ss])+'.</span><small>Each column is 100%. It answers: among '+grp+', how many came on '+d+'? Percents are rounded, so a column can add up to 99% or 101%.</small>';
+    $('#pread').innerHTML = t;
+    $$('#pctseg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.m === mode ? 'true' : 'false'));
+  }
+  $$('#pctseg button').forEach(b => b.addEventListener('click', () => { mode = b.dataset.m; render(); if (mode === 'r') addXP('rowpct'); if (mode === 'c') addXP('colpct'); }));
+  render();
+})();
+
+/* =========================================================== 4. of whom? */
+(function ofWhom(){
+  let h = '<thead><tr><th>Day</th><th>No smoker</th><th>Smoker</th><th>Total</th></tr></thead><tbody>';
+  D4.forEach((d, i) => { h += '<tr><td>'+DNM[d]+'</td><td>'+DS[i][0]+'</td><td>'+DS[i][1]+'</td><td class="m">'+ROWT[i]+'</td></tr>'; });
+  h += '<tr class="tot"><td>Total</td><td>'+COLT[0]+'</td><td>'+COLT[1]+'</td><td>'+GT+'</td></tr></tbody>';
+  $('#oftab').innerHTML = h;
+  miniQuiz($('#ofq'), [
+    {q:'What share of Saturday tables had a smoker?', o:['Row %','Column %'], a:0, why:'“Of Saturday tables”: the Saturday row is the 100%. 42 of 87 = 48%.'},
+    {q:'Among tables with a smoker, what share came on Saturday?', o:['Row %','Column %'], a:1, why:'“Among tables with a smoker”: the Smoker column is the 100%. 42 of 93 = 45%.'},
+    {q:'What share of Thursday tables had no smoker?', o:['Row %','Column %'], a:0, why:'The Thursday row is the 100%: 45 of 62 = 73%.'},
+    {q:'A friend says: “79% of smokers come on Friday.” Right?', o:['Right','Wrong'], a:1, why:'79% is of Friday tables (15 of 19). Of the 93 smoker tables, only 15 came on Friday: 16%.'},
+  ], 'of');
+  $$('#ofq .qrow:nth-child(4) button').forEach(b => b.addEventListener('click', () => { const g = $('#ofq').closest('.scene').querySelector('.gback'); if (g) g.classList.remove('wait'); }));
+})();
+
+/* =========================================================== 5. Simpson */
+const SIM = {Sam:{sun:[90, 100], rain:[10, 20]}, Kai:{sun:[19, 20], rain:[60, 100]}};
+(function simpson(){
+  const P = ['Sam', 'Kai'], PC = {Sam:TARO, Kai:MINT};
+  const all = p => [SIM[p].sun[0] + SIM[p].rain[0], 120];
+  function render(m){
+    const W = 560, H = 230, L = 46, B = 46, T = 14, Y = v => H - B - v / 100 * (H - B - T);
+    let g = '';
+    [0, 25, 50, 75, 100].forEach(t => { g += '<line class="grid" x1="'+L+'" x2="'+(W - 10)+'" y1="'+Y(t)+'" y2="'+Y(t)+'"/><text x="'+(L - 7)+'" y="'+(Y(t) + 4)+'" text-anchor="end">'+t+'%</text>'; });
+    const groups = m === 'all' ? [['All 120 deliveries', p => all(p)]] : [['Sunny days', p => SIM[p].sun], ['Rainy days', p => SIM[p].rain], ['All, added up', p => all(p)]];
+    const gw = (W - L - 10) / groups.length, bw = m === 'all' ? 80 : 54;
+    groups.forEach(([lab, f], gi) => {
+      const cx = L + gw * (gi + .5);
+      if (gi === 2) g += '<line x1="'+(L + gw * 2)+'" x2="'+(L + gw * 2)+'" y1="'+T+'" y2="'+(H - 8)+'" stroke="'+INK+'" stroke-width="1.5" stroke-dasharray="5 4"/>';
+      P.forEach((p, k) => {
+        const [a, b] = f(p), v = a / b * 100, x = cx + (k ? 6 : -6 - bw);
+        g += '<rect class="hb" x="'+x+'" y="'+Y(v).toFixed(1)+'" width="'+bw+'" height="'+(H - B - Y(v)).toFixed(1)+'" rx="3" fill="'+PC[p]+'" stroke="'+INK+'" stroke-width="1.8"><title>'+p+': '+a+' of '+b+'</title></rect>';
+        g += '<text class="val" x="'+(x + bw / 2)+'" y="'+(Y(v) - 6).toFixed(1)+'" text-anchor="middle" style="font-size:15px">'+Math.round(v)+'%</text>';
+        g += '<text x="'+(x + bw / 2)+'" y="'+(H - B + 16)+'" text-anchor="middle" style="fill:'+INK+';font-weight:700">'+p+'</text>';
+      });
+      g += '<text x="'+cx+'" y="'+(H - 8)+'" text-anchor="middle" style="fill:'+INK+';font-weight:800;font-family:var(--font-display);font-size:15px">'+lab+'</text>';
+    });
+    g += '<line class="axis" x1="'+L+'" x2="'+(W - 10)+'" y1="'+(H - B)+'" y2="'+(H - B)+'"/>';
+    $('#simchart').innerHTML = g;
+    const cell = (a, b) => a + ' of ' + b + ' <b>(' + pc(a, b) + ')</b>';
+    $('#simtab').innerHTML = '<thead><tr><th>On time</th><th>Sunny days</th><th>Rainy days</th><th>All</th></tr></thead><tbody>' + P.map(p => '<tr><td><span class="sw" style="background:'+PC[p]+'"></span><b>'+p+'</b></td><td>'+(m === 'all' ? '?' : cell(...SIM[p].sun))+'</td><td>'+(m === 'all' ? '?' : cell(...SIM[p].rain))+'</td><td>'+cell(...all(p))+'</td></tr>').join('') + '</tbody>';
+    $('#simfb').innerHTML = m === 'all' ? 'Sam: 100 of 120 on time (83%). Kai: 79 of 120 (66%). Sam looks clearly better. Now split by weather.' : '<b>Kai wins on sunny days (95% vs 90%) and on rainy days (60% vs 50%), yet loses overall.</b> Same data, opposite answer.';
+    $$('#simseg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.m === m ? 'true' : 'false'));
+    if (m === 'split') addXP('simpson');
+  }
+  $$('#simseg button').forEach(b => b.addEventListener('click', () => render(b.dataset.m)));
+  render('all');
+})();
+
+/* =========================================================== 6. why it flips */
+(function whyFlip(){
+  const sl = $('#mix'), W = 560, H = 230, X = v => 78 + (v - 40) / 60 * (W - 78 - 22);
+  function row(name, col, y, rain, sun, rr, sr, nRain, nSun){
+    const ov = (rr * nRain + sr * nSun) / (nRain + nSun);
+    const rad = n => n ? 4 + Math.sqrt(n) * 1.5 : 0;
+    let g = '<text x="8" y="'+(y + 5)+'" style="fill:'+INK+';font-weight:800;font-family:var(--font-display);font-size:17px">'+name+'</text>';
+    g += '<line x1="'+X(rr)+'" x2="'+X(sr)+'" y1="'+y+'" y2="'+y+'" stroke="'+INK+'" stroke-width="3"/>';
+    if (nRain) g += '<circle cx="'+X(rr)+'" cy="'+y+'" r="'+rad(nRain).toFixed(1)+'" fill="#8EA3E6" stroke="'+INK+'" stroke-width="1.8"><title>'+nRain+' rainy deliveries</title></circle>';
+    if (nSun) g += '<circle cx="'+X(sr)+'" cy="'+y+'" r="'+rad(nSun).toFixed(1)+'" fill="'+SUN_C+'" stroke="'+INK+'" stroke-width="1.8"><title>'+nSun+' sunny deliveries</title></circle>';
+    g += '<text x="'+X(rr)+'" y="'+(y + 30)+'" text-anchor="middle">rain '+rr+'%</text><text x="'+X(sr)+'" y="'+(y + 30)+'" text-anchor="middle">sun '+sr+'%</text>';
+    g += '<line x1="'+X(ov).toFixed(1)+'" x2="'+X(ov).toFixed(1)+'" y1="'+(y - 22)+'" y2="'+y+'" stroke="'+col+'" stroke-width="3"/><path d="M'+X(ov).toFixed(1)+' '+(y - 20)+' l-9 -14 h18 z" fill="'+col+'" stroke="'+INK+'" stroke-width="1.8"/><text class="val" x="'+X(ov).toFixed(1)+'" y="'+(y - 40)+'" text-anchor="middle" style="font-size:14px">overall '+Math.round(ov)+'%</text>';
+    return [g, ov];
+  }
+  function render(){
+    const r = +sl.value;
+    const [gs, os] = row('Sam', TARO, 72, 'rain', 'sun', 50, 90, 20, 100);
+    const [gk, ok] = row('Kai', MINT, 165, 'rain', 'sun', 60, 95, r, 120 - r);
+    let g = '<line x1="'+X(os)+'" x2="'+X(os)+'" y1="26" y2="204" stroke="'+TARO+'" stroke-width="2" stroke-dasharray="5 4"/>' + gs + gk;
+    g += '<line class="axis" x1="78" x2="'+(W - 22)+'" y1="206" y2="206"/>' + [40, 50, 60, 70, 80, 90, 100].map(t => '<line x1="'+X(t)+'" x2="'+X(t)+'" y1="206" y2="211" stroke="'+INK+'" stroke-width="2"/><text x="'+X(t)+'" y="226" text-anchor="middle">'+t+'%</text>').join('');
+    $('#mixchart').innerHTML = g;
+    $('#mixnum').textContent = r + ' of 120';
+    const verdict = Math.abs(ok - os) < 0.05 ? 'A tie.' : ok > os ? 'Kai looks better overall.' : 'Sam looks better overall.';
+    $('#mixread').innerHTML = 'Kai: '+r+' rainy and '+(120 - r)+' sunny deliveries, so overall '+Math.round(ok)+'%. Sam: 20 rainy and 100 sunny, so overall 83%. <b>'+verdict+'</b> Each overall % sits between its rain % and sun %, pulled toward the bigger group.';
+    if (ok > os) addXP('mix');
+  }
+  sl.addEventListener('input', render);
+  $('#mixsame').addEventListener('click', () => { sl.value = 20; render(); });
+  $('#mixreal').addEventListener('click', () => { sl.value = 100; render(); });
+  render();
+})();
+
+/* =========================================================== 7. place the dots */
+(function place(){
+  let k = 0;
+  const fo = {W:380, H:300, L:52, xMin:15, xMax:36, yMin:0, yMax:70, xlab:'Top temperature (°C)', ylab:'Cups sold', xTicks:[15, 20, 25, 30, 35], yTicks:[0, 20, 40, 60]};
+  function render(){
+    $('#daytab').innerHTML = '<thead><tr><th>Day</th><th>°C</th><th>Cups</th></tr></thead><tbody>' + LT.map((t, i) => '<tr class="'+(i === k - 1 ? 'cur' : i >= k ? 'todo' : '')+'"><td>'+(i + 1)+'</td><td>'+t+'</td><td>'+LC[i]+'</td></tr>').join('') + '</tbody>';
+    const fr = frame(fo);
+    let g = fr.g + dotsSVG(LT.slice(0, k), LC.slice(0, k), fr, 6.5);
+    if (k > 0 && k <= 10){
+      const x = fr.X(LT[k - 1]), y = fr.Y(LC[k - 1]);
+      g += '<line class="lnk" x1="'+x+'" x2="'+x+'" y1="'+(fr.H - fr.B)+'" y2="'+y+'"/><line class="lnk" x1="'+fr.L+'" x2="'+x+'" y1="'+y+'" y2="'+y+'"/>';
+      g += '<circle cx="'+x+'" cy="'+y+'" r="9" fill="'+SUN_C+'" stroke="'+INK+'" stroke-width="2.5"/>';
+      g += '<text class="val" x="'+(x + (x > 270 ? -14 : 14))+'" y="'+(y - 12)+'" text-anchor="'+(x > 270 ? 'end' : 'start')+'" style="font-size:14px">Day '+k+': '+LT[k - 1]+' °C, '+LC[k - 1]+' cups</text>';
+    }
+    $('#placechart').innerHTML = g;
+    $('#placenext').textContent = k >= 10 ? 'Start over' : k === 0 ? 'Place day 1' : 'Place the next day';
+    if (k >= 10) addXP('place');
+  }
+  $('#placenext').addEventListener('click', () => { k = k >= 10 ? 0 : k + 1; render(); });
+  $('#placeall').addEventListener('click', () => { k = 10; render(); });
+  render();
+})();
+
+/* =========================================================== 8. drag */
+(function drag(){
+  const svg = $('#dragchart');
+  const fo = {W:600, H:320, L:56, xMin:14, xMax:36, yMin:0, yMax:70, xlab:'Top temperature (°C)', ylab:'Cups sold', xTicks:[15, 20, 25, 30, 35], yTicks:[0, 10, 20, 30, 40, 50, 60, 70]};
+  const fr = frame(fo);
+  const R = rng(5), nz = () => (R() + R() + R() - 1.5) * 2;
+  const PRE = {
+    lina: [LT.slice(), LC.slice()],
+    up: (() => { const x = [16, 18, 20, 21, 23, 25, 27, 29, 31, 34]; return [x, x.map(v => Math.round(2.6 * v - 30 + nz() * 2))]; })(),
+    down: (() => { const x = [16, 18, 20, 21, 23, 25, 27, 29, 31, 34]; return [x, x.map(v => Math.round(78 - 2.1 * v + nz() * 2))]; })(),
+    none: [[16, 18, 19, 22, 24, 26, 28, 30, 32, 34], [38, 15, 52, 30, 61, 22, 44, 12, 49, 33]],
+  };
+  let xs, ys;
+  function setPre(p){ xs = PRE[p][0].slice(); ys = PRE[p][1].slice(); $$('#dpre button').forEach(b => b.setAttribute('aria-pressed', b.dataset.p === p ? 'true' : 'false')); build(); }
+  function words(){
+    const f = fit(xs, ys), a = Math.abs(f.r);
+    if (a < .2) return ['No clear direction', 'the dots scatter with no trend'];
+    const dir = f.r > 0 ? 'Going up: positive' : 'Going down: negative';
+    return [dir, a >= .85 ? 'the dots hug the line tightly' : a >= .6 ? 'the dots stay fairly close to the line' : 'the dots are loose around the line'];
+  }
+  function update(){
+    const f = fit(xs, ys);
+    $('#dline').innerHTML = lineSVG(f, fr, Math.min(...xs) - .5, Math.max(...xs) + .5);
+    $$('.dd', svg).forEach((g, i) => { const x = fr.X(xs[i]), y = fr.Y(ys[i]); $$('circle', g).forEach(c => { c.setAttribute('cx', x.toFixed(1)); c.setAttribute('cy', y.toFixed(1)); }); g.setAttribute('aria-label', 'Day '+(i + 1)+': '+Math.round(xs[i])+' degrees, '+Math.round(ys[i])+' cups'); });
+    const w = words();
+    $('#dread').innerHTML = w[0] + '<small>' + w[1] + '</small>';
+  }
+  function build(){
+    svg.innerHTML = fr.g + '<g id="dline"></g>' + xs.map((x, i) => '<g class="dd" tabindex="0" role="slider" data-i="'+i+'"><circle class="ring" r="18"/><circle class="pt" r="8.5" fill="'+BLUE+'" stroke="'+INK+'" stroke-width="2"/></g>').join('');
+    $$('.dd', svg).forEach(g => {
+      const i = +g.dataset.i;
+      g.addEventListener('pointerdown', e => { e.preventDefault(); g.setPointerCapture(e.pointerId); g.dataset.on = '1'; g.focus({preventScroll:true}); });
+      g.addEventListener('pointermove', e => {
+        if (g.dataset.on !== '1') return;
+        const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+        const p = pt.matrixTransform(svg.getScreenCTM().inverse());
+        xs[i] = Math.max(fo.xMin, Math.min(fo.xMax, fo.xMin + (p.x - fr.L) / (fr.W - fr.L - fr.R) * (fo.xMax - fo.xMin)));
+        ys[i] = Math.max(fo.yMin, Math.min(fo.yMax, fo.yMin + (fr.H - fr.B - p.y) / (fr.H - fr.B - fr.T) * (fo.yMax - fo.yMin)));
+        update(); addXP('drag');
+      });
+      const stop = () => { g.dataset.on = ''; };
+      g.addEventListener('pointerup', stop); g.addEventListener('pointercancel', stop);
+      g.addEventListener('keydown', e => {
+        const d = {ArrowLeft:[-1, 0], ArrowRight:[1, 0], ArrowUp:[0, 2], ArrowDown:[0, -2]}[e.key];
+        if (!d) return; e.preventDefault(); e.stopPropagation();
+        xs[i] = Math.max(fo.xMin, Math.min(fo.xMax, xs[i] + d[0])); ys[i] = Math.max(fo.yMin, Math.min(fo.yMax, ys[i] + d[1]));
+        update(); addXP('drag');
+      });
+    });
+    update();
+  }
+  $$('#dpre button').forEach(b => b.addEventListener('click', () => { setPre(b.dataset.p); if (b.dataset.p !== 'lina') addXP('dpre'); }));
+  setPre('lina');
+})();
+
+/* =========================================================== 9. direction and strength */
+(function cloud(){
+  const STEP = [-.95, -.75, -.5, -.25, 0, .25, .5, .75, .95];
+  const LAB = ['Strong, negative', 'Fairly strong, negative', 'Moderate, negative', 'Weak, negative', 'No clear direction', 'Weak, positive', 'Moderate, positive', 'Fairly strong, positive', 'Strong, positive'];
+  const SUB = ['dots hug a falling line', 'a clear fall, a little spread', 'a fall you can see, with spread', 'a slight fall, lots of spread', 'a round blob', 'a slight rise, lots of spread', 'a rise you can see, with spread', 'a clear rise, a little spread', 'dots hug a rising line'];
+  const z = baseZ(70, 31), sl = $('#cloud');
+  const fr = frame({W:540, H:250, L:30, R:14, T:12, B:30, xMin:-3, xMax:3, yMin:-3.3, yMax:3.3, bare:true});
+  $('#cloudchart').innerHTML = fr.g + '<text x="'+(540 - 14)+'" y="244" text-anchor="end">first amount →</text><text transform="translate(18 130) rotate(-90)" text-anchor="middle">second amount →</text>' + z[0].map(x => '<circle cx="'+fr.X(x).toFixed(1)+'" cy="125" r="5.5" fill="'+BLUE+'" fill-opacity=".8" stroke="'+INK+'" stroke-width="1.3"/>').join('');
+  $('#cloudex').innerHTML = [['neg', 'Negative: the colder the day, the more hot cocoa a café sells.'], ['none', 'No clear direction: shoe size and exam score of adult students.'], ['pos', 'Positive: the hotter the day, the more cups Lina sells.']].map(([k, t]) => '<div data-k="'+k+'">'+t+'</div>').join('');
+  function render(user){
+    const i = +sl.value, r = STEP[i], ys = cloudY(z, r);
+    $$('#cloudchart circle').forEach((c, j) => c.setAttribute('cy', fr.Y(Math.max(-3.2, Math.min(3.2, ys[j]))).toFixed(1)));
+    $('#cloudlab').innerHTML = LAB[i] + '<small>' + SUB[i] + '</small>';
+    const k = r < 0 ? 'neg' : r > 0 ? 'pos' : 'none';
+    $$('#cloudex div').forEach(d => d.classList.toggle('on', d.dataset.k === k));
+    if (user) addXP(r < 0 ? 'cloudneg' : 'cloud');
+  }
+  sl.addEventListener('input', () => render(true));
+  render(false);
+})();
+
+/* =========================================================== 10. form */
+(function form(){
+  const R = rng(44), nz = () => (R() + R() + R() + R() - 2) * 1.7;
+  const mk = (n, a, b, f, e) => { const x = [], y = []; for (let i = 0; i < n; i++){ const v = a + (b - a) * (i + R() * .8) / n; x.push(v); y.push(f(v) + nz() * e); } return [x, y]; };
+  const SETS = {
+    lin: {d: mk(26, 16, 35, v => 2.2 * v - 16, 2.2), o:{xMin:14, xMax:36, yMin:0, yMax:70, xlab:'Top temperature (°C)', ylab:'Cups sold', xTicks:[15, 20, 25, 30, 35]},
+      off:'The dots climb along a fairly straight path.', on:'The straight line runs right through the cloud. The form is straight (linear).'},
+    flat: {d: mk(26, 0, 40, v => 20 + 58 * (1 - Math.exp(-v / 8)), 1.8), o:{xMin:0, xMax:42, yMin:0, yMax:90, xlab:'Hours of practice', ylab:'Typing speed (words/min)', xTicks:[0, 10, 20, 30, 40]},
+      off:'Fast progress at first, then the dots level off.', on:'The line sits above the dots at both ends and below them in the middle. The form is curved, not straight.'},
+    u: {d: mk(26, -10, 35, v => 14 + .075 * (v - 14) * (v - 14), 1.8), o:{xMin:-12, xMax:36, yMin:0, yMax:70, xlab:'Outside temperature (°C)', ylab:'Energy used at home', xTicks:[-10, 0, 10, 20, 30]},
+      off:'High on cold days (heating), low in mild weather, high again on hot days (cooling).', on:'The line is almost flat, as if temperature did not matter. It matters a lot: the form is a U, not a line.'},
+  };
+  let cur = 'lin', line = false;
+  function render(){
+    const S = SETS[cur], fr = frame(Object.assign({W:540, H:260, L:56}, S.o));
+    let g = fr.g + dotsSVG(S.d[0], S.d[1], fr, 6);
+    if (line) g += lineSVG(fit(S.d[0], S.d[1]), fr, Math.min(...S.d[0]), Math.max(...S.d[0]));
+    $('#formchart').innerHTML = g;
+    $('#formfb').innerHTML = line ? '<b>'+S.on+'</b>' : S.off;
+    $$('#formseg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.f === cur ? 'true' : 'false'));
+    $('#formline').setAttribute('aria-pressed', line ? 'true' : 'false');
+    $('#formline').textContent = line ? 'Remove the line' : 'Lay a straight line';
+    if (line && cur === 'u') addXP('formu');
+  }
+  $$('#formseg button').forEach(b => b.addEventListener('click', () => { cur = b.dataset.f; render(); }));
+  $('#formline').addEventListener('click', () => { line = !line; render(); });
+  render();
+})();
+
+/* =========================================================== 11. real scatter: tips */
+(function realTips(){
+  const fr = frame({W:600, H:210, L:52, xMin:0, xMax:55, yMin:0, yMax:11, xlab:'Total bill ($)', ylab:'Tip ($)', xTicks:[0, 10, 20, 30, 40, 50], yTicks:[0, 5, 10], xFmt:v => '$' + v, yFmt:v => '$' + v});
+  const oi = BILLS.findIndex((b, i) => b === 7.25 && TIPS[i] === 5.15);
+  function render(hl){
+    let g = fr.g + dotsSVG(BILLS, TIPS, fr, 3.6, BLUE, .5) + lineSVG(fit(BILLS, TIPS), fr, 3, 51);
+    if (hl){ const x = fr.X(BILLS[oi]), y = fr.Y(TIPS[oi]); g += '<circle cx="'+x+'" cy="'+y+'" r="11" fill="none" stroke="'+SUN_C+'" stroke-width="4"/><circle cx="'+x+'" cy="'+y+'" r="11" fill="none" stroke="'+INK+'" stroke-width="1.5"/><text class="val" x="'+(x + 16)+'" y="'+(y - 6)+'">$5.15 tip on a $7.25 bill</text>'; }
+    $('#tipchart').innerHTML = g;
+  }
+  render(false);
+  miniQuiz($('#tipq'), [
+    {q:'1. Direction: as bills grow, tips…', o:['Go up','Go down','Do nothing'], a:0, why:'Bigger bills tend to come with bigger tips: a positive direction.'},
+    {q:'2. Form?', o:['Roughly straight','Clearly curved'], a:0, why:'Roughly straight. The cloud also fans out: big bills get more varied tips.'},
+    {q:'3. Strength?', o:['Very tight','Clear but loose','No pattern'], a:1, why:'A clear rise, but the dots spread widely around the line: moderate.'},
+    {q:'4. One table tipped $5.15 on a $7.25 bill. Outlier?', o:['Yes','No'], a:0, why:'A 71% tip, far above the line. It is circled in yellow.'},
+  ], 'tip');
+  $$('#tipq .qrow')[3].querySelectorAll('button').forEach(b => b.addEventListener('click', () => render(true)));
+})();
+
+/* =========================================================== 12. trap */
+(function trap(){
+  const T = [19, 21, 22, 24, 25, 26, 27, 28, 30, 31, 33, 34], C = [24, 29, 27, 33, 35, 34, 40, 38, 45, 47, 50, 55], S = [3, 4, 6, 6, 8, 7, 10, 9, 12, 13, 15, 17];
+  const fr = frame({W:420, H:250, L:48, xMin:20, xMax:60, yMin:0, yMax:20, xlab:'Cups sold', ylab:'Sunburn cases', xTicks:[20, 30, 40, 50, 60], yTicks:[0, 5, 10, 15, 20]});
+  const heat = t => { const u = (t - 19) / 15, a = [77, 155, 255], b = [255, 79, 46]; return 'rgb(' + a.map((v, k) => Math.round(v + (b[k] - v) * u)).join(',') + ')'; };
+  let shown = false;
+  function render(){
+    let g = fr.g + lineSVG(fit(C, S), fr, 22, 57);
+    g += C.map((c, i) => '<circle cx="'+fr.X(c).toFixed(1)+'" cy="'+fr.Y(S[i]).toFixed(1)+'" r="7.5" fill="'+(shown ? heat(T[i]) : BLUE)+'" stroke="'+INK+'" stroke-width="1.6" style="transition:fill .5s"><title>Day '+(i + 1)+': '+c+' cups, '+S[i]+' sunburns, '+T[i]+' °C</title></circle>').join('');
+    if (shown){
+      g += '<defs><linearGradient id="hg"><stop offset="0" stop-color="rgb(77,155,255)"/><stop offset="1" stop-color="rgb(255,79,46)"/></linearGradient></defs><text x="300" y="152" style="fill:'+INK+';font-weight:700">Day’s heat</text><rect x="300" y="160" width="100" height="12" rx="4" fill="url(#hg)" stroke="'+INK+'" stroke-width="1.3"/><text x="300" y="190">19 °C</text><text x="400" y="190" text-anchor="end">34 °C</text>';
+    }
+    $('#trapchart').innerHTML = g;
+    $('#cause').classList.toggle('on', shown);
+    $('#cause').setAttribute('aria-hidden', shown ? 'false' : 'true');
+    $('#hiddenbtn').textContent = shown ? 'Hide the hidden variable' : 'Show the hidden variable';
+  }
+  const box = (x, y, w, t, f) => '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="40" rx="10" fill="'+f+'" stroke="'+INK+'" stroke-width="2.2"/><text x="'+(x + w / 2)+'" y="'+(y + 26)+'" text-anchor="middle" style="font:700 15px var(--font-body);fill:'+INK+'">'+t+'</text>';
+  $('#cause').innerHTML = '<svg viewBox="0 0 240 200" role="img" aria-label="Heat causes more cups and more sunburn; cups do not cause sunburn"><defs><marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="'+INK+'"/></marker></defs>'
+    + box(70, 8, 100, 'Hot day', '#F0896A')
+    + '<path d="M100 50 L52 128" stroke="'+INK+'" stroke-width="2.5" marker-end="url(#ar)"/><path d="M140 50 L188 128" stroke="'+INK+'" stroke-width="2.5" marker-end="url(#ar)"/>'
+    + box(2, 134, 100, 'More cups', '#DEE5FB') + box(138, 134, 100, 'Sunburn', '#FBE0E7')
+    + '<path d="M104 154 H136" stroke="'+INK+'" stroke-width="2.2" stroke-dasharray="4 4"/><path d="M112 146 l16 16 M128 146 l-16 16" stroke="#D3375E" stroke-width="3.2"/>'
+    + '<text x="120" y="194" text-anchor="middle" style="font:600 12.5px var(--font-body);fill:'+INK+'">no arrow between them</text></svg>';
+  $('#hiddenbtn').addEventListener('click', () => { shown = !shown; render(); if (shown) addXP('hidden'); });
+  render();
+  miniQuiz($('#trapq'), [
+    {q:'So, does bubble tea cause sunburn?', o:['Yes: the dots rise together','No sign of it: hot days bring both'], a:1, why:'Heat drives both. Cups and sunburn are associated, but this picture gives no reason to think one causes the other.'},
+  ], 'trapq');
+})();
+
+/* =========================================================== 13. which picture */
+(function whichPic(){
+  const BC = ['#DEE5FB', '#A9BCF2', '#2F55D4', '#1F3BA3'];
+  const PAIRS = [
+    {k:'flav', lab:'Flavor × customer type', fam:0},
+    {k:'day', lab:'Day × smoker at the table', fam:0},
+    {k:'temp', lab:'Temperature × cups sold', fam:1},
+    {k:'bill', lab:'Bill × tip', fam:1},
+    {k:'time', lab:'Bill × lunch or dinner', fam:2},
+  ];
+  const FAM = [['tag', 'Two labels', 'Tag + Tag', 'Crosstab', 'with stacked bars'], ['ruler', 'Two amounts', 'Ruler + Ruler', 'Scatter diagram', 'with a trendline'], ['tag', 'A label and an amount', 'Tag + Ruler', 'Classes first, then a crosstab', 'the amount becomes classes']];
+  const host = $('#pairbtns');
+  PAIRS.forEach(p => { const b = el('button', 'btn sm', p.lab); b.type = 'button'; b.dataset.k = p.k; b.addEventListener('click', () => show(p, true)); host.appendChild(b); });
+  function show(p, user){
+    $$('button', host).forEach(b => b.setAttribute('aria-pressed', b.dataset.k === p.k ? 'true' : 'false'));
+    $('#pflow').innerHTML = '<div class="node on"><b>Your two columns</b>'+p.lab+'</div><div class="pflow3">' + FAM.map((f, i) => '<div class="col"><div class="node '+f[0]+(p.fam === i ? ' on' : '')+'"><b>'+f[1]+'</b><small>'+f[2]+'</small></div><div class="node '+f[0]+(p.fam === i ? ' on' : '')+'"><b>'+f[3]+'</b><small>'+f[4]+'</small></div></div>').join('') + '</div>';
+    let g = '';
+    if (p.k === 'flav') g = stackSVG({W:520, names:FLAV, cols:FLAV.map(f => FL[f]), rows:WHO.map((w, i) => ({lab:w, vals:XT[i]})), top:44, pitch:60, bh:40, L:84});
+    else if (p.k === 'day') g = stackSVG({W:520, names:SNAME, cols:SCOL, rows:DS.map((r, i) => ({lab:DNM[D4[i]], vals:r})), L:84});
+    else if (p.k === 'time'){ const cl = [[7, 45, 11, 5], [10, 85, 54, 27]]; g = stackSVG({W:520, names:['under $10', '$10–20', '$20–30', '$30 and up'], cols:BC, rows:[{lab:'Lunch', vals:cl[0]}, {lab:'Dinner', vals:cl[1]}], top:44, pitch:60, bh:40, L:84}); }
+    else if (p.k === 'temp'){ const fr = frame({W:520, H:210, L:50, xMin:15, xMax:36, yMin:0, yMax:70, xlab:'Top temperature (°C)', ylab:'Cups', xTicks:[15, 20, 25, 30, 35], yTicks:[0, 20, 40, 60]}); g = fr.g + lineSVG(fit(LT, LC), fr, 17, 34) + dotsSVG(LT, LC, fr, 6); }
+    else { const fr = frame({W:520, H:210, L:50, xMin:0, xMax:55, yMin:0, yMax:11, xlab:'Total bill ($)', ylab:'Tip ($)', xTicks:[0, 10, 20, 30, 40, 50], yTicks:[0, 5, 10]}); g = fr.g + dotsSVG(BILLS, TIPS, fr, 3, BLUE, .5) + lineSVG(fit(BILLS, TIPS), fr, 3, 51); }
+    $('#pairchart').innerHTML = g;
+    if (user) addXP('pair-' + p.k);
+  }
+  show(PAIRS[0], false);
+})();
+
+/* =========================================================== 14. name it */
+(function nameIt(){
+  const P = [
+    {a:'You sorted 40 cups into a grid of customer × flavor and counted each cell.', n:'Crosstabulation', f:'tableau croisé'},
+    {a:'You made each day’s row add up to 100%.', n:'Row percentages', f:'pourcentages en ligne'},
+    {a:'Kai won in the sun and in the rain, yet lost overall.', n:'Simpson’s paradox', f:'paradoxe de Simpson'},
+    {a:'You placed one dot per day: temperature across, cups up.', n:'Scatter diagram', f:'diagramme de dispersion'},
+    {a:'You dragged dots and a line followed the cloud.', n:'Trendline', f:'droite de tendance'},
+    {a:'Heat pushed up both the cups and the sunburns.', n:'Hidden variable', f:'variable cachée'},
+  ];
+  const host = $('#nameit'); let sel = null, done = 0;
+  const order = shuffle(P.map((_, i) => i));
+  host.innerHTML = '<div class="col">' + P.map((p, i) => '<button type="button" class="nact" data-i="'+i+'" aria-pressed="false">'+p.a+'</button>').join('') + '</div><div class="col">' + order.map(i => '<button type="button" class="nname" data-i="'+i+'">'+P[i].n+'</button>').join('') + '</div>';
+  $$('.nact', host).forEach(b => b.addEventListener('click', () => { if (b.classList.contains('done')) return; sel = +b.dataset.i; $$('.nact', host).forEach(x => x.setAttribute('aria-pressed', x === b ? 'true' : 'false')); }));
+  $$('.nname', host).forEach(b => b.addEventListener('click', () => {
+    if (sel == null){ $('#namescore').textContent = 'Tap a card on the left first.'; return; }
+    const i = +b.dataset.i;
+    if (i === sel){
+      const act = $('.nact[data-i="'+i+'"]', host);
+      act.classList.add('done'); act.setAttribute('aria-pressed', 'false'); act.innerHTML = '<b>'+P[i].n+'</b>'+P[i].a+'<br><i>In French: '+P[i].f+'</i>';
+      b.disabled = true; sel = null; done++; addXP('name' + i);
+      $('#namescore').textContent = done + ' of 6' + (done === 6 ? '. All named!' : '');
+      if (done === 6) confetti();
+    } else { b.classList.remove('nope'); void b.offsetWidth; b.classList.add('nope'); $('#namescore').textContent = 'Not that one. Try another name.'; }
+  }));
+})();
+
+/* =========================================================== 14. arcade */
+const XT_HTML = '<div class="xscroll"><table class="xtab mini" style="max-width:560px;margin:4px 0 12px"><thead><tr><th></th>' + FLAV.map(f => '<th>'+(f === 'Strawberry' ? 'Straw.' : f)+'</th>').join('') + '<th>Total</th></tr></thead><tbody>' + WHO.map((w, i) => '<tr><td><b>'+w+'</b></td>' + XT[i].map(v => '<td>'+v+'</td>').join('') + '<td class="m">'+sum(XT[i])+'</td></tr>').join('') + '<tr class="tot"><td>Total</td>' + FLAV.map((_, j) => '<td>'+(XT[0][j] + XT[1][j])+'</td>').join('') + '<td>40</td></tr></tbody></table></div>';
+const DS_HTML = '<table class="xtab mini" style="max-width:440px;margin:4px 0 12px"><thead><tr><th>Day</th><th>No smoker</th><th>Smoker</th><th>Total</th></tr></thead><tbody>' + D4.map((d, i) => '<tr><td>'+DNM[d]+'</td><td>'+DS[i][0]+'</td><td>'+DS[i][1]+'</td><td class="m">'+ROWT[i]+'</td></tr>').join('') + '<tr class="tot"><td>Total</td><td>'+COLT[0]+'</td><td>'+COLT[1]+'</td><td>244</td></tr></tbody></table>';
+const QS = s => '<span style="display:block;font-size:.8em">'+s+'</span>';
+const LEVELS = [
+  {id:'xt', n:'Read the crosstab', d:'Cells, rows, columns and totals', bg:'#F7B32B', items:[
+    {q:XT_HTML + QS('How many taro cups did students buy?'), opts:['8','10','2'], a:0, why:'Students’ row, Taro column: 8.'},
+    {q:XT_HTML + QS('How many cups did workers buy in all?'), opts:['19','21','8'], a:0, why:'The workers’ row total: 19.'},
+    {q:XT_HTML + QS('How many matcha cups were sold in all?'), opts:['1','5','6'], a:2, why:'Matcha column total: 1 + 5 = 6.'},
+    {q:XT_HTML + QS('Which flavor did workers buy most?'), opts:['Mango','Taro','Matcha'], a:0, why:'Mango: 8 of the workers’ 19 cups.'},
+    {q:'In a crosstab, the row totals and the column totals are…', opts:['The one-variable tables of each variable','Percentages','Errors to ignore'], a:0, why:'Each margin is a frequency table of one variable, like in T1.2.'},
+    {q:'A crosstab of 300 customers: what is the grand total in the bottom-right corner?', opts:['300','100%','The largest cell'], a:0, why:'Every customer is counted once: 300.'},
+  ]},
+  {id:'pc', n:'Row or column %?', d:'Find the group that is 100%', bg:'#F7C98F', items:[
+    {q:DS_HTML + QS('Of the 87 Saturday tables, what share had a smoker?'), opts:['48%','45%','42%'], a:0, why:'Row %: 42 of 87 = 48%.'},
+    {q:DS_HTML + QS('Among the 93 tables with a smoker, what share came on Saturday?'), opts:['48%','45%','36%'], a:1, why:'Column %: 42 of 93 = 45%.'},
+    {q:'Which % answers: “What share of Friday tables had a smoker?” (rows = days)', opts:['Row %','Column %'], a:0, why:'“Of Friday tables”: the Friday row is the 100%.'},
+    {q:'Which % answers: “Among non-smoker tables, what share came on Sunday?” (rows = days)', opts:['Row %','Column %'], a:1, why:'“Among non-smoker tables”: that column is the 100%. 57 of 151 = 38%.'},
+    {q:'In row % mode, what does every row add up to?', opts:['100%','The grand total','244'], a:0, why:'Each row is its own whole: 100%.'},
+    {q:'“15 of 19 Friday tables had a smoker.” A friend says “79% of smokers come on Friday.” Is that right?', opts:['Yes','No: 79% is of Friday tables'], a:1, why:'Of the 93 smoker tables only 15 came on Friday: 16%. Swapping the whole changes the answer.'},
+  ]},
+  {id:'sp', n:'Simpson’s check', d:'When the total tells another story', bg:'#F7C4D2', items:[
+    {q:'Kai beats Sam on sunny days and on rainy days. Can Sam still look better overall?', opts:['No, never','Yes, if Sam had more of the easy days'], a:1, why:'The overall % mixes the groups. Sam did mostly easy, sunny deliveries.'},
+    {q:'Why did Sam look better overall?', opts:['Sam is faster','Sam made most of his deliveries on sunny days','The data are wrong'], a:1, why:'100 of Sam’s 120 deliveries were sunny; 100 of Kai’s were rainy.'},
+    {q:'In the delivery story, the hidden variable is…', opts:['The weather','The flavor','The helper’s name'], a:0, why:'Weather affects on-time rates and was mixed differently for the two helpers.'},
+    {q:'Kidney stones (1986): treatment A did better for small and for large stones, but worse overall. Why?', opts:['A was used mostly on large, harder stones','A is a worse treatment','Rounding'], a:0, why:'Hard cases were piled on A, which pulled its overall rate down (Charig et al., 1986).'},
+    {q:'An overall % surprises you. A good first move is…', opts:['Split the data by a likely hidden variable','Trust the overall %','Round the numbers'], a:0, why:'Splitting the data shows whether a hidden variable is mixed in differently.'},
+  ]},
+  {id:'cl', n:'Read the cloud', d:'Direction and strength by eye', bg:'#A9BCF2', opts:['Positive','Negative','No clear direction'], items:[
+    {q:cloudSVG(.9, 3) + 'Which direction?', a:0, why:'The dots rise from left to right.'},
+    {q:cloudSVG(-.85, 4) + 'Which direction?', a:1, why:'The dots fall from left to right.'},
+    {q:cloudSVG(0, 5) + 'Which direction?', a:2, why:'A round blob: no rise, no fall.'},
+    {q:cloudSVG(-.45, 6) + 'Which direction?', a:1, why:'Loose, but the dots still drift down: weak, negative.'},
+    {q:'Outside temperature and hot cocoa sold in a café.', a:1, why:'Colder days, more cocoa: when one goes up, the other goes down.'},
+    {q:'Size of a house and its price.', a:0, why:'Bigger houses tend to cost more.'},
+    {q:cloudSVG(.95, 7) + 'How strong is this pattern?', opts:['Strong','Weak'], a:0, why:'The dots hug a line.'},
+    {q:cloudSVG(.3, 8) + 'How strong is this pattern?', opts:['Strong','Weak'], a:1, why:'A slight rise hidden in lots of spread.'},
+  ]},
+  {id:'ca', n:'Cause or just together?', d:'Spot the hidden variable', bg:'#B9D98C', items:[
+    {q:'On days with more ice-cream sales, more people drown. Does ice cream cause drowning?', opts:['Yes','No: hot weather brings both'], a:1, why:'Heat sends people to buy ice cream and to swim.'},
+    {q:'Countries that eat more chocolate have more Nobel laureates per person (Messerli, 2012). What can you conclude?', opts:['Chocolate makes Nobel winners','They are associated; the cause is not shown'], a:1, why:'A scatter shows association only. A third factor, such as wealth, could push both.'},
+    {q:'Fires with more firefighters show more damage. Do firefighters cause the damage?', opts:['Yes','No: bigger fires bring more of both'], a:1, why:'The size of the fire drives both counts.'},
+    {q:'Students who sleep more tend to get better grades. What does this pattern prove by itself?', opts:['That sleep raises grades','Only that the two are associated'], a:1, why:'Other things, such as less screen time or less stress, could drive both.'},
+    {q:'A strong, tight pattern in a scatter means…', opts:['One variable causes the other','The two move together closely'], a:1, why:'Strength is about how tight the cloud is, not about cause.'},
+  ]},
+  {id:'wp', n:'Which picture?', d:'Crosstab or scatter diagram', bg:'#C7B3EA', opts:['Crosstab','Scatter diagram'], items:[
+    {q:'Payment method (cash, card, phone) and day of the week', a:0, why:'Two labels.'},
+    {q:'Height and weight of 50 students', a:1, why:'Two amounts.'},
+    {q:'Advertising spending and sales, month by month', a:1, why:'Two amounts.'},
+    {q:'Cup size (S, M, L) and flavor', a:0, why:'Two labels.'},
+    {q:'Age and reaction time of 80 drivers', a:1, why:'Two amounts.'},
+    {q:'Region (North, South…) and whether the customer came back (yes, no)', a:0, why:'Two labels.'},
+  ]},
+  {id:'boss', n:'Boss: build the cloud', d:'Four targets. Place dots to hit each one.', bg:'#E9718F', boss:true, inv:true},
+  {id:'lab', n:'Scatter lab', d:'Tap to place your own dots', bg:'#FFFFFF', tool:true},
+];
+(function arcade(){
+  const host = $('#arcade');
+  const SK = 't13-stars';
+  let best = sget(SK, {});
+  let play = null;
+  function starsHTML(n){ let s = ''; for (let k = 0; k < 3; k++) s += k < n ? '★' : '<span class="off">★</span>'; return s; }
+  const scn = host.closest('.scene');
+  const mini = '<svg viewBox="0 0 90 44" width="86" height="42" aria-hidden="true"><line x1="6" y1="40" x2="84" y2="6" stroke="#D93A62" stroke-width="3"/>' + [[10,36],[22,30],[30,32],[42,22],[52,24],[62,14],[76,12]].map(p => '<circle cx="'+p[0]+'" cy="'+p[1]+'" r="4" fill="#2F55D4" stroke="'+INK+'" stroke-width="1.5"/>').join('') + '</svg>';
+  function tiles(){
+    play = null; scn.classList.remove('playing');
+    host.innerHTML = '<div class="tiles">' + LEVELS.map((L, i) => '<button class="tile" type="button" data-i="'+i+'" style="background:'+L.bg+'"><span class="ln">'+(L.boss ? 'Final level' : L.tool ? 'Tool' : 'Level '+(i + 1))+'</span><span class="tn">'+L.n+'</span><span class="td">'+L.d+'</span>'+(L.tool ? '<span class="ts">'+mini+'</span>' : '<span class="ts" aria-label="'+(best[L.id] || 0)+' of 3 stars">'+starsHTML(best[L.id] || 0)+'</span>')+'</button>').join('') + '</div>';
+    $$('.tile', host).forEach(t => t.addEventListener('click', () => { const L = LEVELS[+t.dataset.i]; if (L.tool) lab(); else if (L.inv) inverse(L); else start(L); }));
+  }
+  function start(L){
+    let qs;
+    if (L.boss){ qs = []; LEVELS.filter(x => x.items).forEach(x => x.items.forEach((it, j) => qs.push(Object.assign({}, it, {opts: it.opts || x.opts, own: !!it.opts, k: x.id + j})))); qs = shuffle(qs).slice(0, 10); }
+    else qs = shuffle(L.items.map((it, j) => Object.assign({}, it, {opts: it.opts || L.opts, own: !!it.opts, k: L.id + j})));
+    qs = qs.map(q => { if (!q.own) return q; const order = shuffle(q.opts.map((_, j) => j)); return Object.assign({}, q, {opts: order.map(j => q.opts[j]), a: order.indexOf(q.a)}); });
+    play = {L, qs, i:0, miss:0, streak:0}; scn.classList.add('playing');
+    question();
+  }
+  function question(){
+    const p = play, q = p.qs[p.i];
+    host.innerHTML = '<div class="card qpanel"><div class="qhead"><span class="lvl">'+p.L.n+'</span><span>Question '+(p.i + 1)+' of '+p.qs.length+'</span><span class="streak">'+FLAME+'Streak '+p.streak+'</span></div>'
+      + '<div class="qbar"><i style="width:'+(100*p.i/p.qs.length)+'%"></i></div>'
+      + '<div class="qtext">'+q.q+'</div>'
+      + '<div class="opts">'+q.opts.map((o, j) => '<button class="opt" type="button" data-j="'+j+'">'+o+'</button>').join('')+'</div>'
+      + '<div class="fb" aria-live="polite"></div>'
+      + '<div class="qnav"><button class="btn" type="button" data-act="quit">Back to levels</button><button class="btn sun" type="button" data-act="next" disabled>'+(p.i === p.qs.length - 1 ? 'See my stars' : 'Next question')+'</button></div></div>';
+    $$('.opt', host).forEach(b => b.addEventListener('click', () => answer(+b.dataset.j)));
+    $('[data-act="quit"]', host).addEventListener('click', tiles);
+    $('[data-act="next"]', host).addEventListener('click', () => { p.i++; if (p.i < p.qs.length) question(); else finish(); });
+    const first = $('.opt', host); if (first) first.focus({preventScroll:true});
+  }
+  function answer(j){
+    const p = play, q = p.qs[p.i], ok = j === q.a;
+    $$('.opt', host).forEach((b, k) => { b.disabled = true; if (k === q.a) b.classList.add('right'); if (k === j && !ok) b.classList.add('wrong'); });
+    if (ok){ p.streak++; addXP('aq:' + q.k); } else { p.streak = 0; p.miss++; }
+    $('.streak', host).innerHTML = FLAME + 'Streak ' + p.streak;
+    $('.fb', host).innerHTML = (ok ? '<b>Right!</b> ' : '<b>Not quite.</b> It’s “'+q.opts[q.a]+'”. ') + q.why;
+    const nx = $('[data-act="next"]', host); nx.disabled = false; nx.focus({preventScroll:true});
+  }
+  function finish(){
+    const p = play, n = p.qs.length, right = n - p.miss;
+    const stars = p.miss === 0 ? 3 : p.miss <= 2 ? 2 : 1;
+    if (stars > (best[p.L.id] || 0)){ best[p.L.id] = stars; sset(SK, best); }
+    host.innerHTML = '<div class="card qpanel donebox"><span class="lvl" style="font-family:var(--font-display);font-weight:800;font-size:22px">'+p.L.n+'</span><div class="bigstars" aria-label="'+stars+' of 3 stars">'+starsHTML(stars)+'</div><div style="font-size:18px">You got <b>'+right+' of '+n+'</b> right.'+(stars === 3 ? ' Not a single slip!' : stars === 2 ? ' Almost perfect.' : ' Try once more: the reasons will stick.')+'</div><div class="row" style="justify-content:center"><button class="btn sun big" type="button" data-act="again">Play again</button><button class="btn big" type="button" data-act="back">Back to levels</button></div></div>';
+    $('[data-act="again"]', host).addEventListener('click', () => start(p.L));
+    $('[data-act="back"]', host).addEventListener('click', tiles);
+    if (stars >= 2) confetti();
+  }
+  function quadR2(xs, ys){
+    const n = xs.length; if (n < 4) return 0;
+    const S = k => sum(xs.map(x => Math.pow(x, k))), T = k => sum(xs.map((x, i) => Math.pow(x, k) * ys[i]));
+    const A = [[n, S(1), S(2), T(0)], [S(1), S(2), S(3), T(1)], [S(2), S(3), S(4), T(2)]];
+    for (let c = 0; c < 3; c++){ let p = c; for (let r = c + 1; r < 3; r++) if (Math.abs(A[r][c]) > Math.abs(A[p][c])) p = r; [A[c], A[p]] = [A[p], A[c]]; if (Math.abs(A[c][c]) < 1e-9) return 0; for (let r = 0; r < 3; r++) if (r !== c){ const f = A[r][c] / A[c][c]; for (let k = c; k < 4; k++) A[r][k] -= f * A[c][k]; } }
+    const b = [0, 1, 2].map(r => A[r][3] / A[r][r]), my = sum(ys) / n;
+    const sse = sum(xs.map((x, i) => Math.pow(ys[i] - (b[0] + b[1] * x + b[2] * x * x), 2))), sst = sum(ys.map(y => (y - my) * (y - my)));
+    return sst ? 1 - sse / sst : 0;
+  }
+  function cloudWords(pts){
+    if (pts.length < 3) return 'add at least 3 dots';
+    const r = fit(pts.map(p => p[0]), pts.map(p => p[1])).r, a = Math.abs(r);
+    return a < .2 ? 'no clear direction' : (r > 0 ? 'positive' : 'negative') + ', ' + (a >= .85 ? 'strong' : a >= .6 ? 'fairly strong' : a >= .35 ? 'moderate' : 'weak');
+  }
+  const ITG = [
+    {t:'Strong and positive: the dots hug a rising line', min:6, ok:(r, q) => r >= .85, tip:'Line the dots up closely, going up to the right.'},
+    {t:'Negative, but loose: a fall you can see, with lots of spread', min:8, ok:(r, q) => r <= -.3 && r >= -.75, tip:'Make the cloud fall to the right, but keep it wide.'},
+    {t:'No clear direction', min:10, ok:(r, q) => Math.abs(r) < .15, tip:'Spread the dots so the line comes out almost flat.'},
+    {t:'A U-shape: the line is almost flat, but the dots follow a curve', min:8, ok:(r, q) => Math.abs(r) < .25 && q >= .75, tip:'High on both sides, low in the middle, close to one smooth curve.'},
+  ];
+  function inverse(L){
+    const ts = shuffle(ITG.slice()); let i = 0, miss = 0, pts = [], solved = false;
+    scn.classList.add('playing');
+    const fo = {W:640, H:290, L:46, xMin:0, xMax:10, yMin:0, yMax:10, xTicks:[0, 2, 4, 6, 8, 10], yTicks:[0, 2, 4, 6, 8, 10]};
+    function draw(){
+      const T = ts[i]; pts = []; solved = false;
+      host.innerHTML = '<div class="card qpanel inv labbox"><div class="qhead"><span class="lvl">'+L.n+'</span><span>Target '+(i + 1)+' of '+ts.length+'</span><span class="streak">Misses: '+miss+'</span></div>'
+        + '<div class="qbar"><i style="width:'+(100 * i / ts.length)+'%"></i></div>'
+        + '<div class="qtext">Target: <b>'+T.t+'</b>. Use at least '+T.min+' dots.</div>'
+        + '<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center"><span class="smallnote">Tap an empty spot to add a dot, tap a dot to remove it.</span><button class="btn sm" type="button" data-act="clear">Clear</button><span class="bigread" id="iread" style="margin-left:auto;font-size:19px"></span></div>'
+        + '<svg class="chart scatlab" id="ichart" viewBox="0 0 640 290" role="img" aria-label="Your dots"></svg>'
+        + '<div class="fb" aria-live="polite"></div>'
+        + '<div class="qnav"><button class="btn" type="button" data-act="quit">Back to levels</button><span class="row" style="gap:8px"><button class="btn" type="button" data-act="check">Check my cloud</button><button class="btn sun" type="button" data-act="next" disabled>'+(i === ts.length - 1 ? 'See my stars' : 'Next target')+'</button></span></div></div>';
+      const svg = $('#ichart'), fr = frame(fo);
+      function render(){
+        let g = fr.g;
+        if (pts.length >= 2) g += lineSVG(fit(pts.map(p => p[0]), pts.map(p => p[1])), fr, Math.min(...pts.map(p => p[0])), Math.max(...pts.map(p => p[0])));
+        g += pts.map((p, j) => '<circle class="lp" data-j="'+j+'" cx="'+fr.X(p[0]).toFixed(1)+'" cy="'+fr.Y(p[1]).toFixed(1)+'" r="8" fill="'+BLUE+'" stroke="'+INK+'" stroke-width="1.8" style="cursor:pointer"/>').join('');
+        svg.innerHTML = g;
+        $('#iread').textContent = 'n = ' + pts.length + ' · ' + cloudWords(pts);
+      }
+      svg.addEventListener('click', e => {
+        if (solved) return;
+        const t = e.target;
+        if (t.classList && t.classList.contains('lp')){ pts.splice(+t.dataset.j, 1); render(); return; }
+        const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+        const p = pt.matrixTransform(svg.getScreenCTM().inverse());
+        const x = (p.x - fr.L) / (fr.W - fr.L - fr.R) * 10, y = (fr.H - fr.B - p.y) / (fr.H - fr.B - fr.T) * 10;
+        if (x < 0 || x > 10 || y < 0 || y > 10) return;
+        pts.push([x, y]); render();
+      });
+      render();
+      $('[data-act="clear"]', host).addEventListener('click', () => { if (!solved){ pts = []; render(); } });
+      $('[data-act="quit"]', host).addEventListener('click', tiles);
+      $('[data-act="check"]', host).addEventListener('click', () => {
+        if (solved) return;
+        const fb = $('.fb', host);
+        if (pts.length < T.min){ fb.innerHTML = 'Add more dots first: this target needs at least '+T.min+'.'; return; }
+        const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]), r = fit(xs, ys).r, q = quadR2(xs, ys);
+        if (T.ok(r, q)){ solved = true; fb.innerHTML = '<b>Right!</b> Your cloud reads: '+cloudWords(pts)+(T.min === 8 && q >= .75 ? ', and it follows a curve' : '')+'.'; addXP('inv' + i + T.min); const nx = $('[data-act="next"]', host); nx.disabled = false; nx.focus({preventScroll:true}); }
+        else { miss++; $('.streak', host).textContent = 'Misses: ' + miss; fb.innerHTML = '<b>Not yet.</b> Your cloud reads: '+cloudWords(pts)+'. '+T.tip; }
+      });
+      $('[data-act="next"]', host).addEventListener('click', () => { i++; if (i < ts.length) draw(); else done(); });
+    }
+    function done(){
+      const stars = miss === 0 ? 3 : miss <= 2 ? 2 : 1;
+      if (stars > (best[L.id] || 0)){ best[L.id] = stars; sset(SK, best); }
+      host.innerHTML = '<div class="card qpanel donebox"><span class="lvl" style="font-family:var(--font-display);font-weight:800;font-size:22px">'+L.n+'</span><div class="bigstars" aria-label="'+stars+' of 3 stars">'+starsHTML(stars)+'</div><div style="font-size:18px">Four clouds built with <b>'+miss+'</b> miss'+(miss === 1 ? '' : 'es')+'.</div><div class="row" style="justify-content:center"><button class="btn sun big" type="button" data-act="again">Play again</button><button class="btn big" type="button" data-act="back">Back to levels</button></div></div>';
+      $('[data-act="again"]', host).addEventListener('click', () => inverse(L));
+      $('[data-act="back"]', host).addEventListener('click', tiles);
+      if (stars >= 2) confetti();
+    }
+    draw();
+  }
+  function lab(){
+    scn.classList.add('playing');
+    host.innerHTML = '<div class="card qpanel labbox" style="max-width:900px;display:grid;gap:10px">'
+      + '<div class="qhead"><span class="lvl">Scatter lab</span><button class="btn sm" type="button" data-act="quit">Back to levels</button></div>'
+      + '<p style="margin:0">Tap an empty spot to add a dot. Tap a dot to remove it. Try to build a negative cloud, a curve, or one outlier that tilts the line.</p>'
+      + '<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center"><button class="btn sm" type="button" id="lclear">Clear</button><button class="btn sm" type="button" id="lrand">Random cloud</button><button class="btn sm" type="button" id="lout">Add an outlier</button><span class="bigread" id="lread" style="margin-left:auto;font-size:20px"></span></div>'
+      + '<svg class="chart scatlab" id="labchart" viewBox="0 0 640 300" style="max-height:38vh" role="img" aria-label="Your scatter diagram"></svg></div>';
+    $('[data-act="quit"]', host).addEventListener('click', tiles);
+    const svg = $('#labchart'), fo = {W:640, H:300, L:46, xMin:0, xMax:10, yMin:0, yMax:10, xTicks:[0, 2, 4, 6, 8, 10], yTicks:[0, 2, 4, 6, 8, 10]};
+    const fr = frame(fo);
+    let pts = [];
+    function rand(){ const r = [-.8, -.5, .5, .85][Math.floor(Math.random() * 4)], z = baseZ(25, Math.floor(Math.random() * 1e6)), ys = cloudY(z, r); pts = z[0].map((x, i) => [Math.max(.2, Math.min(9.8, 5 + x * 1.5)), Math.max(.2, Math.min(9.8, 5 + ys[i] * 1.5))]); }
+    function render(){
+      let g = fr.g;
+      if (pts.length >= 2){ const f = fit(pts.map(p => p[0]), pts.map(p => p[1])); g += lineSVG(f, fr, Math.min(...pts.map(p => p[0])), Math.max(...pts.map(p => p[0]))); }
+      g += pts.map((p, i) => '<circle class="lp" data-i="'+i+'" cx="'+fr.X(p[0]).toFixed(1)+'" cy="'+fr.Y(p[1]).toFixed(1)+'" r="8" fill="'+BLUE+'" stroke="'+INK+'" stroke-width="1.8" style="cursor:pointer"/>').join('');
+      svg.innerHTML = g;
+      let t = 'n = ' + pts.length;
+      if (pts.length >= 3){
+        const r = fit(pts.map(p => p[0]), pts.map(p => p[1])).r, a = Math.abs(r);
+        t += a < .2 ? ' · no clear direction' : ' · ' + (r > 0 ? 'positive' : 'negative') + ', ' + (a >= .85 ? 'strong' : a >= .6 ? 'fairly strong' : a >= .35 ? 'moderate' : 'weak');
+      } else t += ' · add at least 3 dots';
+      $('#lread').textContent = t;
+    }
+    svg.addEventListener('click', e => {
+      const t = e.target;
+      if (t.classList && t.classList.contains('lp')){ pts.splice(+t.dataset.i, 1); render(); return; }
+      const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+      const p = pt.matrixTransform(svg.getScreenCTM().inverse());
+      const x = (p.x - fr.L) / (fr.W - fr.L - fr.R) * 10, y = (fr.H - fr.B - p.y) / (fr.H - fr.B - fr.T) * 10;
+      if (x < 0 || x > 10 || y < 0 || y > 10) return;
+      pts.push([x, y]); render(); addXP('lab');
+    });
+    $('#lclear').addEventListener('click', () => { pts = []; render(); });
+    $('#lrand').addEventListener('click', () => { rand(); render(); });
+    $('#lout').addEventListener('click', () => { pts.push([9.4, pts.length && fit(pts.map(p => p[0]), pts.map(p => p[1])).b1 > 0 ? .6 : 9.4]); render(); addXP('lab'); });
+    rand(); render();
+  }
+  tiles();
+  $('#resetall').addEventListener('click', () => { XP = {}; sset(XPK, XP); best = {}; sset(SK, best); renderXP(false); tiles(); });
+})();
+
+/* =========================================================== 15. recap */
+(function recap(){
+  const I = {
+    xt:'<svg viewBox="0 0 54 54"><rect x="5" y="8" width="44" height="38" rx="6" fill="#FFFFFF" stroke="'+INK+'" stroke-width="2.5"/><path d="M5 21h44M5 33h44M20 8v38M34 8v38" stroke="#C7B3EA" stroke-width="2.2"/><rect x="20" y="21" width="14" height="12" fill="#F7B32B" stroke="'+INK+'" stroke-width="2"/></svg>',
+    pc:'<svg viewBox="0 0 54 54"><rect x="4" y="10" width="46" height="12" fill="#D93A62" stroke="'+INK+'" stroke-width="2"/><rect x="4" y="10" width="30" height="12" fill="#DDD3EC" stroke="'+INK+'" stroke-width="2"/><rect x="4" y="30" width="46" height="12" fill="#D93A62" stroke="'+INK+'" stroke-width="2"/><rect x="4" y="30" width="12" height="12" fill="#DDD3EC" stroke="'+INK+'" stroke-width="2"/><text x="27" y="52" text-anchor="middle" style="font:800 8px var(--font-display);fill:'+INK+'">100%</text></svg>',
+    sp:'<svg viewBox="0 0 54 54"><rect x="6" y="20" width="8" height="26" fill="#8E6CC9" stroke="'+INK+'" stroke-width="2"/><rect x="15" y="14" width="8" height="32" fill="#6E9F2E" stroke="'+INK+'" stroke-width="2"/><rect x="31" y="12" width="8" height="34" fill="#8E6CC9" stroke="'+INK+'" stroke-width="2"/><rect x="40" y="24" width="8" height="22" fill="#6E9F2E" stroke="'+INK+'" stroke-width="2"/><path d="M14 8 C22 2 32 2 40 8" fill="none" stroke="#D3375E" stroke-width="2.5"/><path d="M36 4 l4 4 -5 2" fill="none" stroke="#D3375E" stroke-width="2.5"/></svg>',
+    sc:'<svg viewBox="0 0 54 54"><path d="M6 6v42h44" fill="none" stroke="'+INK+'" stroke-width="2.5"/><path d="M10 42 L48 12" stroke="#D93A62" stroke-width="3"/><circle cx="14" cy="36" r="3.4" fill="#2F55D4" stroke="'+INK+'" stroke-width="1.5"/><circle cx="22" cy="34" r="3.4" fill="#2F55D4" stroke="'+INK+'" stroke-width="1.5"/><circle cx="28" cy="24" r="3.4" fill="#2F55D4" stroke="'+INK+'" stroke-width="1.5"/><circle cx="38" cy="22" r="3.4" fill="#2F55D4" stroke="'+INK+'" stroke-width="1.5"/><circle cx="44" cy="12" r="3.4" fill="#2F55D4" stroke="'+INK+'" stroke-width="1.5"/></svg>',
+    rd:'<svg viewBox="0 0 54 54"><circle cx="22" cy="22" r="14" fill="#DEE5FB" stroke="'+INK+'" stroke-width="2.8"/><path d="M32 32 L48 48" stroke="'+INK+'" stroke-width="5" stroke-linecap="round"/><circle cx="17" cy="26" r="2.6" fill="#2F55D4"/><circle cx="22" cy="21" r="2.6" fill="#2F55D4"/><circle cx="27" cy="16" r="2.6" fill="#2F55D4"/></svg>',
+    wp:'<svg viewBox="0 0 54 54"><path d="M27 48 V28 M27 28 L10 10 M27 28 L44 10" fill="none" stroke="'+INK+'" stroke-width="3" stroke-linecap="round"/><rect x="2" y="2" width="16" height="12" rx="3" fill="#EE7F1B" stroke="'+INK+'" stroke-width="2"/><rect x="36" y="2" width="16" height="12" rx="3" fill="#2F55D4" stroke="'+INK+'" stroke-width="2"/></svg>',
+    warn:'<svg viewBox="0 0 54 54"><path d="M27 5 L51 47 H3 Z" fill="#F7B32B" stroke="#fff" stroke-width="3" stroke-linejoin="round"/><path d="M27 20v13" stroke="'+INK+'" stroke-width="4" stroke-linecap="round"/><circle cx="27" cy="40" r="2.6" fill="'+INK+'"/></svg>',
+  };
+  const C = [
+    ['xt', 'Crosstab', 'One variable in the rows, one in the columns, a count in each cell. The edges are one-variable tables.'],
+    ['pc', 'Row % or column %', 'Find the group after “of” or “among”: that group is the 100%.'],
+    ['sp', 'Simpson’s paradox', 'A result that holds in every group can flip when the groups are added. Split the data by the hidden variable.'],
+    ['sc', 'Scatter diagram', 'One dot per element, one amount on each axis. The trendline shows the general direction.'],
+    ['rd', 'Read the cloud', 'Direction, form (straight or curved), strength (how tight), outliers.'],
+    ['wp', 'Which picture?', 'Two labels: crosstab. Two amounts: scatter diagram. One of each: make classes, then a crosstab.'],
+  ];
+  $('#recap').innerHTML = C.map(([i, t, d]) => '<div class="rc"><span class="ri">'+I[i]+'</span><div><b>'+t+'</b><span>'+d+'</span></div></div>').join('')
+    + '<div class="rc trap"><span class="ri">'+I.warn+'</span><div><b>The trap</b><span>Together is not because. A scatter diagram shows association, not causation. Back in T1.7 and T8.3.</span></div></div>'
+    + '<div class="rc next"><div><b>The door to T1.4</b><span>A flyer says “Average tip on Bubble Street: $6”. Lina gets $2 almost every time. Is the flyer lying?</span><button class="btn sm" type="button" id="again" style="margin-top:8px;display:block">Watch T1.3 again</button></div></div>';
+  $('#again').addEventListener('click', () => go(0));
+})();
+
+/* =========================================================== confetti */
+function confetti(){
+  if (reduced) return;
+  const c = $('#confetti'), x = c.getContext('2d');
+  c.width = innerWidth; c.height = innerHeight;
+  const cols = ['#EE7F1B','#2F55D4','#F7B32B','#6E9F2E','#D93A62','#8E6CC9'];
+  const P = Array.from({length:150}, () => ({x:innerWidth/2 + (Math.random() - .5)*240, y:innerHeight*.4, vx:(Math.random() - .5)*15, vy:-Math.random()*15 - 4, r:Math.random()*7 + 5, c:cols[Math.floor(Math.random()*cols.length)], a:Math.random()*6, va:(Math.random() - .5)*.4}));
+  let t = 0;
+  (function f(){
+    x.clearRect(0, 0, c.width, c.height);
+    P.forEach(p => { p.vy += .42; p.x += p.vx; p.y += p.vy; p.a += p.va; x.save(); x.translate(p.x, p.y); x.rotate(p.a); x.fillStyle = p.c; x.fillRect(-p.r/2, -p.r/3, p.r, p.r*.66); x.restore(); });
+    if (++t < 120) requestAnimationFrame(f); else x.clearRect(0, 0, c.width, c.height);
+  })();
+}
+
+/* =========================================================== start */
+const m0 = /^#s(\d+)$/.exec(location.hash);
+go(m0 ? +m0[1] : 0);
+})();
+</script>
+</body>
+</html>

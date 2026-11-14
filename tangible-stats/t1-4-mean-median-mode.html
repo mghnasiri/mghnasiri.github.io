@@ -1,0 +1,1938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T1.4 — Mean, median, mode: which one to report</title>
+<meta name="description" content="When the mean and the median disagree, which one is the average? A see-saw for the mean, a flag for the median, piles for the mode, weighted and geometric means, skew, and real restaurant tips. Interactive lesson, T1.4.">
+<style>
+:root{color-scheme: light;
+  --milk:#F2EDF9; --paper:#FFFFFF; --wash:#F7F3FC;
+  --ink:#2A1C19; --ink-2:#5B4B66; --ink-3:#85799A; --line:#D9CFEA; --line-2:#E8E1F3;
+  --deep:#4B2D86; --deep-2:#6243A0;
+  --tag:#EE7F1B; --tag-soft:#FFE3CC; --tag-ink:#A04A00;
+  --ruler:#2F55D4; --ruler-soft:#DEE5FB; --ruler-ink:#1F3BA3;
+  --sun:#F7B32B; --sun-soft:#FDEFD2;
+  --mint:#6E9F2E; --berry:#D93A62; --taro:#8E6CC9; --taro-soft:#E7DEF5; --sugar:#B07A4A;
+  --ok:#4E8A1E; --ok-soft:#E3F1D0; --ok-ink:#365F14; --no:#D3375E; --no-soft:#FBE0E7; --no-ink:#A1203F;
+  --font-display:"Times New Roman",Times,"Liberation Serif",serif;
+  --font-body:"Times New Roman",Times,"Liberation Serif",serif;
+  --font-hand:var(--font-body);
+  --r:18px; --bw:2px; --shc:transparent; --dot:transparent;
+  --bg:var(--milk); --fg:var(--ink); --fg2:var(--ink-2); --stripe:transparent; --focus:var(--deep); --now:var(--deep);}
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%; margin:0}
+body{display:flex; flex-direction:column; overflow:hidden; background:var(--milk); color:var(--ink); font-family:var(--font-body); font-size:17px; font-size-adjust:.48; line-height:1.55; -webkit-font-smoothing:antialiased; font-variant-numeric:tabular-nums}
+button{font:inherit; color:inherit}
+:focus-visible{outline:3px solid var(--focus); outline-offset:3px}
+.visually-hidden{position:absolute!important; width:1px; height:1px; overflow:hidden; clip:rect(1px,1px,1px,1px); white-space:nowrap}
+@media (prefers-reduced-motion: reduce){
+*,*::before,*::after{animation:none!important; transition:none!important}
+}
+.bar{flex:none; position:relative; z-index:5; display:flex; align-items:center; gap:16px; height:54px; padding:0 24px; background:var(--milk); border-bottom:1px solid var(--line)}
+.ep{font-family:var(--font-display); font-weight:800; font-size:18px; color:var(--deep)}
+.bar .t{font-size:15px; color:var(--ink-2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0}
+.chapnm{display:inline-flex; align-items:center; gap:8px; font-size:14px; font-weight:700; color:var(--ink); white-space:nowrap}
+.chapnm::before{content:""; width:10px; height:10px; border-radius:50%; background:var(--now); flex:none; transition:background .3s}
+.prog{flex:1; min-width:70px; max-width:300px; height:6px; margin-left:auto; border-radius:999px; background:var(--line); overflow:hidden}
+.prog i{display:block; height:100%; width:0; background:var(--deep); border-radius:999px; transition:width .35s}
+.xp{font-weight:700; font-size:15px; color:var(--deep); white-space:nowrap}
+.xp.pulse{animation:pulse .6s}
+@keyframes pulse{40%{transform:scale(1.3)}}
+@media (max-width:820px){
+.bar .t{display:none}
+}
+@media (max-width:480px){
+.chapnm{display:none}
+.bar{padding:0 14px}
+}
+.ctrl{flex:none; z-index:5; display:flex; align-items:center; justify-content:space-between; gap:12px; height:64px; padding:0 24px; background:var(--milk); border-top:1px solid var(--line)}
+.dots{display:flex; gap:8px; align-items:center; flex-wrap:wrap; justify-content:center}
+.dots button{width:11px; height:11px; padding:0; border-radius:50%; border:2px solid var(--ink-3); background:transparent; cursor:pointer; transition:width .2s, height .2s, background .2s, border-color .2s}
+.dots button.seen{background:var(--ink-3)}
+.dots button.on{width:17px; height:17px; background:var(--ink); border-color:var(--ink)}
+.dots button:hover{border-color:var(--deep)}
+.pos{display:none; font-weight:700}
+@media (max-width:760px){
+.dots{display:none}
+.pos{display:block}
+.ctrl{padding:0 14px}
+}
+.btn{font-weight:700; font-size:16px; color:var(--ink); background:var(--paper); border:2px solid var(--ink); border-radius:999px; padding:8px 18px; cursor:pointer; transition:background .15s, border-color .15s, color .15s, transform .08s; line-height:1.2}
+.btn:hover{border-color:var(--deep); background:var(--wash)}
+.btn:active{transform:translateY(1px)}
+.btn.sun{background:var(--deep); border-color:var(--deep); color:#fff}
+.btn.sun:hover{background:var(--deep-2); border-color:var(--deep-2)}
+.btn.big{font-size:18px; padding:12px 26px}
+.btn.sm{font-size:15px; padding:6px 14px}
+.btn[aria-pressed="true"]{background:var(--deep); border-color:var(--deep); color:#fff}
+.btn:disabled{opacity:.45; cursor:default; transform:none}
+.btn.right{background:var(--ok-soft); border-color:var(--ok); color:var(--ok-ink); opacity:1}
+.btn.wrong{background:var(--no-soft); border-color:var(--no); color:var(--no-ink); opacity:1}
+.row{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+#deck{flex:1; min-height:0; position:relative}
+.scene{position:absolute; inset:0; overflow-y:auto; display:none; padding:clamp(20px,3vw,46px) clamp(16px,3.4vw,52px); color:var(--fg); background-color:var(--bg); background-image:linear-gradient(var(--stripe),var(--stripe)); background-size:100% 6px; background-repeat:no-repeat}
+.scene.on{display:flex}
+.scene-in{margin:auto; width:100%; max-width:1240px; display:grid; grid-template-columns:minmax(0,5fr) minmax(0,7fr); gap:clamp(22px,3.6vw,60px); align-items:center}
+.scene-in.wide{grid-template-columns:minmax(0,1fr); gap:16px}
+.scene-in.picwide{grid-template-columns:minmax(0,4fr) minmax(0,8fr)}
+@media (max-width:900px){
+.scene-in.picwide{grid-template-columns:minmax(0,1fr)}
+.scene-in{grid-template-columns:minmax(0,1fr)}
+}
+@media (min-width:1600px) and (min-height:960px){
+.scene-in{zoom:1.32}
+}
+@media (max-height:760px) and (min-width:901px){
+.scene{padding-top:16px; padding-bottom:14px}
+.txt{gap:10px}
+.pic{gap:12px}
+.recap{gap:10px}
+.rc{padding:9px 12px}
+.rc span{font-size:13.5px}
+.scene-in.wide{gap:12px}
+.nextline{font-size:15.5px}
+}
+.scene.on .scene-in{animation:enter .4s cubic-bezier(.2,.7,.3,1)}
+@keyframes enter{from{opacity:.3; transform:translateY(10px)} to{opacity:1; transform:none}}
+.th-plum{--stripe:transparent; --chip:var(--deep)}
+.th-sun{--stripe:var(--sun); --chip:var(--sun)}
+.th-lilac{--stripe:var(--taro); --chip:var(--taro)}
+.th-sky{--stripe:var(--sugar); --chip:var(--sugar)}
+.th-mint{--stripe:var(--mint); --chip:var(--mint)}
+.th-pink{--stripe:var(--berry); --chip:var(--berry)}
+.th-night,.th-indigo{--chip:var(--deep); --bg:var(--deep); --fg:#fff; --fg2:rgba(255,255,255,.86); --stripe:transparent; --focus:var(--sun)}
+.th-trap{--chip:var(--berry); --bg:var(--ink); --fg:#fff; --fg2:rgba(255,255,255,.84); --stripe:transparent; --focus:var(--sun)}
+.txt{display:flex; flex-direction:column; align-items:flex-start; gap:14px; min-width:0}
+.kick{display:inline-flex; align-items:center; gap:10px; font-weight:600; font-size:15px; color:var(--fg2)}
+.kick b{display:grid; place-items:center; min-width:28px; height:28px; padding:0 8px; border-radius:999px; background:var(--paper); color:var(--ink); box-shadow:inset 0 0 0 2.5px var(--stripe); font-family:var(--font-display); font-weight:800; font-size:14px; line-height:1}
+.th-plum .kick b{box-shadow:inset 0 0 0 2px var(--line)}
+.th-night .kick b,.th-indigo .kick b,.th-trap .kick b{box-shadow:none}
+h1,h2,h3{font-family:var(--font-display); font-weight:700; margin:0; letter-spacing:-.01em; text-wrap:balance}
+h1{font-size:clamp(46px,6.2vw,88px); line-height:.94}
+h2{font-size:clamp(30px,3.5vw,50px); line-height:1.02}
+.sub{margin:0; font-size:clamp(17px,1.45vw,20px); line-height:1.5; color:var(--fg2); max-width:38ch}
+.take{display:block; border-left:4px solid var(--stripe); padding:2px 0 2px 14px; font-weight:700; font-size:16.5px; line-height:1.45; color:var(--fg); max-width:44ch}
+.th-plum .take,.th-night .take,.th-indigo .take,.th-trap .take{border-left-color:var(--sun)}
+.take svg{display:none}
+.fr{font-size:14px; color:var(--fg2)}
+.meta{display:flex; flex-wrap:wrap; gap:4px 22px}
+.pill{font-size:14px; color:var(--fg2)}
+.pic{min-width:0; display:flex; flex-direction:column; gap:16px}
+.card{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:var(--r); padding:16px 18px}
+.th-night .card,.th-indigo .card,.th-trap .card{border-color:transparent}
+.hint{font-size:14.5px; color:var(--ink-2)}
+.lina{display:flex; gap:12px; align-items:flex-start; max-width:44ch}
+.lina .av{flex:none; width:50px; height:50px}
+.lina .av svg{width:100%; height:100%; display:block}
+.bubble{color:var(--fg); font-size:16.5px; line-height:1.45}
+.bubble b{display:block; font-family:var(--font-display); font-weight:800; font-size:14.5px; line-height:1.3; color:var(--deep)}
+.th-night .bubble b,.th-indigo .bubble b,.th-trap .bubble b{color:var(--sun)}
+.card .bubble b{color:var(--deep)}
+.stand{width:100%; height:auto; max-height:calc(100dvh - 215px); display:block}
+.stand .cupbob{animation:bob 3s ease-in-out infinite; transform-box:fill-box; transform-origin:center bottom}
+.stand .cupbob:nth-of-type(2n){animation-delay:-1.4s}
+@keyframes bob{50%{transform:translateY(-6px) rotate(-1.5deg)}}
+.nb{position:relative; background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:16px; padding:28px 12px 12px 46px; overflow-x:auto}
+.nb::before{content:""; position:absolute; left:36px; top:0; bottom:0; width:2px; background:#F49BB3}
+.nb::after{content:""; position:absolute; left:22px; right:22px; top:9px; height:10px; background:radial-gradient(circle, var(--milk) 3px, var(--line) 3.6px, transparent 4.3px) 0 0/30px 10px repeat-x}
+.nb table{border-collapse:collapse; width:100%; font-family:var(--font-body); font-size:clamp(17px,1.45vw,21px); line-height:1; font-variant-numeric:tabular-nums}
+.nb th{font-weight:700; text-align:left; font-size:.76em; color:var(--ink-2); padding:4px 10px 6px; border-bottom:2px solid #C5D0F0; white-space:nowrap}
+.nb td{padding:2px 10px; height:41px; border-bottom:1px solid #DCE3F7; white-space:nowrap; font-weight:600; transition:background .2s}
+.nb .cc{width:42px; padding:2px 4px}
+.nb td.cc svg{display:block; margin:auto}
+.nb tr.gone{display:none}
+#nb2{padding-top:24px}
+#nb2 td{height:36px}
+.nb tr.new td{animation:write .8s ease-out}
+@keyframes write{from{clip-path:inset(0 100% 0 0)} to{clip-path:inset(0 0 0 0)}}
+.nb .hl{background:var(--sun-soft)}
+.nb th.hl{background:var(--sun); color:var(--ink)}
+.nb .hl2{background:var(--sun); box-shadow:inset 0 0 0 2px var(--ink)}
+.counter{font-size:16px; color:var(--fg)}
+.counter b{font-family:var(--font-display); font-size:24px}
+.words{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; width:100%; max-width:440px}
+.word{display:flex; align-items:center; gap:10px; font-weight:700; font-size:17px; color:var(--ink); background:var(--paper); border:2px solid var(--ink); border-radius:12px; padding:8px 12px; cursor:pointer; text-align:left; transition:background .15s, border-color .15s}
+.word:hover{border-color:var(--deep); background:var(--wash)}
+.word[aria-pressed="true"]{background:var(--deep); border-color:var(--deep); color:#fff}
+.word .wi{width:28px; height:28px; flex:none; display:grid; place-items:center}
+.word .wi svg{width:100%; height:100%}
+.defcard{font-size:16px; max-width:44ch; padding:12px 16px}
+.compact .qrow{grid-template-columns:minmax(0,1fr) auto; align-items:center; column-gap:12px; row-gap:4px; padding:8px 0}
+.compact .qrow:first-child{padding-top:0}
+.compact .qf{grid-column:1/-1; min-height:0}
+.compact .qf:empty{display:none}
+.compact .qq{font-size:15.5px; line-height:1.35}
+.qrow{display:grid; gap:8px; padding:10px 0; border-top:1px solid var(--line-2)}
+.qrow:first-child{border-top:0; padding-top:0}
+.qq{font-weight:700}
+.qo{display:flex; flex-wrap:wrap; gap:8px}
+.qf{font-size:15px; color:var(--ink-2); min-height:1.4em}
+.mi svg{width:100%; height:auto; display:block}
+.duo{display:grid; grid-template-columns:1fr 1fr; gap:12px; width:100%; max-width:500px}
+.mas{display:flex; gap:10px; align-items:center; background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:16px; padding:10px; transition:transform .25s, opacity .25s}
+.mas .mi{flex:none; width:66px}
+.mas b{display:block; font-family:var(--font-display); font-size:20px; line-height:1}
+.mas .role{display:block; font-size:14px; line-height:1.3; margin-top:3px; color:var(--ink-2)}
+.mas.dim{opacity:.4}
+.mas.act{transform:translateY(-5px)}
+@media (max-width:520px){
+.duo{grid-template-columns:1fr}
+}
+.machine{background:var(--ink); color:#fff; border-radius:24px; padding:18px; display:grid; gap:16px; --focus:var(--sun)}
+.mtabs{display:flex; flex-wrap:wrap; gap:8px}
+.mtabs .btn{border-color:rgba(255,255,255,.55); background:transparent; color:#fff}
+.mtabs .btn:hover{border-color:#fff; background:rgba(255,255,255,.08)}
+.mtabs .btn[aria-pressed="true"]{background:var(--sun); color:var(--ink); border-color:var(--sun)}
+.slots{display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1.3fr); align-items:center; gap:10px}
+.slot{background:var(--paper); color:var(--ink); border:2px solid var(--paper); border-radius:14px; min-height:80px; display:grid; place-items:center; align-content:center; text-align:center; font-family:var(--font-display); font-weight:700; font-size:clamp(22px,2.2vw,30px); line-height:1.05; padding:8px}
+.slot.out{background:var(--taro-soft); border-color:var(--taro-soft)}
+.slot.out.good{background:var(--ok-soft); border-color:#9BC255}
+.slot.out.bad{background:var(--no-soft); border-color:#F07C98; animation:shake .45s}
+.slot small{display:block; font-family:var(--font-body); font-size:12.5px; font-weight:700; margin-top:5px; color:var(--no-ink)}
+.op{font-family:var(--font-display); font-weight:800; font-size:40px; color:var(--sun)}
+@media (max-width:520px){
+.slot{font-size:18px; padding:6px 3px; min-height:64px}
+.op{font-size:28px}
+.slots{gap:6px}
+}
+.mfoot{display:flex; align-items:center; justify-content:space-between; gap:12px}
+.lamps{display:flex; gap:8px; align-items:center; font-size:13px; color:rgba(255,255,255,.78)}
+.lamp{width:24px; height:24px; border-radius:50%; background:#5B4B66; border:2px solid rgba(255,255,255,.8)}
+.lamp.good{background:#9BC255; box-shadow:0 0 16px #9BC255}
+.lamp.bad{background:#F07C98; box-shadow:0 0 16px #F07C98}
+@keyframes shake{20%{transform:translateX(-6px) rotate(-2deg)}40%{transform:translateX(6px) rotate(2deg)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.speech{display:flex; gap:14px; align-items:center; min-height:104px; font-size:16.5px; line-height:1.4}
+.speech .mi{flex:none; width:100px}
+.speech b{display:block; font-family:var(--font-display); font-size:19px}
+.sortgrid{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px}
+@media (max-width:1150px){
+.sortgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+.scard{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:14px; padding:10px 11px; display:flex; flex-direction:column; gap:6px}
+.scard .nm{font-weight:700; font-size:15px; line-height:1.2}
+.scard .ex{font-family:var(--font-display); font-weight:700; font-size:24px; line-height:1; color:var(--ink-2)}
+.scard .bb{display:flex; gap:6px; margin-top:auto}
+.scard .bb button{flex:1; font-weight:700; font-size:14px; border:2px solid var(--ink); border-radius:10px; padding:6px 4px; cursor:pointer; color:var(--ink); transition:background .15s}
+.scard .bb .bt{background:var(--tag-soft)}
+.scard .bb .br{background:var(--ruler-soft)}
+.scard .bb .bt:hover{background:var(--tag)}
+.scard .bb .br:hover{background:var(--ruler); color:#fff}
+.scard.ok{border-color:var(--ok); box-shadow:inset 0 0 0 1px var(--ok)}
+.scard.bad{border-color:var(--no); box-shadow:inset 0 0 0 1px var(--no)}
+.scard .why{font-size:13.5px; line-height:1.35}
+.scard .why b{display:block; font-size:14px}
+.scard.ok .why b{color:var(--ok-ink)}
+.scard.bad .why b{color:var(--no-ink)}
+.bins{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.bin{border:2px dashed var(--ink-3); border-radius:18px; padding:10px 12px; min-height:104px; color:var(--ink)}
+.bin.tag{background:var(--tag-soft); border-color:#E9A86A}
+.bin.ruler{background:var(--ruler-soft); border-color:#8EA3E6}
+.bh{display:flex; align-items:center; gap:8px; font-weight:700; font-size:15.5px}
+.mi.s{width:50px; flex:none}
+.bin .chips{display:flex; flex-wrap:wrap; gap:6px; margin-top:8px}
+.bin .chips span{font-size:13.5px; font-weight:700; padding:3px 11px; border-radius:999px; animation:drop .35s}
+.bin.tag .chips span{background:var(--tag); color:var(--ink)}
+.bin.ruler .chips span{background:var(--ruler); color:#fff}
+@keyframes drop{from{transform:translateY(-16px) scale(.8); opacity:.3}}
+.score{font-family:var(--font-display); font-weight:800; font-size:26px}
+.lane{display:grid; gap:6px}
+.lh{display:flex; align-items:center; gap:10px; flex-wrap:wrap; font-size:17px}
+.fampill{font-size:13px; font-weight:700; padding:2px 10px; border-radius:999px}
+.fampill.ruler{background:var(--ruler); color:#fff}
+.fampill.tag{background:var(--tag); color:var(--ink)}
+.lane svg{width:100%; height:auto; max-height:100px; display:block}
+.lane svg text{font-family:var(--font-body); font-size:14px; fill:var(--ink-2); font-weight:700}
+.lread{font-family:var(--font-display); font-weight:800; font-size:30px; line-height:1.1}
+.lread small{font-family:var(--font-body); font-weight:400; font-size:14.5px; color:var(--ink-2); margin-left:10px}
+#hopper{transition:transform .32s ease-in-out}
+.hopin.hop{animation:hop .38s ease-out}
+@keyframes hop{45%{transform:translateY(-34px)}}
+input[type=range]{width:100%; accent-color:var(--ruler); height:30px; cursor:pointer; margin:0}
+.stairs{width:100%; height:auto; max-height:38vh; display:block}
+.stairs .stp{cursor:pointer}
+.stairs .stp:focus{outline:none}
+.stairs .stp:focus-visible rect{stroke:var(--deep); stroke-width:5}
+.stairs .snm{font-family:var(--font-display); font-weight:800; font-size:21px}
+.stairs .spw{font-family:var(--font-display); font-weight:800; font-size:23px; fill:var(--ink)}
+.stairs .bl{font-family:var(--font-body); font-weight:700; font-size:15px}
+#hop2{transition:transform .45s cubic-bezier(.3,1.5,.5,1)}
+.pch{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:10px}
+.pch b{font-family:var(--font-display); font-size:26px; line-height:1}
+.pws{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px}
+.pw{display:flex; flex-direction:column; align-items:center; gap:5px; text-align:center; font-size:13px; font-weight:600; color:var(--ink-3); line-height:1.2}
+.pwc{width:38px; height:38px; border-radius:50%; display:grid; place-items:center; border:2px solid var(--line); font-family:var(--font-display); font-weight:800; font-size:24px; background:var(--wash); color:var(--ink-3)}
+.pwc svg{width:20px; height:20px}
+.pw.on{color:var(--ink)}
+.pw.on .pwc{border-color:var(--ink); color:var(--ink)}
+.pw.on.tag .pwc{background:var(--tag)}
+.pw.on.ruler .pwc{background:var(--ruler); color:#fff}
+.pex{display:grid; gap:2px; margin-top:10px; font-size:16px}
+.pex i{font-family:var(--font-display); font-style:normal; font-weight:700; font-size:22px}
+.pex .nope{color:var(--no-ink)}
+.pex s{text-decoration-thickness:2px}
+.pcols{font-size:14px; color:var(--ink-2); margin-left:auto}
+.thermo svg{width:100%; height:auto; display:block; max-height:48vh}
+.thermo .tn{font-family:var(--font-display); font-weight:800; font-size:19px; fill:var(--ink)}
+.thermo .tv{font-family:var(--font-display); font-weight:700; font-size:24px; fill:var(--ink)}
+.thermo .zl{font-weight:700; font-size:14px; fill:var(--no-ink); font-family:var(--font-body)}
+.ratio{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap}
+.ratio .big{font-family:var(--font-display); font-weight:800; font-size:clamp(42px,4.6vw,62px); line-height:1}
+.ratio .lab{font-size:15px; color:var(--ink-2)}
+.tsay{font-size:16px; min-height:3em; margin:0}
+.seg{display:inline-flex; border:2px solid var(--ink); border-radius:12px; overflow:hidden; background:var(--paper)}
+.seg button{font-weight:700; font-size:16px; border:0; background:var(--paper); color:var(--ink); padding:8px 16px; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:background .15s}
+.seg button:hover{background:var(--wash)}
+.seg button + button{border-left:2px solid var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--deep); color:#fff}
+.seg button svg{width:22px; height:22px}
+.pfwrap{display:grid; grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr); gap:14px; align-items:center}
+@media (max-width:620px){
+.pfwrap{grid-template-columns:1fr}
+}
+.pf svg{width:100%; height:auto; display:block}
+.pf svg text{font-family:var(--font-body); font-size:15px; fill:var(--ink-2); font-weight:600}
+.pf svg .ann{fill:var(--ink); font-weight:700; font-size:16px}
+.pf svg .ttl{fill:var(--ink); font-family:var(--font-display); font-weight:800; font-size:20px}
+.pfcap{font-size:16px; margin:0; min-height:2.9em}
+.drawline{stroke-dasharray:1400; stroke-dashoffset:1400; animation:draw 1.2s ease-out forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.growbar{transform-box:fill-box; transform-origin:left center; animation:grow .6s ease-out}
+@keyframes grow{from{transform:scaleX(0)}}
+.popin{transform-box:fill-box; transform-origin:center; animation:popin .35s ease-out}
+@keyframes popin{from{transform:scale(0)}}
+.jarwrap{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.95fr); gap:16px; align-items:center}
+@media (max-width:620px){
+.jarwrap{grid-template-columns:1fr}
+}
+.jarwrap svg{width:100%; height:auto; display:block}
+#jarsvg{max-height:30vh}
+#spoonsvg{max-height:18vh}
+.jl{text-align:center; font-weight:700; font-size:14.5px; margin-top:4px}
+.jread{text-align:center; font-size:16px}
+.jread .big{display:block; font-family:var(--font-display); font-weight:800; font-size:clamp(36px,3.8vw,50px); line-height:1.05}
+.frostq{font-family:var(--font-display); font-weight:800; font-size:48px; fill:var(--ink)}
+.frost{transition:opacity .6s}
+.strip svg{width:100%; height:auto; max-height:17vh; display:block}
+.strip text{font-size:13px; fill:var(--ink-2); font-weight:600; font-family:var(--font-body)}
+.strip .ann{fill:var(--ink); font-weight:700}
+.pairs{display:grid; gap:10px; max-width:48ch}
+.pairc{display:flex; gap:12px; align-items:center; background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:14px; padding:10px 14px; font-size:15.5px; line-height:1.4}
+.pairc svg{flex:none; width:44px; height:44px}
+.sym{font-family:"Times New Roman",Georgia,serif; font-style:italic; font-size:1.12em; white-space:nowrap}
+.sg2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+@media (max-width:560px){
+.sg2{grid-template-columns:1fr}
+}
+.sgc{border-radius:16px; padding:10px 14px; border:1px solid var(--line); color:var(--ink); background:var(--paper)}
+.sgc.guess{background:var(--taro-soft); border-color:var(--taro-soft)}
+.sgc h3{font-size:22px; margin:0 0 4px; display:flex; align-items:center; gap:10px}
+.sgc p{margin:0; font-size:15px; line-height:1.4}
+.sgc svg{width:36px; height:36px; display:block; flex:none}
+.hazard{position:absolute; left:0; right:0; top:0; height:12px; background:repeating-linear-gradient(-45deg,var(--berry) 0 16px,var(--ink) 16px 32px)}
+.trapcups{display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:8px}
+.tc{display:flex; flex-direction:column; align-items:center; gap:6px}
+.code{font-family:var(--font-display); font-weight:800; font-size:24px; width:48px; height:48px; display:grid; place-items:center; border-radius:12px; border:2px solid var(--ink); background:var(--paper); transition:background .2s}
+.code.here{background:var(--sun)}
+.tc small{font-size:12.5px; font-weight:600; color:var(--ink-2); text-align:center; line-height:1.2}
+.tout{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+.to{border:1px solid var(--line); border-radius:14px; padding:10px 12px}
+.to .k{font-size:14px; font-weight:600; color:var(--ink-2)}
+.to .v{font-family:var(--font-display); font-weight:800; font-size:40px; line-height:1.05}
+.to.bad{background:var(--no-soft); border-color:var(--no-soft)}
+.to.bad .v{color:var(--no-ink)}
+.to.good{background:var(--ok-soft); border-color:var(--ok-soft)}
+.to.good .v{color:var(--ok-ink)}
+.tmsg{font-size:16px; min-height:3em; margin:0}
+.jersey{display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap; font-family:var(--font-display); font-weight:800; font-size:32px; border-top:1px solid var(--line-2); padding-top:12px}
+.jersey svg{width:70px; height:70px}
+.jersey .x{color:var(--no)}
+.fact{font-size:14px; color:var(--fg2); max-width:46ch; margin:0}
+.map{width:100%; max-width:880px; height:auto; display:block; margin:0 auto}
+.map .ph{font-family:var(--font-display); font-weight:700; font-size:17px; fill:rgba(255,255,255,.8)}
+.map .st{cursor:pointer}
+.map .st:focus{outline:none}
+.map .st:focus-visible .cap,.map .st.on .cap{stroke:var(--sun); stroke-width:6}
+.map .code{font-family:var(--font-display); font-weight:800; font-size:19px; fill:#fff}
+.map .snm{font-family:var(--font-body); font-size:13.5px; fill:rgba(255,255,255,.84); font-weight:400}
+.map .here{font-family:var(--font-body); font-weight:700; font-size:14px; fill:var(--ink)}
+.legend{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+.legend .tapnote{font-style:normal; color:var(--fg2); font-size:15px}
+.legend > span{display:inline-flex; align-items:center; gap:8px; font-weight:600; font-size:15px; padding:5px 13px; border-radius:999px; background:var(--paper); color:var(--ink)}
+.mapwrap{overflow-x:auto}
+@media (max-width:700px){
+.map{min-width:700px}
+}
+.legend i{width:28px; height:7px; border-radius:4px; display:inline-block; flex:none}
+.stcard{display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr); gap:12px; align-items:start; padding:10px 16px; width:100%; max-width:1000px; margin:0 auto}
+.stcard h3{font-size:21px}
+.stcard p{margin:4px 0 0; font-size:15px; line-height:1.4}
+@media (max-width:620px){
+.stcard{grid-template-columns:1fr}
+}
+.rl{border-radius:12px; padding:9px 12px; font-size:15px; line-height:1.35}
+.rl.tag{background:var(--tag-soft)}
+.rl.ruler{background:var(--ruler-soft)}
+.rl b{display:block}
+.tiles{display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:14px}
+.tile{text-align:left; color:var(--ink); border:0; border-radius:18px; padding:14px; cursor:pointer; display:flex; flex-direction:column; gap:4px; min-height:136px; transition:transform .15s}
+.tile:hover{transform:translateY(-3px)}
+.tile .ln{font-size:13px; font-weight:700; opacity:.8}
+.tile .tn{font-family:var(--font-display); font-weight:800; font-size:23px; line-height:1.05}
+.tile .td{font-size:14px; line-height:1.3}
+.tile .ts{font-size:22px; letter-spacing:3px; margin-top:auto; color:var(--ink)}
+.tile .ts .off{opacity:.28}
+.qpanel{width:100%; max-width:780px; margin:0 auto}
+.qhead{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; font-weight:600}
+.qhead .lvl{font-family:var(--font-display); font-weight:800; font-size:20px}
+.qbar{height:8px; border-radius:999px; background:var(--line-2); overflow:hidden; margin:10px 0 16px}
+.qbar i{display:block; height:100%; background:var(--mint); width:0; border-radius:999px; transition:width .3s}
+.qtext{font-family:var(--font-display); font-weight:700; font-size:clamp(25px,2.7vw,36px); line-height:1.15; margin:4px 0 18px}
+.opts{display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:10px}
+.opt{font-weight:700; font-size:18px; color:var(--ink); background:var(--paper); border:2px solid var(--ink); border-radius:12px; padding:14px; cursor:pointer; transition:background .15s, border-color .15s, transform .08s}
+.opt:hover{background:var(--wash); border-color:var(--deep)}
+.opt:active{transform:translateY(1px)}
+.opt:disabled{cursor:default}
+.opt.right{background:var(--ok-soft); border-color:var(--ok); color:var(--ok-ink)}
+.opt.wrong{background:var(--no-soft); border-color:var(--no); color:var(--no-ink)}
+.fb{margin-top:14px; font-size:16.5px; min-height:2.8em}
+.fb b{font-family:var(--font-display); font-size:19px}
+.qnav{display:flex; justify-content:space-between; gap:10px; margin-top:12px; flex-wrap:wrap}
+.streak{display:inline-flex; align-items:center; gap:6px; padding:3px 12px; border-radius:999px; background:var(--sun-soft); font-size:14.5px}
+.streak svg{width:16px; height:16px}
+.donebox{text-align:center; display:grid; gap:10px; justify-items:center}
+.bigstars{font-size:58px; letter-spacing:8px; color:#E39A0E; line-height:1}
+.bigstars .off{color:var(--line)}
+.det{display:grid; gap:10px}
+.det .qrow2{display:flex; gap:12px; align-items:center; flex-wrap:wrap; justify-content:space-between; padding:7px 12px; border:1px solid var(--line); border-radius:12px}
+.det .qrow2.dim{opacity:.4}
+.det input[type=text]{font:inherit; font-size:16px; padding:8px 12px; border:2px solid var(--ink); border-radius:12px; width:min(100%,360px)}
+.det .res{padding:12px 14px; border-radius:14px; border:1px solid var(--line); font-size:16.5px; display:flex; gap:12px; align-items:center}
+.det .res.tag{background:var(--tag-soft); border-color:var(--tag-soft)}
+.det .res.ruler{background:var(--ruler-soft); border-color:var(--ruler-soft)}
+.det .res .mi{width:70px; flex:none}
+.recap{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px}
+.recap .rc.trap{grid-column:auto}
+@media (max-width:980px){
+.recap{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+.recap .rc.trap{grid-column:auto}
+.recap{grid-template-columns:1fr}
+}
+.rc{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:16px; padding:12px 14px; display:flex; gap:12px; align-items:flex-start}
+.rc .ri{flex:none; width:44px; height:44px; display:grid; place-items:center}
+.rc .ri svg{width:100%; height:100%}
+.rc b{display:block; font-family:var(--font-display); font-size:18px; line-height:1.15; margin-bottom:3px}
+.rc span{font-size:14px; line-height:1.4}
+.rc.trap{background:var(--ink); color:#fff; border-color:var(--ink)}
+.rc.next{background:var(--sun-soft); border-color:var(--sun)}
+details.src{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:16px; padding:12px 16px}
+details.src summary{cursor:pointer; font-weight:700}
+details.src p,details.src ol{font-size:14.5px; line-height:1.5}
+details.src ol{padding-left:1.3em; margin:8px 0 0}
+details.src li{margin-bottom:6px}
+details.src a{color:var(--ruler-ink)}
+.scene.playing .txt .sub, .scene.playing .txt .kick{display:none}
+.zoomcard svg{width:100%; height:auto; max-height:46vh; display:block; margin-top:12px}
+.zcap{margin:10px 0 0; font-size:16px; line-height:1.45; min-height:2.9em}
+.popq{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+@media (max-width:620px){
+.popq{grid-template-columns:1fr}
+}
+.pq{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:16px; padding:12px; display:flex; flex-direction:column; gap:10px}
+.pq.ok{border-color:var(--ok); box-shadow:inset 0 0 0 1px var(--ok)}
+.pq.bad{border-color:var(--no); box-shadow:inset 0 0 0 1px var(--no)}
+.pqh{display:flex; gap:10px; align-items:flex-start}
+.pqi{flex:none; width:40px; height:40px}
+.pqi svg{width:100%; height:100%}
+.pqh b{font-size:15.5px; line-height:1.3}
+.pqo{display:grid; gap:6px}
+.pqo .btn{text-align:left; padding:6px 12px; font-size:14.5px; border-radius:12px; border-width:1.5px}
+.pqa{display:grid; gap:6px; font-size:14.5px; line-height:1.35}
+.pqans{justify-self:start; font-weight:700; padding:4px 10px; border-radius:10px; background:var(--ok-soft); color:var(--ok-ink)}
+.whynot{display:flex; flex-wrap:wrap; gap:8px; max-width:48ch}
+.whynot span{display:inline-flex; align-items:center; gap:6px; font-size:14px; font-weight:600; padding:4px 12px 4px 6px; border-radius:999px; background:var(--paper); color:var(--ink); border:1px solid var(--line)}
+.whynot svg{width:22px; height:22px; flex:none}
+.soupcard{display:grid; gap:12px}
+.soupcard svg{width:100%; height:auto; max-height:40vh; display:block}
+#steam{transition:opacity .8s}
+.souprs{border-radius:14px; border:1px solid var(--line); padding:10px 14px; font-size:15.5px; line-height:1.4; background:var(--wash); min-height:4.6em}
+.souprs b{display:block; font-family:var(--font-display); font-size:19px}
+.souprs.good{background:var(--ok-soft); border-color:var(--ok-soft)}
+.souprs.bad{background:var(--no-soft); border-color:var(--no-soft)}
+.souprs.census{background:var(--sun-soft); border-color:var(--sun-soft)}
+.mnemo{font-family:var(--font-display); font-weight:800; font-size:clamp(22px,2.1vw,29px); line-height:1.25; display:grid; gap:2px; padding:10px 18px}
+.mnemo b{color:var(--berry); font-size:1.2em}
+.pscard{display:grid; gap:14px}
+.psgrid{display:grid; grid-template-columns:minmax(0,1fr) 74px minmax(0,1fr); gap:8px; align-items:center}
+.pbox,.sbox{border:1px solid var(--line); border-radius:16px; padding:12px; display:grid; gap:6px; min-height:220px; align-content:start}
+.pbox{background:#EFE9F8; border-color:#E2D8F2}
+.sbox{background:#FDF3DC; border-color:#F6E2B4}
+.nm2{display:inline-flex; align-items:center; gap:8px; font-family:var(--font-display); font-weight:800; font-size:21px}
+.nm2 svg{width:34px; height:34px}
+.who{font-size:15px; line-height:1.3}
+.who span{display:block; font-size:12.5px; font-weight:700; color:var(--ink-2)}
+.what{font-size:14px; color:var(--ink-2); font-weight:600}
+.val{font-family:var(--font-display); font-weight:800; font-size:clamp(26px,2.5vw,36px); line-height:1.05; display:flex; align-items:center; gap:8px}
+.val svg{width:26px; height:26px; flex:none}
+.val.bump{animation:bump .45s}
+@keyframes bump{40%{transform:scale(1.15)}}
+.note{font-size:13px; color:var(--ink-2)}
+.psarrow{display:grid; justify-items:center; gap:4px; font-size:12.5px; font-weight:700; text-align:center}
+.psarrow svg{width:56px}
+.pshist{font-size:14px; display:flex; flex-wrap:wrap; gap:6px; align-items:center}
+.pshist span{padding:2px 8px; border-radius:8px; background:#FDF3DC; border:1px solid #F6E2B4; font-weight:600}
+@media (max-width:620px){
+.psgrid{grid-template-columns:1fr}
+.psarrow svg{transform:rotate(90deg)}
+}
+.symcard{display:grid; gap:10px}
+.symgrid{display:grid; gap:6px}
+.symhead,.symrow{display:grid; grid-template-columns:minmax(78px,.8fr) 1fr 1fr; gap:8px; align-items:center}
+.sgh{display:grid; text-align:center; font-size:13px; color:var(--ink-2)}
+.sgh b{font-family:var(--font-display); font-size:18px; color:var(--ink)}
+.symrow{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:12px; padding:3px 5px; cursor:pointer; text-align:left; transition:border-color .15s, background .15s}
+.symrow:hover{border-color:var(--deep)}
+.symrow[aria-pressed="true"]{background:var(--sun-soft); border-color:var(--berry); box-shadow:inset 0 0 0 1px var(--berry)}
+.sl{font-weight:700; font-size:16px; padding-left:6px}
+.sc{display:grid; justify-items:center; border-radius:10px; padding:2px 4px}
+.sc.par{background:#EFE9F8}
+.sc.st{background:#FDF3DC}
+.sc .sym{font-size:28px; line-height:1.05}
+.sc small{font-size:12.5px; color:var(--ink-2)}
+.symex{font-size:15px; line-height:1.5; background:var(--wash); border-radius:12px; padding:8px 12px; border:1px solid var(--line); min-height:4.6em}
+#salt{transition:opacity .9s}
+#confetti{position:fixed; inset:0; pointer-events:none; z-index:50}
+.guesscard{display:grid; gap:10px; align-content:start}
+.ghead{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap}
+.gtag{font-family:var(--font-display); font-weight:800; font-size:15px; color:var(--deep)}
+.gnote{font-size:13px; color:var(--ink-2)}
+.gq{margin:0; font-family:var(--font-display); font-weight:800; font-size:clamp(19px,1.7vw,24px); line-height:1.22; color:var(--fg)}
+.gopts{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px}
+.gopt{font:inherit; font-weight:700; font-size:16.5px; text-align:left; padding:9px 16px; border:2px solid var(--ink); border-radius:12px; background:var(--paper); color:var(--ink); cursor:pointer; transition:background .15s, border-color .15s}
+.gopt:hover{background:var(--wash); border-color:var(--deep)}
+.gopt[aria-pressed="true"]{background:var(--deep); border-color:var(--deep); color:#fff}
+.gsaved{margin:0; font-size:14px; color:var(--ink-2)}
+.gtab{border-collapse:collapse; width:100%; font-variant-numeric:tabular-nums; font-size:15.5px}
+.gtab th,.gtab td{padding:4px 10px; border-bottom:1px solid var(--line-2); text-align:center}
+.gtab th{font-size:13px; color:var(--ink-2)}
+.gtab th:first-child,.gtab td:first-child{text-align:left}
+.gtab tr.avg td{border-top:2px solid var(--ink); border-bottom:0; font-weight:800; background:var(--sun-soft)}
+.gback{border-left:3px solid var(--sun); padding:4px 0 4px 12px; font-size:14.5px; line-height:1.45; max-width:52ch}
+.guessbar{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-left:4px solid var(--sun); border-radius:12px; padding:9px 14px; font-size:14.5px; line-height:1.45}
+.guessbar:empty,.gback:empty{display:none}
+.thread{font-size:13.5px; line-height:1.4; padding:2px 0 2px 12px; border-left:2px solid currentColor; color:var(--fg2); max-width:52ch}
+.doors3{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px}
+.door{display:grid; gap:10px; align-content:start}
+.door h4{margin:0; font-family:var(--font-display); font-weight:800; font-size:18px; color:var(--fg)}
+.inv .picks{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:14px}
+.inv .ph{margin:0 0 6px; font-weight:700; font-size:14px; color:var(--ink-2)}
+.inv .plist{display:grid; gap:5px}
+.inv .pk{font:inherit; font-size:14.5px; font-weight:600; text-align:left; padding:4px 11px; border:1.5px solid var(--ink); border-radius:10px; background:var(--paper); color:var(--ink); cursor:pointer}
+.inv .pk:hover{background:var(--wash); border-color:var(--deep)}
+.inv .pk[aria-pressed="true"]{background:var(--deep); border-color:var(--deep); color:#fff; font-weight:700}
+.inv .qtext{font-size:clamp(19px,1.8vw,25px)}
+.th-night .btn.sun,.th-indigo .btn.sun,.th-trap .btn.sun{background:var(--sun); border-color:var(--sun); color:var(--ink)}
+.th-night .card .btn.sun,.th-indigo .card .btn.sun,.th-trap .card .btn.sun{background:var(--deep); border-color:var(--deep); color:#fff}
+@media (max-width:760px){
+.doors3,.inv .picks{grid-template-columns:1fr}
+.gopts{grid-template-columns:1fr}
+}
+@media (max-height:760px) and (min-width:901px){
+.gtab th,.gtab td{padding:3px 9px}
+.gopt{padding:7px 12px; font-size:15px}
+.inv .pk{padding:3px 10px; font-size:13.5px}
+.inv .plist{gap:3px}
+.inv .qtext{font-size:18px}
+.thread{font-size:12.5px; padding:2px 0 2px 10px}
+.gback{font-size:13.5px; padding:4px 0 4px 10px}
+.guessbar{padding:5px 12px; font-size:13px; line-height:1.3}
+.recap{gap:8px}
+}
+/* ---------- this page ---------- */
+.th-peach{--stripe:#4E9C91; --chip:#4E9C91}
+.chart{width:100%;height:auto;display:block}
+.chart text{font-family:var(--font-body);font-size:13px;fill:var(--ink-2);font-weight:600}
+.chart .val{fill:var(--ink);font-weight:700;font-size:13px}
+.chart .ttl{fill:var(--ink);font-family:var(--font-display);font-weight:800;font-size:16px}
+.chart .grid{stroke:#E6DFF1;stroke-width:1.2}
+.chart .axis{stroke:var(--ink);stroke-width:2}
+.chart rect.hb{transition:y .5s ease, height .5s ease, x .5s ease, width .5s ease, opacity .3s}
+.chart rect.gb{transform-box:fill-box;transform-origin:50% 100%;transition:transform .5s cubic-bezier(.3,.8,.3,1)}
+.chart text.val{transition:opacity .3s}
+.chart .dot{fill:#2F55D4;opacity:.55}
+.hero2{display:grid;gap:14px}
+.hrow{display:grid;grid-template-columns:76px minmax(0,1fr) 40px minmax(0,1.25fr);gap:10px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:18px;padding:10px 14px;color:var(--ink)}
+.hrow .raw{font-family:var(--font-hand);font-weight:700;font-size:22px;line-height:1.15;color:var(--ink-2)}
+.hrow .arr{font-family:var(--font-display);font-weight:800;font-size:30px;text-align:center}
+.cupfield{width:100%;height:auto;display:block}
+.cupfield .cg{transition:transform .9s cubic-bezier(.3,.8,.3,1)}
+.cupfield .rl2{transition:opacity .5s .5s;font-family:var(--font-body);font-weight:700;font-size:15px;fill:var(--ink)}
+.ftab{border-collapse:collapse;font-size:16px;width:100%}
+.ftab th,.ftab td{padding:6px 10px;border-bottom:2px solid #EEE8F6;text-align:left}
+.ftab th{font-size:13px;color:var(--ink-2)}
+.ftab td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.ftab tr.sel td{background:var(--sun-soft)}
+.ftab tr.tot td{border-top:2px solid var(--ink);font-weight:700}
+.ftab tbody tr{cursor:pointer}
+.ftab .sw{display:inline-block;width:12px;height:12px;border-radius:3px;border:1.5px solid var(--ink);margin-right:8px;vertical-align:-1px}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:center}
+@media (max-width:620px){
+.two{grid-template-columns:1fr}
+}
+.formula{font-size:17px;font-weight:600;padding:8px 12px;border-radius:12px;background:#F7F3FC;border:1px dashed #C8BDDA;min-height:2.6em}
+.formula .big{font-family:var(--font-display);font-weight:800;font-size:22px}
+.minihead{font-weight:700;font-size:15px;margin:0 0 4px}
+.smallnote{font-size:13.5px;color:var(--ink-2);margin:0}
+.ctrlrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.bigread{font-family:var(--font-display);font-weight:800;font-size:clamp(22px,2.2vw,30px);line-height:1.1}
+.bigread small{display:block;font-family:var(--font-body);font-weight:500;font-size:14px;color:var(--ink-2)}
+.chips2{display:flex;flex-wrap:wrap;gap:6px}
+.chips2 span{font-size:13.5px;font-weight:700;padding:3px 10px;border-radius:999px;border:1px solid var(--line);background:var(--ruler-soft)}
+.rules{display:flex;flex-wrap:wrap;gap:8px}
+.rules span{display:inline-flex;gap:6px;align-items:center;font-size:14px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--ok-soft);border:1px solid var(--ok)}
+.thumbs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:620px){
+.thumbs{grid-template-columns:1fr}
+}
+.thumb{background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:16px;padding:10px;cursor:pointer;text-align:left;display:grid;gap:6px}
+.thumb b{font-size:15px}
+.thumb.ok{border-color:var(--ok);border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.thumb.bad{border-color:var(--no);border-color:var(--no);box-shadow:inset 0 0 0 1px var(--no)}
+.fb2{font-size:15.5px;line-height:1.4;min-height:2.8em;margin:0}
+.examples{display:grid;gap:6px}
+.examples div{font-size:14.5px;padding:6px 10px;border-radius:10px;border:1px solid #E6DFF1;color:var(--ink-2);transition:all .25s}
+.examples div.on{border-color:var(--ink);background:var(--sun-soft);color:var(--ink);font-weight:600}
+.shape-lab{font-family:var(--font-display);font-weight:800;font-size:26px}
+.stemwrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:14px;align-items:start}
+@media (max-width:620px){
+.stemwrap{grid-template-columns:1fr}
+}
+.billchips{display:flex;flex-wrap:wrap;gap:6px}
+.billchips span{font-family:var(--font-hand);font-weight:700;font-size:22px;padding:0 8px;border-radius:8px;background:#FDF3DC;border:1.5px solid var(--ink);transition:opacity .4s}
+.billchips span.used{opacity:.25}
+.stem{font-family:var(--font-hand);font-weight:700;font-size:30px;line-height:1.25;transition:transform .7s}
+.stem.rot{display:flex;align-items:flex-end;gap:8px;font-size:23px;line-height:1}
+.stem.rot .srow{display:flex;flex-direction:column-reverse;align-items:center;width:36px}
+.stem.rot .sk{text-align:center;padding-top:4px}
+.stem.rot .sb{border-left:0;border-top:2px solid var(--ink);width:100%;height:0}
+.stem.rot .lv{display:flex;flex-direction:column-reverse;align-items:center;padding-bottom:3px}
+.stem.rot .lv span{margin:0;line-height:.98}
+.stem .srow{display:grid;grid-template-columns:34px 14px 1fr;align-items:center}
+.stem .sk{text-align:right;color:var(--ruler-ink)}
+.stem .sb{border-left:2px solid var(--ink);height:1.2em}
+.stem .lv span{display:inline-block;margin-right:8px;animation:popl .35s ease-out both}
+@keyframes popl{from{transform:scale(0)}}
+.flow{display:grid;gap:10px}
+.flow .node{border:1px solid var(--line);border-radius:14px;padding:8px 12px;background:#fff;color:var(--ink);font-weight:600;font-size:15px;transition:all .3s;opacity:.45}
+.flow .node.on{opacity:1}
+.flow .node.tag.on{background:var(--tag-soft)}
+.flow .node.ruler.on{background:var(--ruler-soft)}
+.flow .lvl2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.flow .lvl3{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px}
+.flow .node b{display:block;font-family:var(--font-display);font-size:17px}
+.flow .node small{font-weight:500;font-size:13px}
+.varbtns{display:flex;flex-wrap:wrap;gap:8px}
+.lab-ta{width:100%;min-height:70px;font:inherit;font-size:14px;padding:8px 10px;border:2px solid var(--ink);border-radius:12px;resize:vertical}
+.cups2{grid-template-columns:minmax(0,1.45fr) minmax(0,1fr)}
+.cupfield .rl2{font-size:17px}
+#flowchart{max-height:27vh}
+@media (max-width:620px){
+.cups2{grid-template-columns:1fr}
+}
+#barflav{max-height:33vh}
+#barsize{max-height:16vh}
+@media (max-height:760px) and (min-width:901px){
+.ftab th,.ftab td{padding:3px 9px}
+.ftab{font-size:15px}
+.formula{padding:5px 12px;min-height:0;font-size:16px}
+.formula .big{font-size:19px}
+.compact .qrow{padding:5px 0}
+.flow{gap:7px}
+.flow .node{padding:5px 10px;font-size:14px}
+.flow .node b{font-size:15.5px}
+.flow .node small{font-size:12px}
+.lab-ta{min-height:46px}
+}
+.qtext .xtab{font-family:var(--font-body);font-size:14px;line-height:1.25}
+.qtext .xtab th{font-size:12.5px}
+.hero2 .hrow{grid-template-columns:100px minmax(0,1fr) 34px minmax(0,1.2fr)}
+.hrow .mi2{display:flex;align-items:center}
+.hrow .mi2 svg{width:50px;height:auto}
+.hrow .mi2 svg + svg{margin-left:-6px}
+.xgrid{width:100%;height:auto;display:block;max-height:50vh}
+.xgrid .cg{transition:transform .9s cubic-bezier(.3,.8,.3,1)}
+.xgrid .lab{font-family:var(--font-body);font-weight:700;font-size:15px;fill:var(--ink)}
+.xgrid .cnt{font-family:var(--font-display);font-weight:800;font-size:24px;fill:var(--ink);transition:opacity .4s .7s}
+.xgrid .cell{transition:opacity .6s}
+.xtab{border-collapse:collapse;width:100%;font-size:15.5px;font-variant-numeric:tabular-nums}
+.xtab th,.xtab td{padding:6px 8px;text-align:right;border-bottom:2px solid #EEE8F6}
+.xtab th{font-size:13px;color:var(--ink-2);font-weight:700;vertical-align:bottom}
+.xtab th:first-child,.xtab td:first-child{text-align:left}
+.xtab td.c{cursor:pointer;font-weight:700}
+.xtab td.c:hover{box-shadow:inset 0 0 0 2px var(--ink-3)}
+.xtab td.m,.xtab tr.tot td{color:var(--ink-2);background:#F7F3FC}
+.xtab tr.tot td{border-top:2px solid var(--ink);border-bottom:0}
+.xtab td.hl{background:var(--sun-soft)}
+.xtab td.sel{background:var(--sun);box-shadow:inset 0 0 0 2.5px var(--ink)}
+.xtab td.whole{background:var(--taro-soft);color:var(--ink);font-weight:800}
+.xtab.mini{font-size:14px}
+.xtab.mini th,.xtab.mini td{padding:3px 7px}
+.xtab tr.todo td{color:#B4A9C6}
+.xtab tr.cur td{background:var(--sun-soft);color:var(--ink);font-weight:700}
+.xtab .sw{display:inline-block;width:11px;height:11px;border-radius:3px;border:1.5px solid var(--ink);margin-right:6px;vertical-align:-1px}
+.xread{margin:10px 0 0;font-size:16px;line-height:1.4;min-height:2.9em}
+.xread .big{font-family:var(--font-display);font-weight:800;font-size:20px;line-height:1.2}
+.xread small{display:block;color:var(--ink-2);font-size:14px;margin-top:3px}
+.pctwrap{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start;margin-top:10px}
+.realcase{background:#fff;color:var(--ink);border:1.5px dashed var(--ink-3);border-radius:14px;padding:9px 13px;font-size:14.5px;line-height:1.42}
+.realcase.dark{background:rgba(255,255,255,.06);color:var(--fg2);border-color:rgba(255,255,255,.45)}
+.realcase.dark b{color:var(--sun)}
+.placewrap{display:grid;grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr);gap:14px;align-items:center}
+.dragsvg{touch-action:none;max-height:44vh}
+.dragsvg .dd{cursor:grab}
+.dragsvg .dd:active{cursor:grabbing}
+.dragsvg .dd:focus{outline:none}
+.dragsvg .dd .ring{fill:transparent;stroke:transparent}
+.dragsvg .dd:focus-visible .ring{stroke:var(--ink);stroke-width:2.5;stroke-dasharray:4 3}
+.chart .tl{stroke:var(--berry);stroke-width:3.5;stroke-linecap:round;transition:all .25s}
+.chart .lnk{stroke:var(--ink-3);stroke-width:1.6;stroke-dasharray:4 4}
+#cloudchart circle{transition:cx .45s ease, cy .45s ease}
+#cloudchart{max-height:33vh}
+#formchart{max-height:38vh}
+#tipchart{max-height:25vh}
+#simchart{max-height:30vh}
+#mixchart{max-height:29vh}
+#placechart{max-height:46vh}
+#pairchart{max-height:27vh}
+#pbars{max-height:34vh}
+#trapchart{max-height:34vh}
+.trapwrap{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:12px;align-items:center;margin-top:6px}
+.cause{opacity:.08;transition:opacity .6s}
+.cause.on{opacity:1}
+.cause svg{width:100%;height:auto;display:block}
+.legend2{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13.5px;font-weight:600;color:var(--ink-2)}
+.legend2 i{display:inline-block;width:12px;height:12px;border-radius:3px;border:1.5px solid var(--ink);margin-right:5px;vertical-align:-1px}
+.pflow3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.pflow3 .col{display:grid;gap:6px;align-content:start}
+.scatlab{touch-action:manipulation;cursor:crosshair}
+@media (max-width:620px){
+.pctwrap,.placewrap,.trapwrap{grid-template-columns:1fr}
+.pflow3{grid-template-columns:1fr}
+.xtab{font-size:13.5px}
+.xtab th,.xtab td{padding:4px 4px}
+.xtab th .sw{display:none}
+}
+.xscroll{overflow-x:auto;max-width:100%}
+.qtext:has(.xtab){font-size:clamp(18px,1.9vw,24px)}
+@media (max-width:620px){
+#dpre{display:grid;grid-template-columns:1fr 1fr}
+#dpre button+button{border-left:0}
+#dpre button:nth-child(2n){border-left:2px solid var(--ink)}
+#dpre button:nth-child(n+3){border-top:2px solid var(--ink)}
+#dpre button{justify-content:center}
+}
+@media (min-width:1600px) and (min-height:960px){
+#tipchart{max-height:20vh}
+.labbox #labchart{max-height:30vh !important}
+}
+@media (max-height:760px) and (min-width:901px){
+.xtab th,.xtab td{padding:4px 7px}
+.xtab{font-size:14.5px}
+.xread{font-size:15px;margin-top:6px}
+.xread .big{font-size:18px}
+.realcase{font-size:13.5px;padding:7px 11px}
+.compact .qrow{padding:5px 0}
+.compact .qq{font-size:14.5px}
+.flow .node{padding:5px 10px;font-size:14px}
+.flow .node b{font-size:15.5px}
+.flow .node small{font-size:12px}
+}
+.gopt .gshape{display:block;width:100%;height:38px;margin-bottom:4px}
+.pcard{background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:16px;padding:10px 12px;display:grid;gap:6px;align-content:start}
+.pcard .ph2{display:flex;align-items:center;gap:8px;font-weight:800;font-family:var(--font-display);font-size:17px;line-height:1.1}
+.pcard .ph2 svg{width:32px;height:auto;flex:none}
+.pcard .ph2 small{display:block;font-family:var(--font-body);font-weight:500;font-size:12.5px;color:var(--ink-2)}
+.pcard .raw2{font-family:var(--font-hand);font-size:20px;font-weight:700;color:var(--ink-2);line-height:1.1;min-height:2.2em}
+.pcard .pnote{font-size:13.5px;line-height:1.35;min-height:2.7em;margin:0}
+.pcard .chart{width:100%;height:auto;max-height:21vh}
+.pcard .btn{justify-self:start}
+.ibox svg{width:100%;height:auto;max-height:34vh;touch-action:none;display:block}
+.ibox .dd{cursor:grab}
+.ibox .dd .ring{fill:transparent}
+.ibox .dd:focus{outline:none}
+.ibox .dd:focus-visible .ring{stroke:var(--ink);stroke-width:2.5;stroke-dasharray:4 3}
+.ibox .hint{font-size:13.5px;color:var(--ink-2);margin:2px 0 0}
+@media (max-height:760px) and (min-width:901px){
+.pcard{padding:8px 10px;gap:4px}
+.pcard .raw2{font-size:18px}
+.pcard .pnote{font-size:13px}
+.ibox svg{max-height:27vh}
+}
+@media (min-width:1600px) and (min-height:960px){
+.ibox svg{max-height:21vh}
+}
+.gback.wait{display:none}
+.gopts.one{grid-template-columns:1fr}
+.nameit{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:12px;align-items:start}
+.nameit .col{display:grid;gap:7px}
+.nact{font:inherit;font-size:14px;line-height:1.3;text-align:left;padding:7px 11px;border:2px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);cursor:pointer}
+.nact[aria-pressed="true"]{background:var(--deep);border-color:var(--deep);color:#fff}
+.nact.done{background:#E3F1D0;border-color:#4E8A1E;cursor:default}
+.nact.done b{display:block;font-family:var(--font-display);font-size:15px}
+.nact.done i{font-style:normal;font-size:12.5px;color:var(--ink-2)}
+.nname{font:inherit;font-weight:700;font-size:15px;text-align:left;padding:8px 12px;border:2px solid var(--ink);border-radius:999px;background:#fff;color:var(--ink);cursor:pointer}
+.nname:disabled{opacity:.35;box-shadow:none;cursor:default}
+.nname.nope{animation:nope .4s}
+@keyframes nope{0%,100%{transform:none} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)}}
+@media (prefers-reduced-motion:reduce){
+.nname.nope{animation:none;background:#FBE0E7}
+}
+@media (max-width:760px){
+.nameit{grid-template-columns:1fr}
+}
+@media (max-height:760px) and (min-width:901px){
+.nact{padding:5px 10px;font-size:13.5px}
+.nname{padding:6px 11px;font-size:14px}
+.nameit .col{gap:5px}
+}
+.gback.wait{display:none}
+.scene.playing .txt h2{display:none}
+#ichart{max-height:38vh}
+@media (max-height:760px) and (min-width:901px){
+#ichart{max-height:31vh}
+}
+@media (min-width:1600px) and (min-height:960px){
+#ichart{max-height:28vh}
+}
+.flyer{background:var(--sun);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:12px 16px;transform:rotate(-2deg);display:grid;gap:2px;justify-items:center;text-align:center;margin:2px 8px 6px}
+.flyer small{font-size:13px;font-weight:700;color:var(--ink-2)}
+.flyer b{font-family:var(--font-display);font-weight:800;font-size:clamp(26px,2.6vw,36px);line-height:1.05}
+.flyer span{font-family:var(--font-hand);font-size:21px;line-height:1.1}
+.lineup{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;min-height:34px}
+.lchip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums;font-size:15px}
+.lchip i{font-style:normal;font-size:11.5px;color:var(--ink-2);font-weight:600}
+.lchip.mid{background:var(--berry);color:#fff}
+.lchip.mid i{color:rgba(255,255,255,.88)}
+.sizebtns,.yearbtns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:4px}
+.yearbtns{margin:0 0 4px}
+.sizeb{display:grid;gap:3px;justify-items:center;padding:5px 10px;border:1px solid #E6DFF1;border-radius:14px}
+.sizeb b{font-size:14px}
+.sizeb span{display:flex;align-items:center;gap:8px}
+.sizeb em{font-style:normal;font-family:var(--font-display);font-weight:800;font-size:20px;min-width:3.4ch;text-align:center;font-variant-numeric:tabular-nums}
+.sizeb .btn.sm{padding:2px 12px;font-size:19px;line-height:1.1}
+.repgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.rcard{background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:16px;padding:10px 12px;display:grid;gap:8px;align-content:start}
+.rcard p{margin:0;font-weight:700;font-size:15px;line-height:1.3}
+.rcard .rb{display:flex;flex-wrap:wrap;gap:6px}
+.rcard .rb .btn.sm{padding:5px 10px;font-size:14px}
+.rcard .rwhy{font-weight:400;font-size:13.5px;color:var(--ink-2)}
+.rcard .rwhy:empty{display:none}
+.rcard.ok{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.rcard.bad{border-color:var(--no);box-shadow:inset 0 0 0 1px var(--no)}
+.hidden2{display:none}
+.nact .sym2{font-family:var(--font-body);font-weight:700;color:#365F14}
+.labform{display:grid;gap:6px}
+.labform label{font-weight:600;font-size:14px}
+.labform input{font:inherit;font-size:16px;padding:7px 12px;border:2px solid var(--ink);border-radius:12px;min-width:0;flex:1;color:var(--ink);background:#fff}
+.labform input:focus-visible{outline:3px solid var(--ruler);outline-offset:2px}
+#sw1,#sw2,#sw4,#skewsw,#modechart,#wchart,#realchart,#pinchart{max-height:40vh}
+#geochart{max-height:34vh}
+#sw3{max-height:26vh}
+.legend2 .lk{display:inline-block;width:22px;height:4px;border:0;border-radius:2px;vertical-align:middle;margin-right:6px}
+.legend2 .lk.dash{background:repeating-linear-gradient(90deg,#D93A62 0 6px,transparent 6px 10px)}
+@media (max-width:900px){
+.repgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+.repgrid{grid-template-columns:1fr}
+.labform .row{flex-wrap:wrap !important}
+}
+@media (max-height:760px) and (min-width:901px){
+.flyer{padding:8px 14px}
+.flyer b{font-size:28px}
+#sw1,#sw2,#sw4,#skewsw,#modechart,#wchart,#realchart,#pinchart{max-height:36vh}
+#geochart{max-height:29vh}
+#sw3{max-height:22vh}
+.rcard{padding:8px 10px;gap:6px}
+.rcard p{font-size:14px}
+.rcard .rwhy{font-size:12.5px}
+.lchip{padding:3px 9px;font-size:14px}
+}
+@media (min-width:1600px) and (min-height:960px){
+#sw1,#sw2,#sw4,#skewsw,#modechart,#wchart,#realchart,#pinchart{max-height:32vh}
+}
+</style>
+</head>
+<body>
+<header class="bar">
+  <span class="ep">T1.4</span>
+  <span class="t">Mean, median, mode: which one to report</span>
+  <span class="chapnm" id="chapnm">Start</span>
+  <div class="prog" aria-hidden="true"><i id="progfill"></i></div>
+  <span class="xp" id="xp" title="Stars earned on this page">★ 0</span>
+</header>
+
+<main id="deck">
+
+<!-- 0 GUESS FIRST -->
+<section class="scene th-plum" id="s0" data-chap="Start" aria-label="Is the flyer lying?">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>T1.4</b>Playlist 1, episode 4</div>
+      <h1>Is the flyer lying?</h1>
+      <p class="sub">One number to sum up a whole column: that is what an average promises. Guess first: you will see your answer again later.</p>
+      <div class="lina" data-say="This flyer says the average tip on our street is $6. I get $2 almost every time!"></div>
+      <div class="row"><button class="btn sun big" type="button" data-go="next">Find out</button></div>
+      <div class="meta"><span class="pill">Builds on: T1.2</span><span class="pill">Leads to: T1.5, T1.6, T3.2, T5.2</span></div>
+    </div>
+    <div class="pic"><div class="card guesscard" id="guess"></div></div>
+  </div>
+</section>
+
+<!-- 1 LAST TIME: THE DOT CROWD -->
+<section class="scene th-sky" id="s1" data-chap="Start" aria-label="Where is the middle of the crowd?">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>0</b>Last time: the dot crowd</div>
+      <h2>Where is the middle of the crowd?</h2>
+      <p class="sub">In T1.2, 244 real restaurant bills became a dot crowd and a histogram with a long tail. Here are the tips from the same tables.</p>
+      <div class="lina" data-say="Drag the pink pin to the tip you would call typical. We will check it later."></div>
+      <div class="take">One picture shows the whole column. Today: one number that stands for it.</div>
+      <div class="thread"><b>Instrument: Dot crowd</b>, built in T1.2.</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <svg class="chart dragsvg" id="pinchart" viewBox="0 0 600 300" tabindex="0" aria-label="Histogram of 244 tips with a pin you can drag"></svg>
+        <p class="xread" id="pinread" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 THREE DOORS -->
+<section class="scene th-sun" id="s2" data-chap="Three averages" aria-label="Three kinds of typical">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>1</b>Three averages</div>
+      <h2>Three kinds of “typical”</h2>
+      <p class="sub">Three everyday moments. Each one picks a typical value in its own way. Press the button on each card.</p>
+      <div class="lina" data-say="Fair share, middle one, most popular. Three different ideas!"></div>
+      <div class="take">“Typical” can mean the fair share, the middle one, or the most common one.</div>
+    </div>
+    <div class="pic"><div class="doors3 piles" id="doors"></div></div>
+  </div>
+</section>
+
+<!-- 3 BALANCE POINT -->
+<section class="scene th-mint" id="s3" data-chap="The see-saw" aria-label="Find the balance point">
+  <div class="scene-in picwide">
+    <div class="txt">
+      <div class="kick"><b>2</b>The see-saw</div>
+      <h2>Find the balance point</h2>
+      <p class="sub">Five tips sit on a plank as dots. Drag the triangle under the plank until the plank stops tipping.</p>
+      <div class="lina" data-say="Like a see-saw in the park: too far left, the right side drops."></div>
+      <div class="take">The point where the plank balances is one kind of average.</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <svg class="chart dragsvg" id="sw1" viewBox="0 0 640 190" tabindex="0" aria-label="See-saw with five tips; drag the pivot"></svg>
+        <p class="xread" id="sw1read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 DRAG A DOT -->
+<section class="scene th-lilac" id="s4" data-chap="The see-saw" aria-label="Pull one tip far away">
+  <div class="scene-in picwide">
+    <div class="txt">
+      <div class="kick"><b>2</b>The see-saw</div>
+      <h2>Pull one tip far away</h2>
+      <p class="sub">Now the pivot moves by itself to keep the plank level. A flag marks the middle dot. Drag any dot.</p>
+      <div class="lina" data-say="Drag the $7 tip to $20. The pivot chases it. The flag doesn’t care!"></div>
+      <div class="take">The balance point chases a far-away dot. The middle dot stays with the crowd.</div>
+      <div class="thread"><b>Instrument: See-saw.</b> Back in T1.5, T1.6, T3.2, T5.2 and T8.1.</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <svg class="chart dragsvg" id="sw2" viewBox="0 0 640 250" tabindex="0" aria-label="See-saw with draggable tips"></svg>
+        <div class="row" style="justify-content:space-between;align-items:center"><span class="bigread" id="sw2read"></span><button class="btn sm" type="button" id="sw2reset">Put them back</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 THE MIDDLE DOT -->
+<section class="scene th-sky" id="s5" data-chap="The see-saw" aria-label="The middle of the line-up">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>2</b>The see-saw</div>
+      <h2>The middle of the line-up</h2>
+      <p class="sub">Line the tips up from smallest to largest. With an odd count, one tip stands in the middle. Add a tip and see what happens.</p>
+      <div class="take">Odd count: the middle tip. Even count: halfway between the two middle tips.</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="lineup" id="lineup"></div>
+        <svg class="chart" id="sw3" viewBox="0 0 600 150" aria-label="The same tips on a number line with the middle flag"></svg>
+        <p class="xread" id="sw3read" aria-live="polite"></p>
+        <div class="row"><button class="btn sun" type="button" id="addtip">Add a tip</button><button class="btn" type="button" id="droptip">Remove the last tip</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 THE TALLEST PILE -->
+<section class="scene th-peach" id="s6" data-chap="The see-saw" aria-label="The tallest pile">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>2</b>The see-saw</div>
+      <h2>The tallest pile</h2>
+      <p class="sub">Pile up equal values. The tallest pile is the most common value. Switch between the three sets.</p>
+      <div class="lina" data-say="Flavors can’t balance on a plank or line up by size. But they can still vote."></div>
+      <div class="take">The most common value works for amounts and for labels. It is the only “typical” that Tag can have.</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="seg" id="modeseg" role="group" aria-label="Data set"><button type="button" data-m="tips" aria-pressed="true">Tips</button><button type="button" data-m="two" aria-pressed="false">Two tall piles</button><button type="button" data-m="flav" aria-pressed="false">Flavors</button></div>
+        <svg class="chart" id="modechart" viewBox="0 0 560 250" aria-label="Piles of equal values"></svg>
+        <p class="fb2" id="modefb" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 WEIGHTED -->
+<section class="scene th-sun" id="s7" data-chap="Twists" aria-label="Heavier stacks pull harder">
+  <div class="scene-in picwide">
+    <div class="txt">
+      <div class="kick"><b>3</b>Twists</div>
+      <h2>Heavier stacks pull harder</h2>
+      <p class="sub">Saturday’s 40 cups at three prices (invented): small $3.50, medium $5.00, large $6.50. Each cup is a weight on the plank. Sell more of one size.</p>
+      <div class="lina" data-say="If I sell mostly small cups, my average price per cup drops, even though my menu didn’t change."></div>
+      <div class="take">When values come in stacks, each stack pulls with its weight. The plain average of the three prices ignores the stacks.</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <svg class="chart" id="wchart" viewBox="0 0 640 240" aria-label="See-saw with stacks of cups at three prices"></svg>
+        <div class="sizebtns" id="sizebtns"></div>
+        <p class="xread" id="wread" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 SKEW -->
+<section class="scene th-pink" id="s8" data-chap="Twists" aria-label="The tail pulls them apart">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>3</b>Twists</div>
+      <h2>The tail pulls them apart</h2>
+      <p class="sub">Three crowds of 25 values. Watch where the pivot and the flag land.</p>
+      <div class="take">Symmetric: they meet. Tail to the right: the pivot sits right of the flag. Tail to the left: left of it.</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="seg" id="skewseg" role="group" aria-label="Shape"><button type="button" data-k="sym" aria-pressed="false">Symmetric</button><button type="button" data-k="right" aria-pressed="true">Tail to the right</button><button type="button" data-k="left" aria-pressed="false">Tail to the left</button></div>
+        <svg class="chart" id="skewsw" viewBox="0 0 600 250" aria-label="A crowd of dots with its balance point and middle flag"></svg>
+        <p class="fb2" id="skewfb" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 TRAP -->
+<section class="scene th-trap" id="s9" data-chap="The trap" aria-label="Which average is typical?">
+  <div class="hazard" aria-hidden="true"></div>
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>!</b>The trap</div>
+      <h2>Which “average” is typical?</h2>
+      <p class="sub">Back to Bubble Street. A new waiter asks you one question. Answer before you look.</p>
+      <div class="gback wait" data-guessback></div>
+      <div class="take">“Average” in a headline can mean the mean or the median. With a long tail, the median tells you what is typical. Always ask which one.</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <p class="gq" style="margin:0 0 8px">“What tip should I expect on Bubble Street?”</p>
+        <div class="gopts" id="trapopts"><button type="button" class="gopt" data-j="0">$6: the flyer’s average</button><button type="button" class="gopt" data-j="1">About $2</button></div>
+        <div id="trapreveal" class="hidden2">
+          <svg class="chart" id="sw4" viewBox="0 0 640 268" aria-label="Nine tips of $2 and one of $42 on the see-saw"></svg>
+          <div class="row" style="justify-content:space-between;align-items:center"><span class="bigread" id="sw4read"></span><button class="btn sm sun" type="button" id="drop42">Remove the $42 tip</button></div>
+        </div>
+        <p class="fb2" id="trapfb" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 NAME IT -->
+<section class="scene th-mint" id="s10" data-chap="Name it" aria-label="Name what you did">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>4</b>Name it</div>
+      <h2>Name what you did</h2>
+      <p class="sub">Each card is something your hand already did. Tap a card, then its name. The book’s symbols appear as you match.</p>
+      <div class="score" id="namescore" aria-live="polite">0 of 6</div>
+      <div class="take">x̄ is the mean of a sample of n values; μ is the mean of a whole population of N values.</div>
+    </div>
+    <div class="pic"><div class="card nameit" id="nameit"></div></div>
+  </div>
+</section>
+
+<!-- 11 GEOMETRIC -->
+<section class="scene th-peach" id="s11" data-chap="Name it" aria-label="Average growth">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>4</b>Name it</div>
+      <h2>Up 50%, down 50%: back to start?</h2>
+      <p class="sub">Lina saves $100. One year it grows, the next it shrinks. Change the two years and compare the two averages.</p>
+      <div class="take">For growth rates, multiply. The geometric mean is the one steady rate that lands on the same final amount.</div>
+      <div class="fr">In French: moyenne géométrique</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="yearbtns" id="yearbtns"></div>
+        <svg class="chart" id="geochart" viewBox="0 0 560 210" aria-label="Savings over two years"></svg>
+        <div class="legend2"><span><i class="lk" style="background:#2F55D4"></i>real path</span><span><i class="lk dash"></i>steady at the plain average rate</span><span><i class="lk" style="background:#6E9F2E"></i>steady at the geometric mean rate</span></div>
+        <p class="xread" id="georead" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 REAL DATA -->
+<section class="scene th-sky" id="s12" data-chap="Real data" aria-label="The real tips">
+  <div class="scene-in picwide">
+    <div class="txt">
+      <div class="kick"><b>5</b>Real data</div>
+      <h2>The real tips, and your pin</h2>
+      <p class="sub">The 244 tables again, with the balance point, the middle flag, and the pin you dropped at the start.</p>
+      <div class="take">A short tail: mean and median nearly agree. A longer tail: they drift apart.</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="ctrlrow"><div class="seg" id="realseg" role="group" aria-label="Column"><button type="button" data-c="tip" aria-pressed="true">Tips</button><button type="button" data-c="bill" aria-pressed="false">Bills</button></div><span class="xread" id="realread" style="margin:0;min-height:0"></span></div>
+        <svg class="chart" id="realchart" viewBox="0 0 640 250" aria-label="Histogram with mean, median and your pin"></svg>
+      </div>
+      <div class="card compact" id="realq"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 13 WHICH TO REPORT -->
+<section class="scene th-lilac" id="s13" data-chap="Real data" aria-label="Which one would you report?">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>5</b>Real data</div>
+      <h2>Which one would you report?</h2>
+      <p class="sub">Six real-life questions. Pick the average that answers each one.</p>
+      <div class="score" id="repscore" aria-live="polite">0 of 6</div>
+      <div class="take">Long tail: the median. Fair shares and totals: the mean. Labels, or “the most common”: the mode.</div>
+    </div>
+    <div class="pic"><div class="repgrid" id="repgrid"></div></div>
+  </div>
+</section>
+
+<!-- 14 ARCADE -->
+<section class="scene th-indigo" id="s14" data-chap="Practice" aria-label="Practice arcade">
+  <div class="scene-in wide">
+    <div class="txt">
+      <div class="kick"><b>6</b>Practice</div>
+      <h2>Practice arcade</h2>
+      <p class="sub" style="max-width:62ch">Six levels, a boss where you build the tips, and a see-saw lab for your own numbers.</p>
+    </div>
+    <div id="arcade"></div>
+  </div>
+</section>
+
+<!-- 15 RECAP -->
+<section class="scene th-lilac" id="s15" data-chap="Remember" aria-label="Six things to remember">
+  <div class="scene-in wide">
+    <div class="txt">
+      <div class="kick"><b>7</b>Remember</div>
+      <h2>Six things to remember, and one trap</h2>
+    </div>
+    <div class="guessbar" data-guessback="short"></div>
+    <div class="recap" id="recap"></div>
+    <details class="src">
+      <summary>Sources and textbook links</summary>
+      <p>The mean, weighted mean, median, mode and geometric mean, and the notation x̄, μ, n and N, follow chapter 3 of the course textbook. The geometric-mean scene uses the standard definition; check that your edition covers it. The 244 restaurant tables are real data. The flyer, Lina’s tips, the cup prices and sales, the savings and the three doors are invented for teaching. “In French” labels give common French statistical vocabulary, not quotations from the book.</p>
+      <ol>
+        <li>Anderson, D. R., Sweeney, D. J., Williams, T. A., Camm, J. D., &amp; Cochran, J. J. (2015). <em>Statistiques pour l’économie et la gestion</em> (5<sup>e</sup> éd., traduction de la 7<sup>e</sup> édition américaine d’<em>Essentials of Statistics for Business and Economics</em> par C. Borsenberger). De Boeck Supérieur. Chapitre 3.</li>
+        <li>Bryant, P. G., &amp; Smith, M. (1995). <em>Practical data analysis: Case studies in business statistics</em>. Irwin. Dataset “tips” (244 tables), as distributed with the R package reshape2 and the seaborn-data repository: <a href="https://github.com/mwaskom/seaborn-data">https://github.com/mwaskom/seaborn-data</a></li>
+        <li>Çetinkaya-Rundel, M., &amp; Hardin, J. (2024). <em>Introduction to Modern Statistics</em> (2nd ed.). OpenIntro. Chapter 5, Exploring numerical data (the mean as the balancing point of a dot plot). <a href="https://openintro-ims.netlify.app/explore-numerical">https://openintro-ims.netlify.app/explore-numerical</a></li>
+      </ol>
+      <p><button class="btn sm" type="button" id="resetall">Reset my stars</button></p>
+    </details>
+  </div>
+</section>
+
+</main>
+
+<nav class="ctrl" aria-label="Scenes">
+  <button class="btn" type="button" id="prev">Back</button>
+  <div class="dots" id="dots"></div>
+  <span class="pos" id="pos"></span>
+  <button class="btn sun" type="button" id="next">Next</button>
+</nav>
+<div class="visually-hidden" aria-live="polite" id="announce"></div>
+<canvas id="confetti" aria-hidden="true"></canvas>
+<script>
+(function(){
+'use strict';
+/* =========================================================== helpers */
+const $  = (s, r) => (r || document).querySelector(s);
+const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+const INK = '#2A1C19';
+const reduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+function sget(k, f){ try{ const v = localStorage.getItem(k); return v == null ? f : JSON.parse(v); }catch(e){ return f; } }
+function sset(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+function shuffle(a, rnd){ rnd = rnd || Math.random; for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function rng(seed){ return function(){ seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function el(tag, cls, html){ const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
+
+/* =========================================================== art */
+const FL = {Mango:'#F9B233', Taro:'#B79BE0', Matcha:'#9BC255', Strawberry:'#F49BB3', Lychee:'#F4E4C4'};
+const SZ = {S:0.8, M:0.9, L:1};
+function cupInner(fl){
+  const c = FL[fl] || '#ccc';
+  return '<rect x="31" y="0" width="7" height="28" rx="2.5" fill="#D93A62" stroke="'+INK+'" stroke-width="2.5" transform="rotate(14 34 24)"/>'
+   + '<path d="M9 30 H51 L45.6 87 Q45.2 91 41.5 91 H18.5 Q14.8 91 14.4 87 Z" fill="#fff" stroke="'+INK+'" stroke-width="2.5" stroke-linejoin="round"/>'
+   + '<path d="M12.4 38 H47.6 L43.2 86 H16.8 Z" fill="'+c+'"/>'
+   + '<g fill="#3B2416"><circle cx="20.5" cy="81.5" r="3.4"/><circle cx="27.5" cy="83" r="3.4"/><circle cx="34.5" cy="82" r="3.4"/><circle cx="40.5" cy="80.5" r="3.2"/><circle cx="24" cy="75.5" r="3.2"/><circle cx="31.5" cy="76.5" r="3.2"/><circle cx="38" cy="74.5" r="3"/></g>'
+   + '<rect x="5" y="25" width="50" height="7" rx="3.5" fill="#fff" stroke="'+INK+'" stroke-width="2.5"/>'
+   + '<path d="M8 26 Q30 6 52 26 Z" fill="#fff" stroke="'+INK+'" stroke-width="2.5" stroke-linejoin="round"/>';
+}
+function cupG(fl, sz, x, yb, k){ const kk = (k || 1) * (SZ[sz] || 1); return '<g transform="translate('+(x - 30*kk)+' '+(yb - 92*kk)+') scale('+kk+')">'+cupInner(fl)+'</g>'; }
+function cupSVG(fl, sz, w){ return '<svg viewBox="0 0 60 92" width="'+w+'" height="'+Math.round(w*92/60)+'" aria-hidden="true">'+cupG(fl, sz, 30, 92, 1)+'</svg>'; }
+
+let uid = 0;
+function linaSVG(){
+  const id = 'lc' + (++uid);
+  return '<svg viewBox="0 0 64 64" aria-hidden="true"><defs><clipPath id="'+id+'"><circle cx="32" cy="32" r="29.6"/></clipPath></defs>'
+   + '<circle cx="32" cy="32" r="31" fill="#F7B32B" stroke="'+INK+'" stroke-width="2.5"/>'
+   + '<g clip-path="url(#'+id+')"><path d="M8 66 Q10 47 32 47 Q54 47 56 66 Z" fill="#EE7F1B" stroke="'+INK+'" stroke-width="2.5"/>'
+   + '<rect x="28" y="40" width="8" height="9" fill="#F1BE96"/><circle cx="32" cy="12.5" r="7" fill="#2B1A12"/>'
+   + '<circle cx="32" cy="31" r="14" fill="#F1BE96" stroke="'+INK+'" stroke-width="2.5"/>'
+   + '<path d="M17.5 31 Q17 16 32 16 Q47 16 46.5 31 Q41 22.5 32 23.5 Q23 22.5 17.5 31 Z" fill="#2B1A12"/>'
+   + '<circle cx="26.5" cy="32" r="1.9" fill="'+INK+'"/><circle cx="37.5" cy="32" r="1.9" fill="'+INK+'"/>'
+   + '<path d="M28 37 Q32 40.5 36 37" stroke="'+INK+'" stroke-width="2" fill="none" stroke-linecap="round"/>'
+   + '<circle cx="23" cy="36" r="2.3" fill="#F49BB3" opacity=".75"/><circle cx="41" cy="36" r="2.3" fill="#F49BB3" opacity=".75"/></g></svg>';
+}
+function eyes(x1, x2, y){ return '<circle cx="'+x1+'" cy="'+y+'" r="8.5" fill="#fff" stroke="'+INK+'" stroke-width="2.5"/><circle cx="'+(x1+1.5)+'" cy="'+(y+1)+'" r="3.8" fill="'+INK+'"/><circle cx="'+x2+'" cy="'+y+'" r="8.5" fill="#fff" stroke="'+INK+'" stroke-width="2.5"/><circle cx="'+(x2+1.5)+'" cy="'+(y+1)+'" r="3.8" fill="'+INK+'"/>'; }
+function mouth(m, cx, cy){
+  if (m === 'puzzled') return '<path d="M'+(cx-11)+' '+(cy+2)+' q5.5 -6 11 0 t11 0" fill="none" stroke="'+INK+'" stroke-width="3" stroke-linecap="round"/>';
+  if (m === 'wow') return '<ellipse cx="'+cx+'" cy="'+(cy+2)+'" rx="5.5" ry="6.5" fill="'+INK+'"/>';
+  return '<path d="M'+(cx-11)+' '+(cy-2)+' q11 11 22 0" fill="none" stroke="'+INK+'" stroke-width="3" stroke-linecap="round"/>';
+}
+function tagSVG(m){ return '<svg viewBox="0 0 130 96" aria-hidden="true"><path d="M26 44 C14 30 6 28 3 18" fill="none" stroke="'+INK+'" stroke-width="3" stroke-linecap="round"/><path d="M36 10 H112 Q122 10 122 20 V76 Q122 86 112 86 H36 L10 48 Z" fill="#EE7F1B" stroke="'+INK+'" stroke-width="3" stroke-linejoin="round"/><circle cx="31" cy="48" r="7" fill="#fff" stroke="'+INK+'" stroke-width="3"/>'+eyes(70, 94, 42)+mouth(m || 'happy', 82, 64)+'</svg>'; }
+function rulerSVG(m){ let t = ''; for (let i = 0; i < 14; i++){ const x = 14 + i*9.4; t += '<line x1="'+x+'" y1="12" x2="'+x+'" y2="'+(12 + (i % 5 === 0 ? 16 : 9))+'" stroke="#fff" stroke-width="2.5"/>'; } return '<svg viewBox="0 0 150 80" aria-hidden="true"><rect x="4" y="10" width="142" height="62" rx="10" fill="#2F55D4" stroke="'+INK+'" stroke-width="3"/>'+t+eyes(62, 90, 46)+mouth(m || 'happy', 76, 62)+'</svg>'; }
+const BULB = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5a6.5 6.5 0 0 0-3.8 11.8c.8.6 1.3 1.4 1.3 2.3V17h5v-.4c0-.9.5-1.7 1.3-2.3A6.5 6.5 0 0 0 12 2.5z" fill="#fff" stroke="'+INK+'" stroke-width="2"/><path d="M9.5 20h5M10.5 22.5h3" stroke="'+INK+'" stroke-width="2" stroke-linecap="round"/></svg>';
+const LOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+const FLAME = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c1 4 6 6 6 12a6 6 0 0 1-12 0c0-3 2-5 3-6 0 2 1 3 2 3 0-3-1-6 1-9z" fill="#EE7F1B" stroke="'+INK+'" stroke-width="1.8" stroke-linejoin="round"/></svg>';
+function pearlChar(){ return '<circle r="15" fill="#3B2416" stroke="'+INK+'" stroke-width="2.5"/><circle cx="-5" cy="-3" r="3.6" fill="#fff"/><circle cx="5" cy="-3" r="3.6" fill="#fff"/><circle cx="-4.2" cy="-2.5" r="1.7" fill="'+INK+'"/><circle cx="5.8" cy="-2.5" r="1.7" fill="'+INK+'"/><path d="M-4 5 q4 4 8 0" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round"/>'; }
+function shirt(n, col){ return '<svg viewBox="0 0 70 70" aria-hidden="true"><path d="M18 8 L28 4 Q35 11 42 4 L52 8 L66 20 L57 31 L52 27 V66 H18 V27 L13 31 L4 20 Z" fill="'+col+'" stroke="'+INK+'" stroke-width="3" stroke-linejoin="round"/><text x="35" y="52" text-anchor="middle" font-family="Times New Roman, Times, Liberation Serif, serif" font-weight="800" font-size="24" fill="#fff" stroke="'+INK+'" stroke-width="1" paint-order="stroke">'+n+'</text></svg>'; }
+
+function standSVG(){
+  let s = '<svg class="stand" viewBox="0 0 520 440" role="img" aria-label="Lina’s bubble tea stand with four cups and a notebook on the counter">';
+  s += '<rect x="46" y="110" width="16" height="190" rx="4" fill="#fff" stroke="'+INK+'" stroke-width="3"/><rect x="458" y="110" width="16" height="190" rx="4" fill="#fff" stroke="'+INK+'" stroke-width="3"/>';
+  s += '<rect x="62" y="130" width="396" height="160" fill="#FDEFD2" stroke="'+INK+'" stroke-width="3"/>';
+  const x0 = 24, w = 59;
+  for (let i = 0; i < 8; i++) s += '<rect x="'+(x0 + i*w)+'" y="74" width="'+w+'" height="62" fill="'+(i % 2 ? '#fff' : '#EE7F1B')+'"/>';
+  for (let i = 0; i < 8; i++) s += '<path d="M'+(x0 + i*w)+' 136 a'+(w/2)+' 18 0 0 0 '+w+' 0" fill="'+(i % 2 ? '#fff' : '#EE7F1B')+'" stroke="'+INK+'" stroke-width="3"/>';
+  s += '<rect x="24" y="74" width="472" height="62" fill="none" stroke="'+INK+'" stroke-width="3"/>';
+  s += '<rect x="140" y="12" width="240" height="62" rx="16" fill="#F7B32B" stroke="'+INK+'" stroke-width="3"/>';
+  s += '<text x="260" y="54" text-anchor="middle" font-family="Times New Roman, Times, Liberation Serif, serif" font-size="38" font-weight="700" fill="'+INK+'">Lina’s Bubble Tea</text>';
+  [['Mango','L',112],['Taro','M',192],['Matcha','S',262],['Strawberry','L',336]].forEach(([f, z, x]) => { s += '<g class="cupbob">'+cupG(f, z, x, 284, 1.3)+'</g>'; });
+  s += '<g transform="translate(392 218) rotate(-8)"><rect width="86" height="62" rx="6" fill="#FFFFFF" stroke="'+INK+'" stroke-width="3"/><line x1="14" y1="0" x2="14" y2="62" stroke="#F49BB3" stroke-width="2"/>';
+  for (let k = 0; k < 4; k++) s += '<line x1="20" y1="'+(16 + k*12)+'" x2="'+(74 - (k % 2) * 14)+'" y2="'+(16 + k*12)+'" stroke="#C5D0F0" stroke-width="2.5" stroke-linecap="round"/>';
+  s += '</g>';
+  s += '<rect x="12" y="282" width="496" height="22" rx="8" fill="#fff" stroke="'+INK+'" stroke-width="3"/>';
+  s += '<rect x="24" y="302" width="472" height="108" rx="10" fill="#8E6CC9" stroke="'+INK+'" stroke-width="3"/>';
+  for (let k = 0; k < 15; k++) s += '<circle cx="'+(52 + k*30)+'" cy="322" r="6" fill="#3B2416"/>';
+  s += '<rect x="170" y="340" width="180" height="50" rx="12" fill="#fff" stroke="'+INK+'" stroke-width="3"/><text x="260" y="374" text-anchor="middle" font-family="Times New Roman, Times, Liberation Serif, serif" font-size="30" font-weight="700" fill="'+INK+'">fresh every day</text>';
+  s += '</svg>';
+  return s;
+}
+
+/* fill in shared bits */
+$$('.lina[data-say]').forEach(e => { e.innerHTML = '<span class="av">'+linaSVG()+'</span><div class="bubble"><b>Lina</b>'+e.dataset.say+'</div>'; });
+$$('[data-mascot]').forEach(e => { e.innerHTML = e.dataset.mascot === 'tag' ? tagSVG(e.dataset.mood) : rulerSVG(e.dataset.mood); });
+$$('.take').forEach(t => { t.innerHTML = BULB + '<span>' + t.innerHTML + '</span>'; });
+
+/* =========================================================== stars (XP) */
+const XPK = 't14-xp';
+let XP = sget(XPK, {});
+function renderXP(p){ const x = $('#xp'); x.textContent = '★ ' + Object.keys(XP).length; if (p){ x.classList.remove('pulse'); void x.offsetWidth; x.classList.add('pulse'); } }
+function addXP(k){ if (XP[k]) return; XP[k] = 1; sset(XPK, XP); renderXP(true); }
+renderXP(false);
+
+/* =========================================================== navigation */
+const scenes = $$('.scene'), N = scenes.length, ENTER = {};
+let cur = -1;
+const seen = new Set();
+const dotsHost = $('#dots');
+scenes.forEach((s, i) => { const b = el('button'); b.type = 'button'; b.setAttribute('aria-label', 'Scene ' + (i + 1) + ': ' + s.getAttribute('aria-label')); b.addEventListener('click', () => go(i)); dotsHost.appendChild(b); });
+function go(i){
+  i = Math.max(0, Math.min(N - 1, i));
+  if (i === cur) return;
+  cur = i; seen.add(i);
+  scenes.forEach((s, j) => s.classList.toggle('on', j === i));
+  scenes[i].scrollTop = 0;
+  $$('button', dotsHost).forEach((b, j) => { b.classList.toggle('on', j === i); b.classList.toggle('seen', seen.has(j) && j !== i); });
+  $('#chapnm').textContent = scenes[i].dataset.chap;
+  document.documentElement.style.setProperty('--now', getComputedStyle(scenes[i]).getPropertyValue('--chip').trim() || '#4B2D86');
+  $('#progfill').style.width = (100 * i / (N - 1)) + '%';
+  $('#pos').textContent = (i + 1) + ' / ' + N;
+  $('#prev').disabled = i === 0;
+  $('#next').textContent = i === N - 1 ? 'Start again' : 'Next';
+  $('#announce').textContent = scenes[i].getAttribute('aria-label');
+  if (location.hash !== '#s' + i) location.hash = 's' + i;
+  const f = ENTER[scenes[i].id]; if (f) f();
+}
+$('#prev').addEventListener('click', () => go(cur - 1));
+$('#next').addEventListener('click', () => go(cur === N - 1 ? 0 : cur + 1));
+$$('[data-go]').forEach(b => b.addEventListener('click', () => { const v = b.dataset.go; go(v === 'next' ? cur + 1 : +v); }));
+window.addEventListener('hashchange', () => { const m = /^#s(\d+)$/.exec(location.hash); if (m) go(+m[1]); });
+document.addEventListener('keydown', e => {
+  if (e.altKey || e.ctrlKey || e.metaKey) return;
+  const t = e.target; if (t && (t.matches('input, textarea, select') || t.isContentEditable)) return;
+  if (e.key === 'ArrowRight' || e.key === 'PageDown'){ e.preventDefault(); go(cur + 1); }
+  else if (e.key === 'ArrowLeft' || e.key === 'PageUp'){ e.preventDefault(); go(cur - 1); }
+});
+
+/* small quiz helper: one row per question, big buttons, one reason */
+function miniQuiz(host, items, key){
+  items.forEach((it, i) => {
+    const d = el('div', 'qrow', '<div class="qq">'+it.q+'</div><div class="qo">'+it.o.map((o, j) => '<button class="btn sm" type="button" data-j="'+j+'">'+o+'</button>').join('')+'</div><div class="qf" aria-live="polite"></div>');
+    host.appendChild(d);
+    const bs = $$('button', d);
+    bs.forEach(b => b.addEventListener('click', () => {
+      const j = +b.dataset.j, ok = j === it.a;
+      bs.forEach((x, k) => { x.disabled = true; if (k === it.a) x.classList.add('right'); if (k === j && !ok) x.classList.add('wrong'); });
+      $('.qf', d).innerHTML = (ok ? '<b>Yes!</b> ' : '<b>Not quite.</b> ') + it.why;
+      if (ok) addXP(key + i);
+    }));
+  });
+}
+
+
+/* =========================================================== T1.4 data and helpers */
+const BILLS=[16.99, 10.34, 21.01, 23.68, 24.59, 25.29, 8.77, 26.88, 15.04, 14.78, 10.27, 35.26, 15.42, 18.43, 14.83, 21.58, 10.33, 16.29, 16.97, 20.65, 17.92, 20.29, 15.77, 39.42, 19.82, 17.81, 13.37, 12.69, 21.7, 19.65, 9.55, 18.35, 15.06, 20.69, 17.78, 24.06, 16.31, 16.93, 18.69, 31.27, 16.04, 17.46, 13.94, 9.68, 30.4, 18.29, 22.23, 32.4, 28.55, 18.04, 12.54, 10.29, 34.81, 9.94, 25.56, 19.49, 38.01, 26.41, 11.24, 48.27, 20.29, 13.81, 11.02, 18.29, 17.59, 20.08, 16.45, 3.07, 20.23, 15.01, 12.02, 17.07, 26.86, 25.28, 14.73, 10.51, 17.92, 27.2, 22.76, 17.29, 19.44, 16.66, 10.07, 32.68, 15.98, 34.83, 13.03, 18.28, 24.71, 21.16, 28.97, 22.49, 5.75, 16.32, 22.75, 40.17, 27.28, 12.03, 21.01, 12.46, 11.35, 15.38, 44.3, 22.42, 20.92, 15.36, 20.49, 25.21, 18.24, 14.31, 14.0, 7.25, 38.07, 23.95, 25.71, 17.31, 29.93, 10.65, 12.43, 24.08, 11.69, 13.42, 14.26, 15.95, 12.48, 29.8, 8.52, 14.52, 11.38, 22.82, 19.08, 20.27, 11.17, 12.26, 18.26, 8.51, 10.33, 14.15, 16.0, 13.16, 17.47, 34.3, 41.19, 27.05, 16.43, 8.35, 18.64, 11.87, 9.78, 7.51, 14.07, 13.13, 17.26, 24.55, 19.77, 29.85, 48.17, 25.0, 13.39, 16.49, 21.5, 12.66, 16.21, 13.81, 17.51, 24.52, 20.76, 31.71, 10.59, 10.63, 50.81, 15.81, 7.25, 31.85, 16.82, 32.9, 17.89, 14.48, 9.6, 34.63, 34.65, 23.33, 45.35, 23.17, 40.55, 20.69, 20.9, 30.46, 18.15, 23.1, 15.69, 19.81, 28.44, 15.48, 16.58, 7.56, 10.34, 43.11, 13.0, 13.51, 18.71, 12.74, 13.0, 16.4, 20.53, 16.47, 26.59, 38.73, 24.27, 12.76, 30.06, 25.89, 48.33, 13.27, 28.17, 12.9, 28.15, 11.59, 7.74, 30.14, 12.16, 13.42, 8.58, 15.98, 13.42, 16.27, 10.09, 20.45, 13.28, 22.12, 24.01, 15.69, 11.61, 10.77, 15.53, 10.07, 12.6, 32.83, 35.83, 29.03, 27.18, 22.67, 17.82, 18.78]; const TIPS=[1.01, 1.66, 3.5, 3.31, 3.61, 4.71, 2.0, 3.12, 1.96, 3.23, 1.71, 5.0, 1.57, 3.0, 3.02, 3.92, 1.67, 3.71, 3.5, 3.35, 4.08, 2.75, 2.23, 7.58, 3.18, 2.34, 2.0, 2.0, 4.3, 3.0, 1.45, 2.5, 3.0, 2.45, 3.27, 3.6, 2.0, 3.07, 2.31, 5.0, 2.24, 2.54, 3.06, 1.32, 5.6, 3.0, 5.0, 6.0, 2.05, 3.0, 2.5, 2.6, 5.2, 1.56, 4.34, 3.51, 3.0, 1.5, 1.76, 6.73, 3.21, 2.0, 1.98, 3.76, 2.64, 3.15, 2.47, 1.0, 2.01, 2.09, 1.97, 3.0, 3.14, 5.0, 2.2, 1.25, 3.08, 4.0, 3.0, 2.71, 3.0, 3.4, 1.83, 5.0, 2.03, 5.17, 2.0, 4.0, 5.85, 3.0, 3.0, 3.5, 1.0, 4.3, 3.25, 4.73, 4.0, 1.5, 3.0, 1.5, 2.5, 3.0, 2.5, 3.48, 4.08, 1.64, 4.06, 4.29, 3.76, 4.0, 3.0, 1.0, 4.0, 2.55, 4.0, 3.5, 5.07, 1.5, 1.8, 2.92, 2.31, 1.68, 2.5, 2.0, 2.52, 4.2, 1.48, 2.0, 2.0, 2.18, 1.5, 2.83, 1.5, 2.0, 3.25, 1.25, 2.0, 2.0, 2.0, 2.75, 3.5, 6.7, 5.0, 5.0, 2.3, 1.5, 1.36, 1.63, 1.73, 2.0, 2.5, 2.0, 2.74, 2.0, 2.0, 5.14, 5.0, 3.75, 2.61, 2.0, 3.5, 2.5, 2.0, 2.0, 3.0, 3.48, 2.24, 4.5, 1.61, 2.0, 10.0, 3.16, 5.15, 3.18, 4.0, 3.11, 2.0, 2.0, 4.0, 3.55, 3.68, 5.65, 3.5, 6.5, 3.0, 5.0, 3.5, 2.0, 3.5, 4.0, 1.5, 4.19, 2.56, 2.02, 4.0, 1.44, 2.0, 5.0, 2.0, 2.0, 4.0, 2.01, 2.0, 2.5, 4.0, 3.23, 3.41, 3.0, 2.03, 2.23, 2.0, 5.16, 9.0, 2.5, 6.5, 1.1, 3.0, 1.5, 1.44, 3.09, 2.2, 3.48, 1.92, 3.0, 1.58, 2.5, 2.0, 3.0, 2.72, 2.88, 2.0, 3.0, 3.39, 1.47, 3.0, 1.25, 1.0, 1.17, 4.67, 5.92, 2.0, 2.0, 1.75, 3.0];
+const BLUE = '#2F55D4', ORANGE = '#EE7F1B', SUN_C = '#F7B32B', BERRY = '#D93A62', TARO = '#8E6CC9', MINT = '#6E9F2E', PINK = '#E8609E';
+const sum = a => a.reduce((x, y) => x + y, 0);
+const mean = a => sum(a) / a.length;
+function median(a){ const s = a.slice().sort((x, y) => x - y), n = s.length; return n % 2 ? s[(n - 1) / 2] : (s[n / 2 - 1] + s[n / 2]) / 2; }
+function modes(a){ const c = new Map(); a.forEach(v => c.set(v, (c.get(v) || 0) + 1)); const mx = Math.max(...c.values()); return mx < 2 ? [] : [...c.keys()].filter(k => c.get(k) === mx).sort((x, y) => x - y); }
+const money = v => '$' + v.toFixed(2);
+function niceTicks(min, max, target){
+  target = target || 4;
+  const span = Math.max(max - min, 1e-9), raw = span / target, p = Math.pow(10, Math.floor(Math.log10(raw)));
+  const c = [1, 2, 2.5, 5, 10].map(m => m * p);
+  const step = c.find(s => span / s <= target) || c[c.length - 1];
+  const lo = Math.ceil(min / step - 1e-9) * step, t = [];
+  for (let v = lo; v <= max + step * 1e-6; v += step) t.push(+v.toFixed(6));
+  return t;
+}
+function svgPoint(svg, e){ const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY; return pt.matrixTransform(svg.getScreenCTM().inverse()); }
+function dragger(svg, onDown, onMove, onKey){
+  let active = null;
+  svg.addEventListener('pointerdown', e => { const p = svgPoint(svg, e); active = onDown(p); if (active != null){ e.preventDefault(); svg.setPointerCapture(e.pointerId); onMove(active, p); } });
+  svg.addEventListener('pointermove', e => { if (active == null) return; onMove(active, svgPoint(svg, e)); });
+  const up = () => { active = null; };
+  svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+  if (onKey) svg.addEventListener('keydown', e => { const d = {ArrowLeft:-1, ArrowRight:1, ArrowDown:-1, ArrowUp:1}[e.key]; if (d == null) return; e.preventDefault(); e.stopPropagation(); onKey(d); });
+}
+
+/* The see-saw: dots (or stacks) on a plank, a pivot, and a middle flag. */
+function seesaw(o){
+  const W = o.W, H = o.H, L = o.L || 40, R = o.R || 40, PY = o.PY || (H - 82), NY = PY + 46;
+  const X = v => L + (v - o.lo) / (o.hi - o.lo) * (W - L - R);
+  const ws = o.ws || o.xs.map(() => 1), sw = sum(ws);
+  const m = sum(o.xs.map((x, i) => x * ws[i])) / sw;
+  const p = o.pivot == null ? m : o.pivot;
+  const tq = sum(o.xs.map((x, i) => ws[i] * (x - p))) / sw;
+  const arm = Math.max(X(p) - (L - 16), (W - R + 16) - X(p)), lim = Math.asin(Math.min(1, (NY - PY - 6) / arm)) * 180 / Math.PI;
+  const ang = o.tilt ? Math.max(-lim, Math.min(lim, tq / (o.hi - o.lo) * 90)) : 0;
+  const bal = Math.abs(ang) < .5;
+  const r = o.r || 8, pos = [];
+  let g = '<line class="axis" x1="'+L+'" x2="'+(W - R)+'" y1="'+NY+'" y2="'+NY+'"/>';
+  (o.ticks || niceTicks(o.lo, o.hi, o.tn || 6)).forEach(t => { g += '<line x1="'+X(t).toFixed(1)+'" x2="'+X(t).toFixed(1)+'" y1="'+NY+'" y2="'+(NY + 5)+'" stroke="'+INK+'" stroke-width="2"/><text x="'+X(t).toFixed(1)+'" y="'+(NY + 20)+'" text-anchor="middle">'+(o.fmt ? o.fmt(t) : t)+'</text>'; });
+  if (o.flag !== false && !o.blocks && bal){
+    const md = median(o.xs), fx = X(md), top = o.flagTop || 10;
+    g += '<line x1="'+fx.toFixed(1)+'" x2="'+fx.toFixed(1)+'" y1="'+top+'" y2="'+PY+'" stroke="'+INK+'" stroke-width="2.5"/><path d="M'+fx.toFixed(1)+' '+top+' h58 l-9 10 l9 10 h-58 z" fill="'+BERRY+'" stroke="'+INK+'" stroke-width="2"/><text x="'+(fx + 25).toFixed(1)+'" y="'+(top + 14)+'" text-anchor="middle" style="fill:#fff;font-weight:800;font-size:12px">middle</text>';
+  }
+  if (o.ghost != null){ const gx = X(o.ghost); g += '<path d="M'+gx+' '+(PY + 10)+' L'+(gx - 15)+' '+NY+' L'+(gx + 15)+' '+NY+' Z" fill="none" stroke="'+INK+'" stroke-width="2" stroke-dasharray="4 3"/>'; }
+  g += '<g transform="rotate('+ang.toFixed(2)+' '+X(p).toFixed(1)+' '+PY+')" style="transition:transform .25s">';
+  g += '<rect x="'+(L - 16)+'" y="'+PY+'" width="'+(W - L - R + 32)+'" height="9" rx="4.5" fill="#D9A066" stroke="'+INK+'" stroke-width="2"/>';
+  if (o.blocks){
+    o.xs.forEach((x, i) => { const h = ws[i] * (o.bh || 4), bx = X(x); g += '<rect x="'+(bx - 22).toFixed(1)+'" y="'+(PY - h).toFixed(1)+'" width="44" height="'+h.toFixed(1)+'" rx="4" fill="'+(o.colors ? o.colors[i] : BLUE)+'" stroke="'+INK+'" stroke-width="2"/><text class="val" x="'+bx.toFixed(1)+'" y="'+(PY - h - 6).toFixed(1)+'" text-anchor="middle">'+ws[i]+'</text>'; });
+  } else {
+    const seen = {};
+    o.xs.forEach((x, i) => { const k = x.toFixed(2), s = seen[k] = (seen[k] || 0) + 1; const cx = X(x), cy = PY - r - 1 - (s - 1) * (2 * r + 1); pos[i] = [cx, cy]; g += '<circle cx="'+cx.toFixed(1)+'" cy="'+cy.toFixed(1)+'" r="'+r+'" fill="'+(o.sel === i ? SUN_C : (o.dotColor ? o.dotColor(i) : BLUE))+'" stroke="'+INK+'" stroke-width="'+(o.dsw || 1.8)+'"/>'; });
+  }
+  g += '</g>';
+  if (o.pivot !== false){ const px = X(p); g += '<path d="M'+px.toFixed(1)+' '+(PY + 9)+' L'+(px - 17).toFixed(1)+' '+NY+' L'+(px + 17).toFixed(1)+' '+NY+' Z" fill="'+(bal ? MINT : SUN_C)+'" stroke="'+INK+'" stroke-width="2.2"/>'; }
+  return {g, X, m, p, tq, bal, pos, PY, NY, L, R, W};
+}
+function xFromSvg(v, o){ const L = o.L || 40, R = o.R || 40; return o.lo + (v - L) / (o.W - L - R) * (o.hi - o.lo); }
+
+/* =========================================================== 0. guess first */
+function guessFirst(G){
+  const host = $('#guess'), KEY = G.key, LAB = G.olab || G.opts;
+  host.innerHTML = '<div class="ghead"><span class="gtag">Guess first</span>'+(G.note ? '<span class="gnote">'+G.note+'</span>' : '')+'</div>' + (G.visual || '') + '<p class="gq">'+G.q+'</p><div class="gopts'+(G.one ? ' one' : '')+'">' + G.opts.map((o, j) => '<button type="button" class="gopt" data-j="'+j+'" aria-pressed="false">'+o+'</button>').join('') + '</div><p class="gsaved" aria-live="polite"></p>';
+  function mark(){
+    const j = sget(KEY, null);
+    $$('.gopt', host).forEach(b => b.setAttribute('aria-pressed', +b.dataset.j === j ? 'true' : 'false'));
+    $('.gsaved', host).textContent = j == null ? 'Pick one. Nothing is explained yet, so any answer is fine.' : 'Saved. You will see your guess again later on this page.';
+    $$('[data-guessback]').forEach(el => { const w = el.dataset.guessback === 'short' ? G.short : G.why; el.innerHTML = j == null ? '<b>You skipped the guess at the start.</b> The answer: “'+LAB[G.a]+'”. ' + w : '<b>Your guess at the start:</b> “'+LAB[j]+'”. ' + (j === G.a ? '<b>Right!</b> ' : '<b>The answer:</b> “'+LAB[G.a]+'”. ') + w; });
+  }
+  $$('.gopt', host).forEach(b => b.addEventListener('click', () => { sset(KEY, +b.dataset.j); mark(); addXP('guess'); }));
+  mark();
+}
+guessFirst({
+  key:'t14-guess', note:'An invented flyer', one:true,
+  visual:'<div class="flyer"><small>Bubble Street shops</small><b>Average tip: $6</b><span>Come and work with us!</span></div>',
+  q:'Lina gets $2 almost every time. Is the flyer lying?',
+  opts:['Yes: almost nobody gets $6', 'Not necessarily: it can be true', 'Only if the flyer counted wrong'], a:1,
+  short:'Nine $2 tips and one $42 tip average exactly $6, yet nine waiters in ten got $2.',
+  why:'Nine tips of $2 and one of $42 add up to $60. Divided by 10 tips, that is an average of $6, yet nine waiters out of ten got $2. The arithmetic is honest; the number just isn’t typical.',
+});
+
+/* =========================================================== 1. the dot crowd and a pin */
+const PIN = {v: sget('t14-pin', null)};
+(function pinScene(){
+  const svg = $('#pinchart'), W = 600, H = 300, L = 46, R = 18, T = 14, B = 44, lo = 0, hi = 11;
+  const X = v => L + (v - lo) / (hi - lo) * (W - L - R);
+  const edges = Array.from({length:19}, (_, i) => 1 + i * .5), cnt = edges.slice(0, -1).map((e, i) => TIPS.filter(t => t >= e && (t < edges[i + 1] || (i === 17 && t <= 10))).length);
+  const mx = Math.max(...cnt), Y = c => H - B - c / 60 * (H - B - T);
+  let base = '';
+  [0, 20, 40, 60].forEach(t => { base += '<line class="grid" x1="'+L+'" x2="'+(W - R)+'" y1="'+Y(t)+'" y2="'+Y(t)+'"/><text x="'+(L - 7)+'" y="'+(Y(t) + 4)+'" text-anchor="end">'+t+'</text>'; });
+  cnt.forEach((c, i) => { base += '<rect class="hb" x="'+X(edges[i]).toFixed(1)+'" y="'+Y(c).toFixed(1)+'" width="'+(X(edges[i + 1]) - X(edges[i])).toFixed(1)+'" height="'+(H - B - Y(c)).toFixed(1)+'" fill="'+BLUE+'" stroke="'+INK+'" stroke-width="1.4"><title>'+money(edges[i])+' to '+money(edges[i + 1])+': '+c+' tables</title></rect>'; });
+  base += '<line class="axis" x1="'+L+'" x2="'+(W - R)+'" y1="'+(H - B)+'" y2="'+(H - B)+'"/>';
+  for (let t = 0; t <= 11; t++) base += '<text x="'+X(t)+'" y="'+(H - B + 17)+'" text-anchor="middle">$'+t+'</text>';
+  base += '<text x="'+((L + W - R) / 2)+'" y="'+(H - 6)+'" text-anchor="middle" style="fill:'+INK+';font-weight:700">tip of each of the 244 tables</text>';
+  function render(){
+    const v = PIN.v == null ? 7 : PIN.v, x = X(v);
+    svg.innerHTML = base + '<g style="cursor:ew-resize"><line x1="'+x+'" x2="'+x+'" y1="'+(T + 14)+'" y2="'+(H - B)+'" stroke="'+PINK+'" stroke-width="4"/><circle cx="'+x+'" cy="'+(T + 12)+'" r="12" fill="'+PINK+'" stroke="'+INK+'" stroke-width="2.5"/><text x="'+(x + (v > 8 ? -18 : 18))+'" y="'+(T + 17)+'" text-anchor="'+(v > 8 ? 'end' : 'start')+'" style="fill:'+INK+';font-weight:800;font-size:15px">'+money(v)+'</text></g>';
+    $('#pinread').innerHTML = PIN.v == null ? '<span class="big">Drag the pin to the typical tip.</span><small>Tap or drag anywhere on the chart.</small>' : '<span class="big">Your pin: '+money(PIN.v)+'</span><small>Saved. Near the end of the page you will compare it with two kinds of average.</small>';
+  }
+  const setV = v => { PIN.v = Math.round(Math.max(1, Math.min(10, v)) * 20) / 20; sset('t14-pin', PIN.v); render(); addXP('pin'); };
+  dragger(svg, p => 'pin', (a, p) => setV(lo + (p.x - L) / (W - L - R) * (hi - lo)), d => setV((PIN.v == null ? 7 : PIN.v) + d * .1));
+  render();
+})();
+
+/* =========================================================== 2. three doors */
+(function doors(){
+  const D = [
+    {m:'ruler', t:'Four friends, one pizza', n:'what each ate', raw:'Ana $15, Ben $9, Chen $14, Dina $10', b:'Split it evenly', note:'Total $48 ÷ 4 friends = $12 each: the fair share.', draw:() => barSVG2(['Ana', 'Ben', 'Chen', 'Dina'], [15, 9, 14, 10], BLUE, 12, '$12 each')},
+    {m:'ruler', t:'Five kids in a line', n:'height in cm', raw:'152, 138, 160, 145, 171', b:'Line them up', note:'Sorted: 138, 145, 152, 160, 171. The middle child is 152 cm.', draw:() => barSVG2(['138', '145', '152', '160', '171'], [138, 145, 152, 160, 171], BLUE, null, null, 2, 120)},
+    {m:'tag', t:'Favorite flavor', n:'25 classmates', raw:'mango, taro, mango, matcha…', b:'Count the votes', note:'Mango wins with 11 votes. A label can’t be split or lined up, only counted.', draw:() => barSVG2(['Mango', 'Taro', 'Matcha', 'Lychee'], [11, 7, 4, 3], ORANGE, null, null, 0)},
+  ];
+  const host = $('#doors');
+  D.forEach((d, di) => {
+    const c = el('div', 'pcard', '<div class="ph2">'+(d.m === 'tag' ? tagSVG() : rulerSVG())+'<span>'+d.t+'<small>'+d.n+', invented</small></span></div><div class="raw2">'+d.raw+'</div><svg class="chart" viewBox="0 0 220 130" aria-label="'+d.t+'"><text x="110" y="70" text-anchor="middle">?</text></svg><p class="pnote" aria-live="polite"></p><button class="btn sm" type="button">'+d.b+'</button>');
+    const btn = $('button', c);
+    btn.addEventListener('click', () => { $('svg.chart', c).innerHTML = d.draw(); $('.pnote', c).textContent = d.note; btn.disabled = true; btn.textContent = 'Done'; addXP('door' + di); });
+    host.appendChild(c);
+  });
+})();
+function barSVG2(labels, vals, col, line, lineLab, hi, base){
+  const W = 220, H = 130, L = 10, R = 10, T = 14, B = 22, n = labels.length, slot = (W - L - R) / n, bw = slot * .62;
+  const lo = base || 0, mx = Math.max(...vals);
+  const Y = v => H - B - (v - lo) / (mx - lo) * (H - B - T);
+  let g = '';
+  vals.forEach((v, i) => { const x = L + i * slot + (slot - bw) / 2; g += '<rect x="'+x.toFixed(1)+'" y="'+Y(v).toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+(H - B - Y(v)).toFixed(1)+'" rx="3" fill="'+(hi === i ? SUN_C : col)+'" stroke="'+INK+'" stroke-width="1.6"/><text x="'+(x + bw / 2).toFixed(1)+'" y="'+(H - 6)+'" text-anchor="middle" style="font-size:11.5px">'+labels[i]+'</text>'; });
+  if (line != null){ g += '<line x1="'+L+'" x2="'+(W - R)+'" y1="'+Y(line)+'" y2="'+Y(line)+'" stroke="'+BERRY+'" stroke-width="3" stroke-dasharray="6 4"/><text x="'+(W - R)+'" y="'+(Y(line) - 5)+'" text-anchor="end" style="fill:'+INK+';font-weight:800;font-size:12px">'+lineLab+'</text>'; }
+  return g + '<line class="axis" x1="'+L+'" x2="'+(W - R)+'" y1="'+(H - B)+'" y2="'+(H - B)+'"/>';
+}
+
+/* =========================================================== 3. find the balance point */
+(function balance(){
+  const svg = $('#sw1'), o = {W:640, H:190, lo:0, hi:10, xs:[1, 2, 2, 3, 7], tilt:true, flag:false, fmt:t => '$' + t, ticks:[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]};
+  let p = 6;
+  function render(){
+    const s = seesaw(Object.assign({}, o, {pivot:p}));
+    svg.innerHTML = s.g;
+    if (s.bal){ $('#sw1read').innerHTML = '<span class="big">Balanced at '+money(p)+'.</span><small>Check: the five tips add up to $15, and $15 ÷ 5 = $3.</small>'; addXP('balance'); }
+    else $('#sw1read').innerHTML = '<span class="big">The '+(s.tq > 0 ? 'right' : 'left')+' side drops.</span><small>Slide the triangle to the '+(s.tq > 0 ? 'right' : 'left')+'. Arrow keys work too.</small>';
+  }
+  const setP = v => { p = Math.max(0, Math.min(10, v)); if (Math.abs(p - 3) < .13) p = 3; p = Math.round(p * 20) / 20; render(); };
+  dragger(svg, pt => 'pivot', (a, pt) => setP(xFromSvg(pt.x, o)), d => setP(p + d * .1));
+  render();
+})();
+
+/* =========================================================== 4. pull one tip */
+(function chase(){
+  const svg = $('#sw2'), START = [1, 2, 2, 3, 7];
+  const o = {W:640, H:250, lo:0, hi:20, fmt:t => '$' + t, ticks:[0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20]};
+  let xs = START.slice(), sel = 4, last = null;
+  function render(){
+    const s = seesaw(Object.assign({}, o, {xs, sel}));
+    last = s; svg.innerHTML = s.g;
+    $('#sw2read').innerHTML = 'Balance point '+money(s.m)+' · Middle '+money(median(xs))+'<small>'+(s.m - median(xs) > 2 ? 'The pivot ran after the far tip. The flag stayed with the crowd.' : 'Drag a dot. Arrow keys move the yellow one.')+'</small>';
+    if (Math.max(...xs) >= 15) addXP('chase');
+  }
+  dragger(svg, pt => { let best = null, bd = 26; last.pos.forEach((q, i) => { const d = Math.hypot(q[0] - pt.x, q[1] - pt.y); if (d < bd){ bd = d; best = i; } }); if (best != null){ sel = best; } return best; },
+    (i, pt) => { xs[i] = Math.round(Math.max(0, Math.min(20, xFromSvg(pt.x, o))) * 4) / 4; render(); },
+    d => { xs[sel] = Math.max(0, Math.min(20, xs[sel] + d * .5)); render(); });
+  $('#sw2reset').addEventListener('click', () => { xs = START.slice(); sel = 4; render(); });
+  render();
+})();
+
+/* =========================================================== 5. the middle of the line-up */
+(function lineup(){
+  const START = [1, 2, 2, 3, 7], MORE = [5, 4, 9, 2, 6, 3];
+  let xs = START.slice(), k = 0;
+  function render(){
+    const s = xs.slice().sort((a, b) => a - b), n = s.length, mid = n % 2 ? [(n - 1) / 2] : [n / 2 - 1, n / 2];
+    $('#lineup').innerHTML = s.map((v, i) => '<span class="lchip'+(mid.includes(i) ? ' mid' : '')+'"><i>'+(i + 1)+'</i>'+money(v)+'</span>').join('');
+    const sw = seesaw({W:600, H:150, PY:68, lo:0, hi:10, xs, pivot:false, flagTop:4, r:7, fmt:t => '$' + t, ticks:[0, 2, 4, 6, 8, 10]});
+    $('#sw3').innerHTML = sw.g;
+    const md = median(xs);
+    $('#sw3read').innerHTML = n % 2 ? '<span class="big">'+n+' tips: number '+((n + 1) / 2)+' in line is the middle.</span><small>Middle tip: '+money(md)+'.</small>' : '<span class="big">'+n+' tips: no single middle.</span><small>Halfway between number '+(n / 2)+' and number '+(n / 2 + 1)+': ('+money(s[n / 2 - 1])+' + '+money(s[n / 2])+') ÷ 2 = '+money(md)+'.</small>';
+    $('#droptip').disabled = xs.length <= 3; $('#addtip').disabled = xs.length >= 11;
+  }
+  $('#addtip').addEventListener('click', () => { xs.push(MORE[k++ % MORE.length]); render(); if (xs.length % 2 === 0) addXP('even'); });
+  $('#droptip').addEventListener('click', () => { xs.pop(); render(); });
+  render();
+})();
+
+/* =========================================================== 6. the tallest pile */
+(function tallest(){
+  const SETS = {
+    tips:{xs:[1, 2, 2, 2, 2, 3, 3, 4, 5, 5], fb:'The tallest pile sits at $2: four of the ten tips. The most common tip is $2.'},
+    two:{xs:[1, 2, 2, 2, 3, 4, 5, 5, 5, 6], fb:'Two piles tie with three dots each, at $2 and at $5. This crowd has two most common values.'},
+    flav:{fb:'Mango wins with 14 of the 40 Saturday cups from T1.2. No balance point, no middle: flavors can only be counted.'},
+  };
+  function render(k){
+    let g;
+    if (k === 'flav'){
+      const lab = ['Mango', 'Taro', 'Strawberry', 'Matcha', 'Lychee'], v = [14, 10, 8, 6, 2], W = 560, H = 250, L = 30, slot = (W - L - 10) / 5, bw = slot * .6, Y = c => 210 - c / 14 * 180;
+      g = v.map((c, i) => { const x = L + i * slot + (slot - bw) / 2; return '<rect x="'+x+'" y="'+Y(c)+'" width="'+bw+'" height="'+(210 - Y(c))+'" rx="3" fill="'+(i ? ORANGE : SUN_C)+'" stroke="'+INK+'" stroke-width="2"/><text class="val" x="'+(x + bw / 2)+'" y="'+(Y(c) - 6)+'" text-anchor="middle">'+c+'</text><text x="'+(x + bw / 2)+'" y="230" text-anchor="middle" style="fill:'+INK+';font-weight:700">'+lab[i]+'</text>'; }).join('') + '<line class="axis" x1="'+L+'" x2="'+(W - 10)+'" y1="210" y2="210"/>';
+    } else {
+      const xs = SETS[k].xs, md = modes(xs);
+      g = seesaw({W:560, H:250, PY:176, lo:0, hi:7, xs, pivot:false, flag:false, r:11, fmt:t => '$' + t, ticks:[0, 1, 2, 3, 4, 5, 6, 7], dotColor:i => md.includes(xs[i]) ? SUN_C : BLUE}).g;
+    }
+    $('#modechart').innerHTML = g;
+    $('#modefb').textContent = SETS[k].fb;
+    $$('#modeseg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.m === k ? 'true' : 'false'));
+    if (k !== 'tips') addXP('mode-' + k);
+  }
+  $$('#modeseg button').forEach(b => b.addEventListener('click', () => render(b.dataset.m)));
+  render('tips');
+})();
+
+/* =========================================================== 7. weighted mean */
+(function weighted(){
+  const P = [3.5, 5, 6.5], N = ['Small', 'Medium', 'Large'], C = ['#FFE0BD', '#F6A85A', '#EE7F1B'];
+  let w = [8, 20, 12];
+  const host = $('#sizebtns');
+  N.forEach((n, i) => { const d = el('div', 'sizeb', '<b>'+n+' '+money(P[i])+'</b><span><button type="button" class="btn sm" data-d="-2" aria-label="Two fewer '+n.toLowerCase()+' cups">−</button><em data-n></em><button type="button" class="btn sm" data-d="2" aria-label="Two more '+n.toLowerCase()+' cups">+</button></span>'); $$('button', d).forEach(b => b.addEventListener('click', () => { w[i] = Math.max(0, Math.min(30, w[i] + +b.dataset.d)); if (sum(w) === 0) w[i] = 2; render(); addXP('weighted'); })); host.appendChild(d); });
+  function render(){
+    const s = seesaw({W:640, H:240, PY:158, lo:3, hi:7, xs:P, ws:w, blocks:true, bh:4, colors:C, ghost:5, fmt:t => '$' + t.toFixed(2), ticks:[3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7]});
+    $('#wchart').innerHTML = s.g;
+    $$('.sizeb em', host).forEach((e, i) => e.textContent = w[i]);
+    $('#wread').innerHTML = '<span class="big">Weighted: '+money(s.m)+' per cup.</span><small>('+w.map((c, i) => c + ' × ' + money(P[i])).join(' + ')+') ÷ '+sum(w)+' cups. The dashed triangle is the plain average of the three prices, $5.00: it never moves.</small>';
+  }
+  render();
+})();
+
+/* =========================================================== 8. skew */
+(function skew(){
+  const right = [3, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 8, 8, 9, 10, 11, 12, 14, 16, 18, 21];
+  const SETS = {sym:[6, 7, 7, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 11, 11, 11, 11, 12, 12, 12, 13, 13, 14], right, left:right.map(v => 24 - v)};
+  function render(k){
+    const xs = SETS[k], s = seesaw({W:600, H:250, PY:178, lo:0, hi:24, xs, r:6.5, flagTop:6, ticks:[0, 4, 8, 12, 16, 20, 24]});
+    $('#skewsw').innerHTML = s.g;
+    const md = median(xs), d = s.m - md;
+    $('#skewfb').innerHTML = 'Balance point <b>'+s.m.toFixed(2)+'</b> · Middle <b>'+md.toFixed(2)+'</b>. ' + (Math.abs(d) < .3 ? 'They sit together.' : d > 0 ? 'The long tail on the right pulls the pivot right of the flag.' : 'The long tail on the left pulls the pivot left of the flag.');
+    $$('#skewseg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.k === k ? 'true' : 'false'));
+    addXP('skew-' + k);
+  }
+  $$('#skewseg button').forEach(b => b.addEventListener('click', () => render(b.dataset.k)));
+  render('right');
+})();
+
+/* =========================================================== 9. trap */
+(function trap(){
+  let xs = [2, 2, 2, 2, 2, 2, 2, 2, 2, 42];
+  function render(){
+    const s = seesaw({W:640, H:268, PY:190, lo:0, hi:45, xs, r:8, flagTop:4, fmt:t => '$' + t, ticks:[0, 5, 10, 15, 20, 25, 30, 35, 40, 45]});
+    $('#sw4').innerHTML = s.g;
+    $('#sw4read').innerHTML = 'Mean '+money(s.m)+' · Median '+money(median(xs))+'<small>'+xs.length+' tips</small>';
+    $('#drop42').textContent = xs.length === 10 ? 'Remove the $42 tip' : 'Put the $42 tip back';
+  }
+  $$('#trapopts .gopt').forEach(b => b.addEventListener('click', () => {
+    const j = +b.dataset.j;
+    $$('#trapopts .gopt').forEach(x => { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+    $('#trapfb').innerHTML = j === 0 ? '<b>That’s the trap.</b> Only one table in ten paid more than $2. The $6 is real arithmetic, but not a typical tip.' : '<b>Right.</b> Nine tips in ten are $2. The flyer’s $6 is the mean, pulled up by one $42 tip.';
+    $('#trapreveal').classList.remove('hidden2');
+    const g = $('#trapopts').closest('.scene').querySelector('.gback'); if (g) g.classList.remove('wait');
+    if (j === 1) addXP('trap');
+    render();
+  }));
+  $('#drop42').addEventListener('click', () => { xs = xs.length === 10 ? xs.slice(0, 9) : xs.concat([42]); render(); addXP('drop42'); });
+})();
+
+/* =========================================================== 10. name it */
+(function nameIt(){
+  const P = [
+    {a:'You slid the pivot until the plank balanced.', n:'Mean', s:'x̄ = Σxᵢ ÷ n', f:'moyenne'},
+    {a:'The same balance point, for everyone in a population.', n:'Population mean', s:'μ = Σxᵢ ÷ N', f:'moyenne de la population'},
+    {a:'The flag stood at the middle of the line-up.', n:'Median', s:'middle value; even count: halfway between the two middle ones', f:'médiane'},
+    {a:'The tallest pile won.', n:'Mode', s:'the value that occurs most often', f:'mode'},
+    {a:'Bigger stacks of cups pulled the pivot harder.', n:'Weighted mean', s:'x̄ = Σwᵢxᵢ ÷ Σwᵢ', f:'moyenne pondérée'},
+    {a:'One $42 tip dragged the pivot but not the flag.', n:'Extreme value', s:'pulls the mean, barely moves the median', f:'valeur extrême'},
+  ];
+  const host = $('#nameit'); let sel = null, done = 0;
+  const order = shuffle(P.map((_, i) => i));
+  host.innerHTML = '<div class="col">' + P.map((p, i) => '<button type="button" class="nact" data-i="'+i+'" aria-pressed="false">'+p.a+'</button>').join('') + '</div><div class="col">' + order.map(i => '<button type="button" class="nname" data-i="'+i+'">'+P[i].n+'</button>').join('') + '</div>';
+  $$('.nact', host).forEach(b => b.addEventListener('click', () => { if (b.classList.contains('done')) return; sel = +b.dataset.i; $$('.nact', host).forEach(x => x.setAttribute('aria-pressed', x === b ? 'true' : 'false')); }));
+  $$('.nname', host).forEach(b => b.addEventListener('click', () => {
+    if (sel == null){ $('#namescore').textContent = 'Tap a card on the left first.'; return; }
+    const i = +b.dataset.i;
+    if (i === sel){
+      const act = $('.nact[data-i="'+i+'"]', host);
+      act.classList.add('done'); act.setAttribute('aria-pressed', 'false'); act.innerHTML = '<b>'+P[i].n+': <span class="sym2">'+P[i].s+'</span></b>'+P[i].a+'<br><i>In French: '+P[i].f+'</i>';
+      b.disabled = true; sel = null; done++; addXP('name' + i);
+      $('#namescore').textContent = done + ' of 6' + (done === 6 ? '. All named!' : '');
+      if (done === 6) confetti();
+    } else { b.classList.remove('nope'); void b.offsetWidth; b.classList.add('nope'); $('#namescore').textContent = 'Not that one. Try another name.'; }
+  }));
+})();
+
+/* =========================================================== 11. geometric mean */
+(function geo(){
+  const pct = (v, d) => { const t = Math.abs(v).toFixed(d); return (+t === 0 ? '' : v > 0 ? '+' : '−') + t + '%'; };
+  let r = [50, -50];
+  const host = $('#yearbtns');
+  ['Year 1', 'Year 2'].forEach((y, i) => { const d = el('div', 'sizeb', '<b>'+y+'</b><span><button type="button" class="btn sm" data-d="-10" aria-label="'+y+' lower">−</button><em data-n></em><button type="button" class="btn sm" data-d="10" aria-label="'+y+' higher">+</button></span>'); $$('button', d).forEach(b => b.addEventListener('click', () => { r[i] = Math.max(-80, Math.min(100, r[i] + +b.dataset.d)); render(); addXP('geo'); })); host.appendChild(d); });
+  function render(){
+    const f = r.map(v => 1 + v / 100), end = 100 * f[0] * f[1], a = (r[0] + r[1]) / 2, gm = Math.sqrt(f[0] * f[1]) - 1;
+    const pts = [[0, 100], [1, 100 * f[0]], [2, end]], pa = [0, 1, 2].map(t => [t, 100 * Math.pow(1 + a / 100, t)]), pg = [0, 1, 2].map(t => [t, 100 * Math.pow(1 + gm, t)]);
+    const all = pts.concat(pa, pg).map(q => q[1]), top = Math.max(150, Math.ceil(Math.max(...all) / 50) * 50);
+    const W = 560, H = 210, L = 56, R = 160, T = 12, B = 30, X = t => L + t / 2 * (W - L - R), Y = v => H - B - v / top * (H - B - T);
+    let g = '';
+    niceTicks(0, top, 4).forEach(t => { g += '<line class="grid" x1="'+L+'" x2="'+(W - R)+'" y1="'+Y(t)+'" y2="'+Y(t)+'"/><text x="'+(L - 7)+'" y="'+(Y(t) + 4)+'" text-anchor="end">$'+t+'</text>'; });
+    ['Start', 'Year 1', 'Year 2'].forEach((s, t) => { g += '<text x="'+X(t)+'" y="'+(H - 8)+'" text-anchor="middle" style="fill:'+INK+';font-weight:700">'+s+'</text>'; });
+    const path = (ps, col, dash, w) => '<path d="M'+ps.map(q => X(q[0]).toFixed(1) + ' ' + Y(q[1]).toFixed(1)).join(' L')+'" fill="none" stroke="'+col+'" stroke-width="'+w+'"'+(dash ? ' stroke-dasharray="'+dash+'"' : '')+'/>';
+    g += path(pa, BERRY, '7 5', 3.5) + path(pg, MINT, '', 4) + path(pts, BLUE, '', 3);
+    pts.forEach(q => { g += '<circle cx="'+X(q[0])+'" cy="'+Y(q[1])+'" r="6" fill="'+BLUE+'" stroke="'+INK+'" stroke-width="2"/>'; });
+    let yA = Y(pa[2][1]), yE = Y(end);
+    if (Math.abs(yA - yE) < 17){ if (yE >= yA) yE = yA + 17; else yE = yA - 17; }
+    const lab = (y, t, col) => '<text x="'+(X(2) + 12)+'" y="'+(y + 4).toFixed(1)+'" style="fill:'+col+';font-weight:800;font-size:13px">'+t+'</text>';
+    g += lab(yA, 'plain rate: '+money(pa[2][1]), '#B0215D') + lab(yE, 'real: '+money(end), INK);
+    $('#geochart').innerHTML = g;
+    $$('.sizeb em', host).forEach((e, i) => e.textContent = pct(r[i], 0));
+    $('#georead').innerHTML = '<span class="big">Plain average '+pct(a, 1)+' a year; geometric mean '+pct(gm * 100, 1)+' a year.</span><small>Real end: '+money(end)+'. A steady '+pct(a, 1)+' (dashed) would end at '+money(pa[2][1])+'. A steady '+pct(gm * 100, 1)+' (green) lands on '+money(end)+': √('+f[0].toFixed(2)+' × '+f[1].toFixed(2)+') = '+(1 + gm).toFixed(3)+', one steady factor per year.</small>';
+  }
+  render();
+})();
+
+/* =========================================================== 12. real data */
+(function real(){
+  let col = 'tip';
+  function render(){
+    const xs = col === 'tip' ? TIPS : BILLS, step = col === 'tip' ? .5 : 5, lo = col === 'tip' ? 1 : 0, hi = col === 'tip' ? 10.5 : 55;
+    const edges = []; for (let e = lo; e <= hi + 1e-9; e += step) edges.push(+e.toFixed(2));
+    const cnt = edges.slice(0, -1).map((e, i) => xs.filter(v => v >= e && (v < edges[i + 1])).length);
+    const W = 640, H = 250, L = 46, R = 18, T = 30, B = 46, top = Math.ceil(Math.max(...cnt) / 20) * 20;
+    const X = v => L + (v - lo) / (hi - lo) * (W - L - R), Y = c => H - B - c / top * (H - B - T);
+    let g = '';
+    niceTicks(0, top, 4).forEach(t => { g += '<line class="grid" x1="'+L+'" x2="'+(W - R)+'" y1="'+Y(t)+'" y2="'+Y(t)+'"/><text x="'+(L - 7)+'" y="'+(Y(t) + 4)+'" text-anchor="end">'+t+'</text>'; });
+    cnt.forEach((c, i) => { g += '<rect class="hb" x="'+X(edges[i]).toFixed(1)+'" y="'+Y(c).toFixed(1)+'" width="'+(X(edges[i + 1]) - X(edges[i])).toFixed(1)+'" height="'+(H - B - Y(c)).toFixed(1)+'" fill="'+BLUE+'" fill-opacity=".85" stroke="'+INK+'" stroke-width="1.2"/>'; });
+    g += '<line class="axis" x1="'+L+'" x2="'+(W - R)+'" y1="'+(H - B)+'" y2="'+(H - B)+'"/>';
+    niceTicks(lo, hi, col === 'tip' ? 10 : 11).forEach(t => { g += '<line x1="'+X(t)+'" x2="'+X(t)+'" y1="'+(H - B)+'" y2="'+(H - B + 4)+'" stroke="'+INK+'" stroke-width="1.5"/><text x="'+X(t)+'" y="'+(H - 4)+'" text-anchor="middle">$'+t+'</text>'; });
+    const m = mean(xs), md = median(xs);
+    g += '<path d="M'+X(m)+' '+(H - B + 2)+' l-11 18 h22 z" fill="'+MINT+'" stroke="'+INK+'" stroke-width="2"/>';
+    const fx = X(md);
+    g += '<line x1="'+fx+'" x2="'+fx+'" y1="'+(T - 22)+'" y2="'+(H - B)+'" stroke="'+INK+'" stroke-width="2.5"/><path d="M'+fx+' '+(T - 22)+' h58 l-9 10 l9 10 h-58 z" fill="'+BERRY+'" stroke="'+INK+'" stroke-width="2"/><text x="'+(fx + 25)+'" y="'+(T - 8)+'" text-anchor="middle" style="fill:#fff;font-weight:800;font-size:12px">middle</text>';
+    if (col === 'tip' && PIN.v != null){ const px = X(PIN.v), hy = (px > fx - 12 && px < fx + 70) ? T + 26 : T - 10; g += '<line x1="'+px+'" x2="'+px+'" y1="'+hy+'" y2="'+(H - B)+'" stroke="'+PINK+'" stroke-width="3.5" stroke-dasharray="6 4"/><circle cx="'+px+'" cy="'+hy+'" r="8" fill="'+PINK+'" stroke="'+INK+'" stroke-width="2"/>'; }
+    $('#realchart').innerHTML = g;
+    const below = xs.filter(v => v < m).length;
+    $('#realread').innerHTML = col === 'tip'
+      ? '<b>Mean '+money(m)+'</b> (green) · <b>median '+money(md)+'</b> (flag) · most common '+money(modes(xs)[0])+' ('+xs.filter(v => v === modes(xs)[0]).length+' tables)' + (PIN.v != null ? ' · <b style="color:#B0215D">your pin '+money(PIN.v)+'</b>' : '')
+      : '<b>Mean '+money(m)+'</b> (green) · <b>median '+money(md)+'</b> (flag) · '+below+' of 244 bills are below the mean';
+    $$('#realseg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.c === col ? 'true' : 'false'));
+  }
+  $$('#realseg button').forEach(b => b.addEventListener('click', () => { col = b.dataset.c; render(); if (col === 'bill') addXP('bills'); }));
+  ENTER.s12 = render;
+  render();
+  miniQuiz($('#realq'), [
+    {q:'Tips: which is larger, the mean or the median?', o:['The mean', 'The median'], a:0, why:'Mean $3.00, median $2.90: a short tail, a small gap.'},
+    {q:'Bills: why is the mean ($19.79) above the median ($17.80)?', o:['A long tail of big bills pulls it up', 'Most bills are above $19.79'], a:0, why:'145 of the 244 bills (59%) are below the mean. A few big bills pull the balance point right.'},
+  ], 'real');
+})();
+
+/* =========================================================== 13. which one to report */
+(function report(){
+  const C = [
+    {q:'Home prices in a town with a few mansions', a:1, why:'A few mansions pull the mean up. The median shows a typical home.'},
+    {q:'Splitting a $48 pizza bill between 4 friends', a:0, why:'A fair share is the mean: $48 ÷ 4 = $12.'},
+    {q:'Which shoe size a shop should order most of', a:2, why:'The most common size sells most.'},
+    {q:'Pay in a company where the boss earns 40 times the rest', a:1, why:'One huge salary drags the mean. The median shows typical pay.'},
+    {q:'Tea to buy for 30 days, from the cups sold each day', a:0, why:'Totals need the mean: mean cups per day × 30 days.'},
+    {q:'The favorite flavor in the class', a:2, why:'A label has no mean and no median. Only the mode.'},
+  ];
+  const O = ['Mean', 'Median', 'Mode'], host = $('#repgrid'); let done = 0, right = 0;
+  C.forEach((c, i) => {
+    const d = el('div', 'rcard', '<p>'+c.q+'</p><div class="rb">'+O.map((o, j) => '<button type="button" class="btn sm" data-j="'+j+'">'+o+'</button>').join('')+'</div><p class="rwhy" aria-live="polite"></p>');
+    $$('button', d).forEach(b => b.addEventListener('click', () => {
+      const ok = +b.dataset.j === c.a;
+      $$('button', d).forEach((x, j) => { x.disabled = true; if (j === c.a) x.classList.add('right'); if (x === b && !ok) x.classList.add('wrong'); });
+      $('.rwhy', d).innerHTML = '<b>'+(ok ? 'Yes.' : 'It’s the '+O[c.a].toLowerCase()+'.')+'</b> '+c.why;
+      d.classList.add(ok ? 'ok' : 'bad'); done++; if (ok){ right++; addXP('rep' + i); }
+      $('#repscore').textContent = done < 6 ? done + ' of 6' : right + ' of 6 right' + (right === 6 ? '. Perfect!' : '');
+    }));
+    host.appendChild(d);
+  });
+})();
+
+/* =========================================================== 14. arcade */
+const LEVELS = [
+  {id:'mn', n:'Find the mean', d:'Add, then divide', bg:'#F7B32B', items:[
+    {q:'Tips: $2, $3, $4. What is the mean?', opts:['$3', '$9', '$4'], a:0, why:'2 + 3 + 4 = 9, and 9 ÷ 3 = $3.'},
+    {q:'Tips: $1, $1, $1, $5. What is the mean?', opts:['$2', '$1', '$2.50'], a:0, why:'1 + 1 + 1 + 5 = 8, and 8 ÷ 4 = $2. Only one tip sits above it.'},
+    {q:'Five quiz scores: 6, 8, 9, 7, 10. What is the mean?', opts:['8', '9', '7.5'], a:0, why:'6 + 8 + 9 + 7 + 10 = 40, and 40 ÷ 5 = 8.'},
+    {q:'Four numbers have a mean of 5. What is their total?', opts:['20', '5', '9'], a:0, why:'Mean × count = total: 5 × 4 = 20.'},
+    {q:'Three tips have a mean of $4. A fourth tip of $8 arrives. What is the new mean?', opts:['$5', '$6', '$4'], a:0, why:'The old total is 3 × 4 = 12. Add 8: 20. Divide by 4: $5.'},
+    {q:'Add $10 to every tip. What happens to the mean?', opts:['It goes up by $10', 'It stays the same', 'It doubles'], a:0, why:'Every dot slides $10 to the right, and the balance point slides with them.'},
+    {q:'On the see-saw, the mean is…', opts:['The balance point', 'The middle dot', 'The tallest pile'], a:0, why:'The plank balances at the mean.'},
+  ]},
+  {id:'md', n:'Find the median', d:'Line up, take the middle', bg:'#F7C98F', items:[
+    {q:'Tips: $5, $1, $3. What is the median?', opts:['$3', '$1', '$5'], a:0, why:'Line them up: 1, 3, 5. The middle one is $3.'},
+    {q:'Tips: $2, $8, $4, $6. What is the median?', opts:['$5', '$4', '$6'], a:0, why:'Sorted: 2, 4, 6, 8. No single middle, so take halfway between 4 and 6: $5.'},
+    {q:'Ages: 12, 15, 13, 40, 14. What is the median?', opts:['14', '18.8', '13'], a:0, why:'Sorted: 12, 13, 14, 15, 40. The middle one is 14. The mean would be 18.8, pulled up by the 40.'},
+    {q:'Nine values stand in a line-up. The median is value number…', opts:['5', '4.5', '9'], a:0, why:'(9 + 1) ÷ 2 = 5: four values on each side.'},
+    {q:'Ten values stand in a line-up. The median is…', opts:['Halfway between values 5 and 6', 'Value number 5', 'Value number 10'], a:0, why:'An even count has two middle values. The median sits halfway between them.'},
+    {q:'Five tips. The largest changes from $9 to $90. The median…', opts:['Stays the same', 'Goes up a lot', 'Goes down'], a:0, why:'The middle of the line-up is still the same tip. Only the mean feels the change.'},
+    {q:'What is the median of 3, 3, 3, 4, 100?', opts:['3', '22.6', '4'], a:0, why:'The middle value is 3. The mean, 113 ÷ 5 = 22.6, is pulled far right by the 100.'},
+  ]},
+  {id:'mo', n:'Find the mode', d:'The tallest pile', bg:'#F7C4D2', items:[
+    {q:'Shoe sizes sold: 38, 39, 39, 40, 39, 41. What is the mode?', opts:['39', '40', '39.3'], a:0, why:'Size 39 was sold three times, more than any other.'},
+    {q:'Flavors: mango, taro, mango, lychee, mango, taro. What is the mode?', opts:['Mango', 'Taro', 'There is none'], a:0, why:'Mango appears three times. Labels can have a mode.'},
+    {q:'Tips: $1, $2, $3, $4, $5. Every tip appears once. What about the mode?', opts:['No value is more common than the others', '$3 is the mode', '$5 is the mode'], a:0, why:'No pile is taller than another, so the mode tells you nothing here.'},
+    {q:'Tips: $2, $2, $5, $5, $7. What is the mode?', opts:['Two modes: $2 and $5', '$2 only', '$7'], a:0, why:'Two piles tie. A data set with two modes is called bimodal.'},
+    {q:'Which average can you find for the favorite colors of a class?', opts:['Only the mode', 'The mean and the median', 'All three'], a:0, why:'Colors are labels: no adding, no line-up by size. Only counting.'},
+    {q:'The mode of the 244 real tips is…', opts:['$2.00', '$3.00', '$2.90'], a:0, why:'33 tables tipped exactly $2.00, more than any other amount.'},
+  ]},
+  {id:'wm', n:'Weighted mean', d:'Heavier stacks pull harder', bg:'#A9BCF2', items:[
+    {q:'10 cups at $4 and 30 cups at $6. What is the mean price per cup?', opts:['$5.50', '$5.00', '$6.00'], a:0, why:'(10 × 4 + 30 × 6) ÷ 40 = 220 ÷ 40 = $5.50. The bigger stack at $6 pulls it up.'},
+    {q:'Same menu, but 30 cups at $4 and 10 cups at $6?', opts:['$4.50', '$5.00', '$5.50'], a:0, why:'(30 × 4 + 10 × 6) ÷ 40 = 180 ÷ 40 = $4.50.'},
+    {q:'The test counts three times as much as the homework. Test 80, homework 60. What is the weighted mean?', opts:['75', '70', '80'], a:0, why:'(3 × 80 + 1 × 60) ÷ (3 + 1) = 300 ÷ 4 = 75.'},
+    {q:'20 students averaged 70; 30 students averaged 80. What is the mean of all 50?', opts:['76', '75', '80'], a:0, why:'(20 × 70 + 30 × 80) ÷ 50 = 3800 ÷ 50 = 76. The bigger class pulls harder.'},
+    {q:'When does the weighted mean equal the plain mean of the values?', opts:['When every stack has the same weight', 'Never', 'When the values are large'], a:0, why:'Equal weights pull equally, so nothing changes.'},
+    {q:'In x̄ = Σwᵢxᵢ ÷ Σwᵢ, what is wᵢ?', opts:['The weight of the value xᵢ', 'The width of the plank', 'The median'], a:0, why:'Each value xᵢ is counted with its weight wᵢ, like a stack of cups.'},
+  ]},
+  {id:'sk', n:'Read the shape', d:'Where does the tail go?', bg:'#B9D98C', opts:['Tail to the right', 'Tail to the left', 'Roughly symmetric'], items:[
+    {q:'Mean $8, median $5.', a:0, why:'The mean sits right of the median: a long tail pulls it right.'},
+    {q:'Exam scores: mean 62, median 70.', a:1, why:'The mean sits left of the median: a few very low scores pull it left.'},
+    {q:'Heights: mean 170 cm, median 170 cm.', a:2, why:'Mean and median meet: no long tail on either side.'},
+    {q:'Incomes in a city: the mean is far above the median.', a:0, why:'A few very high incomes form a long tail to the right.'},
+    {q:'The 244 real bills: mean $19.79, median $17.80.', a:0, why:'A few big bills form a tail to the right, as in T1.2.'},
+    {q:'Age at retirement: mean 60, median 63.', a:1, why:'Some people retire much earlier: a tail to the left.'},
+    {q:'One tip of $500 joins 99 tips close to $3. Which one moves more?', opts:['The mean', 'The median'], a:0, why:'The mean jumps by about $5. The median barely moves.'},
+  ]},
+  {id:'rp', n:'Which one to report?', d:'Mean, median or mode', bg:'#C7B3EA', opts:['Mean', 'Median', 'Mode'], items:[
+    {q:'Typical rent in a city with a few luxury flats', a:1, why:'A few very high rents pull the mean up. The median shows a typical rent.'},
+    {q:'Tea to buy for a week, from the cups sold each day', a:0, why:'A total needs the mean: mean cups per day × 7 days.'},
+    {q:'The most popular pizza topping', a:2, why:'A topping is a label. Only the mode works.'},
+    {q:'Typical waiting time when a few people wait for hours', a:1, why:'The long waits drag the mean. The median stays with most people.'},
+    {q:'Sharing the cost of a taxi fairly', a:0, why:'A fair share is the mean: total ÷ number of people.'},
+    {q:'The T-shirt size a shop should order most of', a:2, why:'The most common size sells most.'},
+  ]},
+  {id:'boss', n:'Boss: build the tips', d:'Four targets. Drag five dots to hit each one.', bg:'#E9718F', boss:true, inv:true},
+  {id:'lab', n:'See-saw lab', d:'Type your own numbers', bg:'#FFFFFF', tool:true},
+];
+(function arcade(){
+  const host = $('#arcade');
+  const SK = 't14-stars';
+  let best = sget(SK, {});
+  let play = null;
+  function starsHTML(n){ let s = ''; for (let k = 0; k < 3; k++) s += k < n ? '★' : '<span class="off">★</span>'; return s; }
+  const scn = host.closest('.scene');
+  const mini = '<svg viewBox="0 0 90 44" width="86" height="42" aria-hidden="true"><rect x="4" y="22" width="82" height="5" rx="2.5" fill="#D9A066" stroke="'+INK+'" stroke-width="1.5"/>' + [[14,16],[26,16],[26,8],[40,16],[72,16]].map(p => '<circle cx="'+p[0]+'" cy="'+p[1]+'" r="4" fill="#2F55D4" stroke="'+INK+'" stroke-width="1.5"/>').join('') + '<path d="M36 27 L28 40 H44 Z" fill="#6E9F2E" stroke="'+INK+'" stroke-width="1.5"/></svg>';
+  function tiles(){
+    play = null; scn.classList.remove('playing');
+    host.innerHTML = '<div class="tiles">' + LEVELS.map((L, i) => '<button class="tile" type="button" data-i="'+i+'" style="background:'+L.bg+'"><span class="ln">'+(L.boss ? 'Final level' : L.tool ? 'Tool' : 'Level '+(i + 1))+'</span><span class="tn">'+L.n+'</span><span class="td">'+L.d+'</span>'+(L.tool ? '<span class="ts">'+mini+'</span>' : '<span class="ts" aria-label="'+(best[L.id] || 0)+' of 3 stars">'+starsHTML(best[L.id] || 0)+'</span>')+'</button>').join('') + '</div>';
+    $$('.tile', host).forEach(t => t.addEventListener('click', () => { const L = LEVELS[+t.dataset.i]; if (L.tool) lab(); else if (L.inv) inverse(L); else start(L); }));
+  }
+  function start(L){
+    let qs;
+    if (L.boss){ qs = []; LEVELS.filter(x => x.items).forEach(x => x.items.forEach((it, j) => qs.push(Object.assign({}, it, {opts: it.opts || x.opts, own: !!it.opts, k: x.id + j})))); qs = shuffle(qs).slice(0, 10); }
+    else qs = shuffle(L.items.map((it, j) => Object.assign({}, it, {opts: it.opts || L.opts, own: !!it.opts, k: L.id + j})));
+    qs = qs.map(q => { if (!q.own) return q; const order = shuffle(q.opts.map((_, j) => j)); return Object.assign({}, q, {opts: order.map(j => q.opts[j]), a: order.indexOf(q.a)}); });
+    play = {L, qs, i:0, miss:0, streak:0}; scn.classList.add('playing');
+    question();
+  }
+  function question(){
+    const p = play, q = p.qs[p.i];
+    host.innerHTML = '<div class="card qpanel"><div class="qhead"><span class="lvl">'+p.L.n+'</span><span>Question '+(p.i + 1)+' of '+p.qs.length+'</span><span class="streak">'+FLAME+'Streak '+p.streak+'</span></div>'
+      + '<div class="qbar"><i style="width:'+(100*p.i/p.qs.length)+'%"></i></div>'
+      + '<div class="qtext">'+q.q+'</div>'
+      + '<div class="opts">'+q.opts.map((o, j) => '<button class="opt" type="button" data-j="'+j+'">'+o+'</button>').join('')+'</div>'
+      + '<div class="fb" aria-live="polite"></div>'
+      + '<div class="qnav"><button class="btn" type="button" data-act="quit">Back to levels</button><button class="btn sun" type="button" data-act="next" disabled>'+(p.i === p.qs.length - 1 ? 'See my stars' : 'Next question')+'</button></div></div>';
+    $$('.opt', host).forEach(b => b.addEventListener('click', () => answer(+b.dataset.j)));
+    $('[data-act="quit"]', host).addEventListener('click', tiles);
+    $('[data-act="next"]', host).addEventListener('click', () => { p.i++; if (p.i < p.qs.length) question(); else finish(); });
+    const first = $('.opt', host); if (first) first.focus({preventScroll:true});
+  }
+  function answer(j){
+    const p = play, q = p.qs[p.i], ok = j === q.a;
+    $$('.opt', host).forEach((b, k) => { b.disabled = true; if (k === q.a) b.classList.add('right'); if (k === j && !ok) b.classList.add('wrong'); });
+    if (ok){ p.streak++; addXP('aq:' + q.k); } else { p.streak = 0; p.miss++; }
+    $('.streak', host).innerHTML = FLAME + 'Streak ' + p.streak;
+    $('.fb', host).innerHTML = (ok ? '<b>Right!</b> ' : '<b>Not quite.</b> It’s “'+q.opts[q.a]+'”. ') + q.why;
+    const nx = $('[data-act="next"]', host); nx.disabled = false; nx.focus({preventScroll:true});
+  }
+  function finish(){
+    const p = play, n = p.qs.length, right = n - p.miss;
+    const stars = p.miss === 0 ? 3 : p.miss <= 2 ? 2 : 1;
+    if (stars > (best[p.L.id] || 0)){ best[p.L.id] = stars; sset(SK, best); }
+    host.innerHTML = '<div class="card qpanel donebox"><span class="lvl" style="font-family:var(--font-display);font-weight:800;font-size:22px">'+p.L.n+'</span><div class="bigstars" aria-label="'+stars+' of 3 stars">'+starsHTML(stars)+'</div><div style="font-size:18px">You got <b>'+right+' of '+n+'</b> right.'+(stars === 3 ? ' Not a single slip!' : stars === 2 ? ' Almost perfect.' : ' Try once more: the reasons will stick.')+'</div><div class="row" style="justify-content:center"><button class="btn sun big" type="button" data-act="again">Play again</button><button class="btn big" type="button" data-act="back">Back to levels</button></div></div>';
+    $('[data-act="again"]', host).addEventListener('click', () => start(p.L));
+    $('[data-act="back"]', host).addEventListener('click', tiles);
+    if (stars >= 2) confetti();
+  }
+  /* ---------- boss: build five tips ---------- */
+  const fmt$ = v => '$' + (Math.round(v * 100) / 100).toString();
+  const ITG = [
+    {t:'mean $5 and median $2', ok:x => mean(x) === 5 && median(x) === 2, tip:x => 'Five tips with a mean of $5 add up to $25. For a median of $2, the middle tip in the line-up must be $2.'},
+    {t:'mean $6 and median $8', ok:x => mean(x) === 6 && median(x) === 8, tip:x => 'Five tips with a mean of $6 add up to $30. The middle tip must be $8, so the tail has to go to the left.'},
+    {t:'mean $7 and median $7, with five different tips', ok:x => mean(x) === 7 && median(x) === 7 && new Set(x).size === 5, tip:x => 'The total must be $35 and the middle tip $7. Keep the line-up balanced around $7, with no two dots on the same value.'},
+    {t:'mode $3, median $4 and mean $6', ok:x => { const m = modes(x); return m.length === 1 && m[0] === 3 && median(x) === 4 && mean(x) === 6; }, tip:x => 'Two dots on $3 make the tallest pile, the middle one on $4, and all five must add up to $30. Keep the other two on different values.'},
+  ];
+  function inverse(L){
+    const ts = ITG.slice(); let i = 0, miss = 0, xs, sel, solved;
+    scn.classList.add('playing');
+    const o = {W:640, H:230, PY:150, lo:0, hi:20, r:10, ticks:[0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20], fmt:t => '$' + t};
+    function draw(){
+      const T = ts[i]; xs = [2, 6, 10, 14, 18]; sel = 0; solved = false;
+      host.innerHTML = '<div class="card qpanel inv labbox"><div class="qhead"><span class="lvl">'+L.n+'</span><span>Target '+(i + 1)+' of '+ts.length+'</span><span class="streak">Misses: '+miss+'</span></div>'
+        + '<div class="qbar"><i style="width:'+(100 * i / ts.length)+'%"></i></div>'
+        + '<div class="qtext">Target: five tips with <b>'+T.t+'</b>.</div>'
+        + '<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center"><span class="smallnote">Drag the dots. Keys: ← → move the yellow dot, ↑ ↓ pick another. Whole dollars only.</span><span class="bigread" id="iread" style="margin-left:auto;font-size:19px"></span></div>'
+        + '<svg class="chart dragsvg" id="ichart" viewBox="0 0 640 230" tabindex="0" role="img" aria-label="Five tips on the see-saw"></svg>'
+        + '<div class="fb" aria-live="polite"></div>'
+        + '<div class="qnav"><button class="btn" type="button" data-act="quit">Back to levels</button><span class="row" style="gap:8px"><button class="btn" type="button" data-act="check">Check my tips</button><button class="btn sun" type="button" data-act="next" disabled>'+(i === ts.length - 1 ? 'See my stars' : 'Next target')+'</button></span></div></div>';
+      const svg = $('#ichart'); let last;
+      function render(){
+        last = seesaw(Object.assign({}, o, {xs, sel}));
+        svg.innerHTML = last.g;
+        const m = modes(xs);
+        $('#iread').textContent = 'mean ' + fmt$(mean(xs)) + ' · median ' + fmt$(median(xs)) + ' · mode ' + (m.length ? m.map(fmt$).join(' and ') : 'none');
+      }
+      dragger(svg, pt => { if (solved) return null; let best = null, bd = 28; last.pos.forEach((q, j) => { const d = Math.hypot(q[0] - pt.x, q[1] - pt.y); if (d < bd){ bd = d; best = j; } }); if (best != null) sel = best; return best; },
+        (j, pt) => { xs[j] = Math.round(Math.max(0, Math.min(20, xFromSvg(pt.x, o)))); render(); },
+        null);
+      svg.addEventListener('keydown', e => { if (solved) return; const k = e.key; if (!/^Arrow/.test(k)) return; e.preventDefault(); e.stopPropagation(); if (k === 'ArrowUp' || k === 'ArrowDown') sel = (sel + (k === 'ArrowUp' ? 1 : 4)) % 5; else xs[sel] = Math.max(0, Math.min(20, xs[sel] + (k === 'ArrowRight' ? 1 : -1))); render(); });
+      render();
+      $('[data-act="quit"]', host).addEventListener('click', tiles);
+      $('[data-act="check"]', host).addEventListener('click', () => {
+        if (solved) return;
+        const fb = $('.fb', host);
+        if (T.ok(xs)){ solved = true; fb.innerHTML = '<b>Right!</b> Your tips: ' + xs.slice().sort((a, b) => a - b).map(v => '$' + v).join(', ') + '.'; addXP('inv' + i); const nx = $('[data-act="next"]', host); nx.disabled = false; nx.focus({preventScroll:true}); }
+        else { miss++; $('.streak', host).textContent = 'Misses: ' + miss; fb.innerHTML = '<b>Not yet.</b> ' + T.tip(xs); }
+      });
+      $('[data-act="next"]', host).addEventListener('click', () => { i++; if (i < ts.length) draw(); else done(); });
+    }
+    function done(){
+      const stars = miss === 0 ? 3 : miss <= 2 ? 2 : 1;
+      if (stars > (best[L.id] || 0)){ best[L.id] = stars; sset(SK, best); }
+      host.innerHTML = '<div class="card qpanel donebox"><span class="lvl" style="font-family:var(--font-display);font-weight:800;font-size:22px">'+L.n+'</span><div class="bigstars" aria-label="'+stars+' of 3 stars">'+starsHTML(stars)+'</div><div style="font-size:18px">Four sets of tips built with <b>'+miss+'</b> miss'+(miss === 1 ? '' : 'es')+'.</div><div class="row" style="justify-content:center"><button class="btn sun big" type="button" data-act="again">Play again</button><button class="btn big" type="button" data-act="back">Back to levels</button></div></div>';
+      $('[data-act="again"]', host).addEventListener('click', () => inverse(L));
+      $('[data-act="back"]', host).addEventListener('click', tiles);
+      if (stars >= 2) confetti();
+    }
+    draw();
+  }
+  /* ---------- lab: your own numbers on the see-saw ---------- */
+  function lab(){
+    scn.classList.add('playing');
+    host.innerHTML = '<div class="card qpanel labbox" style="max-width:900px;display:grid;gap:10px">'
+      + '<div class="qhead"><span class="lvl">See-saw lab</span><button class="btn sm" type="button" data-act="quit">Back to levels</button></div>'
+      + '<form class="labform" id="lform"><label for="lin">Type or paste numbers, separated by spaces or commas. Use a point for decimals: 2.5</label><span class="row" style="gap:8px;flex-wrap:nowrap"><input id="lin" type="text" inputmode="decimal" autocomplete="off" value="2, 2, 2, 2, 2, 2, 2, 2, 2, 42"><button class="btn sun sm" type="submit">Put them on the see-saw</button></span></form>'
+      + '<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"><button class="btn sm" type="button" id="lreal">The 244 real tips</button><button class="btn sm" type="button" id="lfar">Add one far value</button><span class="smallnote" id="lnote" aria-live="polite"></span></div>'
+      + '<svg class="chart" id="labchart" viewBox="0 0 640 230" style="max-height:34vh" role="img" aria-label="Your numbers on the see-saw"></svg>'
+      + '<p class="bigread" id="lread" style="margin:0;font-size:20px"></p></div>';
+    $('[data-act="quit"]', host).addEventListener('click', tiles);
+    let xs = [];
+    function parse(t){ return (t.match(/-?\d+(?:\.\d+)?/g) || []).map(Number).filter(v => isFinite(v)); }
+    function render(){
+      const note = $('#lnote');
+      if (!xs.length){ $('#labchart').innerHTML = ''; $('#lread').textContent = 'No numbers yet.'; note.textContent = ''; return; }
+      let lo = Math.min(0, ...xs), hi = Math.max(...xs); if (hi - lo < 1) hi = lo + 1;
+      const tk = niceTicks(lo, hi, 6), step = tk.length > 1 ? tk[1] - tk[0] : 1;
+      lo = Math.min(lo, tk[0]); hi = tk[tk.length - 1] < hi ? tk[tk.length - 1] + step : tk[tk.length - 1];
+      const big = xs.length > 40, ticks = niceTicks(lo, hi, 6);
+      const bin = big ? (hi - lo) / 60 : 0, ys = big ? xs.map(v => lo + Math.round((v - lo) / bin) * bin) : xs;
+      const maxStack = Math.max(...[...ys.reduce((m, v) => m.set(v.toFixed(4), (m.get(v.toFixed(4)) || 0) + 1), new Map()).values()]);
+      const r = Math.max(1, Math.min(9, 118 / (2 * maxStack + 1)));
+      const s = seesaw({W:640, H:230, PY:146, lo, hi, xs:ys, r, dsw:Math.min(1.8, r * .4), flagTop:4, ticks, fmt:t => +t.toFixed(2)});
+      $('#labchart').innerHTML = s.g;
+      const m = mean(xs), md = median(xs), mo = modes(xs);
+      $('#lread').innerHTML = 'n = ' + xs.length + ' · mean <b>' + (+m.toFixed(2)) + '</b> · median <b>' + (+md.toFixed(2)) + '</b> · mode ' + (mo.length === 0 ? 'none' : mo.length > 3 ? mo.length + ' values tie' : mo.map(v => +v.toFixed(2)).join(' and '));
+      note.textContent = big ? 'Many numbers: equal-looking dots are grouped so they fit. The readout uses the exact values.' : (Math.abs(m - md) > (hi - lo) * .05 ? 'The pivot and the flag are apart: look for a long tail.' : 'The pivot and the flag sit close together.');
+    }
+    $('#lform').addEventListener('submit', e => { e.preventDefault(); const v = parse($('#lin').value); if (v.length){ xs = v.slice(0, 400); addXP('lab'); } else xs = []; render(); });
+    $('#lreal').addEventListener('click', () => { xs = TIPS.slice(); $('#lin').value = 'the 244 real tips'; render(); addXP('lab'); });
+    $('#lfar').addEventListener('click', () => { if (!xs.length) return; const v = Math.round(Math.max(...xs) * 3 + 5); xs = xs.concat([v]); $('#lin').value = xs.length > 30 ? $('#lin').value + ', ' + v : xs.join(', '); render(); addXP('lab'); });
+    xs = parse($('#lin').value); render();
+  }
+  tiles();
+  $('#resetall').addEventListener('click', () => { XP = {}; sset(XPK, XP); best = {}; sset(SK, best); renderXP(false); tiles(); });
+})();
+
+/* =========================================================== 15. recap */
+(function recap(){
+  const plank = '<rect x="3" y="30" width="48" height="5" rx="2.5" fill="#D9A066" stroke="'+INK+'" stroke-width="2"/>';
+  const dot = (x, y, c) => '<circle cx="'+x+'" cy="'+y+'" r="4" fill="'+(c || '#2F55D4')+'" stroke="'+INK+'" stroke-width="1.5"/>';
+  const I = {
+    mn:'<svg viewBox="0 0 54 54">'+plank+dot(10, 25)+dot(18, 25)+dot(18, 17)+dot(26, 25)+dot(44, 25)+'<path d="M23 35 L15 49 H31 Z" fill="#6E9F2E" stroke="'+INK+'" stroke-width="2"/></svg>',
+    md:'<svg viewBox="0 0 54 54"><path d="M27 6 V44" stroke="'+INK+'" stroke-width="2.5"/><path d="M27 6 h18 l-5 5 l5 5 h-18 z" fill="#D93A62" stroke="'+INK+'" stroke-width="2"/>'+dot(7, 40)+dot(17, 40)+dot(27, 40, '#F7B32B')+dot(37, 40)+dot(47, 40)+'</svg>',
+    mo:'<svg viewBox="0 0 54 54">'+dot(12, 44)+dot(27, 44, '#F7B32B')+dot(27, 35, '#F7B32B')+dot(27, 26, '#F7B32B')+dot(27, 17, '#F7B32B')+dot(42, 44)+dot(42, 35)+'<path d="M4 50 H50" stroke="'+INK+'" stroke-width="2.5"/></svg>',
+    wm:'<svg viewBox="0 0 54 54">'+plank+'<rect x="6" y="22" width="10" height="8" fill="#FFE0BD" stroke="'+INK+'" stroke-width="1.6"/><rect x="22" y="6" width="10" height="24" fill="#F6A85A" stroke="'+INK+'" stroke-width="1.6"/><rect x="38" y="16" width="10" height="14" fill="#EE7F1B" stroke="'+INK+'" stroke-width="1.6"/><path d="M29 35 L21 49 H37 Z" fill="#6E9F2E" stroke="'+INK+'" stroke-width="2"/></svg>',
+    sk:'<svg viewBox="0 0 54 54"><path d="M4 46 C10 46 12 12 18 12 C26 12 30 40 50 44" fill="#DEE5FB" stroke="'+INK+'" stroke-width="2.5"/><path d="M18 46 V14" stroke="#D93A62" stroke-width="2.5"/><path d="M24 50 l-5 0 l5 -7 l5 7 z" fill="#6E9F2E" stroke="'+INK+'" stroke-width="1.6"/></svg>',
+    gm:'<svg viewBox="0 0 54 54"><path d="M6 46 V6 M6 46 H50" stroke="'+INK+'" stroke-width="2.5" fill="none"/><path d="M8 34 L28 14 L48 40" fill="none" stroke="#2F55D4" stroke-width="3"/><path d="M8 34 L48 40" stroke="#6E9F2E" stroke-width="3"/>'+dot(8, 34)+dot(28, 14)+dot(48, 40)+'</svg>',
+    warn:'<svg viewBox="0 0 54 54"><path d="M27 5 L51 47 H3 Z" fill="#F7B32B" stroke="#fff" stroke-width="3" stroke-linejoin="round"/><path d="M27 20v13" stroke="'+INK+'" stroke-width="4" stroke-linecap="round"/><circle cx="27" cy="40" r="2.6" fill="'+INK+'"/></svg>',
+  };
+  const C = [
+    ['mn', 'Mean', 'The balance point: x̄ = Σxᵢ ÷ n. One far value pulls it.'],
+    ['md', 'Median', 'The middle of the line-up. Even count: halfway between the two middle values.'],
+    ['mo', 'Mode', 'The tallest pile. The only “typical” a label can have.'],
+    ['wm', 'Weighted mean', 'Each value pulls with its weight: Σwᵢxᵢ ÷ Σwᵢ.'],
+    ['sk', 'The tail decides', 'Tail to the right: mean above median. Tail to the left: below.'],
+    ['gm', 'Geometric mean', 'For growth rates: the one steady rate that ends at the same amount.'],
+  ];
+  $('#recap').innerHTML = C.map(([i, t, d]) => '<div class="rc"><span class="ri">'+I[i]+'</span><div><b>'+t+'</b><span>'+d+'</span></div></div>').join('')
+    + '<div class="rc trap"><span class="ri">'+I.warn+'</span><div><b>The trap</b><span>A headline “average” can be the mean or the median. With a long tail, report the median, and say which one.</span></div></div>'
+    + '<div class="rc next"><div><b>The door to T1.5</b><span>Two stands both average a 4-minute wait. At one you always wait about 4 minutes. At the other it is 1 minute or 9. Which line do you join?</span><button class="btn sm" type="button" id="again" style="margin-top:8px;display:block">Watch T1.4 again</button></div></div>';
+  $('#again').addEventListener('click', () => go(0));
+})();
+/* =========================================================== confetti */
+function confetti(){
+  if (reduced) return;
+  const c = $('#confetti'), x = c.getContext('2d');
+  c.width = innerWidth; c.height = innerHeight;
+  const cols = ['#EE7F1B','#2F55D4','#F7B32B','#6E9F2E','#D93A62','#8E6CC9'];
+  const P = Array.from({length:150}, () => ({x:innerWidth/2 + (Math.random() - .5)*240, y:innerHeight*.4, vx:(Math.random() - .5)*15, vy:-Math.random()*15 - 4, r:Math.random()*7 + 5, c:cols[Math.floor(Math.random()*cols.length)], a:Math.random()*6, va:(Math.random() - .5)*.4}));
+  let t = 0;
+  (function f(){
+    x.clearRect(0, 0, c.width, c.height);
+    P.forEach(p => { p.vy += .42; p.x += p.vx; p.y += p.vy; p.a += p.va; x.save(); x.translate(p.x, p.y); x.rotate(p.a); x.fillStyle = p.c; x.fillRect(-p.r/2, -p.r/3, p.r, p.r*.66); x.restore(); });
+    if (++t < 120) requestAnimationFrame(f); else x.clearRect(0, 0, c.width, c.height);
+  })();
+}
+
+/* =========================================================== start */
+const m0 = /^#s(\d+)$/.exec(location.hash);
+go(m0 ? +m0[1] : 0);
+})();
+</script>
+</body>
+</html>

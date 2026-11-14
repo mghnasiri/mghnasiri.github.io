@@ -1,0 +1,2041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T1.2 — One variable: frequency tables, bar charts, histograms</title>
+<meta name="description" content="Which graph fits my variable, and how do I read the shape of a histogram? Frequency tables, bar and pie charts, classes, histograms, bin width, shape, cumulative distributions, the ogive and stem-and-leaf, with Lina and a real restaurant dataset.">
+<style>
+:root{color-scheme: light;
+  --milk:#F2EDF9; --paper:#FFFFFF; --wash:#F7F3FC;
+  --ink:#2A1C19; --ink-2:#5B4B66; --ink-3:#85799A; --line:#D9CFEA; --line-2:#E8E1F3;
+  --deep:#4B2D86; --deep-2:#6243A0;
+  --tag:#EE7F1B; --tag-soft:#FFE3CC; --tag-ink:#A04A00;
+  --ruler:#2F55D4; --ruler-soft:#DEE5FB; --ruler-ink:#1F3BA3;
+  --sun:#F7B32B; --sun-soft:#FDEFD2;
+  --mint:#6E9F2E; --berry:#D93A62; --taro:#8E6CC9; --taro-soft:#E7DEF5; --sugar:#B07A4A;
+  --ok:#4E8A1E; --ok-soft:#E3F1D0; --ok-ink:#365F14; --no:#D3375E; --no-soft:#FBE0E7; --no-ink:#A1203F;
+  --font-display:"Times New Roman",Times,"Liberation Serif",serif;
+  --font-body:"Times New Roman",Times,"Liberation Serif",serif;
+  --font-hand:var(--font-body);
+  --r:18px; --bw:2px; --shc:transparent; --dot:transparent;
+  --bg:var(--milk); --fg:var(--ink); --fg2:var(--ink-2); --stripe:transparent; --focus:var(--deep); --now:var(--deep);}
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%; margin:0}
+body{display:flex; flex-direction:column; overflow:hidden; background:var(--milk); color:var(--ink); font-family:var(--font-body); font-size:17px; font-size-adjust:.48; line-height:1.55; -webkit-font-smoothing:antialiased; font-variant-numeric:tabular-nums}
+button{font:inherit; color:inherit}
+:focus-visible{outline:3px solid var(--focus); outline-offset:3px}
+.visually-hidden{position:absolute!important; width:1px; height:1px; overflow:hidden; clip:rect(1px,1px,1px,1px); white-space:nowrap}
+@media (prefers-reduced-motion: reduce){
+*,*::before,*::after{animation:none!important; transition:none!important}
+}
+.bar{flex:none; position:relative; z-index:5; display:flex; align-items:center; gap:16px; height:54px; padding:0 24px; background:var(--milk); border-bottom:1px solid var(--line)}
+.ep{font-family:var(--font-display); font-weight:800; font-size:18px; color:var(--deep)}
+.bar .t{font-size:15px; color:var(--ink-2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0}
+.chapnm{display:inline-flex; align-items:center; gap:8px; font-size:14px; font-weight:700; color:var(--ink); white-space:nowrap}
+.chapnm::before{content:""; width:10px; height:10px; border-radius:50%; background:var(--now); flex:none; transition:background .3s}
+.prog{flex:1; min-width:70px; max-width:300px; height:6px; margin-left:auto; border-radius:999px; background:var(--line); overflow:hidden}
+.prog i{display:block; height:100%; width:0; background:var(--deep); border-radius:999px; transition:width .35s}
+.xp{font-weight:700; font-size:15px; color:var(--deep); white-space:nowrap}
+.xp.pulse{animation:pulse .6s}
+@keyframes pulse{40%{transform:scale(1.3)}}
+@media (max-width:820px){
+.bar .t{display:none}
+}
+@media (max-width:480px){
+.chapnm{display:none}
+.bar{padding:0 14px}
+}
+.ctrl{flex:none; z-index:5; display:flex; align-items:center; justify-content:space-between; gap:12px; height:64px; padding:0 24px; background:var(--milk); border-top:1px solid var(--line)}
+.dots{display:flex; gap:8px; align-items:center; flex-wrap:wrap; justify-content:center}
+.dots button{width:11px; height:11px; padding:0; border-radius:50%; border:2px solid var(--ink-3); background:transparent; cursor:pointer; transition:width .2s, height .2s, background .2s, border-color .2s}
+.dots button.seen{background:var(--ink-3)}
+.dots button.on{width:17px; height:17px; background:var(--ink); border-color:var(--ink)}
+.dots button:hover{border-color:var(--deep)}
+.pos{display:none; font-weight:700}
+@media (max-width:760px){
+.dots{display:none}
+.pos{display:block}
+.ctrl{padding:0 14px}
+}
+.btn{font-weight:700; font-size:16px; color:var(--ink); background:var(--paper); border:2px solid var(--ink); border-radius:999px; padding:8px 18px; cursor:pointer; transition:background .15s, border-color .15s, color .15s, transform .08s; line-height:1.2}
+.btn:hover{border-color:var(--deep); background:var(--wash)}
+.btn:active{transform:translateY(1px)}
+.btn.sun{background:var(--deep); border-color:var(--deep); color:#fff}
+.btn.sun:hover{background:var(--deep-2); border-color:var(--deep-2)}
+.btn.big{font-size:18px; padding:12px 26px}
+.btn.sm{font-size:15px; padding:6px 14px}
+.btn[aria-pressed="true"]{background:var(--deep); border-color:var(--deep); color:#fff}
+.btn:disabled{opacity:.45; cursor:default; transform:none}
+.btn.right{background:var(--ok-soft); border-color:var(--ok); color:var(--ok-ink); opacity:1}
+.btn.wrong{background:var(--no-soft); border-color:var(--no); color:var(--no-ink); opacity:1}
+.row{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+#deck{flex:1; min-height:0; position:relative}
+.scene{position:absolute; inset:0; overflow-y:auto; display:none; padding:clamp(20px,3vw,46px) clamp(16px,3.4vw,52px); color:var(--fg); background-color:var(--bg); background-image:linear-gradient(var(--stripe),var(--stripe)); background-size:100% 6px; background-repeat:no-repeat}
+.scene.on{display:flex}
+.scene-in{margin:auto; width:100%; max-width:1240px; display:grid; grid-template-columns:minmax(0,5fr) minmax(0,7fr); gap:clamp(22px,3.6vw,60px); align-items:center}
+.scene-in.wide{grid-template-columns:minmax(0,1fr); gap:16px}
+.scene-in.picwide{grid-template-columns:minmax(0,4fr) minmax(0,8fr)}
+@media (max-width:900px){
+.scene-in.picwide{grid-template-columns:minmax(0,1fr)}
+.scene-in{grid-template-columns:minmax(0,1fr)}
+}
+@media (min-width:1600px) and (min-height:960px){
+.scene-in{zoom:1.32}
+}
+@media (max-height:760px) and (min-width:901px){
+.scene{padding-top:16px; padding-bottom:14px}
+.txt{gap:10px}
+.pic{gap:12px}
+.recap{gap:10px}
+.rc{padding:9px 12px}
+.rc span{font-size:13.5px}
+.scene-in.wide{gap:12px}
+.nextline{font-size:15.5px}
+}
+.scene.on .scene-in{animation:enter .4s cubic-bezier(.2,.7,.3,1)}
+@keyframes enter{from{opacity:.3; transform:translateY(10px)} to{opacity:1; transform:none}}
+.th-plum{--stripe:transparent; --chip:var(--deep)}
+.th-sun{--stripe:var(--sun); --chip:var(--sun)}
+.th-lilac{--stripe:var(--taro); --chip:var(--taro)}
+.th-sky{--stripe:var(--sugar); --chip:var(--sugar)}
+.th-mint{--stripe:var(--mint); --chip:var(--mint)}
+.th-pink{--stripe:var(--berry); --chip:var(--berry)}
+.th-night,.th-indigo{--chip:var(--deep); --bg:var(--deep); --fg:#fff; --fg2:rgba(255,255,255,.86); --stripe:transparent; --focus:var(--sun)}
+.th-trap{--chip:var(--berry); --bg:var(--ink); --fg:#fff; --fg2:rgba(255,255,255,.84); --stripe:transparent; --focus:var(--sun)}
+.txt{display:flex; flex-direction:column; align-items:flex-start; gap:14px; min-width:0}
+.kick{display:inline-flex; align-items:center; gap:10px; font-weight:600; font-size:15px; color:var(--fg2)}
+.kick b{display:grid; place-items:center; min-width:28px; height:28px; padding:0 8px; border-radius:999px; background:var(--paper); color:var(--ink); box-shadow:inset 0 0 0 2.5px var(--stripe); font-family:var(--font-display); font-weight:800; font-size:14px; line-height:1}
+.th-plum .kick b{box-shadow:inset 0 0 0 2px var(--line)}
+.th-night .kick b,.th-indigo .kick b,.th-trap .kick b{box-shadow:none}
+h1,h2,h3{font-family:var(--font-display); font-weight:700; margin:0; letter-spacing:-.01em; text-wrap:balance}
+h1{font-size:clamp(46px,6.2vw,88px); line-height:.94}
+h2{font-size:clamp(30px,3.5vw,50px); line-height:1.02}
+.sub{margin:0; font-size:clamp(17px,1.45vw,20px); line-height:1.5; color:var(--fg2); max-width:38ch}
+.take{display:block; border-left:4px solid var(--stripe); padding:2px 0 2px 14px; font-weight:700; font-size:16.5px; line-height:1.45; color:var(--fg); max-width:44ch}
+.th-plum .take,.th-night .take,.th-indigo .take,.th-trap .take{border-left-color:var(--sun)}
+.take svg{display:none}
+.fr{font-size:14px; color:var(--fg2)}
+.meta{display:flex; flex-wrap:wrap; gap:4px 22px}
+.pill{font-size:14px; color:var(--fg2)}
+.pic{min-width:0; display:flex; flex-direction:column; gap:16px}
+.card{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:var(--r); padding:16px 18px}
+.th-night .card,.th-indigo .card,.th-trap .card{border-color:transparent}
+.hint{font-size:14.5px; color:var(--ink-2)}
+.lina{display:flex; gap:12px; align-items:flex-start; max-width:44ch}
+.lina .av{flex:none; width:50px; height:50px}
+.lina .av svg{width:100%; height:100%; display:block}
+.bubble{color:var(--fg); font-size:16.5px; line-height:1.45}
+.bubble b{display:block; font-family:var(--font-display); font-weight:800; font-size:14.5px; line-height:1.3; color:var(--deep)}
+.th-night .bubble b,.th-indigo .bubble b,.th-trap .bubble b{color:var(--sun)}
+.card .bubble b{color:var(--deep)}
+.stand{width:100%; height:auto; max-height:calc(100dvh - 215px); display:block}
+.stand .cupbob{animation:bob 3s ease-in-out infinite; transform-box:fill-box; transform-origin:center bottom}
+.stand .cupbob:nth-of-type(2n){animation-delay:-1.4s}
+@keyframes bob{50%{transform:translateY(-6px) rotate(-1.5deg)}}
+.nb{position:relative; background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:16px; padding:28px 12px 12px 46px; overflow-x:auto}
+.nb::before{content:""; position:absolute; left:36px; top:0; bottom:0; width:2px; background:#F49BB3}
+.nb::after{content:""; position:absolute; left:22px; right:22px; top:9px; height:10px; background:radial-gradient(circle, var(--milk) 3px, var(--line) 3.6px, transparent 4.3px) 0 0/30px 10px repeat-x}
+.nb table{border-collapse:collapse; width:100%; font-family:var(--font-body); font-size:clamp(17px,1.45vw,21px); line-height:1; font-variant-numeric:tabular-nums}
+.nb th{font-weight:700; text-align:left; font-size:.76em; color:var(--ink-2); padding:4px 10px 6px; border-bottom:2px solid #C5D0F0; white-space:nowrap}
+.nb td{padding:2px 10px; height:41px; border-bottom:1px solid #DCE3F7; white-space:nowrap; font-weight:600; transition:background .2s}
+.nb .cc{width:42px; padding:2px 4px}
+.nb td.cc svg{display:block; margin:auto}
+.nb tr.gone{display:none}
+#nb2{padding-top:24px}
+#nb2 td{height:36px}
+.nb tr.new td{animation:write .8s ease-out}
+@keyframes write{from{clip-path:inset(0 100% 0 0)} to{clip-path:inset(0 0 0 0)}}
+.nb .hl{background:var(--sun-soft)}
+.nb th.hl{background:var(--sun); color:var(--ink)}
+.nb .hl2{background:var(--sun); box-shadow:inset 0 0 0 2px var(--ink)}
+.counter{font-size:16px; color:var(--fg)}
+.counter b{font-family:var(--font-display); font-size:24px}
+.words{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; width:100%; max-width:440px}
+.word{display:flex; align-items:center; gap:10px; font-weight:700; font-size:17px; color:var(--ink); background:var(--paper); border:2px solid var(--ink); border-radius:12px; padding:8px 12px; cursor:pointer; text-align:left; transition:background .15s, border-color .15s}
+.word:hover{border-color:var(--deep); background:var(--wash)}
+.word[aria-pressed="true"]{background:var(--deep); border-color:var(--deep); color:#fff}
+.word .wi{width:28px; height:28px; flex:none; display:grid; place-items:center}
+.word .wi svg{width:100%; height:100%}
+.defcard{font-size:16px; max-width:44ch; padding:12px 16px}
+.compact .qrow{grid-template-columns:minmax(0,1fr) auto; align-items:center; column-gap:12px; row-gap:4px; padding:8px 0}
+.compact .qrow:first-child{padding-top:0}
+.compact .qf{grid-column:1/-1; min-height:0}
+.compact .qf:empty{display:none}
+.compact .qq{font-size:15.5px; line-height:1.35}
+.qrow{display:grid; gap:8px; padding:10px 0; border-top:1px solid var(--line-2)}
+.qrow:first-child{border-top:0; padding-top:0}
+.qq{font-weight:700}
+.qo{display:flex; flex-wrap:wrap; gap:8px}
+.qf{font-size:15px; color:var(--ink-2); min-height:1.4em}
+.mi svg{width:100%; height:auto; display:block}
+.duo{display:grid; grid-template-columns:1fr 1fr; gap:12px; width:100%; max-width:500px}
+.mas{display:flex; gap:10px; align-items:center; background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:16px; padding:10px; transition:transform .25s, opacity .25s}
+.mas .mi{flex:none; width:66px}
+.mas b{display:block; font-family:var(--font-display); font-size:20px; line-height:1}
+.mas .role{display:block; font-size:14px; line-height:1.3; margin-top:3px; color:var(--ink-2)}
+.mas.dim{opacity:.4}
+.mas.act{transform:translateY(-5px)}
+@media (max-width:520px){
+.duo{grid-template-columns:1fr}
+}
+.machine{background:var(--ink); color:#fff; border-radius:24px; padding:18px; display:grid; gap:16px; --focus:var(--sun)}
+.mtabs{display:flex; flex-wrap:wrap; gap:8px}
+.mtabs .btn{border-color:rgba(255,255,255,.55); background:transparent; color:#fff}
+.mtabs .btn:hover{border-color:#fff; background:rgba(255,255,255,.08)}
+.mtabs .btn[aria-pressed="true"]{background:var(--sun); color:var(--ink); border-color:var(--sun)}
+.slots{display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1.3fr); align-items:center; gap:10px}
+.slot{background:var(--paper); color:var(--ink); border:2px solid var(--paper); border-radius:14px; min-height:80px; display:grid; place-items:center; align-content:center; text-align:center; font-family:var(--font-display); font-weight:700; font-size:clamp(22px,2.2vw,30px); line-height:1.05; padding:8px}
+.slot.out{background:var(--taro-soft); border-color:var(--taro-soft)}
+.slot.out.good{background:var(--ok-soft); border-color:#9BC255}
+.slot.out.bad{background:var(--no-soft); border-color:#F07C98; animation:shake .45s}
+.slot small{display:block; font-family:var(--font-body); font-size:12.5px; font-weight:700; margin-top:5px; color:var(--no-ink)}
+.op{font-family:var(--font-display); font-weight:800; font-size:40px; color:var(--sun)}
+@media (max-width:520px){
+.slot{font-size:18px; padding:6px 3px; min-height:64px}
+.op{font-size:28px}
+.slots{gap:6px}
+}
+.mfoot{display:flex; align-items:center; justify-content:space-between; gap:12px}
+.lamps{display:flex; gap:8px; align-items:center; font-size:13px; color:rgba(255,255,255,.78)}
+.lamp{width:24px; height:24px; border-radius:50%; background:#5B4B66; border:2px solid rgba(255,255,255,.8)}
+.lamp.good{background:#9BC255; box-shadow:0 0 16px #9BC255}
+.lamp.bad{background:#F07C98; box-shadow:0 0 16px #F07C98}
+@keyframes shake{20%{transform:translateX(-6px) rotate(-2deg)}40%{transform:translateX(6px) rotate(2deg)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.speech{display:flex; gap:14px; align-items:center; min-height:104px; font-size:16.5px; line-height:1.4}
+.speech .mi{flex:none; width:100px}
+.speech b{display:block; font-family:var(--font-display); font-size:19px}
+.sortgrid{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px}
+@media (max-width:1150px){
+.sortgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+.scard{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:14px; padding:10px 11px; display:flex; flex-direction:column; gap:6px}
+.scard .nm{font-weight:700; font-size:15px; line-height:1.2}
+.scard .ex{font-family:var(--font-display); font-weight:700; font-size:24px; line-height:1; color:var(--ink-2)}
+.scard .bb{display:flex; gap:6px; margin-top:auto}
+.scard .bb button{flex:1; font-weight:700; font-size:14px; border:2px solid var(--ink); border-radius:10px; padding:6px 4px; cursor:pointer; color:var(--ink); transition:background .15s}
+.scard .bb .bt{background:var(--tag-soft)}
+.scard .bb .br{background:var(--ruler-soft)}
+.scard .bb .bt:hover{background:var(--tag)}
+.scard .bb .br:hover{background:var(--ruler); color:#fff}
+.scard.ok{border-color:var(--ok); box-shadow:inset 0 0 0 1px var(--ok)}
+.scard.bad{border-color:var(--no); box-shadow:inset 0 0 0 1px var(--no)}
+.scard .why{font-size:13.5px; line-height:1.35}
+.scard .why b{display:block; font-size:14px}
+.scard.ok .why b{color:var(--ok-ink)}
+.scard.bad .why b{color:var(--no-ink)}
+.bins{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.bin{border:2px dashed var(--ink-3); border-radius:18px; padding:10px 12px; min-height:104px; color:var(--ink)}
+.bin.tag{background:var(--tag-soft); border-color:#E9A86A}
+.bin.ruler{background:var(--ruler-soft); border-color:#8EA3E6}
+.bh{display:flex; align-items:center; gap:8px; font-weight:700; font-size:15.5px}
+.mi.s{width:50px; flex:none}
+.bin .chips{display:flex; flex-wrap:wrap; gap:6px; margin-top:8px}
+.bin .chips span{font-size:13.5px; font-weight:700; padding:3px 11px; border-radius:999px; animation:drop .35s}
+.bin.tag .chips span{background:var(--tag); color:var(--ink)}
+.bin.ruler .chips span{background:var(--ruler); color:#fff}
+@keyframes drop{from{transform:translateY(-16px) scale(.8); opacity:.3}}
+.score{font-family:var(--font-display); font-weight:800; font-size:26px}
+.lane{display:grid; gap:6px}
+.lh{display:flex; align-items:center; gap:10px; flex-wrap:wrap; font-size:17px}
+.fampill{font-size:13px; font-weight:700; padding:2px 10px; border-radius:999px}
+.fampill.ruler{background:var(--ruler); color:#fff}
+.fampill.tag{background:var(--tag); color:var(--ink)}
+.lane svg{width:100%; height:auto; max-height:100px; display:block}
+.lane svg text{font-family:var(--font-body); font-size:14px; fill:var(--ink-2); font-weight:700}
+.lread{font-family:var(--font-display); font-weight:800; font-size:30px; line-height:1.1}
+.lread small{font-family:var(--font-body); font-weight:400; font-size:14.5px; color:var(--ink-2); margin-left:10px}
+#hopper{transition:transform .32s ease-in-out}
+.hopin.hop{animation:hop .38s ease-out}
+@keyframes hop{45%{transform:translateY(-34px)}}
+input[type=range]{width:100%; accent-color:var(--ruler); height:30px; cursor:pointer; margin:0}
+.stairs{width:100%; height:auto; max-height:38vh; display:block}
+.stairs .stp{cursor:pointer}
+.stairs .stp:focus{outline:none}
+.stairs .stp:focus-visible rect{stroke:var(--deep); stroke-width:5}
+.stairs .snm{font-family:var(--font-display); font-weight:800; font-size:21px}
+.stairs .spw{font-family:var(--font-display); font-weight:800; font-size:23px; fill:var(--ink)}
+.stairs .bl{font-family:var(--font-body); font-weight:700; font-size:15px}
+#hop2{transition:transform .45s cubic-bezier(.3,1.5,.5,1)}
+.pch{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:10px}
+.pch b{font-family:var(--font-display); font-size:26px; line-height:1}
+.pws{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px}
+.pw{display:flex; flex-direction:column; align-items:center; gap:5px; text-align:center; font-size:13px; font-weight:600; color:var(--ink-3); line-height:1.2}
+.pwc{width:38px; height:38px; border-radius:50%; display:grid; place-items:center; border:2px solid var(--line); font-family:var(--font-display); font-weight:800; font-size:24px; background:var(--wash); color:var(--ink-3)}
+.pwc svg{width:20px; height:20px}
+.pw.on{color:var(--ink)}
+.pw.on .pwc{border-color:var(--ink); color:var(--ink)}
+.pw.on.tag .pwc{background:var(--tag)}
+.pw.on.ruler .pwc{background:var(--ruler); color:#fff}
+.pex{display:grid; gap:2px; margin-top:10px; font-size:16px}
+.pex i{font-family:var(--font-display); font-style:normal; font-weight:700; font-size:22px}
+.pex .nope{color:var(--no-ink)}
+.pex s{text-decoration-thickness:2px}
+.pcols{font-size:14px; color:var(--ink-2); margin-left:auto}
+.thermo svg{width:100%; height:auto; display:block; max-height:48vh}
+.thermo .tn{font-family:var(--font-display); font-weight:800; font-size:19px; fill:var(--ink)}
+.thermo .tv{font-family:var(--font-display); font-weight:700; font-size:24px; fill:var(--ink)}
+.thermo .zl{font-weight:700; font-size:14px; fill:var(--no-ink); font-family:var(--font-body)}
+.ratio{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap}
+.ratio .big{font-family:var(--font-display); font-weight:800; font-size:clamp(42px,4.6vw,62px); line-height:1}
+.ratio .lab{font-size:15px; color:var(--ink-2)}
+.tsay{font-size:16px; min-height:3em; margin:0}
+.seg{display:inline-flex; border:2px solid var(--ink); border-radius:12px; overflow:hidden; background:var(--paper)}
+.seg button{font-weight:700; font-size:16px; border:0; background:var(--paper); color:var(--ink); padding:8px 16px; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:background .15s}
+.seg button:hover{background:var(--wash)}
+.seg button + button{border-left:2px solid var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--deep); color:#fff}
+.seg button svg{width:22px; height:22px}
+.pfwrap{display:grid; grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr); gap:14px; align-items:center}
+@media (max-width:620px){
+.pfwrap{grid-template-columns:1fr}
+}
+.pf svg{width:100%; height:auto; display:block}
+.pf svg text{font-family:var(--font-body); font-size:15px; fill:var(--ink-2); font-weight:600}
+.pf svg .ann{fill:var(--ink); font-weight:700; font-size:16px}
+.pf svg .ttl{fill:var(--ink); font-family:var(--font-display); font-weight:800; font-size:20px}
+.pfcap{font-size:16px; margin:0; min-height:2.9em}
+.drawline{stroke-dasharray:1400; stroke-dashoffset:1400; animation:draw 1.2s ease-out forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.growbar{transform-box:fill-box; transform-origin:left center; animation:grow .6s ease-out}
+@keyframes grow{from{transform:scaleX(0)}}
+.popin{transform-box:fill-box; transform-origin:center; animation:popin .35s ease-out}
+@keyframes popin{from{transform:scale(0)}}
+.jarwrap{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.95fr); gap:16px; align-items:center}
+@media (max-width:620px){
+.jarwrap{grid-template-columns:1fr}
+}
+.jarwrap svg{width:100%; height:auto; display:block}
+#jarsvg{max-height:30vh}
+#spoonsvg{max-height:18vh}
+.jl{text-align:center; font-weight:700; font-size:14.5px; margin-top:4px}
+.jread{text-align:center; font-size:16px}
+.jread .big{display:block; font-family:var(--font-display); font-weight:800; font-size:clamp(36px,3.8vw,50px); line-height:1.05}
+.frostq{font-family:var(--font-display); font-weight:800; font-size:48px; fill:var(--ink)}
+.frost{transition:opacity .6s}
+.strip svg{width:100%; height:auto; max-height:17vh; display:block}
+.strip text{font-size:13px; fill:var(--ink-2); font-weight:600; font-family:var(--font-body)}
+.strip .ann{fill:var(--ink); font-weight:700}
+.pairs{display:grid; gap:10px; max-width:48ch}
+.pairc{display:flex; gap:12px; align-items:center; background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:14px; padding:10px 14px; font-size:15.5px; line-height:1.4}
+.pairc svg{flex:none; width:44px; height:44px}
+.sym{font-family:"Times New Roman",Georgia,serif; font-style:italic; font-size:1.12em; white-space:nowrap}
+.sg2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+@media (max-width:560px){
+.sg2{grid-template-columns:1fr}
+}
+.sgc{border-radius:16px; padding:10px 14px; border:1px solid var(--line); color:var(--ink); background:var(--paper)}
+.sgc.guess{background:var(--taro-soft); border-color:var(--taro-soft)}
+.sgc h3{font-size:22px; margin:0 0 4px; display:flex; align-items:center; gap:10px}
+.sgc p{margin:0; font-size:15px; line-height:1.4}
+.sgc svg{width:36px; height:36px; display:block; flex:none}
+.hazard{position:absolute; left:0; right:0; top:0; height:12px; background:repeating-linear-gradient(-45deg,var(--berry) 0 16px,var(--ink) 16px 32px)}
+.trapcups{display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:8px}
+.tc{display:flex; flex-direction:column; align-items:center; gap:6px}
+.code{font-family:var(--font-display); font-weight:800; font-size:24px; width:48px; height:48px; display:grid; place-items:center; border-radius:12px; border:2px solid var(--ink); background:var(--paper); transition:background .2s}
+.code.here{background:var(--sun)}
+.tc small{font-size:12.5px; font-weight:600; color:var(--ink-2); text-align:center; line-height:1.2}
+.tout{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+.to{border:1px solid var(--line); border-radius:14px; padding:10px 12px}
+.to .k{font-size:14px; font-weight:600; color:var(--ink-2)}
+.to .v{font-family:var(--font-display); font-weight:800; font-size:40px; line-height:1.05}
+.to.bad{background:var(--no-soft); border-color:var(--no-soft)}
+.to.bad .v{color:var(--no-ink)}
+.to.good{background:var(--ok-soft); border-color:var(--ok-soft)}
+.to.good .v{color:var(--ok-ink)}
+.tmsg{font-size:16px; min-height:3em; margin:0}
+.jersey{display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap; font-family:var(--font-display); font-weight:800; font-size:32px; border-top:1px solid var(--line-2); padding-top:12px}
+.jersey svg{width:70px; height:70px}
+.jersey .x{color:var(--no)}
+.fact{font-size:14px; color:var(--fg2); max-width:46ch; margin:0}
+.map{width:100%; max-width:880px; height:auto; display:block; margin:0 auto}
+.map .ph{font-family:var(--font-display); font-weight:700; font-size:17px; fill:rgba(255,255,255,.8)}
+.map .st{cursor:pointer}
+.map .st:focus{outline:none}
+.map .st:focus-visible .cap,.map .st.on .cap{stroke:var(--sun); stroke-width:6}
+.map .code{font-family:var(--font-display); font-weight:800; font-size:19px; fill:#fff}
+.map .snm{font-family:var(--font-body); font-size:13.5px; fill:rgba(255,255,255,.84); font-weight:400}
+.map .here{font-family:var(--font-body); font-weight:700; font-size:14px; fill:var(--ink)}
+.legend{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+.legend .tapnote{font-style:normal; color:var(--fg2); font-size:15px}
+.legend > span{display:inline-flex; align-items:center; gap:8px; font-weight:600; font-size:15px; padding:5px 13px; border-radius:999px; background:var(--paper); color:var(--ink)}
+.mapwrap{overflow-x:auto}
+@media (max-width:700px){
+.map{min-width:700px}
+}
+.legend i{width:28px; height:7px; border-radius:4px; display:inline-block; flex:none}
+.stcard{display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr); gap:12px; align-items:start; padding:10px 16px; width:100%; max-width:1000px; margin:0 auto}
+.stcard h3{font-size:21px}
+.stcard p{margin:4px 0 0; font-size:15px; line-height:1.4}
+@media (max-width:620px){
+.stcard{grid-template-columns:1fr}
+}
+.rl{border-radius:12px; padding:9px 12px; font-size:15px; line-height:1.35}
+.rl.tag{background:var(--tag-soft)}
+.rl.ruler{background:var(--ruler-soft)}
+.rl b{display:block}
+.tiles{display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:14px}
+.tile{text-align:left; color:var(--ink); border:0; border-radius:18px; padding:14px; cursor:pointer; display:flex; flex-direction:column; gap:4px; min-height:136px; transition:transform .15s}
+.tile:hover{transform:translateY(-3px)}
+.tile .ln{font-size:13px; font-weight:700; opacity:.8}
+.tile .tn{font-family:var(--font-display); font-weight:800; font-size:23px; line-height:1.05}
+.tile .td{font-size:14px; line-height:1.3}
+.tile .ts{font-size:22px; letter-spacing:3px; margin-top:auto; color:var(--ink)}
+.tile .ts .off{opacity:.28}
+.qpanel{width:100%; max-width:780px; margin:0 auto}
+.qhead{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; font-weight:600}
+.qhead .lvl{font-family:var(--font-display); font-weight:800; font-size:20px}
+.qbar{height:8px; border-radius:999px; background:var(--line-2); overflow:hidden; margin:10px 0 16px}
+.qbar i{display:block; height:100%; background:var(--mint); width:0; border-radius:999px; transition:width .3s}
+.qtext{font-family:var(--font-display); font-weight:700; font-size:clamp(25px,2.7vw,36px); line-height:1.15; margin:4px 0 18px}
+.opts{display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:10px}
+.opt{font-weight:700; font-size:18px; color:var(--ink); background:var(--paper); border:2px solid var(--ink); border-radius:12px; padding:14px; cursor:pointer; transition:background .15s, border-color .15s, transform .08s}
+.opt:hover{background:var(--wash); border-color:var(--deep)}
+.opt:active{transform:translateY(1px)}
+.opt:disabled{cursor:default}
+.opt.right{background:var(--ok-soft); border-color:var(--ok); color:var(--ok-ink)}
+.opt.wrong{background:var(--no-soft); border-color:var(--no); color:var(--no-ink)}
+.fb{margin-top:14px; font-size:16.5px; min-height:2.8em}
+.fb b{font-family:var(--font-display); font-size:19px}
+.qnav{display:flex; justify-content:space-between; gap:10px; margin-top:12px; flex-wrap:wrap}
+.streak{display:inline-flex; align-items:center; gap:6px; padding:3px 12px; border-radius:999px; background:var(--sun-soft); font-size:14.5px}
+.streak svg{width:16px; height:16px}
+.donebox{text-align:center; display:grid; gap:10px; justify-items:center}
+.bigstars{font-size:58px; letter-spacing:8px; color:#E39A0E; line-height:1}
+.bigstars .off{color:var(--line)}
+.det{display:grid; gap:10px}
+.det .qrow2{display:flex; gap:12px; align-items:center; flex-wrap:wrap; justify-content:space-between; padding:7px 12px; border:1px solid var(--line); border-radius:12px}
+.det .qrow2.dim{opacity:.4}
+.det input[type=text]{font:inherit; font-size:16px; padding:8px 12px; border:2px solid var(--ink); border-radius:12px; width:min(100%,360px)}
+.det .res{padding:12px 14px; border-radius:14px; border:1px solid var(--line); font-size:16.5px; display:flex; gap:12px; align-items:center}
+.det .res.tag{background:var(--tag-soft); border-color:var(--tag-soft)}
+.det .res.ruler{background:var(--ruler-soft); border-color:var(--ruler-soft)}
+.det .res .mi{width:70px; flex:none}
+.recap{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px}
+.recap .rc.trap{grid-column:auto}
+@media (max-width:980px){
+.recap{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+.recap .rc.trap{grid-column:auto}
+.recap{grid-template-columns:1fr}
+}
+.rc{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:16px; padding:12px 14px; display:flex; gap:12px; align-items:flex-start}
+.rc .ri{flex:none; width:44px; height:44px; display:grid; place-items:center}
+.rc .ri svg{width:100%; height:100%}
+.rc b{display:block; font-family:var(--font-display); font-size:18px; line-height:1.15; margin-bottom:3px}
+.rc span{font-size:14px; line-height:1.4}
+.rc.trap{background:var(--ink); color:#fff; border-color:var(--ink)}
+.rc.next{background:var(--sun-soft); border-color:var(--sun)}
+details.src{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:16px; padding:12px 16px}
+details.src summary{cursor:pointer; font-weight:700}
+details.src p,details.src ol{font-size:14.5px; line-height:1.5}
+details.src ol{padding-left:1.3em; margin:8px 0 0}
+details.src li{margin-bottom:6px}
+details.src a{color:var(--ruler-ink)}
+.scene.playing .txt .sub, .scene.playing .txt .kick{display:none}
+.zoomcard svg{width:100%; height:auto; max-height:46vh; display:block; margin-top:12px}
+.zcap{margin:10px 0 0; font-size:16px; line-height:1.45; min-height:2.9em}
+.popq{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+@media (max-width:620px){
+.popq{grid-template-columns:1fr}
+}
+.pq{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:16px; padding:12px; display:flex; flex-direction:column; gap:10px}
+.pq.ok{border-color:var(--ok); box-shadow:inset 0 0 0 1px var(--ok)}
+.pq.bad{border-color:var(--no); box-shadow:inset 0 0 0 1px var(--no)}
+.pqh{display:flex; gap:10px; align-items:flex-start}
+.pqi{flex:none; width:40px; height:40px}
+.pqi svg{width:100%; height:100%}
+.pqh b{font-size:15.5px; line-height:1.3}
+.pqo{display:grid; gap:6px}
+.pqo .btn{text-align:left; padding:6px 12px; font-size:14.5px; border-radius:12px; border-width:1.5px}
+.pqa{display:grid; gap:6px; font-size:14.5px; line-height:1.35}
+.pqans{justify-self:start; font-weight:700; padding:4px 10px; border-radius:10px; background:var(--ok-soft); color:var(--ok-ink)}
+.whynot{display:flex; flex-wrap:wrap; gap:8px; max-width:48ch}
+.whynot span{display:inline-flex; align-items:center; gap:6px; font-size:14px; font-weight:600; padding:4px 12px 4px 6px; border-radius:999px; background:var(--paper); color:var(--ink); border:1px solid var(--line)}
+.whynot svg{width:22px; height:22px; flex:none}
+.soupcard{display:grid; gap:12px}
+.soupcard svg{width:100%; height:auto; max-height:40vh; display:block}
+#steam{transition:opacity .8s}
+.souprs{border-radius:14px; border:1px solid var(--line); padding:10px 14px; font-size:15.5px; line-height:1.4; background:var(--wash); min-height:4.6em}
+.souprs b{display:block; font-family:var(--font-display); font-size:19px}
+.souprs.good{background:var(--ok-soft); border-color:var(--ok-soft)}
+.souprs.bad{background:var(--no-soft); border-color:var(--no-soft)}
+.souprs.census{background:var(--sun-soft); border-color:var(--sun-soft)}
+.mnemo{font-family:var(--font-display); font-weight:800; font-size:clamp(22px,2.1vw,29px); line-height:1.25; display:grid; gap:2px; padding:10px 18px}
+.mnemo b{color:var(--berry); font-size:1.2em}
+.pscard{display:grid; gap:14px}
+.psgrid{display:grid; grid-template-columns:minmax(0,1fr) 74px minmax(0,1fr); gap:8px; align-items:center}
+.pbox,.sbox{border:1px solid var(--line); border-radius:16px; padding:12px; display:grid; gap:6px; min-height:220px; align-content:start}
+.pbox{background:#EFE9F8; border-color:#E2D8F2}
+.sbox{background:#FDF3DC; border-color:#F6E2B4}
+.nm2{display:inline-flex; align-items:center; gap:8px; font-family:var(--font-display); font-weight:800; font-size:21px}
+.nm2 svg{width:34px; height:34px}
+.who{font-size:15px; line-height:1.3}
+.who span{display:block; font-size:12.5px; font-weight:700; color:var(--ink-2)}
+.what{font-size:14px; color:var(--ink-2); font-weight:600}
+.val{font-family:var(--font-display); font-weight:800; font-size:clamp(26px,2.5vw,36px); line-height:1.05; display:flex; align-items:center; gap:8px}
+.val svg{width:26px; height:26px; flex:none}
+.val.bump{animation:bump .45s}
+@keyframes bump{40%{transform:scale(1.15)}}
+.note{font-size:13px; color:var(--ink-2)}
+.psarrow{display:grid; justify-items:center; gap:4px; font-size:12.5px; font-weight:700; text-align:center}
+.psarrow svg{width:56px}
+.pshist{font-size:14px; display:flex; flex-wrap:wrap; gap:6px; align-items:center}
+.pshist span{padding:2px 8px; border-radius:8px; background:#FDF3DC; border:1px solid #F6E2B4; font-weight:600}
+@media (max-width:620px){
+.psgrid{grid-template-columns:1fr}
+.psarrow svg{transform:rotate(90deg)}
+}
+.symcard{display:grid; gap:10px}
+.symgrid{display:grid; gap:6px}
+.symhead,.symrow{display:grid; grid-template-columns:minmax(78px,.8fr) 1fr 1fr; gap:8px; align-items:center}
+.sgh{display:grid; text-align:center; font-size:13px; color:var(--ink-2)}
+.sgh b{font-family:var(--font-display); font-size:18px; color:var(--ink)}
+.symrow{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:12px; padding:3px 5px; cursor:pointer; text-align:left; transition:border-color .15s, background .15s}
+.symrow:hover{border-color:var(--deep)}
+.symrow[aria-pressed="true"]{background:var(--sun-soft); border-color:var(--berry); box-shadow:inset 0 0 0 1px var(--berry)}
+.sl{font-weight:700; font-size:16px; padding-left:6px}
+.sc{display:grid; justify-items:center; border-radius:10px; padding:2px 4px}
+.sc.par{background:#EFE9F8}
+.sc.st{background:#FDF3DC}
+.sc .sym{font-size:28px; line-height:1.05}
+.sc small{font-size:12.5px; color:var(--ink-2)}
+.symex{font-size:15px; line-height:1.5; background:var(--wash); border-radius:12px; padding:8px 12px; border:1px solid var(--line); min-height:4.6em}
+#salt{transition:opacity .9s}
+#confetti{position:fixed; inset:0; pointer-events:none; z-index:50}
+.guesscard{display:grid; gap:10px; align-content:start}
+.ghead{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap}
+.gtag{font-family:var(--font-display); font-weight:800; font-size:15px; color:var(--deep)}
+.gnote{font-size:13px; color:var(--ink-2)}
+.gq{margin:0; font-family:var(--font-display); font-weight:800; font-size:clamp(19px,1.7vw,24px); line-height:1.22; color:var(--fg)}
+.gopts{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px}
+.gopt{font:inherit; font-weight:700; font-size:16.5px; text-align:left; padding:9px 16px; border:2px solid var(--ink); border-radius:12px; background:var(--paper); color:var(--ink); cursor:pointer; transition:background .15s, border-color .15s}
+.gopt:hover{background:var(--wash); border-color:var(--deep)}
+.gopt[aria-pressed="true"]{background:var(--deep); border-color:var(--deep); color:#fff}
+.gsaved{margin:0; font-size:14px; color:var(--ink-2)}
+.gtab{border-collapse:collapse; width:100%; font-variant-numeric:tabular-nums; font-size:15.5px}
+.gtab th,.gtab td{padding:4px 10px; border-bottom:1px solid var(--line-2); text-align:center}
+.gtab th{font-size:13px; color:var(--ink-2)}
+.gtab th:first-child,.gtab td:first-child{text-align:left}
+.gtab tr.avg td{border-top:2px solid var(--ink); border-bottom:0; font-weight:800; background:var(--sun-soft)}
+.gback{border-left:3px solid var(--sun); padding:4px 0 4px 12px; font-size:14.5px; line-height:1.45; max-width:52ch}
+.guessbar{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-left:4px solid var(--sun); border-radius:12px; padding:9px 14px; font-size:14.5px; line-height:1.45}
+.guessbar:empty,.gback:empty{display:none}
+.thread{font-size:13.5px; line-height:1.4; padding:2px 0 2px 12px; border-left:2px solid currentColor; color:var(--fg2); max-width:52ch}
+.doors3{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px}
+.door{display:grid; gap:10px; align-content:start}
+.door h4{margin:0; font-family:var(--font-display); font-weight:800; font-size:18px; color:var(--fg)}
+.inv .picks{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:14px}
+.inv .ph{margin:0 0 6px; font-weight:700; font-size:14px; color:var(--ink-2)}
+.inv .plist{display:grid; gap:5px}
+.inv .pk{font:inherit; font-size:14.5px; font-weight:600; text-align:left; padding:4px 11px; border:1.5px solid var(--ink); border-radius:10px; background:var(--paper); color:var(--ink); cursor:pointer}
+.inv .pk:hover{background:var(--wash); border-color:var(--deep)}
+.inv .pk[aria-pressed="true"]{background:var(--deep); border-color:var(--deep); color:#fff; font-weight:700}
+.inv .qtext{font-size:clamp(19px,1.8vw,25px)}
+.th-night .btn.sun,.th-indigo .btn.sun,.th-trap .btn.sun{background:var(--sun); border-color:var(--sun); color:var(--ink)}
+.th-night .card .btn.sun,.th-indigo .card .btn.sun,.th-trap .card .btn.sun{background:var(--deep); border-color:var(--deep); color:#fff}
+@media (max-width:760px){
+.doors3,.inv .picks{grid-template-columns:1fr}
+.gopts{grid-template-columns:1fr}
+}
+@media (max-height:760px) and (min-width:901px){
+.gtab th,.gtab td{padding:3px 9px}
+.gopt{padding:7px 12px; font-size:15px}
+.inv .pk{padding:3px 10px; font-size:13.5px}
+.inv .plist{gap:3px}
+.inv .qtext{font-size:18px}
+.thread{font-size:12.5px; padding:2px 0 2px 10px}
+.gback{font-size:13.5px; padding:4px 0 4px 10px}
+.guessbar{padding:5px 12px; font-size:13px; line-height:1.3}
+.recap{gap:8px}
+}
+/* ---------- this page ---------- */
+.th-peach{--stripe:#4E9C91; --chip:#4E9C91}
+.chart{width:100%;height:auto;display:block}
+.chart text{font-family:var(--font-body);font-size:13px;fill:var(--ink-2);font-weight:600}
+.chart .val{fill:var(--ink);font-weight:700;font-size:13px}
+.chart .ttl{fill:var(--ink);font-family:var(--font-display);font-weight:800;font-size:16px}
+.chart .grid{stroke:#E6DFF1;stroke-width:1.2}
+.chart .axis{stroke:var(--ink);stroke-width:2}
+.chart rect.hb{transition:y .5s ease, height .5s ease, x .5s ease, width .5s ease, opacity .3s}
+.chart rect.gb{transform-box:fill-box;transform-origin:50% 100%;transition:transform .5s cubic-bezier(.3,.8,.3,1)}
+.chart text.val{transition:opacity .3s}
+.chart .dot{fill:#2F55D4;opacity:.55}
+.hero2{display:grid;gap:14px}
+.hrow{display:grid;grid-template-columns:76px minmax(0,1fr) 40px minmax(0,1.25fr);gap:10px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:18px;padding:10px 14px;color:var(--ink)}
+.hrow .raw{font-family:var(--font-hand);font-weight:700;font-size:22px;line-height:1.15;color:var(--ink-2)}
+.hrow .arr{font-family:var(--font-display);font-weight:800;font-size:30px;text-align:center}
+.cupfield{width:100%;height:auto;display:block}
+.cupfield .cg{transition:transform .9s cubic-bezier(.3,.8,.3,1)}
+.cupfield .rl2{transition:opacity .5s .5s;font-family:var(--font-body);font-weight:700;font-size:15px;fill:var(--ink)}
+.ftab{border-collapse:collapse;font-size:16px;width:100%}
+.ftab th,.ftab td{padding:6px 10px;border-bottom:2px solid #EEE8F6;text-align:left}
+.ftab th{font-size:13px;color:var(--ink-2)}
+.ftab td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.ftab tr.sel td{background:var(--sun-soft)}
+.ftab tr.tot td{border-top:2px solid var(--ink);font-weight:700}
+.ftab tbody tr{cursor:pointer}
+.ftab .sw{display:inline-block;width:12px;height:12px;border-radius:3px;border:1.5px solid var(--ink);margin-right:8px;vertical-align:-1px}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:center}
+@media (max-width:620px){
+.two{grid-template-columns:1fr}
+}
+.formula{font-size:17px;font-weight:600;padding:8px 12px;border-radius:12px;background:#F7F3FC;border:1px dashed #C8BDDA;min-height:2.6em}
+.formula .big{font-family:var(--font-display);font-weight:800;font-size:22px}
+.minihead{font-weight:700;font-size:15px;margin:0 0 4px}
+.smallnote{font-size:13.5px;color:var(--ink-2);margin:0}
+.ctrlrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.bigread{font-family:var(--font-display);font-weight:800;font-size:clamp(22px,2.2vw,30px);line-height:1.1}
+.bigread small{display:block;font-family:var(--font-body);font-weight:500;font-size:14px;color:var(--ink-2)}
+.chips2{display:flex;flex-wrap:wrap;gap:6px}
+.chips2 span{font-size:13.5px;font-weight:700;padding:3px 10px;border-radius:999px;border:1px solid var(--line);background:var(--ruler-soft)}
+.rules{display:flex;flex-wrap:wrap;gap:8px}
+.rules span{display:inline-flex;gap:6px;align-items:center;font-size:14px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--ok-soft);border:1px solid var(--ok)}
+.thumbs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:620px){
+.thumbs{grid-template-columns:1fr}
+}
+.thumb{background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:16px;padding:10px;cursor:pointer;text-align:left;display:grid;gap:6px}
+.thumb b{font-size:15px}
+.thumb.ok{border-color:var(--ok);border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.thumb.bad{border-color:var(--no);border-color:var(--no);box-shadow:inset 0 0 0 1px var(--no)}
+.fb2{font-size:15.5px;line-height:1.4;min-height:2.8em;margin:0}
+.examples{display:grid;gap:6px}
+.examples div{font-size:14.5px;padding:6px 10px;border-radius:10px;border:1px solid #E6DFF1;color:var(--ink-2);transition:all .25s}
+.examples div.on{border-color:var(--ink);background:var(--sun-soft);color:var(--ink);font-weight:600}
+.shape-lab{font-family:var(--font-display);font-weight:800;font-size:26px}
+.stemwrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:14px;align-items:start}
+@media (max-width:620px){
+.stemwrap{grid-template-columns:1fr}
+}
+.billchips{display:flex;flex-wrap:wrap;gap:6px}
+.billchips span{font-family:var(--font-hand);font-weight:700;font-size:22px;padding:0 8px;border-radius:8px;background:#FDF3DC;border:1.5px solid var(--ink);transition:opacity .4s}
+.billchips span.used{opacity:.25}
+.stem{font-family:var(--font-hand);font-weight:700;font-size:30px;line-height:1.25;transition:transform .7s}
+.stem.rot{display:flex;align-items:flex-end;gap:8px;font-size:23px;line-height:1}
+.stem.rot .srow{display:flex;flex-direction:column-reverse;align-items:center;width:36px}
+.stem.rot .sk{text-align:center;padding-top:4px}
+.stem.rot .sb{border-left:0;border-top:2px solid var(--ink);width:100%;height:0}
+.stem.rot .lv{display:flex;flex-direction:column-reverse;align-items:center;padding-bottom:3px}
+.stem.rot .lv span{margin:0;line-height:.98}
+.stem .srow{display:grid;grid-template-columns:34px 14px 1fr;align-items:center}
+.stem .sk{text-align:right;color:var(--ruler-ink)}
+.stem .sb{border-left:2px solid var(--ink);height:1.2em}
+.stem .lv span{display:inline-block;margin-right:8px;animation:popl .35s ease-out both}
+@keyframes popl{from{transform:scale(0)}}
+.flow{display:grid;gap:10px}
+.flow .node{border:1px solid var(--line);border-radius:14px;padding:8px 12px;background:#fff;color:var(--ink);font-weight:600;font-size:15px;transition:all .3s;opacity:.45}
+.flow .node.on{opacity:1}
+.flow .node.tag.on{background:var(--tag-soft)}
+.flow .node.ruler.on{background:var(--ruler-soft)}
+.flow .lvl2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.flow .lvl3{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px}
+.flow .node b{display:block;font-family:var(--font-display);font-size:17px}
+.flow .node small{font-weight:500;font-size:13px}
+.varbtns{display:flex;flex-wrap:wrap;gap:8px}
+.lab-ta{width:100%;min-height:70px;font:inherit;font-size:14px;padding:8px 10px;border:2px solid var(--ink);border-radius:12px;resize:vertical}
+.cups2{grid-template-columns:minmax(0,1.45fr) minmax(0,1fr)}
+.cupfield .rl2{font-size:17px}
+#flowchart{max-height:27vh}
+@media (max-width:620px){
+.cups2{grid-template-columns:1fr}
+}
+#barflav{max-height:33vh}
+#barsize{max-height:16vh}
+@media (max-height:760px) and (min-width:901px){
+.ftab th,.ftab td{padding:3px 9px}
+.ftab{font-size:15px}
+.formula{padding:5px 12px;min-height:0;font-size:16px}
+.formula .big{font-size:19px}
+.compact .qrow{padding:5px 0}
+.flow{gap:7px}
+.flow .node{padding:5px 10px;font-size:14px}
+.flow .node b{font-size:15.5px}
+.flow .node small{font-size:12px}
+.lab-ta{min-height:46px}
+}
+.gopt .gshape{display:block;width:100%;height:38px;margin-bottom:4px}
+.pcard{background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:16px;padding:10px 12px;display:grid;gap:6px;align-content:start}
+.pcard .ph2{display:flex;align-items:center;gap:8px;font-weight:800;font-family:var(--font-display);font-size:17px;line-height:1.1}
+.pcard .ph2 svg{width:32px;height:auto;flex:none}
+.pcard .ph2 small{display:block;font-family:var(--font-body);font-weight:500;font-size:12.5px;color:var(--ink-2)}
+.pcard .raw2{font-family:var(--font-hand);font-size:20px;font-weight:700;color:var(--ink-2);line-height:1.1;min-height:2.2em}
+.pcard .pnote{font-size:13.5px;line-height:1.35;min-height:2.7em;margin:0}
+.pcard .chart{width:100%;height:auto;max-height:21vh}
+.pcard .btn{justify-self:start}
+.ibox svg{width:100%;height:auto;max-height:34vh;touch-action:none;display:block}
+.ibox .dd{cursor:grab}
+.ibox .dd .ring{fill:transparent}
+.ibox .dd:focus{outline:none}
+.ibox .dd:focus-visible .ring{stroke:var(--ink);stroke-width:2.5;stroke-dasharray:4 3}
+.ibox .hint{font-size:13.5px;color:var(--ink-2);margin:2px 0 0}
+@media (max-height:760px) and (min-width:901px){
+.pcard{padding:8px 10px;gap:4px}
+.pcard .raw2{font-size:18px}
+.pcard .pnote{font-size:13px}
+.ibox svg{max-height:27vh}
+}
+@media (min-width:1600px) and (min-height:960px){
+.ibox svg{max-height:21vh}
+}
+.gback.wait{display:none}
+@media (max-height:760px) and (min-width:901px){ #realhist{max-height:34vh} }
+</style>
+</head>
+<body>
+<header class="bar">
+  <span class="ep">T1.2</span>
+  <span class="t">One variable: frequency tables, bar charts, histograms</span>
+  <span class="chapnm" id="chapnm">Start</span>
+  <div class="prog" aria-hidden="true"><i id="progfill"></i></div>
+  <span class="xp" id="xp" title="Stars earned on this page">★ 0</span>
+</header>
+
+<main id="deck">
+
+<!-- 0 HOOK -->
+<section class="scene th-plum" id="s0" data-chap="Start" aria-label="What shape will the bills make?">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>T1.2</b>Playlist 1, episode 2</div>
+      <h1>What shape are the bills?</h1>
+      <p class="sub">Today a long list becomes a picture whose shape you can read. Guess first: you will see your answer again later.</p>
+      <div class="lina" data-say="A restaurant shared 244 real bills with me. Before we draw them, what do you think they look like?"></div>
+      <div class="row"><button class="btn sun big" type="button" data-go="next">Find out</button></div>
+      <div class="meta"><span class="pill">Builds on: T1.1 (Tag and Ruler)</span><span class="pill">Leads to: T1.4, T1.5, T1.6, T4.1</span></div>
+    </div>
+    <div class="pic"><div class="card guesscard" id="guess"></div></div>
+  </div>
+</section>
+
+<!-- 0b DOORS -->
+<section class="scene th-sky" id="s1" data-chap="Start" aria-label="Three columns, three piles">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>0</b>Tag and Ruler again</div>
+      <h2>Three columns, three piles</h2>
+      <p class="sub">Remember Tag and Ruler from T1.1? Each kind of column piles up in its own way. Press the button on each card.</p>
+      <div class="lina" data-say="Labels sort themselves into piles. Measurements need a little help first."></div>
+      <div class="take">To see a whole column at once, count how many fall in each pile. Measured amounts need ranges first.</div>
+    </div>
+    <div class="pic"><div class="doors3 piles" id="piles"></div></div>
+  </div>
+</section>
+
+<!-- 1 COUNT -->
+<section class="scene th-sun" id="s2" data-chap="Counting labels" aria-label="Count the cups">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>1</b>Counting labels</div>
+      <h2>Count the cups</h2>
+      <p class="sub">On Saturday Lina sold 40 cups. Her list is a mess. Sort it, then count.</p>
+      <div class="lina" data-say="Mango, taro, mango, matcha, mango… I lost count at twelve."></div>
+      <div class="take">A frequency table lists each label and how many times it appears. That count is its frequency.</div>
+      <div class="fr">In French: tableau des fréquences</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="two cups2">
+          <svg class="cupfield" id="cupfield" viewBox="0 0 470 290" aria-label="Forty cups, coloured by flavor"></svg>
+          <table class="ftab" id="ftab1"></table>
+        </div>
+        <div class="row" style="margin-top:10px"><button class="btn sun" type="button" id="sortcups">Sort and count</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 RELATIVE -->
+<section class="scene th-sun" id="s3" data-chap="Counting labels" aria-label="Out of how many?">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>1</b>Counting labels</div>
+      <h2>Out of how many?</h2>
+      <p class="sub">14 mango cups: is that a lot? It depends on the total. Each square below is one of the 40 cups.</p>
+      <div class="take">Relative frequency = frequency ÷ total. Percent frequency = relative frequency × 100. They always add up to 1, or 100%.</div>
+      <div class="fr">In French: fréquence relative, fréquence en pourcentage</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="two">
+          <svg class="chart" id="waffle" viewBox="0 0 330 214" aria-label="Forty squares, one per cup, coloured by flavor"></svg>
+          <div>
+            <div class="seg" id="relseg" role="group" aria-label="Show counts, fractions or percents"><button type="button" data-m="f" aria-pressed="true">Count</button><button type="button" data-m="r" aria-pressed="false">Relative</button><button type="button" data-m="p" aria-pressed="false">Percent</button></div>
+            <table class="ftab" id="ftab2" style="margin-top:10px"></table>
+          </div>
+        </div>
+        <div class="formula" id="formula" style="margin-top:10px" aria-live="polite"></div>
+      </div>
+      <div class="card compact" id="relcheck"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 BAR CHART -->
+<section class="scene th-lilac" id="s4" data-chap="Pictures for labels" aria-label="One bar per label">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>2</b>Pictures for labels</div>
+      <h2>One bar per label</h2>
+      <p class="sub">A bar chart gives each label its own bar. The gaps between bars say: these are separate boxes.</p>
+      <div class="lina" data-say="Mango wins, by a lot. And for sizes I keep S, M, L in order."></div>
+      <div class="take">Bar chart: one bar per category, with gaps. For ordered labels, keep their natural order.</div>
+      <div class="fr">In French: diagramme en barres</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="ctrlrow">
+          <div class="seg" id="barsort" role="group" aria-label="Bar order"><button type="button" data-o="count" aria-pressed="true">Biggest first</button><button type="button" data-o="az" aria-pressed="false">A to Z</button></div>
+          <div class="seg" id="barval" role="group" aria-label="Bar height"><button type="button" data-v="f" aria-pressed="true">Counts</button><button type="button" data-v="p" aria-pressed="false">Percents</button></div>
+        </div>
+        <svg class="chart" id="barflav" viewBox="0 0 520 230" aria-label="Bar chart of the 40 cups by flavor"></svg>
+      </div>
+      <div class="card">
+        <p class="minihead">Cup size: ordered labels keep their order</p>
+        <svg class="chart" id="barsize" viewBox="0 0 520 130" aria-label="Bar chart of cup sizes S, M, L"></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 PIE -->
+<section class="scene th-lilac" id="s5" data-chap="Pictures for labels" aria-label="A pie shows parts of one whole">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>2</b>Pictures for labels</div>
+      <h2>A pie shows parts of one whole</h2>
+      <p class="sub">Each slice is a share of Sunday’s 40 cups, and the slices add up to 100%. Now try to compare two slices.</p>
+      <div class="take">Pie charts show shares of one whole. To compare close values, bars are easier: our eyes judge lengths better than angles.</div>
+      <div class="fr">In French: diagramme circulaire</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="two">
+          <svg class="chart" id="pie" viewBox="0 0 260 260" aria-label="Pie chart of Sunday's cups by flavor"></svg>
+          <div id="piebars"></div>
+        </div>
+        <p class="minihead" style="margin-top:8px">Using the pie only: which slice is bigger?</p>
+        <div class="row" id="pieq"><button class="btn sm" type="button" data-a="taro">Taro</button><button class="btn sm" type="button" data-a="straw">Strawberry</button><button class="btn sm" type="button" data-a="same">They look the same</button></div>
+        <p class="fb2" id="piefb" aria-live="polite" style="margin-top:8px"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 REAL DATA -->
+<section class="scene th-sky" id="s6" data-chap="Amounts need classes" aria-label="244 tables, almost no repeats">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>3</b>Amounts need classes</div>
+      <h2>244 tables, almost no repeats</h2>
+      <p class="sub">Lina dreams of a café with tables. She studies a real notebook: one waiter recorded every table he served for a few months.</p>
+      <div class="lina" data-say="229 different bills for 244 tables! One bar per value would be useless."></div>
+      <div class="take">For amounts, almost every value is different. So we first group the values into classes.</div>
+      <div class="fr">In French: regrouper en classes</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="seg" id="rawseg" role="group" aria-label="How to draw the bills"><button type="button" data-m="dots" aria-pressed="true">Just the dots</button><button type="button" data-m="each" aria-pressed="false">One bar per value</button><button type="button" data-m="class" aria-pressed="false">Group into classes</button></div>
+        <svg class="chart" id="rawchart" viewBox="0 0 540 300" aria-label="The 244 bills" style="margin-top:8px"></svg>
+        <p class="fb2" id="rawfb" aria-live="polite"></p>
+        <p class="smallnote">Real data: total bill of each table, in US dollars (Bryant &amp; Smith, 1995).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 BUILD CLASSES -->
+<section class="scene th-sky" id="s7" data-chap="Amounts need classes" aria-label="Build classes in three steps">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>3</b>Amounts need classes</div>
+      <h2>Build classes in three steps</h2>
+      <p class="sub">The textbook’s recipe: choose how many classes, find their width, set their limits.</p>
+      <div class="take">Width ≈ (largest − smallest) ÷ number of classes, rounded up. A common guideline: 5 to 20 classes.</div>
+      <div class="fr">In French: classe, largeur de classe, limites de classe</div>
+    </div>
+    <div class="pic">
+      <div class="card" style="display:grid; gap:10px">
+        <div><p class="minihead">Step 1. How many classes?</p><div class="ctrlrow"><input type="range" id="kslider" min="5" max="20" step="1" value="5" aria-label="Number of classes" style="max-width:340px"><span class="bigread" id="kread"></span></div></div>
+        <div><p class="minihead">Step 2. How wide?</p><div class="formula" id="wcalc"></div></div>
+        <div><p class="minihead">Step 3. Where does each class start and end?</p><svg class="chart" id="limits" viewBox="0 0 540 74" aria-label="Class limits on a number line"></svg><div class="chips2" id="classchips"></div></div>
+        <div class="rules"><span>✓ every bill fits</span><span>✓ no overlaps</span><span>✓ no gaps</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 COUNT CLASSES -->
+<section class="scene th-sky" id="s8" data-chap="Amounts need classes" aria-label="Count each class, then draw">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>3</b>Amounts need classes</div>
+      <h2>Count each class, then draw</h2>
+      <p class="sub">Five classes of $10. Tap a row of the table and its bar rises.</p>
+      <div class="take">A histogram is a bar chart of the classes. Its bars touch, because the number line has no gaps.</div>
+      <div class="fr">In French: histogramme</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="two">
+          <table class="ftab" id="ctab"></table>
+          <svg class="chart" id="chist" viewBox="0 0 300 250" aria-label="Histogram built from the table"></svg>
+        </div>
+        <div class="row" style="margin-top:10px"><button class="btn sun" type="button" id="drawall">Draw them all</button><button class="btn" type="button" id="clearall">Start over</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 TRAP: GAPS -->
+<section class="scene th-trap" id="s9" data-chap="The trap" aria-label="Gaps or no gaps?">
+  <div class="hazard" aria-hidden="true"></div>
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>!</b>The trap</div>
+      <h2>Gaps or no gaps?</h2>
+      <p class="sub">A bar chart and a histogram look alike. Their gaps tell them apart. Try breaking each rule.</p>
+      <div class="take">Gaps: separate labels (bar chart). Touching: one number line cut into classes (histogram).</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="two">
+          <div><p class="minihead">Flavors (labels)</p><svg class="chart" id="trapbar" viewBox="0 0 280 200" aria-label="Bar chart of flavors"></svg><button class="btn sm" type="button" id="closegaps">Close the gaps</button></div>
+          <div><p class="minihead">Bills (amounts)</p><svg class="chart" id="traphist" viewBox="0 0 280 200" aria-label="Histogram of bills"></svg><button class="btn sm" type="button" id="opengaps">Open gaps</button></div>
+        </div>
+        <p class="fb2" id="trapfb" aria-live="polite" style="margin-top:10px"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 BIN SLIDER -->
+<section class="scene th-mint" id="s10" data-chap="Bin width" aria-label="Same data, new picture">
+  <div class="scene-in picwide">
+    <div class="txt">
+      <div class="kick"><b>4</b>Bin width</div>
+      <h2>Same data, new picture</h2>
+      <p class="sub">Change the number of classes. The bars change. The 244 dots underneath never move.</p>
+      <div class="lina" data-say="At 5 classes it’s one big lump. At 20, I can see most bills sit between $10 and $20."></div>
+      <div class="take">A new bin width changes the picture, not the data.</div>
+      <div class="fr">In French: largeur de classe</div>
+      <div class="thread"><b>Instrument: Dot crowd.</b> The dots stay put while the picture changes. Back in T1.3 to T1.6 and T8.5.</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="ctrlrow">
+          <div class="seg" id="binpre" role="group" aria-label="Number of classes"><button type="button" data-k="5" aria-pressed="false">5 classes</button><button type="button" data-k="10" aria-pressed="true">10 classes</button><button type="button" data-k="20" aria-pressed="false">20 classes</button></div>
+          <span class="bigread" id="binread"></span>
+        </div>
+        <input type="range" id="binslider" min="3" max="40" step="1" value="10" aria-label="Number of classes" style="margin:8px 0 4px">
+        <svg class="chart" id="binchart" viewBox="0 0 600 300" aria-label="Histogram of the 244 bills with the chosen number of classes"></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 SKEW -->
+<section class="scene th-pink" id="s11" data-chap="Reading shape" aria-label="Where is the tail?">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>5</b>Reading shape</div>
+      <h2>Where is the tail?</h2>
+      <p class="sub">Slide to change the shape. The name comes from the tail, not from the hump.</p>
+      <div class="take">Skewed right: a long tail to the right. Skewed left: a long tail to the left. Symmetric: both sides match.</div>
+      <div class="fr">In French: asymétrique à droite, asymétrique à gauche, symétrique</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="ctrlrow"><span class="shape-lab" id="shapelab"></span><span class="hint">tail on the left ◂ slide ▸ tail on the right</span></div>
+        <input type="range" id="skew" min="-6" max="6" step="0.1" value="4" aria-label="Skewness" style="margin:6px 0">
+        <svg class="chart" id="skewchart" viewBox="0 0 540 230" aria-label="A histogram whose shape follows the slider"></svg>
+        <div class="examples" id="skewex"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 MODALITY -->
+<section class="scene th-pink" id="s12" data-chap="Reading shape" aria-label="How many humps?">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>5</b>Reading shape</div>
+      <h2>How many humps?</h2>
+      <p class="sub">Lina’s orders through the day: a lunch rush, and maybe an after-school rush. Slide the second rush away from lunch.</p>
+      <div class="take">One hump: unimodal. Two humps: bimodal. Two humps often mean two different groups mixed together.</div>
+      <div class="fr">In French: unimodale, bimodale</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="ctrlrow"><span class="shape-lab" id="modelab"></span><span class="hint">invented data</span></div>
+        <input type="range" id="gap" min="0" max="4.5" step="0.1" value="3.5" aria-label="Hours between the two rushes" style="margin:6px 0">
+        <svg class="chart" id="modechart" viewBox="0 0 540 240" aria-label="Orders by time of day"></svg>
+        <p class="fb2" id="modefb" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 13 READ REAL -->
+<section class="scene th-pink" id="s13" data-chap="Reading shape" aria-label="Read the real bills">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>5</b>Reading shape</div>
+      <h2>Read the real bills</h2>
+      <p class="sub">The waiter’s 244 bills again, this time in classes of $5. Read the picture and answer.</p>
+      <div class="gback wait" data-guessback></div>
+      <div class="take">Read a histogram in three moves: the tallest bar, the tail, and how much lies below a value.</div>
+    </div>
+    <div class="pic">
+      <div class="card"><svg class="chart" id="realhist" viewBox="0 0 560 250" aria-label="Histogram of the 244 bills in $5 classes"></svg></div>
+      <div class="card compact" id="realq"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 14 CUMULATIVE -->
+<section class="scene th-peach" id="s14" data-chap="Running totals" aria-label="Running totals">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>6</b>Running totals</div>
+      <h2>Running totals</h2>
+      <p class="sub">How many tables paid less than $30? Add the classes as you go, like stacking blocks.</p>
+      <div class="take">Cumulative frequency = how many values are below the end of each class. The last one is always the total.</div>
+      <div class="fr">In French: fréquences cumulées</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="two">
+          <table class="ftab" id="cumtab"></table>
+          <svg class="chart" id="cumchart" viewBox="0 0 300 250" aria-label="Running totals as a staircase"></svg>
+        </div>
+        <div class="row" style="margin-top:10px"><button class="btn sun" type="button" id="cumnext">Add the next class</button><button class="btn" type="button" id="cumreset">Start over</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 15 OGIVE -->
+<section class="scene th-peach" id="s15" data-chap="Running totals" aria-label="The ogive">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>6</b>Running totals</div>
+      <h2>The ogive: read “less than”</h2>
+      <p class="sub">Join the running totals, as percents, with a line. Drag to any bill and read how many tables paid less.</p>
+      <div class="take">An ogive climbs from 0% to 100%. Pick a value on the bottom, go up to the line, read the percent below it.</div>
+      <div class="fr">In French: ogive, courbe des fréquences cumulées</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="ctrlrow"><span class="bigread" id="ogread"></span></div>
+        <input type="range" id="ogx" min="0" max="55" step="0.5" value="20" aria-label="Bill amount in dollars" style="margin:6px 0">
+        <svg class="chart" id="ogive" viewBox="0 0 540 270" aria-label="Ogive of the 244 bills"></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 16 STEM AND LEAF -->
+<section class="scene th-lilac" id="s16" data-chap="Stem-and-leaf" aria-label="Stem-and-leaf">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>7</b>Stem-and-leaf</div>
+      <h2>A histogram that keeps every value</h2>
+      <p class="sub">The 19 Friday bills. Split each one: the tens digit is the stem, the ones digit is the leaf. Cents are dropped.</p>
+      <div class="take">A stem-and-leaf display shows the shape like a histogram, and you can still read every value.</div>
+      <div class="fr">In French: diagramme tige et feuilles</div>
+    </div>
+    <div class="pic">
+      <div class="card stemwrap">
+        <div><p class="minihead">Friday’s bills ($)</p><div class="billchips" id="billchips"></div></div>
+        <div><p class="minihead" id="stemhead">Stem | leaf (tens | ones)</p><div class="stem" id="stem"></div></div>
+      </div>
+      <div class="row"><button class="btn sun" type="button" id="stembuild">Build it</button><button class="btn" type="button" id="stemrot">Turn it sideways</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- 17 WHICH GRAPH -->
+<section class="scene th-sky" id="s17" data-chap="Which graph?" aria-label="Which graph fits?">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>8</b>Which graph?</div>
+      <h2>Which graph fits?</h2>
+      <p class="sub">Pick a column. Follow the path to its graph.</p>
+      <div class="varbtns" id="varbtns"></div>
+      <div class="take">Tag’s columns: bar chart or pie. Ruler’s columns: histogram, ogive, or stem-and-leaf.</div>
+    </div>
+    <div class="pic">
+      <div class="card flow" id="flow"></div>
+      <div class="card"><svg class="chart" id="flowchart" viewBox="0 0 520 200" aria-label="The chosen graph"></svg></div>
+    </div>
+  </div>
+</section>
+
+<!-- 18 ARCADE -->
+<section class="scene th-indigo" id="s18" data-chap="Practice" aria-label="Practice arcade">
+  <div class="scene-in wide">
+    <div class="txt">
+      <div class="kick"><b>9</b>Practice</div>
+      <h2>Practice arcade</h2>
+      <p class="sub" style="max-width:62ch">Six short levels, a boss where you build the data, and a histogram lab for your own numbers. One question at a time.</p>
+    </div>
+    <div id="arcade"></div>
+  </div>
+</section>
+
+<!-- 19 RECAP -->
+<section class="scene th-lilac" id="s19" data-chap="Remember" aria-label="Six things to remember">
+  <div class="scene-in wide">
+    <div class="txt">
+      <div class="kick"><b>10</b>Remember</div>
+      <h2>Six things to remember, and one trap</h2>
+    </div>
+    <div class="guessbar" data-guessback="short"></div>
+    <div class="recap" id="recap"></div>
+    <details class="src">
+      <summary>Sources and textbook links</summary>
+      <p>Definitions and the three-step recipe for classes follow chapter 2 of the course textbook (frequency, relative and percent frequency distributions; bar and pie charts; classes, histograms, cumulative distributions and the ogive; the stem-and-leaf display). Shape words (skew, modality) follow OpenIntro Statistics, chapter 2. The 244 bills are real data; Lina’s cups and order times are invented for teaching. “In French” labels give common French statistical vocabulary, not quotations from the book.</p>
+      <ol>
+        <li>Anderson, D. R., Sweeney, D. J., Williams, T. A., Camm, J. D., &amp; Cochran, J. J. (2015). <em>Statistiques pour l’économie et la gestion</em> (5<sup>e</sup> éd., traduction de la 7<sup>e</sup> édition américaine d’<em>Essentials of Statistics for Business and Economics</em> par C. Borsenberger). De Boeck Supérieur. Chapitre 2.</li>
+        <li>Bryant, P. G., &amp; Smith, M. (1995). <em>Practical data analysis: Case studies in business statistics</em>. Irwin. Dataset “tips” (244 tables), as distributed with the R package reshape2 and the seaborn-data repository: <a href="https://github.com/mwaskom/seaborn-data">https://github.com/mwaskom/seaborn-data</a></li>
+        <li>Cleveland, W. S., &amp; McGill, R. (1984). Graphical perception: Theory, experimentation, and application to the development of graphical methods. <em>Journal of the American Statistical Association, 79</em>(387), 531–554. <a href="https://doi.org/10.1080/01621459.1984.10478080">https://doi.org/10.1080/01621459.1984.10478080</a></li>
+        <li>Diez, D. M., Çetinkaya-Rundel, M., &amp; Barr, C. D. (2019). <em>OpenIntro Statistics</em> (4th ed.). OpenIntro. Chapter 2. <a href="https://www.openintro.org/book/os/">https://www.openintro.org/book/os/</a></li>
+      </ol>
+      <p><button class="btn sm" type="button" id="resetall">Reset my stars</button></p>
+    </details>
+  </div>
+</section>
+
+</main>
+
+<nav class="ctrl" aria-label="Scenes">
+  <button class="btn" type="button" id="prev">Back</button>
+  <div class="dots" id="dots"></div>
+  <span class="pos" id="pos"></span>
+  <button class="btn sun" type="button" id="next">Next</button>
+</nav>
+<div class="visually-hidden" aria-live="polite" id="announce"></div>
+<canvas id="confetti" aria-hidden="true"></canvas>
+<script>
+(function(){
+'use strict';
+/* =========================================================== helpers */
+const $  = (s, r) => (r || document).querySelector(s);
+const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+const INK = '#2A1C19';
+const reduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+function sget(k, f){ try{ const v = localStorage.getItem(k); return v == null ? f : JSON.parse(v); }catch(e){ return f; } }
+function sset(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+function shuffle(a, rnd){ rnd = rnd || Math.random; for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function rng(seed){ return function(){ seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function el(tag, cls, html){ const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
+
+/* =========================================================== art */
+const FL = {Mango:'#F9B233', Taro:'#B79BE0', Matcha:'#9BC255', Strawberry:'#F49BB3', Lychee:'#F4E4C4'};
+const SZ = {S:0.8, M:0.9, L:1};
+function cupInner(fl){
+  const c = FL[fl] || '#ccc';
+  return '<rect x="31" y="0" width="7" height="28" rx="2.5" fill="#D93A62" stroke="'+INK+'" stroke-width="2.5" transform="rotate(14 34 24)"/>'
+   + '<path d="M9 30 H51 L45.6 87 Q45.2 91 41.5 91 H18.5 Q14.8 91 14.4 87 Z" fill="#fff" stroke="'+INK+'" stroke-width="2.5" stroke-linejoin="round"/>'
+   + '<path d="M12.4 38 H47.6 L43.2 86 H16.8 Z" fill="'+c+'"/>'
+   + '<g fill="#3B2416"><circle cx="20.5" cy="81.5" r="3.4"/><circle cx="27.5" cy="83" r="3.4"/><circle cx="34.5" cy="82" r="3.4"/><circle cx="40.5" cy="80.5" r="3.2"/><circle cx="24" cy="75.5" r="3.2"/><circle cx="31.5" cy="76.5" r="3.2"/><circle cx="38" cy="74.5" r="3"/></g>'
+   + '<rect x="5" y="25" width="50" height="7" rx="3.5" fill="#fff" stroke="'+INK+'" stroke-width="2.5"/>'
+   + '<path d="M8 26 Q30 6 52 26 Z" fill="#fff" stroke="'+INK+'" stroke-width="2.5" stroke-linejoin="round"/>';
+}
+function cupG(fl, sz, x, yb, k){ const kk = (k || 1) * (SZ[sz] || 1); return '<g transform="translate('+(x - 30*kk)+' '+(yb - 92*kk)+') scale('+kk+')">'+cupInner(fl)+'</g>'; }
+function cupSVG(fl, sz, w){ return '<svg viewBox="0 0 60 92" width="'+w+'" height="'+Math.round(w*92/60)+'" aria-hidden="true">'+cupG(fl, sz, 30, 92, 1)+'</svg>'; }
+
+let uid = 0;
+function linaSVG(){
+  const id = 'lc' + (++uid);
+  return '<svg viewBox="0 0 64 64" aria-hidden="true"><defs><clipPath id="'+id+'"><circle cx="32" cy="32" r="29.6"/></clipPath></defs>'
+   + '<circle cx="32" cy="32" r="31" fill="#F7B32B" stroke="'+INK+'" stroke-width="2.5"/>'
+   + '<g clip-path="url(#'+id+')"><path d="M8 66 Q10 47 32 47 Q54 47 56 66 Z" fill="#EE7F1B" stroke="'+INK+'" stroke-width="2.5"/>'
+   + '<rect x="28" y="40" width="8" height="9" fill="#F1BE96"/><circle cx="32" cy="12.5" r="7" fill="#2B1A12"/>'
+   + '<circle cx="32" cy="31" r="14" fill="#F1BE96" stroke="'+INK+'" stroke-width="2.5"/>'
+   + '<path d="M17.5 31 Q17 16 32 16 Q47 16 46.5 31 Q41 22.5 32 23.5 Q23 22.5 17.5 31 Z" fill="#2B1A12"/>'
+   + '<circle cx="26.5" cy="32" r="1.9" fill="'+INK+'"/><circle cx="37.5" cy="32" r="1.9" fill="'+INK+'"/>'
+   + '<path d="M28 37 Q32 40.5 36 37" stroke="'+INK+'" stroke-width="2" fill="none" stroke-linecap="round"/>'
+   + '<circle cx="23" cy="36" r="2.3" fill="#F49BB3" opacity=".75"/><circle cx="41" cy="36" r="2.3" fill="#F49BB3" opacity=".75"/></g></svg>';
+}
+function eyes(x1, x2, y){ return '<circle cx="'+x1+'" cy="'+y+'" r="8.5" fill="#fff" stroke="'+INK+'" stroke-width="2.5"/><circle cx="'+(x1+1.5)+'" cy="'+(y+1)+'" r="3.8" fill="'+INK+'"/><circle cx="'+x2+'" cy="'+y+'" r="8.5" fill="#fff" stroke="'+INK+'" stroke-width="2.5"/><circle cx="'+(x2+1.5)+'" cy="'+(y+1)+'" r="3.8" fill="'+INK+'"/>'; }
+function mouth(m, cx, cy){
+  if (m === 'puzzled') return '<path d="M'+(cx-11)+' '+(cy+2)+' q5.5 -6 11 0 t11 0" fill="none" stroke="'+INK+'" stroke-width="3" stroke-linecap="round"/>';
+  if (m === 'wow') return '<ellipse cx="'+cx+'" cy="'+(cy+2)+'" rx="5.5" ry="6.5" fill="'+INK+'"/>';
+  return '<path d="M'+(cx-11)+' '+(cy-2)+' q11 11 22 0" fill="none" stroke="'+INK+'" stroke-width="3" stroke-linecap="round"/>';
+}
+function tagSVG(m){ return '<svg viewBox="0 0 130 96" aria-hidden="true"><path d="M26 44 C14 30 6 28 3 18" fill="none" stroke="'+INK+'" stroke-width="3" stroke-linecap="round"/><path d="M36 10 H112 Q122 10 122 20 V76 Q122 86 112 86 H36 L10 48 Z" fill="#EE7F1B" stroke="'+INK+'" stroke-width="3" stroke-linejoin="round"/><circle cx="31" cy="48" r="7" fill="#fff" stroke="'+INK+'" stroke-width="3"/>'+eyes(70, 94, 42)+mouth(m || 'happy', 82, 64)+'</svg>'; }
+function rulerSVG(m){ let t = ''; for (let i = 0; i < 14; i++){ const x = 14 + i*9.4; t += '<line x1="'+x+'" y1="12" x2="'+x+'" y2="'+(12 + (i % 5 === 0 ? 16 : 9))+'" stroke="#fff" stroke-width="2.5"/>'; } return '<svg viewBox="0 0 150 80" aria-hidden="true"><rect x="4" y="10" width="142" height="62" rx="10" fill="#2F55D4" stroke="'+INK+'" stroke-width="3"/>'+t+eyes(62, 90, 46)+mouth(m || 'happy', 76, 62)+'</svg>'; }
+const BULB = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5a6.5 6.5 0 0 0-3.8 11.8c.8.6 1.3 1.4 1.3 2.3V17h5v-.4c0-.9.5-1.7 1.3-2.3A6.5 6.5 0 0 0 12 2.5z" fill="#fff" stroke="'+INK+'" stroke-width="2"/><path d="M9.5 20h5M10.5 22.5h3" stroke="'+INK+'" stroke-width="2" stroke-linecap="round"/></svg>';
+const LOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+const FLAME = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c1 4 6 6 6 12a6 6 0 0 1-12 0c0-3 2-5 3-6 0 2 1 3 2 3 0-3-1-6 1-9z" fill="#EE7F1B" stroke="'+INK+'" stroke-width="1.8" stroke-linejoin="round"/></svg>';
+function pearlChar(){ return '<circle r="15" fill="#3B2416" stroke="'+INK+'" stroke-width="2.5"/><circle cx="-5" cy="-3" r="3.6" fill="#fff"/><circle cx="5" cy="-3" r="3.6" fill="#fff"/><circle cx="-4.2" cy="-2.5" r="1.7" fill="'+INK+'"/><circle cx="5.8" cy="-2.5" r="1.7" fill="'+INK+'"/><path d="M-4 5 q4 4 8 0" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round"/>'; }
+function shirt(n, col){ return '<svg viewBox="0 0 70 70" aria-hidden="true"><path d="M18 8 L28 4 Q35 11 42 4 L52 8 L66 20 L57 31 L52 27 V66 H18 V27 L13 31 L4 20 Z" fill="'+col+'" stroke="'+INK+'" stroke-width="3" stroke-linejoin="round"/><text x="35" y="52" text-anchor="middle" font-family="Times New Roman, Times, Liberation Serif, serif" font-weight="800" font-size="24" fill="#fff" stroke="'+INK+'" stroke-width="1" paint-order="stroke">'+n+'</text></svg>'; }
+
+function standSVG(){
+  let s = '<svg class="stand" viewBox="0 0 520 440" role="img" aria-label="Lina’s bubble tea stand with four cups and a notebook on the counter">';
+  s += '<rect x="46" y="110" width="16" height="190" rx="4" fill="#fff" stroke="'+INK+'" stroke-width="3"/><rect x="458" y="110" width="16" height="190" rx="4" fill="#fff" stroke="'+INK+'" stroke-width="3"/>';
+  s += '<rect x="62" y="130" width="396" height="160" fill="#FDEFD2" stroke="'+INK+'" stroke-width="3"/>';
+  const x0 = 24, w = 59;
+  for (let i = 0; i < 8; i++) s += '<rect x="'+(x0 + i*w)+'" y="74" width="'+w+'" height="62" fill="'+(i % 2 ? '#fff' : '#EE7F1B')+'"/>';
+  for (let i = 0; i < 8; i++) s += '<path d="M'+(x0 + i*w)+' 136 a'+(w/2)+' 18 0 0 0 '+w+' 0" fill="'+(i % 2 ? '#fff' : '#EE7F1B')+'" stroke="'+INK+'" stroke-width="3"/>';
+  s += '<rect x="24" y="74" width="472" height="62" fill="none" stroke="'+INK+'" stroke-width="3"/>';
+  s += '<rect x="140" y="12" width="240" height="62" rx="16" fill="#F7B32B" stroke="'+INK+'" stroke-width="3"/>';
+  s += '<text x="260" y="54" text-anchor="middle" font-family="Times New Roman, Times, Liberation Serif, serif" font-size="38" font-weight="700" fill="'+INK+'">Lina’s Bubble Tea</text>';
+  [['Mango','L',112],['Taro','M',192],['Matcha','S',262],['Strawberry','L',336]].forEach(([f, z, x]) => { s += '<g class="cupbob">'+cupG(f, z, x, 284, 1.3)+'</g>'; });
+  s += '<g transform="translate(392 218) rotate(-8)"><rect width="86" height="62" rx="6" fill="#FFFFFF" stroke="'+INK+'" stroke-width="3"/><line x1="14" y1="0" x2="14" y2="62" stroke="#F49BB3" stroke-width="2"/>';
+  for (let k = 0; k < 4; k++) s += '<line x1="20" y1="'+(16 + k*12)+'" x2="'+(74 - (k % 2) * 14)+'" y2="'+(16 + k*12)+'" stroke="#C5D0F0" stroke-width="2.5" stroke-linecap="round"/>';
+  s += '</g>';
+  s += '<rect x="12" y="282" width="496" height="22" rx="8" fill="#fff" stroke="'+INK+'" stroke-width="3"/>';
+  s += '<rect x="24" y="302" width="472" height="108" rx="10" fill="#8E6CC9" stroke="'+INK+'" stroke-width="3"/>';
+  for (let k = 0; k < 15; k++) s += '<circle cx="'+(52 + k*30)+'" cy="322" r="6" fill="#3B2416"/>';
+  s += '<rect x="170" y="340" width="180" height="50" rx="12" fill="#fff" stroke="'+INK+'" stroke-width="3"/><text x="260" y="374" text-anchor="middle" font-family="Times New Roman, Times, Liberation Serif, serif" font-size="30" font-weight="700" fill="'+INK+'">fresh every day</text>';
+  s += '</svg>';
+  return s;
+}
+
+/* fill in shared bits */
+$$('.lina[data-say]').forEach(e => { e.innerHTML = '<span class="av">'+linaSVG()+'</span><div class="bubble"><b>Lina</b>'+e.dataset.say+'</div>'; });
+$$('[data-mascot]').forEach(e => { e.innerHTML = e.dataset.mascot === 'tag' ? tagSVG(e.dataset.mood) : rulerSVG(e.dataset.mood); });
+$$('.take').forEach(t => { t.innerHTML = BULB + '<span>' + t.innerHTML + '</span>'; });
+
+/* =========================================================== stars (XP) */
+const XPK = 't12-xp';
+let XP = sget(XPK, {});
+function renderXP(p){ const x = $('#xp'); x.textContent = '★ ' + Object.keys(XP).length; if (p){ x.classList.remove('pulse'); void x.offsetWidth; x.classList.add('pulse'); } }
+function addXP(k){ if (XP[k]) return; XP[k] = 1; sset(XPK, XP); renderXP(true); }
+renderXP(false);
+
+/* =========================================================== navigation */
+const scenes = $$('.scene'), N = scenes.length, ENTER = {};
+let cur = -1;
+const seen = new Set();
+const dotsHost = $('#dots');
+scenes.forEach((s, i) => { const b = el('button'); b.type = 'button'; b.setAttribute('aria-label', 'Scene ' + (i + 1) + ': ' + s.getAttribute('aria-label')); b.addEventListener('click', () => go(i)); dotsHost.appendChild(b); });
+function go(i){
+  i = Math.max(0, Math.min(N - 1, i));
+  if (i === cur) return;
+  cur = i; seen.add(i);
+  scenes.forEach((s, j) => s.classList.toggle('on', j === i));
+  scenes[i].scrollTop = 0;
+  $$('button', dotsHost).forEach((b, j) => { b.classList.toggle('on', j === i); b.classList.toggle('seen', seen.has(j) && j !== i); });
+  $('#chapnm').textContent = scenes[i].dataset.chap;
+  document.documentElement.style.setProperty('--now', getComputedStyle(scenes[i]).getPropertyValue('--chip').trim() || '#4B2D86');
+  $('#progfill').style.width = (100 * i / (N - 1)) + '%';
+  $('#pos').textContent = (i + 1) + ' / ' + N;
+  $('#prev').disabled = i === 0;
+  $('#next').textContent = i === N - 1 ? 'Start again' : 'Next';
+  $('#announce').textContent = scenes[i].getAttribute('aria-label');
+  if (location.hash !== '#s' + i) location.hash = 's' + i;
+  const f = ENTER[scenes[i].id]; if (f) f();
+}
+$('#prev').addEventListener('click', () => go(cur - 1));
+$('#next').addEventListener('click', () => go(cur === N - 1 ? 0 : cur + 1));
+$$('[data-go]').forEach(b => b.addEventListener('click', () => { const v = b.dataset.go; go(v === 'next' ? cur + 1 : +v); }));
+window.addEventListener('hashchange', () => { const m = /^#s(\d+)$/.exec(location.hash); if (m) go(+m[1]); });
+document.addEventListener('keydown', e => {
+  if (e.altKey || e.ctrlKey || e.metaKey) return;
+  const t = e.target; if (t && (t.matches('input, textarea, select') || t.isContentEditable)) return;
+  if (e.key === 'ArrowRight' || e.key === 'PageDown'){ e.preventDefault(); go(cur + 1); }
+  else if (e.key === 'ArrowLeft' || e.key === 'PageUp'){ e.preventDefault(); go(cur - 1); }
+});
+
+/* small quiz helper: one row per question, big buttons, one reason */
+function miniQuiz(host, items, key){
+  items.forEach((it, i) => {
+    const d = el('div', 'qrow', '<div class="qq">'+it.q+'</div><div class="qo">'+it.o.map((o, j) => '<button class="btn sm" type="button" data-j="'+j+'">'+o+'</button>').join('')+'</div><div class="qf" aria-live="polite"></div>');
+    host.appendChild(d);
+    const bs = $$('button', d);
+    bs.forEach(b => b.addEventListener('click', () => {
+      const j = +b.dataset.j, ok = j === it.a;
+      bs.forEach((x, k) => { x.disabled = true; if (k === it.a) x.classList.add('right'); if (k === j && !ok) x.classList.add('wrong'); });
+      $('.qf', d).innerHTML = (ok ? '<b>Yes!</b> ' : '<b>Not quite.</b> ') + it.why;
+      if (ok) addXP(key + i);
+    }));
+  });
+}
+
+
+/* =========================================================== T1.2 data */
+const BILLS=[16.99, 10.34, 21.01, 23.68, 24.59, 25.29, 8.77, 26.88, 15.04, 14.78, 10.27, 35.26, 15.42, 18.43, 14.83, 21.58, 10.33, 16.29, 16.97, 20.65, 17.92, 20.29, 15.77, 39.42, 19.82, 17.81, 13.37, 12.69, 21.7, 19.65, 9.55, 18.35, 15.06, 20.69, 17.78, 24.06, 16.31, 16.93, 18.69, 31.27, 16.04, 17.46, 13.94, 9.68, 30.4, 18.29, 22.23, 32.4, 28.55, 18.04, 12.54, 10.29, 34.81, 9.94, 25.56, 19.49, 38.01, 26.41, 11.24, 48.27, 20.29, 13.81, 11.02, 18.29, 17.59, 20.08, 16.45, 3.07, 20.23, 15.01, 12.02, 17.07, 26.86, 25.28, 14.73, 10.51, 17.92, 27.2, 22.76, 17.29, 19.44, 16.66, 10.07, 32.68, 15.98, 34.83, 13.03, 18.28, 24.71, 21.16, 28.97, 22.49, 5.75, 16.32, 22.75, 40.17, 27.28, 12.03, 21.01, 12.46, 11.35, 15.38, 44.3, 22.42, 20.92, 15.36, 20.49, 25.21, 18.24, 14.31, 14.0, 7.25, 38.07, 23.95, 25.71, 17.31, 29.93, 10.65, 12.43, 24.08, 11.69, 13.42, 14.26, 15.95, 12.48, 29.8, 8.52, 14.52, 11.38, 22.82, 19.08, 20.27, 11.17, 12.26, 18.26, 8.51, 10.33, 14.15, 16.0, 13.16, 17.47, 34.3, 41.19, 27.05, 16.43, 8.35, 18.64, 11.87, 9.78, 7.51, 14.07, 13.13, 17.26, 24.55, 19.77, 29.85, 48.17, 25.0, 13.39, 16.49, 21.5, 12.66, 16.21, 13.81, 17.51, 24.52, 20.76, 31.71, 10.59, 10.63, 50.81, 15.81, 7.25, 31.85, 16.82, 32.9, 17.89, 14.48, 9.6, 34.63, 34.65, 23.33, 45.35, 23.17, 40.55, 20.69, 20.9, 30.46, 18.15, 23.1, 15.69, 19.81, 28.44, 15.48, 16.58, 7.56, 10.34, 43.11, 13.0, 13.51, 18.71, 12.74, 13.0, 16.4, 20.53, 16.47, 26.59, 38.73, 24.27, 12.76, 30.06, 25.89, 48.33, 13.27, 28.17, 12.9, 28.15, 11.59, 7.74, 30.14, 12.16, 13.42, 8.58, 15.98, 13.42, 16.27, 10.09, 20.45, 13.28, 22.12, 24.01, 15.69, 11.61, 10.77, 15.53, 10.07, 12.6, 32.83, 35.83, 29.03, 27.18, 22.67, 17.82, 18.78];
+const TIPS=[1.01, 1.66, 3.5, 3.31, 3.61, 4.71, 2.0, 3.12, 1.96, 3.23, 1.71, 5.0, 1.57, 3.0, 3.02, 3.92, 1.67, 3.71, 3.5, 3.35, 4.08, 2.75, 2.23, 7.58, 3.18, 2.34, 2.0, 2.0, 4.3, 3.0, 1.45, 2.5, 3.0, 2.45, 3.27, 3.6, 2.0, 3.07, 2.31, 5.0, 2.24, 2.54, 3.06, 1.32, 5.6, 3.0, 5.0, 6.0, 2.05, 3.0, 2.5, 2.6, 5.2, 1.56, 4.34, 3.51, 3.0, 1.5, 1.76, 6.73, 3.21, 2.0, 1.98, 3.76, 2.64, 3.15, 2.47, 1.0, 2.01, 2.09, 1.97, 3.0, 3.14, 5.0, 2.2, 1.25, 3.08, 4.0, 3.0, 2.71, 3.0, 3.4, 1.83, 5.0, 2.03, 5.17, 2.0, 4.0, 5.85, 3.0, 3.0, 3.5, 1.0, 4.3, 3.25, 4.73, 4.0, 1.5, 3.0, 1.5, 2.5, 3.0, 2.5, 3.48, 4.08, 1.64, 4.06, 4.29, 3.76, 4.0, 3.0, 1.0, 4.0, 2.55, 4.0, 3.5, 5.07, 1.5, 1.8, 2.92, 2.31, 1.68, 2.5, 2.0, 2.52, 4.2, 1.48, 2.0, 2.0, 2.18, 1.5, 2.83, 1.5, 2.0, 3.25, 1.25, 2.0, 2.0, 2.0, 2.75, 3.5, 6.7, 5.0, 5.0, 2.3, 1.5, 1.36, 1.63, 1.73, 2.0, 2.5, 2.0, 2.74, 2.0, 2.0, 5.14, 5.0, 3.75, 2.61, 2.0, 3.5, 2.5, 2.0, 2.0, 3.0, 3.48, 2.24, 4.5, 1.61, 2.0, 10.0, 3.16, 5.15, 3.18, 4.0, 3.11, 2.0, 2.0, 4.0, 3.55, 3.68, 5.65, 3.5, 6.5, 3.0, 5.0, 3.5, 2.0, 3.5, 4.0, 1.5, 4.19, 2.56, 2.02, 4.0, 1.44, 2.0, 5.0, 2.0, 2.0, 4.0, 2.01, 2.0, 2.5, 4.0, 3.23, 3.41, 3.0, 2.03, 2.23, 2.0, 5.16, 9.0, 2.5, 6.5, 1.1, 3.0, 1.5, 1.44, 3.09, 2.2, 3.48, 1.92, 3.0, 1.58, 2.5, 2.0, 3.0, 2.72, 2.88, 2.0, 3.0, 3.39, 1.47, 3.0, 1.25, 1.0, 1.17, 4.67, 5.92, 2.0, 2.0, 1.75, 3.0];
+const FRIDAY=[28.97, 22.49, 5.75, 16.32, 22.75, 40.17, 27.28, 12.03, 21.01, 12.46, 11.35, 15.38, 12.16, 13.42, 8.58, 15.98, 13.42, 16.27, 10.09];
+const SIZES=[2, 3, 3, 2, 4, 4, 2, 4, 2, 2, 2, 4, 2, 4, 2, 2, 3, 3, 3, 3, 2, 2, 2, 4, 2, 4, 2, 2, 2, 2, 2, 4, 2, 4, 2, 3, 3, 3, 3, 3, 3, 2, 2, 2, 4, 2, 2, 4, 3, 2, 2, 2, 4, 2, 4, 2, 4, 2, 2, 4, 2, 2, 2, 4, 3, 3, 2, 1, 2, 2, 2, 3, 2, 2, 2, 2, 2, 4, 2, 2, 2, 2, 1, 2, 2, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 1, 3, 2, 3, 2, 4, 2, 2, 4, 2, 2, 2, 2, 2, 6, 2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6, 5, 6, 2, 2, 3, 2, 2, 2, 2, 2, 3, 4, 4, 5, 6, 4, 2, 4, 4, 2, 3, 2, 2, 3, 2, 4, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 2, 3, 4, 2, 5, 3, 5, 3, 3, 2, 2, 2, 2, 2, 2, 2, 4, 2, 2, 3, 2, 2, 2, 4, 3, 3, 4, 2, 2, 3, 4, 4, 2, 3, 2, 5, 2, 2, 4, 2, 2, 1, 3, 2, 2, 2, 4, 2, 2, 4, 3, 2, 2, 2, 2, 2, 2, 3, 3, 2, 2, 2, 2];
+const DAYS=["Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Fri", "Fri", "Fri", "Fri", "Fri", "Fri", "Fri", "Fri", "Fri", "Fri", "Fri", "Fri", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sun", "Sun", "Sun", "Sun", "Sun", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sat", "Sat", "Sat", "Sat", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Sun", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Thur", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Fri", "Fri", "Fri", "Fri", "Fri", "Fri", "Fri", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Sat", "Thur"];
+const FLAV = ['Mango','Taro','Strawberry','Matcha','Lychee'];
+const SAT = [14, 10, 8, 6, 2];          // Lina's Saturday cups (invented)
+const SUN = [11, 10, 9, 8, 2];          // Lina's Sunday cups (invented)
+const ORANGE = '#EE7F1B', BLUE = '#2F55D4', SUN_C = '#F7B32B';
+const BMIN = Math.min(...BILLS), BMAX = Math.max(...BILLS);
+
+/* =========================================================== chart helpers */
+function niceTicks(min, max, target){
+  target = target || 4;
+  const span = Math.max(max - min, 1e-9), raw = span / target, p = Math.pow(10, Math.floor(Math.log10(raw)));
+  const c = [1, 2, 2.5, 5, 10].map(m => m * p);
+  const step = c.find(s => span / s <= target) || c[c.length - 1];
+  const lo = Math.floor(min / step) * step, hi = Math.ceil(max / step) * step;
+  const t = []; for (let v = lo; v <= hi + step * 1e-6; v += step) t.push(+v.toFixed(6));
+  return {lo, hi, step, ticks:t};
+}
+function binCounts(data, edges){
+  const n = edges.length - 1, c = new Array(n).fill(0);
+  data.forEach(v => { for (let i = 0; i < n; i++){ if (v >= edges[i] && (v < edges[i + 1] || (i === n - 1 && v <= edges[i + 1]))){ c[i]++; break; } } });
+  return c;
+}
+function evenEdges(k){ const w = (BMAX - BMIN) / k; return Array.from({length:k + 1}, (_, i) => i === k ? BMAX : BMIN + i * w); }
+const money = v => '$' + (Math.abs(v - Math.round(v)) < 1e-9 ? Math.round(v) : v.toFixed(v < 10 ? 2 : 1));
+function histSVG(o){
+  const W = o.W, H = o.H, L = o.L || 46, R = o.R || 20, T = o.T || 16;
+  const B = 30 + (o.xlab ? 18 : 0) + (o.dots ? 46 : 0);
+  const e = o.edges, n = e.length - 1, c = o.counts;
+  const X = v => L + (v - e[0]) / (e[n] - e[0]) * (W - L - R);
+  const tk = niceTicks(0, o.yMax || Math.max(1, ...c), o.yt || 4), hb = H - B;
+  const Y = v => hb - (v / tk.hi) * (hb - T);
+  const gap = o.gap || 0;
+  let g = '';
+  if (!o.noY) tk.ticks.forEach(t => { g += '<line class="grid" x1="'+L+'" x2="'+(W - R)+'" y1="'+Y(t)+'" y2="'+Y(t)+'"/><text x="'+(L - 6)+'" y="'+(Y(t) + 4)+'" text-anchor="end">'+(o.yFmt ? o.yFmt(t) : t)+'</text>'; });
+  for (let i = 0; i < n; i++){
+    const x = X(e[i]) + gap, w = Math.max(.6, X(e[i + 1]) - X(e[i]) - 2 * gap), y = Y(c[i]);
+    const fill = o.hl && o.hl.has(i) ? SUN_C : (o.color || BLUE);
+    const hide = o.shown && !o.shown[i];
+    g += '<rect class="hb'+(o.grow ? ' gb' : '')+'" data-i="'+i+'" x="'+x.toFixed(2)+'" y="'+y.toFixed(2)+'" width="'+w.toFixed(2)+'" height="'+(hb - y).toFixed(2)+'" fill="'+fill+'" stroke="'+INK+'" stroke-width="'+(o.sw == null ? 1.6 : o.sw)+'"'+(hide ? ' style="transform:scaleY(0)"' : '')+'><title>'+money(e[i])+' to '+money(e[i + 1])+': '+c[i]+'</title></rect>';
+    if (o.vals && c[i] > 0) g += '<text class="val"'+(hide ? ' opacity="0"' : '')+' data-v="'+i+'" x="'+(x + w / 2).toFixed(1)+'" y="'+(y - 5).toFixed(1)+'" text-anchor="middle">'+c[i]+'</text>';
+  }
+  g += '<line class="axis" x1="'+L+'" x2="'+(W - R)+'" y1="'+hb+'" y2="'+hb+'"/>';
+  const every = o.every || 1;
+  e.forEach((v, i) => { if (i % every === 0) g += '<text x="'+X(v).toFixed(1)+'" y="'+(hb + 17)+'" text-anchor="middle">'+(o.xFmt ? o.xFmt(v) : money(v))+'</text>'; });
+  if (o.xlab) g += '<text x="'+((L + W - R) / 2)+'" y="'+(hb + 34)+'" text-anchor="middle">'+o.xlab+'</text>';
+  if (o.dots){
+    const R2 = rng(99), y0 = hb + (o.xlab ? 46 : 30);
+    g += '<text x="'+(L - 6)+'" y="'+(y0 + 18)+'" text-anchor="end">data</text>';
+    o.dots.forEach(v => { g += '<circle class="dot" cx="'+X(v).toFixed(1)+'" cy="'+(y0 + 4 + R2() * 30).toFixed(1)+'" r="2.4"/>'; });
+  }
+  return g;
+}
+function barSVG(o){
+  const W = o.W, H = o.H, L = o.L || 40, R = 10, T = o.T || 18, B = 30, n = o.labels.length;
+  const tk = niceTicks(0, o.yMax || Math.max(...o.values), 4), hb = H - B;
+  const Y = v => hb - (v / tk.hi) * (hb - T), slot = (W - L - R) / n, gf = o.gap == null ? .38 : o.gap, bw = slot * (1 - gf);
+  let g = '';
+  if (!o.noGrid) tk.ticks.forEach(t => { g += '<line class="grid" x1="'+L+'" x2="'+(W - R)+'" y1="'+Y(t)+'" y2="'+Y(t)+'"/><text x="'+(L - 6)+'" y="'+(Y(t) + 4)+'" text-anchor="end">'+(o.yFmt ? o.yFmt(t) : t)+'</text>'; });
+  o.values.forEach((v, i) => {
+    const x = L + i * slot + (slot - bw) / 2, y = Y(v);
+    const fill = Array.isArray(o.color) ? o.color[i] : (o.color || ORANGE);
+    g += '<rect class="hb" x="'+x.toFixed(2)+'" y="'+y.toFixed(2)+'" width="'+bw.toFixed(2)+'" height="'+(hb - y).toFixed(2)+'" rx="'+(gf > 0 ? 3 : 0)+'" fill="'+fill+'" stroke="'+INK+'" stroke-width="1.6"><title>'+o.labels[i]+': '+(o.valFmt ? o.valFmt(v) : v)+'</title></rect>';
+    if (o.vals !== false) g += '<text class="val" x="'+(x + bw / 2).toFixed(1)+'" y="'+(y - 6).toFixed(1)+'" text-anchor="middle">'+(o.valFmt ? o.valFmt(v) : v)+'</text>';
+    g += '<text x="'+(x + bw / 2).toFixed(1)+'" y="'+(hb + 18)+'" text-anchor="middle">'+o.labels[i]+'</text>';
+  });
+  g += '<line class="axis" x1="'+L+'" x2="'+(W - R)+'" y1="'+hb+'" y2="'+hb+'"/>';
+  return g;
+}
+function pieSVG(vals, cols, cx, cy, r){
+  const tot = vals.reduce((a, b) => a + b, 0); let a = -Math.PI / 2, g = '';
+  vals.forEach((v, i) => {
+    const a2 = a + v / tot * Math.PI * 2, large = a2 - a > Math.PI ? 1 : 0;
+    g += '<path d="M'+cx+' '+cy+' L'+(cx + r * Math.cos(a)).toFixed(2)+' '+(cy + r * Math.sin(a)).toFixed(2)+' A'+r+' '+r+' 0 '+large+' 1 '+(cx + r * Math.cos(a2)).toFixed(2)+' '+(cy + r * Math.sin(a2)).toFixed(2)+' Z" fill="'+cols[i]+'" stroke="'+INK+'" stroke-width="2.2"><title>'+FLAV[i]+'</title></path>';
+    a = a2;
+  });
+  return g;
+}
+function erf(x){ const s = x < 0 ? -1 : 1; x = Math.abs(x); const t = 1 / (1 + 0.3275911 * x); const y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x); return s * y; }
+const phi = z => Math.exp(-z * z / 2) / Math.sqrt(2 * Math.PI), Phi = z => .5 * (1 + erf(z / Math.SQRT2));
+function skewDens(x, a){ const w = 1.5, d = a / Math.sqrt(1 + a * a), sh = w * d * Math.sqrt(2 / Math.PI); const z = (x + sh) / w; return 2 / w * phi(z) * Phi(a * z); }
+function shapeVals(kind, n){
+  n = n || 14; const out = [];
+  for (let i = 0; i < n; i++){
+    const x = -3.4 + (i + .5) * 6.8 / n;
+    let v;
+    if (kind === 'sym') v = skewDens(x, 0);
+    else if (kind === 'right') v = skewDens(x, 5);
+    else if (kind === 'left') v = skewDens(x, -5);
+    else v = .5 * phi((x + 1.6) / .62) + .5 * phi((x - 1.6) / .62);
+    out.push(v);
+  }
+  const m = Math.max(...out); return out.map(v => v / m);
+}
+function shapeSVG(kind){
+  const v = shapeVals(kind, 14), W = 220, H = 90, bw = (W - 20) / 14;
+  let g = '<svg viewBox="0 0 '+W+' '+H+'" width="200" height="82" aria-hidden="true" style="display:block;margin:6px 0">';
+  v.forEach((h, i) => { const bh = h * (H - 18); g += '<rect x="'+(10 + i * bw).toFixed(1)+'" y="'+(H - 8 - bh).toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+bh.toFixed(1)+'" fill="#2F55D4" stroke="'+INK+'" stroke-width="1.4"/>'; });
+  return g + '<line x1="6" x2="'+(W - 6)+'" y1="'+(H - 8)+'" y2="'+(H - 8)+'" stroke="'+INK+'" stroke-width="2"/></svg>';
+}
+
+/* =========================================================== 0. guess first */
+function guessFirst(G){
+  const host = $('#guess'), KEY = G.key, LAB = G.olab || G.opts;
+  host.innerHTML = '<div class="ghead"><span class="gtag">Guess first</span>'+(G.note ? '<span class="gnote">'+G.note+'</span>' : '')+'</div>' + (G.visual || '') + '<p class="gq">'+G.q+'</p><div class="gopts">' + G.opts.map((o, j) => '<button type="button" class="gopt" data-j="'+j+'" aria-pressed="false">'+o+'</button>').join('') + '</div><p class="gsaved" aria-live="polite"></p>';
+  function mark(){
+    const j = sget(KEY, null);
+    $$('.gopt', host).forEach(b => b.setAttribute('aria-pressed', +b.dataset.j === j ? 'true' : 'false'));
+    $('.gsaved', host).textContent = j == null ? 'Pick one. Nothing is explained yet, so any answer is fine.' : 'Saved. You will see your guess again later on this page.';
+    $$('[data-guessback]').forEach(el => { const w = el.dataset.guessback === 'short' ? G.short : G.why; el.innerHTML = j == null ? '<b>You skipped the guess at the start.</b> The answer: “'+LAB[G.a]+'”. ' + w : '<b>Your guess at the start:</b> “'+LAB[j]+'”. ' + (j === G.a ? '<b>Right!</b> ' : '<b>The answer:</b> “'+LAB[G.a]+'”. ') + w; });
+  }
+  $$('.gopt', host).forEach(b => b.addEventListener('click', () => { sset(KEY, +b.dataset.j); mark(); addXP('guess'); }));
+  mark();
+}
+(function guess(){
+  const mini = kind => { const v = kind === 'flat' ? [.62, .7, .66, .72, .64, .7, .68, .66, .71, .65, .69, .67, .7, .64] : shapeVals(kind, 14); return '<svg class="gshape" viewBox="0 0 140 46" aria-hidden="true">' + v.map((h, i) => '<rect x="'+(i * 10)+'" y="'+(44 - h * 40).toFixed(1)+'" width="10" height="'+(h * 40).toFixed(1)+'" fill="#2F55D4" stroke="'+INK+'" stroke-width="1.2"/>').join('') + '</svg>'; };
+  const lab = ['A hill in the middle', 'A long tail to the right', 'A long tail to the left', 'Flat everywhere'];
+  guessFirst({
+    key:'t12-guess', note:'244 real bills, $3 to $51',
+    q:'Grouped into price ranges, which shape will the 244 restaurant bills make?',
+    opts:['sym', 'right', 'left', 'flat'].map((k, i) => mini(k) + lab[i]), olab:lab, a:1,
+    short:'Most bills are small and a few are big, so the tail stretches to the right.',
+    why:'Most tables paid $10 to $20, and only a few paid $40 or more. Bills, incomes and wait times often have a long tail to the right.',
+  });
+})();
+
+/* =========================================================== 1. three doors: three piles */
+(function piles(){
+  const HT = [141.2, 143.5, 146.8, 148.1, 150.6, 151.0, 152.4, 153.9, 155.2, 156.7, 157.3, 158.8, 159.5, 160.4, 161.9, 162.7, 163.3, 164.8, 166.1, 167.5, 168.9, 171.2, 173.6, 175.0, 178.4];
+  const D = [
+    {m:'tag', t:'Field-trip vote', n:'25 students, one vote each', raw:'museum, zoo, museum, beach, zoo…', steps:[{b:'Pile them up', k:'bars', labels:['Museum', 'Zoo', 'Beach'], vals:[11, 9, 5], note:'Each label is its own pile: 11, 9 and 5 votes.'}]},
+    {m:'ruler', t:'Brothers and sisters', n:'25 students', raw:'1, 0, 2, 1, 1, 3, 0, 2…', steps:[{b:'Pile them up', k:'touch', labels:['0', '1', '2', '3'], vals:[6, 10, 6, 3], note:'A count takes only a few values, so each value can be its own pile.'}]},
+    {m:'ruler', t:'Height', n:'25 students, in cm', raw:'141.2, 157.3, 163.3, 150.6…', steps:[{b:'Pile by value', k:'spikes', note:'25 different heights: 25 piles of one. Nothing to see yet.'}, {b:'Pile by range', k:'touch', labels:['140s', '150s', '160s', '170s'], vals:[4, 9, 8, 4], note:'Ranges of 10 cm: now a shape appears.'}]},
+  ];
+  const host = $('#piles');
+  D.forEach((d, di) => {
+    const c = el('div', 'pcard', '<div class="ph2">'+(d.m === 'tag' ? tagSVG() : rulerSVG())+'<span>'+d.t+'<small>'+d.n+'</small></span></div><div class="raw2">'+d.raw+'</div><svg class="chart" viewBox="0 0 220 130" aria-label="'+d.t+' piled up"><text x="110" y="70" text-anchor="middle">?</text></svg><p class="pnote" aria-live="polite"></p><button class="btn sm" type="button">'+d.steps[0].b+'</button>');
+    let st = 0;
+    const btn = $('button', c);
+    btn.addEventListener('click', () => {
+      const S = d.steps[st], col = d.m === 'tag' ? ORANGE : BLUE;
+      let g;
+      if (S.k === 'spikes'){
+        const X = v => 14 + (v - 140) / 40 * 192;
+        g = '<line class="axis" x1="14" x2="206" y1="100" y2="100"/>' + HT.map(v => '<rect x="'+(X(v) - 2).toFixed(1)+'" y="80" width="4" height="20" fill="'+col+'" stroke="'+INK+'" stroke-width=".8"/>').join('') + [140, 150, 160, 170, 180].map(t => '<text x="'+X(t)+'" y="117" text-anchor="middle">'+t+'</text>').join('') + '<text x="14" y="74">1</text>';
+      } else g = barSVG({W:220, H:130, labels:S.labels, values:S.vals, color:col, gap: S.k === 'bars' ? .38 : 0, L:24, T:20, noGrid:true});
+      $('svg.chart', c).innerHTML = g;
+      $('.pnote', c).textContent = S.note;
+      st++;
+      if (st < d.steps.length) btn.textContent = d.steps[st].b; else { btn.disabled = true; btn.textContent = 'Done'; addXP('pile' + di); }
+    });
+    host.appendChild(c);
+  });
+})();
+
+/* =========================================================== 1. sort and count */
+(function sortCups(){
+  const s = $('#cupfield'), R = rng(12);
+  const list = []; FLAV.forEach((f, i) => { for (let k = 0; k < SAT[i]; k++) list.push(i); });
+  const slots = shuffle([...Array(40).keys()], R);
+  const cups = list.map((fi, j) => { const p = slots[j], col = p % 8, row = Math.floor(p / 8); return {fi, mx: 16 + col * 54 + (R() - .5) * 16, my: 10 + row * 55 + (R() - .5) * 10}; });
+  const seen = FLAV.map(() => 0);
+  cups.forEach(c => { c.k = seen[c.fi]++; c.sx = 108 + c.k * 23; c.sy = 10 + c.fi * 55; });
+  let g = '';
+  FLAV.forEach((f, i) => { g += '<text class="rl2" x="100" y="'+(10 + i * 55 + 27)+'" text-anchor="end" opacity="0">'+f+'</text><text class="rl2" x="468" y="'+(10 + i * 55 + 29)+'" text-anchor="end" opacity="0" style="font-family:var(--font-display);font-size:26px">'+SAT[i]+'</text>'; });
+  cups.forEach((c, j) => { g += '<g class="cg" data-j="'+j+'" style="transform:translate('+c.mx.toFixed(1)+'px,'+c.my.toFixed(1)+'px)"><g transform="scale(.4)">'+cupInner(FLAV[c.fi])+'</g></g>'; });
+  s.innerHTML = g;
+  let sorted = false;
+  function table(){
+    $('#ftab1').innerHTML = '<thead><tr><th>Flavor</th><th style="text-align:right">Frequency</th></tr></thead><tbody>' + FLAV.map((f, i) => '<tr><td><span class="sw" style="background:'+FL[f]+'"></span>'+f+'</td><td class="n">'+(sorted ? SAT[i] : '?')+'</td></tr>').join('') + '<tr class="tot"><td>Total</td><td class="n">40</td></tr></tbody>';
+  }
+  function run(){
+    $$('.cg', s).forEach((el, j) => { const c = cups[j]; el.style.transform = 'translate('+(sorted ? c.sx : c.mx).toFixed(1)+'px,'+(sorted ? c.sy : c.my).toFixed(1)+'px)'; });
+    $$('.rl2', s).forEach(t => t.setAttribute('opacity', sorted ? 1 : 0));
+    $('#sortcups').textContent = sorted ? 'Mix them up again' : 'Sort and count';
+    table();
+    if (sorted) addXP('sortcups');
+  }
+  $('#sortcups').addEventListener('click', () => { sorted = !sorted; run(); });
+  run();
+})();
+
+/* =========================================================== 2. relative frequency */
+(function relative(){
+  const s = $('#waffle'); let g = '', idx = 0;
+  FLAV.forEach((f, fi) => { for (let k = 0; k < SAT[fi]; k++){ const col = idx % 8, row = Math.floor(idx / 8); g += '<rect class="wq" data-f="'+fi+'" x="'+(5 + col * 40)+'" y="'+(5 + row * 41)+'" width="34" height="34" rx="6" fill="'+FL[f]+'" stroke="'+INK+'" stroke-width="2" style="transition:opacity .25s"/>'; idx++; } });
+  s.innerHTML = g;
+  let mode = 'f', sel = 0;
+  const fmt = (i) => mode === 'f' ? String(SAT[i]) : mode === 'r' ? (SAT[i] / 40).toFixed(3).replace(/0$/, '') : Math.round(SAT[i] / 40 * 1000) / 10 + '%';
+  function render(){
+    const head = mode === 'f' ? 'Frequency' : mode === 'r' ? 'Relative frequency' : 'Percent frequency';
+    $('#ftab2').innerHTML = '<thead><tr><th>Flavor</th><th style="text-align:right">'+head+'</th></tr></thead><tbody>' + FLAV.map((f, i) => '<tr data-i="'+i+'"'+(i === sel ? ' class="sel"' : '')+'><td><span class="sw" style="background:'+FL[f]+'"></span>'+f+'</td><td class="n">'+fmt(i)+'</td></tr>').join('') + '<tr class="tot"><td>Total</td><td class="n">'+(mode === 'f' ? '40' : mode === 'r' ? '1' : '100%')+'</td></tr></tbody>';
+    $$('#ftab2 tbody tr[data-i]').forEach(tr => tr.addEventListener('click', () => { sel = +tr.dataset.i; render(); }));
+    $$('.wq', s).forEach(r => r.setAttribute('opacity', +r.dataset.f === sel ? 1 : .22));
+    const f = FLAV[sel], n = SAT[sel], rel = n / 40;
+    $('#formula').innerHTML = mode === 'f' ? '<span class="big">'+f+': '+n+'</span> of the 40 cups.' : mode === 'r' ? '<span class="big">'+n+' ÷ 40 = '+rel.toFixed(3).replace(/0$/, '')+'</span> of all cups were '+f.toLowerCase()+'.' : '<span class="big">'+rel.toFixed(3).replace(/0$/, '')+' × 100 = '+Math.round(rel * 1000) / 10+'%</span> of all cups were '+f.toLowerCase()+'.';
+    $$('#relseg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.m === mode ? 'true' : 'false'));
+  }
+  $$('#relseg button').forEach(b => b.addEventListener('click', () => { mode = b.dataset.m; render(); if (mode === 'p') addXP('percent'); }));
+  render();
+  miniQuiz($('#relcheck'), [
+    {q:'Bao Bar sold 100 cups, 30 of them mango. Who sells the bigger share of mango?', o:['Bao Bar','Lina','The same'], a:1, why:'Lina: 14 of 40 = 35%. Bao Bar: 30 of 100 = 30%. More cups is not a bigger share.'},
+    {q:'What do all the percent frequencies add up to?', o:['40','100%','It depends'], a:1, why:'Every cup sits in exactly one row, so the shares fill 100%.'},
+  ], 'rel');
+})();
+
+/* =========================================================== 3. bar charts */
+(function bars(){
+  let order = 'count', val = 'f';
+  function render(){
+    let idx = FLAV.map((_, i) => i);
+    if (order === 'az') idx.sort((a, b) => FLAV[a].localeCompare(FLAV[b]));
+    const vals = idx.map(i => val === 'f' ? SAT[i] : SAT[i] / 40 * 100);
+    $('#barflav').innerHTML = barSVG({W:520, H:230, labels:idx.map(i => FLAV[i]), values:vals, valFmt: val === 'f' ? (v => v) : (v => Math.round(v) + '%'), yFmt: val === 'f' ? null : (t => t + '%')});
+    $$('#barsort button').forEach(b => b.setAttribute('aria-pressed', b.dataset.o === order ? 'true' : 'false'));
+    $$('#barval button').forEach(b => b.setAttribute('aria-pressed', b.dataset.v === val ? 'true' : 'false'));
+  }
+  $$('#barsort button').forEach(b => b.addEventListener('click', () => { order = b.dataset.o; render(); }));
+  $$('#barval button').forEach(b => b.addEventListener('click', () => { val = b.dataset.v; render(); addXP('barpct'); }));
+  render();
+  $('#barsize').innerHTML = barSVG({W:520, H:130, labels:['S','M','L'], values:[8, 20, 12], T:20, gap:.5});
+})();
+
+/* =========================================================== 4. pie */
+(function pie(){
+  const cols = FLAV.map(f => FL[f]);
+  $('#pie').innerHTML = pieSVG(SUN, cols, 130, 130, 118);
+  const legend = '<div style="display:grid;gap:6px">' + FLAV.map((f, i) => '<div><span class="sw" style="display:inline-block;width:14px;height:14px;border-radius:3px;border:1.5px solid '+INK+';background:'+cols[i]+';margin-right:8px;vertical-align:-2px"></span><b>'+f+'</b></div>').join('') + '</div>';
+  $('#piebars').innerHTML = legend;
+  $$('#pieq button').forEach(b => b.addEventListener('click', () => {
+    const a = b.dataset.a;
+    $$('#pieq button').forEach(x => { x.disabled = true; if (x.dataset.a === 'taro') x.classList.add('right'); if (x === b && a !== 'taro') x.classList.add('wrong'); });
+    $('#piefb').innerHTML = (a === 'taro' ? '<b>Yes, Taro.</b> ' : '<b>It’s Taro.</b> ') + 'Taro: 10 cups (25%). Strawberry: 9 cups (22.5%). Hard to see as angles; easy as bars, which all start from the same line.';
+    $('#piebars').innerHTML = '<svg class="chart" viewBox="0 0 280 230" aria-label="The same Sunday cups as bars">'+barSVG({W:280, H:230, labels:['Ma','Ta','St','Mt','Ly'], values:SUN, color:cols, L:30})+'</svg>';
+    if (a === 'taro') addXP('pie');
+  }));
+})();
+
+/* =========================================================== 5. raw bills */
+(function raw(){
+  const s = $('#rawchart');
+  const uniq = [...new Set(BILLS)].sort((a, b) => a - b);
+  const FB = {
+    dots:'244 dots, one per table. They crowd between $10 and $20, but you can’t count them by eye.',
+    each:'One bar per value: 229 bars, almost all of height 1. Nothing to see.',
+    class:'Classes of $10: now a shape appears. Most tables paid $10 to $20.',
+  };
+  function render(m){
+    const W = 540, H = 300, L = 46, R = 14, X = v => L + v / 60 * (W - L - R);
+    let g = '';
+    if (m === 'dots'){
+      const R2 = rng(7);
+      g += '<line class="axis" x1="'+L+'" x2="'+(W - R)+'" y1="262" y2="262"/>';
+      for (let t = 0; t <= 60; t += 10) g += '<text x="'+X(t)+'" y="282" text-anchor="middle">$'+t+'</text>';
+      BILLS.forEach(v => { g += '<circle class="dot" cx="'+X(v).toFixed(1)+'" cy="'+(24 + R2() * 228).toFixed(1)+'" r="3.2" style="opacity:.6"/>'; });
+    } else if (m === 'each'){
+      const cnt = {}; BILLS.forEach(v => { cnt[v] = (cnt[v] || 0) + 1; });
+      const Y = v => 262 - v / 4 * 230;
+      [0, 1, 2, 3, 4].forEach(t => { g += '<line class="grid" x1="'+L+'" x2="'+(W - R)+'" y1="'+Y(t)+'" y2="'+Y(t)+'"/><text x="'+(L - 6)+'" y="'+(Y(t) + 4)+'" text-anchor="end">'+t+'</text>'; });
+      uniq.forEach(v => { g += '<rect x="'+(X(v) - .8).toFixed(1)+'" y="'+Y(cnt[v]).toFixed(1)+'" width="1.6" height="'+(262 - Y(cnt[v])).toFixed(1)+'" fill="'+BLUE+'"/>'; });
+      g += '<line class="axis" x1="'+L+'" x2="'+(W - R)+'" y1="262" y2="262"/>';
+      for (let t = 0; t <= 60; t += 10) g += '<text x="'+X(t)+'" y="282" text-anchor="middle">$'+t+'</text>';
+    } else {
+      const e = [0, 10, 20, 30, 40, 50, 60];
+      g = histSVG({W, H, edges:e, counts:binCounts(BILLS, e), vals:true, dots:BILLS});
+    }
+    s.innerHTML = g;
+    $('#rawfb').textContent = FB[m];
+    $$('#rawseg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.m === m ? 'true' : 'false'));
+    if (m === 'class') addXP('classes');
+  }
+  $$('#rawseg button').forEach(b => b.addEventListener('click', () => render(b.dataset.m)));
+  render('dots');
+})();
+
+/* =========================================================== 6. build classes */
+(function builder(){
+  const sl = $('#kslider');
+  function render(){
+    const k = +sl.value, raw = (BMAX - BMIN) / k, w = Math.ceil(raw - 1e-9), start = 3;
+    let n = Math.ceil((BMAX - start) / w); if (start + n * w <= BMAX) n++;
+    $('#kread').textContent = k + ' classes';
+    $('#wcalc').innerHTML = '(largest − smallest) ÷ classes = ($50.81 − $3.07) ÷ '+k+' = <b>$'+raw.toFixed(2)+'</b>. Round up to a whole dollar: <span class="big">width $'+w+'</span>' + (n !== k ? '<br><small>With this width, '+n+' classes cover every bill. That’s fine.</small>' : '');
+    const W = 540, L = 20, R = 20, X = v => L + v / 60 * (W - L - R);
+    let g = '';
+    for (let i = 0; i < n; i++){ const a = start + i * w, b = a + w; g += '<rect x="'+X(a).toFixed(1)+'" y="24" width="'+(X(b) - X(a)).toFixed(1)+'" height="26" fill="'+(i % 2 ? '#fff' : '#DEE5FB')+'" stroke="'+INK+'" stroke-width="1.6"/>'; }
+    g += '<line class="axis" x1="'+L+'" x2="'+(W - R)+'" y1="50" y2="50"/>';
+    for (let t = 0; t <= 60; t += 10) g += '<text x="'+X(t)+'" y="68" text-anchor="middle">$'+t+'</text>';
+    [[BMIN, 'smallest $3.07'], [BMAX, 'largest $50.81']].forEach(([v, lab], j) => { g += '<path d="M'+X(v)+' 23 l-6 -12 h12 z" fill="'+(j ? '#D3375E' : '#6E9F2E')+'" stroke="'+INK+'" stroke-width="1.5"/><text x="'+(X(v) + (j ? -10 : 10))+'" y="14" text-anchor="'+(j ? 'end' : 'start')+'" style="fill:'+INK+';font-weight:700">'+lab+'</text>'; });
+    $('#limits').innerHTML = g;
+    $('#classchips').innerHTML = Array.from({length:n}, (_, i) => '<span>$'+(start + i * w)+' to under $'+(start + (i + 1) * w)+'</span>').join('');
+    if (k !== 5) addXP('builder');
+  }
+  sl.addEventListener('input', render);
+  render();
+})();
+
+/* =========================================================== 7. count classes, draw */
+(function countDraw(){
+  const e = [3, 13, 23, 33, 43, 53], c = binCounts(BILLS, e), shown = c.map(() => false);
+  function table(){
+    $('#ctab').innerHTML = '<thead><tr><th>Bill</th><th style="text-align:right">Tables</th><th style="text-align:right">Percent</th></tr></thead><tbody>' + c.map((v, i) => '<tr data-i="'+i+'"'+(shown[i] ? ' class="sel"' : '')+'><td>$'+e[i]+' to $'+e[i + 1]+'</td><td class="n">'+v+'</td><td class="n">'+(v / 244 * 100).toFixed(1)+'%</td></tr>').join('') + '<tr class="tot"><td>Total</td><td class="n">244</td><td class="n">100%</td></tr></tbody>';
+    $$('#ctab tbody tr[data-i]').forEach(tr => tr.addEventListener('click', () => { shown[+tr.dataset.i] = !shown[+tr.dataset.i]; update(); }));
+  }
+  $('#chist').innerHTML = histSVG({W:300, H:250, edges:e, counts:c, vals:true, L:40, grow:true, shown});
+  function update(){
+    table();
+    $$('#chist rect.hb').forEach(r => { r.style.transform = shown[+r.dataset.i] ? 'scaleY(1)' : 'scaleY(0)'; });
+    $$('#chist text.val').forEach(t => t.setAttribute('opacity', shown[+t.dataset.v] ? 1 : 0));
+    if (shown.every(x => x)) addXP('drawall');
+  }
+  $('#drawall').addEventListener('click', () => { shown.fill(true); update(); });
+  $('#clearall').addEventListener('click', () => { shown.fill(false); update(); });
+  update();
+})();
+
+/* =========================================================== 8. trap: gaps */
+(function trapGaps(){
+  let barClosed = false, histOpen = false; const tried = new Set();
+  const e = [0, 10, 20, 30, 40, 50, 60], c = binCounts(BILLS, e);
+  function render(){
+    $('#trapbar').innerHTML = barSVG({W:280, H:200, labels:['Ma','Ta','St','Mt','Ly'], values:SAT, gap: barClosed ? 0 : .38, L:30, vals:false});
+    $('#traphist').innerHTML = histSVG({W:280, H:200, edges:e, counts:c, gap: histOpen ? 7 : 0, L:36, every:2});
+    $('#closegaps').textContent = barClosed ? 'Put the gaps back' : 'Close the gaps';
+    $('#opengaps').textContent = histOpen ? 'Close them again' : 'Open gaps';
+  }
+  $('#closegaps').addEventListener('click', () => { barClosed = !barClosed; tried.add('b'); render(); $('#trapfb').textContent = barClosed ? 'Now mango seems to flow into taro, as if there were flavors in between. There aren’t: flavors are separate labels, so a bar chart keeps its gaps.' : 'Gaps back: five separate boxes, five separate labels.'; if (tried.size === 2) addXP('trapgaps'); });
+  $('#opengaps').addEventListener('click', () => { histOpen = !histOpen; tried.add('h'); render(); $('#trapfb').textContent = histOpen ? 'A gap would mean “no bills here”. But a $9.99 bill and a $10.01 bill sit side by side: the number line has no holes, so histogram bars touch.' : 'Touching again: one number line, cut into classes.'; if (tried.size === 2) addXP('trapgaps'); });
+  render();
+  $('#trapfb').textContent = 'Press a button under each chart.';
+})();
+
+/* =========================================================== 9. bin slider */
+(function binSlider(){
+  const sl = $('#binslider'); const visited = new Set();
+  function render(){
+    const k = +sl.value, e = evenEdges(k), c = binCounts(BILLS, e);
+    $('#binchart').innerHTML = histSVG({W:600, H:300, edges:e, counts:c, dots:BILLS, every:Math.max(1, Math.ceil(k / 8)), xFmt:v => '$' + Math.round(v), L:40});
+    $('#binread').innerHTML = k + ' classes<small>each about $'+((BMAX - BMIN) / k).toFixed(2)+' wide · still 244 tables · '+(k < 5 ? 'too few: the shape hides' : k > 20 ? 'too many: bars turn into noise' : 'a good range is 5 to 20')+'</small>';
+    $$('#binpre button').forEach(b => b.setAttribute('aria-pressed', +b.dataset.k === k ? 'true' : 'false'));
+    visited.add(k); if ([5, 10, 20].every(x => visited.has(x))) addXP('bins');
+  }
+  sl.addEventListener('input', render);
+  $$('#binpre button').forEach(b => b.addEventListener('click', () => { sl.value = b.dataset.k; render(); }));
+  render();
+})();
+
+/* =========================================================== 11. skew */
+(function skew(){
+  const sl = $('#skew'), EX = [
+    ['left','Skewed left: scores on an easy test. Most did well, a few did badly.'],
+    ['sym','Symmetric: heights of adult women in one country. About as many a bit short as a bit tall.'],
+    ['right','Skewed right: restaurant bills, incomes, wait times. Most are small, a few are big.'],
+  ];
+  $('#skewex').innerHTML = EX.map(([k, t]) => '<div data-k="'+k+'">'+t+'</div>').join('');
+  function render(){
+    const a = +sl.value, n = 22, W = 540, H = 230, L = 20, R = 20, hb = 192, vals = [];
+    let cum = 0, lo = null, hi = null; const dx = .01;
+    for (let x = -8; x <= 8; x += dx){ cum += skewDens(x, a) * dx; if (lo === null && cum >= .004) lo = x; if (hi === null && cum >= .996) hi = x; }
+    const pad = (hi - lo) * .04; lo -= pad; hi += pad;
+    for (let i = 0; i < n; i++){ const x = lo + (i + .5) * (hi - lo) / n; vals.push(skewDens(x, a)); }
+    const m = Math.max(...vals), bw = (W - L - R) / n;
+    let g = '';
+    vals.forEach((v, i) => { const h = v / m * 150; g += '<rect x="'+(L + i * bw).toFixed(1)+'" y="'+(hb - h).toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+h.toFixed(1)+'" fill="'+BLUE+'" stroke="'+INK+'" stroke-width="1.5"/>'; });
+    g += '<line class="axis" x1="'+L+'" x2="'+(W - R)+'" y1="'+hb+'" y2="'+hb+'"/>';
+    const kind = a <= -1.2 ? 'left' : a >= 1.2 ? 'right' : 'sym';
+    const peak = vals.indexOf(m), px = L + (peak + .5) * bw;
+    if (kind === 'right') g += '<path d="M'+(px + 30)+' 206 H'+(W - R - 14)+'" stroke="#D3375E" stroke-width="4"/><path d="M'+(W - R - 16)+' 198 L'+(W - R)+' 206 L'+(W - R - 16)+' 214 z" fill="#D3375E"/><text x="'+(W - R - 4)+'" y="225" text-anchor="end" style="fill:#A1203F;font-weight:700;font-size:15px">long tail</text>';
+    if (kind === 'left') g += '<path d="M'+(px - 30)+' 206 H'+(L + 14)+'" stroke="#D3375E" stroke-width="4"/><path d="M'+(L + 16)+' 198 L'+L+' 206 L'+(L + 16)+' 214 z" fill="#D3375E"/><text x="'+(L + 4)+'" y="225" style="fill:#A1203F;font-weight:700;font-size:15px">long tail</text>';
+    $('#skewchart').innerHTML = g;
+    $('#shapelab').textContent = kind === 'left' ? 'Skewed left' : kind === 'right' ? 'Skewed right' : 'Symmetric';
+    $$('#skewex div').forEach(d => d.classList.toggle('on', d.dataset.k === kind));
+    if (kind === 'left') addXP('skewleft');
+  }
+  sl.addEventListener('input', render);
+  render();
+})();
+
+/* =========================================================== 12. modality */
+(function modes(){
+  const sl = $('#gap');
+  const t2s = t => { const h = Math.floor(t), m = Math.round((t - h) * 60); return h + ':' + String(m).padStart(2, '0'); };
+  function render(user){
+    const gp = +sl.value, c1 = 12.25, c2 = 12.25 + gp, sd = .7;
+    const f = t => .55 * phi((t - c1) / sd) + .45 * phi((t - c2) / sd);
+    const edges = Array.from({length:17}, (_, i) => 10 + i * .5), vals = edges.slice(0, 16).map(t => f(t + .25));
+    const m = Math.max(...vals), counts = vals.map(v => Math.round(v / m * 40));
+    let peaks = 0; const grid = Array.from({length:401}, (_, i) => 10 + i * .02).map(f);
+    for (let i = 1; i < grid.length - 1; i++) if (grid[i] > grid[i - 1] && grid[i] >= grid[i + 1]) peaks++;
+    $('#modechart').innerHTML = histSVG({W:540, H:240, edges, counts, every:4, xFmt:t2s, xlab:'time of the order', L:40});
+    const bi = peaks >= 2;
+    $('#modelab').textContent = bi ? 'Two humps: bimodal' : 'One hump: unimodal';
+    $('#modefb').textContent = bi ? 'Lunch (around 12:15) and the second rush (around '+t2s(c2)+') are far apart: two humps, two groups of customers.' : 'The two rushes overlap, so they melt into one hump. The picture can’t tell you there are two groups.';
+    if (bi && user) addXP('bimodal');
+  }
+  sl.addEventListener('input', () => render(true));
+  render();
+})();
+
+/* =========================================================== 13. read the real bills */
+(function readReal(){
+  const e = Array.from({length:12}, (_, i) => i * 5);
+  $('#realhist').innerHTML = histSVG({W:560, H:250, edges:e, counts:binCounts(BILLS, e), vals:true, every:2, xlab:'total bill', L:40});
+  miniQuiz($('#realq'), [
+    {q:'Which class has the most tables?', o:['$10 to $15','$15 to $20','$20 to $25'], a:1, why:'$15 to $20: 67 tables, just above $10 to $15 with 63.'},
+    {q:'What is the shape?', o:['Skewed left','Symmetric','Skewed right'], a:2, why:'The long tail of big bills points right.'},
+    {q:'How many tables paid less than $20?', o:['67','130','147'], a:2, why:'1 + 16 + 63 + 67 = 147 tables.'},
+  ], 'real');
+  $$('#realq .qrow:nth-child(2) button').forEach(b => b.addEventListener('click', () => { const g = $('#realq').closest('.scene').querySelector('.gback'); if (g) g.classList.remove('wait'); }));
+})();
+
+/* =========================================================== 14. running totals */
+(function cumulative(){
+  const e = [0, 10, 20, 30, 40, 50, 60], c = binCounts(BILLS, e), cum = c.map((_, i) => c.slice(0, i + 1).reduce((a, b) => a + b, 0));
+  let step = 2;
+  function render(){
+    $('#cumtab').innerHTML = '<thead><tr><th>Less than</th><th style="text-align:right">This class</th><th style="text-align:right">Running total</th><th style="text-align:right">%</th></tr></thead><tbody>' + c.map((v, i) => '<tr'+(i === step - 1 ? ' class="sel"' : '')+'><td>$'+e[i + 1]+'</td><td class="n">'+(i < step ? '+' + v : '')+'</td><td class="n">'+(i < step ? cum[i] : '')+'</td><td class="n">'+(i < step ? (cum[i] / 244 * 100).toFixed(1) : '')+'</td></tr>').join('') + '</tbody>';
+    const W = 300, H = 250, L = 40, R = 18, T = 14, hb = 216, X = i => L + i * (W - L - R) / 6, Y = v => hb - v / 250 * (hb - T);
+    let g = '';
+    [0, 50, 100, 150, 200, 250].forEach(t => { g += '<line class="grid" x1="'+L+'" x2="'+(W - R)+'" y1="'+Y(t)+'" y2="'+Y(t)+'"/><text x="'+(L - 6)+'" y="'+(Y(t) + 4)+'" text-anchor="end">'+t+'</text>'; });
+    for (let i = 0; i < step; i++){
+      const base = i ? cum[i - 1] : 0;
+      g += '<rect x="'+X(i)+'" y="'+Y(base).toFixed(1)+'" width="'+(X(1) - X(0))+'" height="'+(hb - Y(base)).toFixed(1)+'" fill="'+BLUE+'" stroke="'+INK+'" stroke-width="1.5"/>';
+      g += '<rect x="'+X(i)+'" y="'+Y(cum[i]).toFixed(1)+'" width="'+(X(1) - X(0))+'" height="'+(Y(base) - Y(cum[i])).toFixed(1)+'" fill="'+(i === step - 1 ? SUN_C : '#A9BCF2')+'" stroke="'+INK+'" stroke-width="1.5"/>';
+      g += '<text class="val" x="'+(X(i) + (X(1) - X(0)) / 2)+'" y="'+(Y(cum[i]) - 5)+'" text-anchor="middle">'+cum[i]+'</text>';
+    }
+    g += '<line class="axis" x1="'+L+'" x2="'+(W - R)+'" y1="'+hb+'" y2="'+hb+'"/>';
+    for (let i = 0; i <= 6; i++) g += '<text x="'+X(i)+'" y="'+(hb + 17)+'" text-anchor="middle">$'+e[i]+'</text>';
+    $('#cumchart').innerHTML = g;
+    $('#cumnext').disabled = step >= 6; $('#cumnext').textContent = step >= 6 ? 'All 244 tables added' : 'Add the next class';
+    if (step >= 6) addXP('cumul');
+  }
+  $('#cumnext').addEventListener('click', () => { if (step < 6){ step++; render(); } });
+  $('#cumreset').addEventListener('click', () => { step = 1; render(); });
+  render();
+})();
+
+/* =========================================================== 15. ogive */
+(function ogive(){
+  const e = Array.from({length:12}, (_, i) => i * 5), c = binCounts(BILLS, e);
+  const pts = [[0, 0]]; let run = 0; c.forEach((v, i) => { run += v; pts.push([e[i + 1], run / 244 * 100]); });
+  const W = 540, H = 270, L = 46, R = 16, T = 14, hb = 230, X = v => L + v / 55 * (W - L - R), Y = p => hb - p / 100 * (hb - T);
+  function at(x){ for (let i = 1; i < pts.length; i++){ if (x <= pts[i][0]){ const [x0, y0] = pts[i - 1], [x1, y1] = pts[i]; return y0 + (y1 - y0) * (x - x0) / (x1 - x0); } } return 100; }
+  function render(){
+    const x = +$('#ogx').value, p = at(x), exact = BILLS.filter(b => b < x).length;
+    let g = '';
+    [0, 25, 50, 75, 100].forEach(t => { g += '<line class="grid" x1="'+L+'" x2="'+(W - R)+'" y1="'+Y(t)+'" y2="'+Y(t)+'"/><text x="'+(L - 6)+'" y="'+(Y(t) + 4)+'" text-anchor="end">'+t+'%</text>'; });
+    g += '<line class="axis" x1="'+L+'" x2="'+(W - R)+'" y1="'+hb+'" y2="'+hb+'"/>';
+    for (let t = 0; t <= 55; t += 5) g += '<text x="'+X(t)+'" y="'+(hb + 17)+'" text-anchor="middle">$'+t+'</text>';
+    g += '<path d="M'+pts.map(q => X(q[0]).toFixed(1) + ' ' + Y(q[1]).toFixed(1)).join(' L')+'" fill="none" stroke="'+BLUE+'" stroke-width="3.5" stroke-linejoin="round"/>';
+    pts.forEach(q => { g += '<circle cx="'+X(q[0]).toFixed(1)+'" cy="'+Y(q[1]).toFixed(1)+'" r="4.5" fill="#fff" stroke="'+BLUE+'" stroke-width="2.5"/>'; });
+    g += '<path d="M'+X(x)+' '+hb+' V'+Y(p)+' H'+L+'" fill="none" stroke="#D3375E" stroke-width="2.5"/><circle cx="'+X(x)+'" cy="'+Y(p)+'" r="7" fill="'+SUN_C+'" stroke="'+INK+'" stroke-width="2.5"/>';
+    $('#ogive').innerHTML = g;
+    $('#ogread').innerHTML = 'About '+Math.round(p)+'% of tables paid less than $'+x.toFixed(x % 1 ? 2 : 0)+'<small>Counting the data directly: '+exact+' of 244 tables ('+(exact / 244 * 100).toFixed(0)+'%)</small>';
+    if (x !== 20) addXP('ogive');
+  }
+  $('#ogx').addEventListener('input', render);
+  render();
+})();
+
+/* =========================================================== 16. stem-and-leaf */
+(function stemLeaf(){
+  const v = FRIDAY.slice();
+  $('#billchips').innerHTML = v.map((b, i) => '<span data-i="'+i+'">'+b.toFixed(2)+'</span>').join('');
+  const stems = [0, 1, 2, 3, 4];
+  function empty(){ $('#stem').innerHTML = stems.map(s => '<div class="srow"><span class="sk">'+s+'</span><span class="sb"></span><span class="lv" data-s="'+s+'"></span></div>').join(''); }
+  empty();
+  let built = false, rot = false;
+  $('#stembuild').addEventListener('click', () => {
+    empty(); built = true;
+    const sorted = v.map((b, i) => ({b, i})).sort((a, b) => a.b - b.b);
+    sorted.forEach((o, n) => {
+      const stem = Math.floor(o.b / 10), leaf = Math.floor(o.b) % 10;
+      setTimeout(() => { $('.lv[data-s="'+stem+'"]').insertAdjacentHTML('beforeend', '<span>'+leaf+'</span>'); $('#billchips span[data-i="'+o.i+'"]').classList.add('used'); }, reduced ? 0 : n * 120);
+    });
+    $('#stembuild').textContent = 'Build it again';
+    addXP('stem');
+  });
+  $('#stemrot').addEventListener('click', () => { rot = !rot; $('#stem').classList.toggle('rot', rot); $('#stemrot').textContent = rot ? 'Turn it back' : 'Turn it sideways';
+    $('#stemhead').textContent = rot ? 'Turned sideways: a histogram you can read' : 'Stem | leaf (tens | ones)'; });
+})();
+
+/* =========================================================== 17. which graph */
+(function whichGraph(){
+  const V = [
+    {k:'flav', lab:'Flavor of each cup', fam:'tag', g:'bar'},
+    {k:'day', lab:'Day each table was served', fam:'tag', g:'bar'},
+    {k:'share', lab:'Each flavor’s share of the day', fam:'tag', g:'pie'},
+    {k:'bill', lab:'Total bill of each table', fam:'ruler', g:'hist'},
+    {k:'under', lab:'How many bills are under $25?', fam:'ruler', g:'ogive'},
+    {k:'fri', lab:'Friday’s 19 bills, every value kept', fam:'ruler', g:'stem'},
+  ];
+  const host = $('#varbtns');
+  V.forEach(v => { const b = el('button', 'btn sm', v.lab); b.type = 'button'; b.dataset.k = v.k; b.addEventListener('click', () => show(v, true)); host.appendChild(b); });
+  function show(v, user){
+    $$('button', host).forEach(b => b.setAttribute('aria-pressed', b.dataset.k === v.k ? 'true' : 'false'));
+    $('#flow').innerHTML = '<div class="node on"><b>Your column</b>'+v.lab+'</div>'
+      + '<div class="lvl2"><div class="node tag'+(v.fam === 'tag' ? ' on' : '')+'"><b>Tag: labels</b><small>which one?</small></div><div class="node ruler'+(v.fam === 'ruler' ? ' on' : '')+'"><b>Ruler: amounts</b><small>how much?</small></div></div>'
+      + '<div class="lvl3" style="grid-template-columns:repeat(5,minmax(0,1fr))">'
+      + [['bar','tag','Bar chart','compare labels'],['pie','tag','Pie chart','parts of a whole'],['hist','ruler','Histogram','the shape'],['ogive','ruler','Ogive','how many below'],['stem','ruler','Stem-and-leaf','small data, every value']].map(([k, f, t, s]) => '<div class="node '+f+(v.g === k ? ' on' : '')+'"><b>'+t+'</b><small>'+s+'</small></div>').join('') + '</div>';
+    let g = '';
+    if (v.k === 'flav') g = barSVG({W:520, H:200, labels:FLAV, values:SAT, T:20});
+    else if (v.k === 'day'){ const d = ['Thur','Fri','Sat','Sun']; g = barSVG({W:520, H:200, labels:d, values:d.map(x => DAYS.filter(y => y === x).length), T:20}); }
+    else if (v.k === 'share') g = '<g transform="translate(160 0)">'+pieSVG(SAT, FLAV.map(f => FL[f]), 100, 100, 92)+'</g>';
+    else if (v.k === 'bill'){ const e = Array.from({length:12}, (_, i) => i * 5); g = histSVG({W:520, H:200, edges:e, counts:binCounts(BILLS, e), every:2}); }
+    else if (v.k === 'under'){
+      const e = Array.from({length:12}, (_, i) => i * 5), c = binCounts(BILLS, e); let run = 0; const pts = [[0, 0]]; c.forEach((x, i) => { run += x; pts.push([e[i + 1], run / 244 * 100]); });
+      const X = x => 46 + x / 55 * 460, Y = p => 170 - p / 100 * 155;
+      [0, 50, 100].forEach(t => { g += '<line class="grid" x1="46" x2="506" y1="'+Y(t)+'" y2="'+Y(t)+'"/><text x="40" y="'+(Y(t) + 4)+'" text-anchor="end">'+t+'%</text>'; });
+      for (let t = 0; t <= 55; t += 10) g += '<text x="'+X(t)+'" y="190" text-anchor="middle">$'+t+'</text>';
+      g += '<line class="axis" x1="46" x2="506" y1="170" y2="170"/><path d="M'+pts.map(q => X(q[0]).toFixed(1) + ' ' + Y(q[1]).toFixed(1)).join(' L')+'" fill="none" stroke="'+BLUE+'" stroke-width="3.5"/>';
+      const p25 = BILLS.filter(b => b < 25).length / 244 * 100;
+      g += '<path d="M'+X(25)+' 170 V'+Y(p25)+' H46" fill="none" stroke="#D3375E" stroke-width="2.5"/><text x="'+(X(25) + 8)+'" y="'+(Y(p25) + 16)+'" class="val">about '+Math.round(p25)+'% under $25</text>';
+    } else {
+      const rows = [0, 1, 2, 3, 4].map(s => s + ' | ' + FRIDAY.filter(b => Math.floor(b / 10) === s).map(b => Math.floor(b) % 10).join(' '));
+      g = rows.map((r, i) => '<text x="150" y="'+(36 + i * 34)+'" style="font-family:Times New Roman, Times, Liberation Serif, serif;font-size:30px;fill:'+INK+';font-weight:700">'+r+'</text>').join('');
+    }
+    $('#flowchart').innerHTML = g;
+    if (user) addXP('which-' + v.k);
+  }
+  show(V[3], false);
+})();
+
+/* =========================================================== 18. arcade */
+const LEVELS = [
+  {id:'count', n:'Count it', d:'Frequencies, shares and percents', bg:'#F7B32B', items:[
+    {q:'Lina sold 40 cups and 14 were mango. What is the relative frequency of mango?', opts:['0.14','0.35','14'], a:1, why:'14 ÷ 40 = 0.35.'},
+    {q:'A relative frequency of 0.35 is what percent frequency?', opts:['3.5%','35%','0.35%'], a:1, why:'Multiply by 100: 35%.'},
+    {q:'You add up all the relative frequencies in a table. What do you get?', opts:['1','The number of rows','It depends on the data'], a:0, why:'Every element sits in exactly one row, so the shares fill one whole.'},
+    {q:'5 of 25 students walk to school. What is the percent frequency?', opts:['5%','20%','25%'], a:1, why:'5 ÷ 25 = 0.20, which is 20%.'},
+    {q:'Bao Bar sold 30 mango cups out of 100. Lina sold 14 out of 40. Who sells the bigger share of mango?', opts:['Bao Bar','Lina','The same'], a:1, why:'Lina: 35%. Bao Bar: 30%. More cups is not a bigger share.'},
+    {q:'A frequency table shows 5, 8, 2 and 5. How many elements are in the data?', opts:['8','20','4'], a:1, why:'5 + 8 + 2 + 5 = 20.'},
+  ]},
+  {id:'which', n:'Which graph?', d:'Label or amount, bar or histogram', bg:'#F7C98F', opts:['Bar or pie chart','Histogram'], items:[
+    {q:'Favourite music genre of 200 students', a:0, why:'A genre is a label: Tag’s column.'},
+    {q:'Minutes each customer waited in line', a:1, why:'Minutes are amounts on a number line: Ruler’s column.'},
+    {q:'Payment method: cash, card or phone', a:0, why:'Three labels, so a bar chart (or a pie).'},
+    {q:'Price of 120 used cars', a:1, why:'Prices are amounts. Group them into classes, then draw a histogram.'},
+    {q:'Shirt size: S, M, L, XL', a:0, why:'Sizes are labels with an order. Still a bar chart, with the bars kept in order.'},
+    {q:'Height of 300 sunflowers', a:1, why:'Heights are measured amounts.'},
+    {q:'Region of each store: North, South, East, West', a:0, why:'Regions are labels.'},
+    {q:'Number of pages in 80 novels', a:1, why:'Page counts are amounts with many different values, so group them into classes.'},
+  ]},
+  {id:'gaps', n:'Gap or no gap?', d:'Should these bars touch?', bg:'#A9BCF2', opts:['Gaps: bar chart','Touching: histogram'], items:[
+    {q:'Bars for Mango, Taro and Strawberry', a:0, why:'Flavors are separate labels. Nothing lives between them.'},
+    {q:'Bars for $0 to $10, $10 to $20, $20 to $30', a:1, why:'One class ends where the next begins on the number line.'},
+    {q:'Bars for Monday, Tuesday, Wednesday', a:0, why:'Days here are labels for the bars, so a bar chart keeps its gaps.'},
+    {q:'Bars for 150 to 160 cm, 160 to 170 cm, 170 to 180 cm', a:1, why:'Heights glide from class to class: the bars touch.'},
+    {q:'Bars for car brands', a:0, why:'Brands are labels.'},
+    {q:'Bars for waits of 0 to 5, 5 to 10 and 10 to 15 minutes', a:1, why:'Classes of one number line: no holes, no gaps.'},
+  ]},
+  {id:'shape', n:'Name the shape', d:'Symmetric, skewed or two humps', bg:'#F7C4D2', opts:['Symmetric','Skewed right','Skewed left','Two humps'], items:[
+    {q:shapeSVG('right') + 'Which shape is this?', a:1, why:'The long tail points to the right.'},
+    {q:shapeSVG('left') + 'Which shape is this?', a:2, why:'The long tail points to the left.'},
+    {q:shapeSVG('sym') + 'Which shape is this?', a:0, why:'The left half mirrors the right half.'},
+    {q:shapeSVG('bi') + 'Which shape is this?', a:3, why:'Two peaks: bimodal. Often two groups are mixed together.'},
+    {q:'Household incomes in a city: most are modest, a few are very high.', a:1, why:'The few very high incomes make a long tail to the right.'},
+    {q:'Scores on a very easy quiz: most near the top, a few low.', a:2, why:'The few low scores make a tail to the left.'},
+    {q:'Arrival times at a café with a breakfast rush and a lunch rush.', a:3, why:'Two rushes, two humps.'},
+  ]},
+  {id:'classes', n:'Build the classes', d:'Number, width and limits', bg:'#B9D98C', items:[
+    {q:'Data run from 12 to 92 and you want 8 classes. What width?', opts:['8','10','80'], a:1, why:'(92 − 12) ÷ 8 = 10.'},
+    {q:'Data run from 3 to 50. With 5 classes the raw width is 9.4. Which width do you use?', opts:['9','10','47'], a:1, why:'Round up to a convenient number, so every value still fits: 10.'},
+    {q:'Classes are “$10 to under $20” and “$20 to under $30”. A bill of exactly $20 goes in…', opts:['$10 to under $20','$20 to under $30','Both'], a:1, why:'Each value goes in exactly one class. $20 is not under $20.'},
+    {q:'The textbook’s guide for the number of classes:', opts:['2 or 3','Between 5 and 20','At least 50'], a:1, why:'Between 5 and 20: fewer for small data sets, more for big ones.'},
+    {q:'One data set has 30 values, another has 3,000. Which usually takes more classes?', opts:['30 values','3,000 values','The same'], a:1, why:'More data can fill more classes without turning into noise.'},
+    {q:'You switch a histogram from 5 to 20 classes. What changes?', opts:['The data','The picture','Both'], a:1, why:'Same values, new grouping. Only the picture changes.'},
+  ]},
+  {id:'run', n:'Running totals', d:'Cumulative counts, ogive, stems', bg:'#C7B3EA', items:[
+    {q:'17 bills are under $10 and 130 bills are from $10 to under $20. How many are under $20?', opts:['130','147','113'], a:1, why:'17 + 130 = 147.'},
+    {q:'In a cumulative frequency table, the last running total always equals…', opts:['The biggest class','The number of data values','10'], a:1, why:'By the last class, every value has been added once.'},
+    {q:'An ogive passes through 60% above $20. What does that mean?', opts:['60% of bills are exactly $20','About 60% of bills are less than $20','60 bills cost $20'], a:1, why:'An ogive answers “what share is less than this value?”'},
+    {q:'Moving to the right, an ogive…', opts:['Only goes up or stays flat','Can go down','Is always a straight line'], a:0, why:'Running totals never shrink.'},
+    {q:'Stem-and-leaf row “2 | 1 4 8”, where the stem is the tens. What are the values?', opts:['2, 1, 4, 8','21, 24, 28','214 and 8'], a:1, why:'Stem 2 with leaves 1, 4, 8 gives 21, 24 and 28.'},
+    {q:'What does a stem-and-leaf display keep that a histogram loses?', opts:['The colors','Every single value','The mean'], a:1, why:'Each leaf is one data value, so you can read them all back.'},
+  ]},
+  {id:'boss', n:'Boss: fill the outline', d:'Four target shapes. Drag 12 dots to build each one.', bg:'#E9718F', boss:true, inv:true},
+  {id:'lab', n:'Histogram lab', d:'Paste your own numbers and move the slider', bg:'#FFFFFF', tool:true},
+];
+(function arcade(){
+  const host = $('#arcade');
+  const SK = 't12-stars';
+  let best = sget(SK, {});
+  let play = null;
+  function starsHTML(n){ let s = ''; for (let k = 0; k < 3; k++) s += k < n ? '★' : '<span class="off">★</span>'; return s; }
+  const scn = host.closest('.scene');
+  const mini = '<svg viewBox="0 0 90 44" width="86" height="42" aria-hidden="true"><rect x="4" y="26" width="16" height="14" fill="#2F55D4" stroke="'+INK+'" stroke-width="2"/><rect x="20" y="8" width="16" height="32" fill="#2F55D4" stroke="'+INK+'" stroke-width="2"/><rect x="36" y="16" width="16" height="24" fill="#2F55D4" stroke="'+INK+'" stroke-width="2"/><rect x="52" y="30" width="16" height="10" fill="#2F55D4" stroke="'+INK+'" stroke-width="2"/><rect x="68" y="35" width="16" height="5" fill="#2F55D4" stroke="'+INK+'" stroke-width="2"/></svg>';
+  function tiles(){
+    play = null; scn.classList.remove('playing');
+    host.innerHTML = '<div class="tiles">' + LEVELS.map((L, i) => '<button class="tile" type="button" data-i="'+i+'" style="background:'+L.bg+'"><span class="ln">'+(L.boss ? 'Final level' : L.tool ? 'Tool' : 'Level '+(i + 1))+'</span><span class="tn">'+L.n+'</span><span class="td">'+L.d+'</span>'+(L.tool ? '<span class="ts">'+mini+'</span>' : '<span class="ts" aria-label="'+(best[L.id] || 0)+' of 3 stars">'+starsHTML(best[L.id] || 0)+'</span>')+'</button>').join('') + '</div>';
+    $$('.tile', host).forEach(t => t.addEventListener('click', () => { const L = LEVELS[+t.dataset.i]; if (L.tool) lab(); else if (L.inv) inverse(L); else start(L); }));
+  }
+  function start(L){
+    let qs;
+    if (L.boss){ qs = []; LEVELS.filter(x => x.items).forEach(x => x.items.forEach(it => qs.push(Object.assign({}, it, {opts: it.opts || x.opts, own: !!it.opts})))); qs = shuffle(qs).slice(0, 10); }
+    else qs = shuffle(L.items.map(it => Object.assign({}, it, {opts: it.opts || L.opts, own: !!it.opts})));
+    qs = qs.map(q => { if (!q.own) return q; const order = shuffle(q.opts.map((_, j) => j)); return Object.assign({}, q, {opts: order.map(j => q.opts[j]), a: order.indexOf(q.a)}); });
+    play = {L, qs, i:0, miss:0, streak:0}; scn.classList.add('playing');
+    question();
+  }
+  function question(){
+    const p = play, q = p.qs[p.i];
+    host.innerHTML = '<div class="card qpanel"><div class="qhead"><span class="lvl">'+p.L.n+'</span><span>Question '+(p.i + 1)+' of '+p.qs.length+'</span><span class="streak">'+FLAME+'Streak '+p.streak+'</span></div>'
+      + '<div class="qbar"><i style="width:'+(100*p.i/p.qs.length)+'%"></i></div>'
+      + '<div class="qtext">'+q.q+'</div>'
+      + '<div class="opts">'+q.opts.map((o, j) => '<button class="opt" type="button" data-j="'+j+'">'+o+'</button>').join('')+'</div>'
+      + '<div class="fb" aria-live="polite"></div>'
+      + '<div class="qnav"><button class="btn" type="button" data-act="quit">Back to levels</button><button class="btn sun" type="button" data-act="next" disabled>'+(p.i === p.qs.length - 1 ? 'See my stars' : 'Next question')+'</button></div></div>';
+    $$('.opt', host).forEach(b => b.addEventListener('click', () => answer(+b.dataset.j)));
+    $('[data-act="quit"]', host).addEventListener('click', tiles);
+    $('[data-act="next"]', host).addEventListener('click', () => { p.i++; if (p.i < p.qs.length) question(); else finish(); });
+    const first = $('.opt', host); if (first) first.focus({preventScroll:true});
+  }
+  function answer(j){
+    const p = play, q = p.qs[p.i], ok = j === q.a;
+    $$('.opt', host).forEach((b, k) => { b.disabled = true; if (k === q.a) b.classList.add('right'); if (k === j && !ok) b.classList.add('wrong'); });
+    if (ok){ p.streak++; addXP('aq:' + q.q.replace(/<[^>]+>/g, '').slice(0, 48) + q.a); } else { p.streak = 0; p.miss++; }
+    $('.streak', host).innerHTML = FLAME + 'Streak ' + p.streak;
+    $('.fb', host).innerHTML = (ok ? '<b>Right!</b> ' : '<b>Not quite.</b> It’s “'+q.opts[q.a]+'”. ') + q.why;
+    const nx = $('[data-act="next"]', host); nx.disabled = false; nx.focus({preventScroll:true});
+  }
+  function finish(){
+    const p = play, n = p.qs.length, right = n - p.miss;
+    const stars = p.miss === 0 ? 3 : p.miss <= 2 ? 2 : 1;
+    if (stars > (best[p.L.id] || 0)){ best[p.L.id] = stars; sset(SK, best); }
+    host.innerHTML = '<div class="card qpanel donebox"><span class="lvl" style="font-family:var(--font-display);font-weight:800;font-size:22px">'+p.L.n+'</span><div class="bigstars" aria-label="'+stars+' of 3 stars">'+starsHTML(stars)+'</div><div style="font-size:18px">You got <b>'+right+' of '+n+'</b> right.'+(stars === 3 ? ' Not a single slip!' : stars === 2 ? ' Almost perfect.' : ' Try once more: the reasons will stick.')+'</div><div class="row" style="justify-content:center"><button class="btn sun big" type="button" data-act="again">Play again</button><button class="btn big" type="button" data-act="back">Back to levels</button></div></div>';
+    $('[data-act="again"]', host).addEventListener('click', () => start(p.L));
+    $('[data-act="back"]', host).addEventListener('click', tiles);
+    if (stars >= 2) confetti();
+  }
+  const ITG = [
+    {t:'One hill in the middle', c:[1, 3, 4, 3, 1]},
+    {t:'A long tail to the right', c:[5, 4, 1, 1, 1]},
+    {t:'A long tail to the left', c:[1, 1, 1, 4, 5]},
+    {t:'Two humps', c:[4, 2, 0, 2, 4]},
+  ];
+  const IE = [0, 10, 20, 30, 40, 50];
+  function inverse(L){
+    const ts = shuffle(ITG.slice()); let i = 0, miss = 0, xs = [], solved = false;
+    const W = 640, X = v => 44 + v / 50 * (W - 76), HB = 150, Y = n => HB - n * 23, NL = 222;
+    scn.classList.add('playing');
+    function draw(){
+      const T = ts[i]; solved = false;
+      do { xs = Array.from({length:12}, () => Math.floor(Math.random() * 51)); } while (binCounts(xs, IE).join() === T.c.join());
+      let g = '';
+      [0, 1, 2, 3, 4, 5].forEach(n => { g += '<line class="grid" x1="44" x2="'+(W - 32)+'" y1="'+Y(n)+'" y2="'+Y(n)+'"/><text x="38" y="'+(Y(n) + 4)+'" text-anchor="end">'+n+'</text>'; });
+      g += '<g id="ibars">';
+      for (let k = 0; k < 5; k++){ const x0 = X(IE[k]), x1 = X(IE[k + 1]); g += '<rect class="ib" x="'+x0+'" width="'+(x1 - x0)+'" stroke="'+INK+'" stroke-width="1.6" fill-opacity=".9"/><rect x="'+x0+'" y="'+Y(T.c[k])+'" width="'+(x1 - x0)+'" height="'+(HB - Y(T.c[k]))+'" fill="none" stroke="'+INK+'" stroke-width="2.6" stroke-dasharray="7 5"/>'; }
+      g += '</g><line class="axis" x1="44" x2="'+(W - 32)+'" y1="'+HB+'" y2="'+HB+'"/>';
+      for (let t = 0; t <= 50; t += 10) g += '<line x1="'+X(t)+'" x2="'+X(t)+'" y1="'+HB+'" y2="'+(NL + 5)+'" stroke="'+INK+'" stroke-width="1" stroke-dasharray="2 4" opacity=".5"/><text x="'+X(t)+'" y="'+(NL + 22)+'" text-anchor="middle">$'+t+'</text>';
+      g += '<line class="axis" x1="'+X(0)+'" x2="'+X(50)+'" y1="'+NL+'" y2="'+NL+'"/>';
+      g += xs.map((v, j) => '<g class="dd" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="50" data-j="'+j+'"><circle class="ring" r="13"/><circle class="pt" r="6.5" fill="'+BLUE+'" stroke="'+INK+'" stroke-width="1.6"/></g>').join('');
+      host.innerHTML = '<div class="card qpanel inv ibox"><div class="qhead"><span class="lvl">'+L.n+'</span><span>Target '+(i + 1)+' of '+ts.length+'</span><span class="streak">Misses: '+miss+'</span></div>'
+        + '<div class="qbar"><i style="width:'+(100 * i / ts.length)+'%"></i></div>'
+        + '<div class="qtext">Target: <b>'+T.t+'</b>. Drag the 12 dots until every bar fills its dashed outline.</div>'
+        + '<svg viewBox="0 0 '+W+' 252" aria-label="Your 12 dots and their histogram">'+g+'</svg>'
+        + '<p class="hint">A dot exactly on $20 counts in the $20 to $30 class. Arrow keys move a dot by $1.</p>'
+        + '<div class="fb" aria-live="polite"></div>'
+        + '<div class="qnav"><button class="btn" type="button" data-act="quit">Back to levels</button><span class="row" style="gap:8px"><button class="btn" type="button" data-act="check">Check my data</button><button class="btn sun" type="button" data-act="next" disabled>'+(i === ts.length - 1 ? 'See my stars' : 'Next target')+'</button></span></div></div>';
+      const svg = $('svg', host);
+      function update(){
+        const c = binCounts(xs, IE), T = ts[i];
+        $$('.ib', svg).forEach((r, k) => { r.setAttribute('y', Y(c[k])); r.setAttribute('height', Math.max(0, HB - Y(c[k]))); r.setAttribute('fill', c[k] === T.c[k] ? '#6E9F2E' : BLUE); });
+        const seen = {};
+        $$('.dd', svg).forEach((d, j) => { const v = xs[j], s = seen[v] = (seen[v] || 0) + 1; $$('circle', d).forEach(ci => { ci.setAttribute('cx', X(v).toFixed(1)); ci.setAttribute('cy', NL - 10 - (s - 1) * 13); }); d.setAttribute('aria-valuenow', v); d.setAttribute('aria-label', 'Dot '+(j + 1)+' at $'+v); });
+      }
+      $$('.dd', svg).forEach(d => {
+        const j = +d.dataset.j;
+        const setV = v => { if (solved) return; xs[j] = Math.max(0, Math.min(50, v)); update(); };
+        d.addEventListener('pointerdown', e => { e.preventDefault(); d.setPointerCapture(e.pointerId); d.dataset.on = '1'; d.focus({preventScroll:true}); });
+        d.addEventListener('pointermove', e => { if (d.dataset.on !== '1') return; const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY; const p = pt.matrixTransform(svg.getScreenCTM().inverse()); setV(Math.round((p.x - 44) / (W - 76) * 50)); });
+        const stop = () => { d.dataset.on = ''; };
+        d.addEventListener('pointerup', stop); d.addEventListener('pointercancel', stop);
+        d.addEventListener('keydown', e => { const dv = {ArrowLeft:-1, ArrowRight:1, ArrowDown:-1, ArrowUp:1}[e.key]; if (dv == null) return; e.preventDefault(); e.stopPropagation(); setV(xs[j] + dv); });
+      });
+      update();
+      $('[data-act="quit"]', host).addEventListener('click', tiles);
+      $('[data-act="check"]', host).addEventListener('click', () => {
+        if (solved) return;
+        const c = binCounts(xs, IE), T = ts[i], fb = $('.fb', host), k = c.findIndex((v, q) => v !== T.c[q]);
+        if (k < 0){ solved = true; fb.innerHTML = '<b>Right!</b> Every class holds exactly the count its outline asks for.'; addXP('inv' + T.c.join('')); const nx = $('[data-act="next"]', host); nx.disabled = false; nx.focus({preventScroll:true}); }
+        else { miss++; $('.streak', host).textContent = 'Misses: ' + miss; fb.innerHTML = '<b>Not yet.</b> The $'+IE[k]+' to $'+IE[k + 1]+' class holds '+c[k]+' dot'+(c[k] === 1 ? '' : 's')+'; its outline wants '+T.c[k]+'.'; }
+      });
+      $('[data-act="next"]', host).addEventListener('click', () => { i++; if (i < ts.length) draw(); else done(); });
+    }
+    function done(){
+      const stars = miss === 0 ? 3 : miss <= 2 ? 2 : 1;
+      if (stars > (best[L.id] || 0)){ best[L.id] = stars; sset(SK, best); }
+      host.innerHTML = '<div class="card qpanel donebox"><span class="lvl" style="font-family:var(--font-display);font-weight:800;font-size:22px">'+L.n+'</span><div class="bigstars" aria-label="'+stars+' of 3 stars">'+starsHTML(stars)+'</div><div style="font-size:18px">Four shapes built with <b>'+miss+'</b> miss'+(miss === 1 ? '' : 'es')+'.</div><div class="row" style="justify-content:center"><button class="btn sun big" type="button" data-act="again">Play again</button><button class="btn big" type="button" data-act="back">Back to levels</button></div></div>';
+      $('[data-act="again"]', host).addEventListener('click', () => inverse(L));
+      $('[data-act="back"]', host).addEventListener('click', tiles);
+      if (stars >= 2) confetti();
+    }
+    draw();
+  }
+  function lab(){
+    scn.classList.add('playing');
+    host.innerHTML = '<div class="card qpanel labbox" style="max-width:900px;display:grid;gap:10px">'
+      + '<div class="qhead"><span class="lvl">Histogram lab</span><button class="btn sm" type="button" data-act="quit">Back to levels</button></div>'
+      + '<label for="labdata" style="font-weight:600">Your numbers <small style="font-weight:400">(spaces, commas or new lines between them; a dot for decimals)</small></label>'
+      + '<textarea id="labdata" class="lab-ta" spellcheck="false" rows="2">'+TIPS.join(' ')+'</textarea>'
+      + '<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center"><label for="labk" style="font-weight:600">Classes</label><input type="range" id="labk" min="3" max="30" value="8" style="flex:1 1 180px;width:auto"><span id="labkr" style="font-family:var(--font-display);font-weight:800;font-size:20px;min-width:1.6em"></span><button class="btn sm" type="button" id="labtips">Use the 244 tips</button><button class="btn sm" type="button" id="labbills">Use the 244 bills</button></div>'
+      + '<svg class="chart" id="labchart" viewBox="0 0 640 210" style="max-height:30vh" role="img" aria-label="Histogram of your numbers"></svg>'
+      + '<div id="labinfo" class="smallnote" aria-live="polite"></div></div>';
+    $('[data-act="quit"]', host).addEventListener('click', tiles);
+    function render(){
+      const k = +$('#labk').value;
+      $('#labkr').textContent = k;
+      const raw = $('#labdata').value.split(/[\s;,]+/).filter(t => t.length);
+      const nums = raw.map(Number).filter(x => isFinite(x));
+      const bad = raw.length - nums.length;
+      if (nums.length < 2){ $('#labchart').innerHTML = '<text x="320" y="105" text-anchor="middle">Type at least two numbers.</text>'; $('#labinfo').textContent = bad ? bad + ' entries were not numbers and were skipped.' : ''; return; }
+      const mn = Math.min(...nums), mx = Math.max(...nums);
+      if (mn === mx){ $('#labchart').innerHTML = '<text x="320" y="105" text-anchor="middle">All your numbers are equal: one single bar.</text>'; $('#labinfo').textContent = 'n = ' + nums.length; return; }
+      const w = (mx - mn) / k, e = Array.from({length:k + 1}, (_, i) => i === k ? mx : mn + i * w);
+      const fmt = x => { const d = Math.abs(w) < 1 ? 2 : Math.abs(w) < 10 ? 1 : 0; return (+x.toFixed(d)).toString(); };
+      $('#labchart').innerHTML = histSVG({W:640, H:210, edges:e, counts:binCounts(nums, e), every:Math.max(1, Math.ceil(k / 10)), xFmt:fmt, L:40, sw:k > 20 ? 1 : 1.6});
+      $('#labinfo').innerHTML = '<b>n = '+nums.length+'</b> · smallest '+fmt(mn)+' · largest '+fmt(mx)+' · each class '+fmt(w)+' wide'+(bad ? ' · '+bad+' entries were not numbers and were skipped' : '')+'. Move the slider: the numbers stay, the picture changes.';
+      addXP('lab');
+    }
+    $('#labk').addEventListener('input', render);
+    $('#labdata').addEventListener('input', render);
+    $('#labtips').addEventListener('click', () => { $('#labdata').value = TIPS.join(' '); render(); });
+    $('#labbills').addEventListener('click', () => { $('#labdata').value = BILLS.join(' '); render(); });
+    render();
+  }
+  tiles();
+  $('#resetall').addEventListener('click', () => { XP = {}; sset(XPK, XP); best = {}; sset(SK, best); renderXP(false); tiles(); });
+})();
+
+/* =========================================================== 19. recap */
+(function recap(){
+  const I = {
+    count:'<svg viewBox="0 0 54 54"><rect x="6" y="8" width="42" height="40" rx="6" fill="#FFFFFF" stroke="'+INK+'" stroke-width="2.5"/><path d="M6 20h42M6 30h42M6 40h42" stroke="#C5D0F0" stroke-width="2.5"/><path d="M34 8v40" stroke="#F49BB3" stroke-width="2.5"/><text x="41" y="28" text-anchor="middle" style="font:800 9px var(--font-display);fill:'+INK+'">14</text><text x="41" y="38" text-anchor="middle" style="font:800 9px var(--font-display);fill:'+INK+'">10</text></svg>',
+    bars:'<svg viewBox="0 0 54 54"><rect x="5" y="14" width="10" height="34" rx="2" fill="#EE7F1B" stroke="'+INK+'" stroke-width="2"/><rect x="22" y="24" width="10" height="24" rx="2" fill="#EE7F1B" stroke="'+INK+'" stroke-width="2"/><rect x="39" y="32" width="10" height="16" rx="2" fill="#EE7F1B" stroke="'+INK+'" stroke-width="2"/></svg>',
+    classes:'<svg viewBox="0 0 54 54"><path d="M4 34h46" stroke="'+INK+'" stroke-width="2.5"/><path d="M6 24v20M20 24v20M34 24v20M48 24v20" stroke="#2F55D4" stroke-width="3"/><circle cx="12" cy="18" r="2.6" fill="'+INK+'"/><circle cx="15" cy="12" r="2.6" fill="'+INK+'"/><circle cx="25" cy="16" r="2.6" fill="'+INK+'"/><circle cx="29" cy="10" r="2.6" fill="'+INK+'"/><circle cx="27" cy="20" r="2.6" fill="'+INK+'"/><circle cx="41" cy="18" r="2.6" fill="'+INK+'"/></svg>',
+    hist:'<svg viewBox="0 0 54 54"><rect x="4" y="30" width="12" height="18" fill="#2F55D4" stroke="'+INK+'" stroke-width="2"/><rect x="16" y="10" width="12" height="38" fill="#2F55D4" stroke="'+INK+'" stroke-width="2"/><rect x="28" y="22" width="12" height="26" fill="#2F55D4" stroke="'+INK+'" stroke-width="2"/><rect x="40" y="38" width="10" height="10" fill="#2F55D4" stroke="'+INK+'" stroke-width="2"/></svg>',
+    shape:'<svg viewBox="0 0 54 54"><path d="M4 46 C10 46 12 12 18 12 C26 12 30 40 50 44" fill="#A9BCF2" stroke="#2F55D4" stroke-width="3"/><path d="M28 50 H48" stroke="#D3375E" stroke-width="3"/><path d="M44 46 l5 4 -5 4" fill="none" stroke="#D3375E" stroke-width="3"/></svg>',
+    ogive:'<svg viewBox="0 0 54 54"><path d="M6 46 L14 42 L22 22 L30 12 L38 8 L48 6" fill="none" stroke="#2F55D4" stroke-width="3.2" stroke-linejoin="round"/><circle cx="22" cy="22" r="3.5" fill="#F7B32B" stroke="'+INK+'" stroke-width="2"/><path d="M22 46 V22 H6" fill="none" stroke="#D3375E" stroke-width="2" stroke-dasharray="3 3"/></svg>',
+    warn:'<svg viewBox="0 0 54 54"><path d="M27 5 L51 47 H3 Z" fill="#F7B32B" stroke="#fff" stroke-width="3" stroke-linejoin="round"/><path d="M27 20v13" stroke="'+INK+'" stroke-width="4" stroke-linecap="round"/><circle cx="27" cy="40" r="2.6" fill="'+INK+'"/></svg>',
+  };
+  const C = [
+    ['count','Count it','Frequency: how many. Relative frequency: how many ÷ total. Percent: × 100. Shares add up to 100%.'],
+    ['bars','Labels: bar or pie','One bar per label, with gaps between bars. A pie shows parts of one whole, but bars are easier to compare.'],
+    ['classes','Amounts: classes first','Choose the number of classes (about 5 to 20), the width, then limits so each value lands in exactly one class.'],
+    ['hist','Histogram','One bar per class, bars touching, because the number line has no holes.'],
+    ['shape','Read the shape','Symmetric, skewed right (tail right), skewed left (tail left). One hump or two.'],
+    ['ogive','Less than…','Running totals give the ogive. A stem-and-leaf keeps every value.'],
+  ];
+  $('#recap').innerHTML = C.map(([i, t, d]) => '<div class="rc"><span class="ri">'+I[i]+'</span><div><b>'+t+'</b><span>'+d+'</span></div></div>').join('')
+    + '<div class="rc trap"><span class="ri">'+I.warn+'</span><div><b>The trap</b><span>Gaps mean labels, touching means amounts. A new class width changes the picture, never the data.</span></div></div>'
+    + '<div class="rc next"><div><b>The door to T1.3</b><span>Lina also wrote who bought each cup. Two labels per cup: how can one picture show two columns together?</span><button class="btn sm" type="button" id="again" style="margin-top:8px;display:block">Watch T1.2 again</button></div></div>';
+  $('#again').addEventListener('click', () => go(0));
+})();
+
+/* =========================================================== confetti */
+function confetti(){
+  if (reduced) return;
+  const c = $('#confetti'), x = c.getContext('2d');
+  c.width = innerWidth; c.height = innerHeight;
+  const cols = ['#EE7F1B','#2F55D4','#F7B32B','#6E9F2E','#D93A62','#8E6CC9'];
+  const P = Array.from({length:150}, () => ({x:innerWidth/2 + (Math.random() - .5)*240, y:innerHeight*.4, vx:(Math.random() - .5)*15, vy:-Math.random()*15 - 4, r:Math.random()*7 + 5, c:cols[Math.floor(Math.random()*cols.length)], a:Math.random()*6, va:(Math.random() - .5)*.4}));
+  let t = 0;
+  (function f(){
+    x.clearRect(0, 0, c.width, c.height);
+    P.forEach(p => { p.vy += .42; p.x += p.vx; p.y += p.vy; p.a += p.va; x.save(); x.translate(p.x, p.y); x.rotate(p.a); x.fillStyle = p.c; x.fillRect(-p.r/2, -p.r/3, p.r, p.r*.66); x.restore(); });
+    if (++t < 120) requestAnimationFrame(f); else x.clearRect(0, 0, c.width, c.height);
+  })();
+}
+
+/* =========================================================== start */
+const m0 = /^#s(\d+)$/.exec(location.hash);
+go(m0 ? +m0[1] : 0);
+})();
+</script>
+</body>
+</html>
