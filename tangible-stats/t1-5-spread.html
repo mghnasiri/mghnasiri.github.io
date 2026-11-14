@@ -1,0 +1,2239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T1.5 — Range, variance, standard deviation, coefficient of variation</title>
+<meta name="description" content="Two crowds with the same mean can behave very differently. A range bracket, squares on a see-saw, the average square and its side, why a sample divides by n − 1, the coefficient of variation, and real restaurant tips. Interactive lesson, T1.5.">
+<style>
+:root{color-scheme: light;
+  --milk:#F2EDF9; --paper:#FFFFFF; --wash:#F7F3FC;
+  --ink:#2A1C19; --ink-2:#5B4B66; --ink-3:#85799A; --line:#D9CFEA; --line-2:#E8E1F3;
+  --deep:#4B2D86; --deep-2:#6243A0;
+  --tag:#EE7F1B; --tag-soft:#FFE3CC; --tag-ink:#A04A00;
+  --ruler:#2F55D4; --ruler-soft:#DEE5FB; --ruler-ink:#1F3BA3;
+  --sun:#F7B32B; --sun-soft:#FDEFD2;
+  --mint:#6E9F2E; --berry:#D93A62; --taro:#8E6CC9; --taro-soft:#E7DEF5; --sugar:#B07A4A;
+  --ok:#4E8A1E; --ok-soft:#E3F1D0; --ok-ink:#365F14; --no:#D3375E; --no-soft:#FBE0E7; --no-ink:#A1203F;
+  --font-display:"Times New Roman",Times,"Liberation Serif",serif;
+  --font-body:"Times New Roman",Times,"Liberation Serif",serif;
+  --font-hand:var(--font-body);
+  --r:18px; --bw:2px; --shc:transparent; --dot:transparent;
+  --bg:var(--milk); --fg:var(--ink); --fg2:var(--ink-2); --stripe:transparent; --focus:var(--deep); --now:var(--deep);}
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%; margin:0}
+body{display:flex; flex-direction:column; overflow:hidden; background:var(--milk); color:var(--ink); font-family:var(--font-body); font-size:17px; font-size-adjust:.48; line-height:1.55; -webkit-font-smoothing:antialiased; font-variant-numeric:tabular-nums}
+button{font:inherit; color:inherit}
+:focus-visible{outline:3px solid var(--focus); outline-offset:3px}
+.visually-hidden{position:absolute!important; width:1px; height:1px; overflow:hidden; clip:rect(1px,1px,1px,1px); white-space:nowrap}
+@media (prefers-reduced-motion: reduce){
+*,*::before,*::after{animation:none!important; transition:none!important}
+}
+.bar{flex:none; position:relative; z-index:5; display:flex; align-items:center; gap:16px; height:54px; padding:0 24px; background:var(--milk); border-bottom:1px solid var(--line)}
+.ep{font-family:var(--font-display); font-weight:800; font-size:18px; color:var(--deep)}
+.bar .t{font-size:15px; color:var(--ink-2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0}
+.chapnm{display:inline-flex; align-items:center; gap:8px; font-size:14px; font-weight:700; color:var(--ink); white-space:nowrap}
+.chapnm::before{content:""; width:10px; height:10px; border-radius:50%; background:var(--now); flex:none; transition:background .3s}
+.prog{flex:1; min-width:70px; max-width:300px; height:6px; margin-left:auto; border-radius:999px; background:var(--line); overflow:hidden}
+.prog i{display:block; height:100%; width:0; background:var(--deep); border-radius:999px; transition:width .35s}
+.xp{font-weight:700; font-size:15px; color:var(--deep); white-space:nowrap}
+.xp.pulse{animation:pulse .6s}
+@keyframes pulse{40%{transform:scale(1.3)}}
+@media (max-width:820px){
+.bar .t{display:none}
+}
+@media (max-width:480px){
+.chapnm{display:none}
+.bar{padding:0 14px}
+}
+.ctrl{flex:none; z-index:5; display:flex; align-items:center; justify-content:space-between; gap:12px; height:64px; padding:0 24px; background:var(--milk); border-top:1px solid var(--line)}
+.dots{display:flex; gap:8px; align-items:center; flex-wrap:wrap; justify-content:center}
+.dots button{width:11px; height:11px; padding:0; border-radius:50%; border:2px solid var(--ink-3); background:transparent; cursor:pointer; transition:width .2s, height .2s, background .2s, border-color .2s}
+.dots button.seen{background:var(--ink-3)}
+.dots button.on{width:17px; height:17px; background:var(--ink); border-color:var(--ink)}
+.dots button:hover{border-color:var(--deep)}
+.pos{display:none; font-weight:700}
+@media (max-width:760px){
+.dots{display:none}
+.pos{display:block}
+.ctrl{padding:0 14px}
+}
+.btn{font-weight:700; font-size:16px; color:var(--ink); background:var(--paper); border:2px solid var(--ink); border-radius:999px; padding:8px 18px; cursor:pointer; transition:background .15s, border-color .15s, color .15s, transform .08s; line-height:1.2}
+.btn:hover{border-color:var(--deep); background:var(--wash)}
+.btn:active{transform:translateY(1px)}
+.btn.sun{background:var(--deep); border-color:var(--deep); color:#fff}
+.btn.sun:hover{background:var(--deep-2); border-color:var(--deep-2)}
+.btn.big{font-size:18px; padding:12px 26px}
+.btn.sm{font-size:15px; padding:6px 14px}
+.btn[aria-pressed="true"]{background:var(--deep); border-color:var(--deep); color:#fff}
+.btn:disabled{opacity:.45; cursor:default; transform:none}
+.btn.right{background:var(--ok-soft); border-color:var(--ok); color:var(--ok-ink); opacity:1}
+.btn.wrong{background:var(--no-soft); border-color:var(--no); color:var(--no-ink); opacity:1}
+.row{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+#deck{flex:1; min-height:0; position:relative}
+.scene{position:absolute; inset:0; overflow-y:auto; display:none; padding:clamp(20px,3vw,46px) clamp(16px,3.4vw,52px); color:var(--fg); background-color:var(--bg); background-image:linear-gradient(var(--stripe),var(--stripe)); background-size:100% 6px; background-repeat:no-repeat}
+.scene.on{display:flex}
+.scene-in{margin:auto; width:100%; max-width:1240px; display:grid; grid-template-columns:minmax(0,5fr) minmax(0,7fr); gap:clamp(22px,3.6vw,60px); align-items:center}
+.scene-in.wide{grid-template-columns:minmax(0,1fr); gap:16px}
+.scene-in.picwide{grid-template-columns:minmax(0,4fr) minmax(0,8fr)}
+@media (max-width:900px){
+.scene-in.picwide{grid-template-columns:minmax(0,1fr)}
+.scene-in{grid-template-columns:minmax(0,1fr)}
+}
+@media (min-width:1600px) and (min-height:960px){
+.scene-in{zoom:1.32}
+}
+@media (max-height:760px) and (min-width:901px){
+.scene{padding-top:16px; padding-bottom:14px}
+.txt{gap:10px}
+.pic{gap:12px}
+.recap{gap:10px}
+.rc{padding:9px 12px}
+.rc span{font-size:13.5px}
+.scene-in.wide{gap:12px}
+.nextline{font-size:15.5px}
+}
+.scene.on .scene-in{animation:enter .4s cubic-bezier(.2,.7,.3,1)}
+@keyframes enter{from{opacity:.3; transform:translateY(10px)} to{opacity:1; transform:none}}
+.th-plum{--stripe:transparent; --chip:var(--deep)}
+.th-sun{--stripe:var(--sun); --chip:var(--sun)}
+.th-lilac{--stripe:var(--taro); --chip:var(--taro)}
+.th-sky{--stripe:var(--sugar); --chip:var(--sugar)}
+.th-mint{--stripe:var(--mint); --chip:var(--mint)}
+.th-pink{--stripe:var(--berry); --chip:var(--berry)}
+.th-night,.th-indigo{--chip:var(--deep); --bg:var(--deep); --fg:#fff; --fg2:rgba(255,255,255,.86); --stripe:transparent; --focus:var(--sun)}
+.th-trap{--chip:var(--berry); --bg:var(--ink); --fg:#fff; --fg2:rgba(255,255,255,.84); --stripe:transparent; --focus:var(--sun)}
+.txt{display:flex; flex-direction:column; align-items:flex-start; gap:14px; min-width:0}
+.kick{display:inline-flex; align-items:center; gap:10px; font-weight:600; font-size:15px; color:var(--fg2)}
+.kick b{display:grid; place-items:center; min-width:28px; height:28px; padding:0 8px; border-radius:999px; background:var(--paper); color:var(--ink); box-shadow:inset 0 0 0 2.5px var(--stripe); font-family:var(--font-display); font-weight:800; font-size:14px; line-height:1}
+.th-plum .kick b{box-shadow:inset 0 0 0 2px var(--line)}
+.th-night .kick b,.th-indigo .kick b,.th-trap .kick b{box-shadow:none}
+h1,h2,h3{font-family:var(--font-display); font-weight:700; margin:0; letter-spacing:-.01em; text-wrap:balance}
+h1{font-size:clamp(46px,6.2vw,88px); line-height:.94}
+h2{font-size:clamp(30px,3.5vw,50px); line-height:1.02}
+.sub{margin:0; font-size:clamp(17px,1.45vw,20px); line-height:1.5; color:var(--fg2); max-width:38ch}
+.take{display:block; border-left:4px solid var(--stripe); padding:2px 0 2px 14px; font-weight:700; font-size:16.5px; line-height:1.45; color:var(--fg); max-width:44ch}
+.th-plum .take,.th-night .take,.th-indigo .take,.th-trap .take{border-left-color:var(--sun)}
+.take svg{display:none}
+.fr{font-size:14px; color:var(--fg2)}
+.meta{display:flex; flex-wrap:wrap; gap:4px 22px}
+.pill{font-size:14px; color:var(--fg2)}
+.pic{min-width:0; display:flex; flex-direction:column; gap:16px}
+.card{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:var(--r); padding:16px 18px}
+.th-night .card,.th-indigo .card,.th-trap .card{border-color:transparent}
+.hint{font-size:14.5px; color:var(--ink-2)}
+.lina{display:flex; gap:12px; align-items:flex-start; max-width:44ch}
+.lina .av{flex:none; width:50px; height:50px}
+.lina .av svg{width:100%; height:100%; display:block}
+.bubble{color:var(--fg); font-size:16.5px; line-height:1.45}
+.bubble b{display:block; font-family:var(--font-display); font-weight:800; font-size:14.5px; line-height:1.3; color:var(--deep)}
+.th-night .bubble b,.th-indigo .bubble b,.th-trap .bubble b{color:var(--sun)}
+.card .bubble b{color:var(--deep)}
+.stand{width:100%; height:auto; max-height:calc(100dvh - 215px); display:block}
+.stand .cupbob{animation:bob 3s ease-in-out infinite; transform-box:fill-box; transform-origin:center bottom}
+.stand .cupbob:nth-of-type(2n){animation-delay:-1.4s}
+@keyframes bob{50%{transform:translateY(-6px) rotate(-1.5deg)}}
+.nb{position:relative; background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:16px; padding:28px 12px 12px 46px; overflow-x:auto}
+.nb::before{content:""; position:absolute; left:36px; top:0; bottom:0; width:2px; background:#F49BB3}
+.nb::after{content:""; position:absolute; left:22px; right:22px; top:9px; height:10px; background:radial-gradient(circle, var(--milk) 3px, var(--line) 3.6px, transparent 4.3px) 0 0/30px 10px repeat-x}
+.nb table{border-collapse:collapse; width:100%; font-family:var(--font-body); font-size:clamp(17px,1.45vw,21px); line-height:1; font-variant-numeric:tabular-nums}
+.nb th{font-weight:700; text-align:left; font-size:.76em; color:var(--ink-2); padding:4px 10px 6px; border-bottom:2px solid #C5D0F0; white-space:nowrap}
+.nb td{padding:2px 10px; height:41px; border-bottom:1px solid #DCE3F7; white-space:nowrap; font-weight:600; transition:background .2s}
+.nb .cc{width:42px; padding:2px 4px}
+.nb td.cc svg{display:block; margin:auto}
+.nb tr.gone{display:none}
+#nb2{padding-top:24px}
+#nb2 td{height:36px}
+.nb tr.new td{animation:write .8s ease-out}
+@keyframes write{from{clip-path:inset(0 100% 0 0)} to{clip-path:inset(0 0 0 0)}}
+.nb .hl{background:var(--sun-soft)}
+.nb th.hl{background:var(--sun); color:var(--ink)}
+.nb .hl2{background:var(--sun); box-shadow:inset 0 0 0 2px var(--ink)}
+.counter{font-size:16px; color:var(--fg)}
+.counter b{font-family:var(--font-display); font-size:24px}
+.words{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; width:100%; max-width:440px}
+.word{display:flex; align-items:center; gap:10px; font-weight:700; font-size:17px; color:var(--ink); background:var(--paper); border:2px solid var(--ink); border-radius:12px; padding:8px 12px; cursor:pointer; text-align:left; transition:background .15s, border-color .15s}
+.word:hover{border-color:var(--deep); background:var(--wash)}
+.word[aria-pressed="true"]{background:var(--deep); border-color:var(--deep); color:#fff}
+.word .wi{width:28px; height:28px; flex:none; display:grid; place-items:center}
+.word .wi svg{width:100%; height:100%}
+.defcard{font-size:16px; max-width:44ch; padding:12px 16px}
+.compact .qrow{grid-template-columns:minmax(0,1fr) auto; align-items:center; column-gap:12px; row-gap:4px; padding:8px 0}
+.compact .qrow:first-child{padding-top:0}
+.compact .qf{grid-column:1/-1; min-height:0}
+.compact .qf:empty{display:none}
+.compact .qq{font-size:15.5px; line-height:1.35}
+.qrow{display:grid; gap:8px; padding:10px 0; border-top:1px solid var(--line-2)}
+.qrow:first-child{border-top:0; padding-top:0}
+.qq{font-weight:700}
+.qo{display:flex; flex-wrap:wrap; gap:8px}
+.qf{font-size:15px; color:var(--ink-2); min-height:1.4em}
+.mi svg{width:100%; height:auto; display:block}
+.duo{display:grid; grid-template-columns:1fr 1fr; gap:12px; width:100%; max-width:500px}
+.mas{display:flex; gap:10px; align-items:center; background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:16px; padding:10px; transition:transform .25s, opacity .25s}
+.mas .mi{flex:none; width:66px}
+.mas b{display:block; font-family:var(--font-display); font-size:20px; line-height:1}
+.mas .role{display:block; font-size:14px; line-height:1.3; margin-top:3px; color:var(--ink-2)}
+.mas.dim{opacity:.4}
+.mas.act{transform:translateY(-5px)}
+@media (max-width:520px){
+.duo{grid-template-columns:1fr}
+}
+.machine{background:var(--ink); color:#fff; border-radius:24px; padding:18px; display:grid; gap:16px; --focus:var(--sun)}
+.mtabs{display:flex; flex-wrap:wrap; gap:8px}
+.mtabs .btn{border-color:rgba(255,255,255,.55); background:transparent; color:#fff}
+.mtabs .btn:hover{border-color:#fff; background:rgba(255,255,255,.08)}
+.mtabs .btn[aria-pressed="true"]{background:var(--sun); color:var(--ink); border-color:var(--sun)}
+.slots{display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1.3fr); align-items:center; gap:10px}
+.slot{background:var(--paper); color:var(--ink); border:2px solid var(--paper); border-radius:14px; min-height:80px; display:grid; place-items:center; align-content:center; text-align:center; font-family:var(--font-display); font-weight:700; font-size:clamp(22px,2.2vw,30px); line-height:1.05; padding:8px}
+.slot.out{background:var(--taro-soft); border-color:var(--taro-soft)}
+.slot.out.good{background:var(--ok-soft); border-color:#9BC255}
+.slot.out.bad{background:var(--no-soft); border-color:#F07C98; animation:shake .45s}
+.slot small{display:block; font-family:var(--font-body); font-size:12.5px; font-weight:700; margin-top:5px; color:var(--no-ink)}
+.op{font-family:var(--font-display); font-weight:800; font-size:40px; color:var(--sun)}
+@media (max-width:520px){
+.slot{font-size:18px; padding:6px 3px; min-height:64px}
+.op{font-size:28px}
+.slots{gap:6px}
+}
+.mfoot{display:flex; align-items:center; justify-content:space-between; gap:12px}
+.lamps{display:flex; gap:8px; align-items:center; font-size:13px; color:rgba(255,255,255,.78)}
+.lamp{width:24px; height:24px; border-radius:50%; background:#5B4B66; border:2px solid rgba(255,255,255,.8)}
+.lamp.good{background:#9BC255; box-shadow:0 0 16px #9BC255}
+.lamp.bad{background:#F07C98; box-shadow:0 0 16px #F07C98}
+@keyframes shake{20%{transform:translateX(-6px) rotate(-2deg)}40%{transform:translateX(6px) rotate(2deg)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.speech{display:flex; gap:14px; align-items:center; min-height:104px; font-size:16.5px; line-height:1.4}
+.speech .mi{flex:none; width:100px}
+.speech b{display:block; font-family:var(--font-display); font-size:19px}
+.sortgrid{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px}
+@media (max-width:1150px){
+.sortgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+.scard{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:14px; padding:10px 11px; display:flex; flex-direction:column; gap:6px}
+.scard .nm{font-weight:700; font-size:15px; line-height:1.2}
+.scard .ex{font-family:var(--font-display); font-weight:700; font-size:24px; line-height:1; color:var(--ink-2)}
+.scard .bb{display:flex; gap:6px; margin-top:auto}
+.scard .bb button{flex:1; font-weight:700; font-size:14px; border:2px solid var(--ink); border-radius:10px; padding:6px 4px; cursor:pointer; color:var(--ink); transition:background .15s}
+.scard .bb .bt{background:var(--tag-soft)}
+.scard .bb .br{background:var(--ruler-soft)}
+.scard .bb .bt:hover{background:var(--tag)}
+.scard .bb .br:hover{background:var(--ruler); color:#fff}
+.scard.ok{border-color:var(--ok); box-shadow:inset 0 0 0 1px var(--ok)}
+.scard.bad{border-color:var(--no); box-shadow:inset 0 0 0 1px var(--no)}
+.scard .why{font-size:13.5px; line-height:1.35}
+.scard .why b{display:block; font-size:14px}
+.scard.ok .why b{color:var(--ok-ink)}
+.scard.bad .why b{color:var(--no-ink)}
+.bins{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.bin{border:2px dashed var(--ink-3); border-radius:18px; padding:10px 12px; min-height:104px; color:var(--ink)}
+.bin.tag{background:var(--tag-soft); border-color:#E9A86A}
+.bin.ruler{background:var(--ruler-soft); border-color:#8EA3E6}
+.bh{display:flex; align-items:center; gap:8px; font-weight:700; font-size:15.5px}
+.mi.s{width:50px; flex:none}
+.bin .chips{display:flex; flex-wrap:wrap; gap:6px; margin-top:8px}
+.bin .chips span{font-size:13.5px; font-weight:700; padding:3px 11px; border-radius:999px; animation:drop .35s}
+.bin.tag .chips span{background:var(--tag); color:var(--ink)}
+.bin.ruler .chips span{background:var(--ruler); color:#fff}
+@keyframes drop{from{transform:translateY(-16px) scale(.8); opacity:.3}}
+.score{font-family:var(--font-display); font-weight:800; font-size:26px}
+.lane{display:grid; gap:6px}
+.lh{display:flex; align-items:center; gap:10px; flex-wrap:wrap; font-size:17px}
+.fampill{font-size:13px; font-weight:700; padding:2px 10px; border-radius:999px}
+.fampill.ruler{background:var(--ruler); color:#fff}
+.fampill.tag{background:var(--tag); color:var(--ink)}
+.lane svg{width:100%; height:auto; max-height:100px; display:block}
+.lane svg text{font-family:var(--font-body); font-size:14px; fill:var(--ink-2); font-weight:700}
+.lread{font-family:var(--font-display); font-weight:800; font-size:30px; line-height:1.1}
+.lread small{font-family:var(--font-body); font-weight:400; font-size:14.5px; color:var(--ink-2); margin-left:10px}
+#hopper{transition:transform .32s ease-in-out}
+.hopin.hop{animation:hop .38s ease-out}
+@keyframes hop{45%{transform:translateY(-34px)}}
+input[type=range]{width:100%; accent-color:var(--ruler); height:30px; cursor:pointer; margin:0}
+.stairs{width:100%; height:auto; max-height:38vh; display:block}
+.stairs .stp{cursor:pointer}
+.stairs .stp:focus{outline:none}
+.stairs .stp:focus-visible rect{stroke:var(--deep); stroke-width:5}
+.stairs .snm{font-family:var(--font-display); font-weight:800; font-size:21px}
+.stairs .spw{font-family:var(--font-display); font-weight:800; font-size:23px; fill:var(--ink)}
+.stairs .bl{font-family:var(--font-body); font-weight:700; font-size:15px}
+#hop2{transition:transform .45s cubic-bezier(.3,1.5,.5,1)}
+.pch{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:10px}
+.pch b{font-family:var(--font-display); font-size:26px; line-height:1}
+.pws{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px}
+.pw{display:flex; flex-direction:column; align-items:center; gap:5px; text-align:center; font-size:13px; font-weight:600; color:var(--ink-3); line-height:1.2}
+.pwc{width:38px; height:38px; border-radius:50%; display:grid; place-items:center; border:2px solid var(--line); font-family:var(--font-display); font-weight:800; font-size:24px; background:var(--wash); color:var(--ink-3)}
+.pwc svg{width:20px; height:20px}
+.pw.on{color:var(--ink)}
+.pw.on .pwc{border-color:var(--ink); color:var(--ink)}
+.pw.on.tag .pwc{background:var(--tag)}
+.pw.on.ruler .pwc{background:var(--ruler); color:#fff}
+.pex{display:grid; gap:2px; margin-top:10px; font-size:16px}
+.pex i{font-family:var(--font-display); font-style:normal; font-weight:700; font-size:22px}
+.pex .nope{color:var(--no-ink)}
+.pex s{text-decoration-thickness:2px}
+.pcols{font-size:14px; color:var(--ink-2); margin-left:auto}
+.thermo svg{width:100%; height:auto; display:block; max-height:48vh}
+.thermo .tn{font-family:var(--font-display); font-weight:800; font-size:19px; fill:var(--ink)}
+.thermo .tv{font-family:var(--font-display); font-weight:700; font-size:24px; fill:var(--ink)}
+.thermo .zl{font-weight:700; font-size:14px; fill:var(--no-ink); font-family:var(--font-body)}
+.ratio{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap}
+.ratio .big{font-family:var(--font-display); font-weight:800; font-size:clamp(42px,4.6vw,62px); line-height:1}
+.ratio .lab{font-size:15px; color:var(--ink-2)}
+.tsay{font-size:16px; min-height:3em; margin:0}
+.seg{display:inline-flex; border:2px solid var(--ink); border-radius:12px; overflow:hidden; background:var(--paper)}
+.seg button{font-weight:700; font-size:16px; border:0; background:var(--paper); color:var(--ink); padding:8px 16px; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:background .15s}
+.seg button:hover{background:var(--wash)}
+.seg button + button{border-left:2px solid var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--deep); color:#fff}
+.seg button svg{width:22px; height:22px}
+.pfwrap{display:grid; grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr); gap:14px; align-items:center}
+@media (max-width:620px){
+.pfwrap{grid-template-columns:1fr}
+}
+.pf svg{width:100%; height:auto; display:block}
+.pf svg text{font-family:var(--font-body); font-size:15px; fill:var(--ink-2); font-weight:600}
+.pf svg .ann{fill:var(--ink); font-weight:700; font-size:16px}
+.pf svg .ttl{fill:var(--ink); font-family:var(--font-display); font-weight:800; font-size:20px}
+.pfcap{font-size:16px; margin:0; min-height:2.9em}
+.drawline{stroke-dasharray:1400; stroke-dashoffset:1400; animation:draw 1.2s ease-out forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.growbar{transform-box:fill-box; transform-origin:left center; animation:grow .6s ease-out}
+@keyframes grow{from{transform:scaleX(0)}}
+.popin{transform-box:fill-box; transform-origin:center; animation:popin .35s ease-out}
+@keyframes popin{from{transform:scale(0)}}
+.jarwrap{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.95fr); gap:16px; align-items:center}
+@media (max-width:620px){
+.jarwrap{grid-template-columns:1fr}
+}
+.jarwrap svg{width:100%; height:auto; display:block}
+#jarsvg{max-height:30vh}
+#spoonsvg{max-height:18vh}
+.jl{text-align:center; font-weight:700; font-size:14.5px; margin-top:4px}
+.jread{text-align:center; font-size:16px}
+.jread .big{display:block; font-family:var(--font-display); font-weight:800; font-size:clamp(36px,3.8vw,50px); line-height:1.05}
+.frostq{font-family:var(--font-display); font-weight:800; font-size:48px; fill:var(--ink)}
+.frost{transition:opacity .6s}
+.strip svg{width:100%; height:auto; max-height:17vh; display:block}
+.strip text{font-size:13px; fill:var(--ink-2); font-weight:600; font-family:var(--font-body)}
+.strip .ann{fill:var(--ink); font-weight:700}
+.pairs{display:grid; gap:10px; max-width:48ch}
+.pairc{display:flex; gap:12px; align-items:center; background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:14px; padding:10px 14px; font-size:15.5px; line-height:1.4}
+.pairc svg{flex:none; width:44px; height:44px}
+.sym{font-family:"Times New Roman",Georgia,serif; font-style:italic; font-size:1.12em; white-space:nowrap}
+.sg2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+@media (max-width:560px){
+.sg2{grid-template-columns:1fr}
+}
+.sgc{border-radius:16px; padding:10px 14px; border:1px solid var(--line); color:var(--ink); background:var(--paper)}
+.sgc.guess{background:var(--taro-soft); border-color:var(--taro-soft)}
+.sgc h3{font-size:22px; margin:0 0 4px; display:flex; align-items:center; gap:10px}
+.sgc p{margin:0; font-size:15px; line-height:1.4}
+.sgc svg{width:36px; height:36px; display:block; flex:none}
+.hazard{position:absolute; left:0; right:0; top:0; height:12px; background:repeating-linear-gradient(-45deg,var(--berry) 0 16px,var(--ink) 16px 32px)}
+.trapcups{display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:8px}
+.tc{display:flex; flex-direction:column; align-items:center; gap:6px}
+.code{font-family:var(--font-display); font-weight:800; font-size:24px; width:48px; height:48px; display:grid; place-items:center; border-radius:12px; border:2px solid var(--ink); background:var(--paper); transition:background .2s}
+.code.here{background:var(--sun)}
+.tc small{font-size:12.5px; font-weight:600; color:var(--ink-2); text-align:center; line-height:1.2}
+.tout{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+.to{border:1px solid var(--line); border-radius:14px; padding:10px 12px}
+.to .k{font-size:14px; font-weight:600; color:var(--ink-2)}
+.to .v{font-family:var(--font-display); font-weight:800; font-size:40px; line-height:1.05}
+.to.bad{background:var(--no-soft); border-color:var(--no-soft)}
+.to.bad .v{color:var(--no-ink)}
+.to.good{background:var(--ok-soft); border-color:var(--ok-soft)}
+.to.good .v{color:var(--ok-ink)}
+.tmsg{font-size:16px; min-height:3em; margin:0}
+.jersey{display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap; font-family:var(--font-display); font-weight:800; font-size:32px; border-top:1px solid var(--line-2); padding-top:12px}
+.jersey svg{width:70px; height:70px}
+.jersey .x{color:var(--no)}
+.fact{font-size:14px; color:var(--fg2); max-width:46ch; margin:0}
+.map{width:100%; max-width:880px; height:auto; display:block; margin:0 auto}
+.map .ph{font-family:var(--font-display); font-weight:700; font-size:17px; fill:rgba(255,255,255,.8)}
+.map .st{cursor:pointer}
+.map .st:focus{outline:none}
+.map .st:focus-visible .cap,.map .st.on .cap{stroke:var(--sun); stroke-width:6}
+.map .code{font-family:var(--font-display); font-weight:800; font-size:19px; fill:#fff}
+.map .snm{font-family:var(--font-body); font-size:13.5px; fill:rgba(255,255,255,.84); font-weight:400}
+.map .here{font-family:var(--font-body); font-weight:700; font-size:14px; fill:var(--ink)}
+.legend{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+.legend .tapnote{font-style:normal; color:var(--fg2); font-size:15px}
+.legend > span{display:inline-flex; align-items:center; gap:8px; font-weight:600; font-size:15px; padding:5px 13px; border-radius:999px; background:var(--paper); color:var(--ink)}
+.mapwrap{overflow-x:auto}
+@media (max-width:700px){
+.map{min-width:700px}
+}
+.legend i{width:28px; height:7px; border-radius:4px; display:inline-block; flex:none}
+.stcard{display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr); gap:12px; align-items:start; padding:10px 16px; width:100%; max-width:1000px; margin:0 auto}
+.stcard h3{font-size:21px}
+.stcard p{margin:4px 0 0; font-size:15px; line-height:1.4}
+@media (max-width:620px){
+.stcard{grid-template-columns:1fr}
+}
+.rl{border-radius:12px; padding:9px 12px; font-size:15px; line-height:1.35}
+.rl.tag{background:var(--tag-soft)}
+.rl.ruler{background:var(--ruler-soft)}
+.rl b{display:block}
+.tiles{display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:14px}
+.tile{text-align:left; color:var(--ink); border:0; border-radius:18px; padding:14px; cursor:pointer; display:flex; flex-direction:column; gap:4px; min-height:136px; transition:transform .15s}
+.tile:hover{transform:translateY(-3px)}
+.tile .ln{font-size:13px; font-weight:700; opacity:.8}
+.tile .tn{font-family:var(--font-display); font-weight:800; font-size:23px; line-height:1.05}
+.tile .td{font-size:14px; line-height:1.3}
+.tile .ts{font-size:22px; letter-spacing:3px; margin-top:auto; color:var(--ink)}
+.tile .ts .off{opacity:.28}
+.qpanel{width:100%; max-width:780px; margin:0 auto}
+.qhead{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; font-weight:600}
+.qhead .lvl{font-family:var(--font-display); font-weight:800; font-size:20px}
+.qbar{height:8px; border-radius:999px; background:var(--line-2); overflow:hidden; margin:10px 0 16px}
+.qbar i{display:block; height:100%; background:var(--mint); width:0; border-radius:999px; transition:width .3s}
+.qtext{font-family:var(--font-display); font-weight:700; font-size:clamp(25px,2.7vw,36px); line-height:1.15; margin:4px 0 18px}
+.opts{display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:10px}
+.opt{font-weight:700; font-size:18px; color:var(--ink); background:var(--paper); border:2px solid var(--ink); border-radius:12px; padding:14px; cursor:pointer; transition:background .15s, border-color .15s, transform .08s}
+.opt:hover{background:var(--wash); border-color:var(--deep)}
+.opt:active{transform:translateY(1px)}
+.opt:disabled{cursor:default}
+.opt.right{background:var(--ok-soft); border-color:var(--ok); color:var(--ok-ink)}
+.opt.wrong{background:var(--no-soft); border-color:var(--no); color:var(--no-ink)}
+.fb{margin-top:14px; font-size:16.5px; min-height:2.8em}
+.fb b{font-family:var(--font-display); font-size:19px}
+.qnav{display:flex; justify-content:space-between; gap:10px; margin-top:12px; flex-wrap:wrap}
+.streak{display:inline-flex; align-items:center; gap:6px; padding:3px 12px; border-radius:999px; background:var(--sun-soft); font-size:14.5px}
+.streak svg{width:16px; height:16px}
+.donebox{text-align:center; display:grid; gap:10px; justify-items:center}
+.bigstars{font-size:58px; letter-spacing:8px; color:#E39A0E; line-height:1}
+.bigstars .off{color:var(--line)}
+.det{display:grid; gap:10px}
+.det .qrow2{display:flex; gap:12px; align-items:center; flex-wrap:wrap; justify-content:space-between; padding:7px 12px; border:1px solid var(--line); border-radius:12px}
+.det .qrow2.dim{opacity:.4}
+.det input[type=text]{font:inherit; font-size:16px; padding:8px 12px; border:2px solid var(--ink); border-radius:12px; width:min(100%,360px)}
+.det .res{padding:12px 14px; border-radius:14px; border:1px solid var(--line); font-size:16.5px; display:flex; gap:12px; align-items:center}
+.det .res.tag{background:var(--tag-soft); border-color:var(--tag-soft)}
+.det .res.ruler{background:var(--ruler-soft); border-color:var(--ruler-soft)}
+.det .res .mi{width:70px; flex:none}
+.recap{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px}
+.recap .rc.trap{grid-column:auto}
+@media (max-width:980px){
+.recap{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+.recap .rc.trap{grid-column:auto}
+.recap{grid-template-columns:1fr}
+}
+.rc{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:16px; padding:12px 14px; display:flex; gap:12px; align-items:flex-start}
+.rc .ri{flex:none; width:44px; height:44px; display:grid; place-items:center}
+.rc .ri svg{width:100%; height:100%}
+.rc b{display:block; font-family:var(--font-display); font-size:18px; line-height:1.15; margin-bottom:3px}
+.rc span{font-size:14px; line-height:1.4}
+.rc.trap{background:var(--ink); color:#fff; border-color:var(--ink)}
+.rc.next{background:var(--sun-soft); border-color:var(--sun)}
+details.src{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:16px; padding:12px 16px}
+details.src summary{cursor:pointer; font-weight:700}
+details.src p,details.src ol{font-size:14.5px; line-height:1.5}
+details.src ol{padding-left:1.3em; margin:8px 0 0}
+details.src li{margin-bottom:6px}
+details.src a{color:var(--ruler-ink)}
+.scene.playing .txt .sub, .scene.playing .txt .kick{display:none}
+.zoomcard svg{width:100%; height:auto; max-height:46vh; display:block; margin-top:12px}
+.zcap{margin:10px 0 0; font-size:16px; line-height:1.45; min-height:2.9em}
+.popq{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+@media (max-width:620px){
+.popq{grid-template-columns:1fr}
+}
+.pq{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:16px; padding:12px; display:flex; flex-direction:column; gap:10px}
+.pq.ok{border-color:var(--ok); box-shadow:inset 0 0 0 1px var(--ok)}
+.pq.bad{border-color:var(--no); box-shadow:inset 0 0 0 1px var(--no)}
+.pqh{display:flex; gap:10px; align-items:flex-start}
+.pqi{flex:none; width:40px; height:40px}
+.pqi svg{width:100%; height:100%}
+.pqh b{font-size:15.5px; line-height:1.3}
+.pqo{display:grid; gap:6px}
+.pqo .btn{text-align:left; padding:6px 12px; font-size:14.5px; border-radius:12px; border-width:1.5px}
+.pqa{display:grid; gap:6px; font-size:14.5px; line-height:1.35}
+.pqans{justify-self:start; font-weight:700; padding:4px 10px; border-radius:10px; background:var(--ok-soft); color:var(--ok-ink)}
+.whynot{display:flex; flex-wrap:wrap; gap:8px; max-width:48ch}
+.whynot span{display:inline-flex; align-items:center; gap:6px; font-size:14px; font-weight:600; padding:4px 12px 4px 6px; border-radius:999px; background:var(--paper); color:var(--ink); border:1px solid var(--line)}
+.whynot svg{width:22px; height:22px; flex:none}
+.soupcard{display:grid; gap:12px}
+.soupcard svg{width:100%; height:auto; max-height:40vh; display:block}
+#steam{transition:opacity .8s}
+.souprs{border-radius:14px; border:1px solid var(--line); padding:10px 14px; font-size:15.5px; line-height:1.4; background:var(--wash); min-height:4.6em}
+.souprs b{display:block; font-family:var(--font-display); font-size:19px}
+.souprs.good{background:var(--ok-soft); border-color:var(--ok-soft)}
+.souprs.bad{background:var(--no-soft); border-color:var(--no-soft)}
+.souprs.census{background:var(--sun-soft); border-color:var(--sun-soft)}
+.mnemo{font-family:var(--font-display); font-weight:800; font-size:clamp(22px,2.1vw,29px); line-height:1.25; display:grid; gap:2px; padding:10px 18px}
+.mnemo b{color:var(--berry); font-size:1.2em}
+.pscard{display:grid; gap:14px}
+.psgrid{display:grid; grid-template-columns:minmax(0,1fr) 74px minmax(0,1fr); gap:8px; align-items:center}
+.pbox,.sbox{border:1px solid var(--line); border-radius:16px; padding:12px; display:grid; gap:6px; min-height:220px; align-content:start}
+.pbox{background:#EFE9F8; border-color:#E2D8F2}
+.sbox{background:#FDF3DC; border-color:#F6E2B4}
+.nm2{display:inline-flex; align-items:center; gap:8px; font-family:var(--font-display); font-weight:800; font-size:21px}
+.nm2 svg{width:34px; height:34px}
+.who{font-size:15px; line-height:1.3}
+.who span{display:block; font-size:12.5px; font-weight:700; color:var(--ink-2)}
+.what{font-size:14px; color:var(--ink-2); font-weight:600}
+.val{font-family:var(--font-display); font-weight:800; font-size:clamp(26px,2.5vw,36px); line-height:1.05; display:flex; align-items:center; gap:8px}
+.val svg{width:26px; height:26px; flex:none}
+.val.bump{animation:bump .45s}
+@keyframes bump{40%{transform:scale(1.15)}}
+.note{font-size:13px; color:var(--ink-2)}
+.psarrow{display:grid; justify-items:center; gap:4px; font-size:12.5px; font-weight:700; text-align:center}
+.psarrow svg{width:56px}
+.pshist{font-size:14px; display:flex; flex-wrap:wrap; gap:6px; align-items:center}
+.pshist span{padding:2px 8px; border-radius:8px; background:#FDF3DC; border:1px solid #F6E2B4; font-weight:600}
+@media (max-width:620px){
+.psgrid{grid-template-columns:1fr}
+.psarrow svg{transform:rotate(90deg)}
+}
+.symcard{display:grid; gap:10px}
+.symgrid{display:grid; gap:6px}
+.symhead,.symrow{display:grid; grid-template-columns:minmax(78px,.8fr) 1fr 1fr; gap:8px; align-items:center}
+.sgh{display:grid; text-align:center; font-size:13px; color:var(--ink-2)}
+.sgh b{font-family:var(--font-display); font-size:18px; color:var(--ink)}
+.symrow{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:12px; padding:3px 5px; cursor:pointer; text-align:left; transition:border-color .15s, background .15s}
+.symrow:hover{border-color:var(--deep)}
+.symrow[aria-pressed="true"]{background:var(--sun-soft); border-color:var(--berry); box-shadow:inset 0 0 0 1px var(--berry)}
+.sl{font-weight:700; font-size:16px; padding-left:6px}
+.sc{display:grid; justify-items:center; border-radius:10px; padding:2px 4px}
+.sc.par{background:#EFE9F8}
+.sc.st{background:#FDF3DC}
+.sc .sym{font-size:28px; line-height:1.05}
+.sc small{font-size:12.5px; color:var(--ink-2)}
+.symex{font-size:15px; line-height:1.5; background:var(--wash); border-radius:12px; padding:8px 12px; border:1px solid var(--line); min-height:4.6em}
+#salt{transition:opacity .9s}
+#confetti{position:fixed; inset:0; pointer-events:none; z-index:50}
+.guesscard{display:grid; gap:10px; align-content:start}
+.ghead{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap}
+.gtag{font-family:var(--font-display); font-weight:800; font-size:15px; color:var(--deep)}
+.gnote{font-size:13px; color:var(--ink-2)}
+.gq{margin:0; font-family:var(--font-display); font-weight:800; font-size:clamp(19px,1.7vw,24px); line-height:1.22; color:var(--fg)}
+.gopts{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px}
+.gopt{font:inherit; font-weight:700; font-size:16.5px; text-align:left; padding:9px 16px; border:2px solid var(--ink); border-radius:12px; background:var(--paper); color:var(--ink); cursor:pointer; transition:background .15s, border-color .15s}
+.gopt:hover{background:var(--wash); border-color:var(--deep)}
+.gopt[aria-pressed="true"]{background:var(--deep); border-color:var(--deep); color:#fff}
+.gsaved{margin:0; font-size:14px; color:var(--ink-2)}
+.gtab{border-collapse:collapse; width:100%; font-variant-numeric:tabular-nums; font-size:15.5px}
+.gtab th,.gtab td{padding:4px 10px; border-bottom:1px solid var(--line-2); text-align:center}
+.gtab th{font-size:13px; color:var(--ink-2)}
+.gtab th:first-child,.gtab td:first-child{text-align:left}
+.gtab tr.avg td{border-top:2px solid var(--ink); border-bottom:0; font-weight:800; background:var(--sun-soft)}
+.gback{border-left:3px solid var(--sun); padding:4px 0 4px 12px; font-size:14.5px; line-height:1.45; max-width:52ch}
+.guessbar{background:var(--paper); color:var(--ink); border:1px solid var(--line); border-left:4px solid var(--sun); border-radius:12px; padding:9px 14px; font-size:14.5px; line-height:1.45}
+.guessbar:empty,.gback:empty{display:none}
+.thread{font-size:13.5px; line-height:1.4; padding:2px 0 2px 12px; border-left:2px solid currentColor; color:var(--fg2); max-width:52ch}
+.doors3{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px}
+.door{display:grid; gap:10px; align-content:start}
+.door h4{margin:0; font-family:var(--font-display); font-weight:800; font-size:18px; color:var(--fg)}
+.inv .picks{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:14px}
+.inv .ph{margin:0 0 6px; font-weight:700; font-size:14px; color:var(--ink-2)}
+.inv .plist{display:grid; gap:5px}
+.inv .pk{font:inherit; font-size:14.5px; font-weight:600; text-align:left; padding:4px 11px; border:1.5px solid var(--ink); border-radius:10px; background:var(--paper); color:var(--ink); cursor:pointer}
+.inv .pk:hover{background:var(--wash); border-color:var(--deep)}
+.inv .pk[aria-pressed="true"]{background:var(--deep); border-color:var(--deep); color:#fff; font-weight:700}
+.inv .qtext{font-size:clamp(19px,1.8vw,25px)}
+.th-night .btn.sun,.th-indigo .btn.sun,.th-trap .btn.sun{background:var(--sun); border-color:var(--sun); color:var(--ink)}
+.th-night .card .btn.sun,.th-indigo .card .btn.sun,.th-trap .card .btn.sun{background:var(--deep); border-color:var(--deep); color:#fff}
+@media (max-width:760px){
+.doors3,.inv .picks{grid-template-columns:1fr}
+.gopts{grid-template-columns:1fr}
+}
+@media (max-height:760px) and (min-width:901px){
+.gtab th,.gtab td{padding:3px 9px}
+.gopt{padding:7px 12px; font-size:15px}
+.inv .pk{padding:3px 10px; font-size:13.5px}
+.inv .plist{gap:3px}
+.inv .qtext{font-size:18px}
+.thread{font-size:12.5px; padding:2px 0 2px 10px}
+.gback{font-size:13.5px; padding:4px 0 4px 10px}
+.guessbar{padding:5px 12px; font-size:13px; line-height:1.3}
+.recap{gap:8px}
+}
+/* ---------- this page ---------- */
+.th-peach{--stripe:#4E9C91; --chip:#4E9C91}
+.chart{width:100%;height:auto;display:block}
+.chart text{font-family:var(--font-body);font-size:13px;fill:var(--ink-2);font-weight:600}
+.chart .val{fill:var(--ink);font-weight:700;font-size:13px}
+.chart .ttl{fill:var(--ink);font-family:var(--font-display);font-weight:800;font-size:16px}
+.chart .grid{stroke:#E6DFF1;stroke-width:1.2}
+.chart .axis{stroke:var(--ink);stroke-width:2}
+.chart rect.hb{transition:y .5s ease, height .5s ease, x .5s ease, width .5s ease, opacity .3s}
+.chart rect.gb{transform-box:fill-box;transform-origin:50% 100%;transition:transform .5s cubic-bezier(.3,.8,.3,1)}
+.chart text.val{transition:opacity .3s}
+.chart .dot{fill:#2F55D4;opacity:.55}
+.hero2{display:grid;gap:14px}
+.hrow{display:grid;grid-template-columns:76px minmax(0,1fr) 40px minmax(0,1.25fr);gap:10px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:18px;padding:10px 14px;color:var(--ink)}
+.hrow .raw{font-family:var(--font-hand);font-weight:700;font-size:22px;line-height:1.15;color:var(--ink-2)}
+.hrow .arr{font-family:var(--font-display);font-weight:800;font-size:30px;text-align:center}
+.cupfield{width:100%;height:auto;display:block}
+.cupfield .cg{transition:transform .9s cubic-bezier(.3,.8,.3,1)}
+.cupfield .rl2{transition:opacity .5s .5s;font-family:var(--font-body);font-weight:700;font-size:15px;fill:var(--ink)}
+.ftab{border-collapse:collapse;font-size:16px;width:100%}
+.ftab th,.ftab td{padding:6px 10px;border-bottom:2px solid #EEE8F6;text-align:left}
+.ftab th{font-size:13px;color:var(--ink-2)}
+.ftab td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.ftab tr.sel td{background:var(--sun-soft)}
+.ftab tr.tot td{border-top:2px solid var(--ink);font-weight:700}
+.ftab tbody tr{cursor:pointer}
+.ftab .sw{display:inline-block;width:12px;height:12px;border-radius:3px;border:1.5px solid var(--ink);margin-right:8px;vertical-align:-1px}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:center}
+@media (max-width:620px){
+.two{grid-template-columns:1fr}
+}
+.formula{font-size:17px;font-weight:600;padding:8px 12px;border-radius:12px;background:#F7F3FC;border:1px dashed #C8BDDA;min-height:2.6em}
+.formula .big{font-family:var(--font-display);font-weight:800;font-size:22px}
+.minihead{font-weight:700;font-size:15px;margin:0 0 4px}
+.smallnote{font-size:13.5px;color:var(--ink-2);margin:0}
+.ctrlrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.bigread{font-family:var(--font-display);font-weight:800;font-size:clamp(22px,2.2vw,30px);line-height:1.1}
+.bigread small{display:block;font-family:var(--font-body);font-weight:500;font-size:14px;color:var(--ink-2)}
+.chips2{display:flex;flex-wrap:wrap;gap:6px}
+.chips2 span{font-size:13.5px;font-weight:700;padding:3px 10px;border-radius:999px;border:1px solid var(--line);background:var(--ruler-soft)}
+.rules{display:flex;flex-wrap:wrap;gap:8px}
+.rules span{display:inline-flex;gap:6px;align-items:center;font-size:14px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--ok-soft);border:1px solid var(--ok)}
+.thumbs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:620px){
+.thumbs{grid-template-columns:1fr}
+}
+.thumb{background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:16px;padding:10px;cursor:pointer;text-align:left;display:grid;gap:6px}
+.thumb b{font-size:15px}
+.thumb.ok{border-color:var(--ok);border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.thumb.bad{border-color:var(--no);border-color:var(--no);box-shadow:inset 0 0 0 1px var(--no)}
+.fb2{font-size:15.5px;line-height:1.4;min-height:2.8em;margin:0}
+.examples{display:grid;gap:6px}
+.examples div{font-size:14.5px;padding:6px 10px;border-radius:10px;border:1px solid #E6DFF1;color:var(--ink-2);transition:all .25s}
+.examples div.on{border-color:var(--ink);background:var(--sun-soft);color:var(--ink);font-weight:600}
+.shape-lab{font-family:var(--font-display);font-weight:800;font-size:26px}
+.stemwrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:14px;align-items:start}
+@media (max-width:620px){
+.stemwrap{grid-template-columns:1fr}
+}
+.billchips{display:flex;flex-wrap:wrap;gap:6px}
+.billchips span{font-family:var(--font-hand);font-weight:700;font-size:22px;padding:0 8px;border-radius:8px;background:#FDF3DC;border:1.5px solid var(--ink);transition:opacity .4s}
+.billchips span.used{opacity:.25}
+.stem{font-family:var(--font-hand);font-weight:700;font-size:30px;line-height:1.25;transition:transform .7s}
+.stem.rot{display:flex;align-items:flex-end;gap:8px;font-size:23px;line-height:1}
+.stem.rot .srow{display:flex;flex-direction:column-reverse;align-items:center;width:36px}
+.stem.rot .sk{text-align:center;padding-top:4px}
+.stem.rot .sb{border-left:0;border-top:2px solid var(--ink);width:100%;height:0}
+.stem.rot .lv{display:flex;flex-direction:column-reverse;align-items:center;padding-bottom:3px}
+.stem.rot .lv span{margin:0;line-height:.98}
+.stem .srow{display:grid;grid-template-columns:34px 14px 1fr;align-items:center}
+.stem .sk{text-align:right;color:var(--ruler-ink)}
+.stem .sb{border-left:2px solid var(--ink);height:1.2em}
+.stem .lv span{display:inline-block;margin-right:8px;animation:popl .35s ease-out both}
+@keyframes popl{from{transform:scale(0)}}
+.flow{display:grid;gap:10px}
+.flow .node{border:1px solid var(--line);border-radius:14px;padding:8px 12px;background:#fff;color:var(--ink);font-weight:600;font-size:15px;transition:all .3s;opacity:.45}
+.flow .node.on{opacity:1}
+.flow .node.tag.on{background:var(--tag-soft)}
+.flow .node.ruler.on{background:var(--ruler-soft)}
+.flow .lvl2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.flow .lvl3{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px}
+.flow .node b{display:block;font-family:var(--font-display);font-size:17px}
+.flow .node small{font-weight:500;font-size:13px}
+.varbtns{display:flex;flex-wrap:wrap;gap:8px}
+.lab-ta{width:100%;min-height:70px;font:inherit;font-size:14px;padding:8px 10px;border:2px solid var(--ink);border-radius:12px;resize:vertical}
+.cups2{grid-template-columns:minmax(0,1.45fr) minmax(0,1fr)}
+.cupfield .rl2{font-size:17px}
+#flowchart{max-height:27vh}
+@media (max-width:620px){
+.cups2{grid-template-columns:1fr}
+}
+#barflav{max-height:33vh}
+#barsize{max-height:16vh}
+@media (max-height:760px) and (min-width:901px){
+.ftab th,.ftab td{padding:3px 9px}
+.ftab{font-size:15px}
+.formula{padding:5px 12px;min-height:0;font-size:16px}
+.formula .big{font-size:19px}
+.compact .qrow{padding:5px 0}
+.flow{gap:7px}
+.flow .node{padding:5px 10px;font-size:14px}
+.flow .node b{font-size:15.5px}
+.flow .node small{font-size:12px}
+.lab-ta{min-height:46px}
+}
+.qtext .xtab{font-family:var(--font-body);font-size:14px;line-height:1.25}
+.qtext .xtab th{font-size:12.5px}
+.hero2 .hrow{grid-template-columns:100px minmax(0,1fr) 34px minmax(0,1.2fr)}
+.hrow .mi2{display:flex;align-items:center}
+.hrow .mi2 svg{width:50px;height:auto}
+.hrow .mi2 svg + svg{margin-left:-6px}
+.xgrid{width:100%;height:auto;display:block;max-height:50vh}
+.xgrid .cg{transition:transform .9s cubic-bezier(.3,.8,.3,1)}
+.xgrid .lab{font-family:var(--font-body);font-weight:700;font-size:15px;fill:var(--ink)}
+.xgrid .cnt{font-family:var(--font-display);font-weight:800;font-size:24px;fill:var(--ink);transition:opacity .4s .7s}
+.xgrid .cell{transition:opacity .6s}
+.xtab{border-collapse:collapse;width:100%;font-size:15.5px;font-variant-numeric:tabular-nums}
+.xtab th,.xtab td{padding:6px 8px;text-align:right;border-bottom:2px solid #EEE8F6}
+.xtab th{font-size:13px;color:var(--ink-2);font-weight:700;vertical-align:bottom}
+.xtab th:first-child,.xtab td:first-child{text-align:left}
+.xtab td.c{cursor:pointer;font-weight:700}
+.xtab td.c:hover{box-shadow:inset 0 0 0 2px var(--ink-3)}
+.xtab td.m,.xtab tr.tot td{color:var(--ink-2);background:#F7F3FC}
+.xtab tr.tot td{border-top:2px solid var(--ink);border-bottom:0}
+.xtab td.hl{background:var(--sun-soft)}
+.xtab td.sel{background:var(--sun);box-shadow:inset 0 0 0 2.5px var(--ink)}
+.xtab td.whole{background:var(--taro-soft);color:var(--ink);font-weight:800}
+.xtab.mini{font-size:14px}
+.xtab.mini th,.xtab.mini td{padding:3px 7px}
+.xtab tr.todo td{color:#B4A9C6}
+.xtab tr.cur td{background:var(--sun-soft);color:var(--ink);font-weight:700}
+.xtab .sw{display:inline-block;width:11px;height:11px;border-radius:3px;border:1.5px solid var(--ink);margin-right:6px;vertical-align:-1px}
+.xread{margin:10px 0 0;font-size:16px;line-height:1.4;min-height:2.9em}
+.xread .big{font-family:var(--font-display);font-weight:800;font-size:20px;line-height:1.2}
+.xread small{display:block;color:var(--ink-2);font-size:14px;margin-top:3px}
+.pctwrap{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start;margin-top:10px}
+.realcase{background:#fff;color:var(--ink);border:1.5px dashed var(--ink-3);border-radius:14px;padding:9px 13px;font-size:14.5px;line-height:1.42}
+.realcase.dark{background:rgba(255,255,255,.06);color:var(--fg2);border-color:rgba(255,255,255,.45)}
+.realcase.dark b{color:var(--sun)}
+.placewrap{display:grid;grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr);gap:14px;align-items:center}
+.dragsvg{touch-action:none;max-height:44vh}
+.dragsvg .dd{cursor:grab}
+.dragsvg .dd:active{cursor:grabbing}
+.dragsvg .dd:focus{outline:none}
+.dragsvg .dd .ring{fill:transparent;stroke:transparent}
+.dragsvg .dd:focus-visible .ring{stroke:var(--ink);stroke-width:2.5;stroke-dasharray:4 3}
+.chart .tl{stroke:var(--berry);stroke-width:3.5;stroke-linecap:round;transition:all .25s}
+.chart .lnk{stroke:var(--ink-3);stroke-width:1.6;stroke-dasharray:4 4}
+#cloudchart circle{transition:cx .45s ease, cy .45s ease}
+#cloudchart{max-height:33vh}
+#formchart{max-height:38vh}
+#tipchart{max-height:25vh}
+#simchart{max-height:30vh}
+#mixchart{max-height:29vh}
+#placechart{max-height:46vh}
+#pairchart{max-height:27vh}
+#pbars{max-height:34vh}
+#trapchart{max-height:34vh}
+.trapwrap{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:12px;align-items:center;margin-top:6px}
+.cause{opacity:.08;transition:opacity .6s}
+.cause.on{opacity:1}
+.cause svg{width:100%;height:auto;display:block}
+.legend2{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13.5px;font-weight:600;color:var(--ink-2)}
+.legend2 i{display:inline-block;width:12px;height:12px;border-radius:3px;border:1.5px solid var(--ink);margin-right:5px;vertical-align:-1px}
+.pflow3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.pflow3 .col{display:grid;gap:6px;align-content:start}
+.scatlab{touch-action:manipulation;cursor:crosshair}
+@media (max-width:620px){
+.pctwrap,.placewrap,.trapwrap{grid-template-columns:1fr}
+.pflow3{grid-template-columns:1fr}
+.xtab{font-size:13.5px}
+.xtab th,.xtab td{padding:4px 4px}
+.xtab th .sw{display:none}
+}
+.xscroll{overflow-x:auto;max-width:100%}
+.qtext:has(.xtab){font-size:clamp(18px,1.9vw,24px)}
+@media (max-width:620px){
+#dpre{display:grid;grid-template-columns:1fr 1fr}
+#dpre button+button{border-left:0}
+#dpre button:nth-child(2n){border-left:2px solid var(--ink)}
+#dpre button:nth-child(n+3){border-top:2px solid var(--ink)}
+#dpre button{justify-content:center}
+}
+@media (min-width:1600px) and (min-height:960px){
+#tipchart{max-height:20vh}
+.labbox #labchart{max-height:30vh !important}
+}
+@media (max-height:760px) and (min-width:901px){
+.xtab th,.xtab td{padding:4px 7px}
+.xtab{font-size:14.5px}
+.xread{font-size:15px;margin-top:6px}
+.xread .big{font-size:18px}
+.realcase{font-size:13.5px;padding:7px 11px}
+.compact .qrow{padding:5px 0}
+.compact .qq{font-size:14.5px}
+.flow .node{padding:5px 10px;font-size:14px}
+.flow .node b{font-size:15.5px}
+.flow .node small{font-size:12px}
+}
+.gopt .gshape{display:block;width:100%;height:38px;margin-bottom:4px}
+.pcard{background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:16px;padding:10px 12px;display:grid;gap:6px;align-content:start}
+.pcard .ph2{display:flex;align-items:center;gap:8px;font-weight:800;font-family:var(--font-display);font-size:17px;line-height:1.1}
+.pcard .ph2 svg{width:32px;height:auto;flex:none}
+.pcard .ph2 small{display:block;font-family:var(--font-body);font-weight:500;font-size:12.5px;color:var(--ink-2)}
+.pcard .raw2{font-family:var(--font-hand);font-size:20px;font-weight:700;color:var(--ink-2);line-height:1.1;min-height:2.2em}
+.pcard .pnote{font-size:13.5px;line-height:1.35;min-height:2.7em;margin:0}
+.pcard .chart{width:100%;height:auto;max-height:21vh}
+.pcard .btn{justify-self:start}
+.ibox svg{width:100%;height:auto;max-height:34vh;touch-action:none;display:block}
+.ibox .dd{cursor:grab}
+.ibox .dd .ring{fill:transparent}
+.ibox .dd:focus{outline:none}
+.ibox .dd:focus-visible .ring{stroke:var(--ink);stroke-width:2.5;stroke-dasharray:4 3}
+.ibox .hint{font-size:13.5px;color:var(--ink-2);margin:2px 0 0}
+@media (max-height:760px) and (min-width:901px){
+.pcard{padding:8px 10px;gap:4px}
+.pcard .raw2{font-size:18px}
+.pcard .pnote{font-size:13px}
+.ibox svg{max-height:27vh}
+}
+@media (min-width:1600px) and (min-height:960px){
+.ibox svg{max-height:21vh}
+}
+.gback.wait{display:none}
+.gopts.one{grid-template-columns:1fr}
+.nameit{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:12px;align-items:start}
+.nameit .col{display:grid;gap:7px}
+.nact{font:inherit;font-size:14px;line-height:1.3;text-align:left;padding:7px 11px;border:2px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);cursor:pointer}
+.nact[aria-pressed="true"]{background:var(--deep);border-color:var(--deep);color:#fff}
+.nact.done{background:#E3F1D0;border-color:#4E8A1E;cursor:default}
+.nact.done b{display:block;font-family:var(--font-display);font-size:15px}
+.nact.done i{font-style:normal;font-size:12.5px;color:var(--ink-2)}
+.nname{font:inherit;font-weight:700;font-size:15px;text-align:left;padding:8px 12px;border:2px solid var(--ink);border-radius:999px;background:#fff;color:var(--ink);cursor:pointer}
+.nname:disabled{opacity:.35;box-shadow:none;cursor:default}
+.nname.nope{animation:nope .4s}
+@keyframes nope{0%,100%{transform:none} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)}}
+@media (prefers-reduced-motion:reduce){
+.nname.nope{animation:none;background:#FBE0E7}
+}
+@media (max-width:760px){
+.nameit{grid-template-columns:1fr}
+}
+@media (max-height:760px) and (min-width:901px){
+.nact{padding:5px 10px;font-size:13.5px}
+.nname{padding:6px 11px;font-size:14px}
+.nameit .col{gap:5px}
+}
+.gback.wait{display:none}
+.scene.playing .txt h2{display:none}
+#ichart{max-height:38vh}
+@media (max-height:760px) and (min-width:901px){
+#ichart{max-height:31vh}
+}
+@media (min-width:1600px) and (min-height:960px){
+#ichart{max-height:28vh}
+}
+.flyer{background:var(--sun);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:12px 16px;transform:rotate(-2deg);display:grid;gap:2px;justify-items:center;text-align:center;margin:2px 8px 6px}
+.flyer small{font-size:13px;font-weight:700;color:var(--ink-2)}
+.flyer b{font-family:var(--font-display);font-weight:800;font-size:clamp(26px,2.6vw,36px);line-height:1.05}
+.flyer span{font-family:var(--font-hand);font-size:21px;line-height:1.1}
+.lineup{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;min-height:34px}
+.lchip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums;font-size:15px}
+.lchip i{font-style:normal;font-size:11.5px;color:var(--ink-2);font-weight:600}
+.lchip.mid{background:var(--berry);color:#fff}
+.lchip.mid i{color:rgba(255,255,255,.88)}
+.sizebtns,.yearbtns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:4px}
+.yearbtns{margin:0 0 4px}
+.sizeb{display:grid;gap:3px;justify-items:center;padding:5px 10px;border:1px solid #E6DFF1;border-radius:14px}
+.sizeb b{font-size:14px}
+.sizeb span{display:flex;align-items:center;gap:8px}
+.sizeb em{font-style:normal;font-family:var(--font-display);font-weight:800;font-size:20px;min-width:3.4ch;text-align:center;font-variant-numeric:tabular-nums}
+.sizeb .btn.sm{padding:2px 12px;font-size:19px;line-height:1.1}
+.repgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.rcard{background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:16px;padding:10px 12px;display:grid;gap:8px;align-content:start}
+.rcard p{margin:0;font-weight:700;font-size:15px;line-height:1.3}
+.rcard .rb{display:flex;flex-wrap:wrap;gap:6px}
+.rcard .rb .btn.sm{padding:5px 10px;font-size:14px}
+.rcard .rwhy{font-weight:400;font-size:13.5px;color:var(--ink-2)}
+.rcard .rwhy:empty{display:none}
+.rcard.ok{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.rcard.bad{border-color:var(--no);box-shadow:inset 0 0 0 1px var(--no)}
+.hidden2{display:none}
+.nact .sym2{font-family:var(--font-body);font-weight:700;color:#365F14}
+.labform{display:grid;gap:6px}
+.labform label{font-weight:600;font-size:14px}
+.labform input{font:inherit;font-size:16px;padding:7px 12px;border:2px solid var(--ink);border-radius:12px;min-width:0;flex:1;color:var(--ink);background:#fff}
+.labform input:focus-visible{outline:3px solid var(--ruler);outline-offset:2px}
+#sw1,#sw2,#sw4,#skewsw,#modechart,#wchart,#realchart,#pinchart{max-height:40vh}
+#geochart{max-height:34vh}
+#sw3{max-height:26vh}
+.legend2 .lk{display:inline-block;width:22px;height:4px;border:0;border-radius:2px;vertical-align:middle;margin-right:6px}
+.legend2 .lk.dash{background:repeating-linear-gradient(90deg,#D93A62 0 6px,transparent 6px 10px)}
+@media (max-width:900px){
+.repgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+.repgrid{grid-template-columns:1fr}
+.labform .row{flex-wrap:wrap !important}
+}
+@media (max-height:760px) and (min-width:901px){
+.flyer{padding:8px 14px}
+.flyer b{font-size:28px}
+#sw1,#sw2,#sw4,#skewsw,#modechart,#wchart,#realchart,#pinchart{max-height:36vh}
+#geochart{max-height:29vh}
+#sw3{max-height:22vh}
+.rcard{padding:8px 10px;gap:6px}
+.rcard p{font-size:14px}
+.rcard .rwhy{font-size:12.5px}
+.lchip{padding:3px 9px;font-size:14px}
+}
+@media (min-width:1600px) and (min-height:960px){
+#sw1,#sw2,#sw4,#skewsw,#modechart,#wchart,#realchart,#pinchart{max-height:32vh}
+}
+.stands2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:2px 0 4px}
+.standc{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;display:grid;justify-items:center;text-align:center;gap:1px;padding:0 8px 8px}
+.standc .awn{display:block;height:15px;width:calc(100% + 16px);margin:0 -8px 5px;background:repeating-linear-gradient(90deg,var(--c1) 0 18px,#fff 18px 36px);border-bottom:1px solid var(--line)}
+.standc b{font-family:var(--font-display);font-weight:800;font-size:21px;line-height:1.1}
+.standc span{font-family:var(--font-hand);font-size:23px;line-height:1.05}
+.standc small{font-size:12.5px;font-weight:700;color:var(--ink-2)}
+.pcard .dq{margin:0;font-weight:700;font-size:14.5px;line-height:1.3}
+.pcard .rb{display:flex;flex-wrap:wrap;gap:6px}
+.pcard .rb .btn.sm{padding:5px 13px;font-size:14px}
+#q1 circle.mv{transition:cx .6s cubic-bezier(.3,.8,.3,1), cy .6s cubic-bezier(.3,.8,.3,1)}
+.lastspoon{font-size:14.5px;line-height:1.4;min-height:3em;padding:6px 11px;border:1px dashed #C8BDDA;border-radius:12px;background:#F7F3FC;margin:0}
+.lastspoon b{font-family:var(--font-hand);font-size:21px;line-height:1}
+.qtext svg.qs{display:block;width:100%;max-width:560px;height:auto;margin:8px auto 0}
+.qtext svg.qs text{font-family:var(--font-body);font-size:13px;font-weight:700;fill:var(--ink)}
+.unitrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:8px}
+.steps3 button{font-size:15px;padding:8px 13px}
+.take.late{visibility:hidden}
+.dragsvg + .row, .dragsvg + .xread{margin-top:8px}
+#q1,#q3,#q4,#q8{max-height:38vh}
+#q5,#q6,#q7,#q9{max-height:46vh}
+#q10{max-height:23vh}
+#q11{max-height:27vh}
+#q12{max-height:30vh}
+#q9d{max-height:44vh}
+#realchart{max-height:38vh}
+.labbox #labchart{max-height:36vh}
+#ichart{max-height:36vh}
+@media (max-width:560px){
+.stands2{grid-template-columns:1fr}
+.steps3{display:grid}
+.steps3 button + button{border-left:0;border-top:2px solid var(--ink)}
+}
+@media (max-height:760px) and (min-width:901px){
+#q1,#q3,#q4,#q8{max-height:36vh}
+#q5,#q6,#q7,#q9{max-height:44vh}
+#q10{max-height:21vh}
+#q11{max-height:25vh}
+#q12{max-height:28vh}
+#q9d{max-height:40vh}
+#realchart{max-height:35vh}
+.standc b{font-size:19px}
+.standc span{font-size:21px}
+.lastspoon{font-size:13.5px;padding:5px 10px}
+#ichart{max-height:27vh}
+.labbox #labchart{max-height:31vh}
+}
+@media (min-width:1600px) and (min-height:960px){
+#q1,#q3,#q4,#q8{max-height:30vh}
+#q5,#q6,#q7,#q9{max-height:35vh}
+#q10{max-height:17vh}
+#q11{max-height:20vh}
+#q12{max-height:23vh}
+#q9d{max-height:32vh}
+#realchart{max-height:30vh}
+.labbox #labchart{max-height:26vh !important}
+#ichart{max-height:26vh}
+}
+</style>
+</head>
+<body>
+<header class="bar">
+  <span class="ep">T1.5</span>
+  <span class="t">Range, variance, standard deviation, coefficient of variation</span>
+  <span class="chapnm" id="chapnm">Start</span>
+  <div class="prog" aria-hidden="true"><i id="progfill"></i></div>
+  <span class="xp" id="xp" title="Stars earned on this page">★ 0</span>
+</header>
+
+<main id="deck">
+
+<!-- 0 GUESS FIRST -->
+<section class="scene th-plum" id="s0" data-chap="Start" aria-label="Same average. Same wait?">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>T1.5</b>Playlist 1, episode 5</div>
+      <h1 style="font-size:clamp(40px,5vw,70px)">Same average. Same wait?</h1>
+      <p class="sub">T1.4 found one number for the middle of a crowd. Today: a second number, for how far the crowd strays from it. Guess first: you will see your answer again later.</p>
+      <div class="lina" data-say="Two stands near mine both promise “average wait: 4 minutes”. Their lines don’t feel the same at all!"></div>
+      <div class="row"><button class="btn sun big" type="button" data-go="next">Find out</button></div>
+      <div class="meta"><span class="pill">Builds on: T1.4</span><span class="pill">Leads to: T1.6, T3.2, T4.2, T5.2, T6.2</span></div>
+    </div>
+    <div class="pic"><div class="card guesscard" id="guess"></div></div>
+  </div>
+</section>
+
+<!-- 1 LAST TIME: THE SEE-SAW -->
+<section class="scene th-sky" id="s1" data-chap="Start" aria-label="Same balance point, different crowd">
+  <div class="scene-in picwide">
+    <div class="txt">
+      <div class="kick"><b>0</b>Last time: the see-saw</div>
+      <h2>Same balance, different crowd</h2>
+      <p class="sub">In T1.4, the mean was where the plank balances. Eight waits at each stand (invented): switch stands and watch the triangle.</p>
+      <div class="lina" data-say="The triangle doesn’t move at all. The dots do!"></div>
+      <div class="take">The mean tells where a crowd balances. It cannot tell how far the dots stray from that point.</div>
+      <div class="thread"><b>Instrument: See-saw</b>, built in T1.4.</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="seg" id="s1seg" role="group" aria-label="Stand"><button type="button" data-k="bao" aria-pressed="true">Bao Bar</button><button type="button" data-k="kiwi" aria-pressed="false">Kiwi Cup</button></div>
+        <svg class="chart" id="q1" viewBox="0 0 640 240" role="img" aria-label="Eight waits on the see-saw; the balance point is at 4 minutes"></svg>
+        <p class="xread" id="q1read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 THREE DOORS -->
+<section class="scene th-sun" id="s2" data-chap="Spread" aria-label="Same average, different spread">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>1</b>Spread</div>
+      <h2>Same average, different spread</h2>
+      <p class="sub">Three everyday pairs. In each pair the average is the same. Answer the question on each card.</p>
+      <div class="lina" data-say="On average they are twins. In real life, I know which one I would trust."></div>
+      <div class="score" id="doorscore" aria-live="polite">0 of 3</div>
+      <div class="take">Two crowds can share an average and still behave very differently. How far the values stray is called the spread.</div>
+      <div class="fr">In French: dispersion</div>
+    </div>
+    <div class="pic"><div class="doors3 piles" id="doors"></div></div>
+  </div>
+</section>
+
+<!-- 3 THE RANGE -->
+<section class="scene th-mint" id="s3" data-chap="Spread" aria-label="First try: longest minus shortest">
+  <div class="scene-in picwide">
+    <div class="txt">
+      <div class="kick"><b>1</b>Spread</div>
+      <h2>First try: longest minus shortest</h2>
+      <p class="sub">Lina’s first five customers waited 1, 3, 4, 5 and 7 minutes (invented). The bracket runs from the shortest wait to the longest. Drag the dots.</p>
+      <div class="lina" data-say="Move a dot in the middle: the bracket doesn’t even notice."></div>
+      <div class="take">Range = largest value − smallest value. Quick, but only the two end dots decide it.</div>
+      <div class="fr">In French: étendue</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="seg" id="rgseg" role="group" aria-label="Crowd"><button type="button" data-k="lina" aria-pressed="true">Lina’s five</button><button type="button" data-k="calm" aria-pressed="false">Calm, two strays</button><button type="button" data-k="split" aria-pressed="false">Split in two</button></div>
+        <svg class="chart dragsvg" id="q3" viewBox="0 0 640 220" tabindex="0" role="img" aria-label="Waits on a number line with a bracket from the smallest to the largest; drag the dots"></svg>
+        <div class="row" style="justify-content:space-between;align-items:center"><span class="bigread" id="q3read" aria-live="polite"></span><button class="btn sm" type="button" id="q3reset">Put them back</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 DISTANCES CANCEL -->
+<section class="scene th-lilac" id="s4" data-chap="The squares" aria-label="How far from the pivot?">
+  <div class="scene-in picwide">
+    <div class="txt">
+      <div class="kick"><b>2</b>The squares</div>
+      <h2>How far from the pivot?</h2>
+      <p class="sub">A better idea: use every dot. Each wait gets a bar to the balance point: minus to the left, plus to the right. Drag a dot and add them up.</p>
+      <div class="lina" data-say="Whatever I do, the lefts and the rights wipe each other out!"></div>
+      <div class="take">Distances to the mean always add up to zero: that is why the plank balances. Their plain average can’t measure spread.</div>
+      <div class="fr">In French: écart à la moyenne</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <svg class="chart dragsvg" id="q4" viewBox="0 0 640 240" tabindex="0" role="img" aria-label="Five waits with a bar from each dot to the balance point; drag the dots"></svg>
+        <div class="row" style="justify-content:space-between;align-items:center"><span class="bigread" id="q4read" aria-live="polite"></span><button class="btn sm" type="button" id="q4reset">Put them back</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 SQUARES -->
+<section class="scene th-sky" id="s5" data-chap="The squares" aria-label="Each bar grows a square">
+  <div class="scene-in picwide">
+    <div class="txt">
+      <div class="kick"><b>2</b>The squares</div>
+      <h2>Each bar grows a square</h2>
+      <p class="sub">The trick that stops the cancelling: turn each bar into a square, with the bar as its side. An area is never negative. Drag a dot away and watch its square.</p>
+      <div class="lina" data-say="One step farther, and the square gets a lot bigger!"></div>
+      <div class="take">Squaring removes the minus signs, and far dots count extra: twice as far makes a square four times as big.</div>
+      <div class="thread"><b>Instrument: Squares.</b> Back in T3.2, T8.1 and T8.2.</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <svg class="chart dragsvg" id="q5" viewBox="0 0 680 320" tabindex="0" role="img" aria-label="Five waits; each distance to the balance point is the side of a square; drag the dots"></svg>
+        <div class="row" style="justify-content:space-between;align-items:center"><span class="bigread" id="q5read" aria-live="polite"></span><button class="btn sm" type="button" id="q5reset">Put them back</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 THE AVERAGE SQUARE -->
+<section class="scene th-peach" id="s6" data-chap="The squares" aria-label="One average square">
+  <div class="scene-in picwide">
+    <div class="txt">
+      <div class="kick"><b>2</b>The squares</div>
+      <h2>One average square</h2>
+      <p class="sub">These five waits are everyone Lina served in her first hour: the whole crowd. Three steps pour five squares into one.</p>
+      <div class="lina" data-say="An area for the sum, then a side to get back to minutes."></div>
+      <div class="take">Variance = the area of the average square. Standard deviation = its side: back in minutes, like the waits.</div>
+      <div class="fr">In French: variance · écart type</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="seg steps3" id="q6seg" role="group" aria-label="Step"><button type="button" data-k="1" aria-pressed="true">1 Add the areas</button><button type="button" data-k="2" aria-pressed="false">2 Share them out</button><button type="button" data-k="3" aria-pressed="false">3 Take the side</button></div>
+        <svg class="chart" id="q6" viewBox="0 0 680 320" role="img" aria-label="Five squares become one average square"></svg>
+        <p class="xread" id="q6read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 ONE NUMBER FOR THE SPREAD -->
+<section class="scene th-sun" id="s7" data-chap="The squares" aria-label="One number for the spread">
+  <div class="scene-in picwide">
+    <div class="txt">
+      <div class="kick"><b>2</b>The squares</div>
+      <h2>One number for the spread</h2>
+      <p class="sub">Back to the two stands: eight waits each, taken as the whole crowd. The yellow band reaches one standard deviation to each side of the mean.</p>
+      <div class="gback wait" data-guessback></div>
+      <div class="take">The standard deviation says roughly how far a typical value sits from the mean, in the data’s own unit.</div>
+      <div class="thread"><b>Next:</b> this side becomes the tick of the σ-ruler in T1.6.</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="seg" id="q7seg" role="group" aria-label="Crowd"><button type="button" data-k="bao" aria-pressed="true">Bao Bar</button><button type="button" data-k="kiwi" aria-pressed="false">Kiwi Cup</button><button type="button" data-k="lina" aria-pressed="false">Lina’s five</button></div>
+        <svg class="chart" id="q7" viewBox="0 0 680 320" role="img" aria-label="Waits on the see-saw with a band of one standard deviation and the average square"></svg>
+        <p class="xread" id="q7read" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 THE FORCED FIFTH -->
+<section class="scene th-pink" id="s8" data-chap="Why n − 1" aria-label="Four free, one forced">
+  <div class="scene-in picwide">
+    <div class="txt">
+      <div class="kick"><b>3</b>Why n − 1</div>
+      <h2>Four free, one forced</h2>
+      <p class="sub">Five friends chip in $20 for a gift: $4 each on average. Drag what four of them pay. The friend with the lock pays whatever is left.</p>
+      <div class="lina" data-say="Same with my five waits: tell me their mean, and I can only choose four of them."></div>
+      <div class="take">Once the mean is known, only n − 1 of the n values are free: the last one is forced. n − 1 is called the degrees of freedom.</div>
+      <div class="fr">In French: degrés de liberté · back in T6.2 and T8.3</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <svg class="chart dragsvg" id="q8" viewBox="0 0 640 240" tabindex="0" role="img" aria-label="What five friends pay, as dots around a balance point fixed at 4 dollars; drag the four blue dots"></svg>
+        <p class="xread" id="q8read" aria-live="polite"></p>
+        <div class="row"><button class="btn sm" type="button" id="q8reset">Put them back</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 THE BULLSEYE DRAWN AFTERWARDS -->
+<section class="scene th-sky" id="s9" data-chap="Why n − 1" aria-label="Draw the bullseye afterwards">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>3</b>Why n − 1</div>
+      <h2>Draw the bullseye afterwards</h2>
+      <p class="sub">Five darts on a wall. The pink diamond is the real bullseye. The green triangle is the middle of your own five darts. The ring shows how far the darts typically land from the spot you measure from.</p>
+      <div class="lina" data-say="If I draw the bullseye after I throw, right in the middle of my own darts, I always look like a better shot!"></div>
+      <div class="take">A small group sits tightest around its own middle. Around the true target it can only look looser.</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="ctrlrow"><div class="seg" id="dtseg" role="group" aria-label="Measure from"><button type="button" data-k="true" aria-pressed="true">From the real bullseye</button><button type="button" data-k="own" aria-pressed="false">From my own middle</button></div><button class="btn sm sun" type="button" id="dtnew">Throw again</button></div>
+        <svg class="chart" id="q9d" viewBox="0 0 580 300" role="img" aria-label="Five darts, the real bullseye, the middle of the darts, and a ring of typical distance"></svg>
+        <p class="xread" id="dtread" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 ITS OWN MIDDLE -->
+<section class="scene th-mint" id="s10" data-chap="Why n − 1" aria-label="A spoonful does the same">
+  <div class="scene-in picwide">
+    <div class="txt">
+      <div class="kick"><b>3</b>Why n − 1</div>
+      <h2>A spoonful does the same</h2>
+      <p class="sub">A spoonful of waits can only measure from its own mean. This big jar holds waits of 1 to 7 minutes in equal numbers, so its true mean is 4. Slide the yellow marker: where is the total area smallest?</p>
+      <div class="take">Measured from its own mean, a sample’s squares are as small as they can be. So a spoonful looks calmer than the jar really is.</div>
+      <div class="thread"><b>Instrument: Jar and spoons</b>, from T1.1.</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <svg class="chart dragsvg" id="q9" viewBox="0 0 680 320" tabindex="0" role="img" aria-label="Five sampled waits and a marker you can slide; squares run from each dot to the marker"></svg>
+        <div class="row" style="justify-content:space-between;align-items:center"><span class="bigread" id="q9read" aria-live="polite"></span><button class="btn sm sun" type="button" id="q9new">New spoonful</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 MANY SPOONFULS -->
+<section class="scene th-lilac" id="s11" data-chap="Why n − 1" aria-label="Share among n, or n − 1?">
+  <div class="scene-in picwide">
+    <div class="txt">
+      <div class="kick"><b>3</b>Why n − 1</div>
+      <h2>Share among n, or n − 1?</h2>
+      <p class="sub">The jar’s true variance is 4. Each spoonful shares its squares two ways: among all n waits, or among n − 1. Scoop many times and compare the long-run averages with 4.</p>
+      <div class="lina" data-say="Sharing among one fewer makes each share a bit bigger. Just enough, it turns out."></div>
+      <div class="take">Sharing among n runs too small, by the factor (n − 1)/n. Sharing among n − 1 hits the true variance on average.</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="ctrlrow"><div class="seg" id="q10seg" role="group" aria-label="Spoon size"><button type="button" data-n="2" aria-pressed="false">Spoon of 2</button><button type="button" data-n="5" aria-pressed="true">Spoon of 5</button><button type="button" data-n="20" aria-pressed="false">Spoon of 20</button></div><button class="btn sm" type="button" id="q10reset">Start over</button></div>
+        <p class="lastspoon" id="q10last" aria-live="polite"></p>
+        <svg class="chart" id="q10" viewBox="0 0 640 150" role="img" aria-label="Two long-run averages compared with the jar’s true variance of 4"></svg>
+        <div class="row"><button class="btn sun" type="button" id="q10one">Scoop once</button><button class="btn" type="button" id="q10hun">Scoop 100</button><button class="btn" type="button" id="q10tho">Scoop 1,000</button></div>
+        <p class="xread" id="q10read" aria-live="polite" style="margin-top:4px"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 TRAP -->
+<section class="scene th-trap" id="s12" data-chap="The trap" aria-label="Variance 4. Four what?">
+  <div class="hazard" aria-hidden="true"></div>
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>!</b>The trap</div>
+      <h2>Variance 4. Four what?</h2>
+      <p class="sub">Lina’s five waits: variance 4, standard deviation 2. A customer asks one question. Answer before you look.</p>
+      <div class="take late">The variance is an area, in squared units. Say the standard deviation out loud: it speaks the data’s own unit.</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <p class="gq" style="margin:0 0 8px">“How far from the 4-minute average is a typical wait?”</p>
+        <div class="gopts" id="trapopts"><button type="button" class="gopt" data-j="0">About 4 minutes: the variance</button><button type="button" class="gopt" data-j="1">About 2 minutes: the standard deviation</button></div>
+        <div id="trapreveal" class="hidden2">
+          <div class="unitrow"><span class="smallnote">Same five waits. Change the unit:</span><div class="seg" id="unitseg" role="group" aria-label="Unit"><button type="button" data-u="min" aria-pressed="true">In minutes</button><button type="button" data-u="s" aria-pressed="false">In seconds</button></div></div>
+          <svg class="chart" id="q11" viewBox="0 0 560 190" role="img" aria-label="The average square with its side and its area"></svg>
+        </div>
+        <p class="fb2" id="trapfb" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 13 COEFFICIENT OF VARIATION -->
+<section class="scene th-peach" id="s13" data-chap="Compare" aria-label="Big compared with what?">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>4</b>Compare</div>
+      <h2>Big compared with what?</h2>
+      <p class="sub">Two of Lina’s machines (invented). The cup filler pours 500 ml on average, with a standard deviation of 10 ml. The syrup pump gives 30 ml, with a standard deviation of 3 ml.</p>
+      <div class="take late">Coefficient of variation = standard deviation ÷ mean × 100%. It sets a spread next to its own mean, and it has no unit.</div>
+      <div class="fr">In French: coefficient de variation</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <p class="gq" style="margin:0 0 8px">Which machine is less steady?</p>
+        <div class="gopts" id="cvopts"><button type="button" class="gopt" data-j="0">The cup filler: 10 ml is more than 3 ml</button><button type="button" class="gopt" data-j="1">The syrup pump: 3 ml is a lot for 30 ml</button></div>
+        <svg class="chart" id="q12" viewBox="0 0 600 200" role="img" aria-label="Each machine’s spread shown next to its own mean"></svg>
+        <p class="fb2" id="cvfb" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 14 NAME IT -->
+<section class="scene th-mint" id="s14" data-chap="Name it" aria-label="Name what you did">
+  <div class="scene-in">
+    <div class="txt">
+      <div class="kick"><b>5</b>Name it</div>
+      <h2>Name what you did</h2>
+      <p class="sub">Each card is something your hand already did. Tap a card, then its name. The book’s symbols appear as you match.</p>
+      <div class="score" id="namescore" aria-live="polite">0 of 6</div>
+      <div class="take">s² and s describe a sample of n values. σ² and σ describe a whole population of N values.</div>
+    </div>
+    <div class="pic"><div class="card nameit" id="nameit"></div></div>
+  </div>
+</section>
+
+<!-- 15 REAL DATA -->
+<section class="scene th-sky" id="s15" data-chap="Real data" aria-label="Real tables: two spreads">
+  <div class="scene-in picwide">
+    <div class="txt">
+      <div class="kick"><b>6</b>Real data</div>
+      <h2>Real tables: two spreads</h2>
+      <p class="sub">The 244 restaurant tables of T1.2 and T1.4. The green triangle is the mean; the yellow band reaches one standard deviation to each side. The tables are a sample, so the squares are shared among n − 1 = 243.</p>
+      <div class="take">Read a spread twice: in the data’s unit (standard deviation), and next to its own mean (coefficient of variation).</div>
+    </div>
+    <div class="pic">
+      <div class="card">
+        <div class="ctrlrow"><div class="seg" id="realseg" role="group" aria-label="Column"><button type="button" data-c="tip" aria-pressed="true">Tips</button><button type="button" data-c="bill" aria-pressed="false">Bills</button></div><span class="xread" id="realread" style="margin:0;min-height:0"></span></div>
+        <svg class="chart" id="realchart" viewBox="0 0 640 250" role="img" aria-label="Histogram with the mean and a band of one standard deviation to each side"></svg>
+      </div>
+      <div class="card compact" id="realq"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 16 ARCADE -->
+<section class="scene th-indigo" id="s16" data-chap="Practice" aria-label="Practice arcade">
+  <div class="scene-in wide">
+    <div class="txt">
+      <div class="kick"><b>7</b>Practice</div>
+      <h2>Practice arcade</h2>
+      <p class="sub" style="max-width:62ch">Six levels, a boss where you build the spread, and a squares lab.</p>
+    </div>
+    <div id="arcade"></div>
+  </div>
+</section>
+
+<!-- 17 RECAP -->
+<section class="scene th-lilac" id="s17" data-chap="Remember" aria-label="Six things to remember">
+  <div class="scene-in wide">
+    <div class="txt">
+      <div class="kick"><b>8</b>Remember</div>
+      <h2>Six things to remember, and one trap</h2>
+    </div>
+    <div class="guessbar" data-guessback="short"></div>
+    <div class="recap" id="recap"></div>
+    <details class="src">
+      <summary>Sources and textbook links</summary>
+      <p>The range, variance, standard deviation and coefficient of variation, and the notation s², s, σ², σ, n and N, follow chapter 3 of the course textbook [1]. The 244 restaurant tables are real data [2]. Deviation, variance and standard deviation are defined as in [3]. Two standard results stand behind the n − 1 scenes [4]: the squares are smallest when they are measured from the sample’s own mean, and dividing by n − 1 makes the sample variance right on average. The idea of degrees of freedom follows [5]: each relation the values must satisfy removes one. The two stands, Lina’s waits, the jar of waits, the two machines and the three doors are invented for teaching. “In French” labels give common French statistical vocabulary, not quotations from the book.</p>
+      <ol>
+        <li>Anderson, D. R., Sweeney, D. J., Williams, T. A., Camm, J. D., &amp; Cochran, J. J. (2015). <em>Statistiques pour l’économie et la gestion</em> (5<sup>e</sup> éd., traduction de la 7<sup>e</sup> édition américaine d’<em>Essentials of Statistics for Business and Economics</em> par C. Borsenberger). De Boeck Supérieur. Chapitre 3.</li>
+        <li>Bryant, P. G., &amp; Smith, M. (1995). <em>Practical data analysis: Case studies in business statistics</em>. Irwin. Dataset “tips” (244 tables), as distributed with the R package reshape2 and the seaborn-data repository: <a href="https://github.com/mwaskom/seaborn-data">https://github.com/mwaskom/seaborn-data</a></li>
+        <li>Çetinkaya-Rundel, M., &amp; Hardin, J. (2024). <em>Introduction to Modern Statistics</em> (2nd ed.). OpenIntro. Section 5.4, Variance and standard deviation. <a href="https://openintro-ims.netlify.app/explore-numerical">https://openintro-ims.netlify.app/explore-numerical</a></li>
+        <li>Casella, G., &amp; Berger, R. L. (2002). <em>Statistical inference</em> (2nd ed.). Duxbury. Section 5.2, Theorems 5.2.4 and 5.2.6.</li>
+        <li>Walker, H. M. (1940). Degrees of freedom. <em>Journal of Educational Psychology, 31</em>(4), 253–269.</li>
+      </ol>
+      <p><button class="btn sm" type="button" id="resetall">Reset my stars</button></p>
+    </details>
+  </div>
+</section>
+
+</main>
+
+<nav class="ctrl" aria-label="Scenes">
+  <button class="btn" type="button" id="prev">Back</button>
+  <div class="dots" id="dots"></div>
+  <span class="pos" id="pos"></span>
+  <button class="btn sun" type="button" id="next">Next</button>
+</nav>
+<div class="visually-hidden" aria-live="polite" id="announce"></div>
+<canvas id="confetti" aria-hidden="true"></canvas>
+<script>
+(function(){
+'use strict';
+/* =========================================================== helpers */
+const $  = (s, r) => (r || document).querySelector(s);
+const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+const INK = '#2A1C19';
+const reduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+function sget(k, f){ try{ const v = localStorage.getItem(k); return v == null ? f : JSON.parse(v); }catch(e){ return f; } }
+function sset(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+function shuffle(a, rnd){ rnd = rnd || Math.random; for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function rng(seed){ return function(){ seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function el(tag, cls, html){ const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
+
+/* =========================================================== art */
+const FL = {Mango:'#F9B233', Taro:'#B79BE0', Matcha:'#9BC255', Strawberry:'#F49BB3', Lychee:'#F4E4C4'};
+const SZ = {S:0.8, M:0.9, L:1};
+function cupInner(fl){
+  const c = FL[fl] || '#ccc';
+  return '<rect x="31" y="0" width="7" height="28" rx="2.5" fill="#D93A62" stroke="'+INK+'" stroke-width="2.5" transform="rotate(14 34 24)"/>'
+   + '<path d="M9 30 H51 L45.6 87 Q45.2 91 41.5 91 H18.5 Q14.8 91 14.4 87 Z" fill="#fff" stroke="'+INK+'" stroke-width="2.5" stroke-linejoin="round"/>'
+   + '<path d="M12.4 38 H47.6 L43.2 86 H16.8 Z" fill="'+c+'"/>'
+   + '<g fill="#3B2416"><circle cx="20.5" cy="81.5" r="3.4"/><circle cx="27.5" cy="83" r="3.4"/><circle cx="34.5" cy="82" r="3.4"/><circle cx="40.5" cy="80.5" r="3.2"/><circle cx="24" cy="75.5" r="3.2"/><circle cx="31.5" cy="76.5" r="3.2"/><circle cx="38" cy="74.5" r="3"/></g>'
+   + '<rect x="5" y="25" width="50" height="7" rx="3.5" fill="#fff" stroke="'+INK+'" stroke-width="2.5"/>'
+   + '<path d="M8 26 Q30 6 52 26 Z" fill="#fff" stroke="'+INK+'" stroke-width="2.5" stroke-linejoin="round"/>';
+}
+function cupG(fl, sz, x, yb, k){ const kk = (k || 1) * (SZ[sz] || 1); return '<g transform="translate('+(x - 30*kk)+' '+(yb - 92*kk)+') scale('+kk+')">'+cupInner(fl)+'</g>'; }
+function cupSVG(fl, sz, w){ return '<svg viewBox="0 0 60 92" width="'+w+'" height="'+Math.round(w*92/60)+'" aria-hidden="true">'+cupG(fl, sz, 30, 92, 1)+'</svg>'; }
+
+let uid = 0;
+function linaSVG(){
+  const id = 'lc' + (++uid);
+  return '<svg viewBox="0 0 64 64" aria-hidden="true"><defs><clipPath id="'+id+'"><circle cx="32" cy="32" r="29.6"/></clipPath></defs>'
+   + '<circle cx="32" cy="32" r="31" fill="#F7B32B" stroke="'+INK+'" stroke-width="2.5"/>'
+   + '<g clip-path="url(#'+id+')"><path d="M8 66 Q10 47 32 47 Q54 47 56 66 Z" fill="#EE7F1B" stroke="'+INK+'" stroke-width="2.5"/>'
+   + '<rect x="28" y="40" width="8" height="9" fill="#F1BE96"/><circle cx="32" cy="12.5" r="7" fill="#2B1A12"/>'
+   + '<circle cx="32" cy="31" r="14" fill="#F1BE96" stroke="'+INK+'" stroke-width="2.5"/>'
+   + '<path d="M17.5 31 Q17 16 32 16 Q47 16 46.5 31 Q41 22.5 32 23.5 Q23 22.5 17.5 31 Z" fill="#2B1A12"/>'
+   + '<circle cx="26.5" cy="32" r="1.9" fill="'+INK+'"/><circle cx="37.5" cy="32" r="1.9" fill="'+INK+'"/>'
+   + '<path d="M28 37 Q32 40.5 36 37" stroke="'+INK+'" stroke-width="2" fill="none" stroke-linecap="round"/>'
+   + '<circle cx="23" cy="36" r="2.3" fill="#F49BB3" opacity=".75"/><circle cx="41" cy="36" r="2.3" fill="#F49BB3" opacity=".75"/></g></svg>';
+}
+function eyes(x1, x2, y){ return '<circle cx="'+x1+'" cy="'+y+'" r="8.5" fill="#fff" stroke="'+INK+'" stroke-width="2.5"/><circle cx="'+(x1+1.5)+'" cy="'+(y+1)+'" r="3.8" fill="'+INK+'"/><circle cx="'+x2+'" cy="'+y+'" r="8.5" fill="#fff" stroke="'+INK+'" stroke-width="2.5"/><circle cx="'+(x2+1.5)+'" cy="'+(y+1)+'" r="3.8" fill="'+INK+'"/>'; }
+function mouth(m, cx, cy){
+  if (m === 'puzzled') return '<path d="M'+(cx-11)+' '+(cy+2)+' q5.5 -6 11 0 t11 0" fill="none" stroke="'+INK+'" stroke-width="3" stroke-linecap="round"/>';
+  if (m === 'wow') return '<ellipse cx="'+cx+'" cy="'+(cy+2)+'" rx="5.5" ry="6.5" fill="'+INK+'"/>';
+  return '<path d="M'+(cx-11)+' '+(cy-2)+' q11 11 22 0" fill="none" stroke="'+INK+'" stroke-width="3" stroke-linecap="round"/>';
+}
+function tagSVG(m){ return '<svg viewBox="0 0 130 96" aria-hidden="true"><path d="M26 44 C14 30 6 28 3 18" fill="none" stroke="'+INK+'" stroke-width="3" stroke-linecap="round"/><path d="M36 10 H112 Q122 10 122 20 V76 Q122 86 112 86 H36 L10 48 Z" fill="#EE7F1B" stroke="'+INK+'" stroke-width="3" stroke-linejoin="round"/><circle cx="31" cy="48" r="7" fill="#fff" stroke="'+INK+'" stroke-width="3"/>'+eyes(70, 94, 42)+mouth(m || 'happy', 82, 64)+'</svg>'; }
+function rulerSVG(m){ let t = ''; for (let i = 0; i < 14; i++){ const x = 14 + i*9.4; t += '<line x1="'+x+'" y1="12" x2="'+x+'" y2="'+(12 + (i % 5 === 0 ? 16 : 9))+'" stroke="#fff" stroke-width="2.5"/>'; } return '<svg viewBox="0 0 150 80" aria-hidden="true"><rect x="4" y="10" width="142" height="62" rx="10" fill="#2F55D4" stroke="'+INK+'" stroke-width="3"/>'+t+eyes(62, 90, 46)+mouth(m || 'happy', 76, 62)+'</svg>'; }
+const BULB = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5a6.5 6.5 0 0 0-3.8 11.8c.8.6 1.3 1.4 1.3 2.3V17h5v-.4c0-.9.5-1.7 1.3-2.3A6.5 6.5 0 0 0 12 2.5z" fill="#fff" stroke="'+INK+'" stroke-width="2"/><path d="M9.5 20h5M10.5 22.5h3" stroke="'+INK+'" stroke-width="2" stroke-linecap="round"/></svg>';
+const LOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+const FLAME = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c1 4 6 6 6 12a6 6 0 0 1-12 0c0-3 2-5 3-6 0 2 1 3 2 3 0-3-1-6 1-9z" fill="#EE7F1B" stroke="'+INK+'" stroke-width="1.8" stroke-linejoin="round"/></svg>';
+function pearlChar(){ return '<circle r="15" fill="#3B2416" stroke="'+INK+'" stroke-width="2.5"/><circle cx="-5" cy="-3" r="3.6" fill="#fff"/><circle cx="5" cy="-3" r="3.6" fill="#fff"/><circle cx="-4.2" cy="-2.5" r="1.7" fill="'+INK+'"/><circle cx="5.8" cy="-2.5" r="1.7" fill="'+INK+'"/><path d="M-4 5 q4 4 8 0" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round"/>'; }
+function shirt(n, col){ return '<svg viewBox="0 0 70 70" aria-hidden="true"><path d="M18 8 L28 4 Q35 11 42 4 L52 8 L66 20 L57 31 L52 27 V66 H18 V27 L13 31 L4 20 Z" fill="'+col+'" stroke="'+INK+'" stroke-width="3" stroke-linejoin="round"/><text x="35" y="52" text-anchor="middle" font-family="Times New Roman, Times, Liberation Serif, serif" font-weight="800" font-size="24" fill="#fff" stroke="'+INK+'" stroke-width="1" paint-order="stroke">'+n+'</text></svg>'; }
+
+function standSVG(){
+  let s = '<svg class="stand" viewBox="0 0 520 440" role="img" aria-label="Lina’s bubble tea stand with four cups and a notebook on the counter">';
+  s += '<rect x="46" y="110" width="16" height="190" rx="4" fill="#fff" stroke="'+INK+'" stroke-width="3"/><rect x="458" y="110" width="16" height="190" rx="4" fill="#fff" stroke="'+INK+'" stroke-width="3"/>';
+  s += '<rect x="62" y="130" width="396" height="160" fill="#FDEFD2" stroke="'+INK+'" stroke-width="3"/>';
+  const x0 = 24, w = 59;
+  for (let i = 0; i < 8; i++) s += '<rect x="'+(x0 + i*w)+'" y="74" width="'+w+'" height="62" fill="'+(i % 2 ? '#fff' : '#EE7F1B')+'"/>';
+  for (let i = 0; i < 8; i++) s += '<path d="M'+(x0 + i*w)+' 136 a'+(w/2)+' 18 0 0 0 '+w+' 0" fill="'+(i % 2 ? '#fff' : '#EE7F1B')+'" stroke="'+INK+'" stroke-width="3"/>';
+  s += '<rect x="24" y="74" width="472" height="62" fill="none" stroke="'+INK+'" stroke-width="3"/>';
+  s += '<rect x="140" y="12" width="240" height="62" rx="16" fill="#F7B32B" stroke="'+INK+'" stroke-width="3"/>';
+  s += '<text x="260" y="54" text-anchor="middle" font-family="Times New Roman, Times, Liberation Serif, serif" font-size="38" font-weight="700" fill="'+INK+'">Lina’s Bubble Tea</text>';
+  [['Mango','L',112],['Taro','M',192],['Matcha','S',262],['Strawberry','L',336]].forEach(([f, z, x]) => { s += '<g class="cupbob">'+cupG(f, z, x, 284, 1.3)+'</g>'; });
+  s += '<g transform="translate(392 218) rotate(-8)"><rect width="86" height="62" rx="6" fill="#FFFFFF" stroke="'+INK+'" stroke-width="3"/><line x1="14" y1="0" x2="14" y2="62" stroke="#F49BB3" stroke-width="2"/>';
+  for (let k = 0; k < 4; k++) s += '<line x1="20" y1="'+(16 + k*12)+'" x2="'+(74 - (k % 2) * 14)+'" y2="'+(16 + k*12)+'" stroke="#C5D0F0" stroke-width="2.5" stroke-linecap="round"/>';
+  s += '</g>';
+  s += '<rect x="12" y="282" width="496" height="22" rx="8" fill="#fff" stroke="'+INK+'" stroke-width="3"/>';
+  s += '<rect x="24" y="302" width="472" height="108" rx="10" fill="#8E6CC9" stroke="'+INK+'" stroke-width="3"/>';
+  for (let k = 0; k < 15; k++) s += '<circle cx="'+(52 + k*30)+'" cy="322" r="6" fill="#3B2416"/>';
+  s += '<rect x="170" y="340" width="180" height="50" rx="12" fill="#fff" stroke="'+INK+'" stroke-width="3"/><text x="260" y="374" text-anchor="middle" font-family="Times New Roman, Times, Liberation Serif, serif" font-size="30" font-weight="700" fill="'+INK+'">fresh every day</text>';
+  s += '</svg>';
+  return s;
+}
+
+/* fill in shared bits */
+$$('.lina[data-say]').forEach(e => { e.innerHTML = '<span class="av">'+linaSVG()+'</span><div class="bubble"><b>Lina</b>'+e.dataset.say+'</div>'; });
+$$('[data-mascot]').forEach(e => { e.innerHTML = e.dataset.mascot === 'tag' ? tagSVG(e.dataset.mood) : rulerSVG(e.dataset.mood); });
+$$('.take').forEach(t => { t.innerHTML = BULB + '<span>' + t.innerHTML + '</span>'; });
+
+/* =========================================================== stars (XP) */
+const XPK = 't15-xp';
+let XP = sget(XPK, {});
+function renderXP(p){ const x = $('#xp'); x.textContent = '★ ' + Object.keys(XP).length; if (p){ x.classList.remove('pulse'); void x.offsetWidth; x.classList.add('pulse'); } }
+function addXP(k){ if (XP[k]) return; XP[k] = 1; sset(XPK, XP); renderXP(true); }
+renderXP(false);
+
+/* =========================================================== navigation */
+const scenes = $$('.scene'), N = scenes.length, ENTER = {};
+let cur = -1;
+const seen = new Set();
+const dotsHost = $('#dots');
+scenes.forEach((s, i) => { const b = el('button'); b.type = 'button'; b.setAttribute('aria-label', 'Scene ' + (i + 1) + ': ' + s.getAttribute('aria-label')); b.addEventListener('click', () => go(i)); dotsHost.appendChild(b); });
+function go(i){
+  i = Math.max(0, Math.min(N - 1, i));
+  if (i === cur) return;
+  cur = i; seen.add(i);
+  scenes.forEach((s, j) => s.classList.toggle('on', j === i));
+  scenes[i].scrollTop = 0;
+  $$('button', dotsHost).forEach((b, j) => { b.classList.toggle('on', j === i); b.classList.toggle('seen', seen.has(j) && j !== i); });
+  $('#chapnm').textContent = scenes[i].dataset.chap;
+  document.documentElement.style.setProperty('--now', getComputedStyle(scenes[i]).getPropertyValue('--chip').trim() || '#4B2D86');
+  $('#progfill').style.width = (100 * i / (N - 1)) + '%';
+  $('#pos').textContent = (i + 1) + ' / ' + N;
+  $('#prev').disabled = i === 0;
+  $('#next').textContent = i === N - 1 ? 'Start again' : 'Next';
+  $('#announce').textContent = scenes[i].getAttribute('aria-label');
+  if (location.hash !== '#s' + i) location.hash = 's' + i;
+  const f = ENTER[scenes[i].id]; if (f) f();
+}
+$('#prev').addEventListener('click', () => go(cur - 1));
+$('#next').addEventListener('click', () => go(cur === N - 1 ? 0 : cur + 1));
+$$('[data-go]').forEach(b => b.addEventListener('click', () => { const v = b.dataset.go; go(v === 'next' ? cur + 1 : +v); }));
+window.addEventListener('hashchange', () => { const m = /^#s(\d+)$/.exec(location.hash); if (m) go(+m[1]); });
+document.addEventListener('keydown', e => {
+  if (e.altKey || e.ctrlKey || e.metaKey) return;
+  const t = e.target; if (t && (t.matches('input, textarea, select') || t.isContentEditable)) return;
+  if (e.key === 'ArrowRight' || e.key === 'PageDown'){ e.preventDefault(); go(cur + 1); }
+  else if (e.key === 'ArrowLeft' || e.key === 'PageUp'){ e.preventDefault(); go(cur - 1); }
+});
+
+/* small quiz helper: one row per question, big buttons, one reason */
+function miniQuiz(host, items, key){
+  items.forEach((it, i) => {
+    const d = el('div', 'qrow', '<div class="qq">'+it.q+'</div><div class="qo">'+it.o.map((o, j) => '<button class="btn sm" type="button" data-j="'+j+'">'+o+'</button>').join('')+'</div><div class="qf" aria-live="polite"></div>');
+    host.appendChild(d);
+    const bs = $$('button', d);
+    bs.forEach(b => b.addEventListener('click', () => {
+      const j = +b.dataset.j, ok = j === it.a;
+      bs.forEach((x, k) => { x.disabled = true; if (k === it.a) x.classList.add('right'); if (k === j && !ok) x.classList.add('wrong'); });
+      $('.qf', d).innerHTML = (ok ? '<b>Yes!</b> ' : '<b>Not quite.</b> ') + it.why;
+      if (ok) addXP(key + i);
+    }));
+  });
+}
+
+
+/* =========================================================== shared data and helpers */
+const BILLS=[16.99, 10.34, 21.01, 23.68, 24.59, 25.29, 8.77, 26.88, 15.04, 14.78, 10.27, 35.26, 15.42, 18.43, 14.83, 21.58, 10.33, 16.29, 16.97, 20.65, 17.92, 20.29, 15.77, 39.42, 19.82, 17.81, 13.37, 12.69, 21.7, 19.65, 9.55, 18.35, 15.06, 20.69, 17.78, 24.06, 16.31, 16.93, 18.69, 31.27, 16.04, 17.46, 13.94, 9.68, 30.4, 18.29, 22.23, 32.4, 28.55, 18.04, 12.54, 10.29, 34.81, 9.94, 25.56, 19.49, 38.01, 26.41, 11.24, 48.27, 20.29, 13.81, 11.02, 18.29, 17.59, 20.08, 16.45, 3.07, 20.23, 15.01, 12.02, 17.07, 26.86, 25.28, 14.73, 10.51, 17.92, 27.2, 22.76, 17.29, 19.44, 16.66, 10.07, 32.68, 15.98, 34.83, 13.03, 18.28, 24.71, 21.16, 28.97, 22.49, 5.75, 16.32, 22.75, 40.17, 27.28, 12.03, 21.01, 12.46, 11.35, 15.38, 44.3, 22.42, 20.92, 15.36, 20.49, 25.21, 18.24, 14.31, 14.0, 7.25, 38.07, 23.95, 25.71, 17.31, 29.93, 10.65, 12.43, 24.08, 11.69, 13.42, 14.26, 15.95, 12.48, 29.8, 8.52, 14.52, 11.38, 22.82, 19.08, 20.27, 11.17, 12.26, 18.26, 8.51, 10.33, 14.15, 16.0, 13.16, 17.47, 34.3, 41.19, 27.05, 16.43, 8.35, 18.64, 11.87, 9.78, 7.51, 14.07, 13.13, 17.26, 24.55, 19.77, 29.85, 48.17, 25.0, 13.39, 16.49, 21.5, 12.66, 16.21, 13.81, 17.51, 24.52, 20.76, 31.71, 10.59, 10.63, 50.81, 15.81, 7.25, 31.85, 16.82, 32.9, 17.89, 14.48, 9.6, 34.63, 34.65, 23.33, 45.35, 23.17, 40.55, 20.69, 20.9, 30.46, 18.15, 23.1, 15.69, 19.81, 28.44, 15.48, 16.58, 7.56, 10.34, 43.11, 13.0, 13.51, 18.71, 12.74, 13.0, 16.4, 20.53, 16.47, 26.59, 38.73, 24.27, 12.76, 30.06, 25.89, 48.33, 13.27, 28.17, 12.9, 28.15, 11.59, 7.74, 30.14, 12.16, 13.42, 8.58, 15.98, 13.42, 16.27, 10.09, 20.45, 13.28, 22.12, 24.01, 15.69, 11.61, 10.77, 15.53, 10.07, 12.6, 32.83, 35.83, 29.03, 27.18, 22.67, 17.82, 18.78]; const TIPS=[1.01, 1.66, 3.5, 3.31, 3.61, 4.71, 2.0, 3.12, 1.96, 3.23, 1.71, 5.0, 1.57, 3.0, 3.02, 3.92, 1.67, 3.71, 3.5, 3.35, 4.08, 2.75, 2.23, 7.58, 3.18, 2.34, 2.0, 2.0, 4.3, 3.0, 1.45, 2.5, 3.0, 2.45, 3.27, 3.6, 2.0, 3.07, 2.31, 5.0, 2.24, 2.54, 3.06, 1.32, 5.6, 3.0, 5.0, 6.0, 2.05, 3.0, 2.5, 2.6, 5.2, 1.56, 4.34, 3.51, 3.0, 1.5, 1.76, 6.73, 3.21, 2.0, 1.98, 3.76, 2.64, 3.15, 2.47, 1.0, 2.01, 2.09, 1.97, 3.0, 3.14, 5.0, 2.2, 1.25, 3.08, 4.0, 3.0, 2.71, 3.0, 3.4, 1.83, 5.0, 2.03, 5.17, 2.0, 4.0, 5.85, 3.0, 3.0, 3.5, 1.0, 4.3, 3.25, 4.73, 4.0, 1.5, 3.0, 1.5, 2.5, 3.0, 2.5, 3.48, 4.08, 1.64, 4.06, 4.29, 3.76, 4.0, 3.0, 1.0, 4.0, 2.55, 4.0, 3.5, 5.07, 1.5, 1.8, 2.92, 2.31, 1.68, 2.5, 2.0, 2.52, 4.2, 1.48, 2.0, 2.0, 2.18, 1.5, 2.83, 1.5, 2.0, 3.25, 1.25, 2.0, 2.0, 2.0, 2.75, 3.5, 6.7, 5.0, 5.0, 2.3, 1.5, 1.36, 1.63, 1.73, 2.0, 2.5, 2.0, 2.74, 2.0, 2.0, 5.14, 5.0, 3.75, 2.61, 2.0, 3.5, 2.5, 2.0, 2.0, 3.0, 3.48, 2.24, 4.5, 1.61, 2.0, 10.0, 3.16, 5.15, 3.18, 4.0, 3.11, 2.0, 2.0, 4.0, 3.55, 3.68, 5.65, 3.5, 6.5, 3.0, 5.0, 3.5, 2.0, 3.5, 4.0, 1.5, 4.19, 2.56, 2.02, 4.0, 1.44, 2.0, 5.0, 2.0, 2.0, 4.0, 2.01, 2.0, 2.5, 4.0, 3.23, 3.41, 3.0, 2.03, 2.23, 2.0, 5.16, 9.0, 2.5, 6.5, 1.1, 3.0, 1.5, 1.44, 3.09, 2.2, 3.48, 1.92, 3.0, 1.58, 2.5, 2.0, 3.0, 2.72, 2.88, 2.0, 3.0, 3.39, 1.47, 3.0, 1.25, 1.0, 1.17, 4.67, 5.92, 2.0, 2.0, 1.75, 3.0];
+const BLUE = '#2F55D4', ORANGE = '#EE7F1B', SUN_C = '#F7B32B', BERRY = '#D93A62', TARO = '#8E6CC9', MINT = '#6E9F2E', PINK = '#E8609E';
+const sum = a => a.reduce((x, y) => x + y, 0);
+const mean = a => sum(a) / a.length;
+function median(a){ const s = a.slice().sort((x, y) => x - y), n = s.length; return n % 2 ? s[(n - 1) / 2] : (s[n / 2 - 1] + s[n / 2]) / 2; }
+function modes(a){ const c = new Map(); a.forEach(v => c.set(v, (c.get(v) || 0) + 1)); const mx = Math.max(...c.values()); return mx < 2 ? [] : [...c.keys()].filter(k => c.get(k) === mx).sort((x, y) => x - y); }
+const money = v => '$' + v.toFixed(2);
+function niceTicks(min, max, target){
+  target = target || 4;
+  const span = Math.max(max - min, 1e-9), raw = span / target, p = Math.pow(10, Math.floor(Math.log10(raw)));
+  const c = [1, 2, 2.5, 5, 10].map(m => m * p);
+  const step = c.find(s => span / s <= target) || c[c.length - 1];
+  const lo = Math.ceil(min / step - 1e-9) * step, t = [];
+  for (let v = lo; v <= max + step * 1e-6; v += step) t.push(+v.toFixed(6));
+  return t;
+}
+function svgPoint(svg, e){ const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY; return pt.matrixTransform(svg.getScreenCTM().inverse()); }
+function dragger(svg, onDown, onMove, onKey){
+  let active = null;
+  svg.addEventListener('pointerdown', e => { const p = svgPoint(svg, e); active = onDown(p); if (active != null){ e.preventDefault(); svg.setPointerCapture(e.pointerId); onMove(active, p); } });
+  svg.addEventListener('pointermove', e => { if (active == null) return; onMove(active, svgPoint(svg, e)); });
+  const up = () => { active = null; };
+  svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+  if (onKey) svg.addEventListener('keydown', e => { const d = {ArrowLeft:-1, ArrowRight:1, ArrowDown:-1, ArrowUp:1}[e.key]; if (d == null) return; e.preventDefault(); e.stopPropagation(); onKey(d); });
+}
+
+/* =========================================================== T1.5 helpers */
+const RINK = '#1F3BA3';
+const ss = (a, c) => { const m = c == null ? mean(a) : c; return sum(a.map(v => (v - m) * (v - m))); };
+const nf = (v, d) => { const t = +(+v).toFixed(d == null ? 2 : d); return (t === 0 ? 0 : t).toString(); };
+const sg = (v, d) => { const t = +Math.abs(v).toFixed(d == null ? 1 : d); return (t === 0 ? '' : v > 0 ? '+' : '−') + t; };
+const seq = (a, b) => Array.from({length:b - a + 1}, (_, i) => a + i);
+function nearest(pos, pt, lim){ let best = null, bd = lim || 28; pos.forEach((q, i) => { const d = Math.hypot(q[0] - pt.x, q[1] - pt.y); if (d < bd){ bd = d; best = i; } }); return best; }
+function dotKeys(svg, count, getSel, setSel, nudge){
+  svg.addEventListener('keydown', e => {
+    const k = e.key; if (!/^Arrow/.test(k)) return;
+    e.preventDefault(); e.stopPropagation();
+    if (k === 'ArrowUp' || k === 'ArrowDown') setSel((getSel() + (k === 'ArrowUp' ? 1 : count() - 1)) % count());
+    else nudge(k === 'ArrowRight' ? 1 : -1);
+  });
+}
+
+/* The squares: a balanced see-saw. On request each dot gets a bar to a reference point (the mean unless told otherwise),
+   each bar grows a square, a bracket shows the range, a yellow band shows one standard deviation to each side,
+   and a side panel shows the average square or a list of areas. */
+function sqsaw(o){
+  const W = o.W, H = o.H, L = o.L == null ? 40 : o.L, AW = o.AW || (W - L - 40), NY = o.NY || (H - 44), PY = NY - 46;
+  const u = AW / (o.hi - o.lo), X = v => L + (v - o.lo) * u;
+  const xs = o.xs, m = mean(xs), c = o.ref == null ? m : o.ref, r = o.r || 8, top = o.top == null ? 6 : o.top, pos = [], seen = {};
+  xs.forEach((x, i) => { const k = (+x).toFixed(3), s = seen[k] = (seen[k] || 0) + 1; pos[i] = [X(x), PY - r - 1 - (s - 1) * (2 * r + 1)]; });
+  const cid = 'cp' + (++uid), xc = X(c);
+  let g = '<defs><clipPath id="'+cid+'"><rect x="0" y="'+top+'" width="'+W+'" height="'+(PY - top + 1)+'"/></clipPath></defs>';
+  if (o.squares){
+    g += '<g clip-path="url(#'+cid+')">';
+    xs.forEach((x, i) => {
+      const d = Math.abs(x - c), side = d * u; if (side < 1) return;
+      const x0 = Math.min(pos[i][0], xc), y1 = pos[i][1], y0 = y1 - side;
+      g += '<rect x="'+x0.toFixed(1)+'" y="'+y0.toFixed(1)+'" width="'+side.toFixed(1)+'" height="'+side.toFixed(1)+'" fill="'+BLUE+'" fill-opacity=".14" stroke="'+BLUE+'" stroke-width="1.8"/>';
+      if (o.tiles) for (let k = 1; k < d - 1e-6; k++){ const gx = (x < c ? xc - k * u : xc + k * u).toFixed(1), gy = (y1 - k * u).toFixed(1); g += '<path d="M'+gx+' '+y0.toFixed(1)+' V'+y1.toFixed(1)+' M'+x0.toFixed(1)+' '+gy+' H'+(x0 + side).toFixed(1)+'" stroke="'+BLUE+'" stroke-width="1" stroke-opacity=".55" fill="none"/>'; }
+    });
+    g += '</g>';
+  }
+  g += '<line class="axis" x1="'+L+'" x2="'+(L + AW)+'" y1="'+NY+'" y2="'+NY+'"/>';
+  (o.ticks || niceTicks(o.lo, o.hi, 8)).forEach(t => { const tx = X(t).toFixed(1); g += '<line x1="'+tx+'" x2="'+tx+'" y1="'+NY+'" y2="'+(NY + 5)+'" stroke="'+INK+'" stroke-width="2"/><text x="'+tx+'" y="'+(NY + 20)+'" text-anchor="middle">'+(o.fmt ? o.fmt(t) : t)+'</text>'; });
+  if (o.unit) g += '<text x="'+(L + AW / 2)+'" y="'+(NY + 38)+'" text-anchor="middle" style="fill:'+INK+';font-weight:700">'+o.unit+'</text>';
+  if (o.band != null && o.band * u >= 1){ const b0 = Math.max(L - 12, X(c - o.band)), b1 = Math.min(L + AW + 12, X(c + o.band)); g += '<rect'+(o.pop ? ' class="popin"' : '')+' x="'+b0.toFixed(1)+'" y="'+(NY - 7)+'" width="'+(b1 - b0).toFixed(1)+'" height="14" rx="5" fill="'+SUN_C+'" stroke="'+INK+'" stroke-width="2"/>'; }
+  if (o.bars || o.squares) g += '<line x1="'+xc.toFixed(1)+'" x2="'+xc.toFixed(1)+'" y1="'+top+'" y2="'+PY+'" stroke="'+INK+'" stroke-width="1.6" stroke-dasharray="5 4"/>';
+  g += '<rect x="'+(L - 14)+'" y="'+PY+'" width="'+(AW + 28)+'" height="9" rx="4.5" fill="#D9A066" stroke="'+INK+'" stroke-width="2"/>';
+  /* bars that would lie on top of each other (same side, same height) are lifted into lanes, nearest dot lowest */
+  const lift = xs.map(() => 0);
+  if (o.bars && !o.squares) [-1, 1].forEach(side => {
+    const lv = {};
+    xs.forEach((x, i) => { const d = x - c; if (d * side <= 0 || Math.abs(d) * u < 1) return; const k = pos[i][1].toFixed(0); (lv[k] = lv[k] || []).push(i); });
+    Object.keys(lv).forEach(k => { lv[k].sort((a, b) => Math.abs(xs[a] - c) - Math.abs(xs[b] - c)).forEach((i, n) => { lift[i] = n * 24; }); });
+  });
+  if (o.bars) xs.forEach((x, i) => {
+    const d = x - c, w = Math.abs(d) * u; if (w < 1) return;
+    const x0 = Math.min(pos[i][0], xc), y = pos[i][1] - lift[i], lock = o.lockI === i, col = lock ? INK : d < 0 ? BERRY : TARO;
+    if (lift[i]) g += '<line x1="'+pos[i][0].toFixed(1)+'" x2="'+pos[i][0].toFixed(1)+'" y1="'+(pos[i][1] - r).toFixed(1)+'" y2="'+y.toFixed(1)+'" stroke="'+col+'" stroke-width="2.5" stroke-linecap="round"/>';
+    g += '<rect x="'+x0.toFixed(1)+'" y="'+(y - 3.5).toFixed(1)+'" width="'+w.toFixed(1)+'" height="7" rx="3.5" fill="'+col+'"/>';
+    if (o.barLabels !== false && w > 24) g += '<text x="'+(x0 + w / 2).toFixed(1)+'" y="'+(y - 8).toFixed(1)+'" text-anchor="middle" style="fill:'+(lock ? INK : d < 0 ? '#B0215D' : '#5A36B0')+';font-weight:800;font-size:13px">'+sg(d)+'</text>';
+  });
+  if (o.squares && o.areas) xs.forEach((x, i) => {
+    const d = Math.abs(x - c), side = d * u; if (side < 24) return;
+    const x0 = Math.min(pos[i][0], xc), cy = pos[i][1] - side / 2; if (cy < top + 10) return;
+    g += '<text x="'+(x0 + side / 2).toFixed(1)+'" y="'+(cy + (side > 70 ? 8 : 5)).toFixed(1)+'" text-anchor="middle" style="fill:'+RINK+';font-weight:800;font-size:'+(side > 70 ? 22 : 15)+'px">'+nf(d * d, 2)+'</text>';
+  });
+  xs.forEach((x, i) => { g += '<circle cx="'+pos[i][0].toFixed(1)+'" cy="'+pos[i][1].toFixed(1)+'" r="'+r+'" fill="'+(o.sel === i ? SUN_C : (o.dotColor ? o.dotColor(i) : BLUE))+'" stroke="'+INK+'" stroke-width="'+(o.dsw || 1.8)+'"/>'; });
+  if (o.pivot !== false){ const px = X(o.pivotAt == null ? m : o.pivotAt); g += '<path d="M'+px.toFixed(1)+' '+(PY + 9)+' L'+(px - 17).toFixed(1)+' '+NY+' L'+(px + 17).toFixed(1)+' '+NY+' Z" fill="'+MINT+'" stroke="'+INK+'" stroke-width="2.2"/>'; }
+  if (o.range){
+    const a = X(Math.min(...xs)), b = X(Math.max(...xs)), y = o.rangeY || 22;
+    g += '<path d="M'+a.toFixed(1)+' '+(y + 13)+' V'+y+' H'+b.toFixed(1)+' V'+(y + 13)+'" fill="none" stroke="'+BERRY+'" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/><text x="'+((a + b) / 2).toFixed(1)+'" y="'+(y - 6)+'" text-anchor="middle" style="fill:#B0215D;font-weight:800;font-size:14px">range '+nf(Math.max(...xs) - Math.min(...xs))+'</text>';
+  }
+  if (o.panel){
+    const P = o.panel, px = P.x, base = PY + 9, side = Math.sqrt(Math.max(0, P.area)) * u;
+    g += '<text class="ttl" x="'+px+'" y="'+(P.ty || 22)+'">'+(P.title || 'Average square')+'</text>';
+    if (side >= 1){
+      g += '<g'+(P.pop ? ' class="popin"' : '')+'><rect x="'+px+'" y="'+(base - side).toFixed(1)+'" width="'+side.toFixed(1)+'" height="'+side.toFixed(1)+'" fill="'+SUN_C+'" stroke="'+INK+'" stroke-width="2.5"/>';
+      if (P.tiles) for (let k = 1; k < Math.sqrt(P.area) - 1e-6; k++) g += '<path d="M'+(px + k * u).toFixed(1)+' '+(base - side).toFixed(1)+' V'+base+' M'+px+' '+(base - k * u).toFixed(1)+' H'+(px + side).toFixed(1)+'" stroke="'+INK+'" stroke-width="1" stroke-opacity=".5" fill="none"/>';
+      if (P.side) g += '<line x1="'+px+'" x2="'+(px + side).toFixed(1)+'" y1="'+base+'" y2="'+base+'" stroke="'+BERRY+'" stroke-width="6" stroke-linecap="round"/>';
+      g += '</g>';
+    }
+    (P.lines || []).forEach((t, i) => { g += '<text x="'+px+'" y="'+(base + 24 + i * 19)+'" style="fill:'+INK+';font-weight:700;font-size:14px">'+t+'</text>'; });
+  }
+  if (o.receipt){
+    const Rc = o.receipt, rx = Rc.x + Rc.w; let y = Rc.y || 30;
+    g += '<text class="ttl" x="'+Rc.x+'" y="'+y+'">'+(Rc.title || 'Areas')+'</text>'; y += 6;
+    Rc.vals.forEach((v, i) => { y += 24; g += '<text x="'+rx+'" y="'+y+'" text-anchor="end" style="fill:'+RINK+';font-weight:800;font-size:18px">'+(i === Rc.vals.length - 1 && i > 0 ? '+ ' : '')+nf(v, 2)+'</text>'; });
+    y += 10; g += '<line x1="'+Rc.x+'" x2="'+rx+'" y1="'+y+'" y2="'+y+'" stroke="'+INK+'" stroke-width="2.5"/>'; y += 27;
+    g += '<text x="'+rx+'" y="'+y+'" text-anchor="end" style="fill:'+INK+';font-family:var(--font-display);font-weight:800;font-size:25px">'+nf(sum(Rc.vals), 2)+'</text>';
+    (Rc.foot || []).forEach(t => { y += 19; g += '<text x="'+rx+'" y="'+y+'" text-anchor="end" style="font-size:13px">'+t+'</text>'; });
+  }
+  return {g, X, u, m, c, pos, PY, NY, L, AW, xOf:px => o.lo + (px - L) / u};
+}
+
+/* =========================================================== 0. guess first */
+function guessFirst(G){
+  const host = $('#guess'), KEY = G.key, LAB = G.olab || G.opts;
+  host.innerHTML = '<div class="ghead"><span class="gtag">Guess first</span>'+(G.note ? '<span class="gnote">'+G.note+'</span>' : '')+'</div>' + (G.visual || '') + '<p class="gq">'+G.q+'</p><div class="gopts'+(G.one ? ' one' : '')+'">' + G.opts.map((o, j) => '<button type="button" class="gopt" data-j="'+j+'" aria-pressed="false">'+o+'</button>').join('') + '</div><p class="gsaved" aria-live="polite"></p>';
+  function mark(){
+    const j = sget(KEY, null);
+    $$('.gopt', host).forEach(b => b.setAttribute('aria-pressed', +b.dataset.j === j ? 'true' : 'false'));
+    $('.gsaved', host).textContent = j == null ? 'Pick one. Nothing is explained yet, so any answer is fine.' : 'Saved. You will see your guess again later on this page.';
+    $$('[data-guessback]').forEach(el => { const w = el.dataset.guessback === 'short' ? G.short : G.why; el.innerHTML = j == null ? '<b>You skipped the guess at the start.</b> The answer: “'+LAB[G.a]+'”. ' + w : '<b>Your guess at the start:</b> “'+LAB[j]+'”. ' + (j === G.a ? '<b>Right!</b> ' : '<b>The answer:</b> “'+LAB[G.a]+'”. ') + w; });
+  }
+  $$('.gopt', host).forEach(b => b.addEventListener('click', () => { sset(KEY, +b.dataset.j); mark(); addXP('guess'); }));
+  mark();
+}
+const GA = {W:640, H:240, L:40, AW:560, lo:0, hi:8, ticks:seq(0, 8), unit:'minutes'};
+const GS = {W:680, H:320, L:26, AW:440, lo:0, hi:8, ticks:seq(0, 8), unit:'minutes'};
+const LINA5 = [1, 3, 4, 5, 7], BAO = [3, 4, 4, 4, 4, 4, 4, 5], KIWI = [1, 1, 1, 1, 1, 9, 9, 9];
+
+function standCard(name, col, say){ return '<div class="standc" style="--c1:'+col+'"><i class="awn"></i><b>'+name+'</b><span>'+say+'</span><small>average wait: 4 min</small></div>'; }
+guessFirst({
+  key:'t15-guess', note:'Two invented stands', one:true,
+  visual:'<div class="stands2">'+standCard('Bao Bar', '#D93A62', 'always about 4 min')+standCard('Kiwi Cup', '#6E9F2E', '1 min or 9 min')+'</div>',
+  q:'Your bus leaves in 6 minutes and you can’t miss it. Which line do you join?',
+  opts:['Bao Bar: always about 4 minutes', 'Kiwi Cup: 1 minute or 9', 'Either one: both average 4 minutes'], a:0,
+  short:'Both stands average 4 minutes, but at Kiwi Cup 3 waits in 8 take 9 minutes.',
+  why:'Both stands average 4 minutes, but at Kiwi Cup 3 waits in 8 take 9 minutes, and then the bus is gone. Same mean, different spread.',
+});
+
+/* =========================================================== 1. last time: the see-saw */
+(function lastTime(){
+  const svg = $('#q1'), W = 640, L = 40, R = 40, PY = 150, NY = 196, r = 9, X = v => L + v / 10 * (W - L - R);
+  const SETS = {bao:BAO, kiwi:KIWI}, NAME = {bao:'Bao Bar', kiwi:'Kiwi Cup'};
+  let g = '<line class="axis" x1="'+L+'" x2="'+(W - R)+'" y1="'+NY+'" y2="'+NY+'"/>';
+  seq(0, 10).forEach(t => { g += '<line x1="'+X(t)+'" x2="'+X(t)+'" y1="'+NY+'" y2="'+(NY + 5)+'" stroke="'+INK+'" stroke-width="2"/><text x="'+X(t)+'" y="'+(NY + 20)+'" text-anchor="middle">'+t+'</text>'; });
+  g += '<text x="'+(W / 2)+'" y="'+(NY + 38)+'" text-anchor="middle" style="fill:'+INK+';font-weight:700">minutes of waiting</text>';
+  g += '<rect x="'+(L - 16)+'" y="'+PY+'" width="'+(W - L - R + 32)+'" height="9" rx="4.5" fill="#D9A066" stroke="'+INK+'" stroke-width="2"/>';
+  g += '<path d="M'+X(4)+' '+(PY + 9)+' L'+(X(4) - 17)+' '+NY+' L'+(X(4) + 17)+' '+NY+' Z" fill="'+MINT+'" stroke="'+INK+'" stroke-width="2.2"/>';
+  for (let i = 0; i < 8; i++) g += '<circle class="mv" r="'+r+'" cx="'+X(4)+'" cy="'+(PY - r - 1)+'" fill="'+BLUE+'" stroke="'+INK+'" stroke-width="1.8"/>';
+  svg.innerHTML = g;
+  const cs = $$('circle.mv', svg);
+  function show(k){
+    const seen = {};
+    SETS[k].forEach((x, i) => { const s = seen[x] = (seen[x] || 0) + 1; cs[i].setAttribute('cx', X(x)); cs[i].setAttribute('cy', PY - r - 1 - (s - 1) * (2 * r + 1)); });
+    $('#q1read').innerHTML = '<span class="big">'+NAME[k]+': the plank balances at 4 minutes.</span><small>Waits: '+SETS[k].join(', ')+'. Total 32 minutes ÷ 8 waits = 4.</small>';
+    $$('#s1seg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.k === k ? 'true' : 'false'));
+    if (k === 'kiwi') addXP('s1-kiwi');
+  }
+  $$('#s1seg button').forEach(b => b.addEventListener('click', () => show(b.dataset.k)));
+  show('bao');
+})();
+
+/* =========================================================== 2. three doors */
+function pairStrip(A, B, lo, hi, mid, ticks){
+  const W = 220, L = 50, R = 12, X = v => L + (v - lo) / (hi - lo) * (W - L - R);
+  let g = '<line x1="'+X(mid).toFixed(1)+'" x2="'+X(mid).toFixed(1)+'" y1="10" y2="100" stroke="'+MINT+'" stroke-width="3" stroke-dasharray="5 3"/>';
+  [[A, 44], [B, 92]].forEach(([S, y]) => {
+    g += '<text x="2" y="'+(y - 2)+'" style="fill:'+INK+';font-weight:700;font-size:12.5px">'+S[0]+'</text><line x1="'+L+'" x2="'+(W - R)+'" y1="'+y+'" y2="'+y+'" stroke="#B4A9C6" stroke-width="2"/>';
+    const seen = {};
+    S[1].forEach(v => { const s = seen[v] = (seen[v] || 0) + 1; g += '<circle cx="'+X(v).toFixed(1)+'" cy="'+(y - 6 - (s - 1) * 10)+'" r="4.6" fill="'+BLUE+'" stroke="'+INK+'" stroke-width="1.3"/>'; });
+  });
+  ticks.forEach(t => { g += '<text x="'+X(t[0]).toFixed(1)+'" y="118" text-anchor="middle" style="font-size:11px">'+t[1]+'</text>'; });
+  return g;
+}
+(function doors(){
+  const target = (cx, name, pts) => {
+    const cy = 54, R = 44;
+    let s = '<circle cx="'+cx+'" cy="'+cy+'" r="'+R+'" fill="#fff" stroke="'+INK+'" stroke-width="2"/><circle cx="'+cx+'" cy="'+cy+'" r="'+(R * .66).toFixed(1)+'" fill="#E7DEF5" stroke="'+INK+'" stroke-width="1.2"/><circle cx="'+cx+'" cy="'+cy+'" r="'+(R * .33).toFixed(1)+'" fill="#C7B3EA" stroke="'+INK+'" stroke-width="1.2"/>';
+    pts.forEach(p => { s += '<circle cx="'+(cx + p[0] * R / 10.5).toFixed(1)+'" cy="'+(cy - p[1] * R / 10.5).toFixed(1)+'" r="3.6" fill="'+BLUE+'" stroke="'+INK+'" stroke-width="1.3"/>'; });
+    return s + '<text x="'+cx+'" y="120" text-anchor="middle" style="fill:'+INK+';font-weight:700;font-size:12.5px">'+name+'</text>';
+  };
+  const D = [
+    {t:'Two dart players', n:'six darts each', q:'Who is the steadier player?', o:['Ana', 'Ben'], a:0, note:'Both hit the bullseye on average. Ana’s darts stay close to it. Ben’s land all over the board.',
+      draw:() => target(58, 'Ana', [[3, 0], [-2, 2], [0, -3], [2, 2], [-3, 1], [0, -2]]) + target(162, 'Ben', [[8, 2], [-7, 5], [3, -8], [-6, -6], [-2, 9], [4, -2]])},
+    {t:'Two bus lines', n:'minutes early or late', q:'Which bus can you plan your morning around?', o:['Line 7', 'Line 9'], a:0, note:'Both are on time on average. Line 9 manages that by running about 5 minutes early one day and 5 minutes late the next.',
+      draw:() => pairStrip(['Line 7', [-1, 0, 1, 0, -1, 1]], ['Line 9', [-6, 5, -4, 6, -5, 4]], -7.5, 7.5, 0, [[-6, '6 early'], [0, 'on time'], [6, '6 late']])},
+    {t:'Two friends, five quizzes', n:'scores out of 10', q:'Whose next score is harder to guess?', o:['Mia', 'Noah'], a:1, note:'Both average 8 out of 10. Mia is always near 8. Noah swings between 4 and 10.',
+      draw:() => pairStrip(['Mia', [7, 8, 8, 9, 8]], ['Noah', [4, 10, 6, 10, 10]], 3, 10.6, 8, [[4, '4'], [6, '6'], [8, '8'], [10, '10']])},
+  ];
+  const host = $('#doors'); let done = 0, right = 0;
+  D.forEach((d, di) => {
+    const c = el('div', 'pcard', '<div class="ph2">'+rulerSVG()+'<span>'+d.t+'<small>'+d.n+', invented</small></span></div><svg class="chart" viewBox="0 0 220 126" role="img" aria-label="'+d.t+'">'+d.draw()+'</svg><p class="dq">'+d.q+'</p><div class="rb">'+d.o.map((o, j) => '<button class="btn sm" type="button" data-j="'+j+'">'+o+'</button>').join('')+'</div><p class="pnote" aria-live="polite"></p>');
+    const bs = $$('button', c);
+    bs.forEach(b => b.addEventListener('click', () => {
+      const j = +b.dataset.j, ok = j === d.a;
+      bs.forEach((x, k) => { x.disabled = true; if (k === d.a) x.classList.add('right'); if (k === j && !ok) x.classList.add('wrong'); });
+      $('.pnote', c).innerHTML = '<b>'+(ok ? 'Yes.' : 'It’s '+d.o[d.a]+'.')+'</b> '+d.note;
+      done++; if (ok){ right++; addXP('door' + di); }
+      $('#doorscore').textContent = done < 3 ? done + ' of 3' : right + ' of 3 right' + (right === 3 ? '. Perfect!' : '');
+    }));
+    host.appendChild(c);
+  });
+})();
+
+/* =========================================================== 3. the range */
+(function rangeScene(){
+  const svg = $('#q3'), o = {W:640, H:220, L:40, AW:560, lo:0, hi:10, ticks:seq(0, 10), unit:'minutes', range:true};
+  const SETS = {lina:LINA5, calm:[1, 4, 4, 4, 4, 4, 7], split:[1, 1, 1, 4, 7, 7, 7]};
+  const NOTE = {lina:'Drag a middle dot: the bracket doesn’t notice. Drag an end dot: it follows.', calm:'Range 6 again. Five of these seven waits are exactly 4 minutes.', split:'Range 6 again, and the same mean of 4. Yet this crowd is split into two camps. The range can’t tell.'};
+  let key = 'lina', xs = SETS.lina.slice(), sel = 4, last, touched = false;
+  function render(){
+    last = sqsaw(Object.assign({}, o, {xs, sel}));
+    svg.innerHTML = last.g;
+    const mn = Math.min(...xs), mx = Math.max(...xs);
+    $('#q3read').innerHTML = 'Range: '+nf(mx)+' − '+nf(mn)+' = '+nf(mx - mn)+' minutes<small>'+(touched ? 'Only the smallest and the largest dot decide the range. Arrow keys move the yellow dot.' : NOTE[key])+'</small>';
+    $$('#rgseg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.k === key ? 'true' : 'false'));
+  }
+  const setV = (i, v) => { const nv = Math.round(Math.max(0, Math.min(10, v)) * 2) / 2; if (nv !== xs[i]){ xs[i] = nv; touched = true; addXP('range-drag'); } render(); };
+  dragger(svg, pt => { const b = nearest(last.pos, pt); if (b != null) sel = b; return b; }, (i, pt) => setV(i, last.xOf(pt.x)), null);
+  dotKeys(svg, () => xs.length, () => sel, v => { sel = v; render(); }, d => setV(sel, xs[sel] + d * .5));
+  const load = k => { key = k; xs = SETS[k].slice(); sel = xs.length - 1; touched = false; render(); if (k !== 'lina') addXP('range-' + k); };
+  $$('#rgseg button').forEach(b => b.addEventListener('click', () => load(b.dataset.k)));
+  $('#q3reset').addEventListener('click', () => load(key));
+  render();
+})();
+
+/* =========================================================== 4. distances cancel */
+(function barsScene(){
+  const svg = $('#q4'), o = Object.assign({}, GA, {bars:true});
+  let xs = LINA5.slice(), sel = 4, last;
+  function render(){
+    last = sqsaw(Object.assign({}, o, {xs, sel}));
+    svg.innerHTML = last.g;
+    const d = xs.map(x => x - last.m), neg = sum(d.filter(v => v < 0)), po = sum(d.filter(v => v > 0));
+    $('#q4read').innerHTML = 'Left '+(sg(neg) || '0')+' · Right '+(sg(po) || '0')+' · Together 0<small>Balance point '+nf(last.m)+' min. Distances: '+d.map(v => sg(v) || '0').join(', ')+'. Arrow keys move the yellow dot.</small>';
+  }
+  const setV = (i, v) => { const nv = Math.round(Math.max(0, Math.min(8, v))); if (nv !== xs[i]){ xs[i] = nv; addXP('bars-drag'); } render(); };
+  dragger(svg, pt => { const b = nearest(last.pos, pt); if (b != null) sel = b; return b; }, (i, pt) => setV(i, last.xOf(pt.x)), null);
+  dotKeys(svg, () => xs.length, () => sel, v => { sel = v; render(); }, d => setV(sel, xs[sel] + d));
+  $('#q4reset').addEventListener('click', () => { xs = LINA5.slice(); sel = 4; render(); });
+  render();
+})();
+
+/* =========================================================== 5. each bar grows a square */
+(function squaresScene(){
+  const svg = $('#q5'), o = Object.assign({}, GS, {bars:true, barLabels:false, squares:true, areas:true});
+  let xs = LINA5.slice(), sel = 4, last;
+  function render(){
+    const m = mean(xs), ar = xs.map(x => (x - m) * (x - m));
+    last = sqsaw(Object.assign({}, o, {xs, sel, receipt:{x:530, w:120, title:'Areas', vals:ar}}));
+    svg.innerHTML = last.g;
+    const d = Math.abs(xs[sel] - m);
+    $('#q5read').innerHTML = 'Total area: '+nf(sum(ar))+' square minutes<small>The yellow dot is '+nf(d)+' min from the balance point: its square is '+nf(d)+' × '+nf(d)+' = '+nf(d * d)+'. Arrow keys work too.</small>';
+  }
+  const setV = (i, v) => { const nv = Math.round(Math.max(0, Math.min(8, v))); if (nv !== xs[i]){ xs[i] = nv; addXP('squares-drag'); } render(); };
+  dragger(svg, pt => { const b = nearest(last.pos, pt); if (b != null) sel = b; return b; }, (i, pt) => setV(i, last.xOf(pt.x)), null);
+  dotKeys(svg, () => xs.length, () => sel, v => { sel = v; render(); }, d => setV(sel, xs[sel] + d));
+  $('#q5reset').addEventListener('click', () => { xs = LINA5.slice(); sel = 4; render(); });
+  render();
+})();
+
+/* =========================================================== 6. the average square */
+(function averageSquare(){
+  const svg = $('#q6'), xs = LINA5, o = Object.assign({}, GS, {xs, bars:true, barLabels:false, squares:true, areas:true, tiles:true});
+  const READ = {
+    1:'<span class="big">9 + 1 + 0 + 1 + 9 = 20 square minutes in all.</span><small>Each little tile is one square minute. The wait of exactly 4 minutes adds nothing.</small>',
+    2:'<span class="big">20 ÷ 5 waits = 4 square minutes each.</span><small>Shared out equally, every wait gets a square of area 4. That average area is the variance.</small>',
+    3:'<span class="big">A square of area 4 has a side of 2 minutes.</span><small>That side is the standard deviation. The yellow band on the number line runs from 4 − 2 to 4 + 2.</small>',
+  };
+  function render(k){
+    const extra = k === 1 ? {receipt:{x:530, w:120, title:'Areas', vals:[9, 1, 0, 1, 9]}}
+      : k === 2 ? {panel:{x:530, area:4, tiles:true, pop:true, lines:['20 ÷ 5 waits', '= area 4']}}
+      : {panel:{x:530, area:4, tiles:true, side:true, lines:['area 4', 'side 2 minutes']}, band:2, pop:true};
+    svg.innerHTML = sqsaw(Object.assign({}, o, extra)).g;
+    $('#q6read').innerHTML = READ[k];
+    $$('#q6seg button').forEach(b => b.setAttribute('aria-pressed', +b.dataset.k === k ? 'true' : 'false'));
+    if (k === 3) addXP('avg-square');
+  }
+  $$('#q6seg button').forEach(b => b.addEventListener('click', () => render(+b.dataset.k)));
+  ENTER.s6 = () => render(1);
+  render(1);
+})();
+
+/* =========================================================== 7. one number for the spread */
+(function oneNumber(){
+  const svg = $('#q7'), o = Object.assign({}, GS, {hi:10, ticks:seq(0, 10), bars:true, barLabels:false});
+  const SETS = {bao:['Bao Bar', BAO, 'Six waits sit right on the mean; two sit 1 minute away.'], kiwi:['Kiwi Cup', KIWI, 'Five waits sit 3 minutes below the mean; three sit 5 minutes above.'], lina:['Lina’s five', LINA5, 'The same five waits as before.']};
+  function render(k){
+    const S = SETS[k], xs = S[1], q = ss(xs), v = q / xs.length, sd = Math.sqrt(v);
+    svg.innerHTML = sqsaw(Object.assign({}, o, {xs, band:sd, panel:{x:500, area:v, side:true, lines:['area '+nf(v), 'side '+nf(sd)+' min']}})).g;
+    $('#q7read').innerHTML = '<span class="big">'+S[0]+': mean 4 min · standard deviation '+nf(sd)+' min</span><small>'+S[2]+' Squares add up to '+nf(q)+'; shared among the '+xs.length+' waits: '+nf(v)+'; side: '+nf(sd)+'.</small>';
+    $$('#q7seg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.k === k ? 'true' : 'false'));
+    if (k === 'kiwi'){ addXP('one-number'); const gb = svg.closest('.scene').querySelector('.gback'); if (gb) gb.classList.remove('wait'); }
+  }
+  $$('#q7seg button').forEach(b => b.addEventListener('click', () => render(b.dataset.k)));
+  render('bao');
+})();
+
+/* =========================================================== 8. the forced fifth */
+(function forced(){
+  const svg = $('#q8'), o = Object.assign({}, GA, {unit:'dollars paid', fmt:t => '$' + t, bars:true, ref:4, pivotAt:4, lockI:4, dotColor:i => i === 4 ? '#fff' : BLUE});
+  const START = [1, 4, 5, 7];
+  let fr = START.slice(), sel = 3, last, hit = false;
+  const fifth = () => 20 - sum(fr);
+  function render(){
+    const xs = fr.concat([fifth()]);
+    last = sqsaw(Object.assign({}, o, {xs, sel}));
+    const p = last.pos[4], x4 = last.X(4), lx = Math.abs(p[0] - x4) < 30 ? x4 + (p[0] >= x4 ? 34 : -34) : p[0];
+    svg.innerHTML = last.g + '<g transform="translate('+lx.toFixed(1)+' '+(last.PY + 27)+')"><path d="M-4.5 0 v-5 a4.5 4.5 0 0 1 9 0 v5" fill="none" stroke="'+INK+'" stroke-width="2.6"/><rect x="-8" y="-1" width="16" height="12" rx="3" fill="'+INK+'"/></g>';
+    const d = fr.map(v => v - 4), s4 = sum(d);
+    $('#q8read').innerHTML = '<span class="big">Four friends pay $'+nf(sum(fr))+'. The fifth must pay $'+nf(fifth())+'.</span><small>As distances from the $4 mean: '+d.map(v => sg(v) || '0').join(', ')+', and the forced one '+(sg(-s4) || '0')+'. Together 0.'+(hit ? ' The locked dot reached the end of the plank, so that move stops there.' : ' Arrow keys move the yellow dot.')+'</small>';
+  }
+  function setV(i, v){
+    const others = sum(fr) - fr[i], want = Math.round(Math.max(0, Math.min(8, v))), nv = Math.max(Math.max(0, 12 - others), Math.min(Math.min(8, 20 - others), want));
+    hit = nv !== want;
+    if (nv !== fr[i]){ fr[i] = nv; addXP('forced-drag'); }
+    render();
+  }
+  dragger(svg, pt => { const b = nearest(last.pos.slice(0, 4), pt); if (b != null) sel = b; return b; }, (i, pt) => setV(i, last.xOf(pt.x)), null);
+  dotKeys(svg, () => 4, () => sel, v => { sel = v; render(); }, d => setV(sel, fr[sel] + d));
+  $('#q8reset').addEventListener('click', () => { fr = START.slice(); sel = 3; hit = false; render(); });
+  render();
+})();
+
+/* =========================================================== 9. draw the bullseye afterwards */
+(function darts(){
+  const svg = $('#q9d'), cx = 150, cy = 150, S = 24;
+  const rnd = rng(915);
+  const gauss = () => { let a = 0; while (!a) a = rnd(); return Math.sqrt(-2 * Math.log(a)) * Math.cos(2 * Math.PI * rnd()); };
+  const lim = v => Math.max(-5.3, Math.min(5.3, v));
+  let pts, mode = 'true', throws = 0;
+  const throwFive = () => { pts = Array.from({length:5}, () => [lim(gauss() * 2.2), lim(gauss() * 2.2)]); throws++; };
+  const typical = c => Math.sqrt(mean(pts.map(p => (p[0] - c[0]) * (p[0] - c[0]) + (p[1] - c[1]) * (p[1] - c[1]))));
+  function render(){
+    const own = [mean(pts.map(p => p[0])), mean(pts.map(p => p[1]))], c = mode === 'true' ? [0, 0] : own, rT = typical([0, 0]), rO = typical(own), R = mode === 'true' ? rT : rO;
+    const PX = p => [cx + p[0] * S, cy - p[1] * S], C = PX(c), O = PX(own), col = mode === 'true' ? BERRY : MINT, cid = 'cp' + (++uid);
+    let g = '<defs><clipPath id="'+cid+'"><rect x="6" y="6" width="288" height="288" rx="14"/></clipPath></defs><rect x="6" y="6" width="288" height="288" rx="14" fill="#FFF8E7" stroke="'+INK+'" stroke-width="2.5"/><g clip-path="url(#'+cid+')">';
+    [2, 4].forEach(r => { g += '<circle cx="'+cx+'" cy="'+cy+'" r="'+(r * S)+'" fill="none" stroke="#E6DCC3" stroke-width="2"/>'; });
+    g += '<circle cx="'+C[0].toFixed(1)+'" cy="'+C[1].toFixed(1)+'" r="'+(R * S).toFixed(1)+'" fill="'+SUN_C+'" fill-opacity=".4" stroke="'+INK+'" stroke-width="2" stroke-dasharray="6 4"/>';
+    pts.forEach(p => { const q = PX(p); g += '<line x1="'+q[0].toFixed(1)+'" y1="'+q[1].toFixed(1)+'" x2="'+C[0].toFixed(1)+'" y2="'+C[1].toFixed(1)+'" stroke="'+col+'" stroke-width="2.5" stroke-linecap="round"/>'; });
+    g += '</g><path d="M'+cx+' '+(cy - 10)+' l9 10 l-9 10 l-9 -10 z" fill="'+BERRY+'" stroke="'+INK+'" stroke-width="2"/>';
+    g += '<path d="M'+O[0].toFixed(1)+' '+(O[1] - 9).toFixed(1)+' l9 15 h-18 z" fill="'+MINT+'" stroke="'+INK+'" stroke-width="2"/>';
+    pts.forEach(p => { const q = PX(p); g += '<circle cx="'+q[0].toFixed(1)+'" cy="'+q[1].toFixed(1)+'" r="7" fill="'+BLUE+'" stroke="'+INK+'" stroke-width="1.8"/>'; });
+    const dp = Math.abs(+rT.toFixed(1) - +rO.toFixed(1)) < 1e-9 ? 2 : 1;
+    const px = 318, T = (x, y, t, st) => '<text x="'+x+'" y="'+y+'" style="'+st+'">'+t+'</text>', small = 'fill:'+INK+';font-weight:600;font-size:13.5px', big = 'font-family:var(--font-display);font-weight:800;font-size:';
+    g += '<text class="ttl" x="'+px+'" y="34">Typical distance</text>';
+    g += '<path d="M'+(px + 8)+' 62 l8 9 l-8 9 l-8 -9 z" fill="'+BERRY+'" stroke="'+INK+'" stroke-width="1.6"/>' + T(px + 24, 76, 'from the real bullseye', small) + T(px + 24, 108, rT.toFixed(dp)+' cm', 'fill:#B0215D;'+big+(mode === 'true' ? 30 : 22)+'px');
+    g += '<path d="M'+(px + 8)+' 140 l8 14 h-16 z" fill="'+MINT+'" stroke="'+INK+'" stroke-width="1.6"/>' + T(px + 24, 153, 'from my own middle', small) + (mode === 'own' || throws > 1 ? T(px + 24, 185, rO.toFixed(dp)+' cm', 'fill:#365F14;'+big+(mode === 'own' ? 30 : 22)+'px') : T(px + 24, 183, '?', 'fill:#365F14;'+big+'26px'));
+    g += T(px, 236, 'Throw '+throws, small) + T(px, 256, 'The yellow ring: the typical', 'fill:#5B4B66;font-size:12.5px') + T(px, 272, 'distance from the chosen spot.', 'fill:#5B4B66;font-size:12.5px');
+    svg.innerHTML = g;
+    $('#dtread').innerHTML = mode === 'true'
+      ? '<span class="big">From the real bullseye: about '+rT.toFixed(dp)+' cm.</span><small>Now measure the same five darts from their own middle.</small>'
+      : '<span class="big">From my own middle: about '+rO.toFixed(dp)+' cm. '+(dp === 1 ? 'The same darts look tighter.' : 'Barely tighter this time, but never looser.')+'</span><small>The middle of your own darts is the one spot that makes the ring as small as it can be. Throw again: it happens every time.</small>';
+    $$('#dtseg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.k === mode ? 'true' : 'false'));
+  }
+  $$('#dtseg button').forEach(b => b.addEventListener('click', () => { mode = b.dataset.k; render(); if (mode === 'own') addXP('darts-own'); }));
+  $('#dtnew').addEventListener('click', () => { throwFive(); render(); if (throws >= 4) addXP('darts-3'); });
+  throwFive(); render();
+})();
+
+/* =========================================================== 10. a spoonful does the same */
+(function ownMiddle(){
+  const svg = $('#q9'), o = Object.assign({}, GS, {squares:true});
+  const rnd = rng(1505);
+  let xs = [1, 2, 3, 4, 6], c = 4, count = 1, last;
+  function render(){
+    const m = mean(xs), own = ss(xs), mu = ss(xs, 4), now = ss(xs, c), atOwn = Math.abs(c - m) < 1e-9;
+    last = sqsaw(Object.assign({}, o, {xs, ref:c}));
+    const xc = last.X(c), x4 = last.X(4), NY = last.NY;
+    let g = last.g;
+    g += '<path d="M'+x4+' '+(NY - 9)+' l8 9 l-8 9 l-8 -9 z" fill="'+BERRY+'" stroke="'+INK+'" stroke-width="2"/>';
+    g += '<g style="cursor:ew-resize"><circle cx="'+xc.toFixed(1)+'" cy="18" r="12" fill="'+SUN_C+'" stroke="'+INK+'" stroke-width="2.5"/><path d="M'+(xc - 6).toFixed(1)+' 18 h12 m-3 -3.5 l3.5 3.5 l-3.5 3.5 m-6 -7 l-3.5 3.5 l3.5 3.5" fill="none" stroke="'+INK+'" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></g>';
+    const px = 500, T = (x, y, t, st) => '<text x="'+x+'" y="'+y+'" style="'+st+'">'+t+'</text>', small = 'fill:'+INK+';font-weight:600;font-size:13px';
+    g += '<text class="ttl" x="'+px+'" y="26">Total area</text>';
+    g += T(px, 50, 'from the marker, at '+nf(c, 1), small) + T(px, 86, nf(now, 1), 'fill:'+INK+';font-family:var(--font-display);font-weight:800;font-size:34px');
+    g += '<path d="M'+(px + 7)+' 113 l7 8 l-7 8 l-7 -8 z" fill="'+BERRY+'" stroke="'+INK+'" stroke-width="1.6"/>' + T(px + 22, 125, 'from the jar’s mean, 4', small) + T(px + 22, 147, nf(mu, 1), 'fill:#B0215D;font-weight:800;font-size:19px');
+    g += '<path d="M'+(px + 7)+' 170 l8 13 h-16 z" fill="'+MINT+'" stroke="'+INK+'" stroke-width="1.6"/>' + T(px + 22, 181, 'from its own mean, '+nf(m, 1), small) + T(px + 22, 203, nf(own, 1), 'fill:#365F14;font-weight:800;font-size:19px') + T(px + 22, 221, 'the smallest possible', 'fill:#365F14;font-weight:600;font-size:12.5px');
+    svg.innerHTML = g;
+    $('#q9read').innerHTML = (atOwn ? 'Smallest total: '+nf(own, 1) : 'Total from the marker: '+nf(now, 1))+'<small>'+(atOwn ? 'The marker sits on the spoon’s own balance point. No other spot gives a smaller total.' : 'Slide the marker (or use the arrow keys) to make the total as small as you can.')+' Spoonful '+count+': '+xs.join(', ')+'.</small>';
+    if (atOwn) addXP('own-min');
+  }
+  const setC = v => { v = Math.max(0, Math.min(8, v)); const m = mean(xs); c = Math.abs(v - m) < .13 ? m : Math.abs(v - 4) < .1 ? 4 : Math.round(v * 10) / 10; render(); };
+  dragger(svg, pt => 'm', (a, pt) => setC(last.xOf(pt.x)), d => setC(c + d * .1));
+  $('#q9new').addEventListener('click', () => { xs = Array.from({length:5}, () => 1 + Math.floor(rnd() * 7)); c = 4; count++; render(); if (count >= 4) addXP('own-3'); });
+  render();
+})();
+
+/* =========================================================== 11. many spoonfuls */
+(function manySpoons(){
+  const rnd = rng(2070);
+  let n = 5, k = 0, sN = 0, sN1 = 0, lastX = null;
+  function scoop(times){
+    for (let t = 0; t < times; t++){ const xs = Array.from({length:n}, () => 1 + Math.floor(rnd() * 7)), q = ss(xs); sN += q / n; sN1 += q / (n - 1); k++; lastX = xs; }
+    render();
+    if (k >= 1000) addXP('sim-' + n);
+  }
+  function render(){
+    const W = 640, L = 132, R = 70, X = v => L + v / 6 * (W - L - R);
+    let g = '';
+    seq(0, 6).forEach(t => { g += '<line class="grid" x1="'+X(t)+'" x2="'+X(t)+'" y1="26" y2="118"/><text x="'+X(t)+'" y="134" text-anchor="middle">'+t+'</text>'; });
+    const bar = (y, lab, v, col) => '<text x="'+(L - 10)+'" y="'+(y + 17)+'" text-anchor="end" style="fill:'+INK+';font-weight:800;font-size:15px">'+lab+'</text>' + (k ? '<rect x="'+X(0)+'" y="'+y+'" width="'+Math.max(0, X(Math.min(6.4, v)) - X(0)).toFixed(1)+'" height="26" rx="5" fill="'+col+'" stroke="'+INK+'" stroke-width="2"/><text x="'+(X(Math.min(6.4, v)) + 8).toFixed(1)+'" y="'+(y + 18)+'" style="fill:'+INK+';font-weight:800;font-size:15px">'+nf(v)+'</text>' : '');
+    g += bar(36, '÷ '+n+'  (n)', k ? sN / k : 0, BERRY) + bar(78, '÷ '+(n - 1)+'  (n − 1)', k ? sN1 / k : 0, MINT);
+    g += '<line x1="'+X(4)+'" x2="'+X(4)+'" y1="10" y2="122" stroke="'+INK+'" stroke-width="2.5" stroke-dasharray="6 4"/><text x="'+(X(4) + 6)+'" y="18" style="fill:'+INK+';font-weight:800;font-size:13px">jar’s true variance: 4</text>';
+    $('#q10').innerHTML = g;
+    $('#q10last').innerHTML = lastX ? 'Last spoonful: <b>'+(n <= 5 ? lastX.join(', ') : n+' waits')+'</b> → squares add up to '+nf(ss(lastX))+' → ÷ '+n+' = <b>'+nf(ss(lastX) / n)+'</b> · ÷ '+(n - 1)+' = <b>'+nf(ss(lastX) / (n - 1))+'</b>' : 'No spoonful yet. Each scoop takes '+n+' waits from the jar and measures the squares from the spoon’s own mean.';
+    const aim = 4 * (n - 1) / n;
+    $('#q10read').innerHTML = k ? '<span class="big">After '+k.toLocaleString('en-US')+' spoonful'+(k === 1 ? '' : 's')+': ÷ '+n+' averages '+nf(sN / k)+' · ÷ '+(n - 1)+' averages '+nf(sN1 / k)+'</span><small>In the long run, sharing among n = '+n+' settles at '+nf(aim)+', which is '+nf(100 * (n - 1) / n, 0)+'% of 4. Sharing among n − 1 = '+(n - 1)+' settles at 4.</small>' : '<span class="big">Scoop, then scoop many times.</span><small>One spoonful proves nothing: it can land above or below 4. Watch the long-run averages.</small>';
+    $$('#q10seg button').forEach(b => b.setAttribute('aria-pressed', +b.dataset.n === n ? 'true' : 'false'));
+  }
+  const reset = () => { k = 0; sN = 0; sN1 = 0; lastX = null; render(); };
+  $('#q10one').addEventListener('click', () => scoop(1));
+  $('#q10hun').addEventListener('click', () => scoop(100));
+  $('#q10tho').addEventListener('click', () => scoop(1000));
+  $('#q10reset').addEventListener('click', reset);
+  $$('#q10seg button').forEach(b => b.addEventListener('click', () => { n = +b.dataset.n; reset(); }));
+  render();
+})();
+
+/* =========================================================== 12. trap */
+(function trap(){
+  let unit = 'min';
+  function render(){
+    const s = unit === 'min' ? ['2 min', '4 min²', '4 square minutes', '2 minutes'] : ['120 s', '14,400 s²', '14,400 square seconds', '120 seconds'];
+    let g = '<rect x="40" y="14" width="140" height="140" fill="'+SUN_C+'" stroke="'+INK+'" stroke-width="2.5"/>';
+    g += '<path d="M110 14 V154 M40 84 H180" stroke="'+INK+'" stroke-width="1" stroke-opacity=".45" fill="none"/>';
+    g += '<line x1="40" x2="180" y1="154" y2="154" stroke="'+BERRY+'" stroke-width="7" stroke-linecap="round"/>';
+    g += '<text x="110" y="92" text-anchor="middle" style="fill:'+INK+';font-family:var(--font-display);font-weight:800;font-size:'+(unit === 'min' ? 30 : 24)+'px">'+s[1]+'</text>';
+    g += '<text x="110" y="180" text-anchor="middle" style="fill:#B0215D;font-family:var(--font-display);font-weight:800;font-size:22px">'+s[0]+'</text>';
+    const T = (y, t, st) => '<text x="216" y="'+y+'" style="'+st+'">'+t+'</text>', lab = 'fill:#5B4B66;font-weight:600;font-size:14px', big = 'fill:'+INK+';font-family:var(--font-display);font-weight:800;font-size:23px';
+    g += T(40, 'Variance (the area)', lab) + T(68, s[2], big) + T(112, 'Standard deviation (the side)', lab) + T(140, s[3], big);
+    $('#q11').innerHTML = g;
+    $$('#unitseg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.u === unit ? 'true' : 'false'));
+  }
+  let base = '';
+  $$('#trapopts .gopt').forEach(b => b.addEventListener('click', () => {
+    const j = +b.dataset.j;
+    $$('#trapopts .gopt').forEach(x => x.setAttribute('aria-pressed', x === b ? 'true' : 'false'));
+    base = j === 0 ? '<b>That’s the trap.</b> The 4 counts square minutes: it is the area of the average square. Nobody waits a square minute. The typical distance is the side: 2 minutes.' : '<b>Right.</b> The typical distance is the side of the average square: 2 minutes. The 4 is its area, in square minutes.';
+    $('#trapfb').innerHTML = base;
+    $('#trapreveal').classList.remove('hidden2'); $('#trapopts').closest('.scene').querySelector('.take').classList.remove('late');
+    if (j === 1) addXP('trap');
+    render();
+  }));
+  $$('#unitseg button').forEach(b => b.addEventListener('click', () => {
+    unit = b.dataset.u; render();
+    $('#trapfb').innerHTML = unit === 's' ? '<b>Same waits, new unit.</b> The side reads 60 times more: 120 seconds. The area reads 60 × 60 = 3,600 times more: 14,400 square seconds.' : base;
+    if (unit === 's') addXP('trap-unit');
+  }));
+})();
+
+/* =========================================================== 13. coefficient of variation */
+(function cvScene(){
+  const M = [{n:'Cup filler', m:500, s:10, col:'#B79BE0'}, {n:'Syrup pump', m:30, s:3, col:'#B5713C'}];
+  let answered = false;
+  function render(){
+    let g = '';
+    M.forEach((d, i) => {
+      const x0 = 22 + i * 300, w = 76, top = 20, bot = 176, lvl = 52, full = bot - lvl, cvp = d.s / d.m, tx = x0 + w + 16;
+      g += '<rect x="'+x0+'" y="'+top+'" width="'+w+'" height="'+(bot - top)+'" rx="10" fill="#fff" stroke="'+INK+'" stroke-width="2.5"/>';
+      g += '<path d="M'+(x0 + 2.5)+' '+lvl+' H'+(x0 + w - 2.5)+' V'+(bot - 10)+' Q'+(x0 + w - 2.5)+' '+(bot - 2.5)+' '+(x0 + w - 10)+' '+(bot - 2.5)+' H'+(x0 + 10)+' Q'+(x0 + 2.5)+' '+(bot - 2.5)+' '+(x0 + 2.5)+' '+(bot - 10)+' Z" fill="'+d.col+'"/>';
+      if (answered){ const h = Math.max(3, 2 * cvp * full); g += '<rect class="popin" x="'+(x0 - 5)+'" y="'+(lvl - h / 2).toFixed(1)+'" width="'+(w + 10)+'" height="'+h.toFixed(1)+'" rx="3" fill="'+SUN_C+'" stroke="'+INK+'" stroke-width="2"/>'; }
+      else g += '<line x1="'+x0+'" x2="'+(x0 + w)+'" y1="'+lvl+'" y2="'+lvl+'" stroke="'+INK+'" stroke-width="2.5"/>';
+      g += '<text x="'+tx+'" y="42" class="ttl">'+d.n+'</text><text x="'+tx+'" y="66" style="fill:'+INK+';font-size:14px">mean '+d.m+' ml</text><text x="'+tx+'" y="86" style="fill:'+INK+';font-size:14px">standard deviation '+d.s+' ml</text>';
+      if (answered) g += '<text x="'+tx+'" y="120" style="fill:'+INK+';font-size:13.5px">'+d.s+' ÷ '+d.m+' × 100% =</text><text x="'+tx+'" y="154" style="fill:'+INK+';font-family:var(--font-display);font-weight:800;font-size:32px">'+nf(100 * cvp, 0)+'%</text>';
+    });
+    $('#q12').innerHTML = g;
+  }
+  $$('#cvopts .gopt').forEach(b => b.addEventListener('click', () => {
+    const j = +b.dataset.j; answered = true;
+    $$('#cvopts .gopt').forEach(x => x.setAttribute('aria-pressed', x === b ? 'true' : 'false'));
+    $('#cvfb').innerHTML = (j === 1 ? '<b>Right.</b> ' : '<b>Look again.</b> ') + 'Each glass is drawn as 100% of its own mean; the yellow band is one standard deviation up and down. The pump strays by 10% of its mean, the cup filler by only 2%. A percentage has no unit, so the same trick compares minutes with dollars.';
+    $('#cvopts').closest('.scene').querySelector('.take').classList.remove('late');
+    if (j === 1) addXP('cv');
+    render();
+  }));
+  render();
+})();
+
+/* =========================================================== 14. name it */
+(function nameIt(){
+  const P = [
+    {a:'You stretched a bracket from end to end.', n:'Range', s:'largest value − smallest value', f:'étendue'},
+    {a:'Bars to the pivot: they added up to 0.', n:'Deviation from the mean', s:'xᵢ − x̄', f:'écart à la moyenne'},
+    {a:'Whole crowd: squares shared among all.', n:'Population variance', s:'σ² = Σ(xᵢ − μ)² ÷ N', f:'variance de la population'},
+    {a:'Spoonful: squares shared among one fewer.', n:'Sample variance', s:'s² = Σ(xᵢ − x̄)² ÷ (n − 1)', f:'variance de l’échantillon'},
+    {a:'You took the side of the average square.', n:'Standard deviation', s:'s = √s², σ = √σ²', f:'écart type'},
+    {a:'The side, as a percent of the mean.', n:'Coefficient of variation', s:'(s ÷ x̄ × 100)%', f:'coefficient de variation'},
+  ];
+  const host = $('#nameit'); let sel = null, done = 0;
+  const order = shuffle(P.map((_, i) => i));
+  host.innerHTML = '<div class="col">' + P.map((p, i) => '<button type="button" class="nact" data-i="'+i+'" aria-pressed="false">'+p.a+'</button>').join('') + '</div><div class="col">' + order.map(i => '<button type="button" class="nname" data-i="'+i+'">'+P[i].n+'</button>').join('') + '</div>';
+  $$('.nact', host).forEach(b => b.addEventListener('click', () => { if (b.classList.contains('done')) return; sel = +b.dataset.i; $$('.nact', host).forEach(x => x.setAttribute('aria-pressed', x === b ? 'true' : 'false')); }));
+  $$('.nname', host).forEach(b => b.addEventListener('click', () => {
+    if (sel == null){ $('#namescore').textContent = 'Tap a card on the left first.'; return; }
+    const i = +b.dataset.i;
+    if (i === sel){
+      const act = $('.nact[data-i="'+i+'"]', host);
+      act.classList.add('done'); act.setAttribute('aria-pressed', 'false'); act.innerHTML = '<b>'+P[i].n+': <span class="sym2">'+P[i].s+'</span></b>'+P[i].a+'<br><i>In French: '+P[i].f+'</i>';
+      b.disabled = true; sel = null; done++; addXP('name' + i);
+      $('#namescore').textContent = done + ' of 6' + (done === 6 ? '. All named!' : '');
+      if (done === 6) confetti();
+    } else { b.classList.remove('nope'); void b.offsetWidth; b.classList.add('nope'); $('#namescore').textContent = 'Not that one. Try another name.'; }
+  }));
+})();
+
+/* =========================================================== 15. real data */
+(function real(){
+  let col = 'tip';
+  const ST = {};
+  [['tip', TIPS], ['bill', BILLS]].forEach(([k, xs]) => { const m = mean(xs), v = ss(xs) / (xs.length - 1), s = Math.sqrt(v); ST[k] = {m, v, s, mn:Math.min(...xs), mx:Math.max(...xs), cv:100 * s / m}; });
+  function render(){
+    const xs = col === 'tip' ? TIPS : BILLS, step = col === 'tip' ? .5 : 5, lo = col === 'tip' ? 0 : 0, hi = col === 'tip' ? 10.5 : 55, S = ST[col];
+    const edges = []; for (let e = lo; e <= hi + 1e-9; e += step) edges.push(+e.toFixed(2));
+    const cnt = edges.slice(0, -1).map((e, i) => xs.filter(v => v >= e && (v < edges[i + 1])).length);
+    const W = 640, H = 250, L = 46, R = 18, T = 30, B = 46, top = Math.ceil(Math.max(...cnt) / 20) * 20;
+    const X = v => L + (v - lo) / (hi - lo) * (W - L - R), Y = c => H - B - c / top * (H - B - T);
+    let g = '';
+    niceTicks(0, top, 4).forEach(t => { g += '<line class="grid" x1="'+L+'" x2="'+(W - R)+'" y1="'+Y(t)+'" y2="'+Y(t)+'"/><text x="'+(L - 7)+'" y="'+(Y(t) + 4)+'" text-anchor="end">'+t+'</text>'; });
+    g += '<rect x="'+X(S.m - S.s).toFixed(1)+'" y="'+T+'" width="'+(X(S.m + S.s) - X(S.m - S.s)).toFixed(1)+'" height="'+(H - B - T)+'" fill="'+SUN_C+'" fill-opacity=".45"/>';
+    cnt.forEach((c, i) => { g += '<rect class="hb" x="'+X(edges[i]).toFixed(1)+'" y="'+Y(c).toFixed(1)+'" width="'+(X(edges[i + 1]) - X(edges[i])).toFixed(1)+'" height="'+(H - B - Y(c)).toFixed(1)+'" fill="'+BLUE+'" fill-opacity=".85" stroke="'+INK+'" stroke-width="1.2"/>'; });
+    g += '<line class="axis" x1="'+L+'" x2="'+(W - R)+'" y1="'+(H - B)+'" y2="'+(H - B)+'"/>';
+    niceTicks(lo, hi, col === 'tip' ? 10 : 11).forEach(t => { g += '<line x1="'+X(t)+'" x2="'+X(t)+'" y1="'+(H - B)+'" y2="'+(H - B + 4)+'" stroke="'+INK+'" stroke-width="1.5"/><text x="'+X(t)+'" y="'+(H - 4)+'" text-anchor="middle">$'+t+'</text>'; });
+    g += '<rect x="'+X(S.m - S.s).toFixed(1)+'" y="'+(H - B - 7)+'" width="'+(X(S.m + S.s) - X(S.m - S.s)).toFixed(1)+'" height="14" rx="5" fill="'+SUN_C+'" stroke="'+INK+'" stroke-width="2"/>';
+    g += '<path d="M'+X(S.m).toFixed(1)+' '+(H - B + 2)+' l-11 18 h22 z" fill="'+MINT+'" stroke="'+INK+'" stroke-width="2"/>';
+    const a = X(S.mn), b = X(S.mx);
+    g += '<path d="M'+a.toFixed(1)+' 22 V10 H'+b.toFixed(1)+' V22" fill="none" stroke="'+BERRY+'" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/><text x="'+((a + b) / 2).toFixed(1)+'" y="26" text-anchor="middle" style="fill:#B0215D;font-weight:800;font-size:13px">range '+money(S.mx - S.mn)+'</text>';
+    $('#realchart').innerHTML = g;
+    $('#realread').innerHTML = '<b>Mean '+money(S.m)+'</b> · range '+money(S.mx - S.mn)+' · <b>s = '+money(S.s)+'</b>';
+    $$('#realseg button').forEach(b2 => b2.setAttribute('aria-pressed', b2.dataset.c === col ? 'true' : 'false'));
+  }
+  $$('#realseg button').forEach(b => b.addEventListener('click', () => { col = b.dataset.c; render(); if (col === 'bill') addXP('bills'); }));
+  ENTER.s15 = render;
+  render();
+  miniQuiz($('#realq'), [
+    {q:'In dollars, which column has the larger standard deviation?', o:['Bills', 'Tips'], a:0, why:'Bills: s = '+money(ST.bill.s)+'. Tips: s = '+money(ST.tip.s)+'. A bill strays much farther from its mean than a tip does.'},
+    {q:'Next to their own means, which column varies more?', o:['Bills, by far', 'They are almost equal'], a:1, why:'Bills: '+ST.bill.s.toFixed(2)+' ÷ '+ST.bill.m.toFixed(2)+' = '+ST.bill.cv.toFixed(0)+'%. Tips: '+ST.tip.s.toFixed(2)+' ÷ '+ST.tip.m.toFixed(2)+' = '+ST.tip.cv.toFixed(0)+'%. Far apart in dollars, almost the same coefficient of variation.'},
+  ], 'real');
+})();
+
+/* =========================================================== 16. arcade */
+function qStrips(a, b){
+  const W = 520, L = 78, R = 16, lo = 0, hi = 10, X = v => L + (v - lo) / (hi - lo) * (W - L - R);
+  let g = '<svg class="qs" viewBox="0 0 520 112" role="img" aria-label="Crowd A: '+a.join(', ')+'. Crowd B: '+b.join(', ')+'.">';
+  [['Crowd A', a, 40], ['Crowd B', b, 88]].forEach(([nm, xs, y]) => {
+    g += '<text x="4" y="'+(y - 3)+'">'+nm+'</text><line x1="'+L+'" x2="'+(W - R)+'" y1="'+y+'" y2="'+y+'" stroke="#B4A9C6" stroke-width="2"/>';
+    const seen = {};
+    xs.forEach(v => { const s = seen[v] = (seen[v] || 0) + 1; g += '<circle cx="'+X(v).toFixed(1)+'" cy="'+(y - 8 - (s - 1) * 13)+'" r="6" fill="#2F55D4" stroke="#2A1C19" stroke-width="1.5"/>'; });
+  });
+  seq(0, 10).forEach(t => { g += '<text x="'+X(t).toFixed(1)+'" y="108" text-anchor="middle" style="font-weight:600;fill:#5B4B66">'+t+'</text>'; });
+  return g + '</svg>';
+}
+const LEVELS = [
+  {id:'rd', n:'Read the spread', d:'Which crowd strays farther?', bg:'#F7B32B', items:[
+    {q:'Which crowd has the larger standard deviation?'+qStrips([4, 5, 5, 5, 6], [1, 3, 5, 7, 9]), opts:['Crowd B', 'Crowd A', 'They are equal'], a:0, why:'Both balance at 5. In B the dots sit much farther from it, so their squares are bigger.'},
+    {q:'Which crowd has the larger standard deviation?'+qStrips([2, 2, 8, 8], [4, 5, 5, 6]), opts:['Crowd A', 'Crowd B', 'They are equal'], a:0, why:'Both balance at 5. Every dot of A sits 3 away from it; the dots of B are 0 or 1 away.'},
+    {q:'Both crowds have a range of 8. Which has the larger standard deviation?'+qStrips([1, 5, 5, 5, 9], [1, 1, 5, 9, 9]), opts:['Crowd B', 'Crowd A', 'They are equal'], a:0, why:'Same end dots, same range. In B more dots sit far from the mean, so the average square is bigger.'},
+    {q:'Every wait is exactly 4 minutes. What is the standard deviation?', opts:['0', '4', '1'], a:0, why:'No dot strays from the mean, so every square has area 0.'},
+    {q:'Two classes average 70 on a test. Class A’s scores run from 65 to 75, class B’s from 40 to 100. Which class has the larger range?', opts:['Class B', 'Class A', 'They are equal'], a:0, why:'A: 75 − 65 = 10 points. B: 100 − 40 = 60 points.'},
+    {q:'Bao Bar: waits of 3 to 5 minutes. Kiwi Cup: 1 minute or 9. Both average 4. Which has the smaller standard deviation?', opts:['Bao Bar', 'Kiwi Cup', 'They are equal'], a:0, why:'Bao Bar’s waits stay within 1 minute of the mean: 0.5 against 3.9 minutes.'},
+    {q:'A new value arrives, far from all the others. The standard deviation…', opts:['Goes up', 'Goes down', 'Stays the same'], a:0, why:'A far dot adds a big square, and the average square grows.'},
+  ]},
+  {id:'rg', n:'Find the range', d:'Largest minus smallest', bg:'#F7C98F', items:[
+    {q:'Waits: 2, 9, 4, 6 minutes. What is the range?', opts:['7', '9', '5.25'], a:0, why:'Largest − smallest: 9 − 2 = 7 minutes.'},
+    {q:'Tips: $1, $1, $1, $10. What is the range?', opts:['$9', '$10', '$3.25'], a:0, why:'10 − 1 = $9. One far tip sets the whole range.'},
+    {q:'Five waits. One in the middle of the crowd changes from 4 to 5 minutes. The range…', opts:['Stays the same', 'Grows by 1', 'Shrinks by 1'], a:0, why:'Only the smallest and the largest value decide the range.'},
+    {q:'The smallest value is 12 and the range is 30. What is the largest value?', opts:['42', '18', '30'], a:0, why:'12 + 30 = 42.'},
+    {q:'The 244 real bills run from $3.07 to $50.81. What is the range?', opts:['$47.74', '$53.88', '$50.81'], a:0, why:'50.81 − 3.07 = $47.74.'},
+    {q:'A new longest wait arrives. The range…', opts:['Grows', 'Shrinks', 'Stays the same'], a:0, why:'The bracket stretches to reach the new end dot.'},
+    {q:'Which values decide the range?', opts:['Only the smallest and the largest', 'All of them', 'Only the ones near the mean'], a:0, why:'That makes it quick, and easy to fool with one stray value.'},
+  ]},
+  {id:'dv', n:'Distances to the mean', d:'Lefts and rights cancel', bg:'#F7C4D2', items:[
+    {q:'Waits: 2, 4, 9 minutes. The mean is 5. What is the distance of 9 from the mean?', opts:['+4', '−4', '+9'], a:0, why:'9 − 5 = +4: four minutes to the right of the balance point.'},
+    {q:'Waits: 2, 4, 9 minutes. The mean is 5. What is the distance of 2 from the mean?', opts:['−3', '+3', '−2'], a:0, why:'2 − 5 = −3: three minutes to the left.'},
+    {q:'Add up all the distances to the mean, with their signs. You always get…', opts:['0', 'The mean', 'The range'], a:0, why:'Lefts and rights cancel exactly. That is why the plank balances.'},
+    {q:'Four of five distances to the mean are −2, −1, +1 and +4. What is the fifth?', opts:['−2', '+2', '0'], a:0, why:'The four add up to +2, so the fifth must be −2 to bring the total to 0.'},
+    {q:'The mean is 10. A value has a distance of −3. What is the value?', opts:['7', '13', '−3'], a:0, why:'10 − 3 = 7: three below the mean.'},
+    {q:'Three of four distances to the mean are +5, −1 and −1. What is the fourth?', opts:['−3', '+3', '+7'], a:0, why:'+5 − 1 − 1 = +3, so the fourth must be −3.'},
+    {q:'In a sample of 12 values, how many distances to the mean are free?', opts:['11', '12', '1'], a:0, why:'They must add up to 0, so the last one is forced: n − 1 = 11 are free.'},
+  ]},
+  {id:'vs', n:'The average square', d:'Variance and standard deviation', bg:'#A9BCF2', items:[
+    {q:'A sample of 5 values. The squares of the distances add up to 20. What is the sample variance?', opts:['5', '4', '20'], a:0, why:'Shared among n − 1 = 4: 20 ÷ 4 = 5.'},
+    {q:'The variance is 9 square minutes. What is the standard deviation?', opts:['3 minutes', '81 minutes', '4.5 minutes'], a:0, why:'The side of a square of area 9 is 3.'},
+    {q:'Sample: 1, 3, 5. The mean is 3. What is the sample variance?', opts:['4', '8', '2.67'], a:0, why:'Distances −2, 0, +2. Squares 4 + 0 + 4 = 8. Shared among n − 1 = 2: 4.'},
+    {q:'The standard deviation is 5 grams. What is the variance?', opts:['25 square grams', '10 grams', '2.24 grams'], a:0, why:'Area = side × side: 5 × 5 = 25.'},
+    {q:'A whole population has three values: 2, 4, 6. What is the population variance?', opts:['2.67', '4', '8'], a:0, why:'Distances −2, 0, +2. Squares add up to 8. Shared among all N = 3: 8 ÷ 3 = 2.67.'},
+    {q:'A value sits twice as far from the mean as another. Its square is…', opts:['Four times as big', 'Twice as big', 'The same size'], a:0, why:'Double the side, and the area is 2 × 2 = 4 times as big.'},
+    {q:'Which one is measured in the same unit as the data?', opts:['The standard deviation', 'The variance', 'Neither'], a:0, why:'The variance is an area, in squared units. Its side, the standard deviation, is back in the data’s unit.'},
+  ]},
+  {id:'nn', n:'N or n − 1?', d:'Whole crowd, or a spoonful?', bg:'#B9D98C', opts:['Divide by N', 'Divide by n − 1'], items:[
+    {q:'Lina timed every cup she sold on Saturday. She wants the spread of that Saturday’s waits, nothing more.', a:0, why:'These waits are the whole population she describes, so the squares are shared among all N of them.'},
+    {q:'Lina timed 10 cups to learn about the waits of all her customers.', a:1, why:'The 10 cups are a sample. Its squares are measured from its own mean, so share them among n − 1 = 9.'},
+    {q:'A teacher has the marks of all 28 students in her class and describes this class only.', a:0, why:'The class is the whole population of interest: divide by N = 28.'},
+    {q:'A poll asks 500 voters to learn about a whole country.', a:1, why:'500 voters are a sample of the country: divide by n − 1 = 499.'},
+    {q:'A factory tests 30 batteries taken from a batch of 10,000.', a:1, why:'The 30 batteries stand for the batch: a sample, so n − 1 = 29.'},
+    {q:'The 244 restaurant tables, used to learn about that restaurant’s tables in general.', a:1, why:'They are a sample of all its tables: n − 1 = 243.'},
+    {q:'With samples of 5, dividing by n instead of n − 1 gives on average…', opts:['80% of the true variance', 'Exactly the true variance', '120% of the true variance'], a:0, why:'(n − 1)/n = 4/5. Measured from its own mean, a sample’s squares run small.'},
+  ]},
+  {id:'cv', n:'Compare and convert', d:'Percent of the mean, and units', bg:'#C7B3EA', items:[
+    {q:'Mean 50 g, standard deviation 5 g. What is the coefficient of variation?', opts:['10%', '5%', '45%'], a:0, why:'5 ÷ 50 × 100% = 10%.'},
+    {q:'Stock A: mean $200, standard deviation $10. Stock B: mean $20, standard deviation $4. Which varies more next to its own mean?', opts:['Stock B', 'Stock A', 'They are equal'], a:0, why:'A: 10 ÷ 200 = 5%. B: 4 ÷ 20 = 20%.'},
+    {q:'Waits: mean 4 minutes, standard deviation 2 minutes. What is the coefficient of variation?', opts:['50%', '2%', '200%'], a:0, why:'2 ÷ 4 × 100% = 50%.'},
+    {q:'Every customer waits 5 minutes longer. The standard deviation…', opts:['Stays the same', 'Goes up by 5', 'Doubles'], a:0, why:'The whole crowd slides right and the balance point slides with it. No distance changes.'},
+    {q:'Every wait doubles. The standard deviation…', opts:['Doubles', 'Stays the same', 'Is four times as big'], a:0, why:'Every distance doubles, so the side of the average square doubles. Its area, the variance, is four times as big.'},
+    {q:'Waits are measured in minutes. The variance is in…', opts:['Square minutes', 'Minutes', 'No unit at all'], a:0, why:'The variance is the area of the average square: minutes × minutes.'},
+    {q:'Which of these has no unit?', opts:['The coefficient of variation', 'The standard deviation', 'The range'], a:0, why:'Minutes ÷ minutes cancel. That is why it can compare minutes with dollars.'},
+  ]},
+  {id:'boss', n:'Boss: build the spread', d:'Four targets. Drag six dots to hit each one.', bg:'#E9718F', boss:true, inv:true},
+  {id:'lab', n:'Squares lab', d:'Type your own numbers', bg:'#FFFFFF', tool:true},
+];
+(function arcade(){
+  const host = $('#arcade');
+  const SK = 't15-stars';
+  let best = sget(SK, {});
+  let play = null;
+  function starsHTML(n){ let s = ''; for (let k = 0; k < 3; k++) s += k < n ? '★' : '<span class="off">★</span>'; return s; }
+  const scn = host.closest('.scene');
+  const mini = '<svg viewBox="0 0 90 44" width="86" height="42" aria-hidden="true"><rect x="4" y="31" width="82" height="5" rx="2.5" fill="#D9A066" stroke="'+INK+'" stroke-width="1.5"/><rect x="12" y="3" width="26" height="26" fill="#2F55D4" fill-opacity=".18" stroke="#2F55D4" stroke-width="1.6"/><rect x="38" y="17" width="12" height="12" fill="#2F55D4" fill-opacity=".18" stroke="#2F55D4" stroke-width="1.6"/><rect x="62" y="11" width="18" height="18" fill="#F7B32B" stroke="'+INK+'" stroke-width="1.6"/><circle cx="12" cy="27" r="3.5" fill="#2F55D4" stroke="'+INK+'" stroke-width="1.3"/><circle cx="50" cy="27" r="3.5" fill="#2F55D4" stroke="'+INK+'" stroke-width="1.3"/></svg>';
+  function tiles(){
+    play = null; scn.classList.remove('playing');
+    host.innerHTML = '<div class="tiles">' + LEVELS.map((L, i) => '<button class="tile" type="button" data-i="'+i+'" style="background:'+L.bg+'"><span class="ln">'+(L.boss ? 'Final level' : L.tool ? 'Tool' : 'Level '+(i + 1))+'</span><span class="tn">'+L.n+'</span><span class="td">'+L.d+'</span>'+(L.tool ? '<span class="ts">'+mini+'</span>' : '<span class="ts" aria-label="'+(best[L.id] || 0)+' of 3 stars">'+starsHTML(best[L.id] || 0)+'</span>')+'</button>').join('') + '</div>';
+    $$('.tile', host).forEach(t => t.addEventListener('click', () => { const L = LEVELS[+t.dataset.i]; if (L.tool) lab(); else if (L.inv) inverse(L); else start(L); }));
+  }
+  function start(L){
+    let qs;
+    if (L.boss){ qs = []; LEVELS.filter(x => x.items).forEach(x => x.items.forEach((it, j) => qs.push(Object.assign({}, it, {opts: it.opts || x.opts, own: !!it.opts, k: x.id + j})))); qs = shuffle(qs).slice(0, 10); }
+    else qs = shuffle(L.items.map((it, j) => Object.assign({}, it, {opts: it.opts || L.opts, own: !!it.opts, k: L.id + j})));
+    qs = qs.map(q => { if (!q.own) return q; const order = shuffle(q.opts.map((_, j) => j)); return Object.assign({}, q, {opts: order.map(j => q.opts[j]), a: order.indexOf(q.a)}); });
+    play = {L, qs, i:0, miss:0, streak:0}; scn.classList.add('playing');
+    question();
+  }
+  function question(){
+    const p = play, q = p.qs[p.i];
+    host.innerHTML = '<div class="card qpanel"><div class="qhead"><span class="lvl">'+p.L.n+'</span><span>Question '+(p.i + 1)+' of '+p.qs.length+'</span><span class="streak">'+FLAME+'Streak '+p.streak+'</span></div>'
+      + '<div class="qbar"><i style="width:'+(100*p.i/p.qs.length)+'%"></i></div>'
+      + '<div class="qtext">'+q.q+'</div>'
+      + '<div class="opts">'+q.opts.map((o, j) => '<button class="opt" type="button" data-j="'+j+'">'+o+'</button>').join('')+'</div>'
+      + '<div class="fb" aria-live="polite"></div>'
+      + '<div class="qnav"><button class="btn" type="button" data-act="quit">Back to levels</button><button class="btn sun" type="button" data-act="next" disabled>'+(p.i === p.qs.length - 1 ? 'See my stars' : 'Next question')+'</button></div></div>';
+    $$('.opt', host).forEach(b => b.addEventListener('click', () => answer(+b.dataset.j)));
+    $('[data-act="quit"]', host).addEventListener('click', tiles);
+    $('[data-act="next"]', host).addEventListener('click', () => { p.i++; if (p.i < p.qs.length) question(); else finish(); });
+    const first = $('.opt', host); if (first) first.focus({preventScroll:true});
+  }
+  function answer(j){
+    const p = play, q = p.qs[p.i], ok = j === q.a;
+    $$('.opt', host).forEach((b, k) => { b.disabled = true; if (k === q.a) b.classList.add('right'); if (k === j && !ok) b.classList.add('wrong'); });
+    if (ok){ p.streak++; addXP('aq:' + q.k); } else { p.streak = 0; p.miss++; }
+    $('.streak', host).innerHTML = FLAME + 'Streak ' + p.streak;
+    $('.fb', host).innerHTML = (ok ? '<b>Right!</b> ' : '<b>Not quite.</b> It’s “'+q.opts[q.a]+'”. ') + q.why;
+    const nx = $('[data-act="next"]', host); nx.disabled = false; nx.focus({preventScroll:true});
+  }
+  function finish(){
+    const p = play, n = p.qs.length, right = n - p.miss;
+    const stars = p.miss === 0 ? 3 : p.miss <= 2 ? 2 : 1;
+    if (stars > (best[p.L.id] || 0)){ best[p.L.id] = stars; sset(SK, best); }
+    host.innerHTML = '<div class="card qpanel donebox"><span class="lvl" style="font-family:var(--font-display);font-weight:800;font-size:22px">'+p.L.n+'</span><div class="bigstars" aria-label="'+stars+' of 3 stars">'+starsHTML(stars)+'</div><div style="font-size:18px">You got <b>'+right+' of '+n+'</b> right.'+(stars === 3 ? ' Not a single slip!' : stars === 2 ? ' Almost perfect.' : ' Try once more: the reasons will stick.')+'</div><div class="row" style="justify-content:center"><button class="btn sun big" type="button" data-act="again">Play again</button><button class="btn big" type="button" data-act="back">Back to levels</button></div></div>';
+    $('[data-act="again"]', host).addEventListener('click', () => start(p.L));
+    $('[data-act="back"]', host).addEventListener('click', tiles);
+    if (stars >= 2) confetti();
+  }
+  /* ---------- boss: build the spread ---------- */
+  const rangeOf = x => Math.max(...x) - Math.min(...x);
+  const ITG = [
+    {t:'the largest possible standard deviation', ok:x => Math.abs(ss(x) - 150) < 1e-9, tip:x => 'Each dot should sit as far from the balance point as the plank allows. Try splitting the crowd between the two ends.'},
+    {t:'a standard deviation of exactly 0', ok:x => ss(x) < 1e-9, tip:x => 'A standard deviation of 0 means that no dot strays from the mean at all.'},
+    {t:'a range of 10 and the smallest possible standard deviation', ok:x => rangeOf(x) === 10 && Math.abs(ss(x) - 50) < 1e-9, tip:x => rangeOf(x) !== 10 ? 'For a range of 10, one dot must sit on 0 and another on 10.' : 'Two dots must stay on 0 and on 10. Put the other four where they add the smallest squares: right on the balance point.'},
+    {t:'a mean of 5 and a standard deviation of exactly 2', ok:x => mean(x) === 5 && Math.abs(ss(x) - 20) < 1e-9, tip:x => 'For s = 2 the variance is 4. Six dots share their squares among 5, so the squares must add up to 4 × 5 = 20, around a mean of 5. Right now they add up to '+nf(ss(x))+', around a mean of '+nf(mean(x))+'.'},
+  ];
+  function inverse(L){
+    const ts = ITG.slice(); let i = 0, miss = 0, xs, sel, solved;
+    scn.classList.add('playing');
+    const o = {W:640, H:230, L:40, AW:560, lo:0, hi:10, ticks:seq(0, 10), r:10, bars:true, barLabels:false};
+    function draw(){
+      const T = ts[i]; xs = [1, 3, 4, 6, 7, 9]; sel = 0; solved = false;
+      host.innerHTML = '<div class="card qpanel inv labbox"><div class="qhead"><span class="lvl">'+L.n+'</span><span>Target '+(i + 1)+' of '+ts.length+'</span><span class="streak">Misses: '+miss+'</span></div>'
+        + '<div class="qbar"><i style="width:'+(100 * i / ts.length)+'%"></i></div>'
+        + '<div class="qtext">Target: six dots with <b>'+T.t+'</b>.</div>'
+        + '<div style="display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;justify-content:space-between;margin-bottom:6px"><span class="smallnote">Drag the dots, or use the keys: ← → move, ↑ ↓ pick. Here s shares the squares among n − 1 = 5.</span><span class="bigread" id="iread" style="font-size:19px"></span></div>'
+        + '<svg class="chart dragsvg" id="ichart" viewBox="0 0 640 230" tabindex="0" role="img" aria-label="Six dots on the see-saw with a band of one standard deviation"></svg>'
+        + '<div class="fb" aria-live="polite"></div>'
+        + '<div class="qnav"><button class="btn" type="button" data-act="quit">Back to levels</button><span class="row" style="gap:8px"><button class="btn" type="button" data-act="check">Check my dots</button><button class="btn sun" type="button" data-act="next" disabled>'+(i === ts.length - 1 ? 'See my stars' : 'Next target')+'</button></span></div></div>';
+      const svg = $('#ichart'); let last;
+      function render(){
+        const sd = Math.sqrt(ss(xs) / 5);
+        last = sqsaw(Object.assign({}, o, {xs, sel, band:sd}));
+        svg.innerHTML = last.g;
+        $('#iread').textContent = 'mean ' + nf(mean(xs)) + ' · range ' + nf(rangeOf(xs)) + ' · s ' + nf(sd);
+      }
+      dragger(svg, pt => { if (solved) return null; const b = nearest(last.pos, pt, 30); if (b != null) sel = b; return b; },
+        (j, pt) => { xs[j] = Math.round(Math.max(0, Math.min(10, last.xOf(pt.x)))); render(); },
+        null);
+      svg.addEventListener('keydown', e => { if (solved) return; const k = e.key; if (!/^Arrow/.test(k)) return; e.preventDefault(); e.stopPropagation(); if (k === 'ArrowUp' || k === 'ArrowDown') sel = (sel + (k === 'ArrowUp' ? 1 : 5)) % 6; else xs[sel] = Math.max(0, Math.min(10, xs[sel] + (k === 'ArrowRight' ? 1 : -1))); render(); });
+      render();
+      $('[data-act="quit"]', host).addEventListener('click', tiles);
+      $('[data-act="check"]', host).addEventListener('click', () => {
+        if (solved) return;
+        const fb = $('.fb', host);
+        if (T.ok(xs)){ solved = true; fb.innerHTML = '<b>Right!</b> Your dots: ' + xs.slice().sort((a, b) => a - b).join(', ') + '. Standard deviation s = ' + nf(Math.sqrt(ss(xs) / 5)) + '.'; addXP('inv' + i); const nx = $('[data-act="next"]', host); nx.disabled = false; nx.focus({preventScroll:true}); }
+        else { miss++; $('.streak', host).textContent = 'Misses: ' + miss; fb.innerHTML = '<b>Not yet.</b> ' + T.tip(xs); }
+      });
+      $('[data-act="next"]', host).addEventListener('click', () => { i++; if (i < ts.length) draw(); else done(); });
+    }
+    function done(){
+      const stars = miss === 0 ? 3 : miss <= 2 ? 2 : 1;
+      if (stars > (best[L.id] || 0)){ best[L.id] = stars; sset(SK, best); }
+      host.innerHTML = '<div class="card qpanel donebox"><span class="lvl" style="font-family:var(--font-display);font-weight:800;font-size:22px">'+L.n+'</span><div class="bigstars" aria-label="'+stars+' of 3 stars">'+starsHTML(stars)+'</div><div style="font-size:18px">Four spreads built with <b>'+miss+'</b> miss'+(miss === 1 ? '' : 'es')+'.</div><div class="row" style="justify-content:center"><button class="btn sun big" type="button" data-act="again">Play again</button><button class="btn big" type="button" data-act="back">Back to levels</button></div></div>';
+      $('[data-act="again"]', host).addEventListener('click', () => inverse(L));
+      $('[data-act="back"]', host).addEventListener('click', tiles);
+      if (stars >= 2) confetti();
+    }
+    draw();
+  }
+  /* ---------- lab: your own numbers with their squares ---------- */
+  function lab(){
+    scn.classList.add('playing');
+    host.innerHTML = '<div class="card qpanel labbox" style="max-width:900px;display:grid;gap:10px">'
+      + '<div class="qhead"><span class="lvl">Squares lab</span><button class="btn sm" type="button" data-act="quit">Back to levels</button></div>'
+      + '<form class="labform" id="lform"><label for="lin">Type or paste numbers, separated by spaces or commas. Use a point for decimals: 2.5</label><span class="row" style="gap:8px;flex-wrap:nowrap"><input id="lin" type="text" inputmode="decimal" autocomplete="off" value="1, 3, 4, 5, 7"><button class="btn sun sm" type="submit">Grow the squares</button></span></form>'
+      + '<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"><button class="btn sm" type="button" id="ltips">The 244 real tips</button><button class="btn sm" type="button" id="lbills">The 244 real bills</button><div class="seg" id="ldiv" role="group" aria-label="Share the squares among"><button type="button" data-d="s" aria-pressed="true">Sample: ÷ (n − 1)</button><button type="button" data-d="p" aria-pressed="false">Whole population: ÷ N</button></div></div>'
+      + '<svg class="chart" id="labchart" viewBox="0 0 640 250" role="img" aria-label="Your numbers with their squares"></svg>'
+      + '<p class="bigread" id="lread" style="margin:0;font-size:19px"></p><p class="smallnote" id="lnote" aria-live="polite"></p></div>';
+    $('[data-act="quit"]', host).addEventListener('click', tiles);
+    let xs = [], div = 's';
+    function parse(t){ return (t.match(/-?\d+(?:\.\d+)?/g) || []).map(Number).filter(v => isFinite(v)); }
+    function render(){
+      const note = $('#lnote');
+      $$('#ldiv button').forEach(b => b.setAttribute('aria-pressed', b.dataset.d === div ? 'true' : 'false'));
+      if (!xs.length){ $('#labchart').innerHTML = ''; $('#lread').textContent = 'No numbers yet.'; note.textContent = ''; return; }
+      let lo = Math.min(0, ...xs), hi = Math.max(...xs); if (hi - lo < 1) hi = lo + 1;
+      const tk = niceTicks(lo, hi, 6), step = tk.length > 1 ? tk[1] - tk[0] : 1;
+      lo = Math.min(lo, tk[0]); hi = tk[tk.length - 1] < hi ? tk[tk.length - 1] + step : tk[tk.length - 1];
+      const n = xs.length, big = n > 40, few = n <= 12, ticks = niceTicks(lo, hi, 6);
+      const bin = big ? (hi - lo) / 60 : 0, ys = big ? xs.map(v => lo + Math.round((v - lo) / bin) * bin) : xs;
+      const maxStack = Math.max(...[...ys.reduce((m, v) => m.set(v.toFixed(4), (m.get(v.toFixed(4)) || 0) + 1), new Map()).values()]);
+      const r = Math.max(1, Math.min(9, 128 / (2 * maxStack + 1)));
+      const m = mean(xs), q = ss(xs), den = div === 's' ? n - 1 : n, v = den > 0 ? q / den : NaN, sd = Math.sqrt(v);
+      const far = Math.max(...xs.map(x => Math.abs(x - m))), AW = few && far > 0 ? Math.max(300, Math.min(560, 140 * (hi - lo) / far)) : 560;
+      const s = sqsaw({W:640, H:250, L:(640 - AW) / 2, AW, lo, hi, xs:ys, r, dsw:Math.min(1.8, r * .4), ticks, fmt:t => +t.toFixed(2), bars:few, barLabels:false, squares:few, band:isFinite(sd) ? sd : null, pivotAt:m, ref:m});
+      $('#labchart').innerHTML = s.g;
+      $('#lread').innerHTML = den > 0 ? 'n = '+n+' · mean <b>'+nf(m)+'</b> · range <b>'+nf(rangeOf(xs))+'</b> · variance <b>'+nf(v)+'</b> · standard deviation <b>'+nf(sd)+'</b>'+(m > 0 && Math.min(...xs) >= 0 ? ' · CV <b>'+nf(100 * sd / m, 0)+'%</b>' : '') : 'One number alone has no spread to share among n − 1 = 0. Add another number.';
+      note.textContent = (div === 's' ? 'Squares shared among n − 1 = '+(n - 1)+'.' : 'Squares shared among all N = '+n+'.') + ' Yellow band: one standard deviation to each side of the mean.' + (big ? ' Dots are grouped to fit; the numbers are exact.' : few ? '' : ' Above 12 numbers, the single squares are hidden.');
+    }
+    $('#lform').addEventListener('submit', e => { e.preventDefault(); const v = parse($('#lin').value); if (v.length){ xs = v.slice(0, 400); addXP('lab'); } else xs = []; render(); });
+    $('#ltips').addEventListener('click', () => { xs = TIPS.slice(); $('#lin').value = 'the 244 real tips'; render(); addXP('lab'); });
+    $('#lbills').addEventListener('click', () => { xs = BILLS.slice(); $('#lin').value = 'the 244 real bills'; render(); addXP('lab'); });
+    $$('#ldiv button').forEach(b => b.addEventListener('click', () => { div = b.dataset.d; render(); }));
+    xs = parse($('#lin').value); render();
+  }
+  tiles();
+  $('#resetall').addEventListener('click', () => { XP = {}; sset(XPK, XP); best = {}; sset(SK, best); renderXP(false); tiles(); });
+})();
+
+/* =========================================================== 17. recap */
+(function recap(){
+  const dot = (x, y, c) => '<circle cx="'+x+'" cy="'+y+'" r="4" fill="'+(c || '#2F55D4')+'" stroke="'+INK+'" stroke-width="1.5"/>';
+  const I = {
+    rg:'<svg viewBox="0 0 54 54">'+dot(8, 40)+dot(20, 40)+dot(27, 40)+dot(34, 40)+dot(46, 40)+'<path d="M8 28 V16 H46 V28" fill="none" stroke="#D93A62" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/></svg>',
+    dv:'<svg viewBox="0 0 54 54"><path d="M27 6 V48" stroke="'+INK+'" stroke-width="2" stroke-dasharray="4 3"/><rect x="9" y="17" width="18" height="6" rx="3" fill="#D93A62"/><rect x="27" y="31" width="18" height="6" rx="3" fill="#8E6CC9"/>'+dot(9, 20)+dot(45, 34)+'</svg>',
+    sq:'<svg viewBox="0 0 54 54"><rect x="8" y="10" width="28" height="28" fill="#2F55D4" fill-opacity=".18" stroke="#2F55D4" stroke-width="2"/><rect x="8" y="35" width="28" height="6" rx="3" fill="#D93A62"/>'+dot(8, 38)+'<path d="M36 6 V48" stroke="'+INK+'" stroke-width="2" stroke-dasharray="4 3"/></svg>',
+    av:'<svg viewBox="0 0 54 54"><rect x="11" y="8" width="32" height="32" fill="#F7B32B" stroke="'+INK+'" stroke-width="2.5"/><path d="M11 40 H43" stroke="#D93A62" stroke-width="6" stroke-linecap="round"/></svg>',
+    n1:'<svg viewBox="0 0 54 54"><path d="M4 42 H50" stroke="'+INK+'" stroke-width="2.5"/>'+dot(9, 36)+dot(20, 36)+dot(31, 36)+dot(43, 36, '#fff')+'<path d="M39.5 22 v-4 a3.5 3.5 0 0 1 7 0 v4" fill="none" stroke="'+INK+'" stroke-width="2.2"/><rect x="37" y="21" width="12" height="9" rx="2" fill="'+INK+'"/></svg>',
+    cv:'<svg viewBox="0 0 54 54"><rect x="7" y="8" width="16" height="38" rx="4" fill="#fff" stroke="'+INK+'" stroke-width="2"/><rect x="5" y="16" width="20" height="4" fill="#F7B32B" stroke="'+INK+'" stroke-width="1.5"/><rect x="31" y="8" width="16" height="38" rx="4" fill="#fff" stroke="'+INK+'" stroke-width="2"/><rect x="29" y="11" width="20" height="13" fill="#F7B32B" stroke="'+INK+'" stroke-width="1.5"/></svg>',
+    warn:'<svg viewBox="0 0 54 54"><path d="M27 5 L51 47 H3 Z" fill="#F7B32B" stroke="#fff" stroke-width="3" stroke-linejoin="round"/><path d="M27 20v13" stroke="'+INK+'" stroke-width="4" stroke-linecap="round"/><circle cx="27" cy="40" r="2.6" fill="'+INK+'"/></svg>',
+  };
+  const C = [
+    ['rg', 'Range', 'Largest − smallest. Quick, but only the two end values decide it.'],
+    ['dv', 'Distances cancel', 'Distances to the mean always add up to 0, so their plain average says nothing.'],
+    ['sq', 'Squares', 'Square each distance: no minus signs, and far values count extra.'],
+    ['av', 'Variance, standard deviation', 'Variance = the average square. Standard deviation = its side, in the data’s unit.'],
+    ['n1', 'Why n − 1', 'A sample measures from its own mean, so its squares run small. Divide by n − 1.'],
+    ['cv', 'Coefficient of variation', 'Standard deviation ÷ mean × 100%: a spread next to its own mean, with no unit.'],
+  ];
+  $('#recap').innerHTML = C.map(([i, t, d]) => '<div class="rc"><span class="ri">'+I[i]+'</span><div><b>'+t+'</b><span>'+d+'</span></div></div>').join('')
+    + '<div class="rc trap"><span class="ri">'+I.warn+'</span><div><b>The trap</b><span>“Variance 4” is not “4 minutes away”. It is an area, in squared units. Say the standard deviation.</span></div></div>'
+    + '<div class="rc next"><div><b>The door to T1.6</b><span>Lina’s delivery took 12 minutes. Slow? One week it is the slowest of all; another week it is ordinary.</span><button class="btn sm" type="button" id="again" style="margin-top:8px;display:block">Watch T1.5 again</button></div></div>';
+  $('#again').addEventListener('click', () => go(0));
+})();
+/* =========================================================== confetti */
+function confetti(){
+  if (reduced) return;
+  const c = $('#confetti'), x = c.getContext('2d');
+  c.width = innerWidth; c.height = innerHeight;
+  const cols = ['#EE7F1B','#2F55D4','#F7B32B','#6E9F2E','#D93A62','#8E6CC9'];
+  const P = Array.from({length:150}, () => ({x:innerWidth/2 + (Math.random() - .5)*240, y:innerHeight*.4, vx:(Math.random() - .5)*15, vy:-Math.random()*15 - 4, r:Math.random()*7 + 5, c:cols[Math.floor(Math.random()*cols.length)], a:Math.random()*6, va:(Math.random() - .5)*.4}));
+  let t = 0;
+  (function f(){
+    x.clearRect(0, 0, c.width, c.height);
+    P.forEach(p => { p.vy += .42; p.x += p.vx; p.y += p.vy; p.a += p.va; x.save(); x.translate(p.x, p.y); x.rotate(p.a); x.fillStyle = p.c; x.fillRect(-p.r/2, -p.r/3, p.r, p.r*.66); x.restore(); });
+    if (++t < 120) requestAnimationFrame(f); else x.clearRect(0, 0, c.width, c.height);
+  })();
+}
+
+/* =========================================================== start */
+const m0 = /^#s(\d+)$/.exec(location.hash);
+go(m0 ? +m0[1] : 0);
+})();
+</script>
+</body>
+</html>
