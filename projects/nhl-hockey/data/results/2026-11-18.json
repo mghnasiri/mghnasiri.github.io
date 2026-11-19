@@ -1,0 +1,956 @@
+{
+  "date": "2026-11-18",
+  "games_count": 3,
+  "final_games": 3,
+  "partial": false,
+  "games": [
+    {
+      "game_id": 2026020344,
+      "home_team": "DET",
+      "away_team": "BOS",
+      "game_state": "OFF",
+      "schedule_state": "OK"
+    },
+    {
+      "game_id": 2026020345,
+      "home_team": "NJD",
+      "away_team": "MTL",
+      "game_state": "OFF",
+      "schedule_state": "OK"
+    },
+    {
+      "game_id": 2026020346,
+      "home_team": "UTA",
+      "away_team": "COL",
+      "game_state": "OFF",
+      "schedule_state": "OK"
+    }
+  ],
+  "all_scorers": [
+    {
+      "player_id": 8482175,
+      "player_name": "J. Peterka",
+      "team": "BOS",
+      "goals": 1,
+      "game_id": 2026020344,
+      "matchup": "BOS @ DET"
+    },
+    {
+      "player_id": 8479999,
+      "player_name": "C. Mittelstadt",
+      "team": "BOS",
+      "goals": 1,
+      "game_id": 2026020344,
+      "matchup": "BOS @ DET"
+    },
+    {
+      "player_id": 8478401,
+      "player_name": "P. Zacha",
+      "team": "BOS",
+      "goals": 1,
+      "game_id": 2026020344,
+      "matchup": "BOS @ DET"
+    },
+    {
+      "player_id": 8477956,
+      "player_name": "D. Pastrnak",
+      "team": "BOS",
+      "goals": 1,
+      "game_id": 2026020344,
+      "matchup": "BOS @ DET"
+    },
+    {
+      "player_id": 8482078,
+      "player_name": "L. Raymond",
+      "team": "DET",
+      "goals": 1,
+      "game_id": 2026020344,
+      "matchup": "BOS @ DET"
+    },
+    {
+      "player_id": 8480018,
+      "player_name": "N. Suzuki",
+      "team": "MTL",
+      "goals": 1,
+      "game_id": 2026020345,
+      "matchup": "MTL @ NJD"
+    },
+    {
+      "player_id": 8481618,
+      "player_name": "A. Newhook",
+      "team": "MTL",
+      "goals": 1,
+      "game_id": 2026020345,
+      "matchup": "MTL @ NJD"
+    },
+    {
+      "player_id": 8478133,
+      "player_name": "J. Evans",
+      "team": "MTL",
+      "goals": 1,
+      "game_id": 2026020345,
+      "matchup": "MTL @ NJD"
+    },
+    {
+      "player_id": 8478414,
+      "player_name": "T. Meier",
+      "team": "NJD",
+      "goals": 1,
+      "game_id": 2026020345,
+      "matchup": "MTL @ NJD"
+    },
+    {
+      "player_id": 8482146,
+      "player_name": "L. Evangelista",
+      "team": "NJD",
+      "goals": 1,
+      "game_id": 2026020345,
+      "matchup": "MTL @ NJD"
+    },
+    {
+      "player_id": 8480448,
+      "player_name": "P. Kelly",
+      "team": "COL",
+      "goals": 1,
+      "game_id": 2026020346,
+      "matchup": "COL @ UTA"
+    },
+    {
+      "player_id": 8476389,
+      "player_name": "V. Trocheck",
+      "team": "UTA",
+      "goals": 1,
+      "game_id": 2026020346,
+      "matchup": "COL @ UTA"
+    },
+    {
+      "player_id": 8477070,
+      "player_name": "L. O'Brien",
+      "team": "UTA",
+      "goals": 1,
+      "game_id": 2026020346,
+      "matchup": "COL @ UTA"
+    },
+    {
+      "player_id": 8478831,
+      "player_name": "K. Stenlund",
+      "team": "UTA",
+      "goals": 1,
+      "game_id": 2026020346,
+      "matchup": "COL @ UTA"
+    },
+    {
+      "player_id": 8484386,
+      "player_name": "D. Simashev",
+      "team": "UTA",
+      "goals": 1,
+      "game_id": 2026020346,
+      "matchup": "COL @ UTA"
+    }
+  ],
+  "scorers_count": 15,
+  "model_comparisons": [
+    {
+      "model": "blend",
+      "model_display_name": "Blend v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8481559,
+          "name": "Jack Hughes",
+          "team": "NJD",
+          "probability": 0.3727,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8481540,
+          "name": "Cole Caufield",
+          "team": "MTL",
+          "probability": 0.3508,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.3334,
+          "scored": true
+        },
+        {
+          "rank": 4,
+          "player_id": 8477476,
+          "name": "Artturi Lehkonen",
+          "team": "COL",
+          "probability": 0.3182,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8479337,
+          "name": "Alex DeBrincat",
+          "team": "DET",
+          "probability": 0.3065,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8480002,
+          "name": "Nico Hischier",
+          "team": "NJD",
+          "probability": 0.3039,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8478042,
+          "name": "Viktor Arvidsson",
+          "team": "DET",
+          "probability": 0.3024,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8475172,
+          "name": "Nazem Kadri",
+          "team": "COL",
+          "probability": 0.3019,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8478414,
+          "name": "Timo Meier",
+          "team": "NJD",
+          "probability": 0.3012,
+          "scored": true
+        },
+        {
+          "rank": 10,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.2984,
+          "scored": false
+        }
+      ],
+      "hits": 2,
+      "total_predictions": 10,
+      "hit_rate": 20.0
+    },
+    {
+      "model": "direct_lr",
+      "model_display_name": "Direct LR v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8481540,
+          "name": "Cole Caufield",
+          "team": "MTL",
+          "probability": 0.3668,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.3618,
+          "scored": true
+        },
+        {
+          "rank": 3,
+          "player_id": 8479337,
+          "name": "Alex DeBrincat",
+          "team": "DET",
+          "probability": 0.3616,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8481559,
+          "name": "Jack Hughes",
+          "team": "NJD",
+          "probability": 0.356,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8479343,
+          "name": "Clayton Keller",
+          "team": "UTA",
+          "probability": 0.3202,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8478042,
+          "name": "Viktor Arvidsson",
+          "team": "DET",
+          "probability": 0.3062,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8482078,
+          "name": "Lucas Raymond",
+          "team": "DET",
+          "probability": 0.304,
+          "scored": true
+        },
+        {
+          "rank": 8,
+          "player_id": 8480018,
+          "name": "Nick Suzuki",
+          "team": "MTL",
+          "probability": 0.3032,
+          "scored": true
+        },
+        {
+          "rank": 9,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.2944,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8480002,
+          "name": "Nico Hischier",
+          "team": "NJD",
+          "probability": 0.2912,
+          "scored": false
+        }
+      ],
+      "hits": 3,
+      "total_predictions": 10,
+      "hit_rate": 30.0
+    },
+    {
+      "model": "lineup_v1",
+      "model_display_name": "Lineup TOI v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8478414,
+          "name": "Timo Meier",
+          "team": "NJD",
+          "probability": 0.3586,
+          "scored": true
+        },
+        {
+          "rank": 2,
+          "player_id": 8481559,
+          "name": "Jack Hughes",
+          "team": "NJD",
+          "probability": 0.3412,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8480002,
+          "name": "Nico Hischier",
+          "team": "NJD",
+          "probability": 0.3224,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8475172,
+          "name": "Nazem Kadri",
+          "team": "COL",
+          "probability": 0.3186,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8477476,
+          "name": "Artturi Lehkonen",
+          "team": "COL",
+          "probability": 0.3101,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8478042,
+          "name": "Viktor Arvidsson",
+          "team": "DET",
+          "probability": 0.2735,
+          "scored": false
+        },
+        {
+          "rank": 11,
+          "player_id": 8479343,
+          "name": "Clayton Keller",
+          "team": "UTA",
+          "probability": 0.2508,
+          "scored": false
+        },
+        {
+          "rank": 12,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.2454,
+          "scored": false
+        },
+        {
+          "rank": 13,
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.2441,
+          "scored": true
+        },
+        {
+          "rank": 14,
+          "player_id": 8481540,
+          "name": "Cole Caufield",
+          "team": "MTL",
+          "probability": 0.2367,
+          "scored": false
+        }
+      ],
+      "hits": 2,
+      "total_predictions": 10,
+      "hit_rate": 20.0
+    },
+    {
+      "model": "market_odds",
+      "model_display_name": "Market Odds v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8481559,
+          "name": "Jack Hughes",
+          "team": "NJD",
+          "probability": 0.4115,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8481540,
+          "name": "Cole Caufield",
+          "team": "MTL",
+          "probability": 0.3956,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.3879,
+          "scored": true
+        },
+        {
+          "rank": 5,
+          "player_id": 8479337,
+          "name": "Alex DeBrincat",
+          "team": "DET",
+          "probability": 0.3684,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.3617,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8477476,
+          "name": "Artturi Lehkonen",
+          "team": "COL",
+          "probability": 0.3592,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8479343,
+          "name": "Clayton Keller",
+          "team": "UTA",
+          "probability": 0.3361,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8480002,
+          "name": "Nico Hischier",
+          "team": "NJD",
+          "probability": 0.3358,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8478042,
+          "name": "Viktor Arvidsson",
+          "team": "DET",
+          "probability": 0.3119,
+          "scored": false
+        },
+        {
+          "rank": 11,
+          "player_id": 8482078,
+          "name": "Lucas Raymond",
+          "team": "DET",
+          "probability": 0.3099,
+          "scored": true
+        }
+      ],
+      "hits": 2,
+      "total_predictions": 10,
+      "hit_rate": 20.0
+    },
+    {
+      "model": "monte_carlo",
+      "model_display_name": "Monte Carlo v2",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8477476,
+          "name": "Artturi Lehkonen",
+          "team": "COL",
+          "probability": 0.3578,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8481540,
+          "name": "Cole Caufield",
+          "team": "MTL",
+          "probability": 0.3047,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8480018,
+          "name": "Nick Suzuki",
+          "team": "MTL",
+          "probability": 0.2902,
+          "scored": true
+        },
+        {
+          "rank": 7,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.2873,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8481559,
+          "name": "Jack Hughes",
+          "team": "NJD",
+          "probability": 0.2801,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.2752,
+          "scored": true
+        },
+        {
+          "rank": 10,
+          "player_id": 8480002,
+          "name": "Nico Hischier",
+          "team": "NJD",
+          "probability": 0.2634,
+          "scored": false
+        },
+        {
+          "rank": 12,
+          "player_id": 8482078,
+          "name": "Lucas Raymond",
+          "team": "DET",
+          "probability": 0.2583,
+          "scored": true
+        },
+        {
+          "rank": 13,
+          "player_id": 8478042,
+          "name": "Viktor Arvidsson",
+          "team": "DET",
+          "probability": 0.2577,
+          "scored": false
+        },
+        {
+          "rank": 14,
+          "player_id": 8476455,
+          "name": "Gabriel Landeskog",
+          "team": "COL",
+          "probability": 0.2557,
+          "scored": false
+        }
+      ],
+      "hits": 3,
+      "total_predictions": 10,
+      "hit_rate": 30.0
+    },
+    {
+      "model": "neural_network",
+      "model_display_name": "Weighted Linear v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8477476,
+          "name": "Artturi Lehkonen",
+          "team": "COL",
+          "probability": 0.55,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8481559,
+          "name": "Jack Hughes",
+          "team": "NJD",
+          "probability": 0.515,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8481540,
+          "name": "Cole Caufield",
+          "team": "MTL",
+          "probability": 0.473,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8480018,
+          "name": "Nick Suzuki",
+          "team": "MTL",
+          "probability": 0.456,
+          "scored": true
+        },
+        {
+          "rank": 8,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.452,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8478414,
+          "name": "Timo Meier",
+          "team": "NJD",
+          "probability": 0.449,
+          "scored": true
+        },
+        {
+          "rank": 10,
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.444,
+          "scored": true
+        },
+        {
+          "rank": 12,
+          "player_id": 8482078,
+          "name": "Lucas Raymond",
+          "team": "DET",
+          "probability": 0.423,
+          "scored": true
+        },
+        {
+          "rank": 13,
+          "player_id": 8480002,
+          "name": "Nico Hischier",
+          "team": "NJD",
+          "probability": 0.4,
+          "scored": false
+        },
+        {
+          "rank": 15,
+          "player_id": 8476455,
+          "name": "Gabriel Landeskog",
+          "team": "COL",
+          "probability": 0.383,
+          "scored": false
+        }
+      ],
+      "hits": 4,
+      "total_predictions": 10,
+      "hit_rate": 40.0
+    },
+    {
+      "model": "neural_v2",
+      "model_display_name": "Neural Embed v2",
+      "top10_picks": [
+        {
+          "rank": 2,
+          "player_id": 8481540,
+          "name": "Cole Caufield",
+          "team": "MTL",
+          "probability": 0.4189,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8481559,
+          "name": "Jack Hughes",
+          "team": "NJD",
+          "probability": 0.3933,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.348,
+          "scored": true
+        },
+        {
+          "rank": 6,
+          "player_id": 8477476,
+          "name": "Artturi Lehkonen",
+          "team": "COL",
+          "probability": 0.3206,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8475172,
+          "name": "Nazem Kadri",
+          "team": "COL",
+          "probability": 0.31,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.3045,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8478414,
+          "name": "Timo Meier",
+          "team": "NJD",
+          "probability": 0.3041,
+          "scored": true
+        },
+        {
+          "rank": 12,
+          "player_id": 8478042,
+          "name": "Viktor Arvidsson",
+          "team": "DET",
+          "probability": 0.3011,
+          "scored": false
+        },
+        {
+          "rank": 13,
+          "player_id": 8480002,
+          "name": "Nico Hischier",
+          "team": "NJD",
+          "probability": 0.2841,
+          "scored": false
+        },
+        {
+          "rank": 16,
+          "player_id": 8479337,
+          "name": "Alex DeBrincat",
+          "team": "DET",
+          "probability": 0.272,
+          "scored": false
+        }
+      ],
+      "hits": 2,
+      "total_predictions": 10,
+      "hit_rate": 20.0
+    },
+    {
+      "model": "xg_v3",
+      "model_display_name": "xG XGBoost v3",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8478414,
+          "name": "Timo Meier",
+          "team": "NJD",
+          "probability": 0.3406,
+          "scored": true
+        },
+        {
+          "rank": 2,
+          "player_id": 8481559,
+          "name": "Jack Hughes",
+          "team": "NJD",
+          "probability": 0.3322,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8475172,
+          "name": "Nazem Kadri",
+          "team": "COL",
+          "probability": 0.3318,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8477476,
+          "name": "Artturi Lehkonen",
+          "team": "COL",
+          "probability": 0.3101,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8480002,
+          "name": "Nico Hischier",
+          "team": "NJD",
+          "probability": 0.306,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8478042,
+          "name": "Viktor Arvidsson",
+          "team": "DET",
+          "probability": 0.2908,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8477956,
+          "name": "David Pastrnak",
+          "team": "BOS",
+          "probability": 0.2462,
+          "scored": true
+        },
+        {
+          "rank": 12,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.2402,
+          "scored": false
+        },
+        {
+          "rank": 13,
+          "player_id": 8481540,
+          "name": "Cole Caufield",
+          "team": "MTL",
+          "probability": 0.2378,
+          "scored": false
+        },
+        {
+          "rank": 16,
+          "player_id": 8479337,
+          "name": "Alex DeBrincat",
+          "team": "DET",
+          "probability": 0.2362,
+          "scored": false
+        }
+      ],
+      "hits": 2,
+      "total_predictions": 10,
+      "hit_rate": 20.0
+    },
+    {
+      "model": "xg_v3_synthetic",
+      "model_display_name": "xG XGBoost v3 (synthetic shadow)",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8480039,
+          "name": "Martin Necas",
+          "team": "COL",
+          "probability": 0.6267,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8476455,
+          "name": "Gabriel Landeskog",
+          "team": "COL",
+          "probability": 0.5103,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8480018,
+          "name": "Nick Suzuki",
+          "team": "MTL",
+          "probability": 0.441,
+          "scored": true
+        },
+        {
+          "rank": 9,
+          "player_id": 8477476,
+          "name": "Artturi Lehkonen",
+          "team": "COL",
+          "probability": 0.4324,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8478042,
+          "name": "Viktor Arvidsson",
+          "team": "DET",
+          "probability": 0.4205,
+          "scored": false
+        },
+        {
+          "rank": 11,
+          "player_id": 8479337,
+          "name": "Alex DeBrincat",
+          "team": "DET",
+          "probability": 0.4197,
+          "scored": false
+        },
+        {
+          "rank": 14,
+          "player_id": 8480002,
+          "name": "Nico Hischier",
+          "team": "NJD",
+          "probability": 0.3964,
+          "scored": false
+        },
+        {
+          "rank": 16,
+          "player_id": 8481559,
+          "name": "Jack Hughes",
+          "team": "NJD",
+          "probability": 0.387,
+          "scored": false
+        },
+        {
+          "rank": 19,
+          "player_id": 8479343,
+          "name": "Clayton Keller",
+          "team": "UTA",
+          "probability": 0.3792,
+          "scored": false
+        },
+        {
+          "rank": 23,
+          "player_id": 8481618,
+          "name": "Alex Newhook",
+          "team": "MTL",
+          "probability": 0.3524,
+          "scored": true
+        }
+      ],
+      "hits": 2,
+      "total_predictions": 10,
+      "hit_rate": 20.0
+    }
+  ],
+  "fetched_at": "2026-11-19T10:18:05.730715"
+}
