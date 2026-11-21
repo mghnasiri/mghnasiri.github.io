@@ -1,15 +1,9 @@
 {
   "date": "2026-11-21",
   "source": "timnhlassist.com",
-  "players_count": 43,
+  "players_count": 41,
   "groups": {
     "1": [
-      {
-        "name": "Leon Draisaitl",
-        "player_id": 8477934,
-        "team": "EDM",
-        "position": "Forward"
-      },
       {
         "name": "Cutter Gauthier",
         "player_id": 8483445,
@@ -26,12 +20,6 @@
         "name": "Kyle Connor",
         "player_id": 8478398,
         "team": "WPG",
-        "position": "Forward"
-      },
-      {
-        "name": "Connor McDavid",
-        "player_id": 8478402,
-        "team": "EDM",
         "position": "Forward"
       },
       {
@@ -91,15 +79,15 @@
         "position": "Forward"
       },
       {
-        "name": "Cole Caufield",
-        "player_id": 8481540,
-        "team": "MTL",
+        "name": "Alex Tuch",
+        "player_id": 8477949,
+        "team": "WSH",
         "position": "Forward"
       },
       {
-        "name": "Brady Tkachuk",
-        "player_id": 8480801,
-        "team": "FLA",
+        "name": "Cole Caufield",
+        "player_id": 8481540,
+        "team": "MTL",
         "position": "Forward"
       },
       {
@@ -127,9 +115,9 @@
         "position": "Forward"
       },
       {
-        "name": "Sam Bennett",
-        "player_id": 8477935,
-        "team": "FLA",
+        "name": "Casey Mittelstadt",
+        "player_id": 8479999,
+        "team": "BOS",
         "position": "Forward"
       },
       {
@@ -169,9 +157,9 @@
         "position": "Forward"
       },
       {
-        "name": "Jordan Staal",
-        "player_id": 8473533,
-        "team": "CAR",
+        "name": "Kevin Fiala",
+        "player_id": 8477942,
+        "team": "LAK",
         "position": "Forward"
       }
     ],
@@ -195,9 +183,9 @@
         "position": "Defenseman"
       },
       {
-        "name": "Sean Walker",
-        "player_id": 8480336,
-        "team": "CAR",
+        "name": "Justin Faulk",
+        "player_id": 8475753,
+        "team": "DET",
         "position": "Defenseman"
       },
       {
@@ -213,15 +201,21 @@
         "position": "Defenseman"
       },
       {
-        "name": "Eric Robinson",
-        "player_id": 8480762,
-        "team": "CAR",
+        "name": "Scott Laughton",
+        "player_id": 8476872,
+        "team": "LAK",
         "position": "Forward"
       },
       {
         "name": "Andre Lee",
         "player_id": 8481732,
         "team": "LAK",
+        "position": "Forward"
+      },
+      {
+        "name": "Jean-Gabriel Pageau",
+        "player_id": 8476419,
+        "team": "NYI",
         "position": "Forward"
       },
       {
@@ -235,12 +229,6 @@
         "player_id": 8479992,
         "team": "DET",
         "position": "Forward"
-      },
-      {
-        "name": "Alexander Nikishin",
-        "player_id": 8482100,
-        "team": "CAR",
-        "position": "Defensemen"
       },
       {
         "name": "Dakota Joshua",
@@ -270,14 +258,6 @@
   },
   "all_players": [
     {
-      "name": "Leon Draisaitl",
-      "player_id": 8477934,
-      "team": "EDM",
-      "position": "Forward",
-      "goals": 21,
-      "shots": 92
-    },
-    {
       "name": "Cutter Gauthier",
       "player_id": 8483445,
       "team": "ANA",
@@ -300,14 +280,6 @@
       "position": "Forward",
       "goals": 18,
       "shots": 99
-    },
-    {
-      "name": "Connor McDavid",
-      "player_id": 8478402,
-      "team": "EDM",
-      "position": "Forward",
-      "goals": 13,
-      "shots": 66
     },
     {
       "name": "Auston Matthews",
@@ -382,20 +354,20 @@
       "shots": 89
     },
     {
+      "name": "Alex Tuch",
+      "player_id": 8477949,
+      "team": "WSH",
+      "position": "Forward",
+      "goals": 13,
+      "shots": 50
+    },
+    {
       "name": "Cole Caufield",
       "player_id": 8481540,
       "team": "MTL",
       "position": "Forward",
       "goals": 12,
       "shots": 76
-    },
-    {
-      "name": "Brady Tkachuk",
-      "player_id": 8480801,
-      "team": "FLA",
-      "position": "Forward",
-      "goals": 11,
-      "shots": 82
     },
     {
       "name": "Mark Stone",
@@ -430,12 +402,12 @@
       "shots": 40
     },
     {
-      "name": "Sam Bennett",
-      "player_id": 8477935,
-      "team": "FLA",
+      "name": "Casey Mittelstadt",
+      "player_id": 8479999,
+      "team": "BOS",
       "position": "Forward",
-      "goals": 7,
-      "shots": 56
+      "goals": 8,
+      "shots": 30
     },
     {
       "name": "Alex Iafallo",
@@ -486,12 +458,12 @@
       "shots": 26
     },
     {
-      "name": "Jordan Staal",
-      "player_id": 8473533,
-      "team": "CAR",
+      "name": "Kevin Fiala",
+      "player_id": 8477942,
+      "team": "LAK",
       "position": "Forward",
       "goals": 0,
-      "shots": 9
+      "shots": 4
     },
     {
       "name": "Travis Sanheim",
@@ -518,12 +490,12 @@
       "shots": 30
     },
     {
-      "name": "Sean Walker",
-      "player_id": 8480336,
-      "team": "CAR",
+      "name": "Justin Faulk",
+      "player_id": 8475753,
+      "team": "DET",
       "position": "Defenseman",
       "goals": 3,
-      "shots": 42
+      "shots": 30
     },
     {
       "name": "Jonatan Berggren",
@@ -542,12 +514,12 @@
       "shots": 37
     },
     {
-      "name": "Eric Robinson",
-      "player_id": 8480762,
-      "team": "CAR",
+      "name": "Scott Laughton",
+      "player_id": 8476872,
+      "team": "LAK",
       "position": "Forward",
       "goals": 2,
-      "shots": 27
+      "shots": 25
     },
     {
       "name": "Andre Lee",
@@ -556,6 +528,14 @@
       "position": "Forward",
       "goals": 2,
       "shots": 18
+    },
+    {
+      "name": "Jean-Gabriel Pageau",
+      "player_id": 8476419,
+      "team": "NYI",
+      "position": "Forward",
+      "goals": 1,
+      "shots": 23
     },
     {
       "name": "Ben Meyers",
@@ -572,14 +552,6 @@
       "position": "Forward",
       "goals": 1,
       "shots": 30
-    },
-    {
-      "name": "Alexander Nikishin",
-      "player_id": 8482100,
-      "team": "CAR",
-      "position": "Defensemen",
-      "goals": 1,
-      "shots": 2
     },
     {
       "name": "Dakota Joshua",
@@ -614,5 +586,5 @@
       "shots": 0
     }
   ],
-  "scraped_at": "2026-11-21T12:19:29.055346"
+  "scraped_at": "2026-11-21T15:29:50.968655"
 }
