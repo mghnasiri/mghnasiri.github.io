@@ -1,7 +1,7 @@
 {
   "date": "2026-11-21",
   "source": "timnhlassist.com",
-  "players_count": 40,
+  "players_count": 41,
   "groups": {
     "1": [
       {
@@ -73,21 +73,21 @@
     ],
     "2": [
       {
+        "name": "Tage Thompson",
+        "player_id": 8479420,
+        "team": "BUF",
+        "position": "Forward"
+      },
+      {
+        "name": "Alex Tuch",
+        "player_id": 8477949,
+        "team": "WSH",
+        "position": "Forward"
+      },
+      {
         "name": "Cole Caufield",
         "player_id": 8481540,
         "team": "MTL",
-        "position": "Forward"
-      },
-      {
-        "name": "Jimmy Snuggerud",
-        "player_id": 8483516,
-        "team": "STL",
-        "position": "Forward"
-      },
-      {
-        "name": "Brady Tkachuk",
-        "player_id": 8480801,
-        "team": "FLA",
         "position": "Forward"
       },
       {
@@ -106,18 +106,6 @@
         "name": "Casey Mittelstadt",
         "player_id": 8479999,
         "team": "BOS",
-        "position": "Forward"
-      },
-      {
-        "name": "Rickard Rakell",
-        "player_id": 8476483,
-        "team": "PIT",
-        "position": "Forward"
-      },
-      {
-        "name": "Barrett Hayton",
-        "player_id": 8480849,
-        "team": "UTA",
         "position": "Forward"
       },
       {
@@ -193,6 +181,12 @@
         "player_id": 8481013,
         "team": "STL",
         "position": "Forward"
+      },
+      {
+        "name": "Simon Nemec",
+        "player_id": 8483495,
+        "team": "CGY",
+        "position": "Defenseman"
       },
       {
         "name": "Scott Laughton",
@@ -340,28 +334,28 @@
       "shots": 60
     },
     {
+      "name": "Tage Thompson",
+      "player_id": 8479420,
+      "team": "BUF",
+      "position": "Forward",
+      "goals": 14,
+      "shots": 89
+    },
+    {
+      "name": "Alex Tuch",
+      "player_id": 8477949,
+      "team": "WSH",
+      "position": "Forward",
+      "goals": 13,
+      "shots": 50
+    },
+    {
       "name": "Cole Caufield",
       "player_id": 8481540,
       "team": "MTL",
       "position": "Forward",
       "goals": 12,
       "shots": 76
-    },
-    {
-      "name": "Jimmy Snuggerud",
-      "player_id": 8483516,
-      "team": "STL",
-      "position": "Forward",
-      "goals": 12,
-      "shots": 50
-    },
-    {
-      "name": "Brady Tkachuk",
-      "player_id": 8480801,
-      "team": "FLA",
-      "position": "Forward",
-      "goals": 11,
-      "shots": 82
     },
     {
       "name": "Mark Stone",
@@ -386,22 +380,6 @@
       "position": "Forward",
       "goals": 8,
       "shots": 30
-    },
-    {
-      "name": "Rickard Rakell",
-      "player_id": 8476483,
-      "team": "PIT",
-      "position": "Forward",
-      "goals": 8,
-      "shots": 55
-    },
-    {
-      "name": "Barrett Hayton",
-      "player_id": 8480849,
-      "team": "UTA",
-      "position": "Forward",
-      "goals": 4,
-      "shots": 44
     },
     {
       "name": "Alex Iafallo",
@@ -500,6 +478,14 @@
       "shots": 31
     },
     {
+      "name": "Simon Nemec",
+      "player_id": 8483495,
+      "team": "CGY",
+      "position": "Defenseman",
+      "goals": 2,
+      "shots": 37
+    },
+    {
       "name": "Scott Laughton",
       "player_id": 8476872,
       "team": "LAK",
@@ -572,5 +558,5 @@
       "shots": 0
     }
   ],
-  "scraped_at": "2026-11-21T15:36:29.616272"
+  "scraped_at": "2026-11-21T15:27:18.863712"
 }

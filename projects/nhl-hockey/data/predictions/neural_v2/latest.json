@@ -103,7 +103,7 @@
       "game_type": 2
     }
   ],
-  "players_count": 43,
+  "players_count": 41,
   "predictions": [
     {
       "player_id": 8483445,
@@ -587,43 +587,6 @@
       "tims_rank": 13
     },
     {
-      "player_id": 8477934,
-      "name": "Leon Draisaitl",
-      "position": "C",
-      "team": "EDM",
-      "games_played": 24,
-      "season_goals": 21,
-      "season_shots": 92,
-      "season_assists": 23,
-      "season_points": 44,
-      "pp_goals": 9,
-      "pp_points": 14,
-      "avg_toi_minutes": 21.7,
-      "recent_toi_minutes": 20.9,
-      "avg_goals": 0.875,
-      "avg_shots": 3.83,
-      "shooting_pct": 0.2283,
-      "last5_goals": 3,
-      "last5_shots": 18,
-      "last5_games": 5,
-      "recent_gpg": 0.6,
-      "prior_games": 0,
-      "opponent": "CAR",
-      "is_home": false,
-      "game_id": 2026020359,
-      "matchup": "EDM @ CAR",
-      "tims_group": "1",
-      "goal_probability": 0.3516,
-      "raw_goal_probability": 0.7903,
-      "player_xg": 0.4332,
-      "expected_shots": 2.71,
-      "avg_shot_xg": 0.1143,
-      "xg_source": "real",
-      "known_in_embedding": true,
-      "rank": 20,
-      "tims_rank": 14
-    },
-    {
       "player_id": 8479318,
       "name": "Auston Matthews",
       "position": "C",
@@ -658,81 +621,7 @@
       "xg_source": "real",
       "known_in_embedding": true,
       "rank": 22,
-      "tims_rank": 15
-    },
-    {
-      "player_id": 8480801,
-      "name": "Brady Tkachuk",
-      "position": "L",
-      "team": "FLA",
-      "games_played": 23,
-      "season_goals": 11,
-      "season_shots": 82,
-      "season_assists": 13,
-      "season_points": 24,
-      "pp_goals": 5,
-      "pp_points": 13,
-      "avg_toi_minutes": 16.6,
-      "recent_toi_minutes": 16.0,
-      "avg_goals": 0.4783,
-      "avg_shots": 3.57,
-      "shooting_pct": 0.1341,
-      "last5_goals": 1,
-      "last5_shots": 16,
-      "last5_games": 5,
-      "recent_gpg": 0.2,
-      "prior_games": 0,
-      "opponent": "BUF",
-      "is_home": true,
-      "game_id": 2026020361,
-      "matchup": "FLA vs BUF",
-      "tims_group": "2",
-      "goal_probability": 0.3414,
-      "raw_goal_probability": 0.8329,
-      "player_xg": 0.4177,
-      "expected_shots": 4.18,
-      "avg_shot_xg": 0.0714,
-      "xg_source": "real",
-      "known_in_embedding": true,
-      "rank": 23,
-      "tims_rank": 16
-    },
-    {
-      "player_id": 8477935,
-      "name": "Sam Bennett",
-      "position": "C",
-      "team": "FLA",
-      "games_played": 23,
-      "season_goals": 7,
-      "season_shots": 56,
-      "season_assists": 5,
-      "season_points": 12,
-      "pp_goals": 1,
-      "pp_points": 1,
-      "avg_toi_minutes": 17.3,
-      "recent_toi_minutes": 16.0,
-      "avg_goals": 0.3043,
-      "avg_shots": 2.43,
-      "shooting_pct": 0.125,
-      "last5_goals": 2,
-      "last5_shots": 11,
-      "last5_games": 5,
-      "recent_gpg": 0.4,
-      "prior_games": 0,
-      "opponent": "BUF",
-      "is_home": true,
-      "game_id": 2026020361,
-      "matchup": "FLA vs BUF",
-      "tims_group": "2",
-      "goal_probability": 0.3216,
-      "raw_goal_probability": 0.7797,
-      "player_xg": 0.3881,
-      "expected_shots": 2.84,
-      "avg_shot_xg": 0.0975,
-      "xg_source": "real",
-      "known_in_embedding": true,
-      "rank": 35,
-      "tims_rank": 17
+      "tims_rank": 14
     },
     {
       "player_id": 8479343,
@@ -769,7 +658,7 @@
       "xg_source": "real",
       "known_in_embedding": true,
       "rank": 49,
-      "tims_rank": 18
+      "tims_rank": 15
     },
     {
       "player_id": 8475913,
@@ -806,7 +695,44 @@
       "xg_source": "real",
       "known_in_embedding": true,
       "rank": 88,
-      "tims_rank": 19
+      "tims_rank": 16
+    },
+    {
+      "player_id": 8477949,
+      "name": "Alex Tuch",
+      "position": "R",
+      "team": "WSH",
+      "games_played": 20,
+      "season_goals": 13,
+      "season_shots": 50,
+      "season_assists": 3,
+      "season_points": 16,
+      "pp_goals": 0,
+      "pp_points": 1,
+      "avg_toi_minutes": 18.9,
+      "recent_toi_minutes": 18.0,
+      "avg_goals": 0.65,
+      "avg_shots": 2.5,
+      "shooting_pct": 0.26,
+      "last5_goals": 2,
+      "last5_shots": 8,
+      "last5_games": 5,
+      "recent_gpg": 0.4,
+      "prior_games": 0,
+      "opponent": "BOS",
+      "is_home": false,
+      "game_id": 2026020363,
+      "matchup": "WSH @ BOS",
+      "tims_group": "2",
+      "goal_probability": 0.2617,
+      "raw_goal_probability": 0.6833,
+      "player_xg": 0.3034,
+      "expected_shots": 2.02,
+      "avg_shot_xg": 0.1073,
+      "xg_source": "real",
+      "known_in_embedding": true,
+      "rank": 89,
+      "tims_rank": 17
     },
     {
       "player_id": 8475745,
@@ -843,44 +769,7 @@
       "xg_source": "real",
       "known_in_embedding": true,
       "rank": 92,
-      "tims_rank": 20
-    },
-    {
-      "player_id": 8478402,
-      "name": "Connor McDavid",
-      "position": "C",
-      "team": "EDM",
-      "games_played": 24,
-      "season_goals": 13,
-      "season_shots": 66,
-      "season_assists": 42,
-      "season_points": 55,
-      "pp_goals": 1,
-      "pp_points": 23,
-      "avg_toi_minutes": 23.5,
-      "recent_toi_minutes": 22.7,
-      "avg_goals": 0.5417,
-      "avg_shots": 2.75,
-      "shooting_pct": 0.197,
-      "last5_goals": 2,
-      "last5_shots": 13,
-      "last5_games": 5,
-      "recent_gpg": 0.4,
-      "prior_games": 0,
-      "opponent": "CAR",
-      "is_home": false,
-      "game_id": 2026020359,
-      "matchup": "EDM @ CAR",
-      "tims_group": "1",
-      "goal_probability": 0.2386,
-      "raw_goal_probability": 0.6485,
-      "player_xg": 0.2725,
-      "expected_shots": 1.94,
-      "avg_shot_xg": 0.1002,
-      "xg_source": "real",
-      "known_in_embedding": true,
-      "rank": 112,
-      "tims_rank": 21
+      "tims_rank": 18
     },
     {
       "player_id": 8483493,
@@ -917,7 +806,44 @@
       "xg_source": "real",
       "known_in_embedding": true,
       "rank": 136,
-      "tims_rank": 22
+      "tims_rank": 19
+    },
+    {
+      "player_id": 8477942,
+      "name": "Kevin Fiala",
+      "position": "L",
+      "team": "LAK",
+      "games_played": 10,
+      "season_goals": 1.9285714285714286,
+      "season_shots": 19.75,
+      "season_assists": 3.3571428571428568,
+      "season_points": 5.2857142857142865,
+      "pp_goals": 0.4285714285714285,
+      "pp_points": 2.821428571428571,
+      "avg_toi_minutes": 18.2,
+      "recent_toi_minutes": 17.3,
+      "avg_goals": 0.1929,
+      "avg_shots": 1.98,
+      "shooting_pct": 0.0976,
+      "last5_goals": 0.32142857142857145,
+      "last5_shots": 6.625,
+      "last5_games": 5,
+      "recent_gpg": 0.0643,
+      "prior_games": 6,
+      "opponent": "OTT",
+      "is_home": false,
+      "game_id": 2026020366,
+      "matchup": "LAK @ OTT",
+      "tims_group": "2",
+      "goal_probability": 0.1876,
+      "raw_goal_probability": 0.5818,
+      "player_xg": 0.2078,
+      "expected_shots": 1.86,
+      "avg_shot_xg": 0.0799,
+      "xg_source": "real",
+      "known_in_embedding": true,
+      "rank": 175,
+      "tims_rank": 20
     },
     {
       "player_id": 8478407,
@@ -954,7 +880,44 @@
       "xg_source": "real",
       "known_in_embedding": true,
       "rank": 183,
-      "tims_rank": 23
+      "tims_rank": 21
+    },
+    {
+      "player_id": 8479999,
+      "name": "Casey Mittelstadt",
+      "position": "C",
+      "team": "BOS",
+      "games_played": 22,
+      "season_goals": 8,
+      "season_shots": 30,
+      "season_assists": 6,
+      "season_points": 14,
+      "pp_goals": 0,
+      "pp_points": 1,
+      "avg_toi_minutes": 14.4,
+      "recent_toi_minutes": 14.9,
+      "avg_goals": 0.3636,
+      "avg_shots": 1.36,
+      "shooting_pct": 0.2667,
+      "last5_goals": 3,
+      "last5_shots": 6,
+      "last5_games": 5,
+      "recent_gpg": 0.6,
+      "prior_games": 0,
+      "opponent": "WSH",
+      "is_home": true,
+      "game_id": 2026020363,
+      "matchup": "BOS vs WSH",
+      "tims_group": "2",
+      "goal_probability": 0.1794,
+      "raw_goal_probability": 0.5683,
+      "player_xg": 0.1977,
+      "expected_shots": 1.73,
+      "avg_shot_xg": 0.0818,
+      "xg_source": "real",
+      "known_in_embedding": true,
+      "rank": 190,
+      "tims_rank": 22
     },
     {
       "player_id": 8478057,
@@ -991,44 +954,44 @@
       "xg_source": "real",
       "known_in_embedding": true,
       "rank": 196,
-      "tims_rank": 24
+      "tims_rank": 23
     },
     {
-      "player_id": 8473533,
-      "name": "Jordan Staal",
+      "player_id": 8476419,
+      "name": "Jean-Gabriel Pageau",
       "position": "C",
-      "team": "CAR",
-      "games_played": 10,
-      "season_goals": 0.5333333333333333,
-      "season_shots": 11.853333333333332,
-      "season_assists": 0.4266666666666667,
-      "season_points": 0.96,
-      "pp_goals": 0.10666666666666667,
-      "pp_points": 0.10666666666666667,
-      "avg_toi_minutes": 15.4,
-      "recent_toi_minutes": 14.6,
-      "avg_goals": 0.0533,
-      "avg_shots": 1.19,
-      "shooting_pct": 0.045,
+      "team": "NYI",
+      "games_played": 18,
+      "season_goals": 1,
+      "season_shots": 23,
+      "season_assists": 7,
+      "season_points": 8,
+      "pp_goals": 0,
+      "pp_points": 0,
+      "avg_toi_minutes": 15.7,
+      "recent_toi_minutes": 15.8,
+      "avg_goals": 0.0556,
+      "avg_shots": 1.28,
+      "shooting_pct": 0.0435,
       "last5_goals": 0,
-      "last5_shots": 5,
+      "last5_shots": 7,
       "last5_games": 5,
       "recent_gpg": 0.0,
-      "prior_games": 2,
-      "opponent": "EDM",
-      "is_home": true,
-      "game_id": 2026020359,
-      "matchup": "CAR vs EDM",
-      "tims_group": "2",
-      "goal_probability": 0.1679,
-      "raw_goal_probability": 0.4814,
-      "player_xg": 0.1838,
-      "expected_shots": 1.08,
-      "avg_shot_xg": 0.1219,
+      "prior_games": 0,
+      "opponent": "DET",
+      "is_home": false,
+      "game_id": 2026020367,
+      "matchup": "NYI @ DET",
+      "tims_group": "3",
+      "goal_probability": 0.1719,
+      "raw_goal_probability": 0.494,
+      "player_xg": 0.1886,
+      "expected_shots": 1.26,
+      "avg_shot_xg": 0.1073,
       "xg_source": "real",
       "known_in_embedding": true,
-      "rank": 209,
-      "tims_rank": 25
+      "rank": 202,
+      "tims_rank": 24
     },
     {
       "player_id": 8481013,
@@ -1065,7 +1028,7 @@
       "xg_source": "real",
       "known_in_embedding": true,
       "rank": 236,
-      "tims_rank": 26
+      "tims_rank": 25
     },
     {
       "player_id": 8483495,
@@ -1102,44 +1065,7 @@
       "xg_source": "real",
       "known_in_embedding": true,
       "rank": 245,
-      "tims_rank": 27
-    },
-    {
-      "player_id": 8480762,
-      "name": "Eric Robinson",
-      "position": "L",
-      "team": "CAR",
-      "games_played": 21,
-      "season_goals": 2,
-      "season_shots": 27,
-      "season_assists": 7,
-      "season_points": 9,
-      "pp_goals": 0,
-      "pp_points": 0,
-      "avg_toi_minutes": 12.3,
-      "recent_toi_minutes": 11.6,
-      "avg_goals": 0.0952,
-      "avg_shots": 1.29,
-      "shooting_pct": 0.0741,
-      "last5_goals": 0,
-      "last5_shots": 3,
-      "last5_games": 5,
-      "recent_gpg": 0.0,
-      "prior_games": 0,
-      "opponent": "EDM",
-      "is_home": true,
-      "game_id": 2026020359,
-      "matchup": "CAR vs EDM",
-      "tims_group": "3",
-      "goal_probability": 0.1419,
-      "raw_goal_probability": 0.4531,
-      "player_xg": 0.153,
-      "expected_shots": 1.17,
-      "avg_shot_xg": 0.0936,
-      "xg_source": "real",
-      "known_in_embedding": true,
-      "rank": 248,
-      "tims_rank": 28
+      "tims_rank": 26
     },
     {
       "player_id": 8480220,
@@ -1176,7 +1102,7 @@
       "xg_source": "real",
       "known_in_embedding": true,
       "rank": 254,
-      "tims_rank": 29
+      "tims_rank": 27
     },
     {
       "player_id": 8478444,
@@ -1213,7 +1139,7 @@
       "xg_source": "real",
       "known_in_embedding": true,
       "rank": 258,
-      "tims_rank": 30
+      "tims_rank": 28
     },
     {
       "player_id": 8477948,
@@ -1250,7 +1176,7 @@
       "xg_source": "real",
       "known_in_embedding": true,
       "rank": 270,
-      "tims_rank": 31
+      "tims_rank": 29
     },
     {
       "player_id": 8480113,
@@ -1287,7 +1213,7 @@
       "xg_source": "real",
       "known_in_embedding": true,
       "rank": 273,
-      "tims_rank": 32
+      "tims_rank": 30
     },
     {
       "player_id": 8479992,
@@ -1324,7 +1250,7 @@
       "xg_source": "real",
       "known_in_embedding": true,
       "rank": 294,
-      "tims_rank": 33
+      "tims_rank": 31
     },
     {
       "player_id": 8480807,
@@ -1361,7 +1287,7 @@
       "xg_source": "real",
       "known_in_embedding": true,
       "rank": 297,
-      "tims_rank": 34
+      "tims_rank": 32
     },
     {
       "player_id": 8483695,
@@ -1398,7 +1324,7 @@
       "xg_source": "real",
       "known_in_embedding": true,
       "rank": 299,
-      "tims_rank": 35
+      "tims_rank": 33
     },
     {
       "player_id": 8483570,
@@ -1435,7 +1361,7 @@
       "xg_source": "real",
       "known_in_embedding": true,
       "rank": 313,
-      "tims_rank": 36
+      "tims_rank": 34
     },
     {
       "player_id": 8481732,
@@ -1472,44 +1398,44 @@
       "xg_source": "real",
       "known_in_embedding": true,
       "rank": 315,
-      "tims_rank": 37
+      "tims_rank": 35
     },
     {
-      "player_id": 8480336,
-      "name": "Sean Walker",
+      "player_id": 8475753,
+      "name": "Justin Faulk",
       "position": "D",
-      "team": "CAR",
+      "team": "DET",
       "games_played": 22,
       "season_goals": 3,
-      "season_shots": 42,
-      "season_assists": 8,
-      "season_points": 11,
-      "pp_goals": 0,
-      "pp_points": 1,
-      "avg_toi_minutes": 20.9,
-      "recent_toi_minutes": 20.3,
+      "season_shots": 30,
+      "season_assists": 6,
+      "season_points": 9,
+      "pp_goals": 2,
+      "pp_points": 4,
+      "avg_toi_minutes": 20.7,
+      "recent_toi_minutes": 23.0,
       "avg_goals": 0.1364,
-      "avg_shots": 1.91,
-      "shooting_pct": 0.0714,
+      "avg_shots": 1.36,
+      "shooting_pct": 0.1,
       "last5_goals": 0,
-      "last5_shots": 7,
+      "last5_shots": 9,
       "last5_games": 5,
       "recent_gpg": 0.0,
       "prior_games": 0,
-      "opponent": "EDM",
+      "opponent": "NYI",
       "is_home": true,
-      "game_id": 2026020359,
-      "matchup": "CAR vs EDM",
+      "game_id": 2026020367,
+      "matchup": "DET vs NYI",
       "tims_group": "3",
-      "goal_probability": 0.0951,
-      "raw_goal_probability": 0.4003,
-      "player_xg": 0.1,
-      "expected_shots": 1.73,
-      "avg_shot_xg": 0.0413,
+      "goal_probability": 0.1057,
+      "raw_goal_probability": 0.4088,
+      "player_xg": 0.1117,
+      "expected_shots": 1.32,
+      "avg_shot_xg": 0.0604,
       "xg_source": "real",
       "known_in_embedding": true,
-      "rank": 362,
-      "tims_rank": 38
+      "rank": 337,
+      "tims_rank": 36
     },
     {
       "player_id": 8477429,
@@ -1546,7 +1472,44 @@
       "xg_source": "real",
       "known_in_embedding": true,
       "rank": 384,
-      "tims_rank": 39
+      "tims_rank": 37
+    },
+    {
+      "player_id": 8476872,
+      "name": "Scott Laughton",
+      "position": "C",
+      "team": "LAK",
+      "games_played": 20,
+      "season_goals": 2,
+      "season_shots": 25,
+      "season_assists": 4,
+      "season_points": 6,
+      "pp_goals": 0,
+      "pp_points": 0,
+      "avg_toi_minutes": 13.7,
+      "recent_toi_minutes": 11.7,
+      "avg_goals": 0.1,
+      "avg_shots": 1.25,
+      "shooting_pct": 0.08,
+      "last5_goals": 0,
+      "last5_shots": 7,
+      "last5_games": 5,
+      "recent_gpg": 0.0,
+      "prior_games": 0,
+      "opponent": "OTT",
+      "is_home": false,
+      "game_id": 2026020366,
+      "matchup": "LAK @ OTT",
+      "tims_group": "3",
+      "goal_probability": 0.0823,
+      "raw_goal_probability": 0.3325,
+      "player_xg": 0.0858,
+      "expected_shots": 1.17,
+      "avg_shot_xg": 0.0523,
+      "xg_source": "real",
+      "known_in_embedding": true,
+      "rank": 395,
+      "tims_rank": 38
     },
     {
       "player_id": 8479066,
@@ -1583,44 +1546,7 @@
       "xg_source": "real",
       "known_in_embedding": true,
       "rank": 427,
-      "tims_rank": 40
-    },
-    {
-      "player_id": 8482100,
-      "name": "Alexander Nikishin",
-      "position": "D",
-      "team": "CAR",
-      "games_played": 10,
-      "season_goals": 1.9506172839506168,
-      "season_shots": 12.543209876543209,
-      "season_assists": 3.9012345679012337,
-      "season_points": 5.851851851851852,
-      "pp_goals": 0.345679012345679,
-      "pp_points": 0.8641975308641975,
-      "avg_toi_minutes": 17.8,
-      "recent_toi_minutes": 17.5,
-      "avg_goals": 0.1951,
-      "avg_shots": 1.25,
-      "shooting_pct": 0.1555,
-      "last5_goals": 1.2716049382716048,
-      "last5_shots": 5.012345679012346,
-      "last5_games": 5,
-      "recent_gpg": 0.2543,
-      "prior_games": 7,
-      "opponent": "EDM",
-      "is_home": true,
-      "game_id": 2026020359,
-      "matchup": "CAR vs EDM",
-      "tims_group": "3",
-      "goal_probability": 0.0695,
-      "raw_goal_probability": 0.3232,
-      "player_xg": 0.0721,
-      "expected_shots": 1.13,
-      "avg_shot_xg": 0.0455,
-      "xg_source": "real",
-      "known_in_embedding": true,
-      "rank": 429,
-      "tims_rank": 41
+      "tims_rank": 39
     },
     {
       "player_id": 8477573,
@@ -1657,7 +1583,7 @@
       "xg_source": "real",
       "known_in_embedding": true,
       "rank": 435,
-      "tims_rank": 42
+      "tims_rank": 40
     },
     {
       "player_id": 8475200,
@@ -1693,8 +1619,8 @@
       "avg_shot_xg": 0.0203,
       "xg_source": "real",
       "known_in_embedding": true,
-      "rank": 550,
-      "tims_rank": 43
+      "rank": 551,
+      "tims_rank": 41
     }
   ],
   "tims_mode": true,
@@ -1775,14 +1701,6 @@
       },
       {
         "rank_in_group": 10,
-        "player_id": 8477934,
-        "name": "Leon Draisaitl",
-        "team": "EDM",
-        "goal_probability": 0.3516,
-        "matchup": "EDM @ CAR"
-      },
-      {
-        "rank_in_group": 11,
         "player_id": 8479318,
         "name": "Auston Matthews",
         "team": "TOR",
@@ -1790,20 +1708,12 @@
         "matchup": "TOR vs CBJ"
       },
       {
-        "rank_in_group": 12,
+        "rank_in_group": 11,
         "player_id": 8479343,
         "name": "Clayton Keller",
         "team": "UTA",
         "goal_probability": 0.3025,
         "matchup": "UTA vs ANA"
-      },
-      {
-        "rank_in_group": 13,
-        "player_id": 8478402,
-        "name": "Connor McDavid",
-        "team": "EDM",
-        "goal_probability": 0.2386,
-        "matchup": "EDM @ CAR"
       }
     ],
     "2": [
@@ -1841,22 +1751,6 @@
       },
       {
         "rank_in_group": 5,
-        "player_id": 8480801,
-        "name": "Brady Tkachuk",
-        "team": "FLA",
-        "goal_probability": 0.3414,
-        "matchup": "FLA vs BUF"
-      },
-      {
-        "rank_in_group": 6,
-        "player_id": 8477935,
-        "name": "Sam Bennett",
-        "team": "FLA",
-        "goal_probability": 0.3216,
-        "matchup": "FLA vs BUF"
-      },
-      {
-        "rank_in_group": 7,
         "player_id": 8475913,
         "name": "Mark Stone",
         "team": "VGK",
@@ -1864,7 +1758,15 @@
         "matchup": "VGK @ WPG"
       },
       {
-        "rank_in_group": 8,
+        "rank_in_group": 6,
+        "player_id": 8477949,
+        "name": "Alex Tuch",
+        "team": "WSH",
+        "goal_probability": 0.2617,
+        "matchup": "WSH @ BOS"
+      },
+      {
+        "rank_in_group": 7,
         "player_id": 8475745,
         "name": "Charlie Coyle",
         "team": "CBJ",
@@ -1872,12 +1774,20 @@
         "matchup": "CBJ @ TOR"
       },
       {
-        "rank_in_group": 9,
+        "rank_in_group": 8,
         "player_id": 8483493,
         "name": "Frank Nazar",
         "team": "CHI",
         "goal_probability": 0.2213,
         "matchup": "CHI @ CGY"
+      },
+      {
+        "rank_in_group": 9,
+        "player_id": 8477942,
+        "name": "Kevin Fiala",
+        "team": "LAK",
+        "goal_probability": 0.1876,
+        "matchup": "LAK @ OTT"
       },
       {
         "rank_in_group": 10,
@@ -1889,11 +1799,11 @@
       },
       {
         "rank_in_group": 11,
-        "player_id": 8473533,
-        "name": "Jordan Staal",
-        "team": "CAR",
-        "goal_probability": 0.1679,
-        "matchup": "CAR vs EDM"
+        "player_id": 8479999,
+        "name": "Casey Mittelstadt",
+        "team": "BOS",
+        "goal_probability": 0.1794,
+        "matchup": "BOS vs WSH"
       },
       {
         "rank_in_group": 12,
@@ -1939,6 +1849,14 @@
       },
       {
         "rank_in_group": 2,
+        "player_id": 8476419,
+        "name": "Jean-Gabriel Pageau",
+        "team": "NYI",
+        "goal_probability": 0.1719,
+        "matchup": "NYI @ DET"
+      },
+      {
+        "rank_in_group": 3,
         "player_id": 8481013,
         "name": "Jonatan Berggren",
         "team": "STL",
@@ -1946,20 +1864,12 @@
         "matchup": "STL vs NJD"
       },
       {
-        "rank_in_group": 3,
+        "rank_in_group": 4,
         "player_id": 8483495,
         "name": "Simon Nemec",
         "team": "CGY",
         "goal_probability": 0.1463,
         "matchup": "CGY vs CHI"
-      },
-      {
-        "rank_in_group": 4,
-        "player_id": 8480762,
-        "name": "Eric Robinson",
-        "team": "CAR",
-        "goal_probability": 0.1419,
-        "matchup": "CAR vs EDM"
       },
       {
         "rank_in_group": 5,
@@ -2011,27 +1921,27 @@
       },
       {
         "rank_in_group": 11,
-        "player_id": 8480336,
-        "name": "Sean Walker",
-        "team": "CAR",
-        "goal_probability": 0.0951,
-        "matchup": "CAR vs EDM"
+        "player_id": 8475753,
+        "name": "Justin Faulk",
+        "team": "DET",
+        "goal_probability": 0.1057,
+        "matchup": "DET vs NYI"
       },
       {
         "rank_in_group": 12,
+        "player_id": 8476872,
+        "name": "Scott Laughton",
+        "team": "LAK",
+        "goal_probability": 0.0823,
+        "matchup": "LAK @ OTT"
+      },
+      {
+        "rank_in_group": 13,
         "player_id": 8479066,
         "name": "Ryan Lomberg",
         "team": "CBJ",
         "goal_probability": 0.0698,
         "matchup": "CBJ @ TOR"
-      },
-      {
-        "rank_in_group": 13,
-        "player_id": 8482100,
-        "name": "Alexander Nikishin",
-        "team": "CAR",
-        "goal_probability": 0.0695,
-        "matchup": "CAR vs EDM"
       },
       {
         "rank_in_group": 14,
@@ -2058,5 +1968,5 @@
     "pos_weight_undone": 13.70655345916748,
     "attempts_per_sog": 1.4
   },
-  "generated_at": "2026-11-21T11:59:24.793608"
+  "generated_at": "2026-11-21T15:42:12.583274"
 }
