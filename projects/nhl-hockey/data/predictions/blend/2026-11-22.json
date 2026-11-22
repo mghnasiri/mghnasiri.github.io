@@ -2,7 +2,7 @@
   "date": "2026-11-22",
   "model": "blend",
   "model_display_name": "Blend v1",
-  "generated_at": "2026-11-22T12:55:23.153324",
+  "generated_at": "2026-11-22T16:05:47.720332",
   "games_count": 5,
   "games": [
     {
@@ -41,7 +41,7 @@
       "game_type": 2
     }
   ],
-  "players_count": 34,
+  "players_count": 40,
   "predictions": [
     {
       "player_id": 8482740,
@@ -53,9 +53,9 @@
       "is_home": true,
       "season_goals": 0,
       "last5_goals": 4,
-      "goal_probability": 0.4189,
-      "blend_score": 1.1745,
-      "blend_models": 3,
+      "goal_probability": 0.4093,
+      "blend_score": 0.9094,
+      "blend_models": 4,
       "tims_group": "1",
       "rank": 1
     },
@@ -69,27 +69,11 @@
       "is_home": true,
       "season_goals": 0,
       "last5_goals": 4,
-      "goal_probability": 0.3913,
-      "blend_score": 1.0244,
-      "blend_models": 3,
+      "goal_probability": 0.396,
+      "blend_score": 0.9919,
+      "blend_models": 4,
       "tims_group": "1",
       "rank": 2
-    },
-    {
-      "player_id": 8479420,
-      "name": "Tage Thompson",
-      "team": "BUF",
-      "position": "C",
-      "opponent": "TBL",
-      "matchup": "BUF @ TBL",
-      "is_home": false,
-      "season_goals": 0,
-      "last5_goals": 3,
-      "goal_probability": 0.3471,
-      "blend_score": 0.5923,
-      "blend_models": 3,
-      "tims_group": "1",
-      "rank": 3
     },
     {
       "player_id": 8477404,
@@ -101,11 +85,11 @@
       "is_home": true,
       "season_goals": 1,
       "last5_goals": 2,
-      "goal_probability": 0.3467,
-      "blend_score": 0.2707,
-      "blend_models": 3,
+      "goal_probability": 0.369,
+      "blend_score": 0.6072,
+      "blend_models": 4,
       "tims_group": "1",
-      "rank": 4
+      "rank": 3
     },
     {
       "player_id": 8476453,
@@ -117,9 +101,25 @@
       "is_home": true,
       "season_goals": 0,
       "last5_goals": 0,
-      "goal_probability": 0.3467,
-      "blend_score": 0.7411,
-      "blend_models": 3,
+      "goal_probability": 0.3644,
+      "blend_score": 0.8396,
+      "blend_models": 4,
+      "tims_group": "1",
+      "rank": 4
+    },
+    {
+      "player_id": 8479420,
+      "name": "Tage Thompson",
+      "team": "BUF",
+      "position": "C",
+      "opponent": "TBL",
+      "matchup": "BUF @ TBL",
+      "is_home": false,
+      "season_goals": 0,
+      "last5_goals": 3,
+      "goal_probability": 0.3514,
+      "blend_score": 0.3617,
+      "blend_models": 4,
       "tims_group": "1",
       "rank": 5
     },
@@ -133,27 +133,11 @@
       "is_home": false,
       "season_goals": 0,
       "last5_goals": 2,
-      "goal_probability": 0.3257,
-      "blend_score": 0.2672,
+      "goal_probability": 0.3264,
+      "blend_score": 0.2733,
       "blend_models": 3,
       "tims_group": "1",
       "rank": 6
-    },
-    {
-      "player_id": 8478498,
-      "name": "Jake DeBrusk",
-      "team": "VAN",
-      "position": "L",
-      "opponent": "CHI",
-      "matchup": "VAN vs CHI",
-      "is_home": true,
-      "season_goals": 0,
-      "last5_goals": 4,
-      "goal_probability": 0.2869,
-      "blend_score": 1.2618,
-      "blend_models": 3,
-      "tims_group": "2",
-      "rank": 7
     },
     {
       "player_id": 8478010,
@@ -165,10 +149,26 @@
       "is_home": true,
       "season_goals": 0,
       "last5_goals": 0,
-      "goal_probability": 0.2776,
-      "blend_score": -0.5551,
-      "blend_models": 3,
+      "goal_probability": 0.2986,
+      "blend_score": -0.4901,
+      "blend_models": 4,
       "tims_group": "1",
+      "rank": 7
+    },
+    {
+      "player_id": 8478498,
+      "name": "Jake DeBrusk",
+      "team": "VAN",
+      "position": "L",
+      "opponent": "CHI",
+      "matchup": "VAN vs CHI",
+      "is_home": true,
+      "season_goals": 0,
+      "last5_goals": 4,
+      "goal_probability": 0.2972,
+      "blend_score": 1.2011,
+      "blend_models": 4,
+      "tims_group": "2",
       "rank": 8
     },
     {
@@ -181,27 +181,11 @@
       "is_home": true,
       "season_goals": 0,
       "last5_goals": 1,
-      "goal_probability": 0.2587,
-      "blend_score": -0.5225,
-      "blend_models": 3,
+      "goal_probability": 0.2821,
+      "blend_score": -0.5098,
+      "blend_models": 4,
       "tims_group": "1",
       "rank": 9
-    },
-    {
-      "player_id": 8476483,
-      "name": "Rickard Rakell",
-      "team": "PIT",
-      "position": "R",
-      "opponent": "DAL",
-      "matchup": "PIT @ DAL",
-      "is_home": false,
-      "season_goals": 0,
-      "last5_goals": 1,
-      "goal_probability": 0.2583,
-      "blend_score": 0.8846,
-      "blend_models": 3,
-      "tims_group": "2",
-      "rank": 10
     },
     {
       "player_id": 8483493,
@@ -213,59 +197,43 @@
       "is_home": false,
       "season_goals": 3,
       "last5_goals": 3,
-      "goal_probability": 0.2531,
-      "blend_score": 0.9625,
-      "blend_models": 3,
+      "goal_probability": 0.2748,
+      "blend_score": 1.0244,
+      "blend_models": 4,
+      "tims_group": "2",
+      "rank": 10
+    },
+    {
+      "player_id": 8476483,
+      "name": "Rickard Rakell",
+      "team": "PIT",
+      "position": "R",
+      "opponent": "DAL",
+      "matchup": "PIT @ DAL",
+      "is_home": false,
+      "season_goals": 0,
+      "last5_goals": 1,
+      "goal_probability": 0.2664,
+      "blend_score": 0.788,
+      "blend_models": 4,
       "tims_group": "2",
       "rank": 11
     },
     {
-      "player_id": 8478402,
-      "name": "Connor McDavid",
-      "team": "EDM",
-      "position": "C",
-      "opponent": "STL",
-      "matchup": "EDM @ STL",
-      "is_home": false,
-      "season_goals": 0,
-      "last5_goals": 0,
-      "goal_probability": 0.2499,
-      "blend_score": -0.8783,
-      "blend_models": 3,
-      "tims_group": "1",
-      "rank": 12
-    },
-    {
-      "player_id": 8482097,
-      "name": "Jack Quinn",
-      "team": "BUF",
-      "position": "R",
-      "opponent": "TBL",
-      "matchup": "BUF @ TBL",
-      "is_home": false,
-      "season_goals": 0,
-      "last5_goals": 2,
-      "goal_probability": 0.2331,
-      "blend_score": 0.7225,
-      "blend_models": 3,
-      "tims_group": "2",
-      "rank": 13
-    },
-    {
-      "player_id": 8475794,
-      "name": "Tyler Seguin",
-      "team": "DAL",
-      "position": "C",
-      "opponent": "PIT",
-      "matchup": "DAL vs PIT",
+      "player_id": 8482077,
+      "name": "Dylan Holloway",
+      "team": "STL",
+      "position": "L",
+      "opponent": "EDM",
+      "matchup": "STL vs EDM",
       "is_home": true,
       "season_goals": 0,
-      "last5_goals": 0,
-      "goal_probability": 0.2279,
-      "blend_score": 0.5916,
+      "last5_goals": 3,
+      "goal_probability": 0.2593,
+      "blend_score": 0.8378,
       "blend_models": 3,
       "tims_group": "2",
-      "rank": 14
+      "rank": 12
     },
     {
       "player_id": 8478444,
@@ -277,11 +245,27 @@
       "is_home": true,
       "season_goals": 0,
       "last5_goals": 1,
-      "goal_probability": 0.2253,
-      "blend_score": -0.9258,
+      "goal_probability": 0.2513,
+      "blend_score": -0.947,
+      "blend_models": 4,
+      "tims_group": "1",
+      "rank": 13
+    },
+    {
+      "player_id": 8478402,
+      "name": "Connor McDavid",
+      "team": "EDM",
+      "position": "C",
+      "opponent": "STL",
+      "matchup": "EDM @ STL",
+      "is_home": false,
+      "season_goals": 0,
+      "last5_goals": 0,
+      "goal_probability": 0.2502,
+      "blend_score": -0.8788,
       "blend_models": 3,
       "tims_group": "1",
-      "rank": 15
+      "rank": 14
     },
     {
       "player_id": 8477479,
@@ -293,11 +277,43 @@
       "is_home": false,
       "season_goals": 0,
       "last5_goals": 0,
-      "goal_probability": 0.2209,
-      "blend_score": -1.1885,
-      "blend_models": 3,
+      "goal_probability": 0.2428,
+      "blend_score": -1.3087,
+      "blend_models": 4,
       "tims_group": "1",
+      "rank": 15
+    },
+    {
+      "player_id": 8482097,
+      "name": "Jack Quinn",
+      "team": "BUF",
+      "position": "R",
+      "opponent": "TBL",
+      "matchup": "BUF @ TBL",
+      "is_home": false,
+      "season_goals": 0,
+      "last5_goals": 2,
+      "goal_probability": 0.2427,
+      "blend_score": 0.6144,
+      "blend_models": 4,
+      "tims_group": "2",
       "rank": 16
+    },
+    {
+      "player_id": 8483516,
+      "name": "Jimmy Snuggerud",
+      "team": "STL",
+      "position": "R",
+      "opponent": "EDM",
+      "matchup": "STL vs EDM",
+      "is_home": true,
+      "season_goals": 0,
+      "last5_goals": 4,
+      "goal_probability": 0.2376,
+      "blend_score": 0.5527,
+      "blend_models": 3,
+      "tims_group": "2",
+      "rank": 17
     },
     {
       "player_id": 8478449,
@@ -309,11 +325,27 @@
       "is_home": true,
       "season_goals": 0,
       "last5_goals": 0,
-      "goal_probability": 0.205,
-      "blend_score": 0.252,
-      "blend_models": 3,
+      "goal_probability": 0.2328,
+      "blend_score": 0.4225,
+      "blend_models": 4,
       "tims_group": "2",
-      "rank": 17
+      "rank": 18
+    },
+    {
+      "player_id": 8475794,
+      "name": "Tyler Seguin",
+      "team": "DAL",
+      "position": "C",
+      "opponent": "PIT",
+      "matchup": "DAL vs PIT",
+      "is_home": true,
+      "season_goals": 0,
+      "last5_goals": 0,
+      "goal_probability": 0.2314,
+      "blend_score": 0.411,
+      "blend_models": 4,
+      "tims_group": "2",
+      "rank": 19
     },
     {
       "player_id": 8482659,
@@ -325,11 +357,11 @@
       "is_home": false,
       "season_goals": 0,
       "last5_goals": 1,
-      "goal_probability": 0.1823,
-      "blend_score": -0.0056,
-      "blend_models": 3,
+      "goal_probability": 0.1881,
+      "blend_score": -0.1984,
+      "blend_models": 4,
       "tims_group": "2",
-      "rank": 18
+      "rank": 20
     },
     {
       "player_id": 8480064,
@@ -341,11 +373,11 @@
       "is_home": false,
       "season_goals": 0,
       "last5_goals": 0,
-      "goal_probability": 0.143,
-      "blend_score": -0.6514,
-      "blend_models": 3,
+      "goal_probability": 0.1535,
+      "blend_score": -0.7761,
+      "blend_models": 4,
       "tims_group": "2",
-      "rank": 19
+      "rank": 21
     },
     {
       "player_id": 8478233,
@@ -357,27 +389,11 @@
       "is_home": false,
       "season_goals": 0,
       "last5_goals": 0,
-      "goal_probability": 0.1369,
-      "blend_score": 1.6718,
-      "blend_models": 3,
+      "goal_probability": 0.1444,
+      "blend_score": 1.7124,
+      "blend_models": 4,
       "tims_group": "3",
-      "rank": 20
-    },
-    {
-      "player_id": 8480036,
-      "name": "Miro Heiskanen",
-      "team": "DAL",
-      "position": "D",
-      "opponent": "PIT",
-      "matchup": "DAL vs PIT",
-      "is_home": true,
-      "season_goals": 0,
-      "last5_goals": 2,
-      "goal_probability": 0.1107,
-      "blend_score": -0.675,
-      "blend_models": 3,
-      "tims_group": "2",
-      "rank": 21
+      "rank": 22
     },
     {
       "player_id": 8481032,
@@ -389,27 +405,43 @@
       "is_home": true,
       "season_goals": 0,
       "last5_goals": 1,
-      "goal_probability": 0.1092,
-      "blend_score": -1.2438,
-      "blend_models": 3,
+      "goal_probability": 0.1244,
+      "blend_score": -1.2495,
+      "blend_models": 4,
       "tims_group": "2",
-      "rank": 22
+      "rank": 23
     },
     {
-      "player_id": 8483808,
-      "name": "Andrei Kuzmenko",
-      "team": "PIT",
-      "position": "L",
-      "opponent": "DAL",
-      "matchup": "PIT @ DAL",
-      "is_home": false,
+      "player_id": 8480036,
+      "name": "Miro Heiskanen",
+      "team": "DAL",
+      "position": "D",
+      "opponent": "PIT",
+      "matchup": "DAL vs PIT",
+      "is_home": true,
       "season_goals": 0,
       "last5_goals": 2,
-      "goal_probability": 0.1065,
-      "blend_score": 0.7112,
-      "blend_models": 3,
+      "goal_probability": 0.1236,
+      "blend_score": -0.8513,
+      "blend_models": 4,
+      "tims_group": "2",
+      "rank": 24
+    },
+    {
+      "player_id": 8479351,
+      "name": "Sam Steel",
+      "team": "DAL",
+      "position": "C",
+      "opponent": "PIT",
+      "matchup": "DAL vs PIT",
+      "is_home": true,
+      "season_goals": 0,
+      "last5_goals": 0,
+      "goal_probability": 0.1194,
+      "blend_score": 1.0577,
+      "blend_models": 4,
       "tims_group": "3",
-      "rank": 23
+      "rank": 25
     },
     {
       "player_id": 8476882,
@@ -421,11 +453,27 @@
       "is_home": false,
       "season_goals": 0,
       "last5_goals": 0,
-      "goal_probability": 0.1037,
-      "blend_score": -1.0608,
-      "blend_models": 3,
+      "goal_probability": 0.1186,
+      "blend_score": -1.1564,
+      "blend_models": 4,
       "tims_group": "2",
-      "rank": 24
+      "rank": 26
+    },
+    {
+      "player_id": 8483808,
+      "name": "Andrei Kuzmenko",
+      "team": "PIT",
+      "position": "L",
+      "opponent": "DAL",
+      "matchup": "PIT @ DAL",
+      "is_home": false,
+      "season_goals": 0,
+      "last5_goals": 2,
+      "goal_probability": 0.1158,
+      "blend_score": 0.8536,
+      "blend_models": 4,
+      "tims_group": "3",
+      "rank": 27
     },
     {
       "player_id": 8483506,
@@ -437,11 +485,11 @@
       "is_home": false,
       "season_goals": 0,
       "last5_goals": 1,
-      "goal_probability": 0.1011,
-      "blend_score": -1.0385,
-      "blend_models": 3,
+      "goal_probability": 0.1097,
+      "blend_score": -1.2726,
+      "blend_models": 4,
       "tims_group": "2",
-      "rank": 25
+      "rank": 28
     },
     {
       "player_id": 8479425,
@@ -453,11 +501,11 @@
       "is_home": true,
       "season_goals": 0,
       "last5_goals": 0,
-      "goal_probability": 0.0896,
-      "blend_score": 0.9864,
-      "blend_models": 3,
+      "goal_probability": 0.1,
+      "blend_score": 0.9425,
+      "blend_models": 4,
       "tims_group": "3",
-      "rank": 26
+      "rank": 29
     },
     {
       "player_id": 8483395,
@@ -469,11 +517,43 @@
       "is_home": true,
       "season_goals": 0,
       "last5_goals": 0,
-      "goal_probability": 0.0773,
-      "blend_score": -0.1489,
-      "blend_models": 3,
+      "goal_probability": 0.0907,
+      "blend_score": 0.1694,
+      "blend_models": 4,
       "tims_group": "3",
-      "rank": 27
+      "rank": 30
+    },
+    {
+      "player_id": 8479705,
+      "name": "Jeffrey Viel",
+      "team": "TBL",
+      "position": "L",
+      "opponent": "BUF",
+      "matchup": "TBL vs BUF",
+      "is_home": true,
+      "season_goals": 0,
+      "last5_goals": 0,
+      "goal_probability": 0.0826,
+      "blend_score": -0.0215,
+      "blend_models": 4,
+      "tims_group": "3",
+      "rank": 31
+    },
+    {
+      "player_id": 8482148,
+      "name": "Hendrix Lapierre",
+      "team": "PIT",
+      "position": "C",
+      "opponent": "DAL",
+      "matchup": "PIT @ DAL",
+      "is_home": false,
+      "season_goals": 0,
+      "last5_goals": 0,
+      "goal_probability": 0.0818,
+      "blend_score": -0.098,
+      "blend_models": 4,
+      "tims_group": "3",
+      "rank": 32
     },
     {
       "player_id": 8477450,
@@ -486,58 +566,10 @@
       "season_goals": 0,
       "last5_goals": 2,
       "goal_probability": 0.0762,
-      "blend_score": -0.2059,
+      "blend_score": -0.1165,
       "blend_models": 3,
       "tims_group": "3",
-      "rank": 28
-    },
-    {
-      "player_id": 8479705,
-      "name": "Jeffrey Viel",
-      "team": "TBL",
-      "position": "L",
-      "opponent": "BUF",
-      "matchup": "TBL vs BUF",
-      "is_home": true,
-      "season_goals": 0,
-      "last5_goals": 0,
-      "goal_probability": 0.073,
-      "blend_score": -0.0593,
-      "blend_models": 3,
-      "tims_group": "3",
-      "rank": 29
-    },
-    {
-      "player_id": 8482148,
-      "name": "Hendrix Lapierre",
-      "team": "PIT",
-      "position": "C",
-      "opponent": "DAL",
-      "matchup": "PIT @ DAL",
-      "is_home": false,
-      "season_goals": 0,
-      "last5_goals": 0,
-      "goal_probability": 0.0702,
-      "blend_score": -0.271,
-      "blend_models": 3,
-      "tims_group": "3",
-      "rank": 30
-    },
-    {
-      "player_id": 8479365,
-      "name": "Trent Frederic",
-      "team": "EDM",
-      "position": "C",
-      "opponent": "STL",
-      "matchup": "EDM @ STL",
-      "is_home": false,
-      "season_goals": 1,
-      "last5_goals": 1,
-      "goal_probability": 0.0677,
-      "blend_score": -0.4984,
-      "blend_models": 3,
-      "tims_group": "3",
-      "rank": 31
+      "rank": 33
     },
     {
       "player_id": 8482803,
@@ -549,11 +581,27 @@
       "is_home": false,
       "season_goals": 0,
       "last5_goals": 1,
-      "goal_probability": 0.0657,
-      "blend_score": -0.0627,
-      "blend_models": 3,
+      "goal_probability": 0.0706,
+      "blend_score": -0.4422,
+      "blend_models": 4,
       "tims_group": "3",
-      "rank": 32
+      "rank": 34
+    },
+    {
+      "player_id": 8484798,
+      "name": "Zeev Buium",
+      "team": "VAN",
+      "position": "D",
+      "opponent": "CHI",
+      "matchup": "VAN vs CHI",
+      "is_home": true,
+      "season_goals": 0,
+      "last5_goals": 1,
+      "goal_probability": 0.0692,
+      "blend_score": -0.3665,
+      "blend_models": 4,
+      "tims_group": "3",
+      "rank": 35
     },
     {
       "player_id": 8484783,
@@ -565,11 +613,43 @@
       "is_home": false,
       "season_goals": 0,
       "last5_goals": 0,
-      "goal_probability": 0.0591,
-      "blend_score": -0.331,
+      "goal_probability": 0.0682,
+      "blend_score": -0.4037,
+      "blend_models": 4,
+      "tims_group": "3",
+      "rank": 36
+    },
+    {
+      "player_id": 8479365,
+      "name": "Trent Frederic",
+      "team": "EDM",
+      "position": "C",
+      "opponent": "STL",
+      "matchup": "EDM @ STL",
+      "is_home": false,
+      "season_goals": 1,
+      "last5_goals": 1,
+      "goal_probability": 0.0678,
+      "blend_score": -0.3915,
       "blend_models": 3,
       "tims_group": "3",
-      "rank": 33
+      "rank": 37
+    },
+    {
+      "player_id": 8475167,
+      "name": "Victor Hedman",
+      "team": "TBL",
+      "position": "D",
+      "opponent": "BUF",
+      "matchup": "TBL vs BUF",
+      "is_home": true,
+      "season_goals": 0,
+      "last5_goals": 0,
+      "goal_probability": 0.059,
+      "blend_score": -0.7098,
+      "blend_models": 4,
+      "tims_group": "3",
+      "rank": 38
     },
     {
       "player_id": 8477149,
@@ -581,11 +661,27 @@
       "is_home": true,
       "season_goals": 0,
       "last5_goals": 0,
-      "goal_probability": 0.0452,
-      "blend_score": -1.7922,
+      "goal_probability": 0.0544,
+      "blend_score": -1.5862,
+      "blend_models": 4,
+      "tims_group": "3",
+      "rank": 39
+    },
+    {
+      "player_id": 8475764,
+      "name": "Cam Fowler",
+      "team": "STL",
+      "position": "D",
+      "opponent": "EDM",
+      "matchup": "STL vs EDM",
+      "is_home": true,
+      "season_goals": 0,
+      "last5_goals": 1,
+      "goal_probability": 0.0473,
+      "blend_score": -0.9687,
       "blend_models": 3,
       "tims_group": "3",
-      "rank": 34
+      "rank": 40
     }
   ],
   "tims_mode": true,
@@ -594,18 +690,18 @@
     "1": [
       {
         "rank_in_group": 1,
-        "player_id": 8482740,
-        "name": "Wyatt Johnston",
+        "player_id": 8480027,
+        "name": "Jason Robertson",
         "team": "DAL",
-        "goal_probability": 0.4189,
+        "goal_probability": 0.396,
         "matchup": "DAL vs PIT"
       },
       {
         "rank_in_group": 2,
-        "player_id": 8480027,
-        "name": "Jason Robertson",
+        "player_id": 8482740,
+        "name": "Wyatt Johnston",
         "team": "DAL",
-        "goal_probability": 0.3913,
+        "goal_probability": 0.4093,
         "matchup": "DAL vs PIT"
       },
       {
@@ -613,55 +709,55 @@
         "player_id": 8476453,
         "name": "Nikita Kucherov",
         "team": "TBL",
-        "goal_probability": 0.3467,
+        "goal_probability": 0.3644,
         "matchup": "TBL vs BUF"
       },
       {
         "rank_in_group": 4,
-        "player_id": 8479420,
-        "name": "Tage Thompson",
-        "team": "BUF",
-        "goal_probability": 0.3471,
-        "matchup": "BUF @ TBL"
-      },
-      {
-        "rank_in_group": 5,
         "player_id": 8477404,
         "name": "Jake Guentzel",
         "team": "TBL",
-        "goal_probability": 0.3467,
+        "goal_probability": 0.369,
         "matchup": "TBL vs BUF"
+      },
+      {
+        "rank_in_group": 5,
+        "player_id": 8479420,
+        "name": "Tage Thompson",
+        "team": "BUF",
+        "goal_probability": 0.3514,
+        "matchup": "BUF @ TBL"
       },
       {
         "rank_in_group": 6,
         "player_id": 8477934,
         "name": "Leon Draisaitl",
         "team": "EDM",
-        "goal_probability": 0.3257,
+        "goal_probability": 0.3264,
         "matchup": "EDM @ STL"
       },
       {
         "rank_in_group": 7,
-        "player_id": 8478420,
-        "name": "Mikko Rantanen",
-        "team": "DAL",
-        "goal_probability": 0.2587,
-        "matchup": "DAL vs PIT"
-      },
-      {
-        "rank_in_group": 8,
         "player_id": 8478010,
         "name": "Brayden Point",
         "team": "TBL",
-        "goal_probability": 0.2776,
+        "goal_probability": 0.2986,
         "matchup": "TBL vs BUF"
+      },
+      {
+        "rank_in_group": 8,
+        "player_id": 8478420,
+        "name": "Mikko Rantanen",
+        "team": "DAL",
+        "goal_probability": 0.2821,
+        "matchup": "DAL vs PIT"
       },
       {
         "rank_in_group": 9,
         "player_id": 8478402,
         "name": "Connor McDavid",
         "team": "EDM",
-        "goal_probability": 0.2499,
+        "goal_probability": 0.2502,
         "matchup": "EDM @ STL"
       },
       {
@@ -669,7 +765,7 @@
         "player_id": 8478444,
         "name": "Brock Boeser",
         "team": "VAN",
-        "goal_probability": 0.2253,
+        "goal_probability": 0.2513,
         "matchup": "VAN vs CHI"
       },
       {
@@ -677,7 +773,7 @@
         "player_id": 8477479,
         "name": "Tyler Bertuzzi",
         "team": "CHI",
-        "goal_probability": 0.2209,
+        "goal_probability": 0.2428,
         "matchup": "CHI @ VAN"
       }
     ],
@@ -687,7 +783,7 @@
         "player_id": 8478498,
         "name": "Jake DeBrusk",
         "team": "VAN",
-        "goal_probability": 0.2869,
+        "goal_probability": 0.2972,
         "matchup": "VAN vs CHI"
       },
       {
@@ -695,88 +791,104 @@
         "player_id": 8483493,
         "name": "Frank Nazar",
         "team": "CHI",
-        "goal_probability": 0.2531,
+        "goal_probability": 0.2748,
         "matchup": "CHI @ VAN"
       },
       {
         "rank_in_group": 3,
-        "player_id": 8476483,
-        "name": "Rickard Rakell",
-        "team": "PIT",
-        "goal_probability": 0.2583,
-        "matchup": "PIT @ DAL"
+        "player_id": 8482077,
+        "name": "Dylan Holloway",
+        "team": "STL",
+        "goal_probability": 0.2593,
+        "matchup": "STL vs EDM"
       },
       {
         "rank_in_group": 4,
-        "player_id": 8482097,
-        "name": "Jack Quinn",
-        "team": "BUF",
-        "goal_probability": 0.2331,
-        "matchup": "BUF @ TBL"
+        "player_id": 8476483,
+        "name": "Rickard Rakell",
+        "team": "PIT",
+        "goal_probability": 0.2664,
+        "matchup": "PIT @ DAL"
       },
       {
         "rank_in_group": 5,
-        "player_id": 8475794,
-        "name": "Tyler Seguin",
-        "team": "DAL",
-        "goal_probability": 0.2279,
-        "matchup": "DAL vs PIT"
+        "player_id": 8482097,
+        "name": "Jack Quinn",
+        "team": "BUF",
+        "goal_probability": 0.2427,
+        "matchup": "BUF @ TBL"
       },
       {
         "rank_in_group": 6,
-        "player_id": 8478449,
-        "name": "Roope Hintz",
-        "team": "DAL",
-        "goal_probability": 0.205,
-        "matchup": "DAL vs PIT"
+        "player_id": 8483516,
+        "name": "Jimmy Snuggerud",
+        "team": "STL",
+        "goal_probability": 0.2376,
+        "matchup": "STL vs EDM"
       },
       {
         "rank_in_group": 7,
-        "player_id": 8482659,
-        "name": "Josh Doan",
-        "team": "BUF",
-        "goal_probability": 0.1823,
-        "matchup": "BUF @ TBL"
-      },
-      {
-        "rank_in_group": 8,
-        "player_id": 8480064,
-        "name": "Josh Norris",
-        "team": "BUF",
-        "goal_probability": 0.143,
-        "matchup": "BUF @ TBL"
-      },
-      {
-        "rank_in_group": 9,
-        "player_id": 8480036,
-        "name": "Miro Heiskanen",
+        "player_id": 8478449,
+        "name": "Roope Hintz",
         "team": "DAL",
-        "goal_probability": 0.1107,
+        "goal_probability": 0.2328,
         "matchup": "DAL vs PIT"
       },
       {
+        "rank_in_group": 8,
+        "player_id": 8475794,
+        "name": "Tyler Seguin",
+        "team": "DAL",
+        "goal_probability": 0.2314,
+        "matchup": "DAL vs PIT"
+      },
+      {
+        "rank_in_group": 9,
+        "player_id": 8482659,
+        "name": "Josh Doan",
+        "team": "BUF",
+        "goal_probability": 0.1881,
+        "matchup": "BUF @ TBL"
+      },
+      {
         "rank_in_group": 10,
-        "player_id": 8483506,
-        "name": "Sam Rinzel",
-        "team": "CHI",
-        "goal_probability": 0.1011,
-        "matchup": "CHI @ VAN"
+        "player_id": 8480064,
+        "name": "Josh Norris",
+        "team": "BUF",
+        "goal_probability": 0.1535,
+        "matchup": "BUF @ TBL"
       },
       {
         "rank_in_group": 11,
-        "player_id": 8476882,
-        "name": "Teuvo Teravainen",
-        "team": "CHI",
-        "goal_probability": 0.1037,
-        "matchup": "CHI @ VAN"
+        "player_id": 8480036,
+        "name": "Miro Heiskanen",
+        "team": "DAL",
+        "goal_probability": 0.1236,
+        "matchup": "DAL vs PIT"
       },
       {
         "rank_in_group": 12,
+        "player_id": 8476882,
+        "name": "Teuvo Teravainen",
+        "team": "CHI",
+        "goal_probability": 0.1186,
+        "matchup": "CHI @ VAN"
+      },
+      {
+        "rank_in_group": 13,
         "player_id": 8481032,
         "name": "Paul Cotter",
         "team": "VAN",
-        "goal_probability": 0.1092,
+        "goal_probability": 0.1244,
         "matchup": "VAN vs CHI"
+      },
+      {
+        "rank_in_group": 14,
+        "player_id": 8483506,
+        "name": "Sam Rinzel",
+        "team": "CHI",
+        "goal_probability": 0.1097,
+        "matchup": "CHI @ VAN"
       }
     ],
     "3": [
@@ -785,51 +897,59 @@
         "player_id": 8478233,
         "name": "Andrew Mangiapane",
         "team": "CHI",
-        "goal_probability": 0.1369,
+        "goal_probability": 0.1444,
         "matchup": "CHI @ VAN"
       },
       {
         "rank_in_group": 2,
-        "player_id": 8479425,
-        "name": "Filip Hronek",
-        "team": "VAN",
-        "goal_probability": 0.0896,
-        "matchup": "VAN vs CHI"
+        "player_id": 8479351,
+        "name": "Sam Steel",
+        "team": "DAL",
+        "goal_probability": 0.1194,
+        "matchup": "DAL vs PIT"
       },
       {
         "rank_in_group": 3,
-        "player_id": 8483808,
-        "name": "Andrei Kuzmenko",
-        "team": "PIT",
-        "goal_probability": 0.1065,
-        "matchup": "PIT @ DAL"
-      },
-      {
-        "rank_in_group": 4,
-        "player_id": 8479705,
-        "name": "Jeffrey Viel",
-        "team": "TBL",
-        "goal_probability": 0.073,
-        "matchup": "TBL vs BUF"
-      },
-      {
-        "rank_in_group": 5,
-        "player_id": 8482803,
-        "name": "Olen Zellweger",
-        "team": "BUF",
-        "goal_probability": 0.0657,
-        "matchup": "BUF @ TBL"
-      },
-      {
-        "rank_in_group": 6,
-        "player_id": 8483395,
-        "name": "Arshdeep Bains",
+        "player_id": 8479425,
+        "name": "Filip Hronek",
         "team": "VAN",
-        "goal_probability": 0.0773,
+        "goal_probability": 0.1,
         "matchup": "VAN vs CHI"
       },
       {
+        "rank_in_group": 4,
+        "player_id": 8483808,
+        "name": "Andrei Kuzmenko",
+        "team": "PIT",
+        "goal_probability": 0.1158,
+        "matchup": "PIT @ DAL"
+      },
+      {
+        "rank_in_group": 5,
+        "player_id": 8483395,
+        "name": "Arshdeep Bains",
+        "team": "VAN",
+        "goal_probability": 0.0907,
+        "matchup": "VAN vs CHI"
+      },
+      {
+        "rank_in_group": 6,
+        "player_id": 8479705,
+        "name": "Jeffrey Viel",
+        "team": "TBL",
+        "goal_probability": 0.0826,
+        "matchup": "TBL vs BUF"
+      },
+      {
         "rank_in_group": 7,
+        "player_id": 8482148,
+        "name": "Hendrix Lapierre",
+        "team": "PIT",
+        "goal_probability": 0.0818,
+        "matchup": "PIT @ DAL"
+      },
+      {
+        "rank_in_group": 8,
         "player_id": 8477450,
         "name": "Jason Dickinson",
         "team": "EDM",
@@ -837,35 +957,59 @@
         "matchup": "EDM @ STL"
       },
       {
-        "rank_in_group": 8,
-        "player_id": 8482148,
-        "name": "Hendrix Lapierre",
-        "team": "PIT",
-        "goal_probability": 0.0702,
-        "matchup": "PIT @ DAL"
-      },
-      {
         "rank_in_group": 9,
-        "player_id": 8484783,
-        "name": "Artyom Levshunov",
-        "team": "CHI",
-        "goal_probability": 0.0591,
-        "matchup": "CHI @ VAN"
+        "player_id": 8484798,
+        "name": "Zeev Buium",
+        "team": "VAN",
+        "goal_probability": 0.0692,
+        "matchup": "VAN vs CHI"
       },
       {
         "rank_in_group": 10,
         "player_id": 8479365,
         "name": "Trent Frederic",
         "team": "EDM",
-        "goal_probability": 0.0677,
+        "goal_probability": 0.0678,
         "matchup": "EDM @ STL"
       },
       {
         "rank_in_group": 11,
+        "player_id": 8484783,
+        "name": "Artyom Levshunov",
+        "team": "CHI",
+        "goal_probability": 0.0682,
+        "matchup": "CHI @ VAN"
+      },
+      {
+        "rank_in_group": 12,
+        "player_id": 8482803,
+        "name": "Olen Zellweger",
+        "team": "BUF",
+        "goal_probability": 0.0706,
+        "matchup": "BUF @ TBL"
+      },
+      {
+        "rank_in_group": 13,
+        "player_id": 8475167,
+        "name": "Victor Hedman",
+        "team": "TBL",
+        "goal_probability": 0.059,
+        "matchup": "TBL vs BUF"
+      },
+      {
+        "rank_in_group": 14,
+        "player_id": 8475764,
+        "name": "Cam Fowler",
+        "team": "STL",
+        "goal_probability": 0.0473,
+        "matchup": "STL vs EDM"
+      },
+      {
+        "rank_in_group": 15,
         "player_id": 8477149,
         "name": "Scott Sabourin",
         "team": "TBL",
-        "goal_probability": 0.0452,
+        "goal_probability": 0.0544,
         "matchup": "TBL vs BUF"
       }
     ]
@@ -873,6 +1017,7 @@
   "model_params": {
     "inputs": [
       "direct_lr",
+      "market_odds",
       "neural_v2",
       "xg_v3"
     ],
