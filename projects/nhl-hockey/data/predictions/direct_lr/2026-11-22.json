@@ -40,7 +40,7 @@
       "game_type": 2
     }
   ],
-  "players_count": 41,
+  "players_count": 40,
   "predictions": [
     {
       "player_id": 8480027,
@@ -56,7 +56,7 @@
       "is_home": true,
       "game_id": 2026020376,
       "matchup": "DAL vs PIT",
-      "goal_probability": 0.3928,
+      "goal_probability": 0.3925,
       "tims_group": "1",
       "rank": 1,
       "tims_rank": 1
@@ -75,7 +75,7 @@
       "is_home": true,
       "game_id": 2026020374,
       "matchup": "TBL vs BUF",
-      "goal_probability": 0.3572,
+      "goal_probability": 0.3567,
       "tims_group": "1",
       "rank": 2,
       "tims_rank": 2
@@ -94,7 +94,7 @@
       "is_home": true,
       "game_id": 2026020376,
       "matchup": "DAL vs PIT",
-      "goal_probability": 0.341,
+      "goal_probability": 0.3414,
       "tims_group": "1",
       "rank": 3,
       "tims_rank": 3
@@ -113,7 +113,7 @@
       "is_home": true,
       "game_id": 2026020376,
       "matchup": "DAL vs PIT",
-      "goal_probability": 0.3249,
+      "goal_probability": 0.3255,
       "tims_group": "1",
       "rank": 4,
       "tims_rank": 4
@@ -132,29 +132,10 @@
       "is_home": false,
       "game_id": 2026020374,
       "matchup": "BUF @ TBL",
-      "goal_probability": 0.3105,
+      "goal_probability": 0.3107,
       "tims_group": "1",
       "rank": 5,
       "tims_rank": 5
-    },
-    {
-      "player_id": 8478427,
-      "name": "Sebastian Aho",
-      "team": "CAR",
-      "position": "C",
-      "games_played": 1,
-      "season_goals": 0,
-      "avg_goals": 0.0,
-      "last5_goals": 1,
-      "last5_games": 5,
-      "opponent": "NYR",
-      "is_home": false,
-      "game_id": 2026020373,
-      "matchup": "CAR @ NYR",
-      "goal_probability": 0.2874,
-      "tims_group": "2",
-      "rank": 6,
-      "tims_rank": 6
     },
     {
       "player_id": 8478444,
@@ -170,8 +151,27 @@
       "is_home": true,
       "game_id": 2026020377,
       "matchup": "VAN vs CHI",
-      "goal_probability": 0.2761,
+      "goal_probability": 0.2773,
       "tims_group": "1",
+      "rank": 6,
+      "tims_rank": 6
+    },
+    {
+      "player_id": 8482077,
+      "name": "Dylan Holloway",
+      "team": "STL",
+      "position": "L",
+      "games_played": 0,
+      "season_goals": 0,
+      "avg_goals": 0,
+      "last5_goals": 3,
+      "last5_games": 5,
+      "opponent": "EDM",
+      "is_home": true,
+      "game_id": 2026020375,
+      "matchup": "STL vs EDM",
+      "goal_probability": 0.2713,
+      "tims_group": "2",
       "rank": 7,
       "tims_rank": 7
     },
@@ -189,7 +189,7 @@
       "is_home": false,
       "game_id": 2026020377,
       "matchup": "CHI @ VAN",
-      "goal_probability": 0.2676,
+      "goal_probability": 0.268,
       "tims_group": "1",
       "rank": 8,
       "tims_rank": 8
@@ -208,7 +208,7 @@
       "is_home": false,
       "game_id": 2026020376,
       "matchup": "PIT @ DAL",
-      "goal_probability": 0.2658,
+      "goal_probability": 0.2655,
       "tims_group": "2",
       "rank": 9,
       "tims_rank": 9
@@ -227,10 +227,29 @@
       "is_home": true,
       "game_id": 2026020377,
       "matchup": "VAN vs CHI",
-      "goal_probability": 0.2557,
+      "goal_probability": 0.2565,
       "tims_group": "2",
       "rank": 10,
       "tims_rank": 10
+    },
+    {
+      "player_id": 8483516,
+      "name": "Jimmy Snuggerud",
+      "team": "STL",
+      "position": "R",
+      "games_played": 0,
+      "season_goals": 0,
+      "avg_goals": 0,
+      "last5_goals": 4,
+      "last5_games": 5,
+      "opponent": "EDM",
+      "is_home": true,
+      "game_id": 2026020375,
+      "matchup": "STL vs EDM",
+      "goal_probability": 0.2565,
+      "tims_group": "2",
+      "rank": 11,
+      "tims_rank": 11
     },
     {
       "player_id": 8477934,
@@ -246,10 +265,10 @@
       "is_home": false,
       "game_id": 2026020375,
       "matchup": "EDM @ STL",
-      "goal_probability": 0.2417,
+      "goal_probability": 0.2435,
       "tims_group": "1",
-      "rank": 11,
-      "tims_rank": 11
+      "rank": 12,
+      "tims_rank": 12
     },
     {
       "player_id": 8477404,
@@ -265,10 +284,10 @@
       "is_home": true,
       "game_id": 2026020374,
       "matchup": "TBL vs BUF",
-      "goal_probability": 0.2367,
+      "goal_probability": 0.237,
       "tims_group": "1",
-      "rank": 12,
-      "tims_rank": 12
+      "rank": 13,
+      "tims_rank": 13
     },
     {
       "player_id": 8478402,
@@ -284,10 +303,10 @@
       "is_home": false,
       "game_id": 2026020375,
       "matchup": "EDM @ STL",
-      "goal_probability": 0.2121,
+      "goal_probability": 0.213,
       "tims_group": "1",
-      "rank": 13,
-      "tims_rank": 13
+      "rank": 14,
+      "tims_rank": 14
     },
     {
       "player_id": 8478010,
@@ -303,10 +322,10 @@
       "is_home": true,
       "game_id": 2026020374,
       "matchup": "TBL vs BUF",
-      "goal_probability": 0.2101,
+      "goal_probability": 0.2108,
       "tims_group": "1",
-      "rank": 14,
-      "tims_rank": 14
+      "rank": 15,
+      "tims_rank": 15
     },
     {
       "player_id": 8483493,
@@ -322,10 +341,10 @@
       "is_home": false,
       "game_id": 2026020377,
       "matchup": "CHI @ VAN",
-      "goal_probability": 0.1994,
+      "goal_probability": 0.1992,
       "tims_group": "2",
-      "rank": 15,
-      "tims_rank": 15
+      "rank": 16,
+      "tims_rank": 16
     },
     {
       "player_id": 8482659,
@@ -341,10 +360,10 @@
       "is_home": false,
       "game_id": 2026020374,
       "matchup": "BUF @ TBL",
-      "goal_probability": 0.1962,
+      "goal_probability": 0.1965,
       "tims_group": "2",
-      "rank": 16,
-      "tims_rank": 16
+      "rank": 17,
+      "tims_rank": 17
     },
     {
       "player_id": 8480064,
@@ -360,10 +379,10 @@
       "is_home": false,
       "game_id": 2026020374,
       "matchup": "BUF @ TBL",
-      "goal_probability": 0.1917,
+      "goal_probability": 0.192,
       "tims_group": "2",
-      "rank": 17,
-      "tims_rank": 17
+      "rank": 18,
+      "tims_rank": 18
     },
     {
       "player_id": 8482097,
@@ -381,8 +400,8 @@
       "matchup": "BUF @ TBL",
       "goal_probability": 0.1895,
       "tims_group": "2",
-      "rank": 18,
-      "tims_rank": 18
+      "rank": 19,
+      "tims_rank": 19
     },
     {
       "player_id": 8476882,
@@ -398,10 +417,10 @@
       "is_home": false,
       "game_id": 2026020377,
       "matchup": "CHI @ VAN",
-      "goal_probability": 0.1824,
+      "goal_probability": 0.183,
       "tims_group": "2",
-      "rank": 19,
-      "tims_rank": 19
+      "rank": 20,
+      "tims_rank": 20
     },
     {
       "player_id": 8478449,
@@ -417,10 +436,10 @@
       "is_home": true,
       "game_id": 2026020376,
       "matchup": "DAL vs PIT",
-      "goal_probability": 0.1793,
+      "goal_probability": 0.1797,
       "tims_group": "2",
-      "rank": 20,
-      "tims_rank": 20
+      "rank": 21,
+      "tims_rank": 21
     },
     {
       "player_id": 8475794,
@@ -436,10 +455,10 @@
       "is_home": true,
       "game_id": 2026020376,
       "matchup": "DAL vs PIT",
-      "goal_probability": 0.1607,
+      "goal_probability": 0.1616,
       "tims_group": "2",
-      "rank": 21,
-      "tims_rank": 21
+      "rank": 22,
+      "tims_rank": 22
     },
     {
       "player_id": 8483808,
@@ -455,27 +474,8 @@
       "is_home": false,
       "game_id": 2026020376,
       "matchup": "PIT @ DAL",
-      "goal_probability": 0.1568,
+      "goal_probability": 0.1571,
       "tims_group": "3",
-      "rank": 22,
-      "tims_rank": 22
-    },
-    {
-      "player_id": 8482109,
-      "name": "Alexis Lafrenière",
-      "team": "NYR",
-      "position": "L",
-      "games_played": 1,
-      "season_goals": 0,
-      "avg_goals": 0.0,
-      "last5_goals": 2,
-      "last5_games": 5,
-      "opponent": "CAR",
-      "is_home": true,
-      "game_id": 2026020373,
-      "matchup": "NYR vs CAR",
-      "goal_probability": 0.1446,
-      "tims_group": "2",
       "rank": 23,
       "tims_rank": 23
     },
@@ -493,7 +493,7 @@
       "is_home": true,
       "game_id": 2026020377,
       "matchup": "VAN vs CHI",
-      "goal_probability": 0.1189,
+      "goal_probability": 0.1191,
       "tims_group": "3",
       "rank": 24,
       "tims_rank": 24
@@ -512,26 +512,26 @@
       "is_home": false,
       "game_id": 2026020377,
       "matchup": "CHI @ VAN",
-      "goal_probability": 0.1173,
+      "goal_probability": 0.1179,
       "tims_group": "3",
       "rank": 25,
       "tims_rank": 25
     },
     {
-      "player_id": 8480762,
-      "name": "Eric Robinson",
-      "team": "CAR",
-      "position": "L",
-      "games_played": 1,
+      "player_id": 8479351,
+      "name": "Sam Steel",
+      "team": "DAL",
+      "position": "C",
+      "games_played": 0,
       "season_goals": 0,
-      "avg_goals": 0.0,
+      "avg_goals": 0,
       "last5_goals": 0,
       "last5_games": 5,
-      "opponent": "NYR",
-      "is_home": false,
-      "game_id": 2026020373,
-      "matchup": "CAR @ NYR",
-      "goal_probability": 0.0991,
+      "opponent": "PIT",
+      "is_home": true,
+      "game_id": 2026020376,
+      "matchup": "DAL vs PIT",
+      "goal_probability": 0.1026,
       "tims_group": "3",
       "rank": 26,
       "tims_rank": 26
@@ -550,7 +550,7 @@
       "is_home": true,
       "game_id": 2026020376,
       "matchup": "DAL vs PIT",
-      "goal_probability": 0.093,
+      "goal_probability": 0.0934,
       "tims_group": "2",
       "rank": 27,
       "tims_rank": 27
@@ -569,29 +569,10 @@
       "is_home": true,
       "game_id": 2026020377,
       "matchup": "VAN vs CHI",
-      "goal_probability": 0.0913,
+      "goal_probability": 0.0914,
       "tims_group": "2",
       "rank": 28,
       "tims_rank": 28
-    },
-    {
-      "player_id": 8476906,
-      "name": "Shayne Gostisbehere",
-      "team": "CAR",
-      "position": "D",
-      "games_played": 0,
-      "season_goals": 0,
-      "avg_goals": 0,
-      "last5_goals": 0,
-      "last5_games": 5,
-      "opponent": "NYR",
-      "is_home": false,
-      "game_id": 2026020373,
-      "matchup": "CAR @ NYR",
-      "goal_probability": 0.0902,
-      "tims_group": "2",
-      "rank": 29,
-      "tims_rank": 29
     },
     {
       "player_id": 8479705,
@@ -609,27 +590,8 @@
       "matchup": "TBL vs BUF",
       "goal_probability": 0.0754,
       "tims_group": "3",
-      "rank": 30,
-      "tims_rank": 30
-    },
-    {
-      "player_id": 8477478,
-      "name": "William Carrier",
-      "team": "CAR",
-      "position": "L",
-      "games_played": 1,
-      "season_goals": 0,
-      "avg_goals": 0.0,
-      "last5_goals": 0,
-      "last5_games": 5,
-      "opponent": "NYR",
-      "is_home": false,
-      "game_id": 2026020373,
-      "matchup": "CAR @ NYR",
-      "goal_probability": 0.0706,
-      "tims_group": "3",
-      "rank": 31,
-      "tims_rank": 31
+      "rank": 29,
+      "tims_rank": 29
     },
     {
       "player_id": 8477450,
@@ -645,10 +607,10 @@
       "is_home": false,
       "game_id": 2026020375,
       "matchup": "EDM @ STL",
-      "goal_probability": 0.0694,
+      "goal_probability": 0.0696,
       "tims_group": "3",
-      "rank": 32,
-      "tims_rank": 32
+      "rank": 30,
+      "tims_rank": 30
     },
     {
       "player_id": 8479365,
@@ -664,29 +626,10 @@
       "is_home": false,
       "game_id": 2026020375,
       "matchup": "EDM @ STL",
-      "goal_probability": 0.0688,
+      "goal_probability": 0.069,
       "tims_group": "3",
-      "rank": 33,
-      "tims_rank": 33
-    },
-    {
-      "player_id": 8480336,
-      "name": "Sean Walker",
-      "team": "CAR",
-      "position": "D",
-      "games_played": 1,
-      "season_goals": 0,
-      "avg_goals": 0.0,
-      "last5_goals": 0,
-      "last5_games": 5,
-      "opponent": "NYR",
-      "is_home": false,
-      "game_id": 2026020373,
-      "matchup": "CAR @ NYR",
-      "goal_probability": 0.0664,
-      "tims_group": "3",
-      "rank": 34,
-      "tims_rank": 34
+      "rank": 31,
+      "tims_rank": 31
     },
     {
       "player_id": 8483395,
@@ -702,10 +645,48 @@
       "is_home": true,
       "game_id": 2026020377,
       "matchup": "VAN vs CHI",
-      "goal_probability": 0.0661,
+      "goal_probability": 0.0663,
       "tims_group": "3",
-      "rank": 35,
-      "tims_rank": 35
+      "rank": 32,
+      "tims_rank": 32
+    },
+    {
+      "player_id": 8475764,
+      "name": "Cam Fowler",
+      "team": "STL",
+      "position": "D",
+      "games_played": 0,
+      "season_goals": 0,
+      "avg_goals": 0,
+      "last5_goals": 1,
+      "last5_games": 5,
+      "opponent": "EDM",
+      "is_home": true,
+      "game_id": 2026020375,
+      "matchup": "STL vs EDM",
+      "goal_probability": 0.0597,
+      "tims_group": "3",
+      "rank": 33,
+      "tims_rank": 33
+    },
+    {
+      "player_id": 8475167,
+      "name": "Victor Hedman",
+      "team": "TBL",
+      "position": "D",
+      "games_played": 2,
+      "season_goals": 0,
+      "avg_goals": 0.0,
+      "last5_goals": 0,
+      "last5_games": 5,
+      "opponent": "BUF",
+      "is_home": true,
+      "game_id": 2026020374,
+      "matchup": "TBL vs BUF",
+      "goal_probability": 0.056,
+      "tims_group": "3",
+      "rank": 34,
+      "tims_rank": 34
     },
     {
       "player_id": 8483506,
@@ -721,10 +702,10 @@
       "is_home": false,
       "game_id": 2026020377,
       "matchup": "CHI @ VAN",
-      "goal_probability": 0.0523,
+      "goal_probability": 0.0527,
       "tims_group": "2",
-      "rank": 36,
-      "tims_rank": 36
+      "rank": 35,
+      "tims_rank": 35
     },
     {
       "player_id": 8477149,
@@ -742,8 +723,8 @@
       "matchup": "TBL vs BUF",
       "goal_probability": 0.051,
       "tims_group": "3",
-      "rank": 37,
-      "tims_rank": 37
+      "rank": 36,
+      "tims_rank": 36
     },
     {
       "player_id": 8482148,
@@ -759,10 +740,10 @@
       "is_home": false,
       "game_id": 2026020376,
       "matchup": "PIT @ DAL",
-      "goal_probability": 0.0473,
+      "goal_probability": 0.0475,
       "tims_group": "3",
-      "rank": 38,
-      "tims_rank": 38
+      "rank": 37,
+      "tims_rank": 37
     },
     {
       "player_id": 8482803,
@@ -778,10 +759,10 @@
       "is_home": false,
       "game_id": 2026020374,
       "matchup": "BUF @ TBL",
-      "goal_probability": 0.0465,
+      "goal_probability": 0.0468,
       "tims_group": "3",
-      "rank": 39,
-      "tims_rank": 39
+      "rank": 38,
+      "tims_rank": 38
     },
     {
       "player_id": 8484783,
@@ -797,29 +778,29 @@
       "is_home": false,
       "game_id": 2026020377,
       "matchup": "CHI @ VAN",
-      "goal_probability": 0.0465,
+      "goal_probability": 0.0467,
       "tims_group": "3",
-      "rank": 40,
-      "tims_rank": 40
+      "rank": 39,
+      "tims_rank": 39
     },
     {
-      "player_id": 8478970,
-      "name": "Jalen Chatfield",
-      "team": "CAR",
+      "player_id": 8484798,
+      "name": "Zeev Buium",
+      "team": "VAN",
       "position": "D",
       "games_played": 1,
       "season_goals": 0,
       "avg_goals": 0.0,
-      "last5_goals": 0,
+      "last5_goals": 1,
       "last5_games": 5,
-      "opponent": "NYR",
-      "is_home": false,
-      "game_id": 2026020373,
-      "matchup": "CAR @ NYR",
-      "goal_probability": 0.0375,
+      "opponent": "CHI",
+      "is_home": true,
+      "game_id": 2026020377,
+      "matchup": "VAN vs CHI",
+      "goal_probability": 0.0372,
       "tims_group": "3",
-      "rank": 41,
-      "tims_rank": 41
+      "rank": 40,
+      "tims_rank": 40
     }
   ],
   "tims_mode": true,
@@ -831,7 +812,7 @@
         "player_id": 8480027,
         "name": "Jason Robertson",
         "team": "DAL",
-        "goal_probability": 0.3928,
+        "goal_probability": 0.3925,
         "matchup": "DAL vs PIT"
       },
       {
@@ -839,7 +820,7 @@
         "player_id": 8476453,
         "name": "Nikita Kucherov",
         "team": "TBL",
-        "goal_probability": 0.3572,
+        "goal_probability": 0.3567,
         "matchup": "TBL vs BUF"
       },
       {
@@ -847,7 +828,7 @@
         "player_id": 8482740,
         "name": "Wyatt Johnston",
         "team": "DAL",
-        "goal_probability": 0.341,
+        "goal_probability": 0.3414,
         "matchup": "DAL vs PIT"
       },
       {
@@ -855,7 +836,7 @@
         "player_id": 8478420,
         "name": "Mikko Rantanen",
         "team": "DAL",
-        "goal_probability": 0.3249,
+        "goal_probability": 0.3255,
         "matchup": "DAL vs PIT"
       },
       {
@@ -863,7 +844,7 @@
         "player_id": 8479420,
         "name": "Tage Thompson",
         "team": "BUF",
-        "goal_probability": 0.3105,
+        "goal_probability": 0.3107,
         "matchup": "BUF @ TBL"
       },
       {
@@ -871,7 +852,7 @@
         "player_id": 8478444,
         "name": "Brock Boeser",
         "team": "VAN",
-        "goal_probability": 0.2761,
+        "goal_probability": 0.2773,
         "matchup": "VAN vs CHI"
       },
       {
@@ -879,7 +860,7 @@
         "player_id": 8477479,
         "name": "Tyler Bertuzzi",
         "team": "CHI",
-        "goal_probability": 0.2676,
+        "goal_probability": 0.268,
         "matchup": "CHI @ VAN"
       },
       {
@@ -887,7 +868,7 @@
         "player_id": 8477934,
         "name": "Leon Draisaitl",
         "team": "EDM",
-        "goal_probability": 0.2417,
+        "goal_probability": 0.2435,
         "matchup": "EDM @ STL"
       },
       {
@@ -895,7 +876,7 @@
         "player_id": 8477404,
         "name": "Jake Guentzel",
         "team": "TBL",
-        "goal_probability": 0.2367,
+        "goal_probability": 0.237,
         "matchup": "TBL vs BUF"
       },
       {
@@ -903,7 +884,7 @@
         "player_id": 8478402,
         "name": "Connor McDavid",
         "team": "EDM",
-        "goal_probability": 0.2121,
+        "goal_probability": 0.213,
         "matchup": "EDM @ STL"
       },
       {
@@ -911,25 +892,25 @@
         "player_id": 8478010,
         "name": "Brayden Point",
         "team": "TBL",
-        "goal_probability": 0.2101,
+        "goal_probability": 0.2108,
         "matchup": "TBL vs BUF"
       }
     ],
     "2": [
       {
         "rank_in_group": 1,
-        "player_id": 8478427,
-        "name": "Sebastian Aho",
-        "team": "CAR",
-        "goal_probability": 0.2874,
-        "matchup": "CAR @ NYR"
+        "player_id": 8482077,
+        "name": "Dylan Holloway",
+        "team": "STL",
+        "goal_probability": 0.2713,
+        "matchup": "STL vs EDM"
       },
       {
         "rank_in_group": 2,
         "player_id": 8476483,
         "name": "Rickard Rakell",
         "team": "PIT",
-        "goal_probability": 0.2658,
+        "goal_probability": 0.2655,
         "matchup": "PIT @ DAL"
       },
       {
@@ -937,35 +918,43 @@
         "player_id": 8478498,
         "name": "Jake DeBrusk",
         "team": "VAN",
-        "goal_probability": 0.2557,
+        "goal_probability": 0.2565,
         "matchup": "VAN vs CHI"
       },
       {
         "rank_in_group": 4,
-        "player_id": 8483493,
-        "name": "Frank Nazar",
-        "team": "CHI",
-        "goal_probability": 0.1994,
-        "matchup": "CHI @ VAN"
+        "player_id": 8483516,
+        "name": "Jimmy Snuggerud",
+        "team": "STL",
+        "goal_probability": 0.2565,
+        "matchup": "STL vs EDM"
       },
       {
         "rank_in_group": 5,
-        "player_id": 8482659,
-        "name": "Josh Doan",
-        "team": "BUF",
-        "goal_probability": 0.1962,
-        "matchup": "BUF @ TBL"
+        "player_id": 8483493,
+        "name": "Frank Nazar",
+        "team": "CHI",
+        "goal_probability": 0.1992,
+        "matchup": "CHI @ VAN"
       },
       {
         "rank_in_group": 6,
-        "player_id": 8480064,
-        "name": "Josh Norris",
+        "player_id": 8482659,
+        "name": "Josh Doan",
         "team": "BUF",
-        "goal_probability": 0.1917,
+        "goal_probability": 0.1965,
         "matchup": "BUF @ TBL"
       },
       {
         "rank_in_group": 7,
+        "player_id": 8480064,
+        "name": "Josh Norris",
+        "team": "BUF",
+        "goal_probability": 0.192,
+        "matchup": "BUF @ TBL"
+      },
+      {
+        "rank_in_group": 8,
         "player_id": 8482097,
         "name": "Jack Quinn",
         "team": "BUF",
@@ -973,43 +962,35 @@
         "matchup": "BUF @ TBL"
       },
       {
-        "rank_in_group": 8,
+        "rank_in_group": 9,
         "player_id": 8476882,
         "name": "Teuvo Teravainen",
         "team": "CHI",
-        "goal_probability": 0.1824,
+        "goal_probability": 0.183,
         "matchup": "CHI @ VAN"
       },
       {
-        "rank_in_group": 9,
+        "rank_in_group": 10,
         "player_id": 8478449,
         "name": "Roope Hintz",
         "team": "DAL",
-        "goal_probability": 0.1793,
-        "matchup": "DAL vs PIT"
-      },
-      {
-        "rank_in_group": 10,
-        "player_id": 8475794,
-        "name": "Tyler Seguin",
-        "team": "DAL",
-        "goal_probability": 0.1607,
+        "goal_probability": 0.1797,
         "matchup": "DAL vs PIT"
       },
       {
         "rank_in_group": 11,
-        "player_id": 8482109,
-        "name": "Alexis Lafrenière",
-        "team": "NYR",
-        "goal_probability": 0.1446,
-        "matchup": "NYR vs CAR"
+        "player_id": 8475794,
+        "name": "Tyler Seguin",
+        "team": "DAL",
+        "goal_probability": 0.1616,
+        "matchup": "DAL vs PIT"
       },
       {
         "rank_in_group": 12,
         "player_id": 8480036,
         "name": "Miro Heiskanen",
         "team": "DAL",
-        "goal_probability": 0.093,
+        "goal_probability": 0.0934,
         "matchup": "DAL vs PIT"
       },
       {
@@ -1017,23 +998,15 @@
         "player_id": 8481032,
         "name": "Paul Cotter",
         "team": "VAN",
-        "goal_probability": 0.0913,
+        "goal_probability": 0.0914,
         "matchup": "VAN vs CHI"
       },
       {
         "rank_in_group": 14,
-        "player_id": 8476906,
-        "name": "Shayne Gostisbehere",
-        "team": "CAR",
-        "goal_probability": 0.0902,
-        "matchup": "CAR @ NYR"
-      },
-      {
-        "rank_in_group": 15,
         "player_id": 8483506,
         "name": "Sam Rinzel",
         "team": "CHI",
-        "goal_probability": 0.0523,
+        "goal_probability": 0.0527,
         "matchup": "CHI @ VAN"
       }
     ],
@@ -1043,7 +1016,7 @@
         "player_id": 8483808,
         "name": "Andrei Kuzmenko",
         "team": "PIT",
-        "goal_probability": 0.1568,
+        "goal_probability": 0.1571,
         "matchup": "PIT @ DAL"
       },
       {
@@ -1051,7 +1024,7 @@
         "player_id": 8479425,
         "name": "Filip Hronek",
         "team": "VAN",
-        "goal_probability": 0.1189,
+        "goal_probability": 0.1191,
         "matchup": "VAN vs CHI"
       },
       {
@@ -1059,16 +1032,16 @@
         "player_id": 8478233,
         "name": "Andrew Mangiapane",
         "team": "CHI",
-        "goal_probability": 0.1173,
+        "goal_probability": 0.1179,
         "matchup": "CHI @ VAN"
       },
       {
         "rank_in_group": 4,
-        "player_id": 8480762,
-        "name": "Eric Robinson",
-        "team": "CAR",
-        "goal_probability": 0.0991,
-        "matchup": "CAR @ NYR"
+        "player_id": 8479351,
+        "name": "Sam Steel",
+        "team": "DAL",
+        "goal_probability": 0.1026,
+        "matchup": "DAL vs PIT"
       },
       {
         "rank_in_group": 5,
@@ -1080,43 +1053,43 @@
       },
       {
         "rank_in_group": 6,
-        "player_id": 8477478,
-        "name": "William Carrier",
-        "team": "CAR",
-        "goal_probability": 0.0706,
-        "matchup": "CAR @ NYR"
-      },
-      {
-        "rank_in_group": 7,
         "player_id": 8477450,
         "name": "Jason Dickinson",
         "team": "EDM",
-        "goal_probability": 0.0694,
+        "goal_probability": 0.0696,
+        "matchup": "EDM @ STL"
+      },
+      {
+        "rank_in_group": 7,
+        "player_id": 8479365,
+        "name": "Trent Frederic",
+        "team": "EDM",
+        "goal_probability": 0.069,
         "matchup": "EDM @ STL"
       },
       {
         "rank_in_group": 8,
-        "player_id": 8479365,
-        "name": "Trent Frederic",
-        "team": "EDM",
-        "goal_probability": 0.0688,
-        "matchup": "EDM @ STL"
-      },
-      {
-        "rank_in_group": 9,
-        "player_id": 8480336,
-        "name": "Sean Walker",
-        "team": "CAR",
-        "goal_probability": 0.0664,
-        "matchup": "CAR @ NYR"
-      },
-      {
-        "rank_in_group": 10,
         "player_id": 8483395,
         "name": "Arshdeep Bains",
         "team": "VAN",
-        "goal_probability": 0.0661,
+        "goal_probability": 0.0663,
         "matchup": "VAN vs CHI"
+      },
+      {
+        "rank_in_group": 9,
+        "player_id": 8475764,
+        "name": "Cam Fowler",
+        "team": "STL",
+        "goal_probability": 0.0597,
+        "matchup": "STL vs EDM"
+      },
+      {
+        "rank_in_group": 10,
+        "player_id": 8475167,
+        "name": "Victor Hedman",
+        "team": "TBL",
+        "goal_probability": 0.056,
+        "matchup": "TBL vs BUF"
       },
       {
         "rank_in_group": 11,
@@ -1131,7 +1104,7 @@
         "player_id": 8482148,
         "name": "Hendrix Lapierre",
         "team": "PIT",
-        "goal_probability": 0.0473,
+        "goal_probability": 0.0475,
         "matchup": "PIT @ DAL"
       },
       {
@@ -1139,7 +1112,7 @@
         "player_id": 8482803,
         "name": "Olen Zellweger",
         "team": "BUF",
-        "goal_probability": 0.0465,
+        "goal_probability": 0.0468,
         "matchup": "BUF @ TBL"
       },
       {
@@ -1147,16 +1120,16 @@
         "player_id": 8484783,
         "name": "Artyom Levshunov",
         "team": "CHI",
-        "goal_probability": 0.0465,
+        "goal_probability": 0.0467,
         "matchup": "CHI @ VAN"
       },
       {
         "rank_in_group": 15,
-        "player_id": 8478970,
-        "name": "Jalen Chatfield",
-        "team": "CAR",
-        "goal_probability": 0.0375,
-        "matchup": "CAR @ NYR"
+        "player_id": 8484798,
+        "name": "Zeev Buium",
+        "team": "VAN",
+        "goal_probability": 0.0372,
+        "matchup": "VAN vs CHI"
       }
     ]
   },
@@ -1167,5 +1140,5 @@
     "features": 50,
     "C": 0.1
   },
-  "generated_at": "2026-11-22T12:11:18.341325"
+  "generated_at": "2026-11-22T15:42:47.302632"
 }
