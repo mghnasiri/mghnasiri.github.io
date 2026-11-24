@@ -1,0 +1,440 @@
+{
+  "date": "2026-11-23",
+  "model": "blend",
+  "model_display_name": "Blend v1",
+  "generated_at": "2026-11-23T21:19:18.334151",
+  "games_count": 7,
+  "games": [
+    {
+      "game_id": 2026020378,
+      "home_team": "NJD",
+      "away_team": "CBJ",
+      "start_time": "2026-11-24T00:00:00Z",
+      "game_type": 2
+    },
+    {
+      "game_id": 2026020379,
+      "home_team": "MTL",
+      "away_team": "LAK",
+      "start_time": "2026-11-24T00:30:00Z",
+      "game_type": 2
+    },
+    {
+      "game_id": 2026020380,
+      "home_team": "OTT",
+      "away_team": "CGY",
+      "start_time": "2026-11-24T00:30:00Z",
+      "game_type": 2
+    },
+    {
+      "game_id": 2026020381,
+      "home_team": "NYI",
+      "away_team": "TOR",
+      "start_time": "2026-11-24T00:30:00Z",
+      "game_type": 2
+    },
+    {
+      "game_id": 2026020382,
+      "home_team": "WPG",
+      "away_team": "UTA",
+      "start_time": "2026-11-24T00:30:00Z",
+      "game_type": 2
+    },
+    {
+      "game_id": 2026020383,
+      "home_team": "SEA",
+      "away_team": "ANA",
+      "start_time": "2026-11-24T02:40:00Z",
+      "game_type": 2
+    },
+    {
+      "game_id": 2026020384,
+      "home_team": "SJS",
+      "away_team": "MIN",
+      "start_time": "2026-11-24T03:00:00Z",
+      "game_type": 2
+    }
+  ],
+  "players_count": 15,
+  "predictions": [
+    {
+      "player_id": 8483445,
+      "name": "Cutter Gauthier",
+      "team": "ANA",
+      "position": "L",
+      "opponent": "SEA",
+      "matchup": "ANA @ SEA",
+      "is_home": false,
+      "season_goals": 0,
+      "last5_goals": 0,
+      "goal_probability": 0.4008,
+      "blend_score": 0.5167,
+      "blend_models": 4,
+      "tims_group": "1",
+      "rank": 1
+    },
+    {
+      "player_id": 8478864,
+      "name": "Kirill Kaprizov",
+      "team": "MIN",
+      "position": "L",
+      "opponent": "SJS",
+      "matchup": "MIN @ SJS",
+      "is_home": false,
+      "season_goals": 0,
+      "last5_goals": 2,
+      "goal_probability": 0.377,
+      "blend_score": 0.0067,
+      "blend_models": 4,
+      "tims_group": "1",
+      "rank": 2
+    },
+    {
+      "player_id": 8481557,
+      "name": "Matt Boldy",
+      "team": "MIN",
+      "position": "L",
+      "opponent": "SJS",
+      "matchup": "MIN @ SJS",
+      "is_home": false,
+      "season_goals": 0,
+      "last5_goals": 1,
+      "goal_probability": 0.3768,
+      "blend_score": 0.0803,
+      "blend_models": 4,
+      "tims_group": "1",
+      "rank": 3
+    },
+    {
+      "player_id": 8484801,
+      "name": "Macklin Celebrini",
+      "team": "SJS",
+      "position": "C",
+      "opponent": "MIN",
+      "matchup": "SJS vs MIN",
+      "is_home": true,
+      "season_goals": 0,
+      "last5_goals": 3,
+      "goal_probability": 0.3385,
+      "blend_score": -0.6038,
+      "blend_models": 4,
+      "tims_group": "1",
+      "rank": 4
+    },
+    {
+      "player_id": 8478493,
+      "name": "Joel Eriksson Ek",
+      "team": "MIN",
+      "position": "C",
+      "opponent": "SJS",
+      "matchup": "MIN @ SJS",
+      "is_home": false,
+      "season_goals": 0,
+      "last5_goals": 1,
+      "goal_probability": 0.3061,
+      "blend_score": 1.3399,
+      "blend_models": 4,
+      "tims_group": "2",
+      "rank": 5
+    },
+    {
+      "player_id": 8482665,
+      "name": "Matty Beniers",
+      "team": "SEA",
+      "position": "C",
+      "opponent": "ANA",
+      "matchup": "SEA vs ANA",
+      "is_home": true,
+      "season_goals": 0,
+      "last5_goals": 1,
+      "goal_probability": 0.2214,
+      "blend_score": 0.5497,
+      "blend_models": 4,
+      "tims_group": "2",
+      "rank": 6
+    },
+    {
+      "player_id": 8475726,
+      "name": "Tyler Toffoli",
+      "team": "SJS",
+      "position": "C",
+      "opponent": "MIN",
+      "matchup": "SJS vs MIN",
+      "is_home": true,
+      "season_goals": 0,
+      "last5_goals": 1,
+      "goal_probability": 0.165,
+      "blend_score": -0.0381,
+      "blend_models": 4,
+      "tims_group": "2",
+      "rank": 7
+    },
+    {
+      "player_id": 8482751,
+      "name": "Ryan Winterton",
+      "team": "SEA",
+      "position": "C",
+      "opponent": "ANA",
+      "matchup": "SEA vs ANA",
+      "is_home": true,
+      "season_goals": 0,
+      "last5_goals": 0,
+      "goal_probability": 0.1369,
+      "blend_score": -0.6557,
+      "blend_models": 4,
+      "tims_group": "2",
+      "rank": 8
+    },
+    {
+      "player_id": 8481754,
+      "name": "Nikita Nesterenko",
+      "team": "ANA",
+      "position": "C",
+      "opponent": "SEA",
+      "matchup": "ANA @ SEA",
+      "is_home": false,
+      "season_goals": 0,
+      "last5_goals": 0,
+      "goal_probability": 0.1119,
+      "blend_score": 1.0723,
+      "blend_models": 4,
+      "tims_group": "3",
+      "rank": 9
+    },
+    {
+      "player_id": 8478508,
+      "name": "Yakov Trenin",
+      "team": "MIN",
+      "position": "C",
+      "opponent": "SJS",
+      "matchup": "MIN @ SJS",
+      "is_home": false,
+      "season_goals": 0,
+      "last5_goals": 0,
+      "goal_probability": 0.1027,
+      "blend_score": 0.6635,
+      "blend_models": 4,
+      "tims_group": "3",
+      "rank": 10
+    },
+    {
+      "player_id": 8478874,
+      "name": "Adam Gaudette",
+      "team": "SJS",
+      "position": "R",
+      "opponent": "MIN",
+      "matchup": "SJS vs MIN",
+      "is_home": true,
+      "season_goals": 0,
+      "last5_goals": 0,
+      "goal_probability": 0.099,
+      "blend_score": -1.1958,
+      "blend_models": 4,
+      "tims_group": "2",
+      "rank": 11
+    },
+    {
+      "player_id": 8481605,
+      "name": "Jackson LaCombe",
+      "team": "ANA",
+      "position": "D",
+      "opponent": "SEA",
+      "matchup": "ANA @ SEA",
+      "is_home": false,
+      "season_goals": 0,
+      "last5_goals": 0,
+      "goal_probability": 0.0937,
+      "blend_score": 0.5714,
+      "blend_models": 4,
+      "tims_group": "3",
+      "rank": 12
+    },
+    {
+      "player_id": 8473422,
+      "name": "Nick Foligno",
+      "team": "MIN",
+      "position": "L",
+      "opponent": "SJS",
+      "matchup": "MIN @ SJS",
+      "is_home": false,
+      "season_goals": 0,
+      "last5_goals": 2,
+      "goal_probability": 0.0784,
+      "blend_score": -0.1368,
+      "blend_models": 4,
+      "tims_group": "3",
+      "rank": 13
+    },
+    {
+      "player_id": 8482858,
+      "name": "Ryker Evans",
+      "team": "SEA",
+      "position": "D",
+      "opponent": "ANA",
+      "matchup": "SEA vs ANA",
+      "is_home": true,
+      "season_goals": 0,
+      "last5_goals": 0,
+      "goal_probability": 0.0624,
+      "blend_score": -0.815,
+      "blend_models": 4,
+      "tims_group": "3",
+      "rank": 14
+    },
+    {
+      "player_id": 8475200,
+      "name": "Dmitry Orlov",
+      "team": "SJS",
+      "position": "D",
+      "opponent": "MIN",
+      "matchup": "SJS vs MIN",
+      "is_home": true,
+      "season_goals": 0,
+      "last5_goals": 0,
+      "goal_probability": 0.0429,
+      "blend_score": -1.3554,
+      "blend_models": 4,
+      "tims_group": "3",
+      "rank": 15
+    }
+  ],
+  "tims_mode": true,
+  "tims_source": "timnhlassist.com",
+  "tims_group_rankings": {
+    "1": [
+      {
+        "rank_in_group": 1,
+        "player_id": 8483445,
+        "name": "Cutter Gauthier",
+        "team": "ANA",
+        "goal_probability": 0.4008,
+        "matchup": "ANA @ SEA"
+      },
+      {
+        "rank_in_group": 2,
+        "player_id": 8481557,
+        "name": "Matt Boldy",
+        "team": "MIN",
+        "goal_probability": 0.3768,
+        "matchup": "MIN @ SJS"
+      },
+      {
+        "rank_in_group": 3,
+        "player_id": 8478864,
+        "name": "Kirill Kaprizov",
+        "team": "MIN",
+        "goal_probability": 0.377,
+        "matchup": "MIN @ SJS"
+      },
+      {
+        "rank_in_group": 4,
+        "player_id": 8484801,
+        "name": "Macklin Celebrini",
+        "team": "SJS",
+        "goal_probability": 0.3385,
+        "matchup": "SJS vs MIN"
+      }
+    ],
+    "2": [
+      {
+        "rank_in_group": 1,
+        "player_id": 8478493,
+        "name": "Joel Eriksson Ek",
+        "team": "MIN",
+        "goal_probability": 0.3061,
+        "matchup": "MIN @ SJS"
+      },
+      {
+        "rank_in_group": 2,
+        "player_id": 8482665,
+        "name": "Matty Beniers",
+        "team": "SEA",
+        "goal_probability": 0.2214,
+        "matchup": "SEA vs ANA"
+      },
+      {
+        "rank_in_group": 3,
+        "player_id": 8475726,
+        "name": "Tyler Toffoli",
+        "team": "SJS",
+        "goal_probability": 0.165,
+        "matchup": "SJS vs MIN"
+      },
+      {
+        "rank_in_group": 4,
+        "player_id": 8482751,
+        "name": "Ryan Winterton",
+        "team": "SEA",
+        "goal_probability": 0.1369,
+        "matchup": "SEA vs ANA"
+      },
+      {
+        "rank_in_group": 5,
+        "player_id": 8478874,
+        "name": "Adam Gaudette",
+        "team": "SJS",
+        "goal_probability": 0.099,
+        "matchup": "SJS vs MIN"
+      }
+    ],
+    "3": [
+      {
+        "rank_in_group": 1,
+        "player_id": 8481754,
+        "name": "Nikita Nesterenko",
+        "team": "ANA",
+        "goal_probability": 0.1119,
+        "matchup": "ANA @ SEA"
+      },
+      {
+        "rank_in_group": 2,
+        "player_id": 8478508,
+        "name": "Yakov Trenin",
+        "team": "MIN",
+        "goal_probability": 0.1027,
+        "matchup": "MIN @ SJS"
+      },
+      {
+        "rank_in_group": 3,
+        "player_id": 8481605,
+        "name": "Jackson LaCombe",
+        "team": "ANA",
+        "goal_probability": 0.0937,
+        "matchup": "ANA @ SEA"
+      },
+      {
+        "rank_in_group": 4,
+        "player_id": 8473422,
+        "name": "Nick Foligno",
+        "team": "MIN",
+        "goal_probability": 0.0784,
+        "matchup": "MIN @ SJS"
+      },
+      {
+        "rank_in_group": 5,
+        "player_id": 8482858,
+        "name": "Ryker Evans",
+        "team": "SEA",
+        "goal_probability": 0.0624,
+        "matchup": "SEA vs ANA"
+      },
+      {
+        "rank_in_group": 6,
+        "player_id": 8475200,
+        "name": "Dmitry Orlov",
+        "team": "SJS",
+        "goal_probability": 0.0429,
+        "matchup": "SJS vs MIN"
+      }
+    ]
+  },
+  "model_params": {
+    "inputs": [
+      "direct_lr",
+      "market_odds",
+      "neural_v2",
+      "xg_v3"
+    ],
+    "method": "mean of within-group z-scored log-odds"
+  }
+}
