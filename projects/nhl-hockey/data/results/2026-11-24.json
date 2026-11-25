@@ -1,0 +1,870 @@
+{
+  "date": "2026-11-24",
+  "games_count": 1,
+  "final_games": 1,
+  "partial": false,
+  "games": [
+    {
+      "game_id": 2026020385,
+      "home_team": "EDM",
+      "away_team": "VGK",
+      "game_state": "OFF",
+      "schedule_state": "OK"
+    }
+  ],
+  "all_scorers": [
+    {
+      "player_id": 8478403,
+      "player_name": "J. Eichel",
+      "team": "VGK",
+      "goals": 2,
+      "game_id": 2026020385,
+      "matchup": "VGK @ EDM"
+    },
+    {
+      "player_id": 8484803,
+      "player_name": "T. Connelly",
+      "team": "VGK",
+      "goals": 2,
+      "game_id": 2026020385,
+      "matchup": "VGK @ EDM"
+    },
+    {
+      "player_id": 8475343,
+      "player_name": "N. Dowd",
+      "team": "VGK",
+      "goals": 1,
+      "game_id": 2026020385,
+      "matchup": "VGK @ EDM"
+    },
+    {
+      "player_id": 8482703,
+      "player_name": "C. Dach",
+      "team": "EDM",
+      "goals": 1,
+      "game_id": 2026020385,
+      "matchup": "VGK @ EDM"
+    },
+    {
+      "player_id": 8481617,
+      "player_name": "V. Podkolzin",
+      "team": "EDM",
+      "goals": 1,
+      "game_id": 2026020385,
+      "matchup": "VGK @ EDM"
+    },
+    {
+      "player_id": 8478402,
+      "player_name": "C. McDavid",
+      "team": "EDM",
+      "goals": 1,
+      "game_id": 2026020385,
+      "matchup": "VGK @ EDM"
+    }
+  ],
+  "scorers_count": 6,
+  "model_comparisons": [
+    {
+      "model": "blend",
+      "model_display_name": "Blend v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8477934,
+          "name": "Leon Draisaitl",
+          "team": "EDM",
+          "probability": 0.3697,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8478402,
+          "name": "Connor McDavid",
+          "team": "EDM",
+          "probability": 0.2904,
+          "scored": true
+        },
+        {
+          "rank": 3,
+          "player_id": 8478483,
+          "name": "Mitchell Marner",
+          "team": "VGK",
+          "probability": 0.2715,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8478403,
+          "name": "Jack Eichel",
+          "team": "VGK",
+          "probability": 0.2524,
+          "scored": true
+        },
+        {
+          "rank": 5,
+          "player_id": 8476881,
+          "name": "Tomas Hertl",
+          "team": "VGK",
+          "probability": 0.2523,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8475913,
+          "name": "Mark Stone",
+          "team": "VGK",
+          "probability": 0.2473,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8481617,
+          "name": "Vasily Podkolzin",
+          "team": "EDM",
+          "probability": 0.2391,
+          "scored": true
+        },
+        {
+          "rank": 8,
+          "player_id": 8478109,
+          "name": "Victor Olofsson",
+          "team": "VGK",
+          "probability": 0.2232,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8476454,
+          "name": "Ryan Nugent-Hopkins",
+          "team": "EDM",
+          "probability": 0.2169,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8479353,
+          "name": "Brett Howden",
+          "team": "VGK",
+          "probability": 0.1997,
+          "scored": false
+        }
+      ],
+      "hits": 3,
+      "total_predictions": 10,
+      "hit_rate": 30.0
+    },
+    {
+      "model": "direct_lr",
+      "model_display_name": "Direct LR v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8478483,
+          "name": "Mitchell Marner",
+          "team": "VGK",
+          "probability": 0.2935,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8475913,
+          "name": "Mark Stone",
+          "team": "VGK",
+          "probability": 0.2814,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8477934,
+          "name": "Leon Draisaitl",
+          "team": "EDM",
+          "probability": 0.2641,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8478402,
+          "name": "Connor McDavid",
+          "team": "EDM",
+          "probability": 0.2318,
+          "scored": true
+        },
+        {
+          "rank": 5,
+          "player_id": 8476454,
+          "name": "Ryan Nugent-Hopkins",
+          "team": "EDM",
+          "probability": 0.2198,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8476881,
+          "name": "Tomas Hertl",
+          "team": "VGK",
+          "probability": 0.2114,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8481617,
+          "name": "Vasily Podkolzin",
+          "team": "EDM",
+          "probability": 0.2097,
+          "scored": true
+        },
+        {
+          "rank": 8,
+          "player_id": 8478403,
+          "name": "Jack Eichel",
+          "team": "VGK",
+          "probability": 0.2016,
+          "scored": true
+        },
+        {
+          "rank": 9,
+          "player_id": 8478109,
+          "name": "Victor Olofsson",
+          "team": "VGK",
+          "probability": 0.1612,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8476448,
+          "name": "William Karlsson",
+          "team": "VGK",
+          "probability": 0.1582,
+          "scored": false
+        }
+      ],
+      "hits": 3,
+      "total_predictions": 10,
+      "hit_rate": 30.0
+    },
+    {
+      "model": "lineup_v1",
+      "model_display_name": "Lineup TOI v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8477934,
+          "name": "Leon Draisaitl",
+          "team": "EDM",
+          "probability": 0.3286,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8476881,
+          "name": "Tomas Hertl",
+          "team": "VGK",
+          "probability": 0.2501,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8478483,
+          "name": "Mitch Marner",
+          "team": "VGK",
+          "probability": 0.2446,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8478402,
+          "name": "Connor McDavid",
+          "team": "EDM",
+          "probability": 0.2343,
+          "scored": true
+        },
+        {
+          "rank": 5,
+          "player_id": 8478403,
+          "name": "Jack Eichel",
+          "team": "VGK",
+          "probability": 0.2319,
+          "scored": true
+        },
+        {
+          "rank": 6,
+          "player_id": 8484803,
+          "name": "Trevor Connelly",
+          "team": "VGK",
+          "probability": 0.2303,
+          "scored": true
+        },
+        {
+          "rank": 7,
+          "player_id": 8481617,
+          "name": "Vasily Podkolzin",
+          "team": "EDM",
+          "probability": 0.2302,
+          "scored": true
+        },
+        {
+          "rank": 8,
+          "player_id": 8478109,
+          "name": "Victor Olofsson",
+          "team": "VGK",
+          "probability": 0.2245,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8476448,
+          "name": "William Karlsson",
+          "team": "VGK",
+          "probability": 0.2217,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8479353,
+          "name": "Brett Howden",
+          "team": "VGK",
+          "probability": 0.1801,
+          "scored": false
+        }
+      ],
+      "hits": 4,
+      "total_predictions": 10,
+      "hit_rate": 40.0
+    },
+    {
+      "model": "market_odds",
+      "model_display_name": "Market Odds v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8477934,
+          "name": "Leon Draisaitl",
+          "team": "EDM",
+          "probability": 0.462,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8478402,
+          "name": "Connor McDavid",
+          "team": "EDM",
+          "probability": 0.4139,
+          "scored": true
+        },
+        {
+          "rank": 3,
+          "player_id": 8475913,
+          "name": "Mark Stone",
+          "team": "VGK",
+          "probability": 0.3394,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8478403,
+          "name": "Jack Eichel",
+          "team": "VGK",
+          "probability": 0.3352,
+          "scored": true
+        },
+        {
+          "rank": 5,
+          "player_id": 8476881,
+          "name": "Tomas Hertl",
+          "team": "VGK",
+          "probability": 0.2898,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8478109,
+          "name": "Victor Olofsson",
+          "team": "VGK",
+          "probability": 0.2826,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8481617,
+          "name": "Vasily Podkolzin",
+          "team": "EDM",
+          "probability": 0.2762,
+          "scored": true
+        },
+        {
+          "rank": 8,
+          "player_id": 8478483,
+          "name": "Mitch Marner",
+          "team": "VGK",
+          "probability": 0.2721,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8476454,
+          "name": "Ryan Nugent-Hopkins",
+          "team": "EDM",
+          "probability": 0.2444,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8480803,
+          "name": "Evan Bouchard",
+          "team": "EDM",
+          "probability": 0.2289,
+          "scored": false
+        }
+      ],
+      "hits": 3,
+      "total_predictions": 10,
+      "hit_rate": 30.0
+    },
+    {
+      "model": "monte_carlo",
+      "model_display_name": "Monte Carlo v2",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8477934,
+          "name": "Leon Draisaitl",
+          "team": "EDM",
+          "probability": 0.3759,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8478109,
+          "name": "Victor Olofsson",
+          "team": "VGK",
+          "probability": 0.3322,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8481617,
+          "name": "Vasily Podkolzin",
+          "team": "EDM",
+          "probability": 0.2751,
+          "scored": true
+        },
+        {
+          "rank": 4,
+          "player_id": 8478402,
+          "name": "Connor McDavid",
+          "team": "EDM",
+          "probability": 0.2574,
+          "scored": true
+        },
+        {
+          "rank": 5,
+          "player_id": 8475913,
+          "name": "Mark Stone",
+          "team": "VGK",
+          "probability": 0.2546,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8480803,
+          "name": "Evan Bouchard",
+          "team": "EDM",
+          "probability": 0.2459,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8476881,
+          "name": "Tomas Hertl",
+          "team": "VGK",
+          "probability": 0.2421,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8478403,
+          "name": "Jack Eichel",
+          "team": "VGK",
+          "probability": 0.2227,
+          "scored": true
+        },
+        {
+          "rank": 9,
+          "player_id": 8479353,
+          "name": "Brett Howden",
+          "team": "VGK",
+          "probability": 0.2094,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8476454,
+          "name": "Ryan Nugent-Hopkins",
+          "team": "EDM",
+          "probability": 0.2014,
+          "scored": false
+        }
+      ],
+      "hits": 3,
+      "total_predictions": 10,
+      "hit_rate": 30.0
+    },
+    {
+      "model": "neural_network",
+      "model_display_name": "Weighted Linear v1",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8477934,
+          "name": "Leon Draisaitl",
+          "team": "EDM",
+          "probability": 0.55,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8478109,
+          "name": "Victor Olofsson",
+          "team": "VGK",
+          "probability": 0.378,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8481617,
+          "name": "Vasily Podkolzin",
+          "team": "EDM",
+          "probability": 0.348,
+          "scored": true
+        },
+        {
+          "rank": 4,
+          "player_id": 8478402,
+          "name": "Connor McDavid",
+          "team": "EDM",
+          "probability": 0.315,
+          "scored": true
+        },
+        {
+          "rank": 5,
+          "player_id": 8476881,
+          "name": "Tomas Hertl",
+          "team": "VGK",
+          "probability": 0.256,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8476448,
+          "name": "William Karlsson",
+          "team": "VGK",
+          "probability": 0.246,
+          "scored": false
+        },
+        {
+          "rank": 7,
+          "player_id": 8480803,
+          "name": "Evan Bouchard",
+          "team": "EDM",
+          "probability": 0.241,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8475913,
+          "name": "Mark Stone",
+          "team": "VGK",
+          "probability": 0.235,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8479353,
+          "name": "Brett Howden",
+          "team": "VGK",
+          "probability": 0.23,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8478403,
+          "name": "Jack Eichel",
+          "team": "VGK",
+          "probability": 0.223,
+          "scored": true
+        }
+      ],
+      "hits": 3,
+      "total_predictions": 10,
+      "hit_rate": 30.0
+    },
+    {
+      "model": "neural_v2",
+      "model_display_name": "Neural Embed v2",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8477934,
+          "name": "Leon Draisaitl",
+          "team": "EDM",
+          "probability": 0.4464,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8478402,
+          "name": "Connor McDavid",
+          "team": "EDM",
+          "probability": 0.3017,
+          "scored": true
+        },
+        {
+          "rank": 3,
+          "player_id": 8478483,
+          "name": "Mitch Marner",
+          "team": "VGK",
+          "probability": 0.297,
+          "scored": false
+        },
+        {
+          "rank": 4,
+          "player_id": 8478403,
+          "name": "Jack Eichel",
+          "team": "VGK",
+          "probability": 0.2738,
+          "scored": true
+        },
+        {
+          "rank": 5,
+          "player_id": 8476881,
+          "name": "Tomas Hertl",
+          "team": "VGK",
+          "probability": 0.2735,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8478109,
+          "name": "Victor Olofsson",
+          "team": "VGK",
+          "probability": 0.2644,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8481617,
+          "name": "Vasily Podkolzin",
+          "team": "EDM",
+          "probability": 0.2616,
+          "scored": true
+        },
+        {
+          "rank": 9,
+          "player_id": 8479353,
+          "name": "Brett Howden",
+          "team": "VGK",
+          "probability": 0.2461,
+          "scored": false
+        },
+        {
+          "rank": 10,
+          "player_id": 8484803,
+          "name": "Trevor Connelly",
+          "team": "VGK",
+          "probability": 0.2454,
+          "scored": true
+        },
+        {
+          "rank": 11,
+          "player_id": 8475913,
+          "name": "Mark Stone",
+          "team": "VGK",
+          "probability": 0.2365,
+          "scored": false
+        }
+      ],
+      "hits": 4,
+      "total_predictions": 10,
+      "hit_rate": 40.0
+    },
+    {
+      "model": "xg_v3",
+      "model_display_name": "xG XGBoost v3",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8477934,
+          "name": "Leon Draisaitl",
+          "team": "EDM",
+          "probability": 0.3226,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8476881,
+          "name": "Tomas Hertl",
+          "team": "VGK",
+          "probability": 0.2395,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8478402,
+          "name": "Connor McDavid",
+          "team": "EDM",
+          "probability": 0.2334,
+          "scored": true
+        },
+        {
+          "rank": 4,
+          "player_id": 8478483,
+          "name": "Mitch Marner",
+          "team": "VGK",
+          "probability": 0.2273,
+          "scored": false
+        },
+        {
+          "rank": 5,
+          "player_id": 8481617,
+          "name": "Vasily Podkolzin",
+          "team": "EDM",
+          "probability": 0.2136,
+          "scored": true
+        },
+        {
+          "rank": 6,
+          "player_id": 8478403,
+          "name": "Jack Eichel",
+          "team": "VGK",
+          "probability": 0.2129,
+          "scored": true
+        },
+        {
+          "rank": 7,
+          "player_id": 8484803,
+          "name": "Trevor Connelly",
+          "team": "VGK",
+          "probability": 0.2103,
+          "scored": true
+        },
+        {
+          "rank": 8,
+          "player_id": 8476448,
+          "name": "William Karlsson",
+          "team": "VGK",
+          "probability": 0.2092,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8478109,
+          "name": "Victor Olofsson",
+          "team": "VGK",
+          "probability": 0.2005,
+          "scored": false
+        },
+        {
+          "rank": 11,
+          "player_id": 8476454,
+          "name": "Ryan Nugent-Hopkins",
+          "team": "EDM",
+          "probability": 0.1904,
+          "scored": false
+        }
+      ],
+      "hits": 4,
+      "total_predictions": 10,
+      "hit_rate": 40.0
+    },
+    {
+      "model": "xg_v3_synthetic",
+      "model_display_name": "xG XGBoost v3 (synthetic shadow)",
+      "top10_picks": [
+        {
+          "rank": 1,
+          "player_id": 8477934,
+          "name": "Leon Draisaitl",
+          "team": "EDM",
+          "probability": 0.785,
+          "scored": false
+        },
+        {
+          "rank": 2,
+          "player_id": 8478109,
+          "name": "Victor Olofsson",
+          "team": "VGK",
+          "probability": 0.586,
+          "scored": false
+        },
+        {
+          "rank": 3,
+          "player_id": 8481617,
+          "name": "Vasily Podkolzin",
+          "team": "EDM",
+          "probability": 0.5586,
+          "scored": true
+        },
+        {
+          "rank": 4,
+          "player_id": 8478402,
+          "name": "Connor McDavid",
+          "team": "EDM",
+          "probability": 0.4878,
+          "scored": true
+        },
+        {
+          "rank": 5,
+          "player_id": 8476454,
+          "name": "Ryan Nugent-Hopkins",
+          "team": "EDM",
+          "probability": 0.4216,
+          "scored": false
+        },
+        {
+          "rank": 6,
+          "player_id": 8478403,
+          "name": "Jack Eichel",
+          "team": "VGK",
+          "probability": 0.4043,
+          "scored": true
+        },
+        {
+          "rank": 7,
+          "player_id": 8475913,
+          "name": "Mark Stone",
+          "team": "VGK",
+          "probability": 0.3718,
+          "scored": false
+        },
+        {
+          "rank": 8,
+          "player_id": 8479353,
+          "name": "Brett Howden",
+          "team": "VGK",
+          "probability": 0.3415,
+          "scored": false
+        },
+        {
+          "rank": 9,
+          "player_id": 8484803,
+          "name": "Trevor Connelly",
+          "team": "VGK",
+          "probability": 0.3401,
+          "scored": true
+        },
+        {
+          "rank": 10,
+          "player_id": 8476448,
+          "name": "William Karlsson",
+          "team": "VGK",
+          "probability": 0.327,
+          "scored": false
+        }
+      ],
+      "hits": 4,
+      "total_predictions": 10,
+      "hit_rate": 40.0
+    }
+  ],
+  "fetched_at": "2026-11-25T11:50:50.737777"
+}
