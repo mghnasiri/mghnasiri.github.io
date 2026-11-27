@@ -1,7 +1,7 @@
 {
   "date": "2026-11-27",
   "source": "timnhlassist.com",
-  "players_count": 13,
+  "players_count": 15,
   "groups": {
     "1": [
       {
@@ -36,6 +36,12 @@
       }
     ],
     "2": [
+      {
+        "name": "Roman Kantserov",
+        "player_id": 8484390,
+        "team": "CHI",
+        "position": "Forward"
+      },
       {
         "name": "Jack Quinn",
         "player_id": 8482097,
@@ -78,6 +84,12 @@
         "name": "Brandon Montour",
         "player_id": 8477986,
         "team": "SEA",
+        "position": "Defenseman"
+      },
+      {
+        "name": "Vladislav Gavrikov",
+        "player_id": 8478882,
+        "team": "NYR",
         "position": "Defenseman"
       },
       {
@@ -128,6 +140,14 @@
       "position": "Forward",
       "goals": 9,
       "shots": 71
+    },
+    {
+      "name": "Roman Kantserov",
+      "player_id": 8484390,
+      "team": "CHI",
+      "position": "Forward",
+      "goals": 15,
+      "shots": 45
     },
     {
       "name": "Jack Quinn",
@@ -186,6 +206,14 @@
       "shots": 40
     },
     {
+      "name": "Vladislav Gavrikov",
+      "player_id": 8478882,
+      "team": "NYR",
+      "position": "Defenseman",
+      "goals": 2,
+      "shots": 34
+    },
+    {
       "name": "Ville Koivunen",
       "player_id": 8482758,
       "team": "PIT",
@@ -194,5 +222,5 @@
       "shots": 18
     }
   ],
-  "scraped_at": "2026-11-27T17:39:50.254139"
+  "scraped_at": "2026-11-27T17:28:58.659091"
 }
